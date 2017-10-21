@@ -2,6 +2,7 @@
   "name": "line-distribution-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://www.kavispires.com/line-distribution-app/",
   "dependencies": {
     "lodash": "^4.17.4",
     "react": "^15.6.1",
@@ -19,9 +20,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "gh-pages": "^1.0.0",
     "node-sass-chokidar": "0.0.3",
     "react-router-dom": "^4.2.2",
     "redux-mock-store": "^1.2.3"
