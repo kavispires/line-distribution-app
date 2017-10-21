@@ -1,17 +1,8 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import ColorSheet from '../components/ColorSheet';
 
-import {
-
-} from '../reducers/app';
-
-
-
 const mapStateToProps = (state) => ({ app: state.app});
 
-const mapDispatchToProps = {
-
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ColorSheet);
+export default withRouter(connect(mapStateToProps)(ColorSheet));

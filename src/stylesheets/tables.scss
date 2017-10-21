@@ -1,0 +1,23 @@
+.table {
+	// outline: 1px solid green;
+	border-collapse: collapse;
+
+	thead {
+		text-align: left;
+		
+		th {
+			padding: 10px;
+			border-bottom: 2px solid #222;
+		}
+	}
+
+	td {
+		padding: 10px;
+		border-bottom: 1px solid #ccc;
+	}
+
+	tbody tr:hover {
+		background: #ccc;
+		cursor: pointer;
+	}
+}

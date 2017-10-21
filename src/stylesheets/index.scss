@@ -8,7 +8,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #fff;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 * {
@@ -16,10 +16,16 @@ body {
 	font-family: 'Ubuntu', serif;
 }
 
+.container {
+	padding: 10px 30px;
+}
+
 .ld-header {
   background-color: #000;
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
 }
 
 .ld-logo {
@@ -51,6 +57,5 @@ body {
 	}
 }
 
-.container {
-	padding: 10px 30px;
-}
+// TABLES
+@import './tables.scss';

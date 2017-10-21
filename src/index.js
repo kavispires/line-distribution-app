@@ -8,23 +8,27 @@ import store from './store';
 import Header from './components/Header';
 
 import AppContainer from './containers/AppContainer';
+import ArtistsContainer from './containers/ArtistsContainer';
 import ColorSheetContainer from './containers/ColorSheetContainer';
+import CreatorContainer from './containers/CreatorContainer';
+import DistributeContainer from './containers/DistributeContainer';
+import HomeContainer from './containers/HomeContainer';
+import LyricsContainer from './containers/LyricsContainer';
 
 import './stylesheets/index.css';
-
-console.log(Router);
 
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<div>
+			<div className="app">
 				<Header />
-				<Route exact path="/" component={AppContainer} />
-				<Route path="/artists" component={AppContainer} />
-				<Route path="/distribute" component={AppContainer} />
-				<Route path="/create" component={AppContainer} />
-				<Route path="/lyrics" component={AppContainer} />
+				<Route path="/" component={AppContainer} />
+				<Route path="/artists" component={ArtistsContainer} />
+				<Route path="/distribute" component={DistributeContainer} />
+				<Route path="/create" component={CreatorContainer} />
+				<Route path="/lyrics" component={LyricsContainer} />
 				<Route path="/colorsheet" component={ColorSheetContainer} />
+				<Route exact path="/" component={HomeContainer} />
 			</div>
 		</Router>
 	</Provider>, document.getElementById('root'));

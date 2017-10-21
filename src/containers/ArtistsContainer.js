@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import App from '../components/App';
+import Artists from '../components/Artists';
 
 import {
-	parseArtists
+	updateCurrentBand
 } from '../reducers/app';
 
 const mapStateToProps = (state) => ({ app: state.app});
 
 const mapDispatchToProps = {
-	parseArtists
+	updateCurrentBand
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artists));

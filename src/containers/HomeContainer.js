@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import App from '../components/App';
+import Home from '../components/Home';
 
 import {
 	parseArtists
@@ -13,4 +13,4 @@ const mapDispatchToProps = {
 	parseArtists
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
