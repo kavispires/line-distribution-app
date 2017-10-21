@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import App from '../components/App';
+import ColorSheet from '../components/ColorSheet';
 
 import {
 
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(ColorSheet);

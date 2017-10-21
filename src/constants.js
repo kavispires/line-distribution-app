@@ -1,0 +1,1 @@
+export const COLORS_LIST = ['blood', 'redOrange', 'peach', 'brown', 'orange', 'dirt', 'lightBrown', 'sand', 'gold', 'tan', 'yellow', 'olive', 'pee', 'yellowGreen', 'green', 'darkGreen', 'forest', 'lime', 'teal', 'cyan', 'turquoise', 'navy', 'blue', 'purple', 'violet', 'rose', 'plum', 'pink', 'redViolet', 'hotPink', 'wine', 'salmon', 'red', 'lightGrey', 'grey', 'darkGrey'];
