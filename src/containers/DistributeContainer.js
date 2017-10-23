@@ -6,12 +6,14 @@ import Distribute from '../components/Distribute';
 import {
 	boxMouseDown,
 	boxMouseUp,
+	handleDecrease,
 	setDurations,
 	setPercentages,
+	handleFinish,
+	handleKeydown,
+	handleKeyup,
 	handleReset,
-	handleUndo,
-	handleDecrease,
-	handleFinish
+	handleUndo
 } from '../reducers/distribute';
 
 const mapStateToProps = (state) => ({ app: state.app, distribute: state.distribute });
@@ -19,12 +21,14 @@ const mapStateToProps = (state) => ({ app: state.app, distribute: state.distribu
 const mapDispatchToProps = {
 	boxMouseDown,
 	boxMouseUp,
+	handleDecrease,
 	setDurations,
 	setPercentages,
+	handleFinish,
+	handleKeydown,
+	handleKeyup,
 	handleReset,
-	handleUndo,
-	handleDecrease,
-	handleFinish
+	handleUndo
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Distribute));

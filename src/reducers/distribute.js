@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { KEYS } from '../constants';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -9,6 +9,7 @@ const SET_PERCENTAGES = 'SET_PERCENTAGES';
 const SET_RELATIVE_PERCENTAGES = 'SET_RELATIVE_PERCENTAGES';
 const SET_QUEUE = 'SET_QUEUE';
 const SET_TOTAL = 'SET_TOTAL';
+const SET_WHO = 'SET_WHO';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -19,7 +20,7 @@ export const setPercentages = payload => dispatch => dispatch({ type: SET_PERCEN
 export const setRelativePercentages = payload => dispatch => dispatch({ type: SET_RELATIVE_PERCENTAGES, payload });
 export const setQueue = payload => dispatch => dispatch({ type: SET_QUEUE, payload });
 export const setTotal = payload => dispatch => dispatch({ type: SET_TOTAL, payload });
-
+export const setWho = payload => dispatch => dispatch({ type: SET_WHO, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -30,7 +31,8 @@ const initialState = {
   percentages: [],
   relativePercentages: [],
   queue: {},
-  total: 0
+  total: 0,
+  who: []
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -67,6 +69,10 @@ export default function reducer(prevState = initialState, action) {
       newState.total = action.payload;
       break;
 
+    case SET_WHO:
+      newState.who = action.payload;
+      break;
+
     default:
       return prevState;
 
@@ -84,6 +90,10 @@ export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getStat
     const queue = Object.assign({},  getState().distribute.queue);
     queue[id] = timestamp;
     dispatch(setQueue(queue));
+    // Add to who
+    const who = [...getState().distribute.who];
+    who.unshift(getState().app.currentBand.members[id]);
+    dispatch(setWho(who));
   }
 };
 
@@ -115,6 +125,10 @@ export const dequeueCapture  = (id, timestamp = Date.now()) => (dispatch, getSta
       return Math.round((val * 100) / total);
     });
     dispatch(setPercentages(percentages));
+    // Add to who
+    const who = [...getState().distribute.who];
+    who.splice(getState().app.currentBand.members[id], 1);
+    dispatch(setWho(who));
   }
 };
 
@@ -154,4 +168,18 @@ export const handleDecrease = () => (dispatch, getState) => {
 
 export const handleFinish = () => (dispatch, getState) => {
   console.log('Finish');
+};
+
+export const handleKeydown = (e) => (dispatch, getState) => {
+  if (KEYS[e.keyCode] !== undefined) {
+    const key = KEYS[e.keyCode];
+    dispatch(enqueueCapture(key.id));
+  }
+};
+
+export const handleKeyup = (e) => (dispatch, getState) => {
+  if (KEYS[e.keyCode] !== undefined) {
+    const key = KEYS[e.keyCode];
+    dispatch(dequeueCapture(key.id));
+  }
 };
