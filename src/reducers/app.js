@@ -19,7 +19,13 @@ export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURREN
 const initialState = {
   artists: {},
   artistList: [],
-  currentBand: ''
+  currentBand: {
+    bandName: 'Test Band',
+    colors: ['orange', 'purple', 'red', 'green', 'pink', 'sand', 'forest', 'blood', 'grey', 'teal', 'redViolet', 'cyan', 'turquoise', 'lime', 'navy', 'brown', 'hotPink', 'violet', 'darkGreen', 'darkGrey', 'redOrange', 'pee', 'olive', 'plum', 'yellow'],
+    genre: 'Test Genre',
+    id: 1000,
+    members: ['orange', 'purple', 'red', 'green', 'pink', 'sand', 'forest', 'blood', 'grey', 'teal', 'redViolet', 'cyan', 'turquoise', 'lime', 'navy', 'brown', 'hotPink', 'violet', 'darkGreen', 'darkGrey', 'redOrange', 'pee', 'olive', 'plum', 'yellow'],
+  }
 };
 
 export default function reducer(prevState = initialState, action) {

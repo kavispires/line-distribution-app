@@ -5,7 +5,7 @@ const Artists = (props) => {
 	const artistList = props.app.artistList;
 
   return (
-    <div className="container">
+    <section className="container">
       <h1>Artists</h1>
       <table className="table">
       	<thead>
@@ -29,7 +29,7 @@ const Artists = (props) => {
 			  }
 				 </tbody>
       </table>
-    </div>
+    </section>
     );
 };
 
