@@ -145,7 +145,12 @@ body {
   height: 100vh; }
 
 .container {
-  padding: 10px 30px; }
+  padding: 10px 30px;
+  overflow: scroll; }
+
+.container-fixed {
+  flex: 1 1 auto;
+  overflow: hidden; }
 
 .ld-header {
   background-color: #000;

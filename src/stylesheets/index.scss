@@ -24,11 +24,12 @@ body {
 
 .container {
 	padding: 10px 30px;
+	overflow: scroll;
 }
 
 .container-fixed {
-	// flex: 1 1 auto;
-	// overflow: hidden;
+	flex: 1 1 auto;
+	overflow: hidden;
 }
 
 .ld-header {
