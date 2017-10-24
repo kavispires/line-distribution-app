@@ -770,3 +770,19 @@ body {
 .log {
   margin-top: 5px;
   font-size: 80%; }
+
+.results {
+  padding: 0; }
+
+.results-bar {
+  display: block;
+  border: 1px outset;
+  margin-bottom: 5px; }
+
+.results-bar-text {
+  display: block;
+  width: 100%; }
+
+.results-bar-color {
+  display: block;
+  height: 5px; }

@@ -28,7 +28,7 @@ class Distribute extends Component {
 		let whoSentence = "...";
 		// Define who sentence
 		if (who.length === 1) {
-			whoSentence = `${who[0]} is sining.`;
+			whoSentence = `${who[0]} is singing.`;
 		} else if (who.length > 1) {
 			whoSentence = `${who.join(', ')} are singing.`;
 		}
@@ -41,7 +41,7 @@ class Distribute extends Component {
 	      	<li><button className="btn" onClick={this.props.handleReset}>Reset</button></li>
 	      	<li><button className="btn" onClick={this.props.handleUndo}>Undo</button></li>
 	      	<li><button className={`btn ${decreaseClass}`} onClick={this.props.handleDecrease}>Decrease</button></li>
-	      	<li><button className="btn" onClick={this.props.handleFinish}>Finish</button></li>
+	      	<li><button className="btn" onClick={() => this.props.history.push('/results')}>Finish</button></li>
 	      </ul>
 	      <h3 className="current-singer">{ whoSentence }</h3>
 	      <div className="progress-bar">

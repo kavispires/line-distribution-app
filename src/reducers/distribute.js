@@ -6,7 +6,6 @@ const SET_DECREASE = 'SET_DECREASE';
 const SET_DURATIONS = 'SET_DURATIONS';
 const SET_HISTORY = 'SET_HISTORY';
 const SET_PERCENTAGES = 'SET_PERCENTAGES';
-const SET_RELATIVE_PERCENTAGES = 'SET_RELATIVE_PERCENTAGES';
 const SET_QUEUE = 'SET_QUEUE';
 const SET_TOTAL = 'SET_TOTAL';
 const SET_WHO = 'SET_WHO';
@@ -17,7 +16,6 @@ export const setDecrease = payload => dispatch => dispatch({ type: SET_DECREASE,
 export const setDurations = payload => dispatch => dispatch({ type: SET_DURATIONS, payload });
 export const setHistory = payload => dispatch => dispatch({ type: SET_HISTORY, payload });
 export const setPercentages = payload => dispatch => dispatch({ type: SET_PERCENTAGES, payload });
-export const setRelativePercentages = payload => dispatch => dispatch({ type: SET_RELATIVE_PERCENTAGES, payload });
 export const setQueue = payload => dispatch => dispatch({ type: SET_QUEUE, payload });
 export const setTotal = payload => dispatch => dispatch({ type: SET_TOTAL, payload });
 export const setWho = payload => dispatch => dispatch({ type: SET_WHO, payload });
@@ -29,7 +27,6 @@ const initialState = {
   durations: [],
   history: [],
   percentages: [],
-  relativePercentages: [],
   queue: {},
   total: 0,
   who: []
@@ -59,10 +56,6 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_PERCENTAGES:
       newState.percentages = action.payload;
-      break;
-
-    case SET_RELATIVE_PERCENTAGES:
-      newState.relativePercentages = action.payload;
       break;
 
     case SET_TOTAL:
@@ -173,6 +166,7 @@ export const handleFinish = () => (dispatch, getState) => {
 export const handleKeydown = (e) => (dispatch, getState) => {
   if (KEYS[e.keyCode] !== undefined) {
     const key = KEYS[e.keyCode];
+    console.log(key);
     dispatch(enqueueCapture(key.id));
   }
 };

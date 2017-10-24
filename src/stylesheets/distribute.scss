@@ -48,9 +48,9 @@
 }
 
 .bar {
-		width: 0px;
-		height: 20px;
-	}
+	width: 0px;
+	height: 20px;
+}
 
 @for $i from 0 through 100 {
   .bar-width-#{$i} { 
