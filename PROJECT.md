@@ -13,6 +13,7 @@
 
 ## RESULTS
 - Basic Results Ranking: DONE
+- Swtich Button (Percentual vs Time)
 - Pie Chart Option
 - Save (localStorage and clipboard) Functionality
 
