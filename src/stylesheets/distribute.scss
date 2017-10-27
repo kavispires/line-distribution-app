@@ -6,32 +6,11 @@
   padding: $unit;
   list-style: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 
   li {
-  	// width: 20%;
   	flex: 1 1 0;
-  	// outline: 1px solid green;
   	padding: 0 $unit;
-  }
-
-  .btn {
-  	width: 100%;
-  	padding: $unit;
-  	font-size: 1.1em;
-    background: white;
-    border: 1px outset;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover {
-    	background: $lightGrey;
-    }
-  }
-
-  .btn-decrease {
-  	border: 1px outset #FF1D25;
-  	background-color: #FF6E73;
   }
 }
 
@@ -48,9 +27,9 @@
 }
 
 .bar {
-		width: 0px;
-		height: 20px;
-	}
+	width: 0px;
+	height: 20px;
+}
 
 @for $i from 0 through 100 {
   .bar-width-#{$i} { 
@@ -79,6 +58,15 @@
 		text-align: center;
 	}
 
+  .key {
+    display: inline-block;
+    width: auto;
+    padding: $unit 8px;
+    border: 1px outset white;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+
 	.member-name {
 		margin: $unit 0;
 	}
@@ -102,6 +90,36 @@
 
 .log {
 	@extend .controls;
-	margin-top: $unit;
+	justify-content: start;
+  margin-top: $unit;
 	font-size: 80%;
+  flex-wrap: wrap;
+}
+
+.log-item {
+  padding: $unit;
+  border-radius: $unit;
+  margin: $unit $unit;
+  cursor: pointer;
+  border: 1px solid white;
+  min-width: 1px;
+  transition: min-width 1s ease;
+
+  .details {
+    margin-left: $unit;
+    display: none;
+    min-width: 1px;
+    transition: min-width 1s ease;
+  }
+
+  &:hover {
+    background: white !important;
+    border: 1px solid $black;
+    min-width: auto;
+
+    .details {
+      display: inline-block;
+      min-width: auto;
+    }
+  }
 }

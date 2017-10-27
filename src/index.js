@@ -14,6 +14,7 @@ import CreatorContainer from './containers/CreatorContainer';
 import DistributeContainer from './containers/DistributeContainer';
 import HomeContainer from './containers/HomeContainer';
 import LyricsContainer from './containers/LyricsContainer';
+import ResultsContainer from './containers/ResultsContainer';
 
 import './stylesheets/index.css';
 
@@ -28,6 +29,7 @@ ReactDOM.render(
 				<Route path="/create" component={CreatorContainer} />
 				<Route path="/lyrics" component={LyricsContainer} />
 				<Route path="/colorsheet" component={ColorSheetContainer} />
+				<Route path="/results" component={ResultsContainer} />
 				<Route exact path="/" component={HomeContainer} />
 			</div>
 		</Router>

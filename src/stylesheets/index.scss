@@ -24,11 +24,12 @@ body {
 
 .container {
 	padding: 10px 30px;
+	overflow: auto;
 }
 
 .container-fixed {
-	// flex: 1 1 auto;
-	// overflow: hidden;
+	flex: 1 1 auto;
+	overflow: hidden;
 }
 
 .ld-header {
@@ -76,8 +77,20 @@ body {
   padding: $unit 0;
 }
 
+// BUTTONS
+@import './buttons.scss';
+
+// SWITCH
+@import './switch.scss';
+
 // TABLES
 @import './tables.scss';
 
 // DISTRIBUTE
 @import './distribute.scss';
+
+// RESULTS
+@import './results.scss';
+
+// CREATOR
+@import './creator.scss';

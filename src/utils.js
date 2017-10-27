@@ -13,4 +13,22 @@ export const boxSizeClass = (num) => {
 	}
 
 	return className;
-}
+};
+
+export const getClosestIndex = (collection, target, key) => {
+	let closestIndex = 0;
+	let smallesDiff = 100;
+
+	collection.forEach((el, i) => {
+		if (key !== undefined) {
+			el = el[key];
+		}
+		const diff = Math.abs(target - el);
+		if (diff < smallesDiff) {
+			smallesDiff = diff;
+			closestIndex = i;
+		}
+	});
+
+	return closestIndex;
+};
