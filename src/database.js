@@ -294,7 +294,7 @@ const USER_ARTISTS = {
         "name": "Squirrel Zone Group",
         "genre": "Pop",
         "members": "Zachary, Robbie, Leo, 3J, Bobak, Nicky, Sypher, Bryan, JQ, Nathan",
-        "colors": "blue, navy, teal, orange,red, pink, wine, violet, yellow, green"
+        "colors": "blue, navy, teal, orange, red, pink, wine, violet, yellow, green"
     },
     "1007": {
         "id": 1007,
