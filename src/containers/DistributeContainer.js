@@ -6,8 +6,10 @@ import Distribute from '../components/Distribute';
 import {
 	boxMouseDown,
 	boxMouseUp,
+	calculateDuration,
 	handleDecrease,
 	setDurations,
+	setHistory,
 	setPercentages,
 	handleFinish,
 	handleKeydown,
@@ -21,8 +23,10 @@ const mapStateToProps = (state) => ({ app: state.app, distribute: state.distribu
 const mapDispatchToProps = {
 	boxMouseDown,
 	boxMouseUp,
+	calculateDuration,
 	handleDecrease,
 	setDurations,
+	setHistory,
 	setPercentages,
 	handleFinish,
 	handleKeydown,

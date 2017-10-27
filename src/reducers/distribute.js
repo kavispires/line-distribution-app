@@ -77,6 +77,54 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
+export const updateHistory = (entry, add = 'true', index) => (dispatch, getState) => {
+  let history = [...getState().distribute.history];
+  if (add) {
+    history.unshift(entry);
+    dispatch(setHistory(history));
+  } else {
+    history = history.filter((el, i) => i !== index);
+    dispatch(setHistory(history));
+  }
+};
+
+export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), dehistory = false, index = null) => (dispatch, getState) => {
+  // Calculate and set
+  const decrease = getState().distribute.decrease;
+  const duration = timestamp - startTimestamp;
+  const durations = [...getState().distribute.durations];
+  // Add or decrease
+  if (decrease) {
+    durations[id] -= duration;
+    if (durations[id] < 0) durations[id] = 0;
+    dispatch(setDecrease(false));
+  } else {
+    durations[id] += duration;
+  }
+
+  dispatch(setDurations(durations));
+  // Calculate percentage
+  const total = durations.reduce((a, b) => a + b);
+  const percentages = durations.map(val => {
+    return Math.round((val * 100) / total);
+  });
+  dispatch(setPercentages(percentages));
+  // Add to who
+  const who = [...getState().distribute.who];
+  who.splice(getState().app.currentBand.members[id], 1);
+  dispatch(setWho(who));
+  // Add to history
+  const entry = {
+    memberId: id,
+    duration
+  };
+  if (!dehistory) {
+    dispatch(updateHistory(entry, true));
+  } else {
+    dispatch(updateHistory(entry, false, index));
+  }
+}
+
 export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getState) => {
   // Only if queue does NOT contains id
   if (getState().distribute.queue[id] === undefined) {
@@ -98,30 +146,8 @@ export const dequeueCapture  = (id, timestamp = Date.now()) => (dispatch, getSta
     const startTimestamp = queue[id];
     delete queue[id];
     dispatch(setQueue(queue));
-    // Calculate and set
-    const decrease  = getState().distribute.decrease;
-    const duration = timestamp - startTimestamp;
-    const durations = [...getState().distribute.durations];
-    // Add or decrease
-    if (decrease) {
-      durations[id] -= duration;
-      if (durations[id] < 0) durations[id] = 0;
-      dispatch(setDecrease(false));
-    } else {
-      durations[id] += duration;
-    }
-
-    dispatch(setDurations(durations));
-    // Calculate percentage
-    const total = durations.reduce((a, b) => a + b);
-    const percentages = durations.map(val => {
-      return Math.round((val * 100) / total);
-    });
-    dispatch(setPercentages(percentages));
-    // Add to who
-    const who = [...getState().distribute.who];
-    who.splice(getState().app.currentBand.members[id], 1);
-    dispatch(setWho(who));
+    // Calculate time
+    dispatch(calculateDuration(id, startTimestamp, timestamp));
   }
 };
 
@@ -164,7 +190,7 @@ export const handleFinish = () => (dispatch, getState) => {
 };
 
 export const handleKeydown = (e) => (dispatch, getState) => {
-  if (KEYS[e.keyCode] !== undefined) {
+  if (KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < getState().app.currentBand.members.length) {
     const key = KEYS[e.keyCode];
     console.log(key);
     dispatch(enqueueCapture(key.id));

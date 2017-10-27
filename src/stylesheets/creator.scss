@@ -1,0 +1,21 @@
+.creator-form {
+
+	fieldset {
+		border: 1px solid $black;
+	}
+
+	label,
+	input,
+	select {
+		display: block;
+	}
+
+	input {
+		min-width: 30%;
+		margin-bottom: $unit;
+	}
+
+	label .hint {
+		font-size: 70%;
+	}
+}

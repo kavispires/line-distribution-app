@@ -1,0 +1,34 @@
+.btn {
+	width: auto;
+	padding: $unit;
+	font-size: 1.1em;
+  background: white;
+  border: 1px outset;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+  	background: $lightGrey;
+  }
+}
+
+.btn-decrease {
+	border: 1px outset #FF1D25;
+	background-color: #FF6E73;
+}
+
+.btn-100 {
+  width: 100%;
+}
+
+.btn-50 {
+  width: 50%;
+}
+
+.btn-25 {
+  width: 25%;
+}
+
+.btn-20 {
+  width: 20%;
+}

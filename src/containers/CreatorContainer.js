@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Creator from '../components/Creator';
 
-const mapStateToProps = (state) => ({ app: state.app});
+const mapStateToProps = (state) => ({ app: state.app, creator: state.creator });
 
 const mapDispatchToProps = {
 

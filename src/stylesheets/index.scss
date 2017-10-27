@@ -24,7 +24,7 @@ body {
 
 .container {
 	padding: 10px 30px;
-	overflow: scroll;
+	overflow: auto;
 }
 
 .container-fixed {
@@ -77,6 +77,12 @@ body {
   padding: $unit 0;
 }
 
+// BUTTONS
+@import './buttons.scss';
+
+// SWITCH
+@import './switch.scss';
+
 // TABLES
 @import './tables.scss';
 
@@ -85,3 +91,6 @@ body {
 
 // RESULTS
 @import './results.scss';
+
+// CREATOR
+@import './creator.scss';
