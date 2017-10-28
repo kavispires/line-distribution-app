@@ -103,7 +103,22 @@ export const parseArtists = () => (dispatch, getState) => {
 export const updateCurrentBand = (e) => (dispatch, getState) => {
   const bandId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
   const currentBand = getState().app.artists[bandId];
+  dispatch(setCurrentBand({}));
   dispatch(setCurrentBand(currentBand));
-  console.log(getState())
+};
 
+export const filter = (e) => (dispatch, getState) => {
+  const value = e.target.value.toLowerCase();
+  // Find band names with value and push id to artistList
+  const artists = getState().app.artists;
+  const filteredArtists = [];
+  for (let key in artists) {
+    if (artists.hasOwnProperty(key)) {
+      if (artists[key].name.toLowerCase().includes(value) || (artists[key].otherNames && artists[key].otherNames.toLowerCase().includes(value))) {
+        filteredArtists.push(artists[key].id);
+      }
+    }
+  }
+  console.log(e.target.value);
+  dispatch(setArtistsList(filteredArtists));
 };

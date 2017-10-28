@@ -25,6 +25,7 @@ body {
 .container {
 	padding: 10px 30px;
 	overflow: auto;
+	flex: 1 1 auto;
 }
 
 .container-fixed {
@@ -38,6 +39,7 @@ body {
   align-items: center;
   position: sticky;
   top: 0;
+  min-height: 40px;
 }
 
 .ld-logo {
@@ -75,6 +77,13 @@ body {
   font-size: 12px;
   border-bottom: 1px solid #ccc;
   padding: $unit 0;
+}
+
+.search-bar {
+	min-width: 30%;
+  border: 1px solid grey;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 // BUTTONS

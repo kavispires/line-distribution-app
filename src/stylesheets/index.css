@@ -146,7 +146,8 @@ body {
 
 .container {
   padding: 10px 30px;
-  overflow: auto; }
+  overflow: auto;
+  flex: 1 1 auto; }
 
 .container-fixed {
   flex: 1 1 auto;
@@ -157,7 +158,8 @@ body {
   display: flex;
   align-items: center;
   position: sticky;
-  top: 0; }
+  top: 0;
+  min-height: 40px; }
 
 .ld-logo {
   max-height: 45px;
@@ -184,6 +186,12 @@ body {
   font-size: 12px;
   border-bottom: 1px solid #ccc;
   padding: 5px 0; }
+
+.search-bar {
+  min-width: 30%;
+  border: 1px solid grey;
+  padding: 5px;
+  margin-bottom: 10px; }
 
 .btn {
   width: auto;
@@ -259,6 +267,7 @@ input:checked + .slider:before {
   margin-left: 5px; }
 
 .table {
+  width: 100%;
   border-collapse: collapse; }
   .table thead {
     text-align: left; }
