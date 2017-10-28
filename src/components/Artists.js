@@ -7,6 +7,7 @@ const Artists = (props) => {
   return (
     <section className="container">
       <h1>Artists</h1>
+      <input className="search-bar" type="text" placeholder="Filter..." onChange={props.filter} />
       <table className="table">
       	<thead>
 				  <tr>
@@ -18,6 +19,7 @@ const Artists = (props) => {
 				 </thead>
 				 <tbody onClick={(e) => props.updateCurrentBand(e)}>
 			  {
+			  	artistList.length > 0 ?
 			  	artistList.map(index => (
 			  		<tr key={index}>
 				    	<td>{artist[index].bandName}</td>
@@ -26,6 +28,8 @@ const Artists = (props) => {
 				    	<td>{artist[index].members.join(', ')}</td>
 				  	</tr>
 			  	))
+			  	:
+			  	<tr><td>No artists available within your search</td></tr>
 			  }
 				 </tbody>
       </table>
