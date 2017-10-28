@@ -6,12 +6,14 @@ import { ARTISTS } from '../constants';
 
 const SET_ARTISTS = 'SET_ARTISTS';
 const SET_ARTISTS_LIST = 'SET_ARTISTS_LIST';
+const SET_ARTISTS_LIST_BACKUP = 'SET_ARTISTS_LIST_BACKUP';
 const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
 
 /* --------------   ACTION CREATORS   -------------- */
 
 export const setArtists = payload => dispatch => dispatch({ type: SET_ARTISTS, payload });
 export const setArtistsList = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST, payload });
+export const setArtistsListBackUp = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST_BACKUP, payload });
 export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURRENT_BAND, payload });
 
 /* -----------------   REDUCERS   ------------------ */
@@ -19,6 +21,7 @@ export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURREN
 const initialState = {
   artists: {},
   artistList: [],
+  artistListBackUp: [],
   currentBand: {
     bandName: 'Test Band',
     colors: ['orange', 'purple', 'red', 'green', 'pink', 'sand', 'forest', 'blood', 'grey', 'teal', 'redViolet', 'cyan', 'turquoise', 'lime', 'navy', 'brown', 'hotPink', 'violet', 'darkGreen', 'darkGrey', 'redOrange', 'pee', 'olive', 'plum', 'yellow'],
@@ -40,6 +43,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_ARTISTS_LIST:
       newState.artistList = action.payload;
+      break;
+
+    case SET_ARTISTS_LIST_BACKUP:
+      newState.artistListBackUp = action.payload;
       break;
 
     case SET_CURRENT_BAND:
@@ -98,6 +105,7 @@ export const parseArtists = () => (dispatch, getState) => {
   // Order by Band Name
   const orderedArtists = _.sortBy(newArtists, ['bandName']).map(band => band.id);
   dispatch(setArtistsList(orderedArtists));
+  dispatch(setArtistsListBackUp(orderedArtists));
 };
 
 export const updateCurrentBand = (e) => (dispatch, getState) => {
@@ -109,16 +117,23 @@ export const updateCurrentBand = (e) => (dispatch, getState) => {
 
 export const filter = (e) => (dispatch, getState) => {
   const value = e.target.value.toLowerCase();
-  // Find band names with value and push id to artistList
+  if (value.length > 0 && value.length < 3) return;
   const artists = getState().app.artists;
-  const filteredArtists = [];
-  for (let key in artists) {
-    if (artists.hasOwnProperty(key)) {
-      if (artists[key].name.toLowerCase().includes(value) || (artists[key].otherNames && artists[key].otherNames.toLowerCase().includes(value))) {
-        filteredArtists.push(artists[key].id);
+  if (value.length === 0) {
+    dispatch(setArtistsList([...getState().app.artistListBackUp]));
+  } else {
+    // Find band names with value and push id to artistList
+    const filteredArtists = [];
+    for (let key in artists) {
+      if (artists.hasOwnProperty(key)) {
+        const artist = artists[key];
+        if (artist.name.toLowerCase().includes(value)
+          || (artist.otherNames && artist.otherNames.toLowerCase().includes(value))
+          ) {
+          filteredArtists.push(artist.id);
+        }
       }
     }
+    dispatch(setArtistsList(filteredArtists));
   }
-  console.log(e.target.value);
-  dispatch(setArtistsList(filteredArtists));
 };

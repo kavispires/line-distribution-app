@@ -177,7 +177,9 @@ export const handleReset = () => (dispatch, getState) => {
 };
 
 export const handleUndo = () => (dispatch, getState) => {
-  console.log('Undo');
+  const history = getState().distribute.history;
+  const removedNode = Object.assign({}, history[0]);
+  dispatch(calculateDuration(removedNode.memberId, 0, -removedNode.duration, true, 0));
 };
 
 export const handleDecrease = () => (dispatch, getState) => {
@@ -185,14 +187,9 @@ export const handleDecrease = () => (dispatch, getState) => {
   dispatch(setDecrease(!decrease));
 };
 
-export const handleFinish = () => (dispatch, getState) => {
-  console.log('Finish');
-};
-
 export const handleKeydown = (e) => (dispatch, getState) => {
   if (KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < getState().app.currentBand.members.length) {
     const key = KEYS[e.keyCode];
-    console.log(key);
     dispatch(enqueueCapture(key.id));
   }
 };
