@@ -128,7 +128,7 @@ export const filter = (e) => (dispatch, getState) => {
       if (artists.hasOwnProperty(key)) {
         const artist = artists[key];
         if (artist.name.toLowerCase().includes(value)
-          || (artist.otherNames && artist.otherNames.toLowerCase().includes(value))
+          || (artist.othernames && artist.othernames.toLowerCase().includes(value))
           ) {
           filteredArtists.push(artist.id);
         }
