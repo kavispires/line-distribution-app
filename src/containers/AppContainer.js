@@ -7,10 +7,15 @@ import {
 	parseArtists
 } from '../reducers/app';
 
+import {
+	handleParser
+} from '../reducers/lyrics';
+
 const mapStateToProps = (state) => ({ app: state.app});
 
 const mapDispatchToProps = {
-	parseArtists
+	parseArtists,
+	handleParser
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

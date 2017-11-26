@@ -7,6 +7,15 @@ $colorCodes: #E72408, #FF6347, #FFA07A, #8B4513, #FF8E2A, #948271, #B87634, #D2B
   }
 }
 
+@for $i from 1 through length($colorNames) {
+	@for $j from 1 through length($colorNames) {
+	  .color-#{nth($colorNames, $i)}-#{nth($colorNames, $j)} {
+	    background-color: #{nth($colorCodes, $i)};
+	  	background: linear-gradient(#{nth($colorCodes, $i)}, #{nth($colorCodes, $j)})
+	  }
+	}
+}
+
 .color-black, .color-darkGrey {
   color: #fff !important;
 }
