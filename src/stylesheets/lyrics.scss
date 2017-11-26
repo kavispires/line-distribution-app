@@ -1,0 +1,26 @@
+@import './variables.scss';
+
+.lyrics-container {
+	display: flex;
+}
+
+.lyrics-editor {
+	width: 100%;
+	padding: $unit;
+	min-height: 100px;
+}
+
+.lyrics-viewer {
+	@extend .lyrics-editor;
+	border: 1px solid #222;
+	min-height: 20px;
+	font-size: 11px;
+
+	p {
+		margin: 0;
+	}
+}
+
+.lyrics-blank-line {
+	margin-top: $unit;
+}
