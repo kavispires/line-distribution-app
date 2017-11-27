@@ -9,6 +9,8 @@ const SET_PERCENTAGES = 'SET_PERCENTAGES';
 const SET_QUEUE = 'SET_QUEUE';
 const SET_TOTAL = 'SET_TOTAL';
 const SET_WHO = 'SET_WHO';
+const EDIT_LYRICS = 'EDIT_LYRICS';
+const SHOW_LYRICS = 'SHOW_LYRICS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -19,15 +21,19 @@ export const setPercentages = payload => dispatch => dispatch({ type: SET_PERCEN
 export const setQueue = payload => dispatch => dispatch({ type: SET_QUEUE, payload });
 export const setTotal = payload => dispatch => dispatch({ type: SET_TOTAL, payload });
 export const setWho = payload => dispatch => dispatch({ type: SET_WHO, payload });
+export const setEditLyrics = payload => dispatch => dispatch({ type: EDIT_LYRICS, payload });
+export const showLyrics = payload => dispatch => dispatch({ type: SHOW_LYRICS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
   decrease: false,
   durations: [],
+  editLyrics: false,
   history: [],
   percentages: [],
   queue: {},
+  showLyrics: false,
   total: 0,
   who: []
 };
@@ -40,6 +46,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_QUEUE:
       newState.queue = action.payload;
+      break;
+
+    case EDIT_LYRICS:
+      newState.editLyrics = action.payload;
       break;
 
     case SET_DECREASE:
@@ -56,6 +66,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_PERCENTAGES:
       newState.percentages = action.payload;
+      break;
+
+    case SHOW_LYRICS:
+      newState.showLyrics = action.payload;
       break;
 
     case SET_TOTAL:
@@ -123,9 +137,10 @@ export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), de
   } else {
     dispatch(updateHistory(entry, false, index));
   }
-}
+};
 
 export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getState) => {
+  if (getState().distribute.editLyrics) return;
   // Only if queue does NOT contains id
   if (getState().distribute.queue[id] === undefined) {
     const queue = Object.assign({},  getState().distribute.queue);
@@ -139,6 +154,7 @@ export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getStat
 };
 
 export const dequeueCapture  = (id, timestamp = Date.now()) => (dispatch, getState) => {
+  if (getState().distribute.editLyrics) return;
   // If queue contains id, set end and delete it from queue
   if (getState().distribute.queue[id] !== undefined) {
     const queue = Object.assign({},  getState().distribute.queue);
@@ -154,13 +170,14 @@ export const dequeueCapture  = (id, timestamp = Date.now()) => (dispatch, getSta
 export const boxMouseDown = (e) => (dispatch, getState) => {
   const timestamp = Date.now();
   let id = e.currentTarget.id;
-
+  if (getState().distribute.editLyrics) return;
   dispatch(enqueueCapture(id, timestamp));
 };
 
 export const boxMouseUp = (e) => (dispatch, getState) => {
   const timestamp = Date.now();
   let id = e.currentTarget.id;
+  if (getState().distribute.editLyrics) return;
   dispatch(dequeueCapture(id, timestamp));
 };
 
@@ -199,4 +216,14 @@ export const handleKeyup = (e) => (dispatch, getState) => {
     const key = KEYS[e.keyCode];
     dispatch(dequeueCapture(key.id));
   }
+};
+
+export const toggleLyrics = () => (dispatch, getState) => {
+  const showLyricsState = getState().distribute.showLyrics;
+  dispatch(showLyrics(!showLyricsState));
+};
+
+export const toggleEditLyrics = () => (dispatch, getState) => {
+  const editLyricsState = getState().distribute.editLyrics;
+  dispatch(setEditLyrics(!editLyricsState));
 };
