@@ -1,5 +1,8 @@
 import React from 'react';
 
+import LyricsEditor from './LyricsEditor';
+import LyricsViewer from './LyricsViewer';
+
 const Lyrics = (props) => {
   const LYRICS = props.lyrics;
   const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
@@ -31,38 +34,8 @@ const Lyrics = (props) => {
         </ul>
       </section>
       <section className="lyrics-container">
-        <textarea className="lyrics-editor" placeholder={ placeholder } onChange={(e) => props.handleParser(e)} defaultValue={ LYRICS.lyrics }/>
-        <div className="lyrics-viewer">
-          {
-            LYRICS.formattedLyrics && LYRICS.formattedLyrics.map((lyric, lyricIndex) => {
-              const key = `${lyric}-${lyricIndex}`;
-              if (lyric.adlibs.length > 0) {
-                return (
-                  <p key={key}>
-                    {
-                      lyric.adlibs && lyric.adlibs.map((el, idx) => {
-                        const key2 = `${key}-el-${idx}`;
-                        const member = lyric.member[idx] ? `[${lyric.member[idx]}] ` : '';
-                        const line = lyric.content[idx] ? `${lyric.content[idx]} ` : '';
-                        const lineClass = `line color-${lyric.class[idx]}`;
-
-                        return (
-                          <span key={ key2 } className="line">
-                            <span className="who">{ member }</span>
-                            <span className={ lineClass }>{ line }</span>
-                          </span>
-                        );
-                      })
-                    }
-                  </p>
-                );
-              } else {
-                return (<p key={key} className="lyrics-blank-line">&nbsp;</p>);
-              }
-
-            })
-          }
-        </div>
+        <LyricsEditor placeholder={ placeholder } action={props.handleParser} defaultValue={ LYRICS.lyrics } />
+        <LyricsViewer formattedLyrics={ LYRICS.formattedLyrics } />
       </section>
     </div>
     );

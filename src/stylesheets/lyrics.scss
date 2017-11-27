@@ -2,25 +2,31 @@
 
 .lyrics-container {
 	display: flex;
-}
 
-.lyrics-editor {
-	width: 100%;
-	padding: $unit;
-	min-height: 100px;
-}
+	.editor {
+		width: 100%;
+		padding: $unit;
+		min-height: 100px;
+	}
 
-.lyrics-viewer {
-	@extend .lyrics-editor;
-	border: 1px solid #222;
-	min-height: 20px;
-	font-size: 11px;
+	.viewer {
+		@extend .editor;
+		border: 1px solid $black;
+		min-height: 20px;
+		font-size: 11px;
 
-	p {
-		margin: 0;
+		p {
+			margin: 0;
+		}
 	}
 }
 
 .lyrics-blank-line {
 	margin-top: $unit;
+}
+
+.line {
+	// color: white;
+	padding: 0 3px;
+	margin-right: 1px;
 }

@@ -14,10 +14,16 @@ import {
 	handleKeydown,
 	handleKeyup,
 	handleReset,
-	handleUndo
+	toggleLyrics,
+	handleUndo,
+	toggleEditLyrics
 } from '../reducers/distribute';
 
-const mapStateToProps = (state) => ({ app: state.app, distribute: state.distribute });
+import {
+	handleParser
+} from '../reducers/lyrics';
+
+const mapStateToProps = (state) => ({ app: state.app, distribute: state.distribute, lyrics: state.lyrics });
 
 const mapDispatchToProps = {
 	boxMouseDown,
@@ -30,7 +36,10 @@ const mapDispatchToProps = {
 	handleKeydown,
 	handleKeyup,
 	handleReset,
-	handleUndo
+	toggleLyrics,
+	handleUndo,
+	handleParser,
+	toggleEditLyrics
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Distribute));
