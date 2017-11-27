@@ -5465,6 +5465,41 @@ input:checked + .slider:before {
     background: #ccc;
     cursor: pointer; }
 
+.container-distribution {
+  display: flex; }
+
+.section-lyrics {
+  padding-left: 10px;
+  transition: width 1s;
+  display: flex;
+  flex-direction: column; }
+  .section-lyrics .editor, .section-lyrics .viewer {
+    display: block;
+    width: 100%;
+    min-height: 250px;
+    min-height: 100px;
+    margin-top: 10px;
+    padding: 5px; }
+  .section-lyrics .viewer {
+    border: 1px solid black;
+    min-height: 20px;
+    font-size: 11px;
+    overflow-y: auto; }
+    .section-lyrics .viewer p {
+      margin: 0; }
+  .section-lyrics .alert {
+    font-style: italic;
+    color: red;
+    font-size: 90%; }
+
+.section-lyrics-off {
+  width: 0px;
+  opacity: 0; }
+
+.section-lyrics-on {
+  width: 30%;
+  min-width: 30%; }
+
 .controls, .log {
   border: 1px solid #cccccc;
   margin: 0;
@@ -6053,18 +6088,24 @@ input:checked + .slider:before {
     transition: min-width 1s ease; }
   .log-item:hover {
     background: white !important;
-    border: 1px solid #222222;
+    border: 1px solid black;
     min-width: auto; }
     .log-item:hover .details {
       display: inline-block;
       min-width: auto; }
+
+.toggle-lyrics {
+  float: right;
+  margin: 5px; }
 
 .results {
   padding: 0; }
 
 .results-bar {
   display: block;
-  border: 1px outset;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom-right-radius: 5px;
   margin-bottom: 5px; }
 
 .results-bar-text {
@@ -6076,7 +6117,7 @@ input:checked + .slider:before {
   height: 5px; }
 
 .creator-form fieldset {
-  border: 1px solid #222222; }
+  border: 1px solid black; }
 
 .creator-form label,
 .creator-form input,
@@ -6092,18 +6133,20 @@ input:checked + .slider:before {
 
 .lyrics-container {
   display: flex; }
-
-.lyrics-editor, .lyrics-viewer {
-  width: 100%;
-  padding: 5px;
-  min-height: 100px; }
-
-.lyrics-viewer {
-  border: 1px solid #222;
-  min-height: 20px;
-  font-size: 11px; }
-  .lyrics-viewer p {
-    margin: 0; }
+  .lyrics-container .editor, .lyrics-container .viewer {
+    width: 100%;
+    padding: 5px;
+    min-height: 100px; }
+  .lyrics-container .viewer {
+    border: 1px solid black;
+    min-height: 20px;
+    font-size: 11px; }
+    .lyrics-container .viewer p {
+      margin: 0; }
 
 .lyrics-blank-line {
   margin-top: 5px; }
+
+.line {
+  padding: 0 3px;
+  margin-right: 1px; }

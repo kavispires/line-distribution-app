@@ -6,7 +6,10 @@
 
 .results-bar {
 	display: block;
-	border: 1px outset;
+	// border: 1px outset;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom-right-radius: $unit;
 	margin-bottom: $unit;
 }
 
