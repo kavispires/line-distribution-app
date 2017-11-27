@@ -5477,6 +5477,7 @@ input:checked + .slider:before {
     display: block;
     width: 100%;
     min-height: 250px;
+    min-height: 100px;
     margin-top: 10px;
     padding: 5px; }
   .section-lyrics .viewer {
