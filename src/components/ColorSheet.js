@@ -2,7 +2,7 @@ import React from 'react';
 
 import { COLORS_LIST } from '../constants';
 
-const ColorSheet = () => {
+const ColorSheet = (props) => {
   return (
     <div className="container">
     	<h1>Color Sheet</h1>
@@ -10,7 +10,8 @@ const ColorSheet = () => {
   		{
     		COLORS_LIST.map(color => (
     			<li key={`${color}`} className={`palette color-${color}`}>
-    				{color}
+    				{props.app.colorCount[color]}<br />
+            {color}
     			</li>
     		))
     	}
