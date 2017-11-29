@@ -5335,7 +5335,8 @@ body {
 
 .container-fixed {
   flex: 1 1 auto;
-  overflow: hidden; }
+  overflow: hidden;
+  width: 100%; }
 
 .ld-header {
   background-color: #000;
