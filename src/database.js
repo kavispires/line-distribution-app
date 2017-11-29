@@ -284,7 +284,7 @@ const USER_ARTISTS = {
         "id": 1002,
         "name": "Kavis",
         "genre": "Pop",
-        "members": "Kyle, Anthony, Vincent, Ira, Seth",
+        "members": "Kyle, Anthony, Viktor, Ira, Seth",
         "colors": "blue, blood, yellow, violet, green"
     },
     "1003": {
@@ -335,7 +335,14 @@ const USER_ARTISTS = {
         "genre": "Pop",
         "members": "Brittany, Diana, Ulla, Tracy, Olive",
         "colors": "redOrange, lime, hotPink, cyan, plum"
-    }
+    },
+    "1010": {
+        "id": 1010,
+        "name": "Kavis",
+        "genre": "Pop",
+        "members": "Kyle, Anthony, Viktor, Ira, Seth, Peet, Scott",
+        "colors": "blue, blood, yellow, violet, green, peach, lightGrey"
+    },
 };
 
 let ARTISTS;
