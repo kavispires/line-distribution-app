@@ -7,6 +7,7 @@ import { ARTISTS } from '../constants';
 const SET_ARTISTS = 'SET_ARTISTS';
 const SET_ARTISTS_LIST = 'SET_ARTISTS_LIST';
 const SET_ARTISTS_LIST_BACKUP = 'SET_ARTISTS_LIST_BACKUP';
+const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
 
 /* --------------   ACTION CREATORS   -------------- */
@@ -14,6 +15,7 @@ const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
 export const setArtists = payload => dispatch => dispatch({ type: SET_ARTISTS, payload });
 export const setArtistsList = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST, payload });
 export const setArtistsListBackUp = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST_BACKUP, payload });
+export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
 export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURRENT_BAND, payload });
 
 /* -----------------   REDUCERS   ------------------ */
@@ -22,13 +24,14 @@ const initialState = {
   artists: {},
   artistList: [],
   artistListBackUp: [],
+  colorCount: {},
   currentBand: {
     bandName: 'Test Band',
     colors: ['orange', 'purple', 'red', 'green', 'pink', 'sand', 'forest', 'blood', 'grey', 'teal', 'redViolet', 'cyan', 'turquoise', 'lime', 'navy', 'brown', 'hotPink', 'violet', 'darkGreen', 'darkGrey', 'redOrange', 'pee', 'olive', 'plum', 'yellow'],
     genre: 'Test Genre',
     id: 1000,
     members: ['orange', 'purple', 'red', 'green', 'pink', 'sand', 'forest', 'blood', 'grey', 'teal', 'redViolet', 'cyan', 'turquoise', 'lime', 'navy', 'brown', 'hotPink', 'violet', 'darkGreen', 'darkGrey', 'redOrange', 'pee', 'olive', 'plum', 'yellow'],
-  }
+  },
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -47,6 +50,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_ARTISTS_LIST_BACKUP:
       newState.artistListBackUp = action.payload;
+      break;
+
+    case SET_COLOR_COUNT:
+      newState.colorCount = action.payload;
       break;
 
     case SET_CURRENT_BAND:
@@ -74,6 +81,7 @@ export const parseArtists = () => (dispatch, getState) => {
    */
   const newArtists = {};
   const artistsCopy = Object.assign({}, ARTISTS);
+  const colorCount = {};
 
   for (let id in artistsCopy) {
     if (artistsCopy.hasOwnProperty(id)
@@ -97,10 +105,19 @@ export const parseArtists = () => (dispatch, getState) => {
       } else {
         console.log(`${band.bandName} was not added. (M: ${band.members.length} vs C: ${band.colors.length}`);
       }
+
+      band.colors.forEach(color => {
+        if (colorCount[color] === undefined) {
+          colorCount[color] = 1;
+        } else {
+          colorCount[color]++;
+        }
+      });
     }
   }
 
   dispatch(setArtists(newArtists));
+  dispatch(setColorCount(colorCount));
 
   // Order by Band Name
   const orderedArtists = _.sortBy(newArtists, ['bandName']).map(band => band.id);
