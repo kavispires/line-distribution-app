@@ -24,12 +24,19 @@ import { setCurrentBand } from '../../src/reducers/app';
 * Case 6: If assigned member is ALL, keep ALL
 * [ALL] I can sing
 * Case 7: Two singers and one part share the line and get double color
-* [BOB/CHARLIE] We love you
+* [BRAVO/CHARLIE] We love you
 * Case 8: Names in parenthesis add adlibs
-* [BOB (CHARLIE)] I love you (Me too)
+* [BRAVO (CHARLIE)] I love you (Me too)
 * Case 9: Double members plus adlibs
-* [BOB/APLHA (CHARLIE)] I love you (Me too)
+* [BRAVO/APLHA (CHARLIE)] I love you (Me too)
 * Case 10: Double members plust double adlibs
+* [BRAVO/ALPHA (CHARLIE/DELTA)] I love you (I like you)
+* Case 11: An unassigned line should keep the main member from the previous line, not the submember
+* [BRAVO (ALPHA)] I can sing (yeah) \n And you can sing
+* Case 12: An unassigned line should also keep the submember
+* [BRAVO (ALPHA)] I can sing (yeah) \n And you can sing (no)
+* Case 13: A line can start with parenthesis
+* [BRAVO (ALPHA)] (Oh no) I can't sing
 */
 
 const testBand = {
@@ -57,6 +64,18 @@ describe('Lyrics Parser', () => {
 
     it('Case 0: Blank line', () => {
       const evt = {target: { value: '' }};
+      testStore.dispatch(action.handleParser(evt));
+      const result = [{
+        class: [''],
+        content: ['&nbsp;'],
+        member: [],
+        adlibs: []
+      }];
+      expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
+    });
+
+    it('Case 0b: Line only has spaces', () => {
+      const evt = {target: { value: '   ' }};
       testStore.dispatch(action.handleParser(evt));
       const result = [{
         class: [''],
@@ -197,7 +216,7 @@ describe('Lyrics Parser', () => {
       expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
     });
 
-    it('Case 8b: Repeating ames in parenthesis add adlibs', () => {
+    it('Case 8b: Repeating names in parenthesis add adlibs', () => {
       const evt = {target: { value: '[BRAVO (CHARLIE)] We love you (Me too) Oh yeah (oh yeah)' }};
       testStore.dispatch(action.handleParser(evt));
       const result = [{
@@ -229,6 +248,52 @@ describe('Lyrics Parser', () => {
         content: ['We love you', '(Us too)'],
         member: ['BRAVO/ALPHA (CHARLIE/DELTA)'],
         adlibs: [false, true]
+      }];
+      expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
+    });
+
+    it('Case 11: An unassigned line should keep the main member from the previous line, not the submember', () => {
+      const evt = {target: { value: '[BRAVO (ALPHA)] I can sing (yeah)\nAnd you can sing' }};
+      testStore.dispatch(action.handleParser(evt));
+      const result = [{
+        class: ['blue', 'red'],
+        content: ['I can sing', '(yeah)'],
+        member: ['BRAVO (ALPHA)'],
+        adlibs: [false, true]
+      }, {
+        class: ['blue'],
+        content: ['And you can sing'],
+        member: [undefined],
+        adlibs: [false]
+      }];
+      expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
+    });
+
+    it('Case 12: An unassigned line should also keep the submember', () => {
+      const evt = {target: { value: '[BRAVO (ALPHA)] I can sing (yeah)\nAnd you can sing (no)' }};
+      testStore.dispatch(action.handleParser(evt));
+      const result = [{
+        class: ['blue', 'red'],
+        content: ['I can sing', '(yeah)'],
+        member: ['BRAVO (ALPHA)'],
+        adlibs: [false, true]
+      }, {
+        class: ['blue', 'red'],
+        content: ['And you can sing', '(no)'],
+        member: [undefined],
+        adlibs: [false, true]
+      }];
+      expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
+    });
+
+    it('Case 13: A line may start with parenthesis', () => {
+      const evt = {target: { value: '[BRAVO (ALPHA)] (Oh no) I can\'t sing' }};
+      testStore.dispatch(action.handleParser(evt));
+      const result = [{
+        class: ['blue', 'red'],
+        content: ['(Oh no)', 'I can\'t sing'],
+        member: ['BRAVO (ALPHA)'],
+        adlibs: [true, false]
       }];
       expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
     });
