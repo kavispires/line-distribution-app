@@ -12,7 +12,7 @@ export const setFormattedLyrics = payload => dispatch => dispatch({ type: SET_FO
 
 const initialState = {
   lyrics: '',
-  formattedLyrics: []
+  formattedLyrics: [],
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -65,7 +65,7 @@ const parseColors = (MEMBERS, COLORS, member, lastColor) => {
     if (member.includes('(')) {
       const members = member.split(' (');
       // Re-add '('
-      if (members.length > 1) members[1] = members[1].slice(0,-1);
+      if (members.length > 1) members[1] = members[1].slice(0, -1);
       // Run for every member
       members.forEach(mem => {
         colors.push(getColors(mem));
@@ -87,26 +87,34 @@ export const handleParser = (evt) => (dispatch, getState) => {
   const parsedLyrics = [];
 
   let lastColor = null;
+  let lastSubColor = null;
   let lastMember = null;
 
+  // Splits lyrics by line breaks to parse each line individually
   lyricsToParse = lyricsToParse.split('\n');
 
+  // Line constructor for each line
+  class Line {
+    constructor() {
+      this.class = [];
+      this.member = [];
+      this.content = [];
+      this.adlibs = [];
+    }
+  }
+
   lyricsToParse.forEach((str) => {
-    let line = {
-      class: [],
-      member: [],
-      content: [],
-      adlibs: []
-    };
-    // <p><span className=lyrics-who"">[Member]</span><span=className="lyrics-line color-blue">Test test test</span></p>
-    // Case 0: Blank line
-    if (str.length === 0) {
+    let line = new Line();
+
+    // Case 0: When the line is blank or just spaces, reset colors, members and push a space placeholder as the content
+    if (str.length === 0 || str.replace(/\s/g, '').length === 0) {
       lastColor = null;
+      lastSubColor = null;
       line.class.push('');
       line.content.push('&nbsp;');
       lastMember = null;
 
-    // All other cases
+    // All Other Cases: When the line has words
     } else {
 
       while (str.length > 0 || str !== '') {
@@ -125,10 +133,6 @@ export const handleParser = (evt) => (dispatch, getState) => {
           member = 'ALL';
         }
 
-        line.member.push(member);
-        line.class = line.class.concat(parseColors(MEMBERS, COLORS, member, lastColor));
-        line.adlibs.push(false);
-
         if (remainder.includes(' [')) {
           const nextBracket = remainder.indexOf('[');
           let temp1 = remainder.slice(0, nextBracket - 1);
@@ -138,6 +142,11 @@ export const handleParser = (evt) => (dispatch, getState) => {
         } else {
           str = '';
         }
+
+        line.member.push(member);
+        line.class = line.class.concat(parseColors(MEMBERS, COLORS, member, lastColor));
+        line.adlibs.push(false);
+        let hasParenthesis = false;
 
         // Check for adlibst on remainder
         if (remainder.includes('(')) {
@@ -163,6 +172,7 @@ export const handleParser = (evt) => (dispatch, getState) => {
               newRemainder.push('(' + elem + ')');
               if (newRemainder.length > 0) {
                 line.adlibs.push(true);
+                hasParenthesis = true;
               } else {
                 line.adlibs[0] = true;
               }
@@ -173,8 +183,12 @@ export const handleParser = (evt) => (dispatch, getState) => {
 
             // Add extra colors classes
             if (newRemainder.length > line.class.length) {
-              let x = count > 0 ? 1 : 2;
-              line.class.push(colorCopy[colorCopy.length - x]);
+              let idx = count > 0 ? 1 : 2;
+              line.class.push(colorCopy[colorCopy.length - idx]);
+            }
+            // If it's an adlib AND the line is unassigned, replace color with last subcolor
+            if (line.adlibs[line.adlibs.length - 1] === true && line.member[line.member.length - 1] === undefined) {
+              line.class[line.adlibs.length - 1] = lastSubColor;
             }
           });
 
@@ -184,11 +198,14 @@ export const handleParser = (evt) => (dispatch, getState) => {
           line.content.push(remainder);
         }
 
-        // Update last color
-        lastColor = line.class[line.class.length - 1];
+        // Update last color for Main Member
+        const lastMemberIndex = line.adlibs.lastIndexOf(false);
+        lastColor = lastMemberIndex >= 0 ? line.class[lastMemberIndex] : line.class[line.class.length - 1];
+        // Update last color for Sub Member
+        const lastSubMemberIndex = line.adlibs.lastIndexOf(true);
+        if (lastSubMemberIndex !== -1) lastSubColor = line.class[lastSubMemberIndex];
       }
     }
-    // console.log(line);
     parsedLyrics.push(line);
   });
   dispatch(setFormattedLyrics(parsedLyrics));
