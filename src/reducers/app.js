@@ -133,6 +133,9 @@ export const updateCurrentBand = (e) => (dispatch, getState) => {
 };
 
 export const filter = (e) => (dispatch, getState) => {
+  if (typeof e === 'string') {
+    return dispatch(setArtistsList([...getState().app.artistListBackUp]));
+  }
   const value = e.target.value.toLowerCase();
   if (value.length > 0 && value.length < 3) return;
   const artists = getState().app.artists;
