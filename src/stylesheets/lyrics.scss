@@ -29,3 +29,24 @@
 	padding: 0 3px;
 	margin-right: 1px;
 }
+
+.current-band {
+	border: 1px solid $black;
+	padding: 0 $doubleUnit;	
+}
+
+.current-band-members {
+	display: flex;
+
+	.members-list {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.member-list-item {
+		padding: $unit;
+		margin: 0 $unit $unit 0;
+		border-radius: $unit;
+	}
+}

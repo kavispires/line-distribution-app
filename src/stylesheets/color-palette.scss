@@ -1,5 +1,5 @@
-$colorNames: blood, redOrange, peach, brown, orange, dirt, lightBrown, sand, gold, tan, yellow, olive, pee, lightGrey, yellowGreen, green, darkGreen, forest, lime, teal, cyan, turquoise, navy, darkGrey, blue, purple, violet, rose, grey, plum, pink, redViolet, hotPink, wine, salmon, red;
-$colorCodes: #E72408, #FF6347, #FFA07A, #8B4513, #FF8E2A, #948271, #B87634, #D2B48C, #B8850B, #E2B631, #FFE400, #808000, #FFFF66, #A6A89D, #CCFF26, #7FB817, #355423, #008000, #59FF84, #15AA98, #83EEEA, #39BADD, #1F4C75, #414549, #406FFF, #7B68EE, #A177EF, #F7D0FF, #777278, #9E35AE, #FC6BE9, #9C1465, #E62E8A, #7F1F2F, #FFABB9, #D01F3C;
+$colorNames: blood, redOrange, peach, brown, orange, dirt, lightBrown, sand, gold, tan, yellow, olive, pee, lightGrey, yellowGreen, green, darkGreen, forest, lime, teal, cyan, turquoise, navy, darkGrey, blue, purple, violet, rose, grey, plum, pink, redViolet, hotPink, wine, salmon, red, undefined;
+$colorCodes: #E72408, #FF6347, #FFA07A, #8B4513, #FF8E2A, #948271, #B87634, #D2B48C, #B8850B, #E2B631, #FFE400, #808000, #FFFF66, #A6A89D, #CCFF26, #7FB817, #355423, #008000, #59FF84, #15AA98, #83EEEA, #39BADD, #1F4C75, #414549, #406FFF, #7B68EE, #A177EF, #F7D0FF, #777278, #9E35AE, #FC6BE9, #9C1465, #E62E8A, #7F1F2F, #FFABB9, #D01F3C, #FFFFFF;
 
 @for $i from 1 through length($colorNames) {
   .color-#{nth($colorNames, $i)} {
@@ -7,11 +7,14 @@ $colorCodes: #E72408, #FF6347, #FFA07A, #8B4513, #FF8E2A, #948271, #B87634, #D2B
   }
 }
 
+$bgpercentage1: 50%;
+$bgpercentage2: 60%;
+
 @for $i from 1 through length($colorNames) {
 	@for $j from 1 through length($colorNames) {
 	  .color-#{nth($colorNames, $i)}-#{nth($colorNames, $j)} {
 	    background-color: #{nth($colorCodes, $i)};
-	  	background: linear-gradient(#{nth($colorCodes, $i)}, #{nth($colorCodes, $j)})
+	  	background: linear-gradient(#{nth($colorCodes, $i)} $bgpercentage1, #{nth($colorCodes, $j)} $bgpercentage2);
 	  }
 	}
 }
