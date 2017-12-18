@@ -107,3 +107,7 @@ body {
 
 // LYRICS PARSER
 @import './lyrics.scss';
+
+.hidden {
+	display: none !important;
+}

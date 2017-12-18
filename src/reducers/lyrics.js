@@ -2,17 +2,20 @@
 
 const SET_LYRICS = 'SET_LYRICS';
 const SET_FORMATTED_LYRICS = 'SET_FORMATTED_LYRICS';
+const SET_SHOW_RULES = 'SET_SHOW_RULES';
 
 /* --------------   ACTION CREATORS   -------------- */
 
 export const setLyrics = payload => dispatch => dispatch({ type: SET_LYRICS, payload });
 export const setFormattedLyrics = payload => dispatch => dispatch({ type: SET_FORMATTED_LYRICS, payload });
+export const setShowRules = payload => dispatch => dispatch({ type: SET_SHOW_RULES, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
   lyrics: '',
   formattedLyrics: [],
+  showRules: false,
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -27,6 +30,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_FORMATTED_LYRICS:
       newState.formattedLyrics = action.payload;
+      break;
+
+    case SET_SHOW_RULES:
+      newState.showRules = action.payload;
       break;
 
     default:
@@ -146,7 +153,6 @@ export const handleParser = (evt) => (dispatch, getState) => {
         line.member.push(member);
         line.class = line.class.concat(parseColors(MEMBERS, COLORS, member, lastColor));
         line.adlibs.push(false);
-        let hasParenthesis = false;
 
         // Check for adlibst on remainder
         if (remainder.includes('(')) {
@@ -172,7 +178,6 @@ export const handleParser = (evt) => (dispatch, getState) => {
               newRemainder.push('(' + elem + ')');
               if (newRemainder.length > 0) {
                 line.adlibs.push(true);
-                hasParenthesis = true;
               } else {
                 line.adlibs[0] = true;
               }
@@ -209,4 +214,9 @@ export const handleParser = (evt) => (dispatch, getState) => {
     parsedLyrics.push(line);
   });
   dispatch(setFormattedLyrics(parsedLyrics));
+};
+
+export const toggleRules = () => (dispatch, getState) => {
+  const showRules = getState().lyrics.showRules;
+  dispatch(setShowRules(!showRules));
 };
