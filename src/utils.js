@@ -32,3 +32,13 @@ export const getClosestIndex = (collection, target, key) => {
 
 	return closestIndex;
 };
+
+export const saveLocalStorage = () => {
+	console.log('saveLocalStorage');
+};
+
+export const loadLocalStorage = () => {
+	console.log('loadLocalStorage');
+	const localStorage = window.localStorage;
+	console.log(localStorage);
+};

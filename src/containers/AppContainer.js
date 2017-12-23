@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import App from '../components/App';
 
+import { loadLocalStorage } from '../utils';
+
 import {
 	parseArtists,
 	filter
@@ -17,7 +19,8 @@ const mapStateToProps = (state) => ({ app: state.app});
 const mapDispatchToProps = {
 	parseArtists,
 	handleParser,
-	filter
+	filter,
+	loadLocalStorage
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
