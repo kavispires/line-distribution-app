@@ -6,6 +6,7 @@ import { getClosestIndex } from '../utils';
 class Results extends Component {
   componentDidMount () {
     this.props.calculateResults();
+    this.props.setResultType(false);
   }
 
   render () {
