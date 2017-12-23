@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class App extends Component {
   componentWillMount () {
     this.props.parseArtists();
