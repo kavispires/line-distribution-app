@@ -24,26 +24,29 @@ class Distribute extends Component {
   }
 
   render () {
+    const DISTRIBUTE = this.props.distribute;
+    const LYRICS = this.props.lyrics;
+
     const currentBand = this.props.app.currentBand;
     const boxSize = boxSizeClass(currentBand.members.length);
-    const durations = this.props.distribute.durations;
-    const percentages = this.props.distribute.percentages;
-    const decreaseClass = this.props.distribute.decrease ? 'btn-decrease' : null;
+    const durations = DISTRIBUTE.durations;
+    const percentages = DISTRIBUTE.percentages;
+    const decreaseClass = DISTRIBUTE.decrease ? 'btn-decrease' : null;
 
-    const who = this.props.distribute.who;
-    let whoSentence = '...';
     // Define who sentence
+    const who = DISTRIBUTE.who;
+    let whoSentence = '...';
     if (who.length === 1) {
       whoSentence = `${who[0]} is singing.`;
     } else if (who.length > 1) {
       whoSentence = `${who.join(', ')} are singing.`;
     }
 
+    // Define Switch Button labels
     const switchLabels = {left: '', right: ''};
 
-    const sectionLyricsClasses = this.props.distribute.showLyrics ? 'section-lyrics-on' : 'section-lyrics-off';
+    const sectionLyricsClasses = DISTRIBUTE.showLyrics ? 'section-lyrics-on' : 'section-lyrics-off';
 
-    const LYRICS = this.props.lyrics;
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
 
     return (
@@ -51,18 +54,23 @@ class Distribute extends Component {
         <section className="section-distribution container-fixed">
           <h1 className="tiny-h1">Distribute</h1>
           <div className="toggle-lyrics"> Lyrics <SwitchToggle action={this.props.toggleLyrics} labels={switchLabels} /></div>
-          <h2>{currentBand.bandName}</h2>
+          <h2>{ currentBand.bandName }</h2>
           <ul className="controls">
-            <li><button className="btn btn-100" onClick={this.props.handleReset}>Reset</button></li>
-            <li><button className="btn btn-100" onClick={this.props.handleUndo}>Undo</button></li>
-            <li><button className={`btn btn-100 ${decreaseClass}`} onClick={this.props.handleDecrease}>Decrease</button></li>
-            <li><button className="btn btn-100" onClick={() => this.props.history.push('/results')}>Finish</button></li>
+            <li>
+              <button className="btn btn-100" onClick={ this.props.handleReset }>Reset</button></li>
+            <li><button className="btn btn-100" onClick={ this.props.handleUndo }>Undo</button></li>
+            <li><button className={ `btn btn-100 ${decreaseClass}` } onClick={ this.props.handleDecrease }>Decrease</button></li>
+            <li><button className="btn btn-100" onClick={ () => this.props.history.push('/results') }>Finish</button></li>
           </ul>
           <h3 className="current-singer">{ whoSentence }</h3>
           <div className="progress-bar">
           {
             currentBand.colors.map((color, index) => (
-              <div key={color} id={`bar-${index}`} className={`bar color-${color} bar-width-${percentages[index]}`} />
+              <div
+                key={ color }
+                id={ `bar-${index}` }
+                className={ `bar color-${color} bar-width-${percentages[index]}` }
+              />
             ))
           }
           </div>
@@ -99,6 +107,7 @@ class Distribute extends Component {
             }
           </div>
         </section>
+
         <section className={`section-lyrics ${sectionLyricsClasses} container-fixed`}>
           <h1 className="tiny-h1">Lyrics</h1>
           <button className="btn btn-25" onClick={this.props.toggleEditLyrics}>{ this.props.distribute.editLyrics ? 'Close Editor' : 'Edit Lyrics'}</button>

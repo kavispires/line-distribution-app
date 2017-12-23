@@ -12,8 +12,6 @@ class Results extends Component {
   render () {
     const RESULTS = this.props.results;
 
-    console.log(RESULTS.results)
-
     /* Stats Calculations*/
     let fairDistribution = 0;
     let difference = 0;
@@ -28,6 +26,7 @@ class Results extends Component {
       closest = RESULTS.results[getClosestIndex(RESULTS.results, fairDistribution, 'percentage')].name;
     }
 
+    // Define switch buttons lables
     const switchLabels = {left: 'Time', right: 'Percentage'};
 
     return (
