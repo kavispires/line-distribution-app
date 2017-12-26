@@ -1,3 +1,5 @@
+import store from './store';
+
 // From number of members, determine the box-size class for boxes in distribution
 export const boxSizeClass = (num) => {
 	let className;
@@ -31,6 +33,13 @@ export const getClosestIndex = (collection, target, key) => {
 	});
 
 	return closestIndex;
+};
+
+export const getCurrentBand = (bandId, artists) => {
+  bandId = bandId || store.getState().app.currentBand;
+  artists = artists || store.getState().app.artists;
+  if (artists[bandId] === undefined) console.warn('Couldn\'t find seleced artist id');
+  return artists[bandId];
 };
 
 export const saveLocalStorage = () => {

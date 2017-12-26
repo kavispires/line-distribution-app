@@ -1,5 +1,7 @@
 import { KEYS } from '../constants';
 
+import { getCurrentBand } from '../utils';
+
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_DECREASE = 'SET_DECREASE';
@@ -107,6 +109,7 @@ export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), de
   const decrease = getState().distribute.decrease;
   const duration = timestamp - startTimestamp;
   const durations = [...getState().distribute.durations];
+  const CURRENT_BAND = getCurrentBand();
   // Add or decrease
   if (decrease) {
     durations[id] -= duration;
@@ -125,7 +128,7 @@ export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), de
   dispatch(setPercentages(percentages));
   // Add to who
   const who = [...getState().distribute.who];
-  who.splice(getState().app.currentBand.members[id], 1);
+  who.splice(CURRENT_BAND.members[id], 1);
   dispatch(setWho(who));
   // Add to history
   const entry = {
@@ -143,12 +146,13 @@ export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getStat
   if (getState().distribute.editLyrics) return;
   // Only if queue does NOT contains id
   if (getState().distribute.queue[id] === undefined) {
+    const CURRENT_BAND = getCurrentBand();
     const queue = Object.assign({},  getState().distribute.queue);
     queue[id] = timestamp;
     dispatch(setQueue(queue));
     // Add to who
     const who = [...getState().distribute.who];
-    who.unshift(getState().app.currentBand.members[id]);
+    who.unshift(CURRENT_BAND.members[id]);
     dispatch(setWho(who));
   }
 };
@@ -181,8 +185,9 @@ export const boxMouseUp = (e) => (dispatch, getState) => {
   dispatch(dequeueCapture(id, timestamp));
 };
 
-export const handleReset = () => (dispatch, getState) => {
-  const newArray = new Array(getState().app.currentBand.members.length).fill(0);
+export const handleReset = () => (dispatch) => {
+  const CURRENT_BAND = getCurrentBand();
+  const newArray = new Array(CURRENT_BAND.members.length).fill(0);
   // Clear queue
   dispatch(setQueue({}));
   // Clear durations
@@ -204,14 +209,15 @@ export const handleDecrease = () => (dispatch, getState) => {
   dispatch(setDecrease(!decrease));
 };
 
-export const handleKeydown = (e) => (dispatch, getState) => {
-  if (KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < getState().app.currentBand.members.length) {
+export const handleKeydown = (e) => (dispatch) => {
+  const CURRENT_BAND = getCurrentBand();
+  if (KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_BAND.members.length) {
     const key = KEYS[e.keyCode];
     dispatch(enqueueCapture(key.id));
   }
 };
 
-export const handleKeyup = (e) => (dispatch, getState) => {
+export const handleKeyup = (e) => (dispatch) => {
   if (KEYS[e.keyCode] !== undefined) {
     const key = KEYS[e.keyCode];
     dispatch(dequeueCapture(key.id));

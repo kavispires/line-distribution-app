@@ -7,6 +7,7 @@ import { ARTISTS } from '../constants';
 const SET_ARTISTS = 'SET_ARTISTS';
 const SET_ARTISTS_LIST = 'SET_ARTISTS_LIST';
 const SET_ARTISTS_LIST_BACKUP = 'SET_ARTISTS_LIST_BACKUP';
+const SET_ARTISTS_SEARCH_INDEXATION = 'SET_ARTISTS_SEARCH';
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
 
@@ -15,6 +16,7 @@ const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
 export const setArtists = payload => dispatch => dispatch({ type: SET_ARTISTS, payload });
 export const setArtistsList = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST, payload });
 export const setArtistsListBackUp = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST_BACKUP, payload });
+export const setArtistsSearchIndexation = payload => dispatch => dispatch({ type: SET_ARTISTS_SEARCH_INDEXATION, payload });
 export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
 export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURRENT_BAND, payload });
 
@@ -24,6 +26,7 @@ const initialState = {
   artists: {},
   artistList: [],
   artistListBackUp: [],
+  artistsSearchIndexation: {},
   colorCount: {},
   currentBand: 0,
 };
@@ -44,6 +47,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_ARTISTS_LIST_BACKUP:
       newState.artistListBackUp = action.payload;
+      break;
+
+    case SET_ARTISTS_SEARCH_INDEXATION:
+      newState.artistsSearchIndexation = action.payload;
       break;
 
     case SET_COLOR_COUNT:
@@ -75,6 +82,7 @@ export const parseArtists = () => (dispatch, getState) => {
    */
   const newArtists = {};
   const artistsCopy = Object.assign({}, ARTISTS);
+  const searchIndexation = {};
   const colorCount = {};
   for (let id in artistsCopy) {
     if (artistsCopy.hasOwnProperty(id)
@@ -95,10 +103,11 @@ export const parseArtists = () => (dispatch, getState) => {
       // Add to newArtists
       if (band.members.length === band.colors.length) {
         newArtists[id] = band;
+        searchIndexation[id] = `${band.bandName} ${band.othernames} ${band.version} ${band.members}`.toLowerCase()  ;
       } else {
-        console.log(`${band.bandName} was not added. (M: ${band.members.length} vs C: ${band.colors.length}`);
+        console.warn(`${band.bandName} was not added. (M: ${band.members.length} vs C: ${band.colors.length}`);
       }
-
+      // Count colors for Color Sheet
       band.colors.forEach(color => {
         if (colorCount[color] === undefined) {
           colorCount[color] = 1;
@@ -110,6 +119,7 @@ export const parseArtists = () => (dispatch, getState) => {
   }
 
   dispatch(setArtists(newArtists));
+  dispatch(setArtistsSearchIndexation(searchIndexation));
   dispatch(setColorCount(colorCount));
 
   // Order by Band Name
@@ -130,19 +140,17 @@ export const filter = (e) => (dispatch, getState) => {
   }
   const value = e.target.value.toLowerCase();
   if (value.length > 0 && value.length < 3) return;
-  const artists = getState().app.artists;
+  const artistsSearchIndexation = getState().app.artistsSearchIndexation;
   if (value.length === 0) {
     dispatch(setArtistsList([...getState().app.artistListBackUp]));
   } else {
     // Find band names with value and push id to artistList
     const filteredArtists = [];
-    for (let key in artists) {
-      if (artists.hasOwnProperty(key)) {
-        const artist = artists[key];
-        if (artist.name.toLowerCase().includes(value)
-          || (artist.othernames && artist.othernames.toLowerCase().includes(value))
-          ) {
-          filteredArtists.push(artist.id);
+    for (let key in artistsSearchIndexation) {
+      if (artistsSearchIndexation.hasOwnProperty(key)) {
+        const artist = artistsSearchIndexation[key];
+        if (artist.includes(value)) {
+          filteredArtists.push(key);
         }
       }
     }
