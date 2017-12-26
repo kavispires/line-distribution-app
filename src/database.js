@@ -291,8 +291,8 @@ const USER_ARTISTS = {
         "id": 1003,
         "name": "Kavis & Friends",
         "genre": "Pop",
-        "members": "Flavia, Maris, Drica, Mooriana, Otavio, Lucia, Kavis, Marcelo, Rodrigo, Fernando, Vilmar, Munizção, Bruno L, Bruno P, Dany, Obesa",
-        "colors": "yellow, blood, pink, purple, teal, violet, orange, green, blue, brown, sand, hotPink, forest, grey, cyan, wine"
+        "members": "Bruno L, Otavio, Kavis, Rodrigo, Flavia, Bruno P, Fernando, Munizção, Maris, Lucia, Mooriana, Dany, Drica, Marcelo, Obesa, Vilmar",
+        "colors": "forest, teal, orange, blue, yellow, grey, brown, hotPink, red, violet, purple, cyan, pink, green, wine, sand"
     },
     "1004": {
         "id": 1004,
@@ -340,7 +340,7 @@ const USER_ARTISTS = {
         "id": 1010,
         "name": "Kavis",
         "genre": "Pop",
-        "members": "Kyle, Anthony, Viktor, Ira, Seth, Peet, Scott",
+        "members": "Kyle, Anthony, Viktor, Ira, Seth, Packer, Scott",
         "colors": "blue, blood, yellow, violet, green, peach, lightGrey"
     },
 };
