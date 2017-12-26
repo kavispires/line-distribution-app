@@ -25,13 +25,7 @@ const initialState = {
   artistList: [],
   artistListBackUp: [],
   colorCount: {},
-  currentBand: {
-    bandName: 'Test Band',
-    colors: ['orange', 'purple', 'red', 'green', 'pink', 'sand', 'forest', 'blood', 'grey', 'teal', 'redViolet', 'cyan', 'turquoise', 'lime', 'navy', 'brown', 'hotPink', 'violet', 'darkGreen', 'darkGrey', 'redOrange', 'pee', 'olive', 'plum', 'yellow'],
-    genre: 'Test Genre',
-    id: 1000,
-    members: ['orange', 'purple', 'red', 'green', 'pink', 'sand', 'forest', 'blood', 'grey', 'teal', 'redViolet', 'cyan', 'turquoise', 'lime', 'navy', 'brown', 'hotPink', 'violet', 'darkGreen', 'darkGrey', 'redOrange', 'pee', 'olive', 'plum', 'yellow'],
-  },
+  currentBand: 0,
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -82,7 +76,6 @@ export const parseArtists = () => (dispatch, getState) => {
   const newArtists = {};
   const artistsCopy = Object.assign({}, ARTISTS);
   const colorCount = {};
-
   for (let id in artistsCopy) {
     if (artistsCopy.hasOwnProperty(id)
       && artistsCopy[id].name !== undefined
@@ -127,9 +120,8 @@ export const parseArtists = () => (dispatch, getState) => {
 
 export const updateCurrentBand = (e) => (dispatch, getState) => {
   const bandId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
-  const currentBand = getState().app.artists[bandId];
-  dispatch(setCurrentBand({}));
-  dispatch(setCurrentBand(currentBand));
+  dispatch(setCurrentBand(0));
+  dispatch(setCurrentBand(bandId));
 };
 
 export const filter = (e) => (dispatch, getState) => {

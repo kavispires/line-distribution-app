@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class App extends Component {
   constructor (props) {
     super(props);
-    
+
   }
 
   componentWillMount () {
@@ -12,7 +12,7 @@ class App extends Component {
 
   componentDidUpdate (prevProps, prevState) {
     if (this.props.location.pathname === '/artists'
-      && this.props.app.currentBand.id !== prevProps.app.currentBand.id) {
+      && this.props.app.currentBand !== prevProps.app.currentBand) {
       this.props.history.push('/distribute');
     }
   }
