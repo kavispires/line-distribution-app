@@ -3,24 +3,26 @@ import React from 'react';
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
 
+import { getCurrentBand } from '../utils';
+
 const Lyrics = (props) => {
   const LYRICS = props.lyrics;
   const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
-  const currentBand = props.app.currentBand;
+  const CURRENT_BAND = getCurrentBand();
 
   return (
     <div className="container">
       <h1>Lyrics</h1>
       {
-        currentBand ?
+        CURRENT_BAND ?
           <div className="current-band">
-            <p>Current Band: {props.app.currentBand.bandName}</p>
+            <p>Current Band: {CURRENT_BAND.bandName}</p>
             <div className="current-band-members">
               <p>Members:</p>
               <ul className="members-list">
                 {
-                  currentBand.members.map((member, i) => (
-                    <li key={member} className={`member-list-item color-${currentBand.colors[i]}`}>{member}</li>
+                  CURRENT_BAND.members.map((member, i) => (
+                    <li key={member} className={`member-list-item color-${CURRENT_BAND.colors[i]}`}>{member}</li>
                   ))
                 }
               </ul>

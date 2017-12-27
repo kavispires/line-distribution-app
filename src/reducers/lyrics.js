@@ -1,3 +1,5 @@
+import { getCurrentBand } from '../utils';
+
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_LYRICS = 'SET_LYRICS';
@@ -89,8 +91,9 @@ export const handleParser = (evt) => (dispatch, getState) => {
   let lyricsToParse = evt.target.value;
   dispatch(setLyrics(lyricsToParse));
 
-  const COLORS = getState().app.currentBand.colors;
-  const MEMBERS = [...getState().app.currentBand.members].map((mem) => mem.toUpperCase());
+  const CURRENT_BAND = getCurrentBand();
+  const COLORS = CURRENT_BAND.colors;
+  const MEMBERS = [...CURRENT_BAND.members].map((mem) => mem.toUpperCase());
   const parsedLyrics = [];
 
   let lastColor = null;
