@@ -1,3 +1,5 @@
+import { getCurrentBand } from '../utils';
+
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_RESULTS = 'SET_RESULTS';
@@ -43,7 +45,7 @@ export default function reducer(prevState = initialState, action) {
 export const calculateResults = () => (dispatch, getState) => {
   const durations = [...getState().distribute.durations];
   const percentages = [...getState().distribute.percentages];
-  const currentBand = Object.assign({}, getState().app.currentBand);
+  const CURRENT_BAND = Object.assign({}, getCurrentBand());
   // Find Max value
   const max = Math.max.apply(null, durations);
   // Sort durations
@@ -54,8 +56,8 @@ export const calculateResults = () => (dispatch, getState) => {
     const index = durations.indexOf(val);
     const relativePercentage = Math.round((durations[index] * 100) / max);
     const member = {
-      name: currentBand.members[index],
-      color: currentBand.colors[index],
+      name: CURRENT_BAND.members[index],
+      color: CURRENT_BAND.colors[index],
       relativePercentage: relativePercentage,
       percentage: percentages[index],
       duration: durations[index]

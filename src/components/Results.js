@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SwitchToggle } from './Widgets';
 
-import { getClosestIndex } from '../utils';
+import { getClosestIndex} from '../utils';
 
 class Results extends Component {
   componentDidMount () {
