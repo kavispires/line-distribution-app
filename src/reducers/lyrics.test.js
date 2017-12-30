@@ -3,8 +3,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 
-import reducer, * as action from '../../src/reducers/lyrics';
-import { setCurrentBand } from '../../src/reducers/app';
+import reducer, * as action from './lyrics';
+import { setArtists, setCurrentBand } from './app';
 
 // import * as CONSTANTS from '../constants';
 
@@ -40,11 +40,13 @@ import { setCurrentBand } from '../../src/reducers/app';
 */
 
 const testBand = {
-  bandName: 'Test Band',
-  colors: ['red', 'blue', 'green', 'yellow'],
-  genre: 'Test Genre',
-  id: 1000,
-  members: ['alpha', 'bravo', 'charlie', 'delta']
+  1: {
+    bandName: 'Test Band',
+    colors: ['red', 'blue', 'green', 'yellow'],
+    genre: 'Test Genre',
+    id: 1,
+    members: ['alpha', 'bravo', 'charlie', 'delta']
+  }
 };
 
 describe('Lyrics Parser', () => {
@@ -57,7 +59,8 @@ describe('Lyrics Parser', () => {
         applyMiddleware(thunkMiddleware)
       )
     );
-    testStore.dispatch(setCurrentBand(testBand));
+    testStore.dispatch(setArtists(testBand))
+    testStore.dispatch(setCurrentBand(1));
   });
 
   describe('handleParser', () => {
@@ -294,6 +297,35 @@ describe('Lyrics Parser', () => {
         content: ['(Oh no)', 'I can\'t sing'],
         member: ['BRAVO (ALPHA)'],
         adlibs: [true, false]
+      }];
+      expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
+    });
+
+    it('Case 14: Submembers (parenthesis) are carried over even if next line uses parentheris and original one doesnt', () => {
+      const evt = {target: { value: '[BRAVO (ALPHA)] I can sing\nAnd you can sing (no)' }};
+      testStore.dispatch(action.handleParser(evt));
+      const result = [{
+        class: ['blue', 'red'],
+        content: ['I can sing'],
+        member: ['BRAVO (ALPHA)'],
+        adlibs: [false]
+      }, {
+        class: ['blue', 'red'],
+        content: ['And you can sing', '(no)'],
+        member: [undefined],
+        adlibs: [false, true]
+      }];
+      expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
+    });
+
+    it('Case 15: If there is not submember assignment, it is assigned to undefined', () => {
+      const evt = {target: { value: '[BRAVO] I can sing (no)' }};
+      testStore.dispatch(action.handleParser(evt));
+      const result = [{
+        class: ['blue', undefined],
+        content: ['I can sing', '(no)'],
+        member: ['BRAVO (ALPHA)'],
+        adlibs: [false, true]
       }];
       expect(testStore.getState().lyrics.formattedLyrics).toEqual(result);
     });

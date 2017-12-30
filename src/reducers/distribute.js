@@ -211,7 +211,7 @@ export const handleDecrease = () => (dispatch, getState) => {
 
 export const handleKeydown = (e) => (dispatch) => {
   const CURRENT_BAND = getCurrentBand();
-  if (KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_BAND.members.length) {
+  if (CURRENT_BAND && KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_BAND.members.length) {
     const key = KEYS[e.keyCode];
     dispatch(enqueueCapture(key.id));
   }

@@ -155,7 +155,14 @@ export const handleParser = (evt) => (dispatch, getState) => {
 
         line.member.push(member);
         line.class = line.class.concat(parseColors(MEMBERS, COLORS, member, lastColor));
-        line.adlibs.push(false);
+
+        if (line.member[line.member.length - 1]) {
+          lastSubColor = line.class[line.class.length - 1];
+        }
+
+        if (remainder[0] !== '(') {
+          line.adlibs.push(false);
+        }
 
         // Check for adlibst on remainder
         if (remainder.includes('(')) {
