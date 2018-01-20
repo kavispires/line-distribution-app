@@ -28,6 +28,10 @@ body {
 	flex: 1 1 auto;
 }
 
+.container-flex {
+	display: flex;
+}
+
 .container-fixed {
 	flex: 1 1 auto;
 	overflow: hidden;

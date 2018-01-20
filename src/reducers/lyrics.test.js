@@ -59,7 +59,7 @@ describe('Lyrics Parser', () => {
         applyMiddleware(thunkMiddleware)
       )
     );
-    testStore.dispatch(setArtists(testBand))
+    testStore.dispatch(setArtists(testBand));
     testStore.dispatch(setCurrentBand(1));
   });
 

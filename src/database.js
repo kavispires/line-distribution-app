@@ -201,7 +201,7 @@ const KPOP_ARTISTS = {
         "name": "TWICE",
         "genre": "K-Pop",
         "members": "Nayeon, Jeongyeon, Momo, Sana, Jihyo, Mina, Dahyun, Chaeyoung, Tzuyu",
-        "colors": "orange, green, red, blue, purple, violet, pink, cyan, yellow"
+        "colors": "peach, green, red, blue, purple, violet, pink, cyan, yellow"
     },
     "33": {
         "id": 33,
@@ -209,7 +209,7 @@ const KPOP_ARTISTS = {
         "genre": "K-Pop",
         "version": "feat. Somi",
         "members": "Nayeon, Jeongyeon, Momo, Sana, Jihyo, Mina, Dahyun, Chaeyoung, Tzuyu, Somi",
-        "colors": "orange, green, red, blue, purple, violet, pink, cyan, yellow, tan"
+        "colors": "peach, green, red, blue, purple, violet, pink, cyan, yellow, tan"
     },
     "34": {
         "id": 34,

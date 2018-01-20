@@ -52,7 +52,7 @@ class Distribute extends Component {
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
 
     return (
-      <div>
+      <div className="container-flex">
         {
           CURRENT_BAND ? (
             <section className="container container-distribution">
