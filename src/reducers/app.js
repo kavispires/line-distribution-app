@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import API from '../api';
 
 import { ARTISTS } from '../constants';
 
@@ -10,6 +11,8 @@ const SET_ARTISTS_LIST_BACKUP = 'SET_ARTISTS_LIST_BACKUP';
 const SET_ARTISTS_SEARCH_INDEXATION = 'SET_ARTISTS_SEARCH';
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
+const SET_COLOR_LIST = 'SET_COLOR_LIST';
+const SET_POSITION_LIST = 'SET_POSITION_LIST';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -18,7 +21,9 @@ export const setArtistsList = payload => dispatch => dispatch({ type: SET_ARTIST
 export const setArtistsListBackUp = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST_BACKUP, payload });
 export const setArtistsSearchIndexation = payload => dispatch => dispatch({ type: SET_ARTISTS_SEARCH_INDEXATION, payload });
 export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
+export const setColorList = payload => dispatch => dispatch({ type: SET_COLOR_LIST, payload });
 export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURRENT_BAND, payload });
+export const setPositionList = payload => dispatch => dispatch({ type: SET_POSITION_LIST, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -27,8 +32,11 @@ const initialState = {
   artistList: [],
   artistListBackUp: [],
   artistsSearchIndexation: {},
+  colors: {},
+  colorList: {},
   colorCount: {},
   currentBand: 0,
+  positionList: {}
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -57,8 +65,16 @@ export default function reducer(prevState = initialState, action) {
       newState.colorCount = action.payload;
       break;
 
+    case SET_COLOR_LIST:
+      newState.colorList = action.payload;
+      break;
+
     case SET_CURRENT_BAND:
       newState.currentBand = action.payload;
+      break;
+
+    case SET_POSITION_LIST:
+      newState.positionList = action.payload;
       break;
 
     default:
@@ -71,6 +87,12 @@ export default function reducer(prevState = initialState, action) {
 }
 
 /* ---------------   DISPATCHERS   ----------------- */
+
+export const init = () => (dispatch) => {
+  dispatch(parseArtists());
+  dispatch(parseColors());
+  dispatch(parsePositions());
+}
 
 export const parseArtists = () => (dispatch, getState) => {
   if (Object.keys(getState().app.artists).length > 0) return;
@@ -126,6 +148,16 @@ export const parseArtists = () => (dispatch, getState) => {
   const orderedArtists = _.sortBy(newArtists, ['bandName']).map(band => band.id);
   dispatch(setArtistsList(orderedArtists));
   dispatch(setArtistsListBackUp(orderedArtists));
+};
+
+const parseColors = () => (dispatch) => {
+  const colorList = API.fetchAllColors();
+  dispatch(setColorList(colorList));
+};
+
+const parsePositions = () => (dispatch) => {
+  const positionList = API.fetchAllPositions();
+  dispatch(setPositionList(positionList));
 };
 
 export const updateCurrentBand = (e) => (dispatch, getState) => {

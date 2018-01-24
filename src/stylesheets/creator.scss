@@ -13,11 +13,89 @@
 	}
 
 	input {
-		min-width: 30%;
+		min-width: 50%;
 		margin-bottom: $unit;
 	}
 
 	label .hint {
 		font-size: 70%;
 	}
+
+	.form-group {
+		display: flex;
+		width: 50%;
+	}
+
+	.form-element {
+		display: flex;
+		margin-right: $doubleUnit;
+
+		label {
+			margin-right: $unit;
+		}
+		small {
+			font-size: 70%;
+			margin-left: $unit;
+			font-style: italic;
+		}
+	}
+
+	.form-member-group {
+		display: flex;
+		width: 100%;
+		flex-wrap: wrap;
+	}
+
+	.form-member {
+		background: #f4f4f4;
+		width: 19%;
+		margin-top: $unit;
+		margin-right: $unit;
+
+		.info {
+			padding: $unit;
+		}
+
+		input {
+			width: 100%;
+		}
+
+		.btn-close {
+			float: right;
+		}
+
+		.color-swatch {
+			display: inline-block;
+			width: 100%;
+			height: 10px;
+		}
+
+		.form-member-position-list {
+			p {
+				margin: 0;
+			}
+			ul {
+				padding: 0 0 0 15px;
+				margin: 0;
+			}
+		}
+
+		.form-member-position-item {
+			// outline: 1px solid green;
+			width: 100%;
+			padding: $unit 0;
+			font-size: 80%;
+
+			&:hover {
+				background: #fff;
+			}
+		}
+	}
+
+}
+
+.temp-input {
+	width: 100%;
+	height: 100px;
+	resize: vertical;
 }

@@ -6,7 +6,7 @@ import App from '../components/App';
 import { loadLocalStorage } from '../utils';
 
 import {
-	parseArtists,
+	init,
 	filter
 } from '../reducers/app';
 
@@ -17,7 +17,7 @@ import {
 const mapStateToProps = (state) => ({ app: state.app});
 
 const mapDispatchToProps = {
-	parseArtists,
+	init,
 	handleParser,
 	filter,
 	loadLocalStorage
