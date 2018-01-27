@@ -69,29 +69,29 @@ class Distribute extends Component {
                 </ul>
                 <h3 className="current-singer">{ whoSentence }</h3>
                 <div className="progress-bar">
-                {
-                  CURRENT_BAND.colors.map((color, index) => (
-                    <div
-                      key={ color }
-                      id={ `bar-${index}` }
-                      className={ `bar color-${color} bar-width-${percentages[index]}` }
-                    />
-                  ))
-                }
+                  {
+                    CURRENT_BAND.colors.map((color, index) => (
+                      <div
+                        key={color}
+                        id={`bar-${index}`}
+                        className={`bar color-${color} bar-width-${percentages[index]}`}
+                      />
+                    ))
+                  }
                 </div>
                 <div className="boxes">
-                {
-                  CURRENT_BAND ?
-                    CURRENT_BAND.members.map((member, index) => (
-                      <button key={member} id={index} className={`box ${boxSize} color-${CURRENT_BAND.colors[index]}`} onMouseDown={this.props.boxMouseDown} onMouseUp={this.props.boxMouseUp}>
-                        <span className="key">{KEY_LIST[index]}</span>
-                        <span className="member-name">{member.toUpperCase()}</span>
-                        <span className="timestamp">{Math.round(durations[index] / 100) / 10}</span>
-                      </button>
-                    ))
-                    :
-                    <p className="text-center">You must select an artist before you can create your vocal line distribution.</p>
-                }
+                  {
+                    CURRENT_BAND ?
+                      CURRENT_BAND.members.map((member, index) => (
+                        <button key={member} id={index} className={`box ${boxSize} color-${CURRENT_BAND.colors[index]}`} onMouseDown={this.props.boxMouseDown} onMouseUp={this.props.boxMouseUp}>
+                          <span className="key">{KEY_LIST[index]}</span>
+                          <span className="member-name">{member.toUpperCase()}</span>
+                          <span className="timestamp">{Math.round(durations[index] / 100) / 10}</span>
+                        </button>
+                      ))
+                      :
+                      <p className="text-center">You must select an artist before you can create your vocal line distribution.</p>
+                  }
                 </div>
                 <div className="log">
                   {

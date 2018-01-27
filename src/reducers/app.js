@@ -79,20 +79,19 @@ export default function reducer(prevState = initialState, action) {
 
     default:
       return prevState;
-
   }
 
   return newState;
-
 }
 
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const init = () => (dispatch) => {
+  console.log('init was called')
   dispatch(parseArtists());
   dispatch(parseColors());
   dispatch(parsePositions());
-}
+};
 
 export const parseArtists = () => (dispatch, getState) => {
   if (Object.keys(getState().app.artists).length > 0) return;

@@ -1,12 +1,14 @@
 /* SCHEMA
- * id: id (required)
- * name: String (required)
- * otherNames: String
- * genre: String
- * units: Array[Unit(id)]
+ * id: Id (required)
+ * bandId: Band(id) (required)
+ * name: String (required) // version, subunit name
+ * debutYeat: Integer
+ * official: Boolean (required)
+ * members: Array[Member(id)] (required)
+ * songs: Array[Song(id)]
  */
 
-const BANDS = {
+const UNITS = {
   "1": {
     "id": 1,
     "name": "Girls' Generation",
@@ -81,4 +83,4 @@ const BANDS = {
   }
 };
 
-export default BANDS;
+export default UNITS;

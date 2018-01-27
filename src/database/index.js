@@ -1,15 +1,26 @@
+import BANDS from './bands';
 import COLORS from './colors';
 import MEMBERS from './members';
-import BANDS from './bands';
-import SONGS from './songs';
 import POSITIONS from './positions';
+import SONGS from './songs';
+import UNITS from './units';
+
+/* SCHEMA
+ * Band.hasMany(Unit)
+ * Unit.hasMany(Member)
+ * Member.hasOne(Color)
+ * Member.hasMany(Position)
+ * Unit.hasMany(Song)
+ * Song.hasOne(Unit)
+*/
 
 const DB = {
+  BANDS,
   COLORS,
   MEMBERS,
-  BANDS,
+  POSITIONS,
   SONGS,
-  POSITIONS
+  UNITS,
 };
 
 export default DB;

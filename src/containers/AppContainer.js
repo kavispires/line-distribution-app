@@ -6,21 +6,21 @@ import App from '../components/App';
 import { loadLocalStorage } from '../utils';
 
 import {
-	init,
-	filter
+  init,
+  filter,
 } from '../reducers/app';
 
 import {
-	handleParser
+  handleParser,
 } from '../reducers/lyrics';
 
-const mapStateToProps = (state) => ({ app: state.app});
+const mapStateToProps = state => ({ app: state.app });
 
 const mapDispatchToProps = {
-	init,
-	handleParser,
-	filter,
-	loadLocalStorage
+  init,
+  handleParser,
+  filter,
+  loadLocalStorage,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

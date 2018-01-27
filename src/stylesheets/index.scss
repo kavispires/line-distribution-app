@@ -1,116 +1,40 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,500');
+// @import url('https://fonts.googleapis.com/css?family=Ubuntu:300,500');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700');
 @import './variables.scss';
 @import './color-palette.scss';
 
-// BROWSER RESET AND DEFAULT
+// APP DEFAULT
+@import './app.scss';
 
-body {
-	margin: 0;
-	padding: 0;
-	background: #fff;
-	font-size: 14px;
-}
+// HEADER
+@import './header.scss';
 
-* {
-	box-sizing: border-box;
-	font-family: 'Ubuntu', serif;
-}
-
-.app {
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
-}
-
-.container {
-	padding: 10px 30px;
-	overflow: auto;
-	flex: 1 1 auto;
-}
-
-.container-flex {
-	display: flex;
-}
-
-.container-fixed {
-	flex: 1 1 auto;
-	overflow: hidden;
-	width: 100%;
-}
-
-.ld-header {
-  background-color: #000;
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  min-height: 40px;
-}
-
-.ld-logo {
-	max-height: 45px;
-	padding: $unit;
-}
-
-.ld-nav {
-	color: #fff;
-
-	a {
-		color: #fff;
-		text-decoration: none;
-		padding-left: $doubleUnit;
-  	padding-right: $doubleUnit;
-
-		&:not(:last-child) {
-			border-right: 1px solid #fff;
-		}
-
-		&:hover {
-			border: 1px solid #fff;
-			border-bottom: 3px solid #fff;
-		}
-
-		&:visited {
-			color: #fff;
-		}
-	}
-}
-
-.tiny-h1 {
-	margin: 0;
-  margin-top: $doubleUnit;
-  font-size: 12px;
-  border-bottom: 1px solid #ccc;
-  padding: $unit 0;
-}
-
-.search-bar {
-	min-width: 30%;
-  border: 1px solid grey;
-  padding: 5px;
-  margin-bottom: 10px;
-}
+// TYPOGRAPHY
+// @import './typography.scss';
 
 // BUTTONS
-@import './buttons.scss';
+// @import './buttons.scss';
 
 // SWITCH
-@import './switch.scss';
+// @import './switch.scss';
 
 // TABLES
-@import './tables.scss';
+// @import './tables.scss';
+
+// HOME
+@import './home.scss';
 
 // DISTRIBUTE
-@import './distribute.scss';
+// @import './distribute.scss';
 
 // RESULTS
-@import './results.scss';
+// @import './results.scss';
 
 // CREATOR
-@import './creator.scss';
+// @import './creator.scss';
 
 // LYRICS PARSER
-@import './lyrics.scss';
+// @import './lyrics.scss';
 
 .hidden {
 	display: none !important;

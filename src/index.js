@@ -5,8 +5,6 @@ import { Provider } from 'react-redux';
 import registerServiceWorker from './registerServiceWorker';
 import store from './store';
 
-import Header from './components/Header';
-
 import AppContainer from './containers/AppContainer';
 import ArtistsContainer from './containers/ArtistsContainer';
 import ColorSheetContainer from './containers/ColorSheetContainer';
@@ -19,19 +17,18 @@ import ResultsContainer from './containers/ResultsContainer';
 import './stylesheets/index.css';
 
 ReactDOM.render(
-	<Provider store={store}>
-		<Router>
-			<div className="app">
-				<Header />
-				<Route path="/" component={AppContainer} />
-				<Route path="/artists" component={ArtistsContainer} />
-				<Route path="/distribute" component={DistributeContainer} />
-				<Route path="/create" component={CreatorContainer} />
-				<Route path="/lyrics" component={LyricsContainer} />
-				<Route path="/colorsheet" component={ColorSheetContainer} />
-				<Route path="/results" component={ResultsContainer} />
-				<Route exact path="/" component={HomeContainer} />
-			</div>
-		</Router>
-	</Provider>, document.getElementById('root'));
+  <Provider store={store}>
+    <Router>
+      <div className="app">
+        <AppContainer />
+        <Route path="/artists" component={ArtistsContainer} />
+        <Route path="/colorsheet" component={ColorSheetContainer} />
+        <Route path="/create" component={CreatorContainer} />
+        <Route path="/distribute" component={DistributeContainer} />
+        <Route path="/lyrics" component={LyricsContainer} />
+        <Route path="/results" component={ResultsContainer} />
+        <Route exact path="/" component={HomeContainer} />
+      </div>
+    </Router>
+  </Provider>, document.getElementById('root'));
 registerServiceWorker();
