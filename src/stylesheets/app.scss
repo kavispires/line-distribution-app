@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import './mixins.scss';
 
 // BROWSER RESET AND DEFAULT
 body {
@@ -44,17 +45,16 @@ h1 {
   margin: 0.83em 0;
 }
 
+.search-bar {
+  @include input-text;
+  width: 30%;
+  min-width: 300px;
+}
+
 // .tiny-h1 {
 // 	margin: 0;
 //   margin-top: $doubleUnit;
 //   font-size: 12px;
 //   border-bottom: 1px solid #ccc;
 //   padding: $unit 0;
-// }
-
-// .search-bar {
-// 	min-width: 30%;
-//   border: 1px solid grey;
-//   padding: 5px;
-//   margin-bottom: 10px;
 // }

@@ -4,14 +4,15 @@ const ColorSheet = (props) => {
   return (
     <div className="container">
       <h1>Color Sheet</h1>
-      <small>The numbers indicate how many times each color appears in the database.</small>
+      <p>The numbers indicate how many times each color appears in the database.</p>
       <ul className="color-palette">
         {
         Object.keys(props.app.colorList).map((id) => {
           const color = props.app.colorList[id].name;
+          const colorId = props.app.colorList[id].id;
           return (
-            <li key={color} className={`palette color-${color}`}>
-              {props.app.colorCount[color]}<br />
+            <li key={color} className={`palette color-${id}`}>
+              [#{id}] {props.app.colorCount[color]}<br />
               {color}
             </li>
           );
