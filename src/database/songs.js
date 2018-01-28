@@ -1,6 +1,6 @@
 /* SCHEMA
  * id: id (required)
- * bandId: Band(Id)
+ * unitId: Unit(Id)
  * title: String (required)
  * official: Boolean (required)
  * lyrics: String

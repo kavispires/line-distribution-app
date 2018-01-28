@@ -88,7 +88,7 @@ export default function reducer(prevState = initialState, action) {
 
 export const init = () => (dispatch) => {
   console.log('init was called')
-  dispatch(parseArtists());
+  // dispatch(parseArtists());
   dispatch(parseColors());
   dispatch(parsePositions());
 };
@@ -150,12 +150,12 @@ export const parseArtists = () => (dispatch, getState) => {
 };
 
 const parseColors = () => (dispatch) => {
-  const colorList = API.fetchAllColors();
+  const colorList = API.get('/colors');
   dispatch(setColorList(colorList));
 };
 
 const parsePositions = () => (dispatch) => {
-  const positionList = API.fetchAllPositions();
+  const positionList = API.get('/positions');
   dispatch(setPositionList(positionList));
 };
 

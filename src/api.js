@@ -1,123 +1,296 @@
-import DB from './database/index.js';
+import _ from 'lodash';
+import DB from './database/index';
+import members from './database/members';
 
 /* API */
 
-// API/colors
-const fetchAllColors = () => {
-  // const result = [];
-  // for (let key in DB.COLORS) {
-  //   if (DB.COLORS.hasOwnProperty(key)) {
-  //     result.push(DB.COLORS[key]);
-  //   }
-  // }
-  // return result;
-  return Object.assign({}, DB.COLORS);
+// API/artists
+const fetchAllBands = (include) => {
+  const response = _.cloneDeep(DB.BANDS);
+
+  if (include) {
+    Object.keys(response).forEach((key) => {
+      const entry = response[key];
+      // Fetch units
+      entry.units = entry.units.map(unit => fetchUnit(unit));
+      return entry;
+    });
+  }
+
+  return response;
 };
 
-// API/colors/names
-// const fetchAllColorsNames = () => {
-//   const result = [];
-//   for (let key in DB.COLORS) {
-//     if (DB.COLORS.hasOwnProperty(key)) {
-//       result.push(DB.COLORS[key].name);
-//     }
-//   }
-//   return result;
-// };
+// API/artists/:id
+const fetchBand = (id, include) => {
+  const response = _.cloneDeep(DB.BANDS[id]);
+
+  if (response !== undefined) {
+    if (include) {
+      // Fetch units
+      response.units = response.units.map(unit => fetchUnit(unit));
+    }
+    return response;
+  }
+  return 'NO-BAND-AVAILABLE';
+};
+
+// API/colors
+const fetchAllColors = () => {
+  return _.cloneDeep(DB.COLORS);
+};
+
+// API/colors/:id
+const fetchColor = (id) => {
+  const response = _.cloneDeep(DB.COLORS[id]);
+  if (response !== undefined) {
+    return response;
+  }
+  return 'NO-COLOR-AVAILABLE';
+};
 
 // API/colors/:id/name
 const fetchColorName = (id) => {
-  if (DB.COLORS[id] !== undefined) {
-    return DB.COLORS[id].name;
+  const response = _.cloneDeep(DB.COLORS[id]);
+  if (response !== undefined) {
+    return response.name;
   }
   return 'NO-COLOR-AVAILABLE';
-}
+};
+
+// API/members
+const fetchAllMembers = (include) => {
+  const response = _.cloneDeep(DB.MEMBERS);
+
+  if (include) {
+    Object.keys(response).forEach((key) => {
+      const entry = response[key];
+      // Fetch color
+      entry.color = fetchColor(entry.colorId);
+      // Fetch alternative color
+      entry.altColor = fetchColor(entry.altColorId);
+      // Fetch position
+      entry.positions = entry.positions.map(pos => fetchPosition(pos));
+      return entry;
+    });
+  }
+
+  return response;
+};
+
+// API/members/:id
+const fetchMember = (id, include) => {
+  const response = _.cloneDeep(DB.MEMBERS[id]);
+  if (response !== undefined) {
+    if (include) {
+      // Fetch color
+      response.color = fetchColor(response.colorId);
+      delete response.colorId;
+      // Fetch alternative color
+      response.altColor = fetchColor(response.altColorId);
+      delete response.altColorId;
+      // Fetch position
+      response.positions = response.positions.map(pos => fetchPosition(pos));
+    }
+    return response;
+  }
+  return 'NO-MEMBER-AVAILABLE';
+};
 
 // API/positions
 const fetchAllPositions = () => {
-  // const result = [];
-  // for (let key in DB.POSITIONS) {
-  //   if (DB.POSITIONS.hasOwnProperty(key)) {
-  //     result.push(DB.POSITIONS[key]);
-  //   }
-  // }
-  return Object.assign({}, DB.POSITIONS);
+  return _.cloneDeep(DB.POSITIONS);
 };
 
-// API/positions/names
-// const fetchAllPositionsNames = () => {
-//   const result = [];
-//   for (let key in DB.POSITIONS) {
-//     if (DB.POSITIONS.hasOwnProperty(key)) {
-//       result.push(DB.POSITIONS[key].name);
-//     }
-//   }
-//   return result;
-// };
+// API/positions/:id
+const fetchPosition = (id) => {
+  const response = _.cloneDeep(DB.POSITIONS[id]);
+  if (response !== undefined) {
+    return response;
+  }
+  return 'NO-POSITION-AVAILABLE';
+};
 
 // API/positions/:id/name
 const fetchPositionName = (id) => {
-  if (DB.POSITIONS[id] !== undefined) {
-    return DB.POSITIONS[id].name;
+  const response = _.cloneDeep(DB.POSITIONS[id]);
+  if (response !== undefined) {
+    return response.name;
   }
-  return 'NO-COLOR-AVAILABLE';
-}
+  return 'NO-POSITION-AVAILABLE';
+};
 
+// API/songs
+const fetchAllSongs = (include) => {
+  const response = _.cloneDeep(DB.SONGS);
 
+  if (include) {
+    Object.keys(response).forEach((key) => {
+      const entry = response[key];
+      // Fetch unit
+      entry.unit = fetchUnit(entry.unitId);
+      delete entry.unitId;
+      return entry;
+    });
+  }
 
+  return response;
+};
 
+// API/songs/:id
+const fetchSong = (id, include) => {
+  const response = _.cloneDeep(DB.SONGS[id]);
+  if (response !== undefined) {
+    if (include) {
+      // Fetch unit
+      response.unit = fetchUnit(response.unitId);
+      delete response.unitId;
+    }
+    return response;
+  }
+  return 'NO-SONG-AVAILABLE';
+};
 
+// API/units
+const fetchAllUnits = (include) => {
+  const response = _.cloneDeep(DB.UNITS);
 
+  if (include) {
+    Object.keys(response).forEach((key) => {
+      const entry = response[key];
+      // Fetch band/artist
+      entry.artist = fetchBand(entry.bandId);
+      delete entry.bandId;
+      // Fetch members
+      entry.members = entry.members.map(mem => fetchMember(mem));
+      // Fetch songs
+      entry.songs = entry.songs.map(song => fetchSong(song));
+      return entry;
+    });
+  }
 
-const fetchMember = (id) => {
-  if (DB.MEMBERS[id] !== undefined) {
-    const member = DB.MEMBERS[id];
-    member.color = fetchColorName(member.colorId);
-    return member;
+  return response;
+};
+
+// API/units/:id
+const fetchUnit = (id, include) => {
+  const response = _.cloneDeep(DB.UNITS[id]);
+  if (response !== undefined) {
+    if (include) {
+      // Fetch band/artist
+      response.artist = fetchBand(response.bandId);
+      delete response.bandId;
+      // Fetch members
+      response.members = response.members.map(mem => fetchPosition(mem));
+      // Fetch songs
+      response.positions = response.positions.map(song => fetchSong(song));
+    }
+    return response;
+  }
+  return 'NO-UNIT-AVAILABLE';
+};
+
+// API/units/:id/song
+const fetchUnitSongs = (id, include) => {
+  const units = _.cloneDeep(DB.UNITS[id]);
+  let response;
+  if (response !== undefined) {
+
+    if (include) {
+      // Fetch color
+      response.color = fetchColor(response.colorId);
+      // Fetch alternative color
+      response.altColor = fetchColor(response.altColorId);
+      // Fetch position
+      response.positionList = response.positions.map(pos => fetchPosition(pos));
+    }
+    return response;
   }
   return 'NO-MEMBER-AVAILABLE';
-}
-
-
-const fetchAllMembers = () => {
-  const result = [];
-  for (let key in DB.MEMBERS) {
-    if (DB.MEMBERS.hasOwnProperty(key)) {
-      const member = DB.MEMBERS[key];
-
-      result.push(DB.MEMBERS[key]);
-    }
-  }
-  return result;
 };
 
-const fetchMemberr = () => {
-  const result = [];
-  for (let key in DB.MEMBERS) {
-    if (DB.MEMBERS.hasOwnProperty(key)) {
-      const member = DB.MEMBERS[key];
+const get = (str) => {
+  const path = str.split('/');
+  const { length } = path;
+  const last = path[length - 1];
+  const all = last === 'all';
 
-      result.push(DB.MEMBERS[key]);
-    }
+  console.log('Fetching api path:', str);
+  switch (path[1]) {
+    case 'artists':
+      // API/artists/all
+      if (length === 3 && all) return fetchAllBands(true);
+      // API/artists
+      if (length === 2) return fetchAllBands();
+      // API/artists/:id/all
+      if (length === 4 && all) return fetchBand(path[2], true);
+      // API/artists/:id
+      if (length === 3) return fetchBand(path[2]);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    case 'colors':
+      // API/colors
+      if (length === 2) return fetchAllColors();
+      // API/colors/:id
+      if (length === 3) return fetchColor(path[2]);
+      // API/colors/:id/name
+      if (length === 4 && last === 'name') return fetchColorName(path[2]);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    case 'members':
+      // API/members/all
+      if (length === 3 && all) return fetchAllMembers(true);
+      // API/members
+      if (length === 2) return fetchAllMembers();
+      // API/members/:id/all
+      if (length === 4 && all) return fetchMember(path[2], true);
+      // API/members/:id
+      if (length === 3) return fetchMember(path[2]);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    case 'positions':
+      // API/positions
+      if (length === 2) return fetchAllPositions();
+      // API/positions/:id
+      if (length === 3) return fetchPosition(path[2]);
+      // API/colors/:id/name
+      if (length === 4 && last === 'name') return fetchPositionName(path[2]);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    case 'songs':
+      // API/songs/all
+      if (length === 3 && all) return fetchAllSongs(true);
+      // API/songs
+      if (length === 2) return fetchAllSongs();
+      // API/songs/:id/all
+      if (length === 4 && all) return fetchSong(path[2], true);
+      // API/songs/:id
+      if (length === 3) return fetchSong(path[2]);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    case 'units':
+      // API/units/all
+      if (length === 3 && all) return fetchAllUnits(true);
+      // API/units
+      if (length === 2) return fetchAllUnits();
+      // API/units/:id/all
+      if (length === 4 && all) return fetchUnit(path[2], true);
+      // API/units/:id
+      if (length === 3) return fetchUnit(path[2]);
+      // API/units/:id/songs
+      if (length === 4 && last === 'songs') return fetchUnitSongs(path[2]);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    default:
+      return {};
   }
-  return result;
-};
-
-const fetchAllBands = () => {
-  const result = [];
-  for (let key in DB.MEMBERS) {
-    if (DB.MEMBERS.hasOwnProperty(key)) {
-      result.push(DB.MEMBERS[key]);
-    }
-  }
-  return result;
 };
 
 export default {
-  fetchAllColors,
-  // fetchAllColorsNames,
-  fetchColorName,
-  fetchAllPositions,
-  // fetchAllPositionsNames,
-  fetchPositionName,
+  get,
 };

@@ -5639,12 +5639,26 @@ h1 {
   font-size: 1.5em;
   margin: 0.83em 0; }
 
-.search-bar {
-  padding: 6px;
-  margin-bottom: 12px;
-  border: 1px solid #CCC;
-  width: 30%;
-  min-width: 300px; }
+.tabs {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  border-bottom: #E6E6E6 1px solid;
+  padding: 0;
+  margin-bottom: 0; }
+
+.tab {
+  background: #E6E6E6;
+  padding: 6px 24px;
+  cursor: pointer; }
+  .tab:first-child {
+    border-top-left-radius: 3px; }
+  .tab:last-child {
+    border-top-right-radius: 3px; }
+  .tab:hover {
+    background: #CCC; }
+  .tab.selected {
+    border-bottom: #fff 2px solid; }
 
 .app-header {
   background-color: #000;
@@ -5674,6 +5688,21 @@ h1 {
     .app-nav a .selected {
       border-bottom: 2px solid #707070; }
 
+.search-bar {
+  padding: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #CCC;
+  width: 30%;
+  min-width: 300px; }
+
+.textarea, .textarea-full {
+  border: #E6E6E6 1px solid;
+  resize: none; }
+
+.textarea-full {
+  width: 100%;
+  min-height: 400px; }
+
 .table {
   width: 100%;
   border-collapse: collapse; }
@@ -5681,13 +5710,20 @@ h1 {
     text-align: left; }
     .table thead th {
       padding: 10px;
-      border-bottom: 2px solid #222; }
+      border-bottom: 2px solid #707070; }
+    .table thead .th-num {
+      max-width: 60px; }
   .table td {
     padding: 10px;
-    border-bottom: 1px solid #ccc; }
+    border-bottom: 1px solid #E6E6E6; }
   .table tbody tr:hover {
-    background: #ccc;
+    background: #fff;
     cursor: pointer; }
+  .table p {
+    margin: 3px; }
+  .table ul {
+    list-style: none;
+    margin-bottom: 12px; }
 
 .home-video {
   position: absolute;
