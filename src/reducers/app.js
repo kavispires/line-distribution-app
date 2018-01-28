@@ -117,26 +117,25 @@ export const updateCurrentBand = e => (dispatch, getState) => {
   dispatch(setCurrentBand(bandId));
 };
 
-export const filter = (e) => (dispatch, getState) => {
+export const filter = e => (dispatch, getState) => {
   if (typeof e === 'string') {
     return dispatch(setArtistsList([...getState().app.artistListBackUp]));
   }
   const value = e.target.value.toLowerCase();
   if (value.length > 0 && value.length < 3) return;
-  const artistsSearchIndexation = getState().app.artistsSearchIndexation;
+  const { artistsSearchIndexation } = getState().app;
   if (value.length === 0) {
     dispatch(setArtistsList([...getState().app.artistListBackUp]));
   } else {
     // Find band names with value and push id to artistList
     const filteredArtists = [];
-    for (let key in artistsSearchIndexation) {
-      if (artistsSearchIndexation.hasOwnProperty(key)) {
-        const artist = artistsSearchIndexation[key];
-        if (artist.includes(value)) {
-          filteredArtists.push(key);
-        }
+    Object.keys(artistsSearchIndexation).forEach((key) => {
+      const artist = artistsSearchIndexation[key];
+      if (artist.includes(value)) {
+        filteredArtists.push(key);
       }
-    }
+    });
+
     dispatch(setArtistsList(filteredArtists));
   }
 };
