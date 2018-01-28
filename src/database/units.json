@@ -1,0 +1,88 @@
+{
+  "0": {
+    "id": 0,
+    "bandId": 0,
+    "name": "",
+    "debutYeat": 0,
+    "official": true,
+    "members": [],
+    "songs": []
+  },
+  "1": {
+    "id": 1,
+    "bandId": 1,
+    "name": "OT9",
+    "debutYeat": 2007,
+    "official": true,
+    "members": [
+      1,
+      2,
+      3,
+      7,
+      4,
+      5,
+      8,
+      6,
+      9
+    ],
+    "songs": []
+  },
+  "2": {
+    "id": 2,
+    "bandId": 1,
+    "name": "OT8",
+    "debutYeat": 2014,
+    "official": true,
+    "members": [
+      1,
+      3,
+      7,
+      4,
+      5,
+      8,
+      6,
+      9
+    ],
+    "songs": []
+  },
+  "3": {
+    "id": 3,
+    "bandId": 1,
+    "name": "TaeTiSeo",
+    "debutYeat": 2012,
+    "official": true,
+    "members": [
+      1,
+      7,
+      9
+    ],
+    "songs": []
+  },
+  "4": {
+    "id": 4,
+    "bandId": 2,
+    "name": "OT4",
+    "debutYeat": 2009,
+    "official": true,
+    "members": [
+      11,
+      12,
+      10,
+      13
+    ],
+    "songs": []
+  },
+  "5": {
+    "id": 5,
+    "bandId": 2,
+    "name": "OT3",
+    "debutYeat": 2016,
+    "official": true,
+    "members": [
+      11,
+      12,
+      10
+    ],
+    "songs": []
+  }
+}

@@ -5604,6 +5604,30 @@
   flex-direction: column;
   justify-content: flex-end; }
 
+.palette-alt {
+  width: 100px;
+  max-width: 100px;
+  height: 100px;
+  margin: 5px;
+  text-align: right; }
+
+.palette-main {
+  width: 100%;
+  height: 70px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; }
+
+.palette-alt-group {
+  height: 30px;
+  display: flex;
+  align-items: stretch; }
+
+.palette-alt-swatch {
+  width: 33%;
+  outline: 1px solid #fff; }
+
 body {
   margin: 0;
   padding: 0;
@@ -5717,7 +5741,7 @@ h1 {
     padding: 10px;
     border-bottom: 1px solid #E6E6E6; }
   .table tbody tr:hover {
-    background: #fff;
+    background: #E6E6E6;
     cursor: pointer; }
   .table p {
     margin: 3px; }

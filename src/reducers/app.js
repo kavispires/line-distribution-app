@@ -1,29 +1,25 @@
 import _ from 'lodash';
-import API from '../api';
 
-import { ARTISTS } from '../constants';
+import API from '../api';
+import { initDatabase } from './database';
 
 /* ------------------   ACTIONS   ------------------ */
 
-const SET_ARTISTS = 'SET_ARTISTS';
 const SET_ARTISTS_LIST = 'SET_ARTISTS_LIST';
 const SET_ARTISTS_LIST_BACKUP = 'SET_ARTISTS_LIST_BACKUP';
 const SET_ARTISTS_SEARCH_INDEXATION = 'SET_ARTISTS_SEARCH';
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
+const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
 const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
-const SET_COLOR_LIST = 'SET_COLOR_LIST';
-const SET_POSITION_LIST = 'SET_POSITION_LIST';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setArtists = payload => dispatch => dispatch({ type: SET_ARTISTS, payload });
 export const setArtistsList = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST, payload });
 export const setArtistsListBackUp = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST_BACKUP, payload });
 export const setArtistsSearchIndexation = payload => dispatch => dispatch({ type: SET_ARTISTS_SEARCH_INDEXATION, payload });
 export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
-export const setColorList = payload => dispatch => dispatch({ type: SET_COLOR_LIST, payload });
+export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
 export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURRENT_BAND, payload });
-export const setPositionList = payload => dispatch => dispatch({ type: SET_POSITION_LIST, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -32,11 +28,9 @@ const initialState = {
   artistList: [],
   artistListBackUp: [],
   artistsSearchIndexation: {},
-  colors: {},
-  colorList: {},
   colorCount: {},
+  colorSheetTab: 'list',
   currentBand: 0,
-  positionList: {}
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -44,10 +38,6 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-
-    case SET_ARTISTS:
-      newState.artists = action.payload;
-      break;
 
     case SET_ARTISTS_LIST:
       newState.artistList = action.payload;
@@ -65,16 +55,12 @@ export default function reducer(prevState = initialState, action) {
       newState.colorCount = action.payload;
       break;
 
-    case SET_COLOR_LIST:
-      newState.colorList = action.payload;
+    case SET_COLOR_SHEET_TAB:
+      newState.colorSheetTab = action.payload;
       break;
 
     case SET_CURRENT_BAND:
       newState.currentBand = action.payload;
-      break;
-
-    case SET_POSITION_LIST:
-      newState.positionList = action.payload;
       break;
 
     default:
@@ -87,79 +73,45 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const init = () => (dispatch) => {
-  console.log('init was called')
-  // dispatch(parseArtists());
-  dispatch(parseColors());
-  dispatch(parsePositions());
+  console.log('INIT WAS CALLED');
+  dispatch(initDatabase());
+  dispatch(getColorCount());
+  dispatch(parseArtists());
+};
+
+const getColorCount = () => (dispatch) => {
+  const count = API.get('./colors/count');
+  dispatch(setColorCount(count));
 };
 
 export const parseArtists = () => (dispatch, getState) => {
-  if (Object.keys(getState().app.artists).length > 0) return;
+  // if (Object.keys(getState().app.artists).length > 0) return;
   /* Get list of artists
    * Remove artists with no members
    * Split members and colors
    * Sort in alphabetical order
    * Update state
    */
-  const newArtists = {};
-  const artistsCopy = Object.assign({}, ARTISTS);
-  const searchIndexation = {};
-  const colorCount = {};
-  for (let id in artistsCopy) {
-    if (artistsCopy.hasOwnProperty(id)
-      && artistsCopy[id].name !== undefined
-      && artistsCopy[id].members !== undefined
-      && artistsCopy[id].colors !== undefined) {
-      const band = Object.assign({}, artistsCopy[id]);
-      // Convert members to array
-      band.members = band.members.split(', ');
-      // Convert colors to array
-      band.colors = band.colors.split(', ');
-      // Set bandName
-      if (band.version === undefined) {
-        band.bandName = band.name;
-      } else {
-        band.bandName = `${band.name} (${band.version})`;
-      }
-      // Add to newArtists
-      if (band.members.length === band.colors.length) {
-        newArtists[id] = band;
-        searchIndexation[id] = `${band.bandName} ${band.othernames} ${band.version} ${band.members}`.toLowerCase()  ;
-      } else {
-        console.warn(`${band.bandName} was not added. (M: ${band.members.length} vs C: ${band.colors.length}`);
-      }
-      // Count colors for Color Sheet
-      band.colors.forEach(color => {
-        if (colorCount[color] === undefined) {
-          colorCount[color] = 1;
-        } else {
-          colorCount[color]++;
-        }
-      });
-    }
-  }
+  const ARTISTS = _.cloneDeep(getState().database.artists);
 
-  dispatch(setArtists(newArtists));
+  const searchIndexation = {};
+
+  // Loop though ARTISTS to set indexation
+  Object.keys(ARTISTS).forEach((id) => {
+    const artist = ARTISTS[id];
+    searchIndexation[id] = `${artist.name} ${artist.otherNames} ${artist.allMembers.join(' ')}`.toLowerCase();
+  });
+
+  // Set Indexation
   dispatch(setArtistsSearchIndexation(searchIndexation));
-  dispatch(setColorCount(colorCount));
 
   // Order by Band Name
-  const orderedArtists = _.sortBy(newArtists, ['bandName']).map(band => band.id);
+  const orderedArtists = _.sortBy(ARTISTS, ['name']).map(band => band.id);
   dispatch(setArtistsList(orderedArtists));
   dispatch(setArtistsListBackUp(orderedArtists));
 };
 
-const parseColors = () => (dispatch) => {
-  const colorList = API.get('/colors');
-  dispatch(setColorList(colorList));
-};
-
-const parsePositions = () => (dispatch) => {
-  const positionList = API.get('/positions');
-  dispatch(setPositionList(positionList));
-};
-
-export const updateCurrentBand = (e) => (dispatch, getState) => {
+export const updateCurrentBand = e => (dispatch, getState) => {
   const bandId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
   dispatch(setCurrentBand(0));
   dispatch(setCurrentBand(bandId));
@@ -187,4 +139,9 @@ export const filter = (e) => (dispatch, getState) => {
     }
     dispatch(setArtistsList(filteredArtists));
   }
+};
+
+export const toggleColorSheetTab = event => (dispatch) => {
+  const { id } = event.target;
+  dispatch(setColorSheetTab(id));
 };

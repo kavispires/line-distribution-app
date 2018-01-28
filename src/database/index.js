@@ -1,21 +1,12 @@
-import BANDS from './bands';
-import COLORS from './colors';
-import MEMBERS from './members';
-import POSITIONS from './positions';
-import SONGS from './songs';
-import UNITS from './units';
-
-/* SCHEMA
- * Band.hasMany(Unit)
- * Unit.hasMany(Member)
- * Member.hasOne(Color)
- * Member.hasMany(Position)
- * Unit.hasMany(Song)
- * Song.hasOne(Unit)
-*/
+import ARTISTS from './artists.json';
+import COLORS from './colors.json';
+import MEMBERS from './members.json';
+import POSITIONS from './positions.json';
+import SONGS from './songs.json';
+import UNITS from './units.json';
 
 const DB = {
-  BANDS,
+  ARTISTS,
   COLORS,
   MEMBERS,
   POSITIONS,

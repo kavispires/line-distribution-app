@@ -1,28 +1,41 @@
 import _ from 'lodash';
 import DB from './database/index';
-import members from './database/members';
 
 /* API */
 
 // API/artists
 const fetchAllBands = (include) => {
-  const response = _.cloneDeep(DB.BANDS);
+  const response = _.cloneDeep(DB.ARTISTS);
 
   if (include) {
     Object.keys(response).forEach((key) => {
       const entry = response[key];
       // Fetch units
       entry.units = entry.units.map(unit => fetchUnit(unit));
-      return entry;
     });
   }
+
+  // Include list of members throughout units
+  Object.keys(response).forEach((key) => {
+    const entry = response[key];
+    const members = {};
+    // Fetch units
+    const units = entry.units.map(unit => fetchUnit(unit));
+    units.forEach((unit) => {
+      unit.members.forEach((memberId) => {
+        members[memberId] = true;
+      });
+    });
+    entry.allMembersId = Object.keys(members).map(m => Number(m));
+    entry.allMembers = Object.keys(members).map(m => fetchMember(m).name);
+  });
 
   return response;
 };
 
 // API/artists/:id
 const fetchBand = (id, include) => {
-  const response = _.cloneDeep(DB.BANDS[id]);
+  const response = _.cloneDeep(DB.ARTISTS[id]);
 
   if (response !== undefined) {
     if (include) {
@@ -32,6 +45,20 @@ const fetchBand = (id, include) => {
     return response;
   }
   return 'NO-BAND-AVAILABLE';
+};
+
+// API/artists/:id/members
+const fetchBandMembers = (id) => {
+  const band = fetchBand(id);
+  const members = {};
+  const units = band.units.map(unitId => fetchUnit(unitId));
+  units.forEach((unit) => {
+    unit.members.forEach((memberId) => {
+      members[memberId] = true;
+    });
+  });
+
+  return Object.keys(members).map(m => fetchMember(m));
 };
 
 // API/colors
@@ -55,6 +82,25 @@ const fetchColorName = (id) => {
     return response.name;
   }
   return 'NO-COLOR-AVAILABLE';
+};
+
+// API/colors/count
+const fetchColorCount = () => {
+  const colors = fetchAllColors();
+  const members = fetchAllMembers();
+
+  const colorCount = {};
+
+  Object.keys(colors).forEach((key) => {
+    colorCount[key] = 0;
+  });
+
+  Object.keys(members).forEach((key) => {
+    const { colorId } = members[key];
+    colorCount[colorId] += 1;
+  });
+
+  return colorCount;
 };
 
 // API/members
@@ -223,6 +269,8 @@ const get = (str) => {
       if (length === 2) return fetchAllBands();
       // API/artists/:id/all
       if (length === 4 && all) return fetchBand(path[2], true);
+      // API/artists/:id/members
+      if (length === 4 && last === 'members') return fetchBandMembers(path[2]);
       // API/artists/:id
       if (length === 3) return fetchBand(path[2]);
       // Error
@@ -231,6 +279,8 @@ const get = (str) => {
     case 'colors':
       // API/colors
       if (length === 2) return fetchAllColors();
+      // API/colors/count
+      if (length === 3 && last === 'count') return fetchColorCount();
       // API/colors/:id
       if (length === 3) return fetchColor(path[2]);
       // API/colors/:id/name

@@ -4,15 +4,15 @@ import { withRouter } from 'react-router-dom';
 import Artists from '../components/Artists';
 
 import {
-	filter,
-	updateCurrentBand
+  filter,
+  updateCurrentBand,
 } from '../reducers/app';
 
-const mapStateToProps = (state) => ({ app: state.app});
+const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
-	filter,
-	updateCurrentBand
+  filter,
+  updateCurrentBand,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artists));

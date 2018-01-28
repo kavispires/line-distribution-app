@@ -14,7 +14,7 @@ import {
   handleParser,
 } from '../reducers/lyrics';
 
-const mapStateToProps = state => ({ app: state.app });
+const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
   init,

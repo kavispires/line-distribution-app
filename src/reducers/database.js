@@ -94,6 +94,21 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
+export const initDatabase = () => (dispatch) => {
+  const artists = API.get('/artists');
+  dispatch(setArtists(artists));
+  const colors = API.get('/colors');
+  dispatch(setColors(colors));
+  const members = API.get('/members');
+  dispatch(setMembers(members));
+  const positions = API.get('/positions');
+  dispatch(setPositions(positions));
+  const songs = API.get('/songs');
+  dispatch(setSongs(songs));
+  const units = API.get('/units');
+  dispatch(setUnits(units));
+};
+
 export const handleDisplay = event => (dispatch, getState) => {
   const { value } = event.target;
   const includeDependencies = getState().database.includeDependencies ? '/all' : '';

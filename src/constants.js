@@ -1,7 +1,3 @@
-import ARTISTS_DB from './database';
-
-// export const COLORS_LIST = ['blood', 'redOrange', 'peach', 'brown', 'orange', 'dirt', 'lightBrown', 'sand', 'gold', 'tan', 'yellow', 'olive', 'pee', 'yellowGreen', 'green', 'darkGreen', 'forest', 'lime', 'teal', 'cyan', 'turquoise', 'navy', 'blue', 'purple', 'violet', 'rose', 'plum', 'pink', 'redViolet', 'hotPink', 'wine', 'salmon', 'red', 'lightGrey', 'grey', 'darkGrey'];
-
 export const ALTERNATIVE_COLOR_LIST = {
   1: [31, 4, 17],
   2: [32, 5, 18],
@@ -173,10 +169,7 @@ export const KEYCODE_LIST = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 81, 87, 69,
 
 export const KEY_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G'];
 
-export const ARTISTS = ARTISTS_DB;
-
 export const ARTITST_PLACEHOLDER = {
-  bandName: 'No Artists Selected',
-  members: [''],
-  colors: [''],
+  name: 'No Artists Selected',
+  allMembers: [],
 };
