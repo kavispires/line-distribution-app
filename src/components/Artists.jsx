@@ -3,9 +3,15 @@ import React from 'react';
 import { ARTITST_PLACEHOLDER } from '../constants';
 
 const Artists = (props) => {
-  const ARTISTS = props.database.artists;
-  const { artistList } = props.app;
-  const currentBand = props.app.currentBand ? ARTISTS[props.app.currentBand] : ARTITST_PLACEHOLDER;
+  const { app, database } = props;
+  const ARTISTS = database.artists;
+  const { artistList } = app;
+  const currentBand = app.currentBand ? ARTISTS[app.currentBand] : ARTITST_PLACEHOLDER;
+
+  const handleArtistClick = (e) => {
+    props.updateCurrentArtist(e);
+    props.history.push('/artist');
+  }
 
   return (
     <section className="container">
@@ -21,7 +27,7 @@ const Artists = (props) => {
             <th>Members</th>
           </tr>
         </thead>
-        <tbody onClick={(e) => props.updateCurrentBand(e)}>
+        <tbody onClick={(e) => handleArtistClick(e)}>
           {
             artistList.length > 0 ?
             artistList.map(index => (

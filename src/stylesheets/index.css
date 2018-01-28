@@ -5626,7 +5626,11 @@
 
 .palette-alt-swatch {
   width: 33%;
-  outline: 1px solid #fff; }
+  outline: 1px solid #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3px; }
 
 body {
   margin: 0;
@@ -5682,7 +5686,54 @@ h1 {
   .tab:hover {
     background: #CCC; }
   .tab.selected {
-    border-bottom: #fff 2px solid; }
+    border-bottom: #fff 2px solid;
+    text-decoration: underline; }
+
+.icon {
+  display: inline-block; }
+
+.icon-tab {
+  width: 12px;
+  transform: translateY(2px); }
+
+.member-list-item {
+  padding: 3px 6px;
+  margin-left: 6px;
+  border-radius: 3px; }
+
+.unit-content {
+  padding: 6px;
+  border: 1px solid #E6E6E6; }
+
+.unit-members {
+  display: flex;
+  flex-wrap: wrap; }
+
+.unit-songs {
+  outline: 1px dashed #CCC; }
+
+.pill {
+  padding: 6px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  border-right: 1px solid #E6E6E6;
+  border-bottom: 1px solid #E6E6E6; }
+  .pill p {
+    margin: 6px 0; }
+
+.pill-color-bar {
+  width: 100%;
+  display: block;
+  height: 6px;
+  margin-bottom: 6px; }
+
+.pill-name {
+  text-transform: uppercase;
+  font-weight: bold; }
+
+.pill-positions {
+  margin: 0;
+  padding-left: 15px; }
 
 .app-header {
   background-color: #000;

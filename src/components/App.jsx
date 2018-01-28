@@ -17,10 +17,6 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     console.log('componentDidUpdate');
-    if (this.props.location.pathname === '/artists'
-      && this.props.app.currentBand !== prevProps.app.currentBand) {
-      this.props.history.push('/distribute');
-    }
   }
 
   render() {

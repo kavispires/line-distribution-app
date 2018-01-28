@@ -27,18 +27,18 @@
     "altColorId": 27,
     "birthdate": 19890515,
     "positions": [
-      3
+      5
     ]
   },
   "4": {
     "id": 4,
     "name": "Hyoyeon",
-    "colorId": 17,
-    "altColorId": 14,
+    "colorId": 14,
+    "altColorId": 11,
     "birthdate": 19890922,
     "positions": [
       4,
-      5,
+      3,
       8
     ]
   },
@@ -46,23 +46,23 @@
     "id": 5,
     "name": "Yuri",
     "colorId": 33,
-    "altColorId": 30,
+    "altColorId": 3,
     "birthdate": 19891205,
     "positions": [
-      4,
       6,
-      9
+      7,
+      8
     ]
   },
   "6": {
     "id": 6,
     "name": "Yoona",
-    "colorId": 11,
-    "altColorId": 27,
+    "colorId": 10,
+    "altColorId": 26,
     "birthdate": 19900530,
     "positions": [
-      4,
-      6,
+      7,
+      8,
       10,
       11,
       12
@@ -72,33 +72,33 @@
     "id": 7,
     "name": "Tiffany",
     "colorId": 30,
-    "altColorId": 13,
+    "altColorId": 27,
     "birthdate": 19890801,
     "positions": [
-      3,
+      5,
       10
     ]
   },
   "8": {
     "id": 8,
     "name": "Sooyoung",
-    "colorId": 20,
-    "altColorId": 23,
+    "colorId": 19,
+    "altColorId": 22,
     "birthdate": 19900210,
     "positions": [
-      4,
       6,
-      9
+      7,
+      8
     ]
   },
   "9": {
     "id": 9,
     "name": "Seohyun",
-    "colorId": 19,
-    "altColorId": 22,
+    "colorId": 18,
+    "altColorId": 21,
     "birthdate": 19910628,
     "positions": [
-      3,
+      5,
       13
     ]
   },
@@ -110,7 +110,7 @@
     "birthdate": 19910226,
     "positions": [
       1,
-      3,
+      5,
       6,
       8,
       12
@@ -144,7 +144,7 @@
     "altColorId": 24,
     "birthdate": 19940118,
     "positions": [
-      3,
+      5,
       5,
       9,
       13
@@ -179,7 +179,7 @@
     "altColorId": 32,
     "birthdate": 19920502,
     "positions": [
-      3,
+      5,
       11
     ]
   },
@@ -248,7 +248,7 @@
     "altColorId": 18,
     "birthdate": 19811229,
     "positions": [
-      3,
+      5,
       6
     ]
   },

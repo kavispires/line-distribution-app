@@ -56,7 +56,9 @@ const ColorSheet = (props) => {
                   <div className="palette-alt-group">
                     {
                       ALTERNATIVE_COLOR_LIST[id].map(altId => (
-                        <div key={`${id}-${altId}`} className={`palette-alt-swatch color-${altId}`} />
+                        <div key={`${id}-${altId}`} className={`palette-alt-swatch color-${altId}`}>
+                          {altId}
+                        </div>
                       ))
                     }
                   </div>

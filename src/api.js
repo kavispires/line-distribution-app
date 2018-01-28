@@ -61,6 +61,17 @@ const fetchBandMembers = (id) => {
   return Object.keys(members).map(m => fetchMember(m));
 };
 
+// API/artists/:id/units
+const fetchBandUnits = (id) => {
+  const band = fetchBand(id);
+  const units = {};
+  band.units.forEach((unitId) => {
+    units[unitId] = fetchUnit(unitId);
+  });
+
+  return units;
+};
+
 // API/colors
 const fetchAllColors = () => {
   return _.cloneDeep(DB.COLORS);
@@ -271,6 +282,8 @@ const get = (str) => {
       if (length === 4 && all) return fetchBand(path[2], true);
       // API/artists/:id/members
       if (length === 4 && last === 'members') return fetchBandMembers(path[2]);
+      // API/artists/:id/units
+      if (length === 4 && last === 'units') return fetchBandUnits(path[2]);
       // API/artists/:id
       if (length === 3) return fetchBand(path[2]);
       // Error

@@ -3,7 +3,7 @@
     "id": 0,
     "bandId": 0,
     "name": "",
-    "debutYeat": 0,
+    "debutYear": 0,
     "official": true,
     "members": [],
     "songs": []
@@ -12,7 +12,7 @@
     "id": 1,
     "bandId": 1,
     "name": "OT9",
-    "debutYeat": 2007,
+    "debutYear": 2007,
     "official": true,
     "members": [
       1,
@@ -31,7 +31,7 @@
     "id": 2,
     "bandId": 1,
     "name": "OT8",
-    "debutYeat": 2014,
+    "debutYear": 2014,
     "official": true,
     "members": [
       1,
@@ -49,7 +49,7 @@
     "id": 3,
     "bandId": 1,
     "name": "TaeTiSeo",
-    "debutYeat": 2012,
+    "debutYear": 2012,
     "official": true,
     "members": [
       1,
@@ -62,7 +62,7 @@
     "id": 4,
     "bandId": 2,
     "name": "OT4",
-    "debutYeat": 2009,
+    "debutYear": 2009,
     "official": true,
     "members": [
       11,
@@ -76,7 +76,7 @@
     "id": 5,
     "bandId": 2,
     "name": "OT3",
-    "debutYeat": 2016,
+    "debutYear": 2016,
     "official": true,
     "members": [
       11,

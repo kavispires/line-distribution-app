@@ -73,7 +73,70 @@ h1 {
 
   &.selected {
     border-bottom: $negative 2px solid;
+    text-decoration: underline;
   }
+}
+
+.icon {
+  display: inline-block;
+}
+
+.icon-tab {
+  width: 12px;
+  transform: translateY(2px);
+}
+
+.member-list-item {
+  padding: $quarterUnit $halfUnit;
+  margin-left: $halfUnit;
+  border-radius: $quarterUnit;
+}
+
+.unit-content {
+  padding: $halfUnit;
+  border: 1px solid $lightGrey;
+}
+
+.unit-members {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.unit-songs {
+  outline: 1px dashed $grey;
+}
+
+.pill {
+  padding: $halfUnit;
+  margin-right: $unit;
+  margin-bottom: $unit;
+  border-right: 1px solid $lightGrey;
+  border-bottom: 1px solid $lightGrey;
+
+  p {
+    margin: $halfUnit 0;
+  }
+}
+
+.pill-color-bar {
+  width: 100%;
+  display: block;
+  height: $halfUnit;
+  margin-bottom: $halfUnit;
+}
+
+.pill-name {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.pill-positions {
+  margin: 0;
+  padding-left: 15px;
+}
+
+.pill-position {
+
 }
 
 // .tiny-h1 {

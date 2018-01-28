@@ -7,30 +7,38 @@ import { initDatabase } from './database';
 
 const SET_ARTISTS_LIST = 'SET_ARTISTS_LIST';
 const SET_ARTISTS_LIST_BACKUP = 'SET_ARTISTS_LIST_BACKUP';
+const SET_ARTIST_PAGE_TAB = 'SET_ARTIST_PAGE_TAB';
 const SET_ARTISTS_SEARCH_INDEXATION = 'SET_ARTISTS_SEARCH';
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
-const SET_CURRENT_BAND = 'SET_CURRENT_BAND';
+const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
+const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
+const SET_CURRENT_UNITS = 'SET_CURRENT_UNITS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
 export const setArtistsList = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST, payload });
 export const setArtistsListBackUp = payload => dispatch => dispatch({ type: SET_ARTISTS_LIST_BACKUP, payload });
+export const setArtistPageTab = payload => dispatch => dispatch({ type: SET_ARTIST_PAGE_TAB, payload });
 export const setArtistsSearchIndexation = payload => dispatch => dispatch({ type: SET_ARTISTS_SEARCH_INDEXATION, payload });
 export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
 export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
-export const setCurrentBand = payload => dispatch => dispatch({ type: SET_CURRENT_BAND, payload });
+export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
+export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
+export const setCurrentUnits = payload => dispatch => dispatch({ type: SET_CURRENT_UNITS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  artists: {},
   artistList: [],
   artistListBackUp: [],
+  artistPageTab: 0,
   artistsSearchIndexation: {},
   colorCount: {},
   colorSheetTab: 'list',
-  currentBand: 0,
+  currentArtist: 0,
+  currentUnit: {},
+  currentUnits: {},
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -47,6 +55,10 @@ export default function reducer(prevState = initialState, action) {
       newState.artistListBackUp = action.payload;
       break;
 
+    case SET_ARTIST_PAGE_TAB:
+      newState.artistPageTab = action.payload;
+      break;
+
     case SET_ARTISTS_SEARCH_INDEXATION:
       newState.artistsSearchIndexation = action.payload;
       break;
@@ -59,8 +71,16 @@ export default function reducer(prevState = initialState, action) {
       newState.colorSheetTab = action.payload;
       break;
 
-    case SET_CURRENT_BAND:
-      newState.currentBand = action.payload;
+    case SET_CURRENT_ARTIST:
+      newState.currentArtist = action.payload;
+      break;
+
+    case SET_CURRENT_UNIT:
+      newState.currentUnit = action.payload;
+      break;
+
+    case SET_CURRENT_UNITS:
+      newState.currentUnits = action.payload;
       break;
 
     default:
@@ -111,12 +131,6 @@ export const parseArtists = () => (dispatch, getState) => {
   dispatch(setArtistsListBackUp(orderedArtists));
 };
 
-export const updateCurrentBand = e => (dispatch, getState) => {
-  const bandId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
-  dispatch(setCurrentBand(0));
-  dispatch(setCurrentBand(bandId));
-};
-
 export const filter = e => (dispatch, getState) => {
   if (typeof e === 'string') {
     return dispatch(setArtistsList([...getState().app.artistListBackUp]));
@@ -140,7 +154,26 @@ export const filter = e => (dispatch, getState) => {
   }
 };
 
+export const updateCurrentArtist = e => (dispatch, getState) => {
+  const artistId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+  dispatch(setCurrentArtist(artistId));
+
+  // Update Current Units
+  const units = API.get(`/artists/${artistId}/units`);
+  dispatch(setCurrentUnits(units));
+};
+
+export const updateCurrentUnit = id => (dispatch) => {
+  const unit = API.get(`/units/${id}`);
+  dispatch(setCurrentUnit(unit));
+};
+
 export const toggleColorSheetTab = event => (dispatch) => {
   const { id } = event.target;
   dispatch(setColorSheetTab(id));
+};
+
+export const switchUnitsTab = event => (dispatch) => {
+  const { id } = event.target;
+  dispatch(setArtistPageTab(id));
 };

@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import store from './store';
 
 import AppContainer from './containers/AppContainer';
+import ArtistContainer from './containers/ArtistContainer';
 import ArtistsContainer from './containers/ArtistsContainer';
 import ColorSheetContainer from './containers/ColorSheetContainer';
 import CreatorContainer from './containers/CreatorContainer';
@@ -22,6 +23,7 @@ ReactDOM.render(
     <Router>
       <div className="app">
         <AppContainer />
+        <Route path="/artist" component={ArtistContainer} />
         <Route path="/artists" component={ArtistsContainer} />
         <Route path="/colorsheet" component={ColorSheetContainer} />
         <Route path="/create" component={CreatorContainer} />

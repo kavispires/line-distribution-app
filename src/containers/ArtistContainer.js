@@ -1,18 +1,18 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import Artists from '../components/Artists';
+import Artist from '../components/Artist';
 
 import {
-  filter,
-  updateCurrentArtist,
+  switchUnitsTab,
+  updateCurrentUnit,
 } from '../reducers/app';
 
 const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
-  filter,
-  updateCurrentArtist,
+  switchUnitsTab,
+  updateCurrentUnit,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artists));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artist));

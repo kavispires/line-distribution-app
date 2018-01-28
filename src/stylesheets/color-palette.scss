@@ -89,4 +89,8 @@ $bgpercentage2: 60%;
 .palette-alt-swatch {
   width: 33%;
   outline: 1px solid $negative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: $quarterUnit;
 }

@@ -90,4 +90,18 @@ export const getLatestId = (type) => {
 export const getAlternativeColor = (colorId) => {
   const list = [...ALTERNATIVE_COLOR_LIST[colorId]];
   return list[Math.floor(Math.random() * list.length)];
-}
+};
+
+export const parseBirthDate = (date) => {
+  date += '';
+  if (date.length < 5) {
+    return date;
+  }
+  if (date.length === 8) {
+    const year = date.substring(0, 4);
+    const month = date.substring(4, 6);
+    const day = date.substring(6);
+    return `${month} / ${day} / ${year}`;
+  }
+  return '?';
+};
