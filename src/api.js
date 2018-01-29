@@ -237,9 +237,9 @@ const fetchUnit = (id, include) => {
       response.artist = fetchBand(response.bandId);
       delete response.bandId;
       // Fetch members
-      response.members = response.members.map(mem => fetchPosition(mem));
+      response.members = response.members.map(mem => fetchMember(mem));
       // Fetch songs
-      response.positions = response.positions.map(song => fetchSong(song));
+      response.songs = response.songs.map(song => fetchSong(song));
     }
     return response;
   }
@@ -247,6 +247,7 @@ const fetchUnit = (id, include) => {
 };
 
 // API/units/:id/song
+// TO-DO: WRONG FUNCTION
 const fetchUnitSongs = (id, include) => {
   const units = _.cloneDeep(DB.UNITS[id]);
   let response;
@@ -258,7 +259,7 @@ const fetchUnitSongs = (id, include) => {
       // Fetch alternative color
       response.altColor = fetchColor(response.altColorId);
       // Fetch position
-      response.positionList = response.positions.map(pos => fetchPosition(pos));
+      response.songs = response.songs.map(song => fetchSong(song));
     }
     return response;
   }

@@ -6,11 +6,13 @@ import iconOfficial from '../images/icon-official.svg';
 
 const Artist = (props) => {
   const { app, database } = props;
-  const ARTIST = database.artists[app.currentArtist];
-  const { currentUnits, currentUnit } = app;
-  console.log(ARTIST);
-  console.log(currentUnit);
-  console.log(props);
+  const ARTIST = database.artists[app.selectedArtist];
+  const { selectedUnits, selectedUnit } = app;
+
+  const setArtistUnit = (path) => {
+    props.updateCurrentUnit();
+    props.history.push(`/${path}`);
+  }
 
   if (ARTIST === undefined) {
     return (
@@ -40,34 +42,33 @@ const Artist = (props) => {
       </p>
       <ul className="tabs" onClick={props.switchUnitsTab}>
         {
-          Object.keys(currentUnits).map((unit) => {
-            const { name, id, official } = currentUnits[unit];
+          Object.keys(selectedUnits).map((unit) => {
+            const { name, id, official } = selectedUnits[unit];
             return (
               <li
                 key={`tab-${name}`}
-                className={`tab ${app.artistPageTab == id ? 'selected' : ''}`}
+                className={`tab ${+app.artistPageTab === id ? 'selected' : ''}`}
                 id={id}
-                onClick={() => props.updateCurrentUnit(id)}
+                onClick={() => props.updateSelectedUnit(id)}
               >
-                {name} <img className="icon icon-tab" src={iconOfficial} alt="Official" />
+                {name} {official ? <img className="icon icon-tab" src={iconOfficial} alt="Official" /> : null }
               </li>
             );
           })
         }
       </ul>
       {
-        currentUnit && currentUnit.id ? (
+        selectedUnit && selectedUnit.id ? (
           <section className="unit-content">
-            <h3>Debut: {currentUnit.debutYear}</h3>
+            <h3>Debut: {selectedUnit.debutYear}</h3>
             <h3>
-              Options:
-              <button className="btn btn-inline" onClick={() => props.history.push('/distribute')}>Distribute</button>
-              <button className="btn btn-inline" onClick={() => props.history.push('/lyrics')}>Lyrics</button>
+              <button className="btn-slim btn-inline" onClick={() => setArtistUnit('distribute')}>Distribute</button>
+              <button className="btn-slim btn-inline" onClick={() => setArtistUnit('lyrics')}>Lyrics</button>
             </h3>
             <h3>Members:</h3>
             <div className="unit-members">
               {
-                currentUnit.members.map(memberId => (
+                selectedUnit.members.map(memberId => (
                   <Member
                     key={memberId}
                     memberId={memberId}
@@ -79,7 +80,7 @@ const Artist = (props) => {
             <h3>Songs:</h3>
             <div className="unit-songs">
               {
-                currentUnit.songs.map(song => (
+                selectedUnit.songs.map(song => (
                   <p>Song Title</p>
                 ))
               }

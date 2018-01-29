@@ -9,7 +9,7 @@ const Artists = (props) => {
   const currentBand = app.currentBand ? ARTISTS[app.currentBand] : ARTITST_PLACEHOLDER;
 
   const handleArtistClick = (e) => {
-    props.updateCurrentArtist(e);
+    props.updateSelectedArtist(e);
     props.history.push('/artist');
   }
 
@@ -44,7 +44,7 @@ const Artists = (props) => {
         </tbody>
       </table>
     </section>
-    );
+  );
 };
 
 export default Artists;

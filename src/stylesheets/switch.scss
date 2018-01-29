@@ -49,9 +49,9 @@ input:checked + .slider:before {
 }
 
 .slide-text-left {
-	margin-right: $unit;
+	margin-right: $halfUnit;
 }
 
 .slide-text-right {
-	margin-left: $unit;
+	margin-left: $halfUnit;
 }

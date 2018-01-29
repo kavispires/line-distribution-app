@@ -14,11 +14,16 @@ import {
   handleParser,
 } from '../reducers/lyrics';
 
+import {
+  handleReset,
+} from '../reducers/distribute';
+
 const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
   init,
   handleParser,
+  handleReset,
   filter,
   loadLocalStorage,
 };

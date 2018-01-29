@@ -5,7 +5,7 @@
 }
 
 .section-lyrics {
-  padding-left: $doubleUnit; 
+  padding-left: $unit;
   transition: width 1s;
   display: flex;
   flex-direction: column;
@@ -15,13 +15,13 @@
     width: 100%;
     min-height: 250px;
     min-height: 100px;
-    margin-top: $doubleUnit;
+    margin-top: $unit;
     padding: $unit;
   }
 
   .viewer {
     @extend .editor;
-    border: 1px solid $black;
+    border: 1px solid $primary;
     min-height: 20px;
     font-size: 11px;
     overflow-y: auto;
@@ -49,16 +49,15 @@
 }
 
 .controls {
-  border: 1px solid $grey;
   margin: 0;
-  padding: $unit;
+  padding: $halfUnit 0;
   list-style: none;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
   li {
   	flex: 1 1 0;
-  	padding: 0 $unit;
+  	padding: 0 $halfUnit;
   }
 }
 
@@ -70,7 +69,7 @@
 	width: 100%;
 	height: 20px;
 	box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
-	border-radius: $unit;
+	border-radius: $halfUnit;
 	display: flex;
 }
 
@@ -80,7 +79,7 @@
 }
 
 @for $i from 0 through 100 {
-  .bar-width-#{$i} { 
+  .bar-width-#{$i} {
     width: $i * 1% !important;
     -webkit-transition: width 2s, height 4s;
     transition: width 1s;
@@ -95,9 +94,9 @@
 
 .box {
 	border: 0;
-	border-radius: $unit;
-	padding: $doubleUnit $unit;
-	margin: $unit;
+	border-radius: $halfUnit;
+	padding: $unit $halfUnit;
+	margin: $halfUnit;
 	cursor: pointer;
 
 	span {
@@ -109,52 +108,56 @@
   .key {
     display: inline-block;
     width: auto;
-    padding: $unit 8px;
-    border: 1px outset white;
-    border-radius: 5px;
+    padding: $halfUnit $unit;
+    border: 1px outset $negative;
+    border-radius: $halfUnit;
     background: rgba(255, 255, 255, 0.4);
   }
 
 	.member-name {
-		margin: $unit 0;
+    margin: $unit 0;
+    text-transform: uppercase;
+    font-size: 14px;
 	}
 }
 
 .box-2 {
-	width: calc(50% - 20px);
+	width: calc(50% - 12px);
 }
 
 .box-3 {
-	width: calc(33% - 20px);
+	width: calc(33% - 10px);
 }
 
 .box-4 {
-	width: calc(25% - 20px);
+	width: calc(25% - 12px);
 }
 
 .box-5 {
-	width: calc(20% - 20px);
+	width: calc(20% - 12px);
 }
 
 .log {
 	@extend .controls;
 	justify-content: start;
-  margin-top: $unit;
+  margin-top: $halfUnit;
 	font-size: 80%;
   flex-wrap: wrap;
+  padding: $halfUnit;
+  border: 1px solid $lightGrey;
 }
 
 .log-item {
-  padding: $unit;
-  border-radius: $unit;
-  margin: $unit $unit;
+  padding: $halfUnit;
+  border-radius: $halfUnit;
+  margin: $halfUnit $halfUnit;
   cursor: pointer;
-  border: 1px solid white;
+  border: 1px solid $negative;
   min-width: 1px;
   transition: min-width 1s ease;
 
   .details {
-    margin-left: $unit;
+    margin-left: $quarterUnit;
     display: none;
     min-width: 1px;
     transition: min-width 1s ease;
@@ -162,7 +165,7 @@
 
   &:hover {
     background: white !important;
-    border: 1px solid $black;
+    border: 1px solid $primary;
     min-width: auto;
 
     .details {
@@ -173,6 +176,7 @@
 }
 
 .toggle-lyrics {
-  float: right;
-  margin: $unit;
+  position: absolute;
+  top: 0;
+  right: $halfUnit;
 }

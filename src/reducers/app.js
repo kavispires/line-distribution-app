@@ -13,7 +13,9 @@ const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
-const SET_CURRENT_UNITS = 'SET_CURRENT_UNITS';
+const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
+const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
+const SET_SELECTED_UNITS = 'SET_SELECTED_UNITS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -25,7 +27,9 @@ export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_C
 export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
 export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
 export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
-export const setCurrentUnits = payload => dispatch => dispatch({ type: SET_CURRENT_UNITS, payload });
+export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
+export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
+export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -39,6 +43,9 @@ const initialState = {
   currentArtist: 0,
   currentUnit: {},
   currentUnits: {},
+  selectedArtist: 0,
+  selectedUnit: {},
+  selectedUnits: {},
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -79,8 +86,16 @@ export default function reducer(prevState = initialState, action) {
       newState.currentUnit = action.payload;
       break;
 
-    case SET_CURRENT_UNITS:
-      newState.currentUnits = action.payload;
+    case SET_SELECTED_ARTIST:
+      newState.selectedArtist = action.payload;
+      break;
+
+    case SET_SELECTED_UNIT:
+      newState.selectedUnit = action.payload;
+      break;
+
+    case SET_SELECTED_UNITS:
+      newState.selectedUnits = action.payload;
       break;
 
     default:
@@ -100,7 +115,7 @@ export const init = () => (dispatch) => {
 };
 
 const getColorCount = () => (dispatch) => {
-  const count = API.get('./colors/count');
+  const count = API.get('/colors/count');
   dispatch(setColorCount(count));
 };
 
@@ -154,18 +169,20 @@ export const filter = e => (dispatch, getState) => {
   }
 };
 
-export const updateCurrentArtist = e => (dispatch, getState) => {
+export const updateSelectedArtist = e => (dispatch, getState) => {
   const artistId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
-  dispatch(setCurrentArtist(artistId));
+  dispatch(setSelectedArtist(artistId));
+  // Reset selected unit
+  dispatch(setSelectedUnit({}));
 
-  // Update Current Units
+  // Update selected Units
   const units = API.get(`/artists/${artistId}/units`);
-  dispatch(setCurrentUnits(units));
+  dispatch(setSelectedUnits(units));
 };
 
-export const updateCurrentUnit = id => (dispatch) => {
+export const updateSelectedUnit = id => (dispatch) => {
   const unit = API.get(`/units/${id}`);
-  dispatch(setCurrentUnit(unit));
+  dispatch(setSelectedUnit(unit));
 };
 
 export const toggleColorSheetTab = event => (dispatch) => {
@@ -176,4 +193,12 @@ export const toggleColorSheetTab = event => (dispatch) => {
 export const switchUnitsTab = event => (dispatch) => {
   const { id } = event.target;
   dispatch(setArtistPageTab(id));
+};
+
+export const updateCurrentUnit = () => (dispatch, getState) => {
+  const { selectedArtist, selectedUnit } = getState().app;
+  const currentArtist = API.get(`/artists/${selectedArtist}`);
+  dispatch(setCurrentArtist(currentArtist));
+  const currentUnit = API.get(`/units/${selectedUnit.id}/all`);
+  dispatch(setCurrentUnit(currentUnit));
 };

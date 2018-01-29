@@ -9,7 +9,6 @@ const SET_VERSION = 'SET_VERSION';
 const SET_GENRE = 'SET_GENRE';
 const SET_OFFICIAL = 'SET_OFFICIAL';
 const SET_TEMP_INPUT = 'SET_TEMP_INPUT';
-const SET_MEMBER_COUNT = 'SET_MEMBER_COUNT';
 const SET_NEW_MEMBERS = 'SET_NEW_MEMBERS';
 
 /* --------------   ACTION CREATORS   -------------- */
@@ -18,7 +17,6 @@ const setBandName = payload => dispatch => dispatch({ type: SET_BAND_NAME, paylo
 const setOtherNames = payload => dispatch => dispatch({ type: SET_OTHER_NAMES, payload });
 const setVersion = payload => dispatch => dispatch({ type: SET_VERSION, payload });
 const setGenre = payload => dispatch => dispatch({ type: SET_GENRE, payload });
-const setMemberCount = payload => dispatch => dispatch({ type: SET_MEMBER_COUNT, payload });
 const setOfficial = payload => dispatch => dispatch({ type: SET_OFFICIAL, payload });
 const setTempInput = payload => dispatch => dispatch({ type: SET_TEMP_INPUT, payload });
 const setNewMembers = payload => dispatch => dispatch({ type: SET_NEW_MEMBERS, payload });
@@ -58,10 +56,6 @@ export default function reducer(prevState = initialState, action) {
       newState.genre = action.payload;
       break;
 
-    case SET_MEMBER_COUNT:
-      newState.memberCount = action.payload;
-      break;
-
     case SET_OFFICIAL:
       newState.official = action.payload;
       break;
@@ -85,35 +79,35 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const handleBandName = (event) => (dispatch) => {
+export const handleBandName = event => (dispatch) => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const value = event.target.value;
   dispatch(setBandName(value));
 };
 
-export const handleOtherNames = (event) => (dispatch) => {
+export const handleOtherNames = event => (dispatch) => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const value = event.target.value;
   dispatch(setOtherNames(value));
 };
 
-export const handleVersion = (event) => (dispatch) => {
+export const handleVersion = event => (dispatch) => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const value = event.target.value;
   dispatch(setVersion(value));
 };
 
-export const handleGenre = (event) => (dispatch) => {
+export const handleGenre = event => (dispatch) => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const value = event.target.value;
   dispatch(setGenre(value));
 };
 
-export const handleOfficial = (event) => (dispatch) => {
+export const handleOfficial = event => (dispatch) => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const value = event.target.checked;
@@ -141,6 +135,7 @@ export const generateBandJSON = (membersIds, skipClipboard = false) => (dispatch
     id: id,
     name: bandName,
     official: official,
+    othernames: otherNames,
     version: version,
     genre: genre,
     members: membersIds,
@@ -156,7 +151,7 @@ export const generateBandJSON = (membersIds, skipClipboard = false) => (dispatch
   return {band: newJSON};
 };
 
-export const addBlankMember = (event) => (dispatch, getState) => {
+export const addBlankMember = event => (dispatch, getState) => {
   event.preventDefault();
 
   // Empty clipboard input
@@ -279,7 +274,7 @@ export const generateMembersJSON = (evt, skipClipboard = false) => (dispatch, ge
   return {members: newJSON, ids};
 };
 
-export const generateFullJSON = (event) => (dispatch, getState) => {
+export const generateFullJSON = event => (dispatch, getState) => {
   console.log('Generating Full JSON...');
 
   const members = dispatch(generateMembersJSON(event, true));

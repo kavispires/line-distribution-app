@@ -5,14 +5,14 @@ import Artists from '../components/Artists';
 
 import {
   filter,
-  updateCurrentArtist,
+  updateSelectedArtist,
 } from '../reducers/app';
 
 const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
   filter,
-  updateCurrentArtist,
+  updateSelectedArtist,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artists));

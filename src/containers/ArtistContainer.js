@@ -6,6 +6,7 @@ import Artist from '../components/Artist';
 import {
   switchUnitsTab,
   updateCurrentUnit,
+  updateSelectedUnit,
 } from '../reducers/app';
 
 const mapStateToProps = state => ({ app: state.app, database: state.database });
@@ -13,6 +14,7 @@ const mapStateToProps = state => ({ app: state.app, database: state.database });
 const mapDispatchToProps = {
   switchUnitsTab,
   updateCurrentUnit,
+  updateSelectedUnit,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artist));

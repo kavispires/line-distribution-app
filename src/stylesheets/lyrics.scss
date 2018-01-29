@@ -11,7 +11,7 @@
 
 	.viewer {
 		@extend .editor;
-		border: 1px solid $black;
+		border: 1px solid $primary;
 		min-height: 20px;
 		font-size: 11px;
 
@@ -31,8 +31,8 @@
 }
 
 .current-band {
-	border: 1px solid $black;
-	padding: 0 $doubleUnit;	
+	border: 1px solid $primary;
+	padding: 0 $doubleUnit;
 }
 
 .current-band-members {
