@@ -7,10 +7,10 @@
 .results-bar {
 	display: block;
 	// border: 1px outset;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	border-bottom-right-radius: $unit;
-	margin-bottom: $unit;
+	border-bottom: 1px solid $lightGrey;
+	border-right: 1px solid $lightGrey;
+	border-bottom-right-radius: $halfUnit;
+	margin-bottom: $halfUnit;
 }
 
 .results-bar-text {
@@ -20,6 +20,6 @@
 
 .results-bar-color {
 	display: block;
-	height: $unit;
+	height: $halfUnit;
 }
 

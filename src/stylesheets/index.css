@@ -5930,7 +5930,7 @@ input:checked + .slider:before {
   padding: 6px 0;
   list-style: none;
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-evenly; }
   .controls li, .log li {
     flex: 1 1 0;
     padding: 0 6px; }
@@ -6526,6 +6526,24 @@ input:checked + .slider:before {
   position: absolute;
   top: 0;
   right: 6px; }
+
+.results {
+  padding: 0; }
+
+.results-bar {
+  display: block;
+  border-bottom: 1px solid #E6E6E6;
+  border-right: 1px solid #E6E6E6;
+  border-bottom-right-radius: 6px;
+  margin-bottom: 6px; }
+
+.results-bar-text {
+  display: block;
+  width: 100%; }
+
+.results-bar-color {
+  display: block;
+  height: 6px; }
 
 .hidden {
   display: none !important; }

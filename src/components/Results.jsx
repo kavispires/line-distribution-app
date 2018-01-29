@@ -4,15 +4,19 @@ import { SwitchToggle } from './Widgets';
 import { getClosestIndex} from '../utils';
 
 class Results extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.calculateResults();
     this.props.setResultType(false);
+
+    if(this.props.location.pathname === '/results' && this.props.app.currentUnit.members === undefined) {
+      this.props.history.push('/artists');
+    }
   }
 
-  render () {
+  render() {
     const RESULTS = this.props.results;
 
-    /* Stats Calculations*/
+    // Stats Calculations
     let fairDistribution = 0;
     let difference = 0;
     let closest = 'Nobody';
@@ -27,7 +31,7 @@ class Results extends Component {
     }
 
     // Define switch buttons lables
-    const switchLabels = {left: 'Time', right: 'Percentage'};
+    const switchLabels = { left: 'Time', right: 'Percentage' };
 
     return (
       <section className="container">
@@ -36,12 +40,12 @@ class Results extends Component {
         <ul className="results">
           {
             RESULTS.results.map((result, i) => (
-              <li key={result.name} className={`results-bar`}>
+              <li key={result.name} className="results-bar">
 
-                <span className={`results-bar-text`}>
+                <span className="results-bar-text">
                   {
                     RESULTS.showPercentage ?
-                    `${i + 1}. ${result.name} [${result.percentage}%]`
+                    `${i + 1}. ${result.name} [${result.percentage}%] ${Math.round(result.duration / 100) / 10} seconds`
                     :
                     `${i + 1}. ${result.name} [${Math.round(result.duration / 100) / 10} seconds]`
                   }
@@ -63,7 +67,7 @@ class Results extends Component {
           </ul>
         </div>
       </section>
-      );
+    );
   }
 }
 
