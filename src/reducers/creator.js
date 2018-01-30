@@ -381,6 +381,7 @@ export const generateUnitJSON = (membersIds, skipClipboard = false) => (dispatch
     id,
     bandId,
     name: unitName,
+    debutYear,
     official,
     members: membersIds,
     songs: [],
