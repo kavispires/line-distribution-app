@@ -62,8 +62,8 @@ const Artist = (props) => {
           <section className="unit-content">
             <h3>Debut: {selectedUnit.debutYear}</h3>
             <h3>
-              <button className="btn-slim btn-inline" onClick={() => setArtistUnit('distribute')}>Distribute</button>
-              <button className="btn-slim btn-inline" onClick={() => setArtistUnit('lyrics')}>Lyrics</button>
+              <button className="btn btn-inline" onClick={() => setArtistUnit('distribute')}>Distribute</button>
+              <button className="btn btn-inline" onClick={() => setArtistUnit('lyrics')}>Lyrics</button>
             </h3>
             <h3>Members:</h3>
             <div className="unit-members">

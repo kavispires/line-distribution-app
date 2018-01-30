@@ -5,13 +5,14 @@
 
 	.editor {
 		width: 100%;
-		padding: $unit;
+		padding: $halfUnit;
 		min-height: 100px;
+		resize: none;
+		border: 1px solid $darkGrey;
 	}
 
 	.viewer {
 		@extend .editor;
-		border: 1px solid $primary;
 		min-height: 20px;
 		font-size: 11px;
 
@@ -22,7 +23,7 @@
 }
 
 .lyrics-blank-line {
-	margin-top: $unit;
+	margin-top: $halfUnit;
 }
 
 .line {
@@ -31,8 +32,8 @@
 }
 
 .current-band {
-	border: 1px solid $primary;
-	padding: 0 $doubleUnit;
+	border: 1px solid $lightGrey;
+	padding: 0 $unit;
 }
 
 .current-band-members {
@@ -45,8 +46,8 @@
 	}
 
 	.member-list-item {
-		padding: $unit;
-		margin: 0 $unit $unit 0;
-		border-radius: $unit;
+		padding: $quarterUnit $halfUnit;
+		margin-left: $halfUnit;
+		border-radius: $quarterUnit;
 	}
 }

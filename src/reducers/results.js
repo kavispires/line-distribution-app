@@ -1,5 +1,3 @@
-import { getCurrentBand } from '../utils';
-
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_RESULTS = 'SET_RESULTS';

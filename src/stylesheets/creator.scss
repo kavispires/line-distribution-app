@@ -2,100 +2,144 @@
 
 .creator-form {
 
-	fieldset {
-		border: 1px solid $primary;
-	}
+  fieldset {
+    border: 1px solid $lightGrey;
+    display: flex;
+    justify-content: center;
+  }
 
-	label,
-	input,
-	select {
-		display: block;
-	}
+  label,
+  input,
+  select {
+    display: inline-block;
+    margin-right: $halfUnit;
+  }
 
-	input {
-		min-width: 50%;
-		margin-bottom: $unit;
-	}
+  .form-instance {
+    width: 33%;
+    margin-bottom: $unit;
 
-	label .hint {
-		font-size: 70%;
-	}
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 
-	.form-group {
-		display: flex;
-		width: 50%;
-	}
+  .form-instance-full {
+    @extend .form-instance;
+    width: 100%;
+  }
 
-	.form-element {
-		display: flex;
-		margin-right: $doubleUnit;
+  .form-instance-highlighted {
+    background: $lightGrey;
+    padding: $quarterUnit $halfUnit;
+  }
 
-		label {
-			margin-right: $unit;
-		}
-		small {
-			font-size: 70%;
-			margin-left: $unit;
-			font-style: italic;
-		}
-	}
+  input {
+    min-width: 100%;
 
-	.form-member-group {
-		display: flex;
-		width: 100%;
-		flex-wrap: wrap;
-	}
+  }
 
-	.form-member {
-		background: #f4f4f4;
-		width: 19%;
-		margin-top: $unit;
-		margin-right: $unit;
+  label .hint {
+    font-size: 70%;
+  }
 
-		.info {
-			padding: $unit;
-		}
+  .form-group {
+    display: flex;
+    width: 50%;
+  }
 
-		input {
-			width: 100%;
-		}
+  .form-element {
+    display: flex;
+    margin-right: $doubleUnit;
 
-		.btn-close {
-			float: right;
-		}
+    label {
+      margin-right: $unit;
+    }
+    small {
+      font-size: 70%;
+      margin-left: $halfUnit;
+      font-style: italic;
+    }
+  }
 
-		.color-swatch {
-			display: inline-block;
-			width: 100%;
-			height: 10px;
-		}
+  .form-member-group {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+  }
 
-		.form-member-position-list {
-			p {
-				margin: 0;
-			}
-			ul {
-				padding: 0 0 0 15px;
-				margin: 0;
-			}
-		}
+  .form-member {
+    background: #f4f4f4;
+    width: 19%;
+    margin-top: $halfUnit;
+    margin-right: $halfUnit;
 
-		.form-member-position-item {
-			// outline: 1px solid green;
-			width: 100%;
-			padding: $unit 0;
-			font-size: 80%;
+    .info {
+      padding: $halfUnit;
+    }
 
-			&:hover {
-				background: #fff;
-			}
-		}
-	}
+    input {
+      width: 100%;
+    }
+
+    .btn-close {
+      float: right;
+    }
+
+    .color-swatch {
+      display: inline-block;
+      width: 100%;
+      height: 10px;
+    }
+
+    .form-member-position-list {
+      p {
+        margin: 0;
+      }
+      ul {
+        padding: 0 0 0 $unit;
+        margin: 0;
+      }
+    }
+
+    .form-member-position-item {
+      // outline: 1px solid green;
+      width: 100%;
+      padding: $halfUnit 0;
+      font-size: 80%;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
 
 }
 
 .temp-input {
-	width: 100%;
-	height: 100px;
-	resize: vertical;
+  width: 100%;
+  height: 300px;
+  resize: vertical;
+}
+
+.color-picker {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  .color-picker-swatch {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid $grey;
+    }
+
+    &.selected {
+      border: 2px solid $negative;
+      width: 20px;
+      height: 20px;
+    }
+  }
 }

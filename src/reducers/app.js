@@ -13,6 +13,7 @@ const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
+const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
 const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
 const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
 const SET_SELECTED_UNITS = 'SET_SELECTED_UNITS';
@@ -27,9 +28,12 @@ export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_C
 export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
 export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
 export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
+export const setMembersList = payload => dispatch => dispatch({ type: SET_MEMBERS_LIST, payload });
 export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
 export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
 export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
+
+
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -43,6 +47,7 @@ const initialState = {
   currentArtist: 0,
   currentUnit: {},
   currentUnits: {},
+  membersList: [],
   selectedArtist: 0,
   selectedUnit: {},
   selectedUnits: {},
@@ -86,6 +91,10 @@ export default function reducer(prevState = initialState, action) {
       newState.currentUnit = action.payload;
       break;
 
+    case SET_MEMBERS_LIST:
+      newState.membersList = action.payload;
+      break;
+
     case SET_SELECTED_ARTIST:
       newState.selectedArtist = action.payload;
       break;
@@ -112,6 +121,7 @@ export const init = () => (dispatch) => {
   dispatch(initDatabase());
   dispatch(getColorCount());
   dispatch(parseArtists());
+  dispatch(parseMembers());
 };
 
 const getColorCount = () => (dispatch) => {
@@ -140,10 +150,16 @@ export const parseArtists = () => (dispatch, getState) => {
   // Set Indexation
   dispatch(setArtistsSearchIndexation(searchIndexation));
 
-  // Order by Band Name
+  // Order by Artists Name
   const orderedArtists = _.sortBy(ARTISTS, ['name']).map(band => band.id);
   dispatch(setArtistsList(orderedArtists));
   dispatch(setArtistsListBackUp(orderedArtists));
+};
+
+export const parseMembers = () => (dispatch, getState) => {
+  const MEMBERS = _.cloneDeep(getState().database.members);
+  const orderedMembers = _.sortBy(MEMBERS, ['name', 'birthdate']).map(member => member.id);
+  dispatch(setMembersList(orderedMembers));
 };
 
 export const filter = e => (dispatch, getState) => {

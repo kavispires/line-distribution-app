@@ -34,10 +34,10 @@
 @import './results.scss';
 
 // CREATOR
-// @import './creator.scss';
+@import './creator.scss';
 
 // LYRICS PARSER
-// @import './lyrics.scss';
+@import './lyrics.scss';
 
 .hidden {
 	display: none !important;

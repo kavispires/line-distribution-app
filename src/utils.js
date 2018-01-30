@@ -65,16 +65,18 @@ export const copyToClipboard = (element = 'temp-input') => {
   }, 1000);
 };
 
-export const getLatestId = (type) => {
-  type = type.toUpperCase();
+export const getLatestId = (t) => {
+  const type = t.toUpperCase();
 
   let lastId = -1;
   let obj;
 
   switch (type) {
     case 'ARTISTS':
-    case 'BANDS':
-      obj = DB.BANDS;
+      obj = DB.ARTISTS;
+      break;
+    case 'UNITS':
+      obj = DB.ARTISTS;
       break;
     case 'MEMBERS':
       obj = DB.MEMBERS;
@@ -92,8 +94,8 @@ export const getAlternativeColor = (colorId) => {
   return list[Math.floor(Math.random() * list.length)];
 };
 
-export const parseBirthDate = (date) => {
-  date += '';
+export const parseBirthDate = (d) => {
+  const date = d + '';
   if (date.length < 5) {
     return date;
   }

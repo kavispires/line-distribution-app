@@ -76,12 +76,12 @@ class Distribute extends Component {
           <section className="section-distribution container-fixed">
             <h1 className="tiny-h1">Distribute</h1>
             <div className="toggle-lyrics"> Lyrics <SwitchToggle action={this.props.toggleLyrics} labels={switchLabels} /></div>
-            <h2>{ CURRENT_UNIT.bandName }</h2>
+            <h2>{CURRENT_UNIT.bandName}</h2>
             <ul className="controls">
-              <li><button className="btn btn-100" onClick={this.props.handleReset}>Reset</button></li>
-              <li><button className="btn btn-100" onClick={ this.props.handleUndo}>Undo</button></li>
-              <li><button className={`btn btn-100 ${decreaseClass}`} onClick={this.props.handleDecrease}>Decrease</button></li>
-              <li><button className="btn btn-100" onClick={() => this.props.history.push('/results')}>Finish</button></li>
+              <li><button className="btn-lg btn-100" onClick={this.props.handleReset}>Reset</button></li>
+              <li><button className="btn-lg btn-100" onClick={this.props.handleUndo}>Undo</button></li>
+              <li><button className={`btn-lg btn-100 ${decreaseClass}`} onClick={this.props.handleDecrease}>Decrease</button></li>
+              <li><button className="btn-lg btn-100" onClick={() => this.props.history.push('/results')}>Finish</button></li>
             </ul>
             <h3 className="current-singer">{ whoSentence }</h3>
             <div className="progress-bar">

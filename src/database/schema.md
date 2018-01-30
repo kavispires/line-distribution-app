@@ -28,7 +28,7 @@ Song.hasOne(Unit)
   * id: id (required)
   * unitId: Unit(Id)
   * title: String (required)
-  * official: Boolean (required)
+  * type: String (required) // Official, Should, Would (Sing)
   * lyrics: String
   * distribution: Array[Object]
 
