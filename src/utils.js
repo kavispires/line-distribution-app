@@ -76,7 +76,7 @@ export const getLatestId = (t) => {
       obj = DB.ARTISTS;
       break;
     case 'UNITS':
-      obj = DB.ARTISTS;
+      obj = DB.UNITS;
       break;
     case 'MEMBERS':
       obj = DB.MEMBERS;
