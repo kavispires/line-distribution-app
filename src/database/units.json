@@ -253,5 +253,212 @@
       66
     ],
     "songs": []
+  },
+
+  "1000": {
+    "id": 1000,
+    "bandId": 1000,
+    "name": "OT5",
+    "debutYear": "2011",
+    "official": true,
+    "members": [
+      1001,
+      1002,
+      1003,
+      1004,
+      1005
+    ],
+    "songs": []
+  },
+  "1001": {
+    "id": 1001,
+    "bandId": 1000,
+    "name": "OT7",
+    "debutYear": "2011",
+    "official": true,
+    "members": [
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007
+    ],
+    "songs": []
+  },
+  "1002": {
+    "id": 1002,
+    "bandId": 1002,
+    "name": "OT2",
+    "debutYear": "2002",
+    "official": true,
+    "members": [
+      1008,
+      1009
+    ],
+    "songs": []
+  },
+  "1003": {
+    "id": 1003,
+    "bandId": 1002,
+    "name": "Feat. Ad.J",
+    "debutYear": "2002",
+    "official": false,
+    "members": [
+      1008,
+      1009,
+      1011
+    ],
+    "songs": []
+  },
+  "1004": {
+    "id": 1004,
+    "bandId": 1002,
+    "name": "Feat. Nick & Ad.J",
+    "debutYear": "2002",
+    "official": false,
+    "members": [
+      1008,
+      1009,
+      1010,
+      1011
+    ],
+    "songs": []
+  },
+  "1005": {
+    "id": 1005,
+    "bandId": 1002,
+    "name": "Feat. T-Precious",
+    "debutYear": "2002",
+    "official": false,
+    "members": [
+      1008,
+      1009,
+      1012
+    ],
+    "songs": []
+  },
+  "1006": {
+    "id": 1006,
+    "bandId": 1002,
+    "name": "Feat. Black O",
+    "debutYear": "2002",
+    "official": false,
+    "members": [
+      1008,
+      1009,
+      1013
+    ],
+    "songs": []
+  },
+  "1007": {
+    "id": 1007,
+    "bandId": 1002,
+    "name": "Feat. Yves Brasil",
+    "debutYear": "2002",
+    "official": false,
+    "members": [
+      1008,
+      1009,
+      1014
+    ],
+    "songs": []
+  },
+  "1008": {
+    "id": 1008,
+    "bandId": 1003,
+    "name": "OT6",
+    "debutYear": "2001",
+    "official": true,
+    "members": [
+      1015,
+      1017,
+      1016,
+      1018,
+      1020,
+      1019
+    ],
+    "songs": []
+  },
+  "1009": {
+    "id": 1009,
+    "bandId": 1004,
+    "name": "I",
+    "debutYear": "2001",
+    "official": true,
+    "members": [
+      1021,
+      1023,
+      1024,
+      1025,
+      1028
+    ],
+    "songs": []
+  },
+  "1010": {
+    "id": 1010,
+    "bandId": 1004,
+    "name": "I (FuDuck)",
+    "debutYear": "2003",
+    "official": true,
+    "members": [
+      1021,
+      1031,
+      1024,
+      1025,
+      1028
+    ],
+    "songs": []
+  },
+  "1011": {
+    "id": 1011,
+    "bandId": 1004,
+    "name": "II",
+    "debutYear": "2004",
+    "official": true,
+    "members": [
+      1022,
+      1026,
+      1027,
+      1029,
+      1030
+    ],
+    "songs": []
+  },
+  "1012": {
+    "id": 1012,
+    "bandId": 1004,
+    "name": "OT10",
+    "debutYear": "2004",
+    "official": true,
+    "members": [
+      1021,
+      1022,
+      1023,
+      1024,
+      1025,
+      1026,
+      1027,
+      1028,
+      1029,
+      1030
+    ],
+    "songs": []
+  },
+  "1013": {
+    "id": 1013,
+    "bandId": 1005,
+    "name": "OT5",
+    "debutYear": "2005",
+    "official": true,
+    "members": [
+      1032,
+      1033,
+      1034,
+      1035,
+      1036
+    ],
+    "songs": []
   }
 }

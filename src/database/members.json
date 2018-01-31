@@ -762,5 +762,405 @@
       8,
       13
     ]
+  },
+
+  "1001": {
+    "id": 1001,
+    "name": "Kyle",
+    "colorId": 22,
+    "altColorId": 19,
+    "birthdate": 19840117,
+    "positions": [
+      1,
+      3,
+      5
+    ]
+  },
+  "1002": {
+    "id": 1002,
+    "name": "Anthony",
+    "colorId": 1,
+    "altColorId": 17,
+    "birthdate": 19840117,
+    "positions": [
+      5,
+      12
+    ]
+  },
+  "1003": {
+    "id": 1003,
+    "name": "Viktor",
+    "colorId": 10,
+    "altColorId": 7,
+    "birthdate": 19840117,
+    "positions": [
+      2
+    ]
+  },
+  "1004": {
+    "id": 1004,
+    "name": "Ira",
+    "colorId": 25,
+    "altColorId": 28,
+    "birthdate": 19840117,
+    "positions": [
+      5
+    ]
+  },
+  "1005": {
+    "id": 1005,
+    "name": "Seth",
+    "colorId": 14,
+    "altColorId": 11,
+    "birthdate": 19840117,
+    "positions": [
+      4,
+      6,
+      8
+    ]
+  },
+  "1006": {
+    "id": 1006,
+    "name": "Packer",
+    "colorId": 3,
+    "altColorId": 6,
+    "birthdate": 19840117,
+    "positions": [
+      7,
+      8
+    ]
+  },
+  "1007": {
+    "id": 1007,
+    "name": "Scott",
+    "colorId": 34,
+    "altColorId": 32,
+    "birthdate": 19840117,
+    "positions": [
+      8,
+      9,
+      13
+    ]
+  },
+  "1008": {
+    "id": 1008,
+    "name": "Pat",
+    "colorId": 33,
+    "altColorId": 3,
+    "birthdate": 19840117,
+    "positions": [
+      2,
+      10
+    ]
+  },
+  "1009": {
+    "id": 1009,
+    "name": "Brian",
+    "colorId": 21,
+    "altColorId": 4,
+    "birthdate": 19840204,
+    "positions": [
+      4,
+      8
+    ]
+  },
+  "1010": {
+    "id": 1010,
+    "name": "Nick",
+    "colorId": 10,
+    "altColorId": 7,
+    "birthdate": 19870101,
+    "positions": [
+      8
+    ]
+  },
+  "1011": {
+    "id": 1011,
+    "name": "Ad.J",
+    "colorId": 14,
+    "altColorId": 11,
+    "birthdate": 19871020,
+    "positions": [
+      3,
+      8
+    ]
+  },
+  "1012": {
+    "id": 1012,
+    "name": "T-Precious",
+    "colorId": 8,
+    "altColorId": 24,
+    "birthdate": 19850101,
+    "positions": [
+      6
+    ]
+  },
+  "1013": {
+    "id": 1013,
+    "name": "Black O",
+    "colorId": 29,
+    "altColorId": 26,
+    "birthdate": 19881101,
+    "positions": [
+      5
+    ]
+  },
+  "1014": {
+    "id": 1014,
+    "name": "Yves Brazil",
+    "colorId": 12,
+    "altColorId": 28,
+    "birthdate": 19860820,
+    "positions": [
+      8
+    ]
+  },
+  "1015": {
+    "id": 1015,
+    "name": "Mari",
+    "colorId": 24,
+    "altColorId": 27,
+    "birthdate": 19820412,
+    "positions": [
+      8
+    ]
+  },
+  "1016": {
+    "id": 1016,
+    "name": "Pri",
+    "colorId": 10,
+    "altColorId": 13,
+    "birthdate": 19820712,
+    "positions": [
+      2,
+      4
+    ]
+  },
+  "1017": {
+    "id": 1017,
+    "name": "Mab",
+    "colorId": 28,
+    "altColorId": 31,
+    "birthdate": 19820422,
+    "positions": [
+      5,
+      12
+    ]
+  },
+  "1018": {
+    "id": 1018,
+    "name": "CD",
+    "colorId": 22,
+    "altColorId": 19,
+    "birthdate": 19830911,
+    "positions": [
+      2
+    ]
+  },
+  "1019": {
+    "id": 1019,
+    "name": "Mika",
+    "colorId": 14,
+    "altColorId": 17,
+    "birthdate": 19840409,
+    "positions": [
+      8,
+      13
+    ]
+  },
+  "1020": {
+    "id": 1020,
+    "name": "Deby",
+    "colorId": 33,
+    "altColorId": 16,
+    "birthdate": 19840402,
+    "positions": [
+      1,
+      3,
+      5,
+      11
+    ]
+  },
+  "1021": {
+    "id": 1021,
+    "name": "Zachary",
+    "colorId": 22,
+    "altColorId": 5,
+    "birthdate": 19710421,
+    "positions": [
+      8
+    ]
+  },
+  "1022": {
+    "id": 1022,
+    "name": "Robbie",
+    "colorId": 21,
+    "altColorId": 18,
+    "birthdate": 19800108,
+    "positions": [
+      5
+    ]
+  },
+  "1023": {
+    "id": 1023,
+    "name": "Leo",
+    "colorId": 18,
+    "altColorId": 1,
+    "birthdate": 19800810,
+    "positions": [
+      5,
+      7
+    ]
+  },
+  "1024": {
+    "id": 1024,
+    "name": "3J",
+    "colorId": 5,
+    "altColorId": 21,
+    "birthdate": 19801117,
+    "positions": [
+      1,
+      2,
+      11
+    ]
+  },
+  "1025": {
+    "id": 1025,
+    "name": "Bobak",
+    "colorId": 33,
+    "altColorId": 30,
+    "birthdate": 19811230,
+    "positions": [
+      3,
+      4
+    ]
+  },
+  "1026": {
+    "id": 1026,
+    "name": "Nicky",
+    "colorId": 28,
+    "altColorId": 25,
+    "birthdate": 19840622,
+    "positions": [
+      2,
+      12
+    ]
+  },
+  "1027": {
+    "id": 1027,
+    "name": "Sypher",
+    "colorId": 29,
+    "altColorId": 12,
+    "birthdate": 19840929,
+    "positions": [
+      3,
+      8
+    ]
+  },
+  "1028": {
+    "id": 1028,
+    "name": "Bryan",
+    "colorId": 25,
+    "altColorId": 22,
+    "birthdate": 19830530,
+    "positions": [
+      8,
+      12,
+      13
+    ]
+  },
+  "1029": {
+    "id": 1029,
+    "name": "JQ",
+    "colorId": 10,
+    "altColorId": 13,
+    "birthdate": 19851011,
+    "positions": [
+      1,
+      4,
+      6,
+      8,
+      11
+    ]
+  },
+  "1030": {
+    "id": 1030,
+    "name": "Nathan",
+    "colorId": 14,
+    "altColorId": 30,
+    "birthdate": 19870204,
+    "positions": [
+      8,
+      12
+    ]
+  },
+  "1031": {
+    "id": 1031,
+    "name": "Fuduck",
+    "colorId": 19,
+    "altColorId": 22,
+    "birthdate": 19780303,
+    "positions": [
+      8,
+      9
+    ]
+  },
+  "1032": {
+    "id": 1032,
+    "name": "Brittany",
+    "colorId": 2,
+    "altColorId": 5,
+    "birthdate": 19730721,
+    "positions": [
+      4,
+      5
+    ]
+  },
+  "1033": {
+    "id": 1033,
+    "name": "Diana",
+    "colorId": 17,
+    "altColorId": 33,
+    "birthdate": 19840102,
+    "positions": [
+      1,
+      2
+    ]
+  },
+  "1034": {
+    "id": 1034,
+    "name": "Ulla",
+    "colorId": 30,
+    "altColorId": 27,
+    "birthdate": 19850628,
+    "positions": [
+      3,
+      8,
+      11
+    ]
+  },
+  "1035": {
+    "id": 1035,
+    "name": "Tracy",
+    "colorId": 19,
+    "altColorId": 2,
+    "birthdate": 19850831,
+    "positions": [
+      7,
+      8,
+      10
+    ]
+  },
+  "1036": {
+    "id": 1036,
+    "name": "Olive",
+    "colorId": 27,
+    "altColorId": 30,
+    "birthdate": 19871216,
+    "positions": [
+      8,
+      12,
+      13
+    ]
   }
 }

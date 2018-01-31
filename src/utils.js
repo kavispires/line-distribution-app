@@ -56,8 +56,8 @@ export const loadLocalStorage = () => {
 
 export const copyToClipboard = (element = 'temp-input') => {
   console.log('Copying to clipboard...');
-  setTimeout(function() {
-    var copyText = document.getElementById(element);
+  setTimeout(() => {
+    const copyText = document.getElementById(element);
     copyText.select();
     document.execCommand("Copy");
     console.log(`Copied to clipboard`);
@@ -85,7 +85,7 @@ export const getLatestId = (t) => {
       obj = {};
   }
 
-  lastId = Math.max(...Object.keys(obj));
+  lastId = Math.max(...Object.keys(obj).filter(a => a < 1000));
   return lastId + 1;
 };
 
