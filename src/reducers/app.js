@@ -33,8 +33,6 @@ export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SEL
 export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
 export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
 
-
-
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
@@ -46,7 +44,7 @@ const initialState = {
   colorSheetTab: 'list',
   currentArtist: 0,
   currentUnit: {},
-  currentUnits: {},
+  // currentUnits: {},
   membersList: [],
   selectedArtist: 0,
   selectedUnit: {},
@@ -54,11 +52,9 @@ const initialState = {
 };
 
 export default function reducer(prevState = initialState, action) {
-
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-
     case SET_ARTISTS_LIST:
       newState.artistList = action.payload;
       break;

@@ -19,11 +19,9 @@ const initialState = {
 };
 
 export default function reducer(prevState = initialState, action) {
-
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-
     case SET_LYRICS:
       newState.lyrics = action.payload;
       break;
@@ -38,11 +36,9 @@ export default function reducer(prevState = initialState, action) {
 
     default:
       return prevState;
-
   }
 
   return newState;
-
 }
 
 /* ---------------   DISPATCHERS   ----------------- */
@@ -91,22 +87,22 @@ export const handleParser = evt => (dispatch, getState) => {
   // const MEMBERS = [...CURRENT_UNIT.members].map((mem) => mem.toUpperCase());
   const parsedLyrics = [];
 
-  // let lastColor = null;
-  // let lastSubColor = null;
-  // let lastMember = null;
+  let lastColor = null;
+  let lastSubColor = null;
+  let lastMember = null;
 
-  // // Splits lyrics by line breaks to parse each line individually
-  // lyricsToParse = lyricsToParse.split('\n');
+  // Splits lyrics by line breaks to parse each line individually
+  lyricsToParse = lyricsToParse.split('\n');
 
-  // // Line constructor for each line
-  // class Line {
-  //   constructor() {
-  //     this.class = [];
-  //     this.member = [];
-  //     this.content = [];
-  //     this.adlibs = [];
-  //   }
-  // }
+  // Line constructor for each line
+  class Line {
+    constructor() {
+      this.class = [];
+      this.member = [];
+      this.content = [];
+      this.adlibs = [];
+    }
+  }
 
   // lyricsToParse.forEach((str) => {
   //   let line = new Line();

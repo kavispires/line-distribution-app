@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
@@ -8,6 +9,20 @@ const Lyrics = (props) => {
   const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
   const CURRENT_UNIT = props.app.currentUnit;
   console.log(CURRENT_UNIT);
+
+  if (CURRENT_UNIT.id === undefined) {
+    return (
+      <div className="container-flex">
+        <section className="container container-distribution">
+          <section className="section-distribution container-fixed">
+            <h1>Lyrics</h1>
+            <p>You must select an Artist and Unit in the <Link to="/artists">Artists Page</Link> before you can use the Lyrics Color Coder.</p>
+          </section>
+        </section>
+      </div>
+    );
+  }
+
 
   return (
     <div className="container">
@@ -21,7 +36,7 @@ const Lyrics = (props) => {
               <ul className="members-list">
                 {
                   CURRENT_UNIT.members.map((member, i) => (
-                    <li key={member.memberId} className={`member-list-item color-${CURRENT_UNIT.members[i].colorId}`}>{member.name}</li>
+                    <li key={`pill-${member.id}`} className={`member-list-item color-${CURRENT_UNIT.members[i].colorId}`}>{member.name}</li>
                   ))
                 }
               </ul>
@@ -30,16 +45,6 @@ const Lyrics = (props) => {
           :
           <p>You must select an artist first for the parser to work properly.</p>
       }
-      {/*
-        Get Text
-        Split by line breaks
-        Lines:
-        Square brackets define the member singing
-        If parenthesis = ad-libs
-        If more then one name = split
-        If 3 or more, just assign all all)
-        If none, copy the latest
-      */}
       <section className="container">
         <button className="btn" onClick={ props.toggleRules }>{ LYRICS.showRules ? 'Minimize Instructions' : 'Show Instructions'}</button>
         {
@@ -56,11 +61,17 @@ const Lyrics = (props) => {
         }
       </section>
       <section className="lyrics-container">
-        <LyricsEditor placeholder={ placeholder } action={props.handleParser} defaultValue={ LYRICS.lyrics } />
-        <LyricsViewer formattedLyrics={ LYRICS.formattedLyrics } />
+        <LyricsEditor
+          placeholder={placeholder}
+          action={props.handleParser}
+          defaultValue={LYRICS.lyrics}
+        />
+        <LyricsViewer
+          formattedLyrics={LYRICS.formattedLyrics}
+        />
       </section>
     </div>
-    );
+  );
 };
 
 export default Lyrics;

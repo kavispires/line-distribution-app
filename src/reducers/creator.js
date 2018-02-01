@@ -365,10 +365,6 @@ export const generateUnitJSON = (membersIds, skipClipboard = false) => (dispatch
   const official = getState().creator.newUnitOfficial || false;
   const id = getLatestId('units');
 
-  // newUnitMembers: [],
-  // loadedMember: 0,
-  // newMembers: {},
-
   if (!Array.isArray(membersIds)) {
     membersIds = ['ADD-MEMBER-IDS'];
   }

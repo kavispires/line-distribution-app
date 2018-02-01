@@ -35,23 +35,13 @@ const initialState = {
   queue: {},
   showLyrics: false,
   total: 0,
-  who: []
+  who: [],
 };
 
 export default function reducer(prevState = initialState, action) {
-
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-
-    case SET_QUEUE:
-      newState.queue = action.payload;
-      break;
-
-    case EDIT_LYRICS:
-      newState.editLyrics = action.payload;
-      break;
-
     case SET_DECREASE:
       newState.decrease = action.payload;
       break;
@@ -60,12 +50,20 @@ export default function reducer(prevState = initialState, action) {
       newState.durations = action.payload;
       break;
 
+    case EDIT_LYRICS:
+      newState.editLyrics = action.payload;
+      break;
+
     case SET_HISTORY:
       newState.history = action.payload;
       break;
 
     case SET_PERCENTAGES:
       newState.percentages = action.payload;
+      break;
+
+    case SET_QUEUE:
+      newState.queue = action.payload;
       break;
 
     case SHOW_LYRICS:
@@ -82,11 +80,9 @@ export default function reducer(prevState = initialState, action) {
 
     default:
       return prevState;
-
   }
 
   return newState;
-
 }
 
 /* ---------------   DISPATCHERS   ----------------- */
