@@ -151,7 +151,7 @@ export const parseArtists = () => (dispatch, getState) => {
   dispatch(setArtistsSearchIndexation(searchIndexation));
 
   // Order by Artists Name
-  const orderedArtists = _.sortBy(ARTISTS, ['name']).map(band => band.id);
+  const orderedArtists = _.sortBy(ARTISTS, [artist => artist.name.toLowerCase()]).map(band => band.id);
   dispatch(setArtistsList(orderedArtists));
   dispatch(setArtistsListBackUp(orderedArtists));
 };
