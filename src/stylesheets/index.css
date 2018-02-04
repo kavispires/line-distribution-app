@@ -5697,6 +5697,16 @@ h1 {
   width: 12px;
   transform: translateY(2px); }
 
+.icon-positions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center; }
+
+.icon-pos {
+  width: 24px;
+  margin-bottom: 3px; }
+
 .member-list-item {
   padding: 3px 6px;
   margin-left: 6px;

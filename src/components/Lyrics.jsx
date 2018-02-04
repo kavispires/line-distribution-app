@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
+import PositionIcons from './icons/PositionIcons';
 
 class Lyrics extends Component {
   componentWillReceiveProps(nextProps) {
@@ -39,13 +40,19 @@ class Lyrics extends Component {
         {
           CURRENT_UNIT ?
             <div className="current-band">
-              <p>Current Band: {CURRENT_UNIT.bandId}</p>
+              <p>Current Band: <b>{CURRENT_UNIT.artist.name}</b></p>
               <div className="current-band-members">
                 <p>Members:</p>
                 <ul className="members-list">
                   {
                     CURRENT_UNIT.members.map((member, i) => (
-                      <li key={`pill-${member.id}`} className={`member-list-item color-${CURRENT_UNIT.members[i].colorId}`}>{member.name}</li>
+                      <li
+                        key={`pill-${member.id}`}
+                        className={`member-list-item color-${CURRENT_UNIT.members[i].colorId}`}
+                      >
+                        {member.name}
+                        <PositionIcons memberId={member.id} positions={member.positions} />
+                      </li>
                     ))
                   }
                 </ul>
