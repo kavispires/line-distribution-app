@@ -1,0 +1,1166 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Taeyeon",
+    "colorId": 5,
+    "altColorId": 21,
+    "birthdate": 19890309,
+    "positions": [
+      1,
+      2
+    ]
+  },
+  "2": {
+    "id": 2,
+    "name": "Jessica",
+    "colorId": 23,
+    "altColorId": 20,
+    "birthdate": 19890418,
+    "positions": [
+      2
+    ]
+  },
+  "3": {
+    "id": 3,
+    "name": "Sunny",
+    "colorId": 24,
+    "altColorId": 27,
+    "birthdate": 19890515,
+    "positions": [
+      5
+    ]
+  },
+  "4": {
+    "id": 4,
+    "name": "Hyoyeon",
+    "colorId": 14,
+    "altColorId": 11,
+    "birthdate": 19890922,
+    "positions": [
+      4,
+      3,
+      8
+    ]
+  },
+  "5": {
+    "id": 5,
+    "name": "Yuri",
+    "colorId": 33,
+    "altColorId": 3,
+    "birthdate": 19891205,
+    "positions": [
+      6,
+      7,
+      8
+    ]
+  },
+  "6": {
+    "id": 6,
+    "name": "Yoona",
+    "colorId": 10,
+    "altColorId": 26,
+    "birthdate": 19900530,
+    "positions": [
+      7,
+      8,
+      10,
+      11,
+      12
+    ]
+  },
+  "7": {
+    "id": 7,
+    "name": "Tiffany",
+    "colorId": 30,
+    "altColorId": 27,
+    "birthdate": 19890801,
+    "positions": [
+      5,
+      10
+    ]
+  },
+  "8": {
+    "id": 8,
+    "name": "Sooyoung",
+    "colorId": 19,
+    "altColorId": 22,
+    "birthdate": 19900210,
+    "positions": [
+      6,
+      7,
+      8
+    ]
+  },
+  "9": {
+    "id": 9,
+    "name": "Seohyun",
+    "colorId": 18,
+    "altColorId": 21,
+    "birthdate": 19910628,
+    "positions": [
+      5,
+      13
+    ]
+  },
+  "10": {
+    "id": 10,
+    "name": "CL",
+    "colorId": 3,
+    "altColorId": 6,
+    "birthdate": 19910226,
+    "positions": [
+      1,
+      5,
+      6,
+      8,
+      12
+    ]
+  },
+  "11": {
+    "id": 11,
+    "name": "Bom",
+    "colorId": 18,
+    "altColorId": 15,
+    "birthdate": 19840324,
+    "positions": [
+      2
+    ]
+  },
+  "12": {
+    "id": 12,
+    "name": "Dara",
+    "colorId": 24,
+    "altColorId": 21,
+    "birthdate": 19841112,
+    "positions": [
+      4,
+      11
+    ]
+  },
+  "13": {
+    "id": 13,
+    "name": "Minzy",
+    "colorId": 21,
+    "altColorId": 24,
+    "birthdate": 19940118,
+    "positions": [
+      5,
+      9,
+      13
+    ]
+  },
+  "14": {
+    "id": 14,
+    "name": "Yubin",
+    "colorId": 18,
+    "altColorId": 21,
+    "birthdate": 19881004,
+    "positions": [
+      4,
+      8,
+      12
+    ]
+  },
+  "15": {
+    "id": 15,
+    "name": "Yeeun",
+    "colorId": 21,
+    "altColorId": 18,
+    "birthdate": 19890526,
+    "positions": [
+      2
+    ]
+  },
+  "16": {
+    "id": 16,
+    "name": "Sunmi",
+    "colorId": 2,
+    "altColorId": 32,
+    "birthdate": 19920502,
+    "positions": [
+      5,
+      11
+    ]
+  },
+  "17": {
+    "id": 17,
+    "name": "Hyelim",
+    "colorId": 32,
+    "altColorId": 15,
+    "birthdate": 19920901,
+    "positions": [
+      4,
+      9,
+      13
+    ]
+  },
+  "18": {
+    "id": 18,
+    "name": "Sohee",
+    "colorId": 24,
+    "altColorId": 7,
+    "birthdate": 19920627,
+    "positions": [
+      4,
+      5,
+      11
+    ]
+  },
+  "19": {
+    "id": 19,
+    "name": "Sunye",
+    "colorId": 5,
+    "altColorId": 21,
+    "birthdate": 19890812,
+    "positions": [
+      1,
+      2,
+      6
+    ]
+  },
+  "20": {
+    "id": 20,
+    "name": "JeA",
+    "colorId": 2,
+    "altColorId": 18,
+    "birthdate": 19810918,
+    "positions": [
+      1,
+      2
+    ]
+  },
+  "21": {
+    "id": 21,
+    "name": "Miryo",
+    "colorId": 15,
+    "altColorId": 18,
+    "birthdate": 19811102,
+    "positions": [
+      4,
+      8
+    ]
+  },
+  "22": {
+    "id": 22,
+    "name": "Narsha",
+    "colorId": 21,
+    "altColorId": 18,
+    "birthdate": 19811229,
+    "positions": [
+      5,
+      6
+    ]
+  },
+  "23": {
+    "id": 23,
+    "name": "GaIn",
+    "colorId": 25,
+    "altColorId": 8,
+    "birthdate": 19870920,
+    "positions": [
+      4,
+      5,
+      11,
+      12,
+      13
+    ]
+  },
+  "24": {
+    "id": 24,
+    "name": "Jihyun",
+    "colorId": 24,
+    "altColorId": 27,
+    "birthdate": 19900109,
+    "positions": [
+      1,
+      7,
+      8,
+      12
+    ]
+  },
+  "25": {
+    "id": 25,
+    "name": "Gayoon",
+    "colorId": 20,
+    "altColorId": 3,
+    "birthdate": 19900118,
+    "positions": [
+      2
+    ]
+  },
+  "26": {
+    "id": 26,
+    "name": "Jiyoon",
+    "colorId": 17,
+    "altColorId": 20,
+    "birthdate": 19901015,
+    "positions": [
+      5,
+      6
+    ]
+  },
+  "27": {
+    "id": 27,
+    "name": "Hyuna",
+    "colorId": 2,
+    "altColorId": 18,
+    "birthdate": 19920606,
+    "positions": [
+      3,
+      4,
+      8,
+      11
+    ]
+  },
+  "28": {
+    "id": 28,
+    "name": "Sohyun",
+    "colorId": 7,
+    "altColorId": 10,
+    "birthdate": 19940830,
+    "positions": [
+      7,
+      8,
+      10,
+      13
+    ]
+  },
+  "29": {
+    "id": 29,
+    "name": "Fei",
+    "colorId": 27,
+    "altColorId": 10,
+    "birthdate": 19870427,
+    "positions": [
+      2
+    ]
+  },
+  "30": {
+    "id": 30,
+    "name": "Jia",
+    "colorId": 17,
+    "altColorId": 20,
+    "birthdate": 19890203,
+    "positions": [
+      3,
+      7,
+      8
+    ]
+  },
+  "31": {
+    "id": 31,
+    "name": "Min",
+    "colorId": 20,
+    "altColorId": 23,
+    "birthdate": 19910621,
+    "positions": [
+      4,
+      5
+    ]
+  },
+  "32": {
+    "id": 32,
+    "name": "Suzy",
+    "colorId": 8,
+    "altColorId": 5,
+    "birthdate": 19941010,
+    "positions": [
+      5,
+      6,
+      11,
+      12,
+      13
+    ]
+  },
+  "33": {
+    "id": 33,
+    "name": "Victoria",
+    "colorId": 33,
+    "altColorId": 30,
+    "birthdate": 19870909,
+    "positions": [
+      1,
+      4,
+      6,
+      8
+    ]
+  },
+  "34": {
+    "id": 34,
+    "name": "Amber",
+    "colorId": 22,
+    "altColorId": 5,
+    "birthdate": 19920918,
+    "positions": [
+      3,
+      8
+    ]
+  },
+  "35": {
+    "id": 35,
+    "name": "Luna",
+    "colorId": 16,
+    "altColorId": 19,
+    "birthdate": 19930812,
+    "positions": [
+      2,
+      7
+    ]
+  },
+  "36": {
+    "id": 36,
+    "name": "Sulli",
+    "colorId": 30,
+    "altColorId": 13,
+    "birthdate": 19940329,
+    "positions": [
+      6,
+      8,
+      12
+    ]
+  },
+  "37": {
+    "id": 37,
+    "name": "Krystal",
+    "colorId": 9,
+    "altColorId": 12,
+    "birthdate": 19941024,
+    "positions": [
+      5,
+      11,
+      12,
+      13
+    ]
+  },
+  "38": {
+    "id": 38,
+    "name": "Yubin",
+    "colorId": 13,
+    "altColorId": 29,
+    "birthdate": 19881004,
+    "positions": [
+      3,
+      8,
+      11
+    ]
+  },
+  "39": {
+    "id": 39,
+    "name": "Yeeun",
+    "colorId": 20,
+    "altColorId": 3,
+    "birthdate": 19890526,
+    "positions": [
+      2
+    ]
+  },
+  "40": {
+    "id": 40,
+    "name": "Sunmi",
+    "colorId": 1,
+    "altColorId": 4,
+    "birthdate": 19920502,
+    "positions": [
+      5,
+      12
+    ]
+  },
+  "41": {
+    "id": 41,
+    "name": "Hyelim",
+    "colorId": 32,
+    "altColorId": 2,
+    "birthdate": 19920901,
+    "positions": [
+      6,
+      8,
+      13
+    ]
+  },
+  "42": {
+    "id": 42,
+    "name": "Sohee",
+    "colorId": 27,
+    "altColorId": 24,
+    "birthdate": 19920627,
+    "positions": [
+      4,
+      8,
+      11
+    ]
+  },
+  "43": {
+    "id": 43,
+    "name": "Sunye",
+    "colorId": 6,
+    "altColorId": 3,
+    "birthdate": 19890812,
+    "positions": [
+      1,
+      2,
+      7
+    ]
+  },
+  "44": {
+    "id": 44,
+    "name": "Nayeon",
+    "colorId": 3,
+    "altColorId": 33,
+    "birthdate": 19950922,
+    "positions": [
+      5,
+      11
+    ]
+  },
+  "45": {
+    "id": 45,
+    "name": "Jeonyeon",
+    "colorId": 14,
+    "altColorId": 17,
+    "birthdate": 19961101,
+    "positions": [
+      5
+    ]
+  },
+  "46": {
+    "id": 46,
+    "name": "Momo",
+    "colorId": 33,
+    "altColorId": 16,
+    "birthdate": 19961109,
+    "positions": [
+      4,
+      8,
+      10
+    ]
+  },
+  "47": {
+    "id": 47,
+    "name": "Sana",
+    "colorId": 23,
+    "altColorId": 26,
+    "birthdate": 19961229,
+    "positions": [
+      7,
+      8
+    ]
+  },
+  "48": {
+    "id": 48,
+    "name": "Jihyo",
+    "colorId": 27,
+    "altColorId": 30,
+    "birthdate": 19970201,
+    "positions": [
+      1,
+      2
+    ]
+  },
+  "49": {
+    "id": 49,
+    "name": "Mina",
+    "colorId": 25,
+    "altColorId": 28,
+    "birthdate": 19970324,
+    "positions": [
+      7,
+      8
+    ]
+  },
+  "50": {
+    "id": 50,
+    "name": "Dahyun",
+    "colorId": 28,
+    "altColorId": 11,
+    "birthdate": 19980528,
+    "positions": [
+      6,
+      8
+    ]
+  },
+  "51": {
+    "id": 51,
+    "name": "Chaeyoung",
+    "colorId": 19,
+    "altColorId": 2,
+    "birthdate": 19990423,
+    "positions": [
+      3,
+      8
+    ]
+  },
+  "52": {
+    "id": 52,
+    "name": "Tzuyu",
+    "colorId": 12,
+    "altColorId": 28,
+    "birthdate": 19990614,
+    "positions": [
+      7,
+      8,
+      12,
+      13
+    ]
+  },
+  "53": {
+    "id": 53,
+    "name": "Jisoo",
+    "colorId": 16,
+    "altColorId": 32,
+    "birthdate": 19950103,
+    "positions": [
+      5,
+      11,
+      12
+    ]
+  },
+  "54": {
+    "id": 54,
+    "name": "Jennie",
+    "colorId": 22,
+    "altColorId": 19,
+    "birthdate": 19960116,
+    "positions": [
+      3,
+      5
+    ]
+  },
+  "55": {
+    "id": 55,
+    "name": "Rosé",
+    "colorId": 30,
+    "altColorId": 27,
+    "birthdate": 19970211,
+    "positions": [
+      2,
+      7
+    ]
+  },
+  "56": {
+    "id": 56,
+    "name": "Lisa",
+    "colorId": 29,
+    "altColorId": 32,
+    "birthdate": 19970327,
+    "positions": [
+      4,
+      6,
+      8,
+      13
+    ]
+  },
+  "57": {
+    "id": 57,
+    "name": "Nayoung",
+    "colorId": 10,
+    "altColorId": 7,
+    "birthdate": 19951218,
+    "positions": [
+      1,
+      4,
+      6,
+      8
+    ]
+  },
+  "58": {
+    "id": 58,
+    "name": "Yuha",
+    "colorId": 14,
+    "altColorId": 17,
+    "birthdate": 19971105,
+    "positions": [
+      5
+    ]
+  },
+  "59": {
+    "id": 59,
+    "name": "Roa",
+    "colorId": 3,
+    "altColorId": 33,
+    "birthdate": 19970729,
+    "positions": [
+      5
+    ]
+  },
+  "60": {
+    "id": 60,
+    "name": "Kyulkyung",
+    "colorId": 28,
+    "altColorId": 25,
+    "birthdate": 19981216,
+    "positions": [
+      4,
+      8,
+      11,
+      12
+    ]
+  },
+  "61": {
+    "id": 61,
+    "name": "Rena",
+    "colorId": 29,
+    "altColorId": 32,
+    "birthdate": 19981019,
+    "positions": [
+      3,
+      7,
+      8
+    ]
+  },
+  "62": {
+    "id": 62,
+    "name": "Eunwoo",
+    "colorId": 20,
+    "altColorId": 23,
+    "birthdate": 19980701,
+    "positions": [
+      2
+    ]
+  },
+  "63": {
+    "id": 63,
+    "name": "Sungyeon",
+    "colorId": 19,
+    "altColorId": 16,
+    "birthdate": 19990525,
+    "positions": [
+      2
+    ]
+  },
+  "64": {
+    "id": 64,
+    "name": "Yehana",
+    "colorId": 1,
+    "altColorId": 4,
+    "birthdate": 19990222,
+    "positions": [
+      2
+    ]
+  },
+  "65": {
+    "id": 65,
+    "name": "Xiyeon",
+    "colorId": 25,
+    "altColorId": 8,
+    "birthdate": 20001114,
+    "positions": [
+      5,
+      6,
+      7,
+      11,
+      12
+    ]
+  },
+  "66": {
+    "id": 66,
+    "name": "Kyla",
+    "colorId": 27,
+    "altColorId": 30,
+    "birthdate": 20011226,
+    "positions": [
+      6,
+      8,
+      13
+    ]
+  },
+
+  "1001": {
+    "id": 1001,
+    "name": "Kyle",
+    "colorId": 22,
+    "altColorId": 19,
+    "birthdate": 19840117,
+    "positions": [
+      1,
+      3,
+      5
+    ]
+  },
+  "1002": {
+    "id": 1002,
+    "name": "Anthony",
+    "colorId": 1,
+    "altColorId": 17,
+    "birthdate": 19840117,
+    "positions": [
+      5,
+      12
+    ]
+  },
+  "1003": {
+    "id": 1003,
+    "name": "Viktor",
+    "colorId": 10,
+    "altColorId": 7,
+    "birthdate": 19840117,
+    "positions": [
+      2
+    ]
+  },
+  "1004": {
+    "id": 1004,
+    "name": "Ira",
+    "colorId": 25,
+    "altColorId": 28,
+    "birthdate": 19840117,
+    "positions": [
+      5
+    ]
+  },
+  "1005": {
+    "id": 1005,
+    "name": "Seth",
+    "colorId": 14,
+    "altColorId": 11,
+    "birthdate": 19840117,
+    "positions": [
+      4,
+      6,
+      8
+    ]
+  },
+  "1006": {
+    "id": 1006,
+    "name": "Packer",
+    "colorId": 3,
+    "altColorId": 6,
+    "birthdate": 19840117,
+    "positions": [
+      7,
+      8
+    ]
+  },
+  "1007": {
+    "id": 1007,
+    "name": "Scott",
+    "colorId": 34,
+    "altColorId": 32,
+    "birthdate": 19840117,
+    "positions": [
+      8,
+      9,
+      13
+    ]
+  },
+  "1008": {
+    "id": 1008,
+    "name": "Pat",
+    "colorId": 33,
+    "altColorId": 3,
+    "birthdate": 19840117,
+    "positions": [
+      2,
+      10
+    ]
+  },
+  "1009": {
+    "id": 1009,
+    "name": "Brian",
+    "colorId": 21,
+    "altColorId": 4,
+    "birthdate": 19840204,
+    "positions": [
+      4,
+      8
+    ]
+  },
+  "1010": {
+    "id": 1010,
+    "name": "Nick",
+    "colorId": 10,
+    "altColorId": 7,
+    "birthdate": 19870101,
+    "positions": [
+      8
+    ]
+  },
+  "1011": {
+    "id": 1011,
+    "name": "Ad.J",
+    "colorId": 14,
+    "altColorId": 11,
+    "birthdate": 19871020,
+    "positions": [
+      3,
+      8
+    ]
+  },
+  "1012": {
+    "id": 1012,
+    "name": "T-Precious",
+    "colorId": 8,
+    "altColorId": 24,
+    "birthdate": 19850101,
+    "positions": [
+      6
+    ]
+  },
+  "1013": {
+    "id": 1013,
+    "name": "Black O",
+    "colorId": 29,
+    "altColorId": 26,
+    "birthdate": 19881101,
+    "positions": [
+      5
+    ]
+  },
+  "1014": {
+    "id": 1014,
+    "name": "Yves Brazil",
+    "colorId": 12,
+    "altColorId": 28,
+    "birthdate": 19860820,
+    "positions": [
+      8
+    ]
+  },
+  "1015": {
+    "id": 1015,
+    "name": "Mari",
+    "colorId": 24,
+    "altColorId": 27,
+    "birthdate": 19820412,
+    "positions": [
+      8
+    ]
+  },
+  "1016": {
+    "id": 1016,
+    "name": "Pri",
+    "colorId": 10,
+    "altColorId": 13,
+    "birthdate": 19820712,
+    "positions": [
+      2,
+      4
+    ]
+  },
+  "1017": {
+    "id": 1017,
+    "name": "Mab",
+    "colorId": 28,
+    "altColorId": 31,
+    "birthdate": 19820422,
+    "positions": [
+      5,
+      12
+    ]
+  },
+  "1018": {
+    "id": 1018,
+    "name": "CD",
+    "colorId": 22,
+    "altColorId": 19,
+    "birthdate": 19830911,
+    "positions": [
+      2
+    ]
+  },
+  "1019": {
+    "id": 1019,
+    "name": "Mika",
+    "colorId": 14,
+    "altColorId": 17,
+    "birthdate": 19840409,
+    "positions": [
+      8,
+      13
+    ]
+  },
+  "1020": {
+    "id": 1020,
+    "name": "Deby",
+    "colorId": 33,
+    "altColorId": 16,
+    "birthdate": 19840402,
+    "positions": [
+      1,
+      3,
+      5,
+      11
+    ]
+  },
+  "1021": {
+    "id": 1021,
+    "name": "Zachary",
+    "colorId": 22,
+    "altColorId": 5,
+    "birthdate": 19710421,
+    "positions": [
+      8
+    ]
+  },
+  "1022": {
+    "id": 1022,
+    "name": "Robbie",
+    "colorId": 21,
+    "altColorId": 18,
+    "birthdate": 19800108,
+    "positions": [
+      5
+    ]
+  },
+  "1023": {
+    "id": 1023,
+    "name": "Leo",
+    "colorId": 18,
+    "altColorId": 1,
+    "birthdate": 19800810,
+    "positions": [
+      5,
+      7
+    ]
+  },
+  "1024": {
+    "id": 1024,
+    "name": "3J",
+    "colorId": 5,
+    "altColorId": 21,
+    "birthdate": 19801117,
+    "positions": [
+      1,
+      2,
+      11
+    ]
+  },
+  "1025": {
+    "id": 1025,
+    "name": "Bobak",
+    "colorId": 33,
+    "altColorId": 30,
+    "birthdate": 19811230,
+    "positions": [
+      3,
+      4
+    ]
+  },
+  "1026": {
+    "id": 1026,
+    "name": "Nicky",
+    "colorId": 28,
+    "altColorId": 25,
+    "birthdate": 19840622,
+    "positions": [
+      2,
+      12
+    ]
+  },
+  "1027": {
+    "id": 1027,
+    "name": "Sypher",
+    "colorId": 29,
+    "altColorId": 12,
+    "birthdate": 19840929,
+    "positions": [
+      3,
+      8
+    ]
+  },
+  "1028": {
+    "id": 1028,
+    "name": "Bryan",
+    "colorId": 25,
+    "altColorId": 22,
+    "birthdate": 19830530,
+    "positions": [
+      8,
+      12,
+      13
+    ]
+  },
+  "1029": {
+    "id": 1029,
+    "name": "JQ",
+    "colorId": 10,
+    "altColorId": 13,
+    "birthdate": 19851011,
+    "positions": [
+      1,
+      4,
+      6,
+      8,
+      11
+    ]
+  },
+  "1030": {
+    "id": 1030,
+    "name": "Nathan",
+    "colorId": 14,
+    "altColorId": 30,
+    "birthdate": 19870204,
+    "positions": [
+      8,
+      12
+    ]
+  },
+  "1031": {
+    "id": 1031,
+    "name": "Fuduck",
+    "colorId": 19,
+    "altColorId": 22,
+    "birthdate": 19780303,
+    "positions": [
+      8,
+      9
+    ]
+  },
+  "1032": {
+    "id": 1032,
+    "name": "Brittany",
+    "colorId": 2,
+    "altColorId": 5,
+    "birthdate": 19730721,
+    "positions": [
+      4,
+      5
+    ]
+  },
+  "1033": {
+    "id": 1033,
+    "name": "Diana",
+    "colorId": 17,
+    "altColorId": 33,
+    "birthdate": 19840102,
+    "positions": [
+      1,
+      2
+    ]
+  },
+  "1034": {
+    "id": 1034,
+    "name": "Ulla",
+    "colorId": 30,
+    "altColorId": 27,
+    "birthdate": 19850628,
+    "positions": [
+      3,
+      8,
+      11
+    ]
+  },
+  "1035": {
+    "id": 1035,
+    "name": "Tracy",
+    "colorId": 19,
+    "altColorId": 2,
+    "birthdate": 19850831,
+    "positions": [
+      7,
+      8,
+      10
+    ]
+  },
+  "1036": {
+    "id": 1036,
+    "name": "Olive",
+    "colorId": 27,
+    "altColorId": 30,
+    "birthdate": 19871216,
+    "positions": [
+      8,
+      12,
+      13
+    ]
+  }
+}

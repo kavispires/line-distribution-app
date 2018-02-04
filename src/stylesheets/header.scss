@@ -1,0 +1,42 @@
+@import './variables.scss';
+
+.app-header {
+  background-color: $primary;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  min-height: 36px;
+}
+
+.app-logo {
+	max-height: 36px;
+	padding: $halfUnit 0;
+}
+
+.app-nav {
+	color: $negative;
+
+	a {
+		color: $negative;
+		text-decoration: none;
+		padding-left: $unit;
+  	padding-right: $unit;
+
+		&:not(:last-child) {
+			border-right: 1px solid $darkGrey;
+		}
+
+		&:hover {
+			border-bottom: 2px solid $grey;
+		}
+
+		&:visited {
+			color: $negative;
+    }
+
+    .selected {
+      border-bottom: 2px solid $darkGrey;
+    }
+	}
+}

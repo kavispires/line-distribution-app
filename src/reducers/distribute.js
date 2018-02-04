@@ -35,23 +35,13 @@ const initialState = {
   queue: {},
   showLyrics: false,
   total: 0,
-  who: []
+  who: [],
 };
 
 export default function reducer(prevState = initialState, action) {
-
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-
-    case SET_QUEUE:
-      newState.queue = action.payload;
-      break;
-
-    case EDIT_LYRICS:
-      newState.editLyrics = action.payload;
-      break;
-
     case SET_DECREASE:
       newState.decrease = action.payload;
       break;
@@ -60,12 +50,20 @@ export default function reducer(prevState = initialState, action) {
       newState.durations = action.payload;
       break;
 
+    case EDIT_LYRICS:
+      newState.editLyrics = action.payload;
+      break;
+
     case SET_HISTORY:
       newState.history = action.payload;
       break;
 
     case SET_PERCENTAGES:
       newState.percentages = action.payload;
+      break;
+
+    case SET_QUEUE:
+      newState.queue = action.payload;
       break;
 
     case SHOW_LYRICS:
@@ -82,11 +80,9 @@ export default function reducer(prevState = initialState, action) {
 
     default:
       return prevState;
-
   }
 
   return newState;
-
 }
 
 /* ---------------   DISPATCHERS   ----------------- */
@@ -104,9 +100,10 @@ export const updateHistory = (entry, add = 'true', index) => (dispatch, getState
 
 export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), dehistory = false, index = null) => (dispatch, getState) => {
   // Calculate and set
-  const decrease = getState().distribute.decrease;
+  const { decrease } = getState().distribute;
   const duration = timestamp - startTimestamp;
   const durations = [...getState().distribute.durations];
+  const CURRENT_UNIT = getState().app.currentUnit;
   // Add or decrease
   if (decrease) {
     durations[id] -= duration;
@@ -115,22 +112,21 @@ export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), de
   } else {
     durations[id] += duration;
   }
-
   dispatch(setDurations(durations));
+
   // Calculate percentage
   const total = durations.reduce((a, b) => a + b);
-  const percentages = durations.map(val => {
-    return Math.round((val * 100) / total);
-  });
+  const percentages = durations.map(val => Math.round((val * 100) / total));
   dispatch(setPercentages(percentages));
+
   // Add to who
   const who = [...getState().distribute.who];
-  who.splice(getState().app.currentBand.members[id], 1);
+  who.splice(CURRENT_UNIT.members[id], 1);
   dispatch(setWho(who));
   // Add to history
   const entry = {
     memberId: id,
-    duration
+    duration,
   };
   if (!dehistory) {
     dispatch(updateHistory(entry, true));
@@ -143,21 +139,22 @@ export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getStat
   if (getState().distribute.editLyrics) return;
   // Only if queue does NOT contains id
   if (getState().distribute.queue[id] === undefined) {
-    const queue = Object.assign({},  getState().distribute.queue);
+    const CURRENT_UNIT = getState().app.currentUnit;
+    const queue = Object.assign({}, getState().distribute.queue);
     queue[id] = timestamp;
     dispatch(setQueue(queue));
     // Add to who
     const who = [...getState().distribute.who];
-    who.unshift(getState().app.currentBand.members[id]);
+    who.unshift(CURRENT_UNIT.members[id].name);
     dispatch(setWho(who));
   }
 };
 
-export const dequeueCapture  = (id, timestamp = Date.now()) => (dispatch, getState) => {
+export const dequeueCapture = (id, timestamp = Date.now()) => (dispatch, getState) => {
   if (getState().distribute.editLyrics) return;
   // If queue contains id, set end and delete it from queue
   if (getState().distribute.queue[id] !== undefined) {
-    const queue = Object.assign({},  getState().distribute.queue);
+    const queue = Object.assign({}, getState().distribute.queue);
     // Get time and delete pair
     const startTimestamp = queue[id];
     delete queue[id];
@@ -167,22 +164,23 @@ export const dequeueCapture  = (id, timestamp = Date.now()) => (dispatch, getSta
   }
 };
 
-export const boxMouseDown = (e) => (dispatch, getState) => {
+export const boxMouseDown = e => (dispatch, getState) => {
   const timestamp = Date.now();
-  let id = e.currentTarget.id;
+  const { id } = e.currentTarget;
   if (getState().distribute.editLyrics) return;
   dispatch(enqueueCapture(id, timestamp));
 };
 
-export const boxMouseUp = (e) => (dispatch, getState) => {
+export const boxMouseUp = e => (dispatch, getState) => {
   const timestamp = Date.now();
-  let id = e.currentTarget.id;
+  const { id } = e.currentTarget;
   if (getState().distribute.editLyrics) return;
   dispatch(dequeueCapture(id, timestamp));
 };
 
 export const handleReset = () => (dispatch, getState) => {
-  const newArray = new Array(getState().app.currentBand.members.length).fill(0);
+  const CURRENT_UNIT = getState().app.currentUnit;
+  const newArray = new Array(CURRENT_UNIT.members.length).fill(0);
   // Clear queue
   dispatch(setQueue({}));
   // Clear durations
@@ -194,24 +192,25 @@ export const handleReset = () => (dispatch, getState) => {
 };
 
 export const handleUndo = () => (dispatch, getState) => {
-  const history = getState().distribute.history;
+  const { history } = getState().distribute;
   const removedNode = Object.assign({}, history[0]);
   dispatch(calculateDuration(removedNode.memberId, 0, -removedNode.duration, true, 0));
 };
 
 export const handleDecrease = () => (dispatch, getState) => {
-  const decrease = getState().distribute.decrease;
+  const { decrease } = getState().distribute;
   dispatch(setDecrease(!decrease));
 };
 
-export const handleKeydown = (e) => (dispatch, getState) => {
-  if (KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < getState().app.currentBand.members.length) {
+export const handleKeydown = e => (dispatch, getState) => {
+  const CURRENT_UNIT = getState().app.currentUnit;
+  if (CURRENT_UNIT && KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_UNIT.members.length) {
     const key = KEYS[e.keyCode];
     dispatch(enqueueCapture(key.id));
   }
 };
 
-export const handleKeyup = (e) => (dispatch, getState) => {
+export const handleKeyup = e => (dispatch) => {
   if (KEYS[e.keyCode] !== undefined) {
     const key = KEYS[e.keyCode];
     dispatch(dequeueCapture(key.id));

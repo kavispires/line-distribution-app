@@ -12,15 +12,13 @@ export const setResultType = payload => dispatch => dispatch({ type: SET_RESULT_
 
 const initialState = {
   results: [],
-  showPercentage: false
+  showPercentage: false,
 };
 
 export default function reducer(prevState = initialState, action) {
-
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-
     case SET_RESULTS:
       newState.results = action.payload;
       break;
@@ -31,11 +29,9 @@ export default function reducer(prevState = initialState, action) {
 
     default:
       return prevState;
-
   }
 
   return newState;
-
 }
 
 /* ---------------   DISPATCHERS   ----------------- */
@@ -43,7 +39,7 @@ export default function reducer(prevState = initialState, action) {
 export const calculateResults = () => (dispatch, getState) => {
   const durations = [...getState().distribute.durations];
   const percentages = [...getState().distribute.percentages];
-  const currentBand = Object.assign({}, getState().app.currentBand);
+  const CURRENT_UNIT = getState().app.currentUnit;
   // Find Max value
   const max = Math.max.apply(null, durations);
   // Sort durations
@@ -54,11 +50,11 @@ export const calculateResults = () => (dispatch, getState) => {
     const index = durations.indexOf(val);
     const relativePercentage = Math.round((durations[index] * 100) / max);
     const member = {
-      name: currentBand.members[index],
-      color: currentBand.colors[index],
-      relativePercentage: relativePercentage,
+      name: CURRENT_UNIT.members[index].name,
+      color: CURRENT_UNIT.members[index].colorId,
+      relativePercentage,
       percentage: percentages[index],
-      duration: durations[index]
+      duration: durations[index],
     };
     results.push(member);
     durations[index] = null;

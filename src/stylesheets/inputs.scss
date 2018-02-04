@@ -1,0 +1,19 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.search-bar {
+  @include input-text;
+  width: 30%;
+  min-width: 300px;
+}
+
+.textarea {
+  border: $lightGrey 1px solid;
+  resize: none;
+}
+
+.textarea-full {
+  @extend .textarea;
+  width: 100%;
+  min-height: 400px;
+}

@@ -1,24 +1,39 @@
+@import './variables.scss';
+
 .table {
-	// outline: 1px solid green;
-	width: 100%;
-	border-collapse: collapse;
+  // outline: 1px solid green;
+  width: 100%;
+  border-collapse: collapse;
 
-	thead {
-		text-align: left;
-		
-		th {
-			padding: 10px;
-			border-bottom: 2px solid #222;
-		}
-	}
+  thead {
+    text-align: left;
 
-	td {
-		padding: 10px;
-		border-bottom: 1px solid #ccc;
-	}
+    th {
+      padding: 10px;
+      border-bottom: 2px solid $darkGrey;
+    }
 
-	tbody tr:hover {
-		background: #ccc;
-		cursor: pointer;
-	}
+    .th-num {
+      max-width: 60px;
+    }
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid $lightGrey;
+  }
+
+  tbody tr:hover {
+    background: $lightGrey;
+    cursor: pointer;
+  }
+
+  p {
+    margin: $quarterUnit;
+  }
+
+  ul {
+    list-style: none;
+    margin-bottom: $unit;
+  }
 }

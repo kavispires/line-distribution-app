@@ -1,0 +1,164 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+// BROWSER RESET AND DEFAULT
+body {
+	margin: 0;
+	padding: 0;
+	background: #fff;
+	font-size: $unit;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: 'Nunito Sans', sans-serif;
+}
+
+.app {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.container {
+	padding: $unit $doubleUnit;
+	overflow: auto;
+	flex: 1 1 auto;
+}
+
+.container-no-padding {
+  flex: 1 1 auto;
+}
+
+.container-flex {
+	display: flex;
+}
+
+.container-fixed {
+	flex: 1 1 auto;
+	overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+}
+
+.tabs {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  border-bottom: $lightGrey 1px solid;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.tab {
+  background: $lightGrey;
+  padding: $halfUnit $doubleUnit;
+  cursor: pointer;
+
+  &:first-child {
+    border-top-left-radius: $quarterUnit;
+  }
+
+  &:last-child {
+    border-top-right-radius: $quarterUnit;
+  }
+
+  &:hover {
+    background: $grey;
+  }
+
+  &.selected {
+    border-bottom: $negative 2px solid;
+    text-decoration: underline;
+  }
+}
+
+.icon {
+  display: inline-block;
+}
+
+.icon-tab {
+  width: 12px;
+  transform: translateY(2px);
+}
+
+.member-list-item {
+  padding: $quarterUnit $halfUnit;
+  margin-left: $halfUnit;
+  border-radius: $quarterUnit;
+}
+
+.unit-content {
+  padding: $halfUnit;
+  border: 1px solid $lightGrey;
+}
+
+.unit-members {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.unit-songs {
+  outline: 1px dashed $grey;
+}
+
+.pill {
+  padding: $halfUnit;
+  margin-right: $unit;
+  margin-bottom: $unit;
+  border-right: 1px solid $lightGrey;
+  border-bottom: 1px solid $lightGrey;
+
+  p {
+    margin: $halfUnit 0;
+  }
+}
+
+.pill-color-bar {
+  width: 100%;
+  display: block;
+  height: $halfUnit;
+  margin-bottom: $halfUnit;
+}
+
+.pill-name {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.pill-positions {
+  margin: 0;
+  padding-left: 15px;
+}
+
+.pill-position {
+
+}
+
+// .tiny-h1 {
+// 	margin: 0;
+//   margin-top: $doubleUnit;
+//   font-size: 12px;
+//   border-bottom: 1px solid #ccc;
+//   padding: $unit 0;
+// }
+
+.latest-units {
+  display: flex;
+  margin-bottom: $unit;
+
+  p {
+    font-weight: 700;
+    margin: 0;
+    margin-right: $unit;
+  }
+
+  .btn {
+    margin-right: $unit;
+  }
+}

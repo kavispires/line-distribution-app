@@ -3,21 +3,29 @@ import { withRouter } from 'react-router-dom';
 
 import App from '../components/App';
 
+import { loadLocalStorage } from '../utils';
+
 import {
-	parseArtists,
-	filter
+  init,
+  filter,
 } from '../reducers/app';
 
 import {
-	handleParser
+  handleParser,
 } from '../reducers/lyrics';
 
-const mapStateToProps = (state) => ({ app: state.app});
+import {
+  handleReset,
+} from '../reducers/distribute';
+
+const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
-	parseArtists,
-	handleParser,
-	filter
+  init,
+  handleParser,
+  handleReset,
+  filter,
+  loadLocalStorage,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

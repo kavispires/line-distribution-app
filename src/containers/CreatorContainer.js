@@ -3,9 +3,53 @@ import { withRouter } from 'react-router-dom';
 
 import Creator from '../components/Creator';
 
-const mapStateToProps = (state) => ({ app: state.app, creator: state.creator });
+import {
+  loadArtist,
+  handleNewArtistName,
+  handleNewArtistOtherNames,
+  handleNewArtistGenre,
+  loadUnit,
+  handleNewUnitName,
+  handleNewUnitDebutYear,
+  handleNewUnitOfficial,
+  loadMember,
+  unloadMember,
+
+  addNewMember,
+  generateArtistJSON,
+  generateFullJSON,
+  generateUnitJSON,
+  generateMembersJSON,
+
+  removeNewMember,
+  removePosition,
+  updateNewMember,
+
+} from '../reducers/creator';
+
+const mapStateToProps = state => ({ app: state.app, creator: state.creator, database: state.database });
 
 const mapDispatchToProps = {
+  loadArtist,
+  handleNewArtistName,
+  handleNewArtistOtherNames,
+  handleNewArtistGenre,
+  loadUnit,
+  handleNewUnitName,
+  handleNewUnitDebutYear,
+  handleNewUnitOfficial,
+  loadMember,
+  unloadMember,
+
+  addNewMember,
+  generateArtistJSON,
+  generateFullJSON,
+  generateUnitJSON,
+  generateMembersJSON,
+
+  removeNewMember,
+  removePosition,
+  updateNewMember,
 
 };
 

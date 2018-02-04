@@ -1,22 +1,31 @@
 @import './variables.scss';
 
 .btn {
-	width: auto;
-	padding: $unit;
-	font-size: 1.1em;
-  background: white;
-  border: 1px outset;
-  border-radius: 5px;
+  padding: 1px $halfUnit 1px;
+  border: 1px outset $lightGrey;
+  border-radius: 4px;
+  font-size: 10px;
+  box-shadow: 0 1px 1px $lightGrey;
   cursor: pointer;
 
   &:hover {
-  	background: $lightGrey;
+    background: $lightGrey;
+    border: 1px outset $grey;
   }
+}
+
+.btn-lg {
+  @extend .btn;
+  font-size: $unit;
+	width: auto;
+	padding: $unit;
+	font-size: 1.1em;
+  border-radius: 5px;
 }
 
 .btn-decrease {
 	border: 1px outset #FF1D25;
-	background-color: #FF6E73;
+  background-color: #FF6E73;
 }
 
 .btn-100 {

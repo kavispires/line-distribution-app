@@ -1,0 +1,439 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Girls' Generation",
+    "otherNames": "snsd, girl's generation, sonyeo sidae",
+    "genre": "K-Pop",
+    "units": [
+      1,
+      2,
+      3
+    ]
+  },
+  "2": {
+    "id": 2,
+    "name": "2NE1",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": [
+      4,
+      5
+    ]
+  },
+  "3": {
+    "id": 3,
+    "name": "4Minute",
+    "otherNames": "4 minute, four minute",
+    "genre": "K-Pop",
+    "units": [
+      7
+    ]
+  },
+  "4": {
+    "id": 4,
+    "name": "Brown Eyed Girls",
+    "otherNames": "beg",
+    "genre": "K-Pop",
+    "units": [
+      6
+    ]
+  },
+  "5": {
+    "id": 5,
+    "name": "Miss A",
+    "otherNames": "missa",
+    "genre": "K-Pop",
+    "units": [
+      8
+    ]
+  },
+  "6": {
+    "id": 6,
+    "name": "f(x)",
+    "otherNames": "fx",
+    "genre": "K-Pop",
+    "units": [
+      9,
+      10
+    ]
+  },
+  "7": {
+    "id": 7,
+    "name": "Wonder Girls",
+    "otherNames": "wg",
+    "genre": "K-Pop",
+    "units": [
+      11,
+      12,
+      13
+    ]
+  },
+  "8": {
+    "id": 8,
+    "name": "TWICE",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": [
+      14
+    ]
+  },
+  "9": {
+    "id": 9,
+    "name": "BLACKPINK",
+    "otherNames": "black pink",
+    "genre": "K-Pop",
+    "units": [
+      15
+    ]
+  },
+  "10": {
+    "id": 10,
+    "name": "PRISTIN",
+    "otherNames": "pledis girls",
+    "genre": "K-Pop",
+    "units": [
+      16
+    ]
+  },
+  "11": {
+    "id": 11,
+    "name": "APINK",
+    "otherNames": "a pink",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "12": {
+    "id": 12,
+    "name": "CLC",
+    "otherNames": "crystal clear",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "13": {
+    "id": 13,
+    "name": "GFRIEND",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "14": {
+    "id": 14,
+    "name": "DIA",
+    "otherNames": "diamond, do it amazing",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "15": {
+    "id": 15,
+    "name": "IOI",
+    "otherNames": "i.o.i, produce 101",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "16": {
+    "id": 16,
+    "name": "SISTAR",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "17": {
+    "id": 17,
+    "name": "AOA",
+    "otherNames": "ace of angels",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "18": {
+    "id": 18,
+    "name": "Red Velvet",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "19": {
+    "id": 19,
+    "name": "Mamamoo",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "20": {
+    "id": 20,
+    "name": "Weki Meki",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "21": {
+    "id": 21,
+    "name": "KARA",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "22": {
+    "id": 22,
+    "name": "Lovelyz",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "23": {
+    "id": 23,
+    "name": "Brave Girls",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "24": {
+    "id": 24,
+    "name": "WJSN",
+    "otherNames": "cosmic girls",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "25": {
+    "id": 25,
+    "name": "Dal Shabet",
+    "otherNames": "dalshabet",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "26": {
+    "id": 26,
+    "name": "EXID",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "27": {
+    "id": 27,
+    "name": "gugudan",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "28": {
+    "id":28,
+    "name": "Oh My Girl",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "29": {
+    "id": 29,
+    "name": "Spica",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "30": {
+    "id": 30,
+    "name": "Unnies",
+    "otherNames": "sister's slam dunk",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "31": {
+    "id": 31,
+    "name": "2PM",
+    "otherNames": "2 pm",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "32": {
+    "id": 32,
+    "name": "Super Junior",
+    "otherNames": "suju",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "33": {
+    "id": 33,
+    "name": "iKON",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "34": {
+    "id": 34,
+    "name": "Wanna One",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "35": {
+    "id": 35,
+    "name": "SHINee",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "36": {
+    "id": 36,
+    "name": "GOT7",
+    "otherNames": "got 7, got seven",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "37": {
+    "id": 37,
+    "name": "Highlight",
+    "otherNames": "beast, b2st",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "38": {
+    "id": 38,
+    "name": "BIGBANG",
+    "otherNames": "big bang",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "39": {
+    "id": 39,
+    "name": "INFINITE",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "40": {
+    "id": 40,
+    "name": "Seventeen",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "41": {
+    "id": 41,
+    "name": "EXO",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "42": {
+    "id": 42,
+    "name": "BTS",
+    "otherNames": "Bangtan Boys",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "43": {
+    "id": 43,
+    "name": "Shinhwa",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "44": {
+    "id": 44,
+    "name": "NU'EST",
+    "otherNames": "nuest",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "45": {
+    "id": 45,
+    "name": "Day6",
+    "otherNames": "day 6, day six",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "46": {
+    "id": 46,
+    "name": "Stray Kids",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "47": {
+    "id": 47,
+    "name": "K.A.R.D.",
+    "otherNames": "kard",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "48": {
+    "id": 48,
+    "name": "Dream Catcher",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "49": {
+    "id": 49,
+    "name": "Fromis9",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "50": {
+    "id": 50,
+    "name": "PLAYBACK",
+    "otherNames": "play back",
+    "genre": "K-Pop",
+    "units": []
+  },
+  "1000": {
+    "id": 1000,
+    "name": "KAVIS",
+    "otherNames": "kvs",
+    "genre": "Pop",
+    "units": [
+      1000,
+      1001
+    ]
+  },
+  "1001": {
+    "id": 1001,
+    "name": "Kavis & Friends",
+    "otherNames": "Kavis and Friends",
+    "genre": "Pop",
+    "units": []
+  },
+  "1002": {
+    "id": 1002,
+    "name": "Nerdstreet Boyz",
+    "otherNames": "nsbz, nerdstreet boys",
+    "genre": "Pop",
+    "units": [
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007
+    ]
+  },
+  "1003": {
+    "id": 1003,
+    "name": "Banda Vyrus",
+    "otherNames": "virus",
+    "genre": "Pop",
+    "units": [
+      1008
+    ]
+  },
+  "1004": {
+    "id": 1004,
+    "name": "Squirrel Zone",
+    "otherNames": "",
+    "genre": "Pop",
+    "units": [
+      1009,
+      1010,
+      1011,
+      1012
+    ]
+  },
+  "1005": {
+    "id": 1005,
+    "name": "DoubtGirls",
+    "otherNames": "doubt girls",
+    "genre": "Pop",
+    "units": [
+      1013
+    ]
+  }
+}
