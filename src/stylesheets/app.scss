@@ -87,6 +87,18 @@ h1 {
   transform: translateY(2px);
 }
 
+.icon-positions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.icon-pos {
+  width: 24px;
+  margin-bottom: $quarterUnit;
+}
+
 .member-list-item {
   padding: $quarterUnit $halfUnit;
   margin-left: $halfUnit;
