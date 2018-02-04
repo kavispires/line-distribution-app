@@ -1,18 +1,38 @@
+import {
+  copyToClipboard,
+  getLatestId,
+  saveLocalStorage,
+} from '../utils';
+
+import API from '../api';
+
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_RESULTS = 'SET_RESULTS';
 const SET_RESULT_TYPE = 'SET_RESULT_TYPE';
+const SET_SONG_TITLE = 'SET_SONG_TITLE';
+const SET_SONG_TYPE = 'SET_SONG_TYPE';
+const SET_ORIGINAL_ARTIST = 'SET_ORIGINAL_ARTIST';
+const TOGGLE_MODAL = 'TOGGLE_MODAL';
 
 /* --------------   ACTION CREATORS   -------------- */
 
 export const setResults = payload => dispatch => dispatch({ type: SET_RESULTS, payload });
 export const setResultType = payload => dispatch => dispatch({ type: SET_RESULT_TYPE, payload });
+export const setSongTitle = payload => dispatch => dispatch({ type: SET_SONG_TITLE, payload });
+export const setSongType = payload => dispatch => dispatch({ type: SET_SONG_TYPE, payload });
+export const setOriginalArtist = payload => dispatch => dispatch({ type: SET_ORIGINAL_ARTIST, payload });
+export const toogleModal = payload => dispatch => dispatch({ type: TOGGLE_MODAL, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
   results: [],
   showPercentage: false,
+  saveModal: false,
+  songTitle: '',
+  songType: '',
+  originalArtist: '',
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -25,6 +45,22 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_RESULT_TYPE:
       newState.showPercentage = action.payload;
+      break;
+
+    case SET_SONG_TITLE:
+      newState.songTitle = action.payload;
+      break;
+
+    case SET_SONG_TYPE:
+      newState.songType = action.payload;
+      break;
+
+    case SET_ORIGINAL_ARTIST:
+      newState.originalArtist = action.payload;
+      break;
+
+    case TOGGLE_MODAL:
+      newState.saveModal = action.payload;
       break;
 
     default:
@@ -65,4 +101,47 @@ export const calculateResults = () => (dispatch, getState) => {
 
 export const handleSwitch = () => (dispatch, getState) => {
   dispatch(setResultType(!getState().creator.showPercentage));
+};
+
+export const openSaveModal = () => (dispatch, getState) => {
+  const modal = getState().results.saveModal;
+  dispatch(toogleModal(!modal));
+};
+
+export const handleSongTitle = event => (dispatch, getState) => {
+  const { value } = event.target;
+  dispatch(setSongTitle(value));
+};
+
+export const handleSongType = event => (dispatch, getState) => {
+  const { value } = event.target;
+  dispatch(setSongType(value));
+};
+
+export const handleOriginalArtist = event => (dispatch, getState) => {
+  const { value } = event.target;
+  dispatch(setOriginalArtist(value));
+};
+
+export const saveSong = () => (dispatch, getState) => {
+  console.log('SAVE');
+  const id = getLatestId('songs');
+  const unitId = getState().app.currentUnit;
+  const title = getState().results.songTitle;
+  const type = getState().results.songType;
+  const { originalArtist } = getState().results.originalArtist;
+  const { lyrics } = getState().lyrics;
+  const distribution = [...getState().distribute.history];
+
+  const newJSON = {
+    id,
+    unitId,
+    title,
+    type,
+    originalArtist,
+    lyrics,
+    distribution,
+  };
+
+  API.post('/songs', newJSON);
 };

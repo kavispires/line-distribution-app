@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SwitchToggle } from './Widgets';
+import ModalSave from './ModalSave';
 
 import { getClosestIndex} from '../utils';
 
@@ -57,6 +58,7 @@ class Results extends Component {
         </ul>
         <div className="controls">
           <button className="btn" onClick={() => this.props.history.push('/distribute')}>Done</button>
+          <button className="btn" onClick={() => this.props.openSaveModal()}>Save to LocalStorage</button>
         </div>
         <div className="group stats">
           <h3>Stats</h3>
@@ -66,6 +68,11 @@ class Results extends Component {
             <li>Member Closest To Fair Distribution: { closest }</li>
           </ul>
         </div>
+        {
+          RESULTS.saveModal ? (
+            <ModalSave props={this.props} />
+          ) : null
+        }
       </section>
     );
   }

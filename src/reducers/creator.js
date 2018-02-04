@@ -4,8 +4,6 @@ import {
   copyToClipboard,
   getAlternativeColor,
   getLatestId,
-  loadLocalStorage,
-  saveLocalStorage
 } from '../utils';
 import API from '../api';
 

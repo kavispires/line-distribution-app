@@ -14,11 +14,13 @@ class Distribute extends Component {
     window.addEventListener('keydown', this.props.handleKeydown);
     window.addEventListener('keyup', this.props.handleKeyup);
 
-    const unitLength = Object.keys(this.props.app.currentUnit).length;
-    if (unitLength > 0
-      && this.props.distribute.durations.length !== unitLength) {
-      this.reset();
-    }
+    // const unitLength = Object.keys(this.props.app.currentUnit).length;
+    // if (unitLength > 0
+    //   && this.props.distribute.durations.length !== unitLength) {
+    //     console.log('UNIT LENGTH', unitLength)
+    //     console.log('componentDidMount RESET')
+    //   this.reset();
+    // }
   }
 
   componentWillReceiveProps(nextProps) {

@@ -44,17 +44,17 @@ export const getCurrentBand = (bandId, artists) => {
   return artists[bandId];
 };
 
-export const saveLocalStorage = (obj) => {
-  console.log('saveLocalStorage');
-  window.localStorage.setItem('linedistribution', JSON.stringify(obj));
-};
-
 export const loadLocalStorage = () => {
-  console.log('loadLocalStorage');
+  console.log('Fetching from localStorage...');
   const { localStorage } = window;
   const data = localStorage.getItem('linedistribution') || '{}';
   console.log(data);
   return JSON.parse(data);
+};
+
+export const saveLocalStorage = (obj, type) => {
+  console.log('Saving to localStorage...');
+  window.localStorage.setItem('linedistribution', JSON.stringify(obj));
 };
 
 export const copyToClipboard = (element = 'temp-input') => {
@@ -84,6 +84,9 @@ export const getLatestId = (t) => {
     case 'MEMBERS':
       obj = DB.MEMBERS;
       break;
+    case 'SONGS':
+      obj = DB.SONGS;
+      break;
     default:
       obj = {};
   }
@@ -98,7 +101,7 @@ export const getAlternativeColor = (colorId) => {
 };
 
 export const parseBirthDate = (d) => {
-  const date = d + '';
+  const date = `${d}`;
   if (date.length < 5) {
     return date;
   }

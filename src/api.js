@@ -233,7 +233,6 @@ const fetchAllUnits = (include) => {
 const fetchLatestUnits = () => {
   const LS = loadLocalStorage();
   let result = [];
-  console.log(LS);
   if (LS.latest) result = LS.latest;
   return result;
 };
@@ -379,6 +378,19 @@ const postLatestUnits = (body) => {
   saveLocalStorage(LS);
 };
 
+// API/songs
+const postSong = (body) => {
+  const LS = loadLocalStorage();
+  console.log(body);
+  if (body) {
+    if (LS.songs === undefined) {
+      LS.songs = {};
+    }
+    LS.songs[body.id] = body;
+  }
+  saveLocalStorage(LS);
+};
+
 const post = (str, body) => {
   const path = str.split('/');
   const { length } = path;
@@ -390,6 +402,10 @@ const post = (str, body) => {
     case 'units':
       // API/units/latest
       if (length === 3 && last === 'latest') return postLatestUnits(body);
+      return {};
+    case 'songs':
+      // API/songs
+      if (length === 2) return postSong(body);
       return {};
     default:
       console.error(`Wrong API path: ${str}`);
