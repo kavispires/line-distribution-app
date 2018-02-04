@@ -52,7 +52,7 @@ export const saveLocalStorage = (obj) => {
 export const loadLocalStorage = () => {
   console.log('loadLocalStorage');
   const { localStorage } = window;
-  const data = localStorage.getItem('linedistribution');
+  const data = localStorage.getItem('linedistribution') || '{}';
   console.log(data);
   return JSON.parse(data);
 };
