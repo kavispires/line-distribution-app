@@ -100,138 +100,157 @@
     "name": "APINK",
     "otherNames": "a pink",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      17
+    ]
   },
   "12": {
     "id": 12,
     "name": "CLC",
     "otherNames": "crystal clear",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      18
+    ]
   },
   "13": {
     "id": 13,
     "name": "GFRIEND",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      19
+    ]
   },
   "14": {
     "id": 14,
     "name": "DIA",
     "otherNames": "diamond, do it amazing",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      20
+    ]
   },
   "15": {
     "id": 15,
-    "name": "IOI",
-    "otherNames": "i.o.i, produce 101",
-    "genre": "K-Pop",
-    "units": []
-  },
-  "16": {
-    "id": 16,
     "name": "SISTAR",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      21
+    ]
   },
-  "17": {
-    "id": 17,
+  "16": {
+    "id": 16,
     "name": "AOA",
     "otherNames": "ace of angels",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      22,
+      23,
+      24,
+      25,
+      26
+    ]
+  },
+  "17": {
+    "id": 17,
+    "name": "Red Velvet",
+    "otherNames": "",
+    "genre": "K-Pop",
+    "units": [
+      27,
+      28
+    ]
   },
   "18": {
     "id": 18,
-    "name": "Red Velvet",
+    "name": "EXID",
     "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "19": {
     "id": 19,
-    "name": "Mamamoo",
-    "otherNames": "",
+    "name": "Dal Shabet",
+    "otherNames": "dalshabet",
     "genre": "K-Pop",
     "units": []
   },
   "20": {
     "id": 20,
-    "name": "Weki Meki",
-    "otherNames": "",
+    "name": "Unnies",
+    "otherNames": "sister's slam dunk",
     "genre": "K-Pop",
     "units": []
   },
   "21": {
     "id": 21,
-    "name": "KARA",
-    "otherNames": "",
+    "name": "WJSN",
+    "otherNames": "cosmic girls",
     "genre": "K-Pop",
     "units": []
   },
   "22": {
     "id": 22,
-    "name": "Lovelyz",
+    "name": "gugudan",
     "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "23": {
-    "id": 23,
-    "name": "Brave Girls",
+    "id":23,
+    "name": "Oh My Girl",
     "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "24": {
     "id": 24,
-    "name": "WJSN",
-    "otherNames": "cosmic girls",
+    "name": "Weki Meki",
+    "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "25": {
     "id": 25,
-    "name": "Dal Shabet",
-    "otherNames": "dalshabet",
+    "name": "IOI",
+    "otherNames": "i.o.i, produce 101",
     "genre": "K-Pop",
     "units": []
   },
   "26": {
     "id": 26,
-    "name": "EXID",
+    "name": "KARA",
     "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "27": {
     "id": 27,
-    "name": "gugudan",
+    "name": "Mamamoo",
     "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "28": {
-    "id":28,
-    "name": "Oh My Girl",
+    "id": 28,
+    "name": "Lovelyz",
     "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "29": {
     "id": 29,
-    "name": "Spica",
+    "name": "Brave Girls",
     "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
   "30": {
     "id": 30,
-    "name": "Unnies",
-    "otherNames": "sister's slam dunk",
+    "name": "Spica",
+    "otherNames": "",
     "genre": "K-Pop",
     "units": []
   },
@@ -390,7 +409,9 @@
     "name": "Kavis & Friends",
     "otherNames": "Kavis and Friends",
     "genre": "Pop",
-    "units": []
+    "units": [
+      1014
+    ]
   },
   "1002": {
     "id": 1002,

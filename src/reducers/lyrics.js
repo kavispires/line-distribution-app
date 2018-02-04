@@ -14,7 +14,6 @@ export const setShowRules = payload => dispatch => dispatch({ type: SET_SHOW_RUL
 
 const initialState = {
   formattedLyrics: [],
-  inputLyrics: '',
   lyrics: '',
   showRules: false,
 };

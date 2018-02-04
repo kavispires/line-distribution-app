@@ -34,7 +34,7 @@ const Artists = (props) => {
                 const artist = database.artists[unit.bandId];
                 return (
                   <button
-                    key={`${id}-${unit.name}`}
+                    key={`latest-${id}-${unit.name}`}
                     onClick={() => setArtistUnit(id)}
                     className="btn"
                   >

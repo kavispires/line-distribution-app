@@ -6562,6 +6562,38 @@ input:checked + .slider:before {
   display: block;
   height: 6px; }
 
+.label-green {
+  color: green;
+  font-weight: bold;
+  margin-left: 6px; }
+
+.label-red {
+  color: red;
+  font-weight: bold;
+  margin-left: 6px; }
+
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  background: rgba(1, 1, 1, 0.9); }
+  .modal .modal-save {
+    width: 80%;
+    min-width: 500px;
+    background: #fff;
+    padding: 12px 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+  .modal .modal-group {
+    margin: 12px 0; }
+    .modal .modal-group label {
+      margin-right: 12px; }
+
 .creator-form fieldset {
   border: 1px solid #E6E6E6;
   display: flex;
