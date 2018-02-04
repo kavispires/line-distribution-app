@@ -232,7 +232,10 @@ const fetchAllUnits = (include) => {
 // API/units/latest
 const fetchLatestUnits = () => {
   const LS = loadLocalStorage();
-  return LS.latest || [];
+  let result = [];
+  console.log(LS);
+  if (LS.latest) result = LS.latest;
+  return result;
 };
 
 // API/units/:id
