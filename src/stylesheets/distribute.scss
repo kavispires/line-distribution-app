@@ -108,16 +108,18 @@
   .key {
     display: inline-block;
     width: auto;
-    padding: $halfUnit $unit;
+    padding: $quarterUnit 8px;
     border: 1px outset $negative;
     border-radius: $halfUnit;
     background: rgba(255, 255, 255, 0.4);
+    font-weight: bold;
   }
 
 	.member-name {
-    margin: $unit 0;
+    margin: $halfUnit 0;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: $unit;
+    font-weight: bold;
 	}
 }
 

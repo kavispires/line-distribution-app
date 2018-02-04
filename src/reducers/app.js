@@ -236,6 +236,10 @@ export const updateCurrentUnit = id => (dispatch, getState) => {
 export const updateLatestUnits = id => (dispatch, getState) => {
   const unit = id || getState().app.selectedUnit;
   const latestUnits = [...getState().app.latestUnits];
+  const containsInLatest = latestUnits.indexOf(unit.id);
+  if (containsInLatest !== -1) {
+    latestUnits.splice(containsInLatest, 1);
+  }
   if (unit.id) {
     latestUnits.unshift(unit.id);
     if (latestUnits.length > 5) {

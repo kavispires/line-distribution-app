@@ -1,44 +1,50 @@
 import {
   copyToClipboard,
   getLatestId,
-  saveLocalStorage,
 } from '../utils';
 
 import API from '../api';
 
 /* ------------------   ACTIONS   ------------------ */
 
+const SET_ORIGINAL_ARTIST = 'SET_ORIGINAL_ARTIST';
 const SET_RESULTS = 'SET_RESULTS';
 const SET_RESULT_TYPE = 'SET_RESULT_TYPE';
 const SET_SONG_TITLE = 'SET_SONG_TITLE';
 const SET_SONG_TYPE = 'SET_SONG_TYPE';
-const SET_ORIGINAL_ARTIST = 'SET_ORIGINAL_ARTIST';
+const SET_TEMP_INPUT = 'SET_TEMP_INPUT';
 const TOGGLE_MODAL = 'TOGGLE_MODAL';
 
 /* --------------   ACTION CREATORS   -------------- */
 
+export const setOriginalArtist = payload => dispatch => dispatch({ type: SET_ORIGINAL_ARTIST, payload });
 export const setResults = payload => dispatch => dispatch({ type: SET_RESULTS, payload });
 export const setResultType = payload => dispatch => dispatch({ type: SET_RESULT_TYPE, payload });
 export const setSongTitle = payload => dispatch => dispatch({ type: SET_SONG_TITLE, payload });
 export const setSongType = payload => dispatch => dispatch({ type: SET_SONG_TYPE, payload });
-export const setOriginalArtist = payload => dispatch => dispatch({ type: SET_ORIGINAL_ARTIST, payload });
+const setTempInput = payload => dispatch => dispatch({ type: SET_TEMP_INPUT, payload });
 export const toogleModal = payload => dispatch => dispatch({ type: TOGGLE_MODAL, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
+  originalArtist: '',
   results: [],
-  showPercentage: false,
   saveModal: false,
+  showPercentage: false,
   songTitle: '',
   songType: '',
-  originalArtist: '',
+  tempInput: '',
 };
 
 export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+    case SET_ORIGINAL_ARTIST:
+      newState.originalArtist = action.payload;
+      break;
+
     case SET_RESULTS:
       newState.results = action.payload;
       break;
@@ -55,8 +61,8 @@ export default function reducer(prevState = initialState, action) {
       newState.songType = action.payload;
       break;
 
-    case SET_ORIGINAL_ARTIST:
-      newState.originalArtist = action.payload;
+    case SET_TEMP_INPUT:
+      newState.tempInput = action.payload;
       break;
 
     case TOGGLE_MODAL:
@@ -124,14 +130,13 @@ export const handleOriginalArtist = event => (dispatch, getState) => {
 };
 
 export const saveSong = () => (dispatch, getState) => {
-  console.log('SAVE');
-  const id = getLatestId('songs');
   const unitId = getState().app.currentUnit.id;
   const title = getState().results.songTitle;
   const type = getState().results.songType;
   const { originalArtist } = getState().results.originalArtist;
   const { lyrics } = getState().lyrics;
   const distribution = [...getState().distribute.history];
+  const id = Date.now();
 
   const newJSON = {
     id,
@@ -144,4 +149,8 @@ export const saveSong = () => (dispatch, getState) => {
   };
 
   API.post('/songs', newJSON);
+
+  const clipboard = JSON.stringify(newJSON, null, 2);
+  dispatch(setTempInput(clipboard));
+  copyToClipboard();
 };
