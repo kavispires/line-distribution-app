@@ -5869,6 +5869,16 @@ input:checked + .slider:before {
   width: 100%;
   min-height: 400px; }
 
+.temp-input {
+  width: 100%;
+  height: 300px;
+  resize: vertical; }
+
+.temp-input-save {
+  width: 100%;
+  resize: none;
+  opacity: 0; }
+
 .table {
   width: 100%;
   border-collapse: collapse; }
@@ -6671,11 +6681,6 @@ input:checked + .slider:before {
     font-size: 80%; }
     .creator-form .form-member .form-member-position-item:hover {
       background: #fff; }
-
-.temp-input {
-  width: 100%;
-  height: 300px;
-  resize: vertical; }
 
 .color-picker {
   width: 100%;

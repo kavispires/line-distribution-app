@@ -63,9 +63,15 @@ const SaveModal = ({props}) => {
         </p>
         <ul className="controls">
           <li><button className="btn-lg btn-100" onClick={props.openSaveModal}>Cancel</button></li>
-          <li><button className="btn-lg btn-100" onClick={props.saveSong}>Save Song</button></li>
+          <li><button className="btn-lg btn-100" onClick={props.saveSong}>Save As...</button></li>
         </ul>
+        <small>At the moment, Save As saves a new instance of the distribution/song each time.</small>
       </div>
+      {
+        results.tempInput ? (
+          <textarea className="temp-input-save" id="temp-input" value={results.tempInput} readOnly />
+        ) : null
+      }
     </section>
   );
 };
