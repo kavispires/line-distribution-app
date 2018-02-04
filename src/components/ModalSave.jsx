@@ -1,11 +1,7 @@
 import React from 'react';
 
-import { parseBirthDate } from '../utils';
-
 const SaveModal = ({props}) => {
   const { results, distribute, lyrics } = props;
-  // const { colorId, birthdate } = MEMBER;
-  // const POSITIONS = MEMBER.positions.map(pos => database.positions[pos]);
 
   return (
     <section className="modal">
