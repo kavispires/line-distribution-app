@@ -12,7 +12,8 @@ const Artist = (props) => {
   const setArtistUnit = (path) => {
     props.updateCurrentUnit();
     props.history.push(`/${path}`);
-  }
+    props.updateLatestUnits();
+  };
 
   if (ARTIST === undefined) {
     return (

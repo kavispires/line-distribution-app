@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import DB from './database/index';
+import { loadLocalStorage, saveLocalStorage } from './utils';
 
 /* API */
 
@@ -228,6 +229,12 @@ const fetchAllUnits = (include) => {
   return response;
 };
 
+// API/units/latest
+const fetchLatestUnits = () => {
+  const LS = loadLocalStorage();
+  return LS.latest || [];
+};
+
 // API/units/:id
 const fetchUnit = (id, include) => {
   const response = _.cloneDeep(DB.UNITS[id]);
@@ -339,6 +346,8 @@ const get = (str) => {
     case 'units':
       // API/units/all
       if (length === 3 && all) return fetchAllUnits(true);
+      // API/units/latest
+      if (length === 3 && last === 'latest') return fetchLatestUnits();
       // API/units
       if (length === 2) return fetchAllUnits();
       // API/units/:id/all
@@ -355,6 +364,37 @@ const get = (str) => {
   }
 };
 
+// API/units/latest
+const postLatestUnits = (body) => {
+  const LS = loadLocalStorage();
+  // Trim body to have only latest 3;
+  if (body.length > 3) {
+    LS.latest = body.slice(0, 3);
+  } else {
+    LS.latest = body;
+  }
+  saveLocalStorage(LS);
+};
+
+const post = (str, body) => {
+  const path = str.split('/');
+  const { length } = path;
+  const last = path[length - 1];
+  const all = last === 'all';
+
+  console.log('Posting to api path:', str);
+  switch (path[1]) {
+    case 'units':
+      // API/units/latest
+      if (length === 3 && last === 'latest') return postLatestUnits(body);
+      return {};
+    default:
+      console.error(`Wrong API path: ${str}`);
+      return {};
+  }
+};
+
 export default {
   get,
+  post,
 };

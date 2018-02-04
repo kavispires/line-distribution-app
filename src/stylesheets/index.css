@@ -5736,6 +5736,16 @@ h1 {
   margin: 0;
   padding-left: 15px; }
 
+.latest-units {
+  display: flex;
+  margin-bottom: 12px; }
+  .latest-units p {
+    font-weight: 700;
+    margin: 0;
+    margin-right: 12px; }
+  .latest-units .btn, .latest-units .btn-lg {
+    margin-right: 12px; }
+
 .app-header {
   background-color: #000;
   display: flex;

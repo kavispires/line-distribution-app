@@ -13,6 +13,7 @@ const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
+const SET_LATEST_UNITS = 'SET_LATEST_UNITS';
 const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
 const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
 const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
@@ -28,6 +29,7 @@ export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_C
 export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
 export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
 export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
+export const setLatestUnits = payload => dispatch => dispatch({ type: SET_LATEST_UNITS, payload });
 export const setMembersList = payload => dispatch => dispatch({ type: SET_MEMBERS_LIST, payload });
 export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
 export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
@@ -44,7 +46,7 @@ const initialState = {
   colorSheetTab: 'list',
   currentArtist: 0,
   currentUnit: {},
-  // currentUnits: {},
+  latestUnits: [],
   membersList: [],
   selectedArtist: 0,
   selectedUnit: {},
@@ -87,6 +89,10 @@ export default function reducer(prevState = initialState, action) {
       newState.currentUnit = action.payload;
       break;
 
+    case SET_LATEST_UNITS:
+      newState.latestUnits = action.payload;
+      break;
+
     case SET_MEMBERS_LIST:
       newState.membersList = action.payload;
       break;
@@ -118,6 +124,7 @@ export const init = () => (dispatch) => {
   dispatch(getColorCount());
   dispatch(parseArtists());
   dispatch(parseMembers());
+  dispatch(getLatestUnits());
 };
 
 const getColorCount = () => (dispatch) => {
@@ -181,6 +188,11 @@ export const filter = e => (dispatch, getState) => {
   }
 };
 
+export const getLatestUnits = () => (dispatch, getState) => {
+  const latestUnits = API.get('/units/latest');
+  dispatch(setLatestUnits(latestUnits));
+};
+
 export const updateSelectedArtist = e => (dispatch, getState) => {
   const artistId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
   dispatch(setSelectedArtist(artistId));
@@ -207,10 +219,29 @@ export const switchUnitsTab = event => (dispatch) => {
   dispatch(setArtistPageTab(id));
 };
 
-export const updateCurrentUnit = () => (dispatch, getState) => {
-  const { selectedArtist, selectedUnit } = getState().app;
+export const updateCurrentUnit = id => (dispatch, getState) => {
+  let { selectedArtist, selectedUnit } = getState().app;
+
+  if (id) {
+    const unit = API.get(`/units/${id}`);
+    selectedArtist = unit.bandId;
+    selectedUnit = unit;
+  }
   const currentArtist = API.get(`/artists/${selectedArtist}`);
-  dispatch(setCurrentArtist(currentArtist));
   const currentUnit = API.get(`/units/${selectedUnit.id}/all`);
+  dispatch(setCurrentArtist(currentArtist));
   dispatch(setCurrentUnit(currentUnit));
+};
+
+export const updateLatestUnits = id => (dispatch, getState) => {
+  const unit = id || getState().app.selectedUnit;
+  const latestUnits = [...getState().app.latestUnits];
+  if (unit.id) {
+    latestUnits.unshift(unit.id);
+    if (latestUnits.length > 5) {
+      latestUnits.pop();
+    }
+    dispatch(setLatestUnits(latestUnits));
+    API.post('/units/latest', latestUnits);
+  }
 };

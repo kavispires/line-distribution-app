@@ -147,3 +147,18 @@ h1 {
 //   border-bottom: 1px solid #ccc;
 //   padding: $unit 0;
 // }
+
+.latest-units {
+  display: flex;
+  margin-bottom: $unit;
+
+  p {
+    font-weight: 700;
+    margin: 0;
+    margin-right: $unit;
+  }
+
+  .btn {
+    margin-right: $unit;
+  }
+}

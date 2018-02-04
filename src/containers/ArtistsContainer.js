@@ -5,6 +5,8 @@ import Artists from '../components/Artists';
 
 import {
   filter,
+  updateCurrentUnit,
+  updateLatestUnits,
   updateSelectedArtist,
 } from '../reducers/app';
 
@@ -12,6 +14,8 @@ const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
   filter,
+  updateCurrentUnit,
+  updateLatestUnits,
   updateSelectedArtist,
 };
 

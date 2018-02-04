@@ -44,14 +44,17 @@ export const getCurrentBand = (bandId, artists) => {
   return artists[bandId];
 };
 
-export const saveLocalStorage = () => {
+export const saveLocalStorage = (obj) => {
   console.log('saveLocalStorage');
+  window.localStorage.setItem('linedistribution', JSON.stringify(obj));
 };
 
 export const loadLocalStorage = () => {
   console.log('loadLocalStorage');
-  const localStorage = window.localStorage;
-  console.log(localStorage);
+  const { localStorage } = window;
+  const data = localStorage.getItem('linedistribution');
+  console.log(data);
+  return JSON.parse(data);
 };
 
 export const copyToClipboard = (element = 'temp-input') => {

@@ -1,6 +1,12 @@
 import _ from 'lodash';
 
-import { copyToClipboard, getLatestId, getAlternativeColor } from '../utils';
+import {
+  copyToClipboard,
+  getAlternativeColor,
+  getLatestId,
+  loadLocalStorage,
+  saveLocalStorage
+} from '../utils';
 import API from '../api';
 
 /* ------------------   ACTIONS   ------------------ */
@@ -446,5 +452,8 @@ export const generateFullJSON = event => (dispatch) => {
   const clipboard = JSON.stringify(newJSON, null, 2);
   dispatch(setTempInput(clipboard));
   copyToClipboard();
+  console.log('Trying to save to local storage')
+  saveLocalStorage(newJSON);
+  console.log(loadLocalStorage());
 };
 

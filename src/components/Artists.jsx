@@ -11,12 +11,38 @@ const Artists = (props) => {
   const handleArtistClick = (e) => {
     props.updateSelectedArtist(e);
     props.history.push('/artist');
-  }
+  };
+
+  const setArtistUnit = (id) => {
+    props.updateCurrentUnit(id);
+    props.history.push(`/distribute`);
+    props.updateLatestUnits(id);
+  };
 
   return (
     <section className="container">
       <h1>Artists</h1>
       <p>Current Band: {currentBand.name}</p>
+
+      <div className="latest-units">
+        <p>Latest Units Used:</p>
+        {
+          app.latestUnits.map((id) => {
+            const unit = database.units[id];
+            const artist = database.artists[unit.bandId];
+            return (
+              <button
+                key={`${id}-${unit.name}`}
+                onClick={() => setArtistUnit(id)}
+                className="btn"
+              >
+                {`${artist.name} (${unit.name})`}
+              </button>
+            );
+          })
+        }
+
+      </div>
       <input className="search-bar" type="text" placeholder="Filter..." onChange={props.filter} />
       <table className="table">
         <thead>
