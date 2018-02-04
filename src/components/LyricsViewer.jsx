@@ -17,7 +17,7 @@ const LyricsEditor = ({ formattedLyrics }) => {
                     const key2 = `lyricline-span-${keyCount}`;
                     keyCount += 1;
                     const member = lyric.members[idx] ? `[${lyric.members[idx]}] ` : '';
-                    const line = lyric.content[idx] ? `${lyric.content[idx]} ` : '';
+                    const line = lyric.content[idx] ? `${lyric.content[idx]}` : '';
                     const lineClass = `line color-${lyric.colors[idx]}`;
 
                     return (

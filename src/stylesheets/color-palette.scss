@@ -21,26 +21,28 @@ $bgpercentage2: 60%;
 @for $i from 1 through length($colorCodes) {
   @for $j from 1 through length($colorCodes) {
     .color-#{$i}-#{$j} {
-      background-color: $i;
-      background: linear-gradient($i $bgpercentage1, $j $bgpercentage2);
+      background-color: nth($colorCodes, $i);
+      background: linear-gradient(nth($colorCodes, $i) $bgpercentage1, nth($colorCodes, $j) $bgpercentage2);
     }
   }
 }
 
 // UNDEFINED COLOR CLASSES
 
-.color-undefined {
-  color: #FFFFFF;
+.color-0, .color-undefined {
+  background-color: #FFFFFF;
 }
 
+$zero: 0;
+
 @for $i from 1 through length($colorCodes) {
-  .color-#{$i}-undefined {
-    background-color: #FFFFFF;
-    background: linear-gradient($i $bgpercentage1, #FFFFFF $bgpercentage2);
+  .color-#{$i}-#{$zero} {
+    background-color: $negative;
+    background: linear-gradient(nth($colorCodes, $i) $bgpercentage1, $negative $bgpercentage2);
   }
-  .color-undefined-#{$i} {
-    background-color: #FFFFFF;
-    background: linear-gradient(#FFFFFF $bgpercentage1, $i $bgpercentage2);
+  .color-#{$zero}-#{$i} {
+    background-color: $negative;
+    background: linear-gradient($negative $bgpercentage1, nth($colorCodes, $i) $bgpercentage2);
   }
 }
 

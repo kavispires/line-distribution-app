@@ -13,16 +13,26 @@ class Distribute extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.props.handleKeydown);
     window.addEventListener('keyup', this.props.handleKeyup);
+
+    const unitLength = Object.keys(this.props.app.currentUnit).length;
+    if (unitLength > 0
+      && this.props.distribute.durations.length !== unitLength) {
+      this.reset();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.app.currentUnit !== this.props.app.currentUnit) {
-      console.log("It's DIFFERENT!!!");
-      const newArray = new Array(this.props.app.currentUnit.members.length).fill(0);
-      this.props.setDurations([...newArray]);
-      this.props.setPercentages([...newArray]);
-      this.props.setHistory([]);
+      this.reset();
+      this.props.handleParser(this.props.lyrics.lyrics);
     }
+  }
+
+  reset() {
+    const newArray = new Array(this.props.app.currentUnit.members.length).fill(0);
+    this.props.setDurations([...newArray]);
+    this.props.setPercentages([...newArray]);
+    this.props.setHistory([]);
   }
 
   render() {

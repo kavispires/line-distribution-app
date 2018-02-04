@@ -1,20 +1,21 @@
 /* ------------------   ACTIONS   ------------------ */
 
-const SET_LYRICS = 'SET_LYRICS';
 const SET_FORMATTED_LYRICS = 'SET_FORMATTED_LYRICS';
+const SET_LYRICS = 'SET_LYRICS';
 const SET_SHOW_RULES = 'SET_SHOW_RULES';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setLyrics = payload => dispatch => dispatch({ type: SET_LYRICS, payload });
 export const setFormattedLyrics = payload => dispatch => dispatch({ type: SET_FORMATTED_LYRICS, payload });
+export const setLyrics = payload => dispatch => dispatch({ type: SET_LYRICS, payload });
 export const setShowRules = payload => dispatch => dispatch({ type: SET_SHOW_RULES, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  lyrics: '',
   formattedLyrics: [],
+  inputLyrics: '',
+  lyrics: '',
   showRules: false,
 };
 
@@ -22,12 +23,12 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-    case SET_LYRICS:
-      newState.lyrics = action.payload;
-      break;
-
     case SET_FORMATTED_LYRICS:
       newState.formattedLyrics = action.payload;
+      break;
+
+    case SET_LYRICS:
+      newState.lyrics = action.payload;
       break;
 
     case SET_SHOW_RULES:
@@ -44,9 +45,12 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const handleParser = evt => (dispatch, getState) => {
-  let lyricsToParse = evt.target.value;
-
-  if (lyricsToParse === getState().lyrics.lyrics) return;
+  let lyricsToParse;
+  if (typeof evt === 'string') {
+    lyricsToParse = evt;
+  } else {
+    lyricsToParse = evt.target.value;
+  }
 
   dispatch(setLyrics(lyricsToParse));
 
