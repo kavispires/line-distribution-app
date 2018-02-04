@@ -8,7 +8,6 @@ const Lyrics = (props) => {
   const LYRICS = props.lyrics;
   const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
   const CURRENT_UNIT = props.app.currentUnit;
-  console.log(CURRENT_UNIT);
 
   if (CURRENT_UNIT.id === undefined) {
     return (
@@ -22,7 +21,6 @@ const Lyrics = (props) => {
       </div>
     );
   }
-
 
   return (
     <div className="container">

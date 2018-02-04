@@ -31,6 +31,7 @@ Song.hasOne(Unit)
   * type: String (required) // Official, Should, Would (Sing)
   * lyrics: String
   * distribution: Array[Object]
+  * originalArtist: String
 
 ### Member
   * id: id (required)

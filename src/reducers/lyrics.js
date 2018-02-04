@@ -43,181 +43,187 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-const parseColors = (MEMBERS, COLORS, member, lastColor) => {
-  function findColor(mem) {
-    return COLORS[MEMBERS.indexOf(mem)];
-  }
-
-  function getColors(mem) {
-    let got;
-    if (mem.includes('/')) {
-      mem = mem.split('/');
-      got = `${findColor(mem[0])}-${findColor(mem[1])}`;
-    } else {
-      got = findColor(mem);
-    }
-    return got;
-  }
-
-  // If no member, just use last colors
-  let colors = [lastColor];
-  // If there are members
-  if (member) {
-    colors = [];
-    // If there's an adlib
-    if (member.includes('(')) {
-      const members = member.split(' (');
-      // Re-add '('
-      if (members.length > 1) members[1] = members[1].slice(0, -1);
-      // Run for every member
-      members.forEach(mem => colors.push(getColors(mem)));
-    } else {
-      colors.push(getColors(member));
-    }
-  }
-
-  return colors;
-};
-
 export const handleParser = evt => (dispatch, getState) => {
   let lyricsToParse = evt.target.value;
+
+  if (lyricsToParse === getState().lyrics.lyrics) return;
+
   dispatch(setLyrics(lyricsToParse));
 
-  const CURRENT_UNIT = getState().app.currentUnit;
-  // const MEMBERS = [...CURRENT_UNIT.members].map((mem) => mem.toUpperCase());
+  const MEMBERS = getState().app.currentUnit.members;
+
   const parsedLyrics = [];
 
-  let lastColor = null;
-  let lastSubColor = null;
-  let lastMember = null;
-
-  // Splits lyrics by line breaks to parse each line individually
   lyricsToParse = lyricsToParse.split('\n');
 
   // Line constructor for each line
   class Line {
     constructor() {
-      this.class = [];
-      this.member = [];
+      this.colors = [];
+      this.members = [];
       this.content = [];
       this.adlibs = [];
     }
   }
 
-  // lyricsToParse.forEach((str) => {
-  //   let line = new Line();
+  // Gets the color id of a name
+  function getColorId(str) {
+    if (str === undefined) return '0';
 
-  //   // Case 0: When the line is blank or just spaces, reset colors, members and push a space placeholder as the content
-  //   if (str.length === 0 || str.replace(/\s/g, '').length === 0) {
-  //     lastColor = null;
-  //     lastSubColor = null;
-  //     line.class.push('');
-  //     line.content.push('&nbsp;');
-  //     lastMember = null;
+    let colorId = '';
+    let wasAdded = false;
+    const names = str.split('/');
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i].toLowerCase();
+      for (let j = 0; j < MEMBERS.length; j++) {
+        if (name === MEMBERS[j].name.toLowerCase()) {
+          colorId += MEMBERS[j].colorId;
+          wasAdded = true;
+          j = MEMBERS.length;
+        }
+      }
+      if (!wasAdded) colorId += '0';
+      if (i !== names.length - 1) colorId += '-';
+      wasAdded = false;
+    }
+    return colorId;
+  }
 
-  //   // All Other Cases: When the line has words
-  //   } else {
+  // Checks if member if present in the current unit
+  function areMembersInUnit(str) {
+    const nameList = str.toLowerCase().replace(/[()/\s]/g,',');
+    if (nameList === 'all') return true;
 
-  //     while (str.length > 0 || str !== '') {
-  //       let remainder = str;
-  //       let member;
+    let wasFound = false;
+    const names = nameList.split(',');
+    let bool = false;
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i];
+      if (name) {
+        wasFound = false;
+        for (let j = 0; j < MEMBERS.length; j++) {
+          const member = MEMBERS[j].name.toLowerCase();
+          if (name === member || name === 'all') {
+            wasFound = true;
+            j = MEMBERS.length;
+          }
+        }
+        bool = wasFound;
+      }
+    }
+    return bool;
+  }
 
-  //       if (str[0] === '[') {
-  //         const firstBracket = str.indexOf(']');
-  //         member = str.slice(0, firstBracket);
-  //         remainder = str.slice(firstBracket + 2);
-  //         member = member.slice(1).toUpperCase();
-  //         lastMember = member;
-  //       }
+  let lastColor = null;
+  let lastSubColor = null;
+  let lastMember = null;
 
-  //       if (!lastMember) {
-  //         member = 'ALL';
-  //       }
+  for (let i = 0; i < lyricsToParse.length; i++) {
+    let lineToParse = lyricsToParse[i].trim();
 
-  //       if (remainder.includes(' [')) {
-  //         const nextBracket = remainder.indexOf('[');
-  //         let temp1 = remainder.slice(0, nextBracket - 1);
-  //         let temp2 = remainder.slice(nextBracket);
-  //         remainder = temp1;
-  //         str = temp2;
-  //       } else {
-  //         str = '';
-  //       }
+    const line = new Line();
 
-  //       line.member.push(member);
-  //       line.class = line.class.concat(parseColors(MEMBERS, COLORS, member, lastColor));
+    // Handles Case 0
+    if (lineToParse.length === 0) {
+      line.colors.push(0);
+      line.content.push('&nbsp;');
+      lastMember = null;
+      lastColor = 0;
+      lastSubColor = 0;
+    } else {
+      // Runs the line string as many times necessary to parse string completely
+      while (lineToParse.length > 0 && lineToParse[lineToParse.length - 1] !== '[') {
+        let remainder = lineToParse;
+        let member;
 
-  //       if (line.member[line.member.length - 1]) {
-  //         lastSubColor = line.class[line.class.length - 1];
-  //       }
+        // Define member(s) based on the first bracket
+        if (remainder[0] === '[') {
+          const firstClosingBracket = lineToParse.indexOf(']');
+          const foundMembers = lineToParse.slice(1, firstClosingBracket);
+          if (areMembersInUnit(foundMembers)) {
+            member = foundMembers.toUpperCase();
+          } else {
+            member = '?';
+          }
+          remainder = lineToParse.slice(firstClosingBracket + 1).trim();
+          lastMember = member;
+        }
+        if (!lastMember) {
+          member = 'ALL';
+        }
 
-  //       if (remainder[0] !== '(') {
-  //         line.adlibs.push(false);
-  //       }
+        // Define color(s)
+        if (lineToParse[0] === '[' && member && !member.includes('(')) {
+          lastColor = getColorId(member);
+        } if (lineToParse[0] === '[' && member && member.includes('(')) {
+          const multiMember = member.split('(');
+          lastColor = getColorId(multiMember[0].trim());
+          const adLibMembers = multiMember[1].substring(0, multiMember[1].length - 1);
+          lastSubColor = getColorId(adLibMembers);
+        }
 
-  //       // Check for adlibst on remainder
-  //       if (remainder.includes('(')) {
-  //         let count = 0;
-  //         let newRemainder = [];
-  //         const colorCopy = [...line.class];
-  //         // Slipt in '(' or ')', remove those characters
-  //         remainder.split(/([()])/).filter(Boolean).forEach(elem => {
+        // If remainder has another member assignment, split in the bracket
+        if (remainder.includes('[')) {
+          const nextBracket = remainder.indexOf('[');
+          const temp1 = remainder.slice(0, nextBracket - 1);
+          const temp2 = remainder.slice(nextBracket);
+          remainder = temp1;
+          lineToParse = temp2;
+          if (!lineToParse.includes(']')) {
+            lineToParse = '';
+          }
+        } else {
+          lineToParse = '';
+        }
 
-  //           if (elem === '(') {
-  //             count++;
-  //             return;
-  //           }
-  //           if (elem === ')' && count > 0) {
-  //             count--;
-  //             return;
-  //           }
-  //           // Remove white spaces before and after
-  //           elem = elem[0] === ' ' ? elem.slice(1, elem.length) : elem;
-  //           elem = elem[elem.length - 1] === ' ' ? elem.slice(0, elem.length - 1) : elem;
-  //           // If it is a adlib
-  //           if (count > 0) {
-  //             newRemainder.push('(' + elem + ')');
-  //             if (newRemainder.length > 0) {
-  //               line.adlibs.push(true);
-  //             } else {
-  //               line.adlibs[0] = true;
-  //             }
-  //           } else {
-  //             if (newRemainder.length > 0) line.adlibs.push(false);
-  //             newRemainder.push(elem);
-  //           }
+        // Add members, independently if they were assigned
+        if (!member) member = '';
+        line.members.push(member);
 
-  //           // Add extra colors classes
-  //           if (newRemainder.length > line.class.length) {
-  //             let idx = count > 0 ? 1 : 2;
-  //             line.class.push(colorCopy[colorCopy.length - idx]);
-  //           }
-  //           // If it's an adlib AND the line is unassigned, replace color with last subcolor
-  //           if (line.adlibs[line.adlibs.length - 1] === true && line.member[line.member.length - 1] === undefined) {
-  //             line.class[line.adlibs.length - 1] = lastSubColor;
-  //           }
-  //         });
+        // Check for adlibs on remainder
+        if (remainder.includes('(')) {
+          // Slipt in '(' or ')', remove those characters
+          const remainderSplit = remainder.split(/([()])/).filter(Boolean).map(r => r.trim());
 
-  //         line.content = line.content.concat(newRemainder);
+          for (let e = 0; e < remainderSplit.length; e++) {
+            const elem = remainderSplit[e];
+            // If it's an adlib line
+            if (elem === '(') {
+              const adlibLine = `${elem}${remainderSplit[e + 1]}${remainderSplit[e + 2]}`;
+              e += 2; // advances '(', the actual line, and ')'
+              line.colors.push(`${lastSubColor}`);
+              line.content.push(adlibLine);
+              line.adlibs.push(true);
+              if (e > 2) {
+                line.members.push('');
+              }
+            } else {
+              line.colors.push(`${lastColor}`);
+              line.content.push(elem);
+              line.adlibs.push(false);
+              if (e > 0) {
+                line.members.push('');
+              }
+            }
+          }
 
-  //       } else {
-  //         line.content.push(remainder);
-  //       }
+          // line.content = line.content.concat(newRemainder);
+        } else {
+          line.colors.push(`${lastColor}`);
+          line.content.push(remainder);
+          line.adlibs.push(false);
+        }
+      }
+    }
 
-  //       // Update last color for Main Member
-  //       const lastMemberIndex = line.adlibs.lastIndexOf(false);
-  //       lastColor = lastMemberIndex >= 0 ? line.class[lastMemberIndex] : line.class[line.class.length - 1];
-  //       // Update last color for Sub Member
-  //       const lastSubMemberIndex = line.adlibs.lastIndexOf(true);
-  //       if (lastSubMemberIndex !== -1) lastSubColor = line.class[lastSubMemberIndex];
-  //     }
-  //   }
-  //   parsedLyrics.push(line);
-  // });
+    parsedLyrics.push(line);
+  }
+
   dispatch(setFormattedLyrics(parsedLyrics));
+  // return parsedLyrics;
 };
 
 export const toggleRules = () => (dispatch, getState) => {
-  const showRules = getState().lyrics.showRules;
+  const { showRules } = getState().lyrics;
   dispatch(setShowRules(!showRules));
 };

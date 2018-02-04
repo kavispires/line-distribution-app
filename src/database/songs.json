@@ -3,10 +3,10 @@
     "id": 0,
     "unitId": 0,
     "title": "",
-    "official": true,
+    "type": "Official",
+    "originalArtist": "None",
     "lyrics": "",
     "distribution": [
-      0,
       0
     ]
   }
