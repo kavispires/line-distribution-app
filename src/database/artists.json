@@ -100,28 +100,36 @@
     "name": "APINK",
     "otherNames": "a pink",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      17
+    ]
   },
   "12": {
     "id": 12,
     "name": "CLC",
     "otherNames": "crystal clear",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      18
+    ]
   },
   "13": {
     "id": 13,
     "name": "GFRIEND",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      19
+    ]
   },
   "14": {
     "id": 14,
     "name": "DIA",
     "otherNames": "diamond, do it amazing",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      20
+    ]
   },
   "15": {
     "id": 15,
