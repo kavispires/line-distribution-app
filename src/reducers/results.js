@@ -126,7 +126,7 @@ export const handleOriginalArtist = event => (dispatch, getState) => {
 export const saveSong = () => (dispatch, getState) => {
   console.log('SAVE');
   const id = getLatestId('songs');
-  const unitId = getState().app.currentUnit;
+  const unitId = getState().app.currentUnit.id;
   const title = getState().results.songTitle;
   const type = getState().results.songType;
   const { originalArtist } = getState().results.originalArtist;

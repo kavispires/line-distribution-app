@@ -1085,6 +1085,207 @@
       5
     ]
   },
+  "95": {
+    "id": 95,
+    "name": "Hyorin",
+    "colorId": 2,
+    "altColorId": 32,
+    "birthdate": 19901211,
+    "positions": [
+      1,
+      2,
+      6,
+      7,
+      11
+    ]
+  },
+  "96": {
+    "id": 96,
+    "name": "Bora",
+    "colorId": 30,
+    "altColorId": 33,
+    "birthdate": 19891230,
+    "positions": [
+      3,
+      4,
+      8,
+      12
+    ]
+  },
+  "97": {
+    "id": 97,
+    "name": "Soyu",
+    "colorId": 14,
+    "altColorId": 30,
+    "birthdate": 19920212,
+    "positions": [
+      5
+    ]
+  },
+  "98": {
+    "id": 98,
+    "name": "Dasom",
+    "colorId": 5,
+    "altColorId": 8,
+    "birthdate": 19930506,
+    "positions": [
+      8,
+      8,
+      12,
+      13
+    ]
+  },
+  "99": {
+    "id": 99,
+    "name": "Jimin",
+    "colorId": 22,
+    "altColorId": 19,
+    "birthdate": 19910108,
+    "positions": [
+      1,
+      3,
+      8
+    ]
+  },
+  "100": {
+    "id": 100,
+    "name": "Yuna",
+    "colorId": 30,
+    "altColorId": 33,
+    "birthdate": 19921230,
+    "positions": [
+      2
+    ]
+  },
+  "101": {
+    "id": 101,
+    "name": "Hyejeong",
+    "colorId": 5,
+    "altColorId": 2,
+    "birthdate": 19930810,
+    "positions": [
+      5,
+      7,
+      12
+    ]
+  },
+  "102": {
+    "id": 102,
+    "name": "Mina",
+    "colorId": 27,
+    "altColorId": 24,
+    "birthdate": 19930921,
+    "positions": [
+      8,
+      10
+    ]
+  },
+  "103": {
+    "id": 103,
+    "name": "Seolhyun",
+    "colorId": 14,
+    "altColorId": 17,
+    "birthdate": 19950103,
+    "positions": [
+      7,
+      8,
+      11
+    ]
+  },
+  "104": {
+    "id": 104,
+    "name": "Chanmi",
+    "colorId": 20,
+    "altColorId": 23,
+    "birthdate": 19960619,
+    "positions": [
+      4,
+      6,
+      8,
+      13
+    ]
+  },
+  "105": {
+    "id": 105,
+    "name": "Choa",
+    "colorId": 33,
+    "altColorId": 16,
+    "birthdate": 19900306,
+    "positions": [
+      2
+    ]
+  },
+  "106": {
+    "id": 106,
+    "name": "Youkyung",
+    "colorId": 36,
+    "altColorId": 16,
+    "birthdate": 19930315,
+    "positions": [
+      8
+    ]
+  },
+  "107": {
+    "id": 107,
+    "name": "Irene",
+    "colorId": 32,
+    "altColorId": 2,
+    "birthdate": 19910329,
+    "positions": [
+      1,
+      3,
+      7,
+      8,
+      12
+    ]
+  },
+  "108": {
+    "id": 108,
+    "name": "Seulgi",
+    "colorId": 10,
+    "altColorId": 26,
+    "birthdate": 19940210,
+    "positions": [
+      4,
+      5,
+      11
+    ]
+  },
+  "109": {
+    "id": 109,
+    "name": "Wendy",
+    "colorId": 18,
+    "altColorId": 1,
+    "birthdate": 19940221,
+    "positions": [
+      2
+    ]
+  },
+  "110": {
+    "id": 110,
+    "name": "Joy",
+    "colorId": 14,
+    "altColorId": 17,
+    "birthdate": 19960903,
+    "positions": [
+      5,
+      6
+    ]
+  },
+  "111": {
+    "id": 111,
+    "name": "Yeri",
+    "colorId": 25,
+    "altColorId": 28,
+    "birthdate": 19990305,
+    "positions": [
+      3,
+      7,
+      8,
+      13
+    ]
+  },
+
 
   "1001": {
     "id": 1001,
@@ -1479,6 +1680,179 @@
     "colorId": 27,
     "altColorId": 30,
     "birthdate": 19871216,
+    "positions": [
+      8,
+      12,
+      13
+    ]
+  },
+  "1037": {
+    "id": 1037,
+    "name": "Bruno L",
+    "colorId": 15,
+    "altColorId": 12,
+    "birthdate": 19820622,
+    "positions": [
+      8
+    ]
+  },
+  "1038": {
+    "id": 1038,
+    "name": "Otavio",
+    "colorId": 18,
+    "altColorId": 21,
+    "birthdate": 19830817,
+    "positions": [
+      5
+    ]
+  },
+  "1039": {
+    "id": 1039,
+    "name": "Kavis",
+    "colorId": 5,
+    "altColorId": 8,
+    "birthdate": 19840117,
+    "positions": [
+      1,
+      2,
+      7,
+      10
+    ]
+  },
+  "1040": {
+    "id": 1040,
+    "name": "Rodrigo",
+    "colorId": 21,
+    "altColorId": 24,
+    "birthdate": 19840204,
+    "positions": [
+      7,
+      8,
+      12
+    ]
+  },
+  "1041": {
+    "id": 1041,
+    "name": "Flavia",
+    "colorId": 10,
+    "altColorId": 7,
+    "birthdate": 19840426,
+    "positions": [
+      4,
+      5
+    ]
+  },
+  "1042": {
+    "id": 1042,
+    "name": "Mariana",
+    "colorId": 24,
+    "altColorId": 27,
+    "birthdate": 19840907,
+    "positions": [
+      8
+    ]
+  },
+  "1043": {
+    "id": 1043,
+    "name": "Fernando",
+    "colorId": 4,
+    "altColorId": 1,
+    "birthdate": 19850103,
+    "positions": [
+      3,
+      5
+    ]
+  },
+  "1044": {
+    "id": 1044,
+    "name": "Munizção",
+    "colorId": 30,
+    "altColorId": 13,
+    "birthdate": 19850105,
+    "positions": [
+      7,
+      12
+    ]
+  },
+  "1045": {
+    "id": 1045,
+    "name": "Bruno P",
+    "colorId": 35,
+    "altColorId": 4,
+    "birthdate": 19850129,
+    "positions": [
+      8
+    ]
+  },
+  "1046": {
+    "id": 1046,
+    "name": "Lúcia",
+    "colorId": 25,
+    "altColorId": 22,
+    "birthdate": 19850326,
+    "positions": [
+      8
+    ]
+  },
+  "1047": {
+    "id": 1047,
+    "name": "Maris",
+    "colorId": 33,
+    "altColorId": 3,
+    "birthdate": 19850415,
+    "positions": [
+      5
+    ]
+  },
+  "1048": {
+    "id": 1048,
+    "name": "Dany",
+    "colorId": 19,
+    "altColorId": 16,
+    "birthdate": 19861213,
+    "positions": [
+      5,
+      12
+    ]
+  },
+  "1049": {
+    "id": 1049,
+    "name": "Drica",
+    "colorId": 3,
+    "altColorId": 19,
+    "birthdate": 19870107,
+    "positions": [
+      8
+    ]
+  },
+  "1050": {
+    "id": 1050,
+    "name": "Marcelo",
+    "colorId": 14,
+    "altColorId": 11,
+    "birthdate": 19871020,
+    "positions": [
+      6,
+      8
+    ]
+  },
+  "1051": {
+    "id": 1051,
+    "name": "Vilmar",
+    "colorId": 7,
+    "altColorId": 4,
+    "birthdate": 19880913,
+    "positions": [
+      8,
+      13
+    ]
+  },
+  "1052": {
+    "id": 1052,
+    "name": "Obesa",
+    "colorId": 31,
+    "altColorId": 14,
+    "birthdate": 109891101,
     "positions": [
       8,
       12,

@@ -322,6 +322,124 @@
     ],
     "songs": []
   },
+  "21": {
+    "id": 21,
+    "bandId": 15,
+    "name": "OT4",
+    "debutYear": "2010",
+    "official": true,
+    "members": [
+      96,
+      95,
+      97,
+      98
+    ],
+    "songs": []
+  },
+  "22": {
+    "id": 22,
+    "bandId": 16,
+    "name": "OT8",
+    "debutYear": "2012",
+    "official": true,
+    "members": [
+      105,
+      99,
+      100,
+      106,
+      101,
+      102,
+      103,
+      104
+    ],
+    "songs": []
+  },
+  "23": {
+    "id": 23,
+    "bandId": 16,
+    "name": "OT6",
+    "debutYear": "2017",
+    "official": true,
+    "members": [
+      99,
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "songs": []
+  },
+  "24": {
+    "id": 24,
+    "bandId": 16,
+    "name": "Black",
+    "debutYear": "2012",
+    "official": true,
+    "members": [
+      99,
+      100,
+      106,
+      102
+    ],
+    "songs": []
+  },
+  "25": {
+    "id": 25,
+    "bandId": 16,
+    "name": "White",
+    "debutYear": "2012",
+    "official": true,
+    "members": [
+      101,
+      103,
+      104
+    ],
+    "songs": []
+  },
+  "26": {
+    "id": 26,
+    "bandId": 16,
+    "name": "Cream",
+    "debutYear": "2012",
+    "official": true,
+    "members": [
+      100,
+      101,
+      104
+    ],
+    "songs": []
+  },
+  "27": {
+    "id": 27,
+    "bandId": 17,
+    "name": "OT4",
+    "debutYear": "2014",
+    "official": true,
+    "members": [
+      107,
+      108,
+      109,
+      110
+    ],
+    "songs": []
+  },
+  "28": {
+    "id": 28,
+    "bandId": 17,
+    "name": "OT5",
+    "debutYear": "2015",
+    "official": true,
+    "members": [
+      107,
+      108,
+      109,
+      110,
+      111
+    ],
+    "songs": []
+  },
+
 
   "1000": {
     "id": 1000,
@@ -526,6 +644,32 @@
       1034,
       1035,
       1036
+    ],
+    "songs": []
+  },
+  "1014": {
+    "id": 1014,
+    "bandId": 1001,
+    "name": "OT16",
+    "debutYear": "2012",
+    "official": false,
+    "members": [
+      1037,
+      1038,
+      1039,
+      1040,
+      1041,
+      1042,
+      1043,
+      1044,
+      1045,
+      1046,
+      1047,
+      1048,
+      1049,
+      1050,
+      1051,
+      1052
     ],
     "songs": []
   }
