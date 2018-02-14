@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { SwitchToggle } from './Widgets';
 import ModalSave from './ModalSave';
 
-import { getClosestIndex} from '../utils';
+import { getClosestIndex,  copyToClipboard } from '../utils';
 
 class Results extends Component {
   componentDidMount() {
     this.props.calculateResults();
     this.props.setResultType(false);
 
-    if(this.props.location.pathname === '/results' && this.props.app.currentUnit.members === undefined) {
+    if (this.props.location.pathname === '/results' && this.props.app.currentUnit.members === undefined) {
       this.props.history.push('/artists');
     }
   }
@@ -38,7 +38,7 @@ class Results extends Component {
       <section className="container">
         <h1 className="tiny-h1">Results</h1>
         <SwitchToggle action={this.props.handleSwitch} labels={switchLabels} />
-        <ul className="results">
+        <ul className="results" id="ranking">
           {
             RESULTS.results.map((result, i) => (
               <li key={result.name} className="results-bar">
@@ -58,6 +58,7 @@ class Results extends Component {
         </ul>
         <div className="controls">
           <button className="btn" onClick={() => this.props.history.push('/distribute')}>Done</button>
+          <button className="btn" onClick={() => copyToClipboard('ranking')}>Copy Results to Clipboard</button>
           <button className="btn" onClick={() => this.props.openSaveModal()}>Save to LocalStorage</button>
         </div>
         <div className="group stats">

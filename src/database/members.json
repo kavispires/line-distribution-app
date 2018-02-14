@@ -514,7 +514,7 @@
   },
   "45": {
     "id": 45,
-    "name": "Jeonyeon",
+    "name": "Jeongyeon",
     "colorId": 14,
     "altColorId": 17,
     "birthdate": 19961101,
@@ -1688,7 +1688,7 @@
   },
   "1037": {
     "id": 1037,
-    "name": "Bruno L",
+    "name": "Bruno_L",
     "colorId": 15,
     "altColorId": 12,
     "birthdate": 19820622,
@@ -1744,7 +1744,7 @@
   },
   "1042": {
     "id": 1042,
-    "name": "Mariana",
+    "name": "Moori",
     "colorId": 24,
     "altColorId": 27,
     "birthdate": 19840907,
@@ -1766,7 +1766,7 @@
   },
   "1044": {
     "id": 1044,
-    "name": "Munizção",
+    "name": "Muni",
     "colorId": 30,
     "altColorId": 13,
     "birthdate": 19850105,
@@ -1777,7 +1777,7 @@
   },
   "1045": {
     "id": 1045,
-    "name": "Bruno P",
+    "name": "Bruno_P",
     "colorId": 35,
     "altColorId": 4,
     "birthdate": 19850129,
@@ -1787,7 +1787,7 @@
   },
   "1046": {
     "id": 1046,
-    "name": "Lúcia",
+    "name": "Lucia",
     "colorId": 25,
     "altColorId": 22,
     "birthdate": 19850326,

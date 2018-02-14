@@ -255,7 +255,7 @@ const fetchUnit = (id, include) => {
   return 'NO-UNIT-AVAILABLE';
 };
 
-// API/units/:id/song
+// API/units/:id/songs
 // TO-DO: WRONG FUNCTION
 const fetchUnitSongs = (id, include) => {
   const units = _.cloneDeep(DB.UNITS[id]);
@@ -273,6 +273,32 @@ const fetchUnitSongs = (id, include) => {
     return response;
   }
   return 'NO-MEMBER-AVAILABLE';
+};
+
+// API/units/songs
+const fetchAllUnitsSongs = () => {
+  const songs = _.cloneDeep(DB.SONGS);
+  let response = {};
+
+  Object.keys(songs).forEach((key) => {
+    const song = songs[key];
+    const { unitId } = song;
+    if (response[unitId] === undefined) {
+      response[unitId] = [song];
+    } else {
+      response[unitId].push(song);
+    }
+  });
+
+  Object.keys(response).forEach((key) => {
+    response[key] = _.sortBy(response[key], 'title');
+  });
+
+  Object.keys(response).forEach((key) => {
+    response[key] = response[key].map(item => item.id);
+  });
+
+  return response;
 };
 
 const get = (str) => {
@@ -350,6 +376,8 @@ const get = (str) => {
       if (length === 3 && all) return fetchAllUnits(true);
       // API/units/latest
       if (length === 3 && last === 'latest') return fetchLatestUnits();
+      // API/units/songs
+      if (length === 3 && last === 'songs') return fetchAllUnitsSongs();
       // API/units
       if (length === 2) return fetchAllUnits();
       // API/units/:id/all

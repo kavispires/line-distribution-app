@@ -18,6 +18,7 @@ const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
 const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
 const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
 const SET_SELECTED_UNITS = 'SET_SELECTED_UNITS';
+const SET_SONGS_PER_UNIT = 'SET_SONGS_PER_UNIT';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -34,6 +35,7 @@ export const setMembersList = payload => dispatch => dispatch({ type: SET_MEMBER
 export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
 export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
 export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
+export const setSongsPerUnit = payload => dispatch => dispatch({ type: SET_SONGS_PER_UNIT, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -51,6 +53,7 @@ const initialState = {
   selectedArtist: 0,
   selectedUnit: {},
   selectedUnits: {},
+  songsPerUnit: {},
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -109,6 +112,10 @@ export default function reducer(prevState = initialState, action) {
       newState.selectedUnits = action.payload;
       break;
 
+    case SET_SONGS_PER_UNIT:
+      newState.songsPerUnit = action.payload;
+      break;
+
     default:
       return prevState;
   }
@@ -124,6 +131,7 @@ export const init = () => (dispatch) => {
   dispatch(getColorCount());
   dispatch(parseArtists());
   dispatch(parseMembers());
+  dispatch(parseSongs());
   dispatch(getLatestUnits());
 };
 
@@ -165,6 +173,16 @@ export const parseMembers = () => (dispatch, getState) => {
   dispatch(setMembersList(orderedMembers));
 };
 
+export const parseSongs = () => (dispatch) => {
+  const songs = API.get('/units/songs');
+  dispatch(setSongsPerUnit(songs));
+};
+
+export const getLatestUnits = () => (dispatch, getState) => {
+  const latestUnits = API.get('/units/latest');
+  dispatch(setLatestUnits(latestUnits));
+};
+
 export const filter = e => (dispatch, getState) => {
   if (typeof e === 'string') {
     return dispatch(setArtistsList([...getState().app.artistListBackUp]));
@@ -186,11 +204,6 @@ export const filter = e => (dispatch, getState) => {
 
     dispatch(setArtistsList(filteredArtists));
   }
-};
-
-export const getLatestUnits = () => (dispatch, getState) => {
-  const latestUnits = API.get('/units/latest');
-  dispatch(setLatestUnits(latestUnits));
 };
 
 export const updateSelectedArtist = e => (dispatch, getState) => {

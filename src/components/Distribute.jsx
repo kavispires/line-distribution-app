@@ -11,8 +11,10 @@ import { boxSizeClass } from '../utils';
 
 class Distribute extends Component {
   componentDidMount() {
-    window.addEventListener('keydown', this.props.handleKeydown);
-    window.addEventListener('keyup', this.props.handleKeyup);
+    if (this.props.location.pathname === '/distribute') {
+      window.addEventListener('keydown', this.props.handleKeydown);
+      window.addEventListener('keyup', this.props.handleKeyup);
+    }
 
     // const unitLength = Object.keys(this.props.app.currentUnit).length;
     // if (unitLength > 0
