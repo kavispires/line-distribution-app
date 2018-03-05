@@ -168,21 +168,30 @@
     "name": "EXID",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      29,
+      30
+    ]
   },
   "19": {
     "id": 19,
     "name": "Dal Shabet",
     "otherNames": "dalshabet",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      31,
+      32
+    ]
   },
   "20": {
     "id": 20,
     "name": "Unnies",
     "otherNames": "sister's slam dunk",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      33,
+      34
+    ]
   },
   "21": {
     "id": 21,
