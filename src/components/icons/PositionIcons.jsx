@@ -14,10 +14,9 @@ import pos11 from '../../images/icon-center.svg';
 import pos12 from '../../images/icon-visual.svg';
 import pos13 from '../../images/icon-maknae.svg';
 
-const PositionIcons = ({positions, memberId}) => {
-
+const PositionIcons = ({positions, memberId, iconClass = 'icon-positions'}) => {
   return (
-    <span className="icon-positions">
+    <span className={iconClass}>
       {
         positions.map((pos) => {
           let img;

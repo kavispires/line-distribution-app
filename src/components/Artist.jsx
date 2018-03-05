@@ -24,6 +24,11 @@ const Artist = (props) => {
     );
   }
 
+  let unitSongs;
+  if (selectedUnit && app.songsPerUnit[selectedUnit.id]) {
+    unitSongs = app.songsPerUnit[selectedUnit.id];
+  }
+
   return (
     <section className="container">
       <h1>Artist Page: {ARTIST.name}</h1>
@@ -81,8 +86,8 @@ const Artist = (props) => {
             <h3>Songs:</h3>
             <div className="unit-songs">
               {
-                selectedUnit.songs.map(song => (
-                  <p>Song Title</p>
+                unitSongs && unitSongs.map(songId => (
+                  <p key={songId}>{database.songs[songId].title}</p>
                 ))
               }
             </div>

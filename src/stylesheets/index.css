@@ -5743,8 +5743,13 @@ h1 {
   font-weight: bold; }
 
 .pill-positions {
-  margin: 0;
-  padding-left: 15px; }
+  margin-top: -12px;
+  padding-left: 0px;
+  list-style: none; }
+
+.pill-icon {
+  display: inline-block;
+  transform: translateY(10px); }
 
 .latest-units {
   display: flex;

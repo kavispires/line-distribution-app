@@ -1,6 +1,5 @@
 import {
   copyToClipboard,
-  getLatestId,
 } from '../utils';
 
 import API from '../api';
@@ -129,7 +128,7 @@ export const handleOriginalArtist = event => (dispatch, getState) => {
   dispatch(setOriginalArtist(value));
 };
 
-export const saveSong = () => (dispatch, getState) => {
+export const saveSong = (save = true) => (dispatch, getState) => {
   const unitId = getState().app.currentUnit.id;
   const title = getState().results.songTitle;
   const type = getState().results.songType;
@@ -148,9 +147,14 @@ export const saveSong = () => (dispatch, getState) => {
     distribution,
   };
 
-  API.post('/songs', newJSON);
+  if (save) {
+    API.post('/songs', newJSON);
+    alert('Saved to LocalStorage and copied to clipboard');
+  }
 
   const clipboard = JSON.stringify(newJSON, null, 2);
   dispatch(setTempInput(clipboard));
   copyToClipboard();
+
+  dispatch(toogleModal(false));
 };

@@ -514,7 +514,7 @@
   },
   "45": {
     "id": 45,
-    "name": "Jeonyeon",
+    "name": "Jeongyeon",
     "colorId": 14,
     "altColorId": 17,
     "birthdate": 19961101,
@@ -1285,7 +1285,234 @@
       13
     ]
   },
-
+  "112": {
+    "id": 112,
+    "name": "Solji",
+    "colorId": 30,
+    "altColorId": 33,
+    "birthdate": 19890110,
+    "positions": [
+      1,
+      2
+    ]
+  },
+  "113": {
+    "id": 113,
+    "name": "LE",
+    "colorId": 21,
+    "altColorId": 24,
+    "birthdate": 19911210,
+    "positions": [
+      3
+    ]
+  },
+  "114": {
+    "id": 114,
+    "name": "Hani",
+    "colorId": 2,
+    "altColorId": 32,
+    "birthdate": 19920501,
+    "positions": [
+      5,
+      11
+    ]
+  },
+  "115": {
+    "id": 115,
+    "name": "Hyerin",
+    "colorId": 17,
+    "altColorId": 20,
+    "birthdate": 19930823,
+    "positions": [
+      5
+    ]
+  },
+  "116": {
+    "id": 116,
+    "name": "Jeonghwa",
+    "colorId": 26,
+    "altColorId": 9,
+    "birthdate": 19950508,
+    "positions": [
+      4,
+      8,
+      10,
+      12,
+      13
+    ]
+  },
+  "117": {
+    "id": 117,
+    "name": "Serri",
+    "colorId": 28,
+    "altColorId": 11,
+    "birthdate": 19900916,
+    "positions": [
+      1,
+      3,
+      5,
+      7
+    ]
+  },
+  "118": {
+    "id": 118,
+    "name": "Ayoung",
+    "colorId": 18,
+    "altColorId": 1,
+    "birthdate": 19910526,
+    "positions": [
+      6,
+      8,
+      12
+    ]
+  },
+  "119": {
+    "id": 119,
+    "name": "Woohee",
+    "colorId": 22,
+    "altColorId": 5,
+    "birthdate": 19911121,
+    "positions": [
+      4,
+      5
+    ]
+  },
+  "120": {
+    "id": 120,
+    "name": "Subin",
+    "colorId": 12,
+    "altColorId": 9,
+    "birthdate": 19940212,
+    "positions": [
+      2,
+      11,
+      13
+    ]
+  },
+  "121": {
+    "id": 121,
+    "name": "Jyiul",
+    "colorId": 1,
+    "altColorId": 17,
+    "birthdate": 19910730,
+    "positions": [
+      7,
+      8,
+      12
+    ]
+  },
+  "122": {
+    "id": 122,
+    "name": "Ga Eun",
+    "colorId": 29,
+    "altColorId": 26,
+    "birthdate": 19920728,
+    "positions": [
+      3,
+      8
+    ]
+  },
+  "123": {
+    "id": 123,
+    "name": "Miran",
+    "colorId": 5,
+    "altColorId": 21,
+    "birthdate": 19750306,
+    "positions": [
+      8
+    ]
+  },
+  "124": {
+    "id": 124,
+    "name": "Sook",
+    "colorId": 17,
+    "altColorId": 14,
+    "birthdate": 19750706,
+    "positions": [
+      6
+    ]
+  },
+  "125": {
+    "id": 125,
+    "name": "Jinkyung",
+    "colorId": 14,
+    "altColorId": 11,
+    "birthdate": 19771223,
+    "positions": [
+      4,
+      8
+    ]
+  },
+  "126": {
+    "id": 126,
+    "name": "Hyorin",
+    "colorId": 26,
+    "altColorId": 29,
+    "birthdate": 19860205,
+    "positions": [
+      5,
+      11
+    ]
+  },
+  "127": {
+    "id": 127,
+    "name": "Jessi",
+    "colorId": 22,
+    "altColorId": 19,
+    "birthdate": 19881217,
+    "positions": [
+      3,
+      5,
+      7
+    ]
+  },
+  "128": {
+    "id": 128,
+    "name": "Yewon",
+    "colorId": 10,
+    "altColorId": 13,
+    "birthdate": 19800315,
+    "positions": [
+      7,
+      8
+    ]
+  },
+  "129": {
+    "id": 129,
+    "name": "Chaeyoung",
+    "colorId": 20,
+    "altColorId": 23,
+    "birthdate": 19800913,
+    "positions": [
+      8,
+      12
+    ]
+  },
+  "130": {
+    "id": 130,
+    "name": "Jinyoung",
+    "colorId": 22,
+    "altColorId": 5,
+    "birthdate": 19850809,
+    "positions": [
+      3,
+      5
+    ]
+  },
+  "131": {
+    "id": 131,
+    "name": "Somi",
+    "colorId": 9,
+    "altColorId": 6,
+    "birthdate": 20010309,
+    "positions": [
+      5,
+      7,
+      10,
+      11,
+      13
+    ]
+  },
 
   "1001": {
     "id": 1001,
@@ -1688,7 +1915,7 @@
   },
   "1037": {
     "id": 1037,
-    "name": "Bruno L",
+    "name": "Bruno_L",
     "colorId": 15,
     "altColorId": 12,
     "birthdate": 19820622,
@@ -1744,7 +1971,7 @@
   },
   "1042": {
     "id": 1042,
-    "name": "Mariana",
+    "name": "Moori",
     "colorId": 24,
     "altColorId": 27,
     "birthdate": 19840907,
@@ -1766,7 +1993,7 @@
   },
   "1044": {
     "id": 1044,
-    "name": "Munizção",
+    "name": "Muni",
     "colorId": 30,
     "altColorId": 13,
     "birthdate": 19850105,
@@ -1777,7 +2004,7 @@
   },
   "1045": {
     "id": 1045,
-    "name": "Bruno P",
+    "name": "Bruno_P",
     "colorId": 35,
     "altColorId": 4,
     "birthdate": 19850129,
@@ -1787,7 +2014,7 @@
   },
   "1046": {
     "id": 1046,
-    "name": "Lúcia",
+    "name": "Lucia",
     "colorId": 25,
     "altColorId": 22,
     "birthdate": 19850326,

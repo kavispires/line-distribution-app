@@ -17,10 +17,6 @@ class App extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log('componentDidUpdate');
-  // }
-
   render() {
     return (<Header />);
   }
