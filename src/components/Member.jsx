@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PositionIcons from './icons/PositionIcons';
 import { parseBirthDate } from '../utils';
 
 const Member = ({ memberId, props }) => {
@@ -19,7 +20,7 @@ const Member = ({ memberId, props }) => {
         {
           POSITIONS.map(pos => (
             <li key={`${MEMBER.name}-${pos.name}`} className="pill-position">
-              {pos.name}
+              <PositionIcons positions={[pos.id]} memberId={MEMBER.id} iconClass="pill-icon" /> {pos.name}
             </li>
           ))
         }

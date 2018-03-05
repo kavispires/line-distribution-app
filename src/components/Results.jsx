@@ -58,7 +58,6 @@ class Results extends Component {
         </ul>
         <div className="controls">
           <button className="btn" onClick={() => this.props.history.push('/distribute')}>Done</button>
-          <button className="btn" onClick={() => copyToClipboard('ranking')}>Copy Results to Clipboard</button>
           <button className="btn" onClick={() => this.props.openSaveModal()}>Save to LocalStorage</button>
         </div>
         <div className="group stats">
@@ -74,6 +73,7 @@ class Results extends Component {
             <ModalSave props={this.props} />
           ) : null
         }
+        <textarea className="temp-input-save" id="temp-input" value={RESULTS.tempInput} readOnly />
       </section>
     );
   }

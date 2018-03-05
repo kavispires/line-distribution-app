@@ -58,7 +58,7 @@ export const saveLocalStorage = (obj, type) => {
 };
 
 export const copyToClipboard = (element = 'temp-input') => {
-  console.log('Copying to clipboard..');
+  console.log('Copying to clipboard...');
   setTimeout(() => {
     const copyText = document.getElementById(element);
     console.log(copyText);

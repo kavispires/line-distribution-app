@@ -144,12 +144,14 @@ h1 {
 }
 
 .pill-positions {
-  margin: 0;
-  padding-left: 15px;
+  margin-top: -12px;
+  padding-left: 0px;
+  list-style: none;
 }
 
-.pill-position {
-
+.pill-icon {
+  display: inline-block;
+  transform: translateY(10px);
 }
 
 // .tiny-h1 {
