@@ -198,35 +198,47 @@
     "name": "WJSN",
     "otherNames": "cosmic girls",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      35
+    ]
   },
   "22": {
     "id": 22,
     "name": "gugudan",
-    "otherNames": "",
+    "otherNames": "gu9udan gx9",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      36
+    ]
   },
   "23": {
     "id":23,
     "name": "Oh My Girl",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      37,
+      38
+    ]
   },
   "24": {
     "id": 24,
     "name": "Weki Meki",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      39
+    ]
   },
   "25": {
     "id": 25,
     "name": "IOI",
     "otherNames": "i.o.i, produce 101",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      40,
+      41
+    ]
   },
   "26": {
     "id": 26,
@@ -402,6 +414,15 @@
     "otherNames": "play back",
     "genre": "K-Pop",
     "units": []
+  },
+  "51": {
+    "id": 51,
+    "name": "Uni T",
+    "otherNames": "Unit G The Unit The Uni+ uni.t uni. t",
+    "genre": "K-Pop",
+    "units": [
+      42
+    ]
   },
   "1000": {
     "id": 1000,
