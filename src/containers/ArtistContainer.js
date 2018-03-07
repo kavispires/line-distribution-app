@@ -7,6 +7,7 @@ import {
   switchUnitsTab,
   updateCurrentUnit,
   updateLatestUnits,
+  updateSelectedArtist,
   updateSelectedUnit,
 } from '../reducers/app';
 
@@ -16,6 +17,7 @@ const mapDispatchToProps = {
   switchUnitsTab,
   updateCurrentUnit,
   updateLatestUnits,
+  updateSelectedArtist,
   updateSelectedUnit,
 };
 

@@ -9,8 +9,9 @@ const Artists = (props) => {
   const currentBand = app.currentBand ? ARTISTS[app.currentBand] : ARTITST_PLACEHOLDER;
 
   const handleArtistClick = (e) => {
-    props.updateSelectedArtist(e);
-    props.history.push('/artist');
+    // Get id of the closest tr element
+    const artistId = app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+    props.history.push(`/artist/${artistId}`);
   };
 
   const setArtistUnit = (id) => {

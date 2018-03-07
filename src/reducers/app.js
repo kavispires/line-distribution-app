@@ -206,8 +206,7 @@ export const filter = e => (dispatch, getState) => {
   }
 };
 
-export const updateSelectedArtist = e => (dispatch, getState) => {
-  const artistId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+export const updateSelectedArtist = artistId => (dispatch, getState) => {
   dispatch(setSelectedArtist(artistId));
   // Reset selected unit
   dispatch(setSelectedUnit({}));
