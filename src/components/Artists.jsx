@@ -15,6 +15,7 @@ const Artists = (props) => {
   };
 
   const setArtistUnit = (id) => {
+    props.updateShouldReset(true);
     props.updateCurrentUnit(id);
     props.history.push(`/distribute`);
     props.updateLatestUnits(id);

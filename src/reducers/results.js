@@ -113,17 +113,17 @@ export const openSaveModal = () => (dispatch, getState) => {
   dispatch(toogleModal(!modal));
 };
 
-export const handleSongTitle = event => (dispatch, getState) => {
+export const handleSongTitle = event => (dispatch) => {
   const { value } = event.target;
   dispatch(setSongTitle(value));
 };
 
-export const handleSongType = event => (dispatch, getState) => {
+export const handleSongType = event => (dispatch) => {
   const { value } = event.target;
   dispatch(setSongType(value));
 };
 
-export const handleOriginalArtist = event => (dispatch, getState) => {
+export const handleOriginalArtist = event => (dispatch) => {
   const { value } = event.target;
   dispatch(setOriginalArtist(value));
 };
@@ -132,7 +132,7 @@ export const saveSong = (save = true) => (dispatch, getState) => {
   const unitId = getState().app.currentUnit.id;
   const title = getState().results.songTitle;
   const type = getState().results.songType;
-  const { originalArtist } = getState().results.originalArtist;
+  const { originalArtist } = getState().results;
   const { lyrics } = getState().lyrics;
   const distribution = [...getState().distribute.history];
   const id = Date.now();

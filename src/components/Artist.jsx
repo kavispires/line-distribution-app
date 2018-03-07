@@ -17,10 +17,11 @@ class Artist extends Component {
     const ARTIST = database.artists[app.selectedArtist];
     const { selectedUnits, selectedUnit } = app;
 
-    const setArtistUnit = (path) => {
+    const setArtistUnit = (path, shouldReset = true) => {
       this.props.updateCurrentUnit();
       this.props.history.push(`/${path}`);
       this.props.updateLatestUnits();
+      this.props.updateShouldReset(shouldReset);
     };
 
     if (ARTIST === undefined) {
@@ -36,6 +37,16 @@ class Artist extends Component {
     if (selectedUnit && app.songsPerUnit[selectedUnit.id]) {
       unitSongs = app.songsPerUnit[selectedUnit.id];
     }
+
+    const handleSongClick = (e) => {
+      // Get id of the closest tr element
+      const songId = unitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+      console.log(songId);
+      // Set unit, push history and update latest
+      setArtistUnit('distribute', false);
+
+      // props.history.push(`/distribute`);
+    };
 
     return (
       <section className="container">
@@ -92,13 +103,38 @@ class Artist extends Component {
                 }
               </div>
               <h3>Songs:</h3>
-              <div className="unit-songs">
-                {
-                  unitSongs && unitSongs.map(songId => (
-                    <p key={songId}>{database.songs[songId].title}</p>
-                  ))
-                }
-              </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Lyrics</th>
+                    <th>Distribution</th>
+                  </tr>
+                </thead>
+                <tbody onClick={(e) => handleSongClick(e)}>
+                  {
+                    unitSongs && unitSongs.map((songId) => {
+                      const song = database.songs[songId];
+                      let type = 'Official';
+                      if (song.type === 'would') {
+                        type = `by ${song.originalArtist}`;
+                      } else if (song.type === 'should') {
+                        type = "How it should've been";
+                      }
+
+                      return (
+                        <tr key={songId}>
+                          <td>{song.title}</td>
+                          <td>{type}</td>
+                          <td>{song.lyrics ? 'YES' : 'NO'}</td>
+                          <td>{song.distribution ? 'YES' : 'NO'}</td>
+                        </tr>
+                      );
+                    })
+                  }
+                </tbody>
+              </table>
             </section>
           ) : (
             <p>Select a unit tab above.</p>

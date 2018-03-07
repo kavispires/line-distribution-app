@@ -8,6 +8,7 @@ import {
   updateCurrentUnit,
   updateLatestUnits,
   updateSelectedArtist,
+  updateShouldReset,
 } from '../reducers/app';
 
 const mapStateToProps = state => ({ app: state.app, database: state.database });
@@ -17,6 +18,7 @@ const mapDispatchToProps = {
   updateCurrentUnit,
   updateLatestUnits,
   updateSelectedArtist,
+  updateShouldReset,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artists));
