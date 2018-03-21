@@ -120,7 +120,7 @@ class Artist extends Component {
                       const song = database.songs[songId];
                       let type = 'Official';
                       if (song.type === 'would') {
-                        type = `by ${song.originalArtist}`;
+                        type = `Originally by ${song.originalArtist}`;
                       } else if (song.type === 'should') {
                         type = "How it should've been";
                       }
