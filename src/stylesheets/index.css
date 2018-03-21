@@ -5761,6 +5761,12 @@ h1 {
   .latest-units .btn, .latest-units .btn-lg {
     margin-right: 12px; }
 
+.converter-output {
+  margin-top: 12px;
+  width: 100%;
+  resize: vertical;
+  min-height: 150px; }
+
 .app-header {
   background-color: #000;
   display: flex;

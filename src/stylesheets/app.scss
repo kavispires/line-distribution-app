@@ -176,3 +176,10 @@ h1 {
     margin-right: $unit;
   }
 }
+
+.converter-output {
+  margin-top: $unit;
+  width: 100%;
+  resize: vertical;
+  min-height: 150px;
+}
