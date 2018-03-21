@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import Member from './Member';
 import iconOfficial from '../images/icon-official.svg';
+import iconYes from '../images/icon-yes.svg';
+import iconNo from '../images/icon-no.svg';
 
 class Artist extends Component {
   componentDidMount() {
@@ -127,8 +129,22 @@ class Artist extends Component {
                         <tr key={songId}>
                           <td>{song.title}</td>
                           <td>{type}</td>
-                          <td>{song.lyrics ? 'YES' : 'NO'}</td>
-                          <td>{song.distribution ? 'YES' : 'NO'}</td>
+                          <td>
+                            {
+                              song.lyrics ?
+                                <img className="icon icon-tab" src={iconYes} alt="Yes" />
+                                :
+                                <img className="icon icon-tab" src={iconNo} alt="No" />
+                            }
+                          </td>
+                          <td>
+                            {
+                              song.distribution ?
+                                <img className="icon icon-tab" src={iconYes} alt="Yes" />
+                                :
+                                <img className="icon icon-tab" src={iconNo} alt="No" />
+                            }
+                          </td>
                         </tr>
                       );
                     })
