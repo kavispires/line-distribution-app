@@ -105,52 +105,59 @@ class Artist extends Component {
                 }
               </div>
               <h3>Songs:</h3>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Type</th>
-                    <th>Lyrics</th>
-                    <th>Distribution</th>
-                  </tr>
-                </thead>
-                <tbody onClick={(e) => handleSongClick(e)}>
-                  {
-                    unitSongs && unitSongs.map((songId) => {
-                      const song = database.songs[songId];
-                      let type = 'Official';
-                      if (song.type === 'would') {
-                        type = `Originally by ${song.originalArtist}`;
-                      } else if (song.type === 'should') {
-                        type = "How it should've been";
-                      }
+              {
+                unitSongs && unitSongs.length > 0 ? (
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Lyrics</th>
+                        <th>Distribution</th>
+                      </tr>
+                    </thead>
+                    <tbody onClick={(e) => handleSongClick(e)}>
+                      {
+                        unitSongs && unitSongs.map((songId) => {
+                          const song = database.songs[songId];
+                          let type = 'Official';
+                          if (song.type === 'would') {
+                            type = `Originally by ${song.originalArtist}`;
+                          } else if (song.type === 'should') {
+                            type = "How it should've been";
+                          }
 
-                      return (
-                        <tr key={songId}>
-                          <td>{song.title}</td>
-                          <td>{type}</td>
-                          <td>
-                            {
-                              song.lyrics ?
-                                <img className="icon icon-tab" src={iconYes} alt="Yes" />
-                                :
-                                <img className="icon icon-tab" src={iconNo} alt="No" />
-                            }
-                          </td>
-                          <td>
-                            {
-                              song.distribution ?
-                                <img className="icon icon-tab" src={iconYes} alt="Yes" />
-                                :
-                                <img className="icon icon-tab" src={iconNo} alt="No" />
-                            }
-                          </td>
-                        </tr>
-                      );
-                    })
-                  }
-                </tbody>
-              </table>
+                          return (
+                            <tr key={songId}>
+                              <td>{song.title}</td>
+                              <td>{type}</td>
+                              <td>
+                                {
+                                  song.lyrics ?
+                                    <img className="icon icon-tab" src={iconYes} alt="Yes" />
+                                    :
+                                    <img className="icon icon-tab" src={iconNo} alt="No" />
+                                }
+                              </td>
+                              <td>
+                                {
+                                  song.distribution ?
+                                    <img className="icon icon-tab" src={iconYes} alt="Yes" />
+                                    :
+                                    <img className="icon icon-tab" src={iconNo} alt="No" />
+                                }
+                              </td>
+                            </tr>
+                          );
+                        })
+                      }
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No songs available</p>
+                )
+              }
+
             </section>
           ) : (
             <p>Select a unit tab above.</p>
