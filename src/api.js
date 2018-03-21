@@ -255,10 +255,22 @@ const fetchUnit = (id, include) => {
   return 'NO-UNIT-AVAILABLE';
 };
 
-// API/units/:id/songs
+// API/units/:id/members
+const fetchUnitMembers = (id, include) => {
+  const UNIT = _.cloneDeep(DB.UNITS[id]);
+  let response;
+  if (UNIT !== undefined && UNIT.members) {
+    // Fetch members
+    response = UNIT.members.map(memberId => fetchMember(memberId));
+    return response;
+  }
+  return 'NO-MEMBERS-AVAILABLE';
+};
+
+// API/units/:id/units
 // TO-DO: WRONG FUNCTION
 const fetchUnitSongs = (id, include) => {
-  const units = _.cloneDeep(DB.UNITS[id]);
+  // const units = _.cloneDeep(DB.UNITS[id]);
   let response;
   if (response !== undefined) {
 
@@ -386,6 +398,8 @@ const get = (str) => {
       if (length === 3) return fetchUnit(path[2]);
       // API/units/:id/songs
       if (length === 4 && last === 'songs') return fetchUnitSongs(path[2]);
+      // API/units/:id/members
+      if (length === 4 && last === 'members') return fetchUnitMembers(path[2]);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
