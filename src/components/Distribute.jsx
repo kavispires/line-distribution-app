@@ -26,10 +26,11 @@ class Distribute extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.app.currentUnit !== this.props.app.currentUnit) {
+    if (nextProps.app.currentUnit !== this.props.app.currentUnit && this.props.app.shouldReset) {
+      console.log("IT'S RESETING");
       this.reset();
-      this.props.handleParser(this.props.lyrics.lyrics);
     }
+    this.props.handleParser(this.props.lyrics.lyrics);
   }
 
   reset() {

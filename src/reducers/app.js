@@ -18,6 +18,7 @@ const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
 const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
 const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
 const SET_SELECTED_UNITS = 'SET_SELECTED_UNITS';
+const SET_SHOULD_RESET = 'SET_SHOULD_RESET';
 const SET_SONGS_PER_UNIT = 'SET_SONGS_PER_UNIT';
 
 /* --------------   ACTION CREATORS   -------------- */
@@ -35,6 +36,7 @@ export const setMembersList = payload => dispatch => dispatch({ type: SET_MEMBER
 export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
 export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
 export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
+export const setShouldReset = payload => dispatch => dispatch({ type: SET_SHOULD_RESET, payload });
 export const setSongsPerUnit = payload => dispatch => dispatch({ type: SET_SONGS_PER_UNIT, payload });
 
 /* -----------------   REDUCERS   ------------------ */
@@ -53,6 +55,7 @@ const initialState = {
   selectedArtist: 0,
   selectedUnit: {},
   selectedUnits: {},
+  shouldReset: true,
   songsPerUnit: {},
 };
 
@@ -110,6 +113,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_SELECTED_UNITS:
       newState.selectedUnits = action.payload;
+      break;
+
+    case SET_SHOULD_RESET:
+      newState.shouldReset = action.payload;
       break;
 
     case SET_SONGS_PER_UNIT:
@@ -206,8 +213,7 @@ export const filter = e => (dispatch, getState) => {
   }
 };
 
-export const updateSelectedArtist = e => (dispatch, getState) => {
-  const artistId = getState().app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+export const updateSelectedArtist = artistId => (dispatch, getState) => {
   dispatch(setSelectedArtist(artistId));
   // Reset selected unit
   dispatch(setSelectedUnit({}));
@@ -261,4 +267,9 @@ export const updateLatestUnits = id => (dispatch, getState) => {
     dispatch(setLatestUnits(latestUnits));
     API.post('/units/latest', latestUnits);
   }
+};
+
+export const updateShouldReset = (bool = false) => (dispatch) => {
+  console.log('SHOULD RESET', bool);
+  dispatch(setShouldReset(bool));
 };

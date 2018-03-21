@@ -18,7 +18,7 @@ const routes = (
   <Router>
     <div className="app">
       <AppContainer />
-      <Route path="/artist" component={ArtistContainer} />
+      <Route path="/artist/:artistId" component={ArtistContainer} />
       <Route path="/artists" component={ArtistsContainer} />
       <Route path="/colorsheet" component={ColorSheetContainer} />
       <Route path="/create" component={CreatorContainer} />
