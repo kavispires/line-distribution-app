@@ -1,6 +1,5 @@
-import {
-  copyToClipboard,
-} from '../utils';
+import _ from 'lodash';
+import { copyToClipboard } from '../utils';
 
 import API from '../api';
 
@@ -134,8 +133,14 @@ export const saveSong = (save = true) => (dispatch, getState) => {
   const type = getState().results.songType;
   const { originalArtist } = getState().results.originalArtist;
   const { lyrics } = getState().lyrics;
-  const distribution = [...getState().distribute.history];
+  const distribution = _.cloneDeep(getState().distribute.history);
   const id = Date.now();
+
+  // Reassign IDs to distribution
+  const MEMBERS = getState().app.currentUnit.members;
+  for (let i = 0; i < distribution.length; i++) {
+    distribution[i].memberId = MEMBERS[distribution[i].memberId].id;
+  }
 
   const newJSON = {
     id,
