@@ -119,6 +119,16 @@ h1 {
   outline: 1px dashed $grey;
 }
 
+.unit-songs-dist {
+  display: flex;
+  width: 100%;
+  min-width: 200px;
+}
+
+.unit-songs-member {
+  height: $unit;
+}
+
 .pill {
   padding: $halfUnit;
   margin-right: $unit;

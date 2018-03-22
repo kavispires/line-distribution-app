@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Artist from '../components/Artist';
 
 import {
+  parseSong,
   switchUnitsTab,
   updateCurrentUnit,
   updateLatestUnits,
@@ -15,6 +16,7 @@ import {
 const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
+  parseSong,
   switchUnitsTab,
   updateCurrentUnit,
   updateLatestUnits,

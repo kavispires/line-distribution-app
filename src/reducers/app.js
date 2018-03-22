@@ -299,3 +299,42 @@ export const updateLatestUnits = id => (dispatch, getState) => {
 export const updateShouldReset = (bool = false) => (dispatch) => {
   dispatch(setShouldReset(bool));
 };
+
+export const parseSong = song => (dispatch, getState) => {
+  const { distribution } = song;
+  const distDict = {};
+  let total = 0;
+  // Get member totals
+  for (let i = 0; i < distribution.length; i++) {
+    const instance = distribution[i];
+    if (distDict[instance.memberId] === undefined) {
+      distDict[instance.memberId] = instance.duration;
+    } else {
+      distDict[instance.memberId] += instance.duration;
+    }
+    total += instance.duration;
+  }
+  const distTotals = [];
+  let totalPercentage = 0;
+  for (let i = 0; i < Object.keys(distDict).length; i++) {
+    const key = Object.keys(distDict)[i];
+    const memberTotal = Math.round((distDict[key] * 100) / total);
+    distTotals.push({
+      memberId: key,
+      memberTotal,
+    });
+    totalPercentage += memberTotal;
+  }
+
+  const result = _.orderBy(distTotals, ['memberTotal'], ['desc']);
+  if (totalPercentage < 100) {
+    const remaining = 100 - totalPercentage;
+    result[result.length - 1].memberTotal += remaining;
+  }
+  if (totalPercentage > 100) {
+    const remaining = totalPercentage - 100;
+    result[result.length - 1].memberTotal -= remaining;
+  }
+
+  return result;
+};
