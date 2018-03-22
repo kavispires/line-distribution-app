@@ -25,8 +25,8 @@ const Member = ({ memberId, props }) => {
         <span className={`pill-color-alt color-${altColorId}`} />
       </span>
       <p><b>Date of Birth:</b> {parseBirthDate(birthdate)}</p>
-      <p><b>Average per Official Song:</b> {average}%</p>
-      <p><b>Total Average per Song:</b> {averageOfficial}%</p>
+      <p><b>Average per Official Song:</b> {aaverageOfficialverage}%</p>
+      <p><b>Total Average per Song:</b> {average}%</p>
       <p><b>Positions:</b></p>
       <ul className="pill-positions">
         {
