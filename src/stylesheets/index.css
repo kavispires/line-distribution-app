@@ -5723,6 +5723,14 @@ h1 {
 .unit-songs {
   outline: 1px dashed #CCC; }
 
+.unit-songs-dist {
+  display: flex;
+  width: 100%;
+  min-width: 200px; }
+
+.unit-songs-member {
+  height: 12px; }
+
 .pill {
   padding: 6px;
   margin-right: 12px;

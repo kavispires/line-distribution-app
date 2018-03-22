@@ -43,7 +43,6 @@ class Artist extends Component {
     const handleSongClick = (e) => {
       // Get id of the closest tr element
       const songId = unitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
-      console.log(songId);
       // Set unit, push history and update latest
       setArtistUnit('distribute', false);
 
@@ -126,7 +125,7 @@ class Artist extends Component {
                           } else if (song.type === 'should') {
                             type = "How it should've been";
                           }
-
+                          const songDistribution = this.props.parseSong(song);
                           return (
                             <tr key={songId}>
                               <td>{song.title}</td>
@@ -142,9 +141,24 @@ class Artist extends Component {
                               <td>
                                 {
                                   song.distribution ?
-                                    <img className="icon icon-tab" src={iconYes} alt="Yes" />
+                                    (
+                                      <span className="unit-songs-dist">
+                                        {
+                                          songDistribution.map((instance) => {
+                                            const { colorId } = database.members[instance.memberId];
+                                            const barWidth = instance.memberTotal;
+                                            return (
+                                              <span
+                                                key={`${songId}-${colorId}`}
+                                                className={`unit-songs-member color-${colorId} bar-width-${barWidth}`}
+                                              />
+                                            );
+                                          })
+                                        }
+                                      </span>
+                                    )
                                     :
-                                    <img className="icon icon-tab" src={iconNo} alt="No" />
+                                      <img className="icon icon-tab" src={iconNo} alt="No" />
                                 }
                               </td>
                             </tr>
