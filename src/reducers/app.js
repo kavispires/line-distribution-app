@@ -248,6 +248,36 @@ export const updateCurrentUnit = id => (dispatch, getState) => {
   }
   const currentArtist = API.get(`/artists/${selectedArtist}`);
   const currentUnit = API.get(`/units/${selectedUnit.id}/all`);
+
+  // Get unique main colors to the members
+  const colorDict = {};
+  // Create color dictionary
+  for (let i = 0; i < currentUnit.members.length; i++) {
+    const member = currentUnit.members[i];
+    if (colorDict[member.colorId] === undefined) {
+      colorDict[member.colorId] = true;
+    }
+  }
+  console.log('DICT =', colorDict);
+  // Check color availability
+  for (let i = 0; i < currentUnit.members.length; i++) {
+    const member = currentUnit.members[i];
+    console.log(member.name, member.colorId, member.altColorId);
+    if (colorDict[member.colorId]) {
+      colorDict[member.colorId] = false;
+    } else if (colorDict[member.altColorId] === undefined) {
+      currentUnit.members[i].colorId = member.altColorId;
+    } else {
+      // If altColor is taken, assign random color
+      let newColor = Math.floor(Math.random() * 36) + 1;
+      while (colorDict[newColor] !== undefined) {
+        newColor += 1;
+        if (newColor > 36) newColor = 1;
+      }
+      currentUnit.member[i].colorId = newColor;
+    }
+  }
+
   dispatch(setCurrentArtist(currentArtist));
   dispatch(setCurrentUnit(currentUnit));
 };
