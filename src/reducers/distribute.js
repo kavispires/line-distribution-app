@@ -204,7 +204,7 @@ export const handleDecrease = () => (dispatch, getState) => {
 
 export const handleKeydown = e => (dispatch, getState) => {
   const CURRENT_UNIT = getState().app.currentUnit;
-  if (CURRENT_UNIT && KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_UNIT.members.length) {
+  if (Object.keys(CURRENT_UNIT).length > 0 && KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_UNIT.members.length) {
     const key = KEYS[e.keyCode];
     dispatch(enqueueCapture(key.id));
   }

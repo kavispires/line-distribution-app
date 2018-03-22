@@ -14,6 +14,8 @@ class Distribute extends Component {
     if (this.props.location.pathname === '/distribute') {
       window.addEventListener('keydown', this.props.handleKeydown);
       window.addEventListener('keyup', this.props.handleKeyup);
+      // Run Lyric parser once.
+      this.props.handleParser(this.props.lyrics.lyrics);
     }
 
     // const unitLength = Object.keys(this.props.app.currentUnit).length;
@@ -27,10 +29,8 @@ class Distribute extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.app.currentUnit !== this.props.app.currentUnit && this.props.app.shouldReset) {
-      console.log("IT'S RESETING");
       this.reset();
     }
-    this.props.handleParser(this.props.lyrics.lyrics);
   }
 
   reset() {
@@ -80,9 +80,9 @@ class Distribute extends Component {
 
     // Define Switch Button labels
     const switchLabels = { left: '', right: '' };
-
+    // Define toggling classes for lyrics panel
     const sectionLyricsClasses = showLyrics ? 'section-lyrics-on' : 'section-lyrics-off';
-
+    // Define placeholder for lyrics input text
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
 
     return (
@@ -153,14 +153,18 @@ class Distribute extends Component {
             }
             {
               this.props.distribute.editLyrics ? (
-                <LyricsEditor placeholder={ placeholder } action={this.props.handleParser} defaultValue={ LYRICS.lyrics } />
+                <LyricsEditor
+                  placeholder={placeholder}
+                  action={this.props.handleParser}
+                  defaultValue={LYRICS.lyrics}
+                />
               ) : null
             }
-            <LyricsViewer formattedLyrics={ LYRICS.formattedLyrics } />
+            <LyricsViewer formattedLyrics={LYRICS.formattedLyrics} />
           </section>
         </section>
       </div>
-      );
+    );
   }
 }
 
