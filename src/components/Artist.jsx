@@ -17,7 +17,7 @@ class Artist extends Component {
   render() {
     const { app, database } = this.props;
     const ARTIST = database.artists[app.selectedArtist];
-    const { selectedUnits, selectedUnit } = app;
+    const { selectedUnits, selectedUnit, selectedUnitSongs } = app;
 
     const setArtistUnit = (path, shouldReset = true) => {
       this.props.updateCurrentUnit();
@@ -35,14 +35,9 @@ class Artist extends Component {
       );
     }
 
-    let unitSongs;
-    if (selectedUnit && app.songsPerUnit[selectedUnit.id]) {
-      unitSongs = app.songsPerUnit[selectedUnit.id];
-    }
-
     const handleSongClick = (e) => {
       // Get id of the closest tr element
-      const songId = unitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+      const songId = selectedUnitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
       // Set unit, push history and update latest
       setArtistUnit('distribute', false);
 
@@ -105,7 +100,7 @@ class Artist extends Component {
               </div>
               <h3>Songs:</h3>
               {
-                unitSongs && unitSongs.length > 0 ? (
+                selectedUnitSongs && selectedUnitSongs.length > 0 ? (
                   <table className="table">
                     <thead>
                       <tr>
@@ -117,17 +112,16 @@ class Artist extends Component {
                     </thead>
                     <tbody onClick={(e) => handleSongClick(e)}>
                       {
-                        unitSongs && unitSongs.map((songId) => {
-                          const song = database.songs[songId];
+                        selectedUnitSongs && selectedUnitSongs.map((song) => {
                           let type = 'Official';
                           if (song.type === 'would') {
                             type = `Originally by ${song.originalArtist}`;
                           } else if (song.type === 'should') {
                             type = "How it should've been";
                           }
-                          const songDistribution = this.props.parseSong(song);
+                          // const songDistribution = this.props.parseSong(song);
                           return (
-                            <tr key={songId}>
+                            <tr key={song.id}>
                               <td>{song.title}</td>
                               <td>{type}</td>
                               <td>
@@ -140,16 +134,16 @@ class Artist extends Component {
                               </td>
                               <td>
                                 {
-                                  song.distribution ?
+                                  song.result ?
                                     (
                                       <span className="unit-songs-dist">
                                         {
-                                          songDistribution.map((instance) => {
+                                          song.result.map((instance) => {
                                             const { colorId } = database.members[instance.memberId];
                                             const barWidth = instance.memberTotal;
                                             return (
                                               <span
-                                                key={`${songId}-${colorId}`}
+                                                key={`${song.id}-${colorId}-${instance.memberId}`}
                                                 className={`unit-songs-member color-${colorId} bar-width-${barWidth}`}
                                               />
                                             );
