@@ -6,13 +6,16 @@ import { parseBirthDate } from '../utils';
 const Member = ({ memberId, props }) => {
   const { database } = props;
   const MEMBER = database.members[memberId];
-  const { colorId, birthdate } = MEMBER;
+  const { colorId, birthdate, altColorId } = MEMBER;
   const POSITIONS = MEMBER.positions.map(pos => database.positions[pos]);
 
   return (
     <section className="pill">
       <p className="pill-name">{MEMBER.name}</p>
-      <span className={`pill-color-bar color-${colorId}`} />
+      <span className="pill-color-bar">
+        <span className={`pill-color-main color-${colorId}`} />
+        <span className={`pill-color-alt color-${altColorId}`} />
+      </span>
       <p><b>Date of Birth:</b> {parseBirthDate(birthdate)}</p>
       <p><b>Average Per Song:</b> 0%</p>
       <p><b>Positions:</b></p>

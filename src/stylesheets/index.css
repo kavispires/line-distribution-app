@@ -5734,9 +5734,19 @@ h1 {
 
 .pill-color-bar {
   width: 100%;
-  display: block;
+  display: flex;
   height: 6px;
   margin-bottom: 6px; }
+
+.pill-color-main {
+  display: block;
+  height: 6px;
+  width: 80%; }
+
+.pill-color-alt {
+  display: block;
+  height: 6px;
+  width: 20%; }
 
 .pill-name {
   text-transform: uppercase;

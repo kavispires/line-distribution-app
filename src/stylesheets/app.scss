@@ -133,9 +133,21 @@ h1 {
 
 .pill-color-bar {
   width: 100%;
-  display: block;
+  display: flex;
   height: $halfUnit;
   margin-bottom: $halfUnit;
+}
+
+.pill-color-main {
+  display: block;
+  height: $halfUnit;
+  width: 80%;
+}
+
+.pill-color-alt {
+  display: block;
+  height: $halfUnit;
+  width: 20%;
 }
 
 .pill-name {
