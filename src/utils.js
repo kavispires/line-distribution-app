@@ -48,7 +48,6 @@ export const loadLocalStorage = () => {
   console.log('Fetching from localStorage...');
   const { localStorage } = window;
   const data = localStorage.getItem('linedistribution') || '{}';
-  // console.log(data);
   return JSON.parse(data);
 };
 
@@ -61,7 +60,6 @@ export const copyToClipboard = (element = 'temp-input') => {
   console.log('Copying to clipboard...');
   setTimeout(() => {
     const copyText = document.getElementById(element);
-    // console.log(copyText);
     copyText.select();
     document.execCommand("Copy");
     console.log(`Copied to clipboard`);

@@ -73,7 +73,6 @@ const Database = (props) => {
                                   <ul key={`${reactKey}`}>
                                     {
                                       pair.map((item) => {
-                                        console.log(item);
                                         return (
                                           <li>
                                             <ul>
