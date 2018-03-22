@@ -133,7 +133,6 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const init = () => (dispatch) => {
-  console.log('INIT WAS CALLED');
   dispatch(initDatabase());
   dispatch(getColorCount());
   dispatch(parseArtists());
@@ -258,11 +257,9 @@ export const updateCurrentUnit = id => (dispatch, getState) => {
       colorDict[member.colorId] = true;
     }
   }
-  console.log('DICT =', colorDict);
   // Check color availability
   for (let i = 0; i < currentUnit.members.length; i++) {
     const member = currentUnit.members[i];
-    console.log(member.name, member.colorId, member.altColorId);
     if (colorDict[member.colorId]) {
       colorDict[member.colorId] = false;
     } else if (colorDict[member.altColorId] === undefined) {
@@ -300,6 +297,5 @@ export const updateLatestUnits = id => (dispatch, getState) => {
 };
 
 export const updateShouldReset = (bool = false) => (dispatch) => {
-  console.log('SHOULD RESET', bool);
   dispatch(setShouldReset(bool));
 };

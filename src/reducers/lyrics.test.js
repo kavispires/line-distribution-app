@@ -81,8 +81,6 @@ const handleParser = (input) => {
 
   for (let i = 0; i < lyricsToParse.length; i++) {
     let lineToParse = lyricsToParse[i].trim();
-    console.log(`===== LINE ${i}:`, lineToParse);
-    console.log('PREV COLOR:', lastColor, 'PREV SUBCOLOR', lastSubColor, 'LAST MEMBER:', lastMember);
     const line = new Line();
 
     // Handles Case 0
@@ -92,7 +90,6 @@ const handleParser = (input) => {
       lastMember = null;
       lastColor = 0;
       lastSubColor = 0;
-      console.log('PREV COLOR:', lastColor, 'PREV SUBCOLOR', lastSubColor, 'LAST MEMBER:', lastMember);
     } else {
       // Runs the line string as many times necessary to parse string completely
       while (lineToParse.length > 0 || lineToParse !== '') {

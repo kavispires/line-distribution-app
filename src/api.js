@@ -423,7 +423,6 @@ const postLatestUnits = (body) => {
 // API/songs
 const postSong = (body) => {
   const LS = loadLocalStorage();
-  console.log(body);
   if (body) {
     if (LS.songs === undefined) {
       LS.songs = {};
