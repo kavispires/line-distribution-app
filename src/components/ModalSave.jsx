@@ -25,7 +25,7 @@ const SaveModal = ({props}) => {
             onChange={props.handleSongType}
           >
             <option value="">Select type...</option>
-            <option value="original">Original</option>
+            <option value="official">Official</option>
             <option value="would">How They Would Sing...</option>
             <option value="should">How They Should Sing...</option>
           </select>
