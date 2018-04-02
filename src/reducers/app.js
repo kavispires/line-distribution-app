@@ -363,6 +363,7 @@ export const parseUnitSongs = songs => (dispatch, getState) => {
       }
       total += instance.duration;
     }
+
     const distTotals = [];
     let totalPercentage = 0;
     for (let i = 0; i < Object.keys(distDict).length; i++) {
@@ -381,7 +382,7 @@ export const parseUnitSongs = songs => (dispatch, getState) => {
         distributionPerMember[key] += distDict[key];
       }
       if (song.type === 'official') {
-        if (distributionPerMember[key] === undefined) {
+        if (distributionPerMemberOfficial[key] === undefined) {
           distributionPerMemberOfficial[key] = distDict[key];
         } else {
           distributionPerMemberOfficial[key] += distDict[key];
@@ -392,7 +393,6 @@ export const parseUnitSongs = songs => (dispatch, getState) => {
     if (song.type === 'official') {
       distributionTotalOfficial += total;
     }
-
 
     const result = _.orderBy(distTotals, ['memberTotal'], ['desc']);
     if (totalPercentage < 100) {
