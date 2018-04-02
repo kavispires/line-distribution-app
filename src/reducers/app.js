@@ -342,11 +342,11 @@ export const updateShouldReset = (bool = false) => (dispatch) => {
   dispatch(setShouldReset(bool));
 };
 
-export const parseUnitSongs = songs => (dispatch, getState) => {
-  const distributionPerMember = _.cloneDeep(getState().app.distributionPerMember);
-  const distributionPerMemberOfficial = _.cloneDeep(getState().app.distributionPerMemberOfficial);
-  let { distributionTotal } = getState().app;
-  let { distributionTotalOfficial } = getState().app;
+export const parseUnitSongs = songs => (dispatch) => {
+  const distributionPerMember = {};
+  const distributionPerMemberOfficial = {};
+  let distributionTotal = 0;
+  let distributionTotalOfficial = 0;
 
   songs.forEach((song) => {
     const { distribution } = song;
