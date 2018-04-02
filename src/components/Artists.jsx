@@ -14,11 +14,12 @@ const Artists = (props) => {
     props.history.push(`/artist/${artistId}`);
   };
 
-  const setArtistUnit = (id) => {
-    props.updateShouldReset(true);
-    props.updateCurrentUnit(id);
-    props.history.push(`/distribute`);
-    props.updateLatestUnits(id);
+  const setArtistUnit = (bandId, unitId) => {
+    props.history.push(`/artist/${bandId}`);
+    // Delays setting selected unit to override page landing functions
+    setTimeout(() => {
+      props.updateSelectedUnit(unitId);
+    }, 1000);
   };
 
   return (
@@ -37,7 +38,7 @@ const Artists = (props) => {
                 return (
                   <button
                     key={`latest-${id}-${unit.name}`}
-                    onClick={() => setArtistUnit(id)}
+                    onClick={() => setArtistUnit(unit.bandId, id)}
                     className="btn"
                   >
                     {`${artist.name} (${unit.name})`}
