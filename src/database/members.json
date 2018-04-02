@@ -2066,7 +2066,7 @@
     "altColorId": 17,
     "birthdate": 19840117,
     "positions": [
-      5,
+      8,
       12
     ]
   },
@@ -2098,7 +2098,7 @@
     "birthdate": 19840117,
     "positions": [
       4,
-      6,
+      10,
       8
     ]
   },
@@ -2619,6 +2619,29 @@
       8,
       12,
       13
+    ]
+  },
+  "1053": {
+    "id": 1053,
+    "name": "Finn",
+    "colorId": 18,
+    "altColorId": 15,
+    "birthdate": 19840117,
+    "positions": [
+      8,
+      9,
+      12
+    ]
+  },
+  "1054": {
+    "id": 1054,
+    "name": "Dane",
+    "colorId": 30,
+    "altColorId": 27,
+    "birthdate": 19840117,
+    "positions": [
+      6,
+      8
     ]
   }
 }
