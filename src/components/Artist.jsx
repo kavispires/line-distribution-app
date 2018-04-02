@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
 import Member from './Member';
 import iconOfficial from '../images/icon-official.svg';
@@ -43,6 +44,8 @@ class Artist extends Component {
 
       // props.history.push(`/distribute`);
     };
+
+    const sortedSelectedUnitSongs = _.sortBy(selectedUnitSongs, ['title']);
 
     return (
       <section className="container">
@@ -112,7 +115,7 @@ class Artist extends Component {
                     </thead>
                     <tbody onClick={(e) => handleSongClick(e)}>
                       {
-                        selectedUnitSongs && selectedUnitSongs.map((song) => {
+                        sortedSelectedUnitSongs && sortedSelectedUnitSongs.map((song) => {
                           let type = 'Official';
                           if (song.type === 'would') {
                             type = `Originally by ${song.originalArtist}`;
