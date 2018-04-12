@@ -20,12 +20,14 @@ class Artist extends Component {
     const { selectedUnits, selectedUnit, selectedUnitSongs } = app;
 
     const setArtistUnit = (path, shouldReset = true) => {
-      this.props.updateShouldReset(shouldReset);
-      setTimeout(() => {
-        this.props.updateCurrentUnit();
+      // this.props.toggleIsLoading(true);
+      // setTimeout(() => {
         this.props.history.push(`/${path}`);
+        this.props.updateShouldReset(shouldReset);
+        this.props.updateCurrentUnit();
         this.props.updateLatestUnits();
-      }, 1000);
+        // this.props.toggleIsLoading(false);
+      // }, 1000);
     };
 
     if (ARTIST === undefined) {
@@ -39,11 +41,13 @@ class Artist extends Component {
 
     const handleSongClick = (e) => {
       // Get id of the closest tr element
-      const songId = selectedUnitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+      const songId = selectedUnitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))].id;
       // Set unit, push history and update latest
       setArtistUnit('distribute', false);
-
-      // props.history.push(`/distribute`);
+      setTimeout(() => {
+        this.props.toggleIsLoading(true);
+        this.props.updateCurrentSong(songId);
+      }, 1200);
     };
 
     return (

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
-
+import LoadingIcon from './LoadingIcon';
 import { SwitchToggle } from './Widgets';
 
 import { KEY_LIST } from '../constants';
@@ -28,13 +28,20 @@ class Distribute extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.app.currentUnit !== this.props.app.currentUnit && this.props.app.shouldReset) {
-      this.reset();
+    const nextPropsCurrentUnit = nextProps.app.currentUnit;
+    if (nextPropsCurrentUnit !== this.props.app.currentUnit && this.props.app.shouldReset) {
+      this.reset(nextPropsCurrentUnit);
+    }
+    const prevSongId = this.props.app.currentSong;
+    const songId = nextProps.app.currentSong;
+    if (songId !== prevSongId) {
+      this.props.toggleIsLoading(true);
+      this.props.loadSong();
     }
   }
 
-  reset() {
-    const newArray = new Array(this.props.app.currentUnit.members.length).fill(0);
+  reset(nextProps) {
+    const newArray = new Array(nextProps.members.length).fill(0);
     this.props.setDurations([...newArray]);
     this.props.setPercentages([...newArray]);
     this.props.setHistory([]);
@@ -46,6 +53,26 @@ class Distribute extends Component {
     const LYRICS = this.props.lyrics;
     const CURRENT_UNIT = APP.currentUnit;
 
+    // IF LOADING
+    if (APP.isLoading) {
+      return (
+        <div className="container-flex">
+          <section className="container container-distribution">
+            <section className="section-distribution container-fixed">
+              <h1>Distribute</h1>
+              <div>
+                {
+                  APP.isLoading ? (
+                    <LoadingIcon />
+                  ) : null
+                }
+              </div>
+            </section>
+          </section>
+        </div>
+      );
+    }
+
     // IF NO CURRENT_UNIT
     if (CURRENT_UNIT && !CURRENT_UNIT.members) {
       return (
@@ -53,7 +80,9 @@ class Distribute extends Component {
           <section className="container container-distribution">
             <section className="section-distribution container-fixed">
               <h1>Distribute</h1>
-              <p>You must select an Artist and Unit in the <Link to="/artists">Artists Page</Link> before you can create your line distribution.</p>
+              <div>
+                <p>You must select an Artist and Unit in the <Link to="/artists">Artists Page</Link> before you can create your line distribution.</p>
+              </div>
             </section>
           </section>
         </div>

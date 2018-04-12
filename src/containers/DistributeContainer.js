@@ -4,10 +4,15 @@ import { withRouter } from 'react-router-dom';
 import Distribute from '../components/Distribute';
 
 import {
+  toggleIsLoading,
+} from '../reducers/app';
+
+import {
   boxMouseDown,
   boxMouseUp,
   calculateDuration,
   handleDecrease,
+  loadSong,
   setDurations,
   setHistory,
   setPercentages,
@@ -41,10 +46,12 @@ const mapDispatchToProps = {
   handleKeydown,
   handleKeyup,
   handleReset,
+  loadSong,
   toggleLyrics,
   handleUndo,
   handleParser,
   toggleEditLyrics,
+  toggleIsLoading,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Distribute));

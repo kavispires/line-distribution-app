@@ -12,6 +12,7 @@ const SET_ARTISTS_SEARCH_INDEXATION = 'SET_ARTISTS_SEARCH';
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
+const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
 const SET_LATEST_UNITS = 'SET_LATEST_UNITS';
 const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
@@ -36,6 +37,7 @@ export const setArtistsSearchIndexation = payload => dispatch => dispatch({ type
 export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
 export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
 export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
+export const setCurrentSong = payload => dispatch => dispatch({ type: SET_CURRENT_SONG, payload });
 export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
 export const setDistributionPerMember = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER, payload });
 export const setDistributionPerMemberOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_OFFICIAL, payload });
@@ -61,6 +63,7 @@ const initialState = {
   colorCount: {},
   colorSheetTab: 'list',
   currentArtist: 0,
+  currentSong: 0,
   currentUnit: {},
   distributionPerMember: {},
   distributionPerMemberOfficial: {},
@@ -107,6 +110,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_CURRENT_ARTIST:
       newState.currentArtist = action.payload;
+      break;
+
+    case SET_CURRENT_SONG:
+      newState.currentSong = action.payload;
       break;
 
     case SET_CURRENT_UNIT:
@@ -271,6 +278,9 @@ export const updateSelectedArtist = artistId => (dispatch, getState) => {
   // Update selected Units
   const units = API.get(`/artists/${artistId}/units`);
   dispatch(setSelectedUnits(units));
+
+  // Reset song
+  dispatch(setCurrentSong(0));
 };
 
 export const updateSelectedUnit = id => (dispatch, getState) => {
@@ -293,6 +303,10 @@ export const toggleColorSheetTab = event => (dispatch) => {
 export const switchUnitsTab = event => (dispatch) => {
   const { id } = event.target;
   dispatch(setArtistPageTab(id));
+};
+
+export const updateCurrentSong = id => (dispatch, getState) => {
+  dispatch(setCurrentSong(id));
 };
 
 export const updateCurrentUnit = id => (dispatch, getState) => {
@@ -335,6 +349,7 @@ export const updateCurrentUnit = id => (dispatch, getState) => {
 
   dispatch(setCurrentArtist(currentArtist));
   dispatch(setCurrentUnit(currentUnit));
+  dispatch(setCurrentSong(0));
 };
 
 export const updateLatestUnits = id => (dispatch, getState) => {
