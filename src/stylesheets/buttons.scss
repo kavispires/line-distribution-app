@@ -7,6 +7,7 @@
   font-size: 10px;
   box-shadow: 0 1px 1px $lightGrey;
   cursor: pointer;
+  min-height: $doubleUnit;
 
   &:hover {
     background: $lightGrey;
