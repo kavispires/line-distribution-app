@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Member from './Member';
 import iconOfficial from '../images/icon-official.svg';
 import ArtistSongsTable from './ArtistSongsTable';
+import LoadingIcon from './LoadingIcon';
 
 class Artist extends Component {
   componentDidMount() {
@@ -19,10 +20,12 @@ class Artist extends Component {
     const { selectedUnits, selectedUnit, selectedUnitSongs } = app;
 
     const setArtistUnit = (path, shouldReset = true) => {
-      this.props.updateCurrentUnit();
-      this.props.history.push(`/${path}`);
-      this.props.updateLatestUnits();
       this.props.updateShouldReset(shouldReset);
+      setTimeout(() => {
+        this.props.updateCurrentUnit();
+        this.props.history.push(`/${path}`);
+        this.props.updateLatestUnits();
+      }, 1000);
     };
 
     if (ARTIST === undefined) {
@@ -108,7 +111,15 @@ class Artist extends Component {
 
             </section>
           ) : (
-            <p>Select a unit tab above.</p>
+            <div>
+              {
+                app.isLoading ? (
+                  <LoadingIcon />
+                ) : (
+                  <p>Select a unit tab above.</p>
+                )
+              }
+            </div>
           )
         }
       </section>

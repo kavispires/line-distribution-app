@@ -16,9 +16,11 @@ const Artists = (props) => {
 
   const setArtistUnit = (bandId, unitId) => {
     props.history.push(`/artist/${bandId}`);
+    props.toggleIsLoading(true);
     // Delays setting selected unit to override page landing functions
     setTimeout(() => {
       props.updateSelectedUnit(unitId);
+      props.toggleIsLoading(false);
     }, 1000);
   };
 

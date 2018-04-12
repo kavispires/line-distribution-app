@@ -25,6 +25,7 @@ const SET_DISTRIBUTION_PER_MEMBER = 'SET_DISTRIBUTION_PER_MEMBER';
 const SET_DISTRIBUTION_PER_MEMBER_OFFICIAL = 'SET_DISTRIBUTION_PER_MEMBER_OFFICIAL';
 const SET_DISTRIBUTION_TOTAL = 'SET_DISTRIBUTION_TOTAL';
 const SET_DISTRIBUTION_TOTAL_OFFICIAL = 'SET_DISTRIBUTION_TOTAL_OFFICIAL';
+const SET_IS_LOADING = 'SET_IS_LOADING';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -48,6 +49,7 @@ export const setSelectedUnitSongs = payload => dispatch => dispatch({ type: SET_
 export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
 export const setShouldReset = payload => dispatch => dispatch({ type: SET_SHOULD_RESET, payload });
 export const setSongsPerUnit = payload => dispatch => dispatch({ type: SET_SONGS_PER_UNIT, payload });
+export const setIsLoading = payload => dispatch => dispatch({ type: SET_IS_LOADING, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -64,6 +66,7 @@ const initialState = {
   distributionPerMemberOfficial: {},
   distributionTotal: 0,
   distributionTotalOfficial: 0,
+  isLoading: false,
   latestUnits: [],
   membersList: [],
   selectedArtist: 0,
@@ -158,6 +161,10 @@ export default function reducer(prevState = initialState, action) {
       newState.songsPerUnit = action.payload;
       break;
 
+    case SET_IS_LOADING:
+      newState.isLoading = action.payload;
+      break;
+
     default:
       return prevState;
   }
@@ -244,6 +251,15 @@ export const filter = e => (dispatch, getState) => {
     });
 
     dispatch(setArtistsList(filteredArtists));
+  }
+};
+
+export const toggleIsLoading = bool => (dispatch, getState) => {
+  if (bool) {
+    dispatch(setIsLoading(bool));
+  } else {
+    const value = getState().app.isLoading;
+    dispatch(setIsLoading(!value));
   }
 };
 
