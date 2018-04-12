@@ -49,6 +49,7 @@ class Distribute extends Component {
 
   render() {
     const APP = this.props.app;
+    const DATABASE = this.props.database;
     const DISTRIBUTE = this.props.distribute;
     const LYRICS = this.props.lyrics;
     const CURRENT_UNIT = APP.currentUnit;
@@ -118,7 +119,13 @@ class Distribute extends Component {
       <div className="container-flex">
         <section className="container container-distribution">
           <section className="section-distribution container-fixed">
-            <h1 className="tiny-h1">Distribute</h1>
+            <h1 className="tiny-h1">Distribute
+              {
+                APP.currentSong ? (
+                  `: ${DATABASE.songs[APP.currentSong].title}`
+                ) : null
+              }
+            </h1>
             <div className="toggle-lyrics"> Lyrics <SwitchToggle action={this.props.toggleLyrics} labels={switchLabels} /></div>
             <h2>{CURRENT_UNIT.bandName}</h2>
             <ul className="controls">
