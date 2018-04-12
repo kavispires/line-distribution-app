@@ -2046,6 +2046,100 @@
       12
     ]
   },
+  "179": {
+    "id": 179,
+    "name": "Gyuri",
+    "colorId": 22,
+    "altColorId": 5,
+    "birthdate": 19880521,
+    "positions": [
+      1,
+      5,
+      10
+    ]
+  },
+  "180": {
+    "id": 180,
+    "name": "Seungyeon",
+    "colorId": 30,
+    "altColorId": 33,
+    "birthdate": 19880724,
+    "positions": [
+      2
+    ]
+  },
+  "181": {
+    "id": 181,
+    "name": "Hara",
+    "colorId": 12,
+    "altColorId": 9,
+    "birthdate": 19910113,
+    "positions": [
+      4,
+      8,
+      11
+    ]
+  },
+  "182": {
+    "id": 182,
+    "name": "Youngji",
+    "colorId": 6,
+    "altColorId": 22,
+    "birthdate": 19940830,
+    "positions": [
+      3,
+      7,
+      8,
+      13
+    ]
+  },
+  "183": {
+    "id": 183,
+    "name": "Solar",
+    "colorId": 1,
+    "altColorId": 4,
+    "birthdate": 19910221,
+    "positions": [
+      1,
+      2,
+      11,
+      12
+    ]
+  },
+  "184": {
+    "id": 184,
+    "name": "Moonbyul",
+    "colorId": 17,
+    "altColorId": 20,
+    "birthdate": 19921222,
+    "positions": [
+      3,
+      4
+    ]
+  },
+  "185": {
+    "id": 185,
+    "name": "Wheein",
+    "colorId": 20,
+    "altColorId": 3,
+    "birthdate": 19950417,
+    "positions": [
+      5,
+      7
+    ]
+  },
+  "186": {
+    "id": 186,
+    "name": "Hwasa",
+    "colorId": 5,
+    "altColorId": 21,
+    "birthdate": 19950723,
+    "positions": [
+      5,
+      6,
+      13
+    ]
+  },
 
   "1001": {
     "id": 1001,
