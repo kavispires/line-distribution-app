@@ -247,10 +247,16 @@ export const loadSong = () => (dispatch, getState) => {
   // Set lyrics
   dispatch(handleParser(SONG.lyrics));
 
-  SONG.distribution.forEach((entry) => {
+  // TODO: It should load in reverse order
+  for (let i = SONG.distribution.length - 1; i >= 0; i--) {
+    const entry = SONG.distribution[i];
     const index = memberIndexDict[entry.memberId];
     dispatch(calculateDuration(index, 0, entry.duration));
-  });
+  }
+  // SONG.distribution.forEach((entry) => {
+  //   const index = memberIndexDict[entry.memberId];
+  //   dispatch(calculateDuration(index, 0, entry.duration));
+  // });
   setTimeout(() => {
     dispatch(toggleIsLoading(false));
   }, 1500);

@@ -5823,7 +5823,8 @@ h1 {
   border-radius: 4px;
   font-size: 10px;
   box-shadow: 0 1px 1px #E6E6E6;
-  cursor: pointer; }
+  cursor: pointer;
+  min-height: 24px; }
   .btn:hover, .btn-lg:hover {
     background: #E6E6E6;
     border: 1px outset #CCC; }
