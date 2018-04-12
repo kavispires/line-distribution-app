@@ -245,14 +245,18 @@
     "name": "KARA",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      43
+    ]
   },
   "27": {
     "id": 27,
     "name": "Mamamoo",
     "otherNames": "",
     "genre": "K-Pop",
-    "units": []
+    "units": [
+      44
+    ]
   },
   "28": {
     "id": 28,

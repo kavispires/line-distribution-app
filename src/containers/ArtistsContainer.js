@@ -5,6 +5,7 @@ import Artists from '../components/Artists';
 
 import {
   filter,
+  toggleIsLoading,
   updateCurrentUnit,
   updateLatestUnits,
   updateSelectedArtist,
@@ -16,6 +17,7 @@ const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
   filter,
+  toggleIsLoading,
   updateCurrentUnit,
   updateLatestUnits,
   updateSelectedArtist,

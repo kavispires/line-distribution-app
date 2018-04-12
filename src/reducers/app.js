@@ -12,6 +12,7 @@ const SET_ARTISTS_SEARCH_INDEXATION = 'SET_ARTISTS_SEARCH';
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
+const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
 const SET_LATEST_UNITS = 'SET_LATEST_UNITS';
 const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
@@ -25,6 +26,7 @@ const SET_DISTRIBUTION_PER_MEMBER = 'SET_DISTRIBUTION_PER_MEMBER';
 const SET_DISTRIBUTION_PER_MEMBER_OFFICIAL = 'SET_DISTRIBUTION_PER_MEMBER_OFFICIAL';
 const SET_DISTRIBUTION_TOTAL = 'SET_DISTRIBUTION_TOTAL';
 const SET_DISTRIBUTION_TOTAL_OFFICIAL = 'SET_DISTRIBUTION_TOTAL_OFFICIAL';
+const SET_IS_LOADING = 'SET_IS_LOADING';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -35,6 +37,7 @@ export const setArtistsSearchIndexation = payload => dispatch => dispatch({ type
 export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
 export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
 export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
+export const setCurrentSong = payload => dispatch => dispatch({ type: SET_CURRENT_SONG, payload });
 export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
 export const setDistributionPerMember = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER, payload });
 export const setDistributionPerMemberOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_OFFICIAL, payload });
@@ -48,6 +51,7 @@ export const setSelectedUnitSongs = payload => dispatch => dispatch({ type: SET_
 export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
 export const setShouldReset = payload => dispatch => dispatch({ type: SET_SHOULD_RESET, payload });
 export const setSongsPerUnit = payload => dispatch => dispatch({ type: SET_SONGS_PER_UNIT, payload });
+export const setIsLoading = payload => dispatch => dispatch({ type: SET_IS_LOADING, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -59,11 +63,13 @@ const initialState = {
   colorCount: {},
   colorSheetTab: 'list',
   currentArtist: 0,
+  currentSong: 0,
   currentUnit: {},
   distributionPerMember: {},
   distributionPerMemberOfficial: {},
   distributionTotal: 0,
   distributionTotalOfficial: 0,
+  isLoading: false,
   latestUnits: [],
   membersList: [],
   selectedArtist: 0,
@@ -104,6 +110,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_CURRENT_ARTIST:
       newState.currentArtist = action.payload;
+      break;
+
+    case SET_CURRENT_SONG:
+      newState.currentSong = action.payload;
       break;
 
     case SET_CURRENT_UNIT:
@@ -156,6 +166,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_SONGS_PER_UNIT:
       newState.songsPerUnit = action.payload;
+      break;
+
+    case SET_IS_LOADING:
+      newState.isLoading = action.payload;
       break;
 
     default:
@@ -247,6 +261,15 @@ export const filter = e => (dispatch, getState) => {
   }
 };
 
+export const toggleIsLoading = bool => (dispatch, getState) => {
+  if (bool) {
+    dispatch(setIsLoading(bool));
+  } else {
+    const value = getState().app.isLoading;
+    dispatch(setIsLoading(!value));
+  }
+};
+
 export const updateSelectedArtist = artistId => (dispatch, getState) => {
   dispatch(setSelectedArtist(artistId));
   // Reset selected unit
@@ -255,6 +278,9 @@ export const updateSelectedArtist = artistId => (dispatch, getState) => {
   // Update selected Units
   const units = API.get(`/artists/${artistId}/units`);
   dispatch(setSelectedUnits(units));
+
+  // Reset song
+  dispatch(setCurrentSong(0));
 };
 
 export const updateSelectedUnit = id => (dispatch, getState) => {
@@ -277,6 +303,10 @@ export const toggleColorSheetTab = event => (dispatch) => {
 export const switchUnitsTab = event => (dispatch) => {
   const { id } = event.target;
   dispatch(setArtistPageTab(id));
+};
+
+export const updateCurrentSong = id => (dispatch, getState) => {
+  dispatch(setCurrentSong(id));
 };
 
 export const updateCurrentUnit = id => (dispatch, getState) => {
@@ -319,6 +349,7 @@ export const updateCurrentUnit = id => (dispatch, getState) => {
 
   dispatch(setCurrentArtist(currentArtist));
   dispatch(setCurrentUnit(currentUnit));
+  dispatch(setCurrentSong(0));
 };
 
 export const updateLatestUnits = id => (dispatch, getState) => {

@@ -5785,6 +5785,10 @@ h1 {
   resize: vertical;
   min-height: 150px; }
 
+.loading-centered {
+  display: flex;
+  justify-content: center; }
+
 .app-header {
   background-color: #000;
   display: flex;

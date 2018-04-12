@@ -5,6 +5,8 @@ import Artist from '../components/Artist';
 
 import {
   switchUnitsTab,
+  toggleIsLoading,
+  updateCurrentSong,
   updateCurrentUnit,
   updateLatestUnits,
   updateSelectedArtist,
@@ -16,6 +18,8 @@ const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
   switchUnitsTab,
+  toggleIsLoading,
+  updateCurrentSong,
   updateCurrentUnit,
   updateLatestUnits,
   updateSelectedArtist,

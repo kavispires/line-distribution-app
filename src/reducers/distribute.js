@@ -1,4 +1,8 @@
+import API from '../api';
 import { KEYS } from '../constants';
+
+import { toggleIsLoading } from './app';
+import { handleParser } from './lyrics';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -225,4 +229,29 @@ export const toggleLyrics = () => (dispatch, getState) => {
 export const toggleEditLyrics = () => (dispatch, getState) => {
   const editLyricsState = getState().distribute.editLyrics;
   dispatch(setEditLyrics(!editLyricsState));
+};
+
+export const loadSong = () => (dispatch, getState) => {
+  dispatch(toggleIsLoading(true));
+  const songId = getState().app.currentSong;
+  const SONG = API.get(`/songs/${songId}`);
+  const CURRENT_UNIT = getState().app.currentUnit;
+
+  console.log(SONG);
+  console.log(CURRENT_UNIT);
+
+  const memberIndexDict = {};
+  CURRENT_UNIT.members.forEach((member, index) => {
+    memberIndexDict[member.id] = index;
+  });
+  // Set lyrics
+  dispatch(handleParser(SONG.lyrics));
+
+  SONG.distribution.forEach((entry) => {
+    const index = memberIndexDict[entry.memberId];
+    dispatch(calculateDuration(index, 0, entry.duration));
+  });
+  setTimeout(() => {
+    dispatch(toggleIsLoading(false));
+  }, 1500);
 };
