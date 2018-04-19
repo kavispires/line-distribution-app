@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Artists from '../components/Artists';
 
 import {
-  filter,
+  artistsfilter,
   toggleIsLoading,
   updateCurrentUnit,
   updateLatestUnits,
@@ -16,7 +16,7 @@ import {
 const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
-  filter,
+  artistsfilter,
   toggleIsLoading,
   updateCurrentUnit,
   updateLatestUnits,

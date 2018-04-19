@@ -9,7 +9,7 @@ class App extends Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.props.filter('');
+      this.props.artistsfilter('');
     }
     // If going to Distribute, reset distribute when unit is different
     if (nextProps.location.pathname === '/distribute' && nextProps.app.currentUnit !== this.props.app.currentUnit) {

@@ -6,8 +6,8 @@ import App from '../components/App';
 import { loadLocalStorage } from '../utils';
 
 import {
+	artistsfilter,
   init,
-  filter,
 } from '../reducers/app';
 
 import {
@@ -21,10 +21,10 @@ import {
 const mapStateToProps = state => ({ app: state.app, database: state.database });
 
 const mapDispatchToProps = {
+  artistsfilter,
   init,
   handleParser,
   handleReset,
-  filter,
   loadLocalStorage,
 };
 

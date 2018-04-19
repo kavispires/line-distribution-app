@@ -7,6 +7,7 @@ import database from './database';
 import distribute from './distribute';
 import lyrics from './lyrics';
 import results from './results';
+import songs from './songs';
 
 const rootReducer = combineReducers({
   app,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   distribute,
   lyrics,
   results,
+  songs,
 });
 
 export default rootReducer;
