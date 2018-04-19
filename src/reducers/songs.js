@@ -61,34 +61,30 @@ export const loadSongs = reload => (dispatch, getState) => {
   }
 };
 
-export const songsfilter = e => (dispatch, getState) => {
-  // if (typeof e === 'string') {
-  //   return dispatch(setArtistsList([...getState().app.artistListBackUp]));
-  // }
-  // const value = e.target.value.toLowerCase();
-  // if (value.length > 0 && value.length < 3) return;
-  // const { artistsSearchIndexation } = getState().app;
-  // if (value.length === 0) {
-  //   dispatch(setArtistsList([...getState().app.artistListBackUp]));
-  // } else {
-  //   // Find band names with value and push id to artistList
-  //   const filteredArtists = [];
-  //   Object.keys(artistsSearchIndexation).forEach((key) => {
-  //     const artist = artistsSearchIndexation[key];
-  //     if (artist.includes(value)) {
-  //       filteredArtists.push(key);
-  //     }
-  //   });
+export const songsFilter = e => (dispatch, getState) => {
+  if (typeof e === 'string') {
+    return dispatch(setSongList([...getState().songs.songListBackUp]));
+  }
 
-  //   dispatch(setArtistsList(filteredArtists));
-  // }
-  console.log(e.target.value);
-  dispatch();
+  const value = e.target.value.toUpperCase();
+
+  // If empty
+  if (value.length === 0) {
+    return dispatch(setSongList([...getState().songs.songListBackUp]));
+  }
+  // If less than 3 characters
+  if (value.length < 3) {
+    return undefined;
+  }
+
+  // If searchable
+  const songList = [...getState().songs.songListBackUp];
+  const filteredSongs = _.filter(songList, o => o.computedTitle.includes(value));
+  dispatch(setSongList(filteredSongs));
 };
 
 export const loadSong = song => (dispatch, getState) => {
   const result = song.lyrics.split('');
-  // const result = [];
 
   // Go through every line and remove characters inside [] except ALL
   let deleteMode = false;

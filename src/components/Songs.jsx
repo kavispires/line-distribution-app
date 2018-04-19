@@ -46,7 +46,7 @@ class Songs extends Component {
         <h1>Songs<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
         <p>Search for previously used songs and load its lyrics to the lyrics parser.</p>
 
-        <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.songsfilter} />
+        <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.songsFilter} />
         <table className="table">
           <thead>
             <tr>

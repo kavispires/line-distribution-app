@@ -6,6 +6,7 @@ import Songs from '../components/Songs';
 import {
 	loadSong,
 	loadSongs,
+	songsFilter,
 } from '../reducers/songs';
 
 const mapStateToProps = state => ({
@@ -16,6 +17,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
 	loadSong,
 	loadSongs,
+	songsFilter,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Songs));
