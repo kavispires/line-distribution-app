@@ -91,6 +91,7 @@ class Artist extends Component {
               <h3>
                 <button className="btn btn-inline" onClick={() => setArtistUnit('distribute')}>Distribute</button>
                 <button className="btn btn-inline" onClick={() => setArtistUnit('lyrics')}>Lyrics</button>
+                <button className="btn btn-inline" onClick={() => setArtistUnit('songs')}>Load Song Lyrics</button>
               </h3>
               <h3>Members:</h3>
               <div className="unit-members">
