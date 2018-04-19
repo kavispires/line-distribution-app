@@ -30,7 +30,7 @@ const Artists = (props) => {
       <p>Current Band: {currentArtist.name}</p>
 
       <h2>Your Latest Used Units</h2>
-      <table className="table">
+      <table className="table table-50">
         <thead>
           <tr>
             <th>Name</th>

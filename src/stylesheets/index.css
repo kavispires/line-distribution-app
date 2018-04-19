@@ -5958,6 +5958,10 @@ input:checked + .slider:before {
     list-style: none;
     margin-bottom: 12px; }
 
+.table-50 {
+  width: 50%;
+  min-width: 400px; }
+
 .home-video {
   position: absolute;
   top: 0;
