@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
 import PositionIcons from './icons/PositionIcons';
+import CurrentArtistName from './widgets/CurrentArtistName';
 
 class Lyrics extends Component {
   componentWillReceiveProps(nextProps) {
@@ -17,6 +18,7 @@ class Lyrics extends Component {
   }
 
   render() {
+    const APP = this.props.app;
     const LYRICS = this.props.lyrics;
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
     const CURRENT_UNIT = this.props.app.currentUnit;
@@ -36,7 +38,7 @@ class Lyrics extends Component {
 
     return (
       <div className="container">
-        <h1>Lyrics</h1>
+        <h1>Lyrics<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
         {
           CURRENT_UNIT ?
             <div className="current-band">

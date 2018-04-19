@@ -131,7 +131,7 @@ export const saveSong = (save = true) => (dispatch, getState) => {
   const unitId = getState().app.currentUnit.id;
   const title = getState().results.songTitle;
   const type = getState().results.songType;
-  const { originalArtist } = getState().results;
+  let { originalArtist } = getState().results;
   const { lyrics } = getState().lyrics;
   const distribution = _.cloneDeep(getState().distribute.history);
   const id = Date.now();
@@ -141,6 +141,8 @@ export const saveSong = (save = true) => (dispatch, getState) => {
   for (let i = 0; i < distribution.length; i++) {
     distribution[i].memberId = MEMBERS[distribution[i].memberId].id;
   }
+
+  if (!originalArtist) originalArtist = getState().app.currentArtist.name;
 
   const newJSON = {
     id,

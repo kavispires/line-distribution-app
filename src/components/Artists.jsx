@@ -6,7 +6,7 @@ const Artists = (props) => {
   const { app, database } = props;
   const ARTISTS = database.artists;
   const { artistList } = app;
-  const currentBand = app.currentBand ? ARTISTS[app.currentBand] : ARTITST_PLACEHOLDER;
+  const currentArtist = app.currentArtist ? app.currentArtist : ARTITST_PLACEHOLDER;
 
   const handleArtistClick = (e) => {
     // Get id of the closest tr element
@@ -27,31 +27,38 @@ const Artists = (props) => {
   return (
     <section className="container">
       <h1>Artists</h1>
-      <p>Current Band: {currentBand.name}</p>
+      <p>Current Band: {currentArtist.name}</p>
 
-      {
-        app.latestUnits.length > 0 ? (
-          <div className="latest-units">
-            <p>Latest Units Used:</p>
-            {
-              app.latestUnits.map((id) => {
-                const unit = database.units[id];
-                const artist = database.artists[unit.bandId];
-                return (
-                  <button
-                    key={`latest-${id}-${unit.name}`}
-                    onClick={() => setArtistUnit(unit.bandId, id)}
-                    className="btn"
-                  >
-                    {`${artist.name} (${unit.name})`}
-                  </button>
-                );
-              })
-            }
-          </div>
-        ) : null
-      }
+      <h2>Your Latest Used Units</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            app.latestUnits.length > 0 ?
+            app.latestUnits.map((id) => {
+              const unit = database.units[id];
+              const artist = database.artists[unit.bandId];
 
+              return (
+                <tr key={id} onClick={() => setArtistUnit(unit.bandId, id)}>
+                  <td>{artist.name}</td>
+                  <td>{artist.genre}</td>
+                  <td>{unit.name}</td>
+                </tr>
+              );
+            })
+            :
+            <tr><td>No artists available within your search</td><td /><td /><td /></tr>
+          }
+        </tbody>
+      </table>
+      <h2>All Artists</h2>
       <input className="search-bar" type="text" placeholder="Filter..." onChange={props.artistsfilter} />
       <table className="table">
         <thead>
