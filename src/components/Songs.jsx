@@ -16,27 +16,27 @@ class Songs extends Component {
     const CURRENT_UNIT = APP.currentUnit;
     const { songList } = SONGS;
 
-    // if (CURRENT_UNIT && !CURRENT_UNIT.members) {
-    //   return (
-    //     <div className="container-flex">
-    //       <section className="container container-distribution">
-    //         <section className="section-distribution container-fixed">
-    //           <h1>Songs</h1>
-    //           <div>
-    //             <p>You must select an Artist and Unit in the <Link to="/artists">Artists Page</Link> before you can create your line distribution.</p>
-    //           </div>
-    //         </section>
-    //       </section>
-    //     </div>
-    //   );
-    // }
+    if (CURRENT_UNIT && !CURRENT_UNIT.members) {
+      return (
+        <div className="container-flex">
+          <section className="container container-distribution">
+            <section className="section-distribution container-fixed">
+              <h1>Songs</h1>
+              <div>
+                <p>You must select an Artist and Unit in the <Link to="/artists">Artists Page</Link> before loading song lyrics.</p>
+              </div>
+            </section>
+          </section>
+        </div>
+      );
+    }
 
     const handleSongLoadClick = (e) => {
       // Get id of the closest tr element
       const song = SONGS.songList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
       this.props.loadSong(song);
       setTimeout(() => {
-        this.props.history.push('/lyrics/');  
+        this.props.history.push('/lyrics/');
       }, 500);
     };
 
