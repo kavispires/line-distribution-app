@@ -50,9 +50,14 @@ export const loadSongs = reload => (dispatch, getState) => {
     const songList = API.get('/songs');
 
     const sortedSongList = _.sortBy(songList, ['title']);
+    sortedSongList.forEach((song) => {
+      song.computedTitle = `${song.title.toUpperCase()} - ${song.originalArtist.toUpperCase()}`;
+    });
 
-    dispatch(setSongList(sortedSongList));
-    dispatch(setSongListBackUp(sortedSongList));
+    const uniqSongList = _.uniqBy(sortedSongList, 'computedTitle');
+
+    dispatch(setSongList(uniqSongList));
+    dispatch(setSongListBackUp(uniqSongList));
   }
 };
 
@@ -84,7 +89,7 @@ export const songsfilter = e => (dispatch, getState) => {
 export const loadSong = song => (dispatch, getState) => {
   const result = song.lyrics.split('');
   // const result = [];
-  
+
   // Go through every line and remove characters inside [] except ALL
   let deleteMode = false;
   for (let i = 0; i < result.length; i++) {
