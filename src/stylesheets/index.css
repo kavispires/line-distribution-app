@@ -5668,6 +5668,10 @@ h1 {
   font-size: 1.5em;
   margin: 0.83em 0; }
 
+h2 {
+  font-size: 1.2em;
+  margin: 1.66em 0 0.83em 0; }
+
 .tabs {
   width: 100%;
   list-style: none;
