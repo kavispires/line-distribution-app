@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import CurrentArtistName from './widgets/CurrentArtistName';
+
 import { getLyricsSnippet } from '../utils';
 
 class Songs extends Component {
   componentDidMount() {
-    console.log('componentDidMount SONGS')
     const reload = this.props.songs.songList.length < 0;
     this.props.loadSongs(reload);
   }
@@ -42,7 +43,7 @@ class Songs extends Component {
 
     return (
       <section className="container">
-        <h1>Songs</h1>
+        <h1>Songs<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
         <p>Search for previously used songs and load its lyrics to the lyrics parser.</p>
 
         <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.songsfilter} />

@@ -6,7 +6,7 @@ const Artists = (props) => {
   const { app, database } = props;
   const ARTISTS = database.artists;
   const { artistList } = app;
-  const currentBand = app.currentBand ? ARTISTS[app.currentBand] : ARTITST_PLACEHOLDER;
+  const currentArtist = app.currentArtist ? ARTISTS[app.currentArtist] : ARTITST_PLACEHOLDER;
 
   const handleArtistClick = (e) => {
     // Get id of the closest tr element
@@ -27,7 +27,7 @@ const Artists = (props) => {
   return (
     <section className="container">
       <h1>Artists</h1>
-      <p>Current Band: {currentBand.name}</p>
+      <p>Current Band: {currentArtist.name}</p>
 
       {
         app.latestUnits.length > 0 ? (

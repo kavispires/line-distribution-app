@@ -5898,6 +5898,12 @@ input:checked + .slider:before {
 .slide-text-right {
   margin-left: 6px; }
 
+.widget-h1-title {
+  font-size: 12px;
+  font-weight: normal;
+  color: #707070;
+  margin-left: 12px; }
+
 .search-bar {
   padding: 6px;
   margin-bottom: 12px;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SwitchToggle = ({action, labels}) => {
+const SwitchToggle = ({action, labels}) => {
   if (Array.isArray(labels)) {
     labels = {left: labels[0], right: labels[1]};
   } else if (typeof labels !== 'object') {
@@ -19,3 +19,5 @@ export const SwitchToggle = ({action, labels}) => {
     </span>
   );
 };
+
+export default SwitchToggle;

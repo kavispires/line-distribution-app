@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
 import LoadingIcon from './LoadingIcon';
-import { SwitchToggle } from './Widgets';
+import SwitchToggle from './widgets/SwitchToggle';
+import CurrentArtistName from './widgets/CurrentArtistName';
 
 import { KEY_LIST } from '../constants';
 import { boxSizeClass } from '../utils';
@@ -120,9 +121,12 @@ class Distribute extends Component {
         <section className="container container-distribution">
           <section className="section-distribution container-fixed">
             <h1 className="tiny-h1">Distribute
+              <CurrentArtistName currentArtist={APP.currentArtist} />
               {
                 APP.currentSong ? (
-                  `: ${DATABASE.songs[APP.currentSong].title}`
+                  <span className="widget-h1-title">
+                     - {DATABASE.songs[APP.currentSong].title}
+                  </span>
                 ) : null
               }
             </h1>

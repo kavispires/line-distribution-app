@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { SwitchToggle } from './Widgets';
+import SwitchToggle from './widgets/SwitchToggle';
 import ModalSave from './ModalSave';
+import CurrentArtistName from './widgets/CurrentArtistName';
 
 import { getClosestIndex,  copyToClipboard } from '../utils';
 
@@ -15,6 +16,7 @@ class Results extends Component {
   }
 
   render() {
+    const APP = this.props.app;
     const RESULTS = this.props.results;
 
     // Stats Calculations
@@ -36,7 +38,9 @@ class Results extends Component {
 
     return (
       <section className="container">
-        <h1 className="tiny-h1">Results</h1>
+        <h1 className="tiny-h1">Results
+          <CurrentArtistName currentArtist={APP.currentArtist} />
+        </h1>
         <SwitchToggle action={this.props.handleSwitch} labels={switchLabels} />
         <ul className="results" id="ranking">
           {

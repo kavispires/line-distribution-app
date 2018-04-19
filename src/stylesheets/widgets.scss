@@ -55,3 +55,10 @@ input:checked + .slider:before {
 .slide-text-right {
 	margin-left: $halfUnit;
 }
+
+.widget-h1-title {
+  font-size: $unit;
+  font-weight: normal;
+  color: $darkGrey;
+  margin-left: $unit;
+}
