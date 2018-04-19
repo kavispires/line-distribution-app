@@ -238,7 +238,7 @@ export const getLatestUnits = () => (dispatch, getState) => {
   dispatch(setLatestUnits(latestUnits));
 };
 
-export const filter = e => (dispatch, getState) => {
+export const artistsfilter = e => (dispatch, getState) => {
   if (typeof e === 'string') {
     return dispatch(setArtistsList([...getState().app.artistListBackUp]));
   }

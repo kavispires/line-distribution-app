@@ -112,3 +112,37 @@ export const parseBirthDate = (d) => {
   }
   return '?';
 };
+
+export const getLyricsSnippet = (str) => {
+  // Get first 5 lines, remove blanks, narrow down to 3
+  const lyrics = str.split('\n').slice(0, 7).filter(line => line !== '\n');
+
+  let result = [];
+  // Remove assignments []
+  lyrics.forEach((lyricLine) => {
+    const line = lyricLine.split('');
+    let toDelete = false;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '[') {
+        toDelete = true;
+      }
+
+      if (line[i] === ']') {
+        toDelete = false;
+        line[i] = '';
+      }
+
+      if (toDelete) {
+        line[i] = '';
+      }
+    }
+
+    result.push(line.join(''));
+  });
+
+  result = result.join(' / ');
+
+  if (result.length > 100) result = `${result.substring(0, 97).trim()}...`;
+
+  return result;
+};

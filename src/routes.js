@@ -12,6 +12,7 @@ import DistributeContainer from './containers/DistributeContainer';
 import HomeContainer from './containers/HomeContainer';
 import LyricsContainer from './containers/LyricsContainer';
 import ResultsContainer from './containers/ResultsContainer';
+import SongsContainer from './containers/SongsContainer';
 
 
 import './stylesheets/index.css';
@@ -29,6 +30,7 @@ const routes = (
       <Route path="/distribute" component={DistributeContainer} />
       <Route path="/lyrics" component={LyricsContainer} />
       <Route path="/results" component={ResultsContainer} />
+      <Route path="/songs" component={SongsContainer} />
       <Route exact path="/" component={HomeContainer} />
     </div>
   </Router>

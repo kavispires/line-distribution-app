@@ -52,7 +52,7 @@ const Artists = (props) => {
         ) : null
       }
 
-      <input className="search-bar" type="text" placeholder="Filter..." onChange={props.filter} />
+      <input className="search-bar" type="text" placeholder="Filter..." onChange={props.artistsfilter} />
       <table className="table">
         <thead>
           <tr>
@@ -74,7 +74,7 @@ const Artists = (props) => {
               </tr>
             ))
             :
-            <tr><td>No artists available within your search</td></tr>
+            <tr><td>No artists available within your search</td><td /><td /><td /></tr>
           }
         </tbody>
       </table>
