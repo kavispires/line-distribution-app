@@ -7,7 +7,11 @@ import {
   selectAction,
 } from '../reducers/converter';
 
-const mapStateToProps = state => ({ converter: state.converter, database: state.database });
+const mapStateToProps = state => ({
+  converter: state.converter,
+  database: state.database,
+  db: state.db,
+});
 
 const mapDispatchToProps = {
   selectAction,

@@ -9,7 +9,10 @@ import {
   toggleTab,
 } from '../reducers/database';
 
-const mapStateToProps = state => ({ database: state.database });
+const mapStateToProps = state => ({
+  database: state.database,
+  db: state.db,
+});
 
 const mapDispatchToProps = {
   handleDisplay,

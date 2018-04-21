@@ -27,7 +27,12 @@ import {
 
 } from '../reducers/creator';
 
-const mapStateToProps = state => ({ app: state.app, creator: state.creator, database: state.database });
+const mapStateToProps = state => ({
+  app: state.app,
+  creator: state.creator,
+  database: state.database,
+  db: state.db,
+});
 
 const mapDispatchToProps = {
   loadArtist,

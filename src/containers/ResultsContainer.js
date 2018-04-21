@@ -16,6 +16,7 @@ import {
 
 const mapStateToProps = state => ({
   app: state.app,
+  db: state.db,
   distribute: state.distribute,
   results: state.results,
   lyrics: state.lyrics,

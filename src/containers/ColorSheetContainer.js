@@ -7,7 +7,11 @@ import {
   toggleColorSheetTab,
 } from '../reducers/app';
 
-const mapStateToProps = state => ({ app: state.app, database: state.database });
+const mapStateToProps = state => ({
+  app: state.app,
+  database: state.database,
+  db: state.db,
+});
 
 const mapDispatchToProps = {
   toggleColorSheetTab,

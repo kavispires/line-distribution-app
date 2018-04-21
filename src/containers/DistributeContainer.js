@@ -31,6 +31,7 @@ import {
 const mapStateToProps = state => ({
   app: state.app,
   database: state.database,
+  db: state.db,
   distribute: state.distribute,
   lyrics: state.lyrics,
 });

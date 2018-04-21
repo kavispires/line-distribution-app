@@ -3,14 +3,11 @@ import { withRouter } from 'react-router-dom';
 
 import Home from '../components/Home';
 
-import {
-	parseArtists
-} from '../reducers/app';
+const mapStateToProps = state => ({
+  app: state.app,
+  db: state.db,
+});
 
-const mapStateToProps = (state) => ({ app: state.app});
-
-const mapDispatchToProps = {
-	parseArtists
-};
+const mapDispatchToProps = {};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

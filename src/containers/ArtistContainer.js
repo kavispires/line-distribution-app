@@ -4,17 +4,25 @@ import { withRouter } from 'react-router-dom';
 import Artist from '../components/Artist';
 
 import {
-  switchUnitsTab,
   toggleIsLoading,
   updateCurrentSong,
   updateCurrentUnit,
   updateLatestUnits,
-  updateSelectedArtist,
-  updateSelectedUnit,
   updateShouldReset,
 } from '../reducers/app';
 
-const mapStateToProps = state => ({ app: state.app, database: state.database });
+import {
+  switchUnitsTab,
+  updateSelectedArtist,
+  updateSelectedUnit,
+} from '../reducers/artists';
+
+const mapStateToProps = state => ({
+  app: state.app,
+  artists: state.artists,
+  db: state.db,
+  database: state.database,
+});
 
 const mapDispatchToProps = {
   switchUnitsTab,

@@ -6,9 +6,12 @@ import App from '../components/App';
 import { loadLocalStorage } from '../utils';
 
 import {
-	artistsfilter,
   init,
 } from '../reducers/app';
+
+import {
+  initDB,
+} from '../reducers/db';
 
 import {
   handleParser,
@@ -18,10 +21,14 @@ import {
   handleReset,
 } from '../reducers/distribute';
 
-const mapStateToProps = state => ({ app: state.app, database: state.database });
+const mapStateToProps = state => ({
+  app: state.app,
+  db: state.db,
+  database: state.database,
+});
 
 const mapDispatchToProps = {
-  artistsfilter,
+  initDB,
   init,
   handleParser,
   handleReset,

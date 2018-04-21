@@ -14,7 +14,11 @@ import {
   setPercentages,
 } from '../reducers/distribute';
 
-const mapStateToProps = state => ({ app: state.app, lyrics: state.lyrics });
+const mapStateToProps = state => ({
+  app: state.app,
+  db: state.db,
+  lyrics: state.lyrics,
+});
 
 const mapDispatchToProps = {
   handleParser,
