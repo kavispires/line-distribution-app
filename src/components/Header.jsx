@@ -2,10 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
 
-const Header = () => {
+const Header = ({ props }) => {
+  const handleLogoClick = () => {
+    props.history.push('/');
+  };
+
   return (
     <header className="app-header">
-      <img className="app-logo" src={logo} alt="Logo" />
+      <img className="app-logo" src={logo} alt="Logo" onClick={handleLogoClick} />
       <nav className="app-nav">
         <Link to="/artists">Artists</Link>
         <Link to="/distribute">Distribute</Link>

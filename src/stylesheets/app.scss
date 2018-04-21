@@ -41,6 +41,16 @@ body {
   position: relative;
 }
 
+.container-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon-loading {
+    width: 100px;
+  }
+}
+
 h1 {
   font-size: 1.5em;
   margin: 0.83em 0;

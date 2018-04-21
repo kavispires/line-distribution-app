@@ -5664,6 +5664,13 @@ body {
   width: 100%;
   position: relative; }
 
+.container-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .container-loading .icon-loading {
+    width: 100px; }
+
 h1 {
   font-size: 1.5em;
   margin: 0.83em 0; }
@@ -5803,7 +5810,8 @@ h2 {
 
 .app-logo {
   max-height: 36px;
-  padding: 6px 0; }
+  padding: 6px 0;
+  cursor: pointer; }
 
 .app-nav {
   color: #fff; }
