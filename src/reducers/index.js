@@ -4,6 +4,7 @@ import app from './app';
 import creator from './creator';
 import converter from './converter';
 import database from './database';
+import db from './db';
 import distribute from './distribute';
 import lyrics from './lyrics';
 import results from './results';
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   creator,
   converter,
   database,
+  db,
   distribute,
   lyrics,
   results,
