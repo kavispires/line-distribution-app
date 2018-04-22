@@ -10,7 +10,6 @@ import {
   updateShouldReset,
 } from '../reducers/app';
 
-
 import {
   filterArtists,
   loadArtists,

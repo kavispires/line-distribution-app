@@ -5701,6 +5701,9 @@ h2 {
     border-bottom: #fff 2px solid;
     text-decoration: underline; }
 
+.tab-padding {
+  padding: 0 12px; }
+
 .icon {
   display: inline-block; }
 

@@ -1,92 +1,122 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import LoadingScreen from './LoadingScreen';
 
 import { ARTITST_PLACEHOLDER } from '../constants';
 
-const Artists = (props) => {
-  const { app, database } = props;
-  const ARTISTS = database.artists;
-  const { artistList } = app;
-  const currentArtist = app.currentArtist ? app.currentArtist : ARTITST_PLACEHOLDER;
+class Artists extends Component {
+  componentWillMount() {
+    if (this.props.db.loaded) {
+      this.props.loadArtists();
+    }
+  }
 
-  const handleArtistClick = (e) => {
-    // Get id of the closest tr element
-    const artistId = app.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
-    props.history.push(`/artist/${artistId}`);
-  };
+  componentWillUpdate(nextProps) {
+    if (nextProps.db.loaded !== this.props.db.loaded) {
+      this.props.loadArtists();
+    }
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.props.filterArtists('');
+    }
+  }
 
-  const setArtistUnit = (bandId, unitId) => {
-    props.history.push(`/artist/${bandId}`);
-    props.toggleIsLoading(true);
-    // Delays setting selected unit to override page landing functions
-    setTimeout(() => {
-      props.updateSelectedUnit(unitId);
-      props.toggleIsLoading(false);
-    }, 1000);
-  };
+  render() {
+    const APP = this.props.app;
+    const ARTISTS = this.props.artists;
 
-  return (
-    <section className="container">
-      <h1>Artists</h1>
-      <p>Current Band: {currentArtist.name}</p>
+    // If no db, show loading
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
 
-      <h2>Your Latest Used Units</h2>
-      <table className="table table-50">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Genre</th>
-            <th>Unit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            app.latestUnits.length > 0 ?
-            app.latestUnits.map((id) => {
-              const unit = database.units[id];
-              const artist = database.artists[unit.bandId];
+    const { artistList } = ARTISTS;
+    const currentArtist = APP.currentArtist ? APP.currentArtist : ARTITST_PLACEHOLDER;
 
-              return (
-                <tr key={id} onClick={() => setArtistUnit(unit.bandId, id)}>
-                  <td>{artist.name}</td>
-                  <td>{artist.genre}</td>
-                  <td>{unit.name}</td>
-                </tr>
-              );
-            })
-            :
-            <tr><td>No artists available within your search</td><td /><td /><td /></tr>
-          }
-        </tbody>
-      </table>
-      <h2>All Artists</h2>
-      <input className="search-bar" type="text" placeholder="Filter..." onChange={props.artistsfilter} />
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Genre</th>
-            <th>Units</th>
-            <th>Members</th>
-          </tr>
-        </thead>
-        <tbody onClick={(e) => handleArtistClick(e)}>
-          {
-            artistList.length > 0 ?
-            artistList.map(index => (
-              <tr key={index}>
-                <td>{ARTISTS[index].name}</td>
-                <td>{ARTISTS[index].genre}</td>
-                <td>{ARTISTS[index].units.length}</td>
-                <td>{ARTISTS[index].allMembers.join(', ')}</td>
-              </tr>
-            ))
-            :
-            <tr><td>No artists available within your search</td><td /><td /><td /></tr>
-          }
-        </tbody>
-      </table>
-    </section>
-  );
-};
+    const handleArtistClick = (e) => {
+      // Get id of the closest tr element
+      const artistId = ARTISTS.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))].id;
+      this.props.history.push(`/artist/${artistId}`);
+      this.props.toggleIsLoading(false);
+    };
+
+    const setArtistUnit = (bandId, unitId) => {
+      this.props.history.push(`/artist/${bandId}`);
+      this.props.toggleIsLoading(true);
+      // Delays setting selected unit to override page landing functions
+      setTimeout(() => {
+        this.props.updateSelectedUnit(unitId);
+        this.props.toggleIsLoading(false);
+      }, 1000);
+    };
+
+    return (
+      <section className="container">
+        <h1>Artists</h1>
+        <p>Current Band: {currentArtist.name}</p>
+
+        {/* <h2>Your Latest Used Units</h2>
+        <table className="table table-50">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Genre</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              APP.latestUnits.length > 0 ?
+              APP.latestUnits.map((id) => {
+                const unit = database.units[id];
+                const artist = database.artists[unit.bandId];
+
+                return (
+                  <tr key={id} onClick={() => setArtistUnit(unit.bandId, id)}>
+                    <td>{artist.name}</td>
+                    <td>{artist.genre}</td>
+                    <td>{unit.name}</td>
+                  </tr>
+                );
+              })
+              :
+              <tr><td>No artists available within your search</td><td /><td /><td /></tr>
+            }
+          </tbody>
+        </table> */}
+
+        <h2>All Artists</h2>
+        <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.filterArtists} />
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Genre</th>
+              <th>Units</th>
+              <th>Members</th>
+            </tr>
+          </thead>
+          <tbody onClick={(e) => handleArtistClick(e)}>
+            {
+              artistList.length > 0 ?
+              artistList.map((entry) => {
+                const unitCount = entry.units ? entry.units.length : 0;
+                return (
+                  <tr key={entry.id}>
+                    <td>{entry.name}</td>
+                    <td>{entry.genre}</td>
+                    <td>{unitCount}</td>
+                    <td>{entry.memberList.join(', ')}</td>
+                  </tr>
+                );
+              })
+              :
+              <tr><td>No artists available within your search</td><td /><td /><td /></tr>
+            }
+          </tbody>
+        </table>
+      </section>
+    );
+  }
+}
 
 export default Artists;
