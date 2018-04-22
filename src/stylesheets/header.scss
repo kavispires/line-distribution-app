@@ -4,40 +4,72 @@
   background-color: $primary;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   min-height: 36px;
 }
 
-.app-logo {
-	max-height: 36px;
-	padding: $halfUnit 0;
-	cursor: pointer;
+.app-header-nav {
+  width: 70%;
+  display: flex;
+  align-items: center;
 }
 
-.app-nav {
-	color: $negative;
+.app-logo {
+  max-height: 36px;
+  padding: $halfUnit 0;
+  cursor: pointer;
+}
 
-	a {
-		color: $negative;
-		text-decoration: none;
-		padding-left: $unit;
-  	padding-right: $unit;
+.app-nav,
+.app-nav-admin {
+  color: $negative;
 
-		&:not(:last-child) {
-			border-right: 1px solid $darkGrey;
-		}
+  a {
+    color: $negative;
+    text-decoration: none;
+    padding-left: $unit;
+    padding-right: $unit;
 
-		&:hover {
-			border-bottom: 2px solid $grey;
-		}
+    &:not(:last-child) {
+      border-right: 1px solid $darkGrey;
+    }
 
-		&:visited {
-			color: $negative;
+    &:hover {
+      border-bottom: 2px solid $grey;
+    }
+
+    &:visited {
+      color: $negative;
     }
 
     .selected {
       border-bottom: 2px solid $darkGrey;
     }
-	}
+  }
+}
+
+.app-nav-admin {
+  border: 1px solid #840202;
+}
+
+.app-header-user {
+  padding: $halfUnit $doubleUnit;
+  color: $negative;
+  display: flex;
+  align-items: center;
+
+  .user-photo {
+    max-height: $doubleUnit;
+    padding-right: $halfUnit;
+    border-radius: 50%;
+  }
+}
+
+.app-header-btn {
+  background: none;
+  color: $negative;
+  border: 1px solid $negative;
+  margin-left: $halfUnit;
 }

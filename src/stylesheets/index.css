@@ -5804,30 +5804,61 @@ h2 {
   background-color: #000;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   min-height: 36px; }
+
+.app-header-nav {
+  width: 70%;
+  display: flex;
+  align-items: center; }
 
 .app-logo {
   max-height: 36px;
   padding: 6px 0;
   cursor: pointer; }
 
-.app-nav {
+.app-nav,
+.app-nav-admin {
   color: #fff; }
-  .app-nav a {
+  .app-nav a,
+  .app-nav-admin a {
     color: #fff;
     text-decoration: none;
     padding-left: 12px;
     padding-right: 12px; }
-    .app-nav a:not(:last-child) {
+    .app-nav a:not(:last-child),
+    .app-nav-admin a:not(:last-child) {
       border-right: 1px solid #707070; }
-    .app-nav a:hover {
+    .app-nav a:hover,
+    .app-nav-admin a:hover {
       border-bottom: 2px solid #CCC; }
-    .app-nav a:visited {
+    .app-nav a:visited,
+    .app-nav-admin a:visited {
       color: #fff; }
-    .app-nav a .selected {
+    .app-nav a .selected,
+    .app-nav-admin a .selected {
       border-bottom: 2px solid #707070; }
+
+.app-nav-admin {
+  border: 1px solid #840202; }
+
+.app-header-user {
+  padding: 6px 24px;
+  color: #fff;
+  display: flex;
+  align-items: center; }
+  .app-header-user .user-photo {
+    max-height: 24px;
+    padding-right: 6px;
+    border-radius: 50%; }
+
+.app-header-btn {
+  background: none;
+  color: #fff;
+  border: 1px solid #fff;
+  margin-left: 6px; }
 
 .btn, .btn-lg {
   padding: 1px 6px 1px;
@@ -5979,12 +6010,34 @@ input:checked + .slider:before {
   pointer-events: none;
   z-index: -99999; }
 
-.home-logo {
+.home-content {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 50%;
-  transform: translate(-50%, -50%); }
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column; }
+
+.home-logo {
+  margin: 0 auto;
+  min-width: 400px;
+  max-width: 550px; }
+
+.home-buttons {
+  display: flex;
+  justify-content: center; }
+  .home-buttons .btn-home {
+    width: 120px;
+    padding: 1px 6px 1px;
+    background: rgba(255, 228, 0, 0.75);
+    border: 0;
+    border-radius: 4px;
+    margin: 6px;
+    cursor: pointer;
+    min-height: 24px; }
+    .home-buttons .btn-home:hover {
+      background: white; }
 
 .container-distribution {
   display: flex; }

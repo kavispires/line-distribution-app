@@ -21,18 +21,28 @@ import {
   handleReset,
 } from '../reducers/distribute';
 
+import {
+  checkAuth,
+  login,
+  logout,
+} from '../reducers/user';
+
 const mapStateToProps = state => ({
   app: state.app,
   db: state.db,
   database: state.database,
+  user: state.user,
 });
 
 const mapDispatchToProps = {
-  initDB,
-  init,
+  checkAuth,
   handleParser,
   handleReset,
+  initDB,
   loadLocalStorage,
+  init,
+  login,
+  logout,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

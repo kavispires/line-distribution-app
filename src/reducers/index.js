@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import app from './app';
+import artists from './artists';
 import creator from './creator';
 import converter from './converter';
 import database from './database';
@@ -9,9 +10,11 @@ import distribute from './distribute';
 import lyrics from './lyrics';
 import results from './results';
 import songs from './songs';
+import user from './user';
 
 const rootReducer = combineReducers({
   app,
+  artists,
   creator,
   converter,
   database,
@@ -20,6 +23,7 @@ const rootReducer = combineReducers({
   lyrics,
   results,
   songs,
+  user,
 });
 
 export default rootReducer;

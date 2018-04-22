@@ -8,10 +8,39 @@
   z-index: -99999;
 }
 
-.home-logo {
+.home-content {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.home-logo {
+  margin: 0 auto;
+  min-width: 400px;
+  max-width: 550px;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+
+  .btn-home {
+    width: 120px;
+    padding: 1px 6px 1px;
+    // background: #FFE400;
+    background: rgba(255, 228, 0, 0.75);
+    border: 0;
+    border-radius: 4px;
+    margin: 6px;
+    cursor: pointer;
+    min-height: 24px;
+
+    &:hover {
+      background: white;
+    }
+  }
 }

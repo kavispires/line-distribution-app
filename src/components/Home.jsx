@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from '../images/logo-alt.svg';
 
-const Home = () => (
-  <div className="container-no-padding">
+const Home = props => (
+  <main className="container-no-padding">
     <iframe
       className="home-video"
       title="home-video"
@@ -10,8 +10,28 @@ const Home = () => (
       frameBorder="0"
       allowFullScreen
     />
-    <img className="home-logo" src={logo} alt="Line Distribution" />
-  </div>
+    <div className="home-content">
+      <img className="home-logo" src={logo} alt="Line Distribution" />
+      <div className="home-buttons">
+        {
+          !props.user.authenticated ? (
+            <button
+              className="btn-home"
+              onClick={props.login}
+            >
+              Sign-in
+            </button>
+          ) : null
+
+        }
+        <button
+          className="btn-home"
+        >
+          Learm more
+        </button>
+      </div>
+    </div>
+  </main>
 );
 
 export default Home;

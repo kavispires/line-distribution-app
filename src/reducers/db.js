@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import firebase from '../firebase';
+import { base } from '../firebase';
 import { loadLocalStorage } from '../utils';
 
 /* ------------------   FIREBASE   ----------------- */
@@ -41,7 +41,7 @@ export default function reducer(prevState = initialState, action) {
 
 export const initDB = () => (dispatch) => {
   // Initiate firebase db
-  dbRef = firebase.database().ref();
+  dbRef = base.database().ref();
   const time = Date.now();
 
   dbRef.on('value', (snap) => {
