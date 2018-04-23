@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import admin from './admin';
 import app from './app';
 import artists from './artists';
 import creator from './creator';
@@ -13,6 +14,7 @@ import songs from './songs';
 import user from './user';
 
 const rootReducer = combineReducers({
+  admin,
   app,
   artists,
   creator,

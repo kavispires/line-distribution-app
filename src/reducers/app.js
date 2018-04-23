@@ -6,8 +6,6 @@ import { makeSixDigit } from '../utils';
 
 /* ------------------   ACTIONS   ------------------ */
 
-const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
-const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
 const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
@@ -20,9 +18,6 @@ const SET_IS_LOADING = 'SET_IS_LOADING';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-
-export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
-export const setColorSheetTab = payload => dispatch => dispatch({ type: SET_COLOR_SHEET_TAB, payload });
 export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
 export const setCurrentSong = payload => dispatch => dispatch({ type: SET_CURRENT_SONG, payload });
 export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
@@ -36,8 +31,6 @@ export const setIsLoading = payload => dispatch => dispatch({ type: SET_IS_LOADI
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  colorCount: {},
-  colorSheetTab: 'list',
   currentArtist: 0,
   currentSong: 0,
   currentUnit: {},
@@ -53,14 +46,6 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-    case SET_COLOR_COUNT:
-      newState.colorCount = action.payload;
-      break;
-
-    case SET_COLOR_SHEET_TAB:
-      newState.colorSheetTab = action.payload;
-      break;
-
     case SET_CURRENT_ARTIST:
       newState.currentArtist = action.payload;
       break;
@@ -102,8 +87,6 @@ export const init = () => async (dispatch) => {
   // Start database
   // await API.init();
 
-
-
   // dispatch(initDatabase());
   // dispatch(getColorCount());s
   // dispatch(parseArtists());
@@ -111,11 +94,6 @@ export const init = () => async (dispatch) => {
   // dispatch(parseSongs());
   // dispatch(getLatestUnits());
 };
-
-// const getColorCount = () => (dispatch) => {
-//   const count = API.get('/colors/count');
-//   dispatch(setColorCount(count));
-// };
 
 export const parseMembers = () => (dispatch, getState) => {
   const MEMBERS = _.cloneDeep(getState().database.members);
@@ -137,31 +115,13 @@ export const toggleIsLoading = bool => (dispatch, getState) => {
   }
 };
 
-export const toggleColorSheetTab = event => (dispatch) => {
-  const { id } = event.target;
-  dispatch(setColorSheetTab(id));
-};
-
 export const updateCurrentSong = id => (dispatch, getState) => {
   dispatch(setCurrentSong(id));
 };
 
 export const updateCurrentUnit = (unit, artist) => (dispatch) => {
-
-  // let { selectedArtist, selectedUnit } = getState().app;
-
-  // if (id) {
-  //   const unit = API.get(`/units/${id}`);
-  //   selectedArtist = unit.bandId;
-  //   selectedUnit = unit;
-  // }
-  // const currentArtist = API.get(`/artists/${selectedArtist}`);
-  // const currentUnit = API.get(`/units/${selectedUnit.id}/all`);
-
   const currentUnit = Object.assign({}, unit);
   const currentArtist = Object.assign({}, artist);
-  console.log(currentUnit);
-  console.log(currentArtist);
 
   // Get unique main colors to the members
   const colorDict = {};

@@ -8,6 +8,7 @@ import {
 } from '../reducers/converter';
 
 const mapStateToProps = state => ({
+  admin: state.admin,
   converter: state.converter,
   database: state.database,
   db: state.db,

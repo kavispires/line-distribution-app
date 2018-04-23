@@ -204,7 +204,15 @@ const GET = {
   },
 
   // API/colors
-  fetchAllColors: () => _.cloneDeep(DB.colors),
+  fetchAllColors: () => {
+    const response = _.cloneDeep(DB.colors);
+    Object.keys(response).forEach((key) => {
+      const color = response[key];
+      const parsedId = Number(color.id.substring(3)).toString();
+      color.class = `color-${parsedId}`;
+    });
+    return response;
+  },
 
   // API/members FIX
   fetchAllMembers: (include) => {

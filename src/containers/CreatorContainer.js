@@ -28,6 +28,7 @@ import {
 } from '../reducers/creator';
 
 const mapStateToProps = state => ({
+  admin: state.admin,
   app: state.app,
   creator: state.creator,
   database: state.database,

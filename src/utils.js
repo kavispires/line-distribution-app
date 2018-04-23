@@ -152,3 +152,8 @@ export const makeSixDigit = (num) => {
   const pad = '000000';
   return pad.substring(0, pad.length - str.length) + str;
 };
+
+export const makeIdNumber = (id) => {
+  const num = id.substring(3);
+  return Number(num);
+};
