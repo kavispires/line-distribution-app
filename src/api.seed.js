@@ -2,6 +2,16 @@
 
 import firebase from './firebase';
 
+/*
+ * INSTRUCTIONS
+ * In firebase.js:
+ * * import DB from './dababase';
+ * Paste makeSixDigit funtion
+ * Paste desired populating function
+ * Paste setTimeout uncommenting the desired populating fuction
+ * Run app
+ * */
+
 const makeSixDigit = (num) => {
   const str = num.toString();
   const pad = '000000';
@@ -69,6 +79,17 @@ const populateMembers = () => {
 const populateUnits = () => {
   console.log('populateUnits');
   const result = {};
+
+  const songsDict = {};
+  Object.keys(DB.SONGS).forEach((key) => {
+    const entry = DB.SONGS[key];
+    const { unitId } = entry;
+    if (songsDict[unitId] === undefined) {
+      songsDict[unitId] = [];
+    }
+    songsDict[unitId].push(key);
+  });
+  console.log(songsDict);
   Object.keys(DB.UNITS).forEach((key) => {
     const entry = DB.UNITS[key];
     const newId = `uni${makeSixDigit(entry.id)}`;
@@ -79,6 +100,8 @@ const populateUnits = () => {
       members.push(posId);
     });
 
+    const songsArray = songsDict[entry.id] || [];
+
     result[newId] = {
       artistId: `art${makeSixDigit(entry.bandId)}`,
       debutYear: entry.debutYear,
@@ -86,11 +109,10 @@ const populateUnits = () => {
       name: entry.name,
       members,
       official: entry.official,
-      songs: {
-        son0: true,
-      },
+      songs: songsArray,
     };
   });
+  console.log(result);
   firebase.database().ref('units').set(result);
 };
 
@@ -118,6 +140,35 @@ const populateArtists = () => {
   firebase.database().ref('artists').set(result);
 };
 
+const populateSongs = () => {
+  console.log('populateSongs');
+  const result = {};
+  Object.keys(DB.SONGS).forEach((key) => {
+    const entry = DB.SONGS[key];
+
+    const unitId = `uni${makeSixDigit(entry.unitId)}`;
+
+    const distribution = entry.distribution.reverse();
+
+    distribution.forEach((dist) => {
+      dist.memberId = `mem${makeSixDigit(dist.memberId)}`;
+    });
+
+    result[entry.id] = {
+      id: entry.id,
+      unitId,
+      userId: 'kavispires@gmail.com',
+      title: entry.title,
+      type: entry.type,
+      lyrics: entry.lyrics,
+      distribution: JSON.stringify(distribution),
+      originalArtist: entry.originalArtist,
+      query: `${entry.originalArtist} - ${entry.title}`,
+    };
+  });
+  firebase.database().ref('songs').set(result);
+};
+
 setTimeout(() => {
   // console.log(DB);
   // populatePositions();
@@ -125,4 +176,5 @@ setTimeout(() => {
   // populateMembers();
   // populateUnits();
   // populateArtists();
+  // populateSongs();
 }, 5000);
