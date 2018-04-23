@@ -5732,7 +5732,8 @@ h2 {
 
 .unit-members {
   display: flex;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  justify-content: space-between; }
 
 .unit-songs {
   outline: 1px dashed #CCC; }
@@ -5746,6 +5747,9 @@ h2 {
   height: 12px; }
 
 .pill {
+  width: 18%;
+  min-width: 180px;
+  max-width: 250px;
   padding: 6px;
   margin-right: 12px;
   margin-bottom: 12px;
@@ -5861,7 +5865,12 @@ h2 {
   background: none;
   color: #fff;
   border: 1px solid #fff;
-  margin-left: 6px; }
+  margin-left: 6px;
+  padding: 1px 6px;
+  cursor: pointer;
+  border-radius: 4px; }
+  .app-header-btn:hover {
+    background: rgba(255, 255, 255, 0.5); }
 
 .btn, .btn-lg {
   padding: 1px 6px 1px;
@@ -6033,14 +6042,15 @@ input:checked + .slider:before {
   .home-buttons .btn-home {
     width: 120px;
     padding: 1px 6px 1px;
-    background: rgba(255, 228, 0, 0.75);
-    border: 0;
+    border: 1px solid;
     border-radius: 4px;
     margin: 6px;
+    color: #fff;
+    background: none;
     cursor: pointer;
     min-height: 24px; }
     .home-buttons .btn-home:hover {
-      background: white; }
+      background: rgba(255, 255, 255, 0.5); }
 
 .container-distribution {
   display: flex; }

@@ -72,4 +72,11 @@
   color: $negative;
   border: 1px solid $negative;
   margin-left: $halfUnit;
+  padding: 1px $halfUnit;
+  cursor: pointer;
+  border-radius: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
 }

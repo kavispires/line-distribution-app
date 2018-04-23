@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .home-video {
   position: absolute;
   top: 0;
@@ -30,17 +32,17 @@
 
   .btn-home {
     width: 120px;
-    padding: 1px 6px 1px;
-    // background: #FFE400;
-    background: rgba(255, 228, 0, 0.75);
-    border: 0;
+    padding: 1px $halfUnit 1px;
+    border: 1px solid ;
     border-radius: 4px;
-    margin: 6px;
+    margin: $halfUnit;
+    color: $negative;
+    background: none;
     cursor: pointer;
-    min-height: 24px;
+    min-height: $doubleUnit;
 
     &:hover {
-      background: white;
+      background: rgba(255, 255, 255, 0.5);
     }
   }
 }

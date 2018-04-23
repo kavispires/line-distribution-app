@@ -132,6 +132,7 @@ h2 {
 .unit-members {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between  ;
 }
 
 .unit-songs {
@@ -149,6 +150,9 @@ h2 {
 }
 
 .pill {
+  width: 18%;
+  min-width: 180px;
+  max-width: 250px;
   padding: $halfUnit;
   margin-right: $unit;
   margin-bottom: $unit;
