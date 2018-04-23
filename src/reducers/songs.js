@@ -48,13 +48,8 @@ export const loadSongs = reload => (dispatch, getState) => {
     dispatch(setSongList(songList));
   } else {
     const songList = API.get('/songs');
-
     const sortedSongList = _.sortBy(songList, ['title']);
-    sortedSongList.forEach((song) => {
-      song.computedTitle = `${song.title.toUpperCase()} - ${song.originalArtist.toUpperCase()}`;
-    });
-
-    const uniqSongList = _.uniqBy(sortedSongList, 'computedTitle');
+    const uniqSongList = _.uniqBy(sortedSongList, 'query');
 
     dispatch(setSongList(uniqSongList));
     dispatch(setSongListBackUp(uniqSongList));
@@ -66,7 +61,7 @@ export const songsFilter = e => (dispatch, getState) => {
     return dispatch(setSongList([...getState().songs.songListBackUp]));
   }
 
-  const value = e.target.value.toUpperCase();
+  const value = e.target.value.toLowerCase();
 
   // If empty
   if (value.length === 0) {
@@ -79,11 +74,11 @@ export const songsFilter = e => (dispatch, getState) => {
 
   // If searchable
   const songList = [...getState().songs.songListBackUp];
-  const filteredSongs = _.filter(songList, o => o.computedTitle.includes(value));
+  const filteredSongs = _.filter(songList, o => o.query.includes(value));
   dispatch(setSongList(filteredSongs));
 };
 
-export const loadSong = song => (dispatch, getState) => {
+export const loadSong = song => (dispatch) => {
   const result = song.lyrics.split('');
 
   // Go through every line and remove characters inside [] except ALL
@@ -94,7 +89,7 @@ export const loadSong = song => (dispatch, getState) => {
     } else if (result[i] === ']') {
       deleteMode = false;
     } else if (deleteMode) {
-      if (result[i] === 'A' && result[i+1] === 'L' && result[i+2] === 'L' && (result[i+3] === ' ' || result[i+3] === '(' || result[i+3] === ']' || result[i+3] === ')')) {
+      if (result[i] === 'A' && result[i + 1] === 'L' && result[i + 2] === 'L' && (result[i + 3] === ' ' || result[i + 3] === '(' || result[i + 3] === ']' || result[i + 3] === ')')) {
         i += 2;
       } else if (result[i] === ' ' || result[i] === '(' || result[i] === ')') {
         // do nothing

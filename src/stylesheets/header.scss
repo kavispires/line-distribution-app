@@ -51,7 +51,11 @@
 }
 
 .app-nav-admin {
-  border: 1px solid #840202;
+  background: #440101;
+
+  a:hover {
+    border-bottom: 2px solid #840202;
+  }
 }
 
 .app-header-user {

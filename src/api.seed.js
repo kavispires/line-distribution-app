@@ -5,7 +5,7 @@ import firebase from './firebase';
 /*
  * INSTRUCTIONS
  * In firebase.js:
- * * import DB from './dababase';
+ * * import DB from './database';
  * Paste makeSixDigit funtion
  * Paste desired populating function
  * Paste setTimeout uncommenting the desired populating fuction
@@ -154,6 +154,8 @@ const populateSongs = () => {
       dist.memberId = `mem${makeSixDigit(dist.memberId)}`;
     });
 
+    const query = `${entry.title} - ${entry.originalArtist}`;
+
     result[entry.id] = {
       id: entry.id,
       unitId,
@@ -163,7 +165,7 @@ const populateSongs = () => {
       lyrics: entry.lyrics,
       distribution: JSON.stringify(distribution),
       originalArtist: entry.originalArtist,
-      query: `${entry.originalArtist} - ${entry.title}`,
+      query: query.toLowerCase(),
     };
   });
   firebase.database().ref('songs').set(result);

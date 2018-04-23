@@ -5849,7 +5849,9 @@ h2 {
       border-bottom: 2px solid #707070; }
 
 .app-nav-admin {
-  border: 1px solid #840202; }
+  background: #440101; }
+  .app-nav-admin a:hover {
+    border-bottom: 2px solid #840202; }
 
 .app-header-user {
   padding: 6px 24px;
@@ -6837,7 +6839,7 @@ input:checked + .slider:before {
   .lyrics-container .editor, .lyrics-container .viewer {
     width: 100%;
     padding: 6px;
-    min-height: 100px;
+    min-height: 300px;
     resize: none;
     border: 1px solid #707070; }
   .lyrics-container .viewer {
