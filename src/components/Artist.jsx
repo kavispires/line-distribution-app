@@ -59,12 +59,12 @@ class Artist extends Component {
 
     const handleSongClick = (e) => {
       // Get id of the closest tr element
-      const songId = selectedUnitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))].id;
+      const selectedSong = selectedUnit.songs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
       // Set unit, push history and update latest
       setArtistUnit('distribute', false);
       setTimeout(() => {
         this.props.toggleIsLoading(true);
-        this.props.updateCurrentSong(songId);
+        this.props.updateCurrentSong(selectedSong);
       }, 1200);
     };
 

@@ -33,8 +33,8 @@ class Distribute extends Component {
     if (nextPropsCurrentUnit !== this.props.app.currentUnit && this.props.app.shouldReset) {
       this.reset(nextPropsCurrentUnit);
     }
-    const prevSongId = this.props.app.currentSong;
-    const songId = nextProps.app.currentSong;
+    const prevSongId = this.props.app.currentSong.id;
+    const songId = nextProps.app.currentSong.id;
     if (songId !== prevSongId) {
       this.props.toggleIsLoading(false);
       this.props.loadSong();

@@ -233,8 +233,7 @@ export const toggleEditLyrics = () => (dispatch, getState) => {
 
 export const loadSong = () => (dispatch, getState) => {
   dispatch(toggleIsLoading(true));
-  const songId = getState().app.currentSong;
-  const SONG = API.get(`/songs/${songId}`);
+  const SONG = getState().app.currentSong;
   const CURRENT_UNIT = getState().app.currentUnit;
 
   console.log(SONG);
@@ -248,7 +247,7 @@ export const loadSong = () => (dispatch, getState) => {
   dispatch(handleParser(SONG.lyrics));
 
   // TODO: It should load in reverse order
-  for (let i = SONG.distribution.length - 1; i >= 0; i--) {
+  for (let i = 0; i < SONG.distribution.length; i++) {
     const entry = SONG.distribution[i];
     const index = memberIndexDict[entry.memberId];
     dispatch(calculateDuration(index, 0, entry.duration));

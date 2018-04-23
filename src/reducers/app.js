@@ -115,8 +115,8 @@ export const toggleIsLoading = bool => (dispatch, getState) => {
   }
 };
 
-export const updateCurrentSong = id => (dispatch, getState) => {
-  dispatch(setCurrentSong(id));
+export const updateCurrentSong = song => (dispatch, getState) => {
+  dispatch(setCurrentSong(song));
 };
 
 export const updateCurrentUnit = (unit, artist) => (dispatch) => {
