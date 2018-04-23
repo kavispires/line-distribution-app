@@ -6853,17 +6853,17 @@ input:checked + .slider:before {
   padding: 0 3px;
   margin-right: 1px; }
 
-.current-band {
+.current-artist {
   border: 1px solid #E6E6E6;
   padding: 0 12px; }
 
-.current-band-members {
+.current-artist-members {
   display: flex; }
-  .current-band-members .members-list {
+  .current-artist-members .members-list {
     list-style: none;
     display: flex;
     flex-wrap: wrap; }
-  .current-band-members .member-list-item {
+  .current-artist-members .member-list-item {
     padding: 3px 6px;
     margin-left: 6px;
     border-radius: 3px; }

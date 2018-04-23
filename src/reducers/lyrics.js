@@ -80,7 +80,7 @@ export const handleParser = evt => (dispatch, getState) => {
       const name = names[i].toLowerCase();
       for (let j = 0; j < MEMBERS.length; j++) {
         if (name === MEMBERS[j].name.toLowerCase()) {
-          colorId += MEMBERS[j].colorId;
+          colorId += MEMBERS[j].color.class;
           wasAdded = true;
           j = MEMBERS.length;
         }

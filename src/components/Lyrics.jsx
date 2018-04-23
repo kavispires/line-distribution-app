@@ -41,19 +41,22 @@ class Lyrics extends Component {
         <h1>Lyrics<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
         {
           CURRENT_UNIT ?
-            <div className="current-band">
+            <div className="current-artist">
               <p>Current Band: <b>{CURRENT_UNIT.artist.name}</b></p>
-              <div className="current-band-members">
+              <div className="current-artist-members">
                 <p>Members:</p>
                 <ul className="members-list">
                   {
                     CURRENT_UNIT.members.map((member, i) => (
                       <li
                         key={`pill-${member.id}`}
-                        className={`member-list-item color-${CURRENT_UNIT.members[i].colorId}`}
+                        className={`member-list-item ${CURRENT_UNIT.members[i].color.class}`}
                       >
                         {member.name}
-                        <PositionIcons memberId={member.id} positions={member.positions} />
+                        <PositionIcons
+                          memberId={member.id}
+                          positions={member.positions.map(pos => pos.id)}
+                        />
                       </li>
                     ))
                   }

@@ -18,7 +18,7 @@ const LyricsEditor = ({ formattedLyrics }) => {
                     keyCount += 1;
                     const member = lyric.members[idx] ? `[${lyric.members[idx]}] ` : '';
                     const line = lyric.content[idx] ? `${lyric.content[idx]}` : '';
-                    const lineClass = `line color-${lyric.colors[idx]}`;
+                    const lineClass = `line ${lyric.colors[idx]}`;
 
                     return (
                       <span key={key2} className="lineGroup">
