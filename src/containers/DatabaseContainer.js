@@ -10,6 +10,7 @@ import {
 } from '../reducers/database';
 
 const mapStateToProps = state => ({
+  admin: state.admon,
   database: state.database,
   db: state.db,
   user: state.user,

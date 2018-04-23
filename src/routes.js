@@ -5,7 +5,6 @@ import AppContainer from './containers/AppContainer';
 import ArtistContainer from './containers/ArtistContainer';
 import ArtistsContainer from './containers/ArtistsContainer';
 import ColorSheetContainer from './containers/ColorSheetContainer';
-import ConverterContainer from './containers/ConverterContainer';
 import CreatorContainer from './containers/CreatorContainer';
 import DatabaseContainer from './containers/DatabaseContainer';
 import DistributeContainer from './containers/DistributeContainer';
@@ -24,7 +23,6 @@ const routes = (
       <Route path="/artist/:artistId" component={ArtistContainer} />
       <Route path="/artists" component={ArtistsContainer} />
       <Route path="/colorsheet" component={ColorSheetContainer} />
-      <Route path="/converter" component={ConverterContainer} />
       <Route path="/create" component={CreatorContainer} />
       <Route path="/database" component={DatabaseContainer} />
       <Route path="/distribute" component={DistributeContainer} />

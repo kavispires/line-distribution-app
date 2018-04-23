@@ -23,7 +23,6 @@ const Header = ({ props }) => {
               <Link to="/create">Create</Link>
               <Link to="/colorsheet">Color Sheet</Link>
               <Link to="/database">Database</Link>
-              <Link to="/converter">Converter</Link>
             </nav>
           ) : null
           }

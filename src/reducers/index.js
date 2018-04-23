@@ -4,7 +4,6 @@ import admin from './admin';
 import app from './app';
 import artists from './artists';
 import creator from './creator';
-import converter from './converter';
 import database from './database';
 import db from './db';
 import distribute from './distribute';
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   app,
   artists,
   creator,
-  converter,
   database,
   db,
   distribute,
