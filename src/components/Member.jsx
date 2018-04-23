@@ -5,15 +5,14 @@ import { parseBirthDate } from '../utils';
 
 const Member = ({ member, props }) => {
   const ARTISTS = props.artists;
-
   // Calculate averages
   let average = 0;
   let averageOfficial = 0;
-  if (ARTISTS.distributionPerMember[member.memberId]) {
-    average = Math.round((ARTISTS.distributionPerMember[member.memberId] * 100) / ARTISTS.distributionTotal);
+  if (ARTISTS.distributionPerMember[member.id]) {
+    average = Math.round((ARTISTS.distributionPerMember[member.id] * 100) / ARTISTS.distributionTotal);
   }
-  if (ARTISTS.distributionPerMemberOfficial[member.memberId]) {
-    averageOfficial = Math.round((ARTISTS.distributionPerMemberOfficial[member.memberId] * 100) / ARTISTS.distributionTotalOfficial);
+  if (ARTISTS.distributionPerMemberOfficial[member.id]) {
+    averageOfficial = Math.round((ARTISTS.distributionPerMemberOfficial[member.id] * 100) / ARTISTS.distributionTotalOfficial);
   }
 
   return (
