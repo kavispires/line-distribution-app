@@ -2,8 +2,6 @@ import _ from 'lodash';
 
 import API from '../api';
 
-import { setCurrentSong } from './app';
-
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_ARTIST_LIST = 'SET_ARTIST_LIST';
@@ -225,7 +223,6 @@ export const updateSelectedArtist = id => (dispatch) => {
 
   // Reset song
   // TO-DO: Remove this call from here. Don't use other reducer functions here
-  dispatch(setCurrentSong(0));
 };
 
 export const updateSelectedUnit = id => (dispatch, getState) => {

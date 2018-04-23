@@ -91,7 +91,7 @@ export const calculateResults = () => (dispatch, getState) => {
     const relativePercentage = Math.round((durations[index] * 100) / max);
     const member = {
       name: CURRENT_UNIT.members[index].name,
-      color: CURRENT_UNIT.members[index].colorId,
+      colorClass: CURRENT_UNIT.members[index].color.class,
       relativePercentage,
       percentage: percentages[index],
       duration: durations[index],

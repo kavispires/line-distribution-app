@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SwitchToggle from './widgets/SwitchToggle';
 import ModalSave from './ModalSave';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
@@ -33,15 +32,11 @@ class Results extends Component {
       closest = RESULTS.results[getClosestIndex(RESULTS.results, fairDistribution, 'percentage')].name;
     }
 
-    // Define switch buttons lables
-    const switchLabels = { left: 'Time', right: 'Percentage' };
-
     return (
       <section className="container">
         <h1 className="tiny-h1">Results
           <CurrentArtistName currentArtist={APP.currentArtist} />
         </h1>
-        <SwitchToggle action={this.props.handleSwitch} labels={switchLabels} />
         <ul className="results" id="ranking">
           {
             RESULTS.results.map((result, i) => (
@@ -49,13 +44,10 @@ class Results extends Component {
 
                 <span className="results-bar-text">
                   {
-                    RESULTS.showPercentage ?
                     `${i + 1}. ${result.name} [${result.percentage}%] ${Math.round(result.duration / 100) / 10} seconds`
-                    :
-                    `${i + 1}. ${result.name} [${Math.round(result.duration / 100) / 10} seconds]`
                   }
                 </span>
-                <span className={`results-bar-color color-${result.color} bar-width-${result.relativePercentage}`} />
+                <span className={`results-bar-color ${result.colorClass} bar-width-${result.relativePercentage}`} />
               </li>
             ))
           }
