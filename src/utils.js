@@ -146,3 +146,9 @@ export const getLyricsSnippet = (str) => {
 
   return result;
 };
+
+export const makeSixDigit = (num) => {
+  const str = num.toString();
+  const pad = '000000';
+  return pad.substring(0, pad.length - str.length) + str;
+};

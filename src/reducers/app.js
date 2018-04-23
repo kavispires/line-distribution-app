@@ -2,8 +2,9 @@ import _ from 'lodash';
 
 import API from '../api';
 
-/* ------------------   ACTIONS   ------------------ */
+import { makeSixDigit } from '../utils';
 
+/* ------------------   ACTIONS   ------------------ */
 
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLOR_SHEET_TAB = 'SET_COLOR_SHEET_TAB';
@@ -41,7 +42,7 @@ const initialState = {
   currentSong: 0,
   currentUnit: {},
 
-  isLoading: true,
+  isLoading: false,
   latestUnits: [],
   membersList: [],
 
@@ -52,8 +53,6 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-
-
     case SET_COLOR_COUNT:
       newState.colorCount = action.payload;
       break;
@@ -147,33 +146,39 @@ export const updateCurrentSong = id => (dispatch, getState) => {
   dispatch(setCurrentSong(id));
 };
 
-export const updateCurrentUnit = id => (dispatch, getState) => {
-  let { selectedArtist, selectedUnit } = getState().app;
+export const updateCurrentUnit = (unit, artist) => (dispatch) => {
 
-  if (id) {
-    const unit = API.get(`/units/${id}`);
-    selectedArtist = unit.bandId;
-    selectedUnit = unit;
-  }
-  const currentArtist = API.get(`/artists/${selectedArtist}`);
-  const currentUnit = API.get(`/units/${selectedUnit.id}/all`);
+  // let { selectedArtist, selectedUnit } = getState().app;
+
+  // if (id) {
+  //   const unit = API.get(`/units/${id}`);
+  //   selectedArtist = unit.bandId;
+  //   selectedUnit = unit;
+  // }
+  // const currentArtist = API.get(`/artists/${selectedArtist}`);
+  // const currentUnit = API.get(`/units/${selectedUnit.id}/all`);
+
+  const currentUnit = Object.assign({}, unit);
+  const currentArtist = Object.assign({}, artist);
+  console.log(currentUnit);
+  console.log(currentArtist);
 
   // Get unique main colors to the members
   const colorDict = {};
   // Create color dictionary
   for (let i = 0; i < currentUnit.members.length; i++) {
     const member = currentUnit.members[i];
-    if (colorDict[member.colorId] === undefined) {
-      colorDict[member.colorId] = true;
+    if (colorDict[member.color.id] === undefined) {
+      colorDict[member.color.id] = true;
     }
   }
   // Check color availability
   for (let i = 0; i < currentUnit.members.length; i++) {
     const member = currentUnit.members[i];
-    if (colorDict[member.colorId]) {
-      colorDict[member.colorId] = false;
-    } else if (colorDict[member.altColorId] === undefined) {
-      currentUnit.members[i].colorId = member.altColorId;
+    if (colorDict[member.color.id]) {
+      colorDict[member.color.id] = false;
+    } else if (colorDict[member.altColor.id] === undefined) {
+      currentUnit.members[i].color.id = member.altColor.id;
     } else {
       // If altColor is taken, assign random color
       let newColor = Math.floor(Math.random() * 36) + 1;
@@ -181,7 +186,8 @@ export const updateCurrentUnit = id => (dispatch, getState) => {
         newColor += 1;
         if (newColor > 36) newColor = 1;
       }
-      currentUnit.member[i].colorId = newColor;
+      newColor = `col${makeSixDigit(newColor)}`;
+      currentUnit.members[i].color = API.get(`/color/${newColor}`);
     }
   }
 

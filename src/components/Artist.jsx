@@ -51,8 +51,8 @@ class Artist extends Component {
       // setTimeout(() => {
         this.props.history.push(`/${path}`);
         this.props.updateShouldReset(shouldReset);
-        this.props.updateCurrentUnit();
-        this.props.updateLatestUnits();
+        this.props.updateCurrentUnit(selectedUnit, selectedArtist);
+        this.props.updateLatestUnits(selectedUnit.id);
         // this.props.toggleIsLoading(false);
       // }, 1000);
     };

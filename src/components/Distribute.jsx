@@ -36,7 +36,7 @@ class Distribute extends Component {
     const prevSongId = this.props.app.currentSong;
     const songId = nextProps.app.currentSong;
     if (songId !== prevSongId) {
-      this.props.toggleIsLoading(true);
+      this.props.toggleIsLoading(false);
       this.props.loadSong();
     }
   }
@@ -50,7 +50,6 @@ class Distribute extends Component {
 
   render() {
     const APP = this.props.app;
-    const DATABASE = this.props.database;
     const DISTRIBUTE = this.props.distribute;
     const LYRICS = this.props.lyrics;
     const CURRENT_UNIT = APP.currentUnit;
@@ -125,7 +124,7 @@ class Distribute extends Component {
               {
                 APP.currentSong ? (
                   <span className="widget-h1-title">
-                     - {DATABASE.songs[APP.currentSong].title}
+                     {/* - {DATABASE.songs[APP.currentSong].title} */}
                   </span>
                 ) : null
               }
@@ -143,9 +142,9 @@ class Distribute extends Component {
               {
                 CURRENT_UNIT.members.map((member, index) => (
                   <div
-                    key={member.colorId}
+                    key={member.color.id}
                     id={`bar-${index}`}
-                    className={`bar color-${member.colorId} bar-width-${percentages[index]}`}
+                    className={`bar ${member.color.class} bar-width-${percentages[index]}`}
                   />
                 ))
               }
@@ -154,7 +153,13 @@ class Distribute extends Component {
               {
                 CURRENT_UNIT ?
                   CURRENT_UNIT.members.map((member, index) => (
-                    <button key={member.name} id={index} className={`box ${boxSize} color-${member.colorId}`} onMouseDown={this.props.boxMouseDown} onMouseUp={this.props.boxMouseUp}>
+                    <button
+                      key={member.name}
+                      id={index}
+                      className={`box ${boxSize} ${member.color.class}`}
+                      onMouseDown={this.props.boxMouseDown}
+                      onMouseUp={this.props.boxMouseUp}
+                    >
                       <span className="key">{KEY_LIST[index]}</span>
                       <span className="member-name">{member.name}</span>
                       <span className="timestamp">{Math.round(durations[index] / 100) / 10}</span>
@@ -171,7 +176,7 @@ class Distribute extends Component {
                   return (
                     <button
                       key={key}
-                      className={`log-item color-${CURRENT_UNIT.members[item.memberId].colorId}`}
+                      className={`log-item ${CURRENT_UNIT.members[item.memberId].color.class}`}
                       onClick={() => this.props.calculateDuration(item.memberId, item.duration, 0, true, i)}
                     >
                       {CURRENT_UNIT.members[item.memberId].name}
