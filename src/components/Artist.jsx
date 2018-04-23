@@ -53,7 +53,7 @@ class Artist extends Component {
         this.props.updateShouldReset(shouldReset);
         this.props.updateCurrentUnit(selectedUnit, selectedArtist);
         this.props.updateLatestUnits(selectedUnit.id);
-        // this.props.toggleIsLoading(false);
+        this.props.toggleIsLoading(false);
       // }, 1000);
     };
 

@@ -31,8 +31,8 @@ export const setIsLoading = payload => dispatch => dispatch({ type: SET_IS_LOADI
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  currentArtist: 0,
-  currentSong: 0,
+  currentArtist: {},
+  currentSong: {},
   currentUnit: {},
 
   isLoading: false,
@@ -87,21 +87,10 @@ export const init = () => async (dispatch) => {
   // Start database
   // await API.init();
 
-  // dispatch(initDatabase());
-  // dispatch(getColorCount());s
-  // dispatch(parseArtists());
-  // dispatch(parseMembers());
-  // dispatch(parseSongs());
   // dispatch(getLatestUnits());
 };
 
-export const parseMembers = () => (dispatch, getState) => {
-  const MEMBERS = _.cloneDeep(getState().database.members);
-  const orderedMembers = _.sortBy(MEMBERS, ['name', 'birthdate']).map(member => member.id);
-  dispatch(setMembersList(orderedMembers));
-};
-
-export const getLatestUnits = () => (dispatch, getState) => {
+export const getLatestUnits = () => (dispatch) => {
   const latestUnits = API.get('/units/latest');
   dispatch(setLatestUnits(latestUnits));
 };
@@ -115,7 +104,7 @@ export const toggleIsLoading = bool => (dispatch, getState) => {
   }
 };
 
-export const updateCurrentSong = song => (dispatch, getState) => {
+export const updateCurrentSong = song => (dispatch) => {
   dispatch(setCurrentSong(song));
 };
 
@@ -176,5 +165,3 @@ export const updateLatestUnits = id => (dispatch, getState) => {
 export const updateShouldReset = (bool = false) => (dispatch) => {
   dispatch(setShouldReset(bool));
 };
-
-

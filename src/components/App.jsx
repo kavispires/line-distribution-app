@@ -17,6 +17,13 @@ class App extends Component {
     if (nextProps.location.pathname === '/distribute' && nextProps.app.currentUnit !== this.props.app.currentUnit) {
       this.props.handleReset();
     }
+
+    // Reset if a different unit was selected
+    if (nextProps.app.currentUnit !== this.props.app.currentUnit && this.props.app.currentUnit.id) {
+      this.props.setCurrentSong({});
+      this.props.resetDistribution();
+      this.props.resetLyrics();
+    }
   }
 
   render() {

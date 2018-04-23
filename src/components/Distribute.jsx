@@ -24,14 +24,14 @@ class Distribute extends Component {
     //   && this.props.distribute.durations.length !== unitLength) {
     //     console.log('UNIT LENGTH', unitLength)
     //     console.log('componentDidMount RESET')
-    //   this.reset();
+    //   this.props.resetDistribution();
     // }
   }
 
   componentWillReceiveProps(nextProps) {
     const nextPropsCurrentUnit = nextProps.app.currentUnit;
     if (nextPropsCurrentUnit !== this.props.app.currentUnit && this.props.app.shouldReset) {
-      this.reset(nextPropsCurrentUnit);
+      this.props.resetDistribution(nextPropsCurrentUnit);
     }
     const prevSongId = this.props.app.currentSong.id;
     const songId = nextProps.app.currentSong.id;
@@ -39,13 +39,6 @@ class Distribute extends Component {
       this.props.toggleIsLoading(false);
       this.props.loadSong();
     }
-  }
-
-  reset(nextProps) {
-    const newArray = new Array(nextProps.members.length).fill(0);
-    this.props.setDurations([...newArray]);
-    this.props.setPercentages([...newArray]);
-    this.props.setHistory([]);
   }
 
   render() {
@@ -122,9 +115,9 @@ class Distribute extends Component {
             <h1 className="tiny-h1">Distribute
               <CurrentArtistName currentArtist={APP.currentArtist} />
               {
-                APP.currentSong ? (
+                APP.currentSong && APP.currentSong.id ? (
                   <span className="widget-h1-title">
-                     {/* - {DATABASE.songs[APP.currentSong].title} */}
+                     - {APP.currentSong.title}
                   </span>
                 ) : null
               }

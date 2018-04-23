@@ -21,6 +21,7 @@ import {
   handleReset,
   toggleLyrics,
   handleUndo,
+  resetDistribution,
   toggleEditLyrics,
 } from '../reducers/distribute';
 
@@ -48,6 +49,7 @@ const mapDispatchToProps = {
   handleKeyup,
   handleReset,
   loadSong,
+  resetDistribution,
   toggleLyrics,
   handleUndo,
   handleParser,

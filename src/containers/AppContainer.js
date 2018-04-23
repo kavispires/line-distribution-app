@@ -7,6 +7,7 @@ import { loadLocalStorage } from '../utils';
 
 import {
   init,
+  setCurrentSong,
 } from '../reducers/app';
 
 import {
@@ -15,10 +16,12 @@ import {
 
 import {
   handleParser,
+  resetLyrics,
 } from '../reducers/lyrics';
 
 import {
   handleReset,
+  resetDistribution,
 } from '../reducers/distribute';
 
 import {
@@ -43,6 +46,9 @@ const mapDispatchToProps = {
   init,
   login,
   logout,
+  resetDistribution,
+  resetLyrics,
+  setCurrentSong,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

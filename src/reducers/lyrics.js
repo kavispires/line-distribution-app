@@ -230,3 +230,8 @@ export const toggleRules = () => (dispatch, getState) => {
   const { showRules } = getState().lyrics;
   dispatch(setShowRules(!showRules));
 };
+
+export const resetLyrics = () => (dispatch) => {
+  dispatch(setLyrics(''));
+  dispatch(setFormattedLyrics([]));
+};

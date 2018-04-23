@@ -195,6 +195,22 @@ export const handleReset = () => (dispatch, getState) => {
   dispatch(setHistory([]));
 };
 
+export const resetDistribution = newUnit => (dispatch, getState) => {
+  if (!newUnit) {
+    newUnit = getState().app.currentUnit;
+  }
+
+  const newArray = new Array(newUnit.members.length).fill(0);
+  // Clear queue
+  dispatch(setQueue({}));
+  // Clear durations
+  dispatch(setDurations(newArray));
+  // Clear percentages
+  dispatch(setPercentages([...newArray]));
+  // Clear history
+  dispatch(setHistory([]));
+};
+
 export const handleUndo = () => (dispatch, getState) => {
   const { history } = getState().distribute;
   const removedNode = Object.assign({}, history[0]);
