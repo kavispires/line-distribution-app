@@ -136,13 +136,13 @@ export const filterArtists = e => (dispatch, getState) => {
   dispatch(setArtistList(filteredArtists));
 };
 
-export const parseUnitSongs = songs => (dispatch) => {
+const parseUnitSongs = unit => (dispatch) => {
   const distributionPerMember = {};
   const distributionPerMemberOfficial = {};
   let distributionTotal = 0;
   let distributionTotalOfficial = 0;
 
-  songs.forEach((song) => {
+  unit.songs.forEach((song) => {
     const { distribution } = song;
     const distDict = {};
     let total = 0;
@@ -204,7 +204,7 @@ export const parseUnitSongs = songs => (dispatch) => {
   dispatch(setDistributionPerMemberOfficial(distributionPerMemberOfficial));
   dispatch(setDistributionTotal(distributionTotal));
   dispatch(setDistributionTotalOfficial(distributionTotalOfficial));
-  dispatch(setSelectedUnitSongs(songs));
+  dispatch(setSelectedUnit(unit));
 };
 
 export const switchUnitsTab = event => (dispatch) => {
@@ -230,12 +230,6 @@ export const updateSelectedArtist = id => (dispatch) => {
 
 export const updateSelectedUnit = id => (dispatch, getState) => {
   const unit = API.get(`/units/${id}/all`);
+  dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));
-
-  let currentUnitSongs = [];
-  if (getState().app.songsPerUnit[id]) {
-    currentUnitSongs = [...getState().app.songsPerUnit[id]];
-    currentUnitSongs = currentUnitSongs.map(songId => API.get(`/songs/${songId}`));
-  }
-  dispatch(parseUnitSongs(currentUnitSongs));
 };

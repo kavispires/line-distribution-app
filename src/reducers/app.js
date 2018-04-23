@@ -14,7 +14,6 @@ const SET_LATEST_UNITS = 'SET_LATEST_UNITS';
 const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
 
 const SET_SHOULD_RESET = 'SET_SHOULD_RESET';
-const SET_SONGS_PER_UNIT = 'SET_SONGS_PER_UNIT';
 
 const SET_IS_LOADING = 'SET_IS_LOADING';
 
@@ -31,7 +30,6 @@ export const setLatestUnits = payload => dispatch => dispatch({ type: SET_LATEST
 export const setMembersList = payload => dispatch => dispatch({ type: SET_MEMBERS_LIST, payload });
 
 export const setShouldReset = payload => dispatch => dispatch({ type: SET_SHOULD_RESET, payload });
-export const setSongsPerUnit = payload => dispatch => dispatch({ type: SET_SONGS_PER_UNIT, payload });
 export const setIsLoading = payload => dispatch => dispatch({ type: SET_IS_LOADING, payload });
 
 /* -----------------   REDUCERS   ------------------ */
@@ -48,7 +46,6 @@ const initialState = {
   membersList: [],
 
   shouldReset: true,
-  songsPerUnit: {},
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -89,10 +86,6 @@ export default function reducer(prevState = initialState, action) {
       newState.shouldReset = action.payload;
       break;
 
-    case SET_SONGS_PER_UNIT:
-      newState.songsPerUnit = action.payload;
-      break;
-
     case SET_IS_LOADING:
       newState.isLoading = action.payload;
       break;
@@ -129,11 +122,6 @@ export const parseMembers = () => (dispatch, getState) => {
   const MEMBERS = _.cloneDeep(getState().database.members);
   const orderedMembers = _.sortBy(MEMBERS, ['name', 'birthdate']).map(member => member.id);
   dispatch(setMembersList(orderedMembers));
-};
-
-export const parseSongs = () => (dispatch) => {
-  const songs = API.get('/units/songs');
-  dispatch(setSongsPerUnit(songs));
 };
 
 export const getLatestUnits = () => (dispatch, getState) => {

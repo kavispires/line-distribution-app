@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import LoginRequiredScreen from './LoginRequiredScreen';
 import LoadingScreen from './LoadingScreen';
 
 import { ARTITST_PLACEHOLDER } from '../constants';
@@ -14,6 +15,7 @@ class Artists extends Component {
   componentWillUpdate(nextProps) {
     if (nextProps.db.loaded !== this.props.db.loaded) {
       this.props.loadArtists();
+      this.render();
     }
     if (nextProps.location.pathname !== this.props.location.pathname) {
       this.props.filterArtists('');
@@ -24,6 +26,10 @@ class Artists extends Component {
     const APP = this.props.app;
     const ARTISTS = this.props.artists;
 
+    // If user is not logged in
+    if (!this.props.user.authenticated) {
+      return <LoginRequiredScreen props={this.props} />;
+    }
     // If no db, show loading
     if (this.props.db.loaded === false) {
       return <LoadingScreen />;

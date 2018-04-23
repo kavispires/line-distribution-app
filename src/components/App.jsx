@@ -5,6 +5,7 @@ import Header from './Header';
 class App extends Component {
   componentWillMount() {
     this.props.initDB();
+    this.props.checkAuth();
   }
 
   componentWillUpdate(nextProps) {

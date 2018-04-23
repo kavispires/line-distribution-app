@@ -454,7 +454,7 @@ const GET = {
 
   // API/song/:id
   fetchSong: (id, include) => {
-    const response = _.cloneDeep(DB.SONGS[id]);
+    const response = _.cloneDeep(DB.songs[id]);
     if (response !== undefined) {
       if (include) {
         // Fetch unit
@@ -462,6 +462,12 @@ const GET = {
           response.unit = GET.fetchUnit(response.unitId);
           delete response.unitId;
         }
+      }
+      // Parse distribution
+      if (response.distribution) {
+        response.distribution = JSON.parse(response.distribution);
+      } else {
+        response.distribution = [];
       }
       return response;
     }

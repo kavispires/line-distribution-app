@@ -3,12 +3,17 @@ import _ from 'lodash';
 import iconYes from '../images/icon-yes.svg';
 import iconNo from '../images/icon-no.svg';
 
-const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
+const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
 
-  const sortedSelectedUnitSongs = _.sortBy(selectedUnitSongs, ['title']);
+  const sortedSongs = _.sortBy(songs, ['title']);
+
+  const memberColors = {};
+  members.forEach((member) => {
+    memberColors[member.id] = member.color.class;
+  });
 
   return (
-    selectedUnitSongs && selectedUnitSongs.length > 0 ? (
+    songs && songs.length > 0 ? (
       <table className="table">
         <thead>
           <tr>
@@ -20,7 +25,7 @@ const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
         </thead>
         <tbody onClick={(e) => handleSongClick(e)}>
           {
-            sortedSelectedUnitSongs && sortedSelectedUnitSongs.map((song) => {
+            sortedSongs && sortedSongs.map((song) => {
               let type = 'Official';
               if (song.type === 'would') {
                 type = `Originally by ${song.originalArtist}`;
@@ -47,12 +52,12 @@ const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
                           <span className="unit-songs-dist">
                             {
                               song.result.map((instance) => {
-                                const { colorId } = database.members[instance.memberId];
+                                const color = memberColors[instance.memberId];
                                 const barWidth = instance.memberTotal;
                                 return (
                                   <span
-                                    key={`${song.id}-${colorId}-${instance.memberId}`}
-                                    className={`unit-songs-member color-${colorId} bar-width-${barWidth}`}
+                                    key={`${song.id}-${color}-${instance.memberId}`}
+                                    className={`unit-songs-member ${color} bar-width-${barWidth}`}
                                   />
                                 );
                               })
