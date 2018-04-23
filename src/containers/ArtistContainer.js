@@ -22,6 +22,7 @@ const mapStateToProps = state => ({
   artists: state.artists,
   db: state.db,
   database: state.database,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

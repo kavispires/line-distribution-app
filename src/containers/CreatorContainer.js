@@ -32,6 +32,7 @@ const mapStateToProps = state => ({
   creator: state.creator,
   database: state.database,
   db: state.db,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

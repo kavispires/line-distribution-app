@@ -34,6 +34,7 @@ const mapStateToProps = state => ({
   db: state.db,
   distribute: state.distribute,
   lyrics: state.lyrics,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

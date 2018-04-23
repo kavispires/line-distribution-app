@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   converter: state.converter,
   database: state.database,
   db: state.db,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

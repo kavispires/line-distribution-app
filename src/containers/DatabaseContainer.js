@@ -12,6 +12,7 @@ import {
 const mapStateToProps = state => ({
   database: state.database,
   db: state.db,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

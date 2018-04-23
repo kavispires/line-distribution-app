@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
   app: state.app,
   artists: state.artists,
   db: state.db,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
   app: state.app,
   db: state.db,
   lyrics: state.lyrics,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

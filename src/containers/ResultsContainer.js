@@ -20,6 +20,7 @@ const mapStateToProps = state => ({
   distribute: state.distribute,
   results: state.results,
   lyrics: state.lyrics,
+  user: state.user,
 });
 
 const mapDispatchToProps = {

@@ -115,6 +115,8 @@ export const checkAuth = () => (dispatch) => {
       // User is signed out.
       // ...
       dispatch(setUser({}));
+      dispatch(setAuthenticated(false));
     }
+    console.log('Auth was checked');
   });
 };
