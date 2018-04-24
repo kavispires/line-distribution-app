@@ -40,9 +40,16 @@ class Artists extends Component {
 
     const handleArtistClick = (e) => {
       // Get id of the closest tr element
-      const artistId = ARTISTS.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))].id;
+      const artist = ARTISTS.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+      const artistId = artist.id;
       this.props.history.push(`/artist/${artistId}`);
-      this.props.toggleIsLoading(false);
+      if (artist.units && artist.units.length > 0) {
+        this.props.toggleIsLoading(true);
+        setTimeout(() => {
+          this.props.updateSelectedUnit(artist.units[0]);
+          this.props.toggleIsLoading(false);
+        }, 1000);
+      }
     };
 
     const setArtistUnit = (unit) => {
