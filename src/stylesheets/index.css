@@ -5807,6 +5807,18 @@ h2 {
   display: flex;
   justify-content: center; }
 
+.user-artists-container {
+  display: flex;
+  justify-content: space-between; }
+
+.user-artists-table {
+  width: 48%; }
+
+.user-artists-message {
+  padding: 0 24px 12px 12px;
+  font-style: italic;
+  color: darkgray; }
+
 .app-header {
   background-color: #000;
   display: flex;

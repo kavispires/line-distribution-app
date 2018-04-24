@@ -15,6 +15,8 @@ const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
 const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
 const SET_SELECTED_UNIT_SONGS = 'SET_SELECTED_UNIT_SONGS';
 const SET_SELECTED_UNITS = 'SET_SELECTED_UNITS';
+const SET_USER_FAVORITE_ARTISTS = 'SET_USER_FAVORITE_ARTISTS';
+const SET_USER_LATEST_ARTISTS = 'SET_USER_LATEST_ARTISTS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
@@ -29,6 +31,8 @@ export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SEL
 export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
 export const setSelectedUnitSongs = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT_SONGS, payload });
 export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
+export const setUserFavoriteArtists = payload => dispatch => dispatch({ type: SET_USER_FAVORITE_ARTISTS, payload });
+export const setUserLatestArtists = payload => dispatch => dispatch({ type: SET_USER_LATEST_ARTISTS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -44,6 +48,8 @@ export const initialState = {
   selectedUnit: {},
   selectedUnitSongs: [],
   selectedUnits: {},
+  userFavoriteArtists: [],
+  userLatestArtists: [],
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -94,6 +100,14 @@ export default function reducer(prevState = initialState, action) {
       newState.selectedUnits = action.payload;
       break;
 
+    case SET_USER_FAVORITE_ARTISTS:
+      newState.userFavoriteArtists = action.payload;
+      break;
+
+    case SET_USER_LATEST_ARTISTS:
+      newState.userLatestArtists = action.payload;
+      break;
+
     default:
       return prevState;
   }
@@ -103,13 +117,22 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const loadArtists = () => (dispatch) => {
+export const loadArtists = () => (dispatch, getState) => {
   const artistList = API.get('/artists');
 
   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
 
   dispatch(setArtistList(sortedArtistList));
   dispatch(setArtistListBackUp(sortedArtistList));
+
+  // Also, load latest artists, and favorite units
+  const { user } = getState().user;
+  if (user.uid) {
+    const userLatestArtists = API.get(`/user/latest/${user.uid}`);
+    dispatch(setUserLatestArtists(userLatestArtists));
+    const userFavoriteArtists = API.get(`/user/favorite/${user.uid}`);
+    dispatch(setUserFavoriteArtists(userFavoriteArtists));
+  }
 };
 
 export const filterArtists = e => (dispatch, getState) => {
@@ -225,8 +248,39 @@ export const updateSelectedArtist = id => (dispatch) => {
   // TO-DO: Remove this call from here. Don't use other reducer functions here
 };
 
-export const updateSelectedUnit = id => (dispatch, getState) => {
+export const updateSelectedUnit = id => (dispatch) => {
   const unit = API.get(`/units/${id}/all`);
   dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));
+};
+
+export const updateLatestUnits = id => (dispatch, getState) => {
+  const unitId = id || getState().app.currentUnit.id;
+
+  const { user } = getState().user;
+  if (id && user.uid) {
+    let latestUnits = [];
+    const { userLatestArtists } = getState().artists;
+    if (userLatestArtists.length > 0) {
+      latestUnits = userLatestArtists.map(unit => unit.id);
+    }
+
+    // Check if it already contains, then remove it
+    const containsInLatest = latestUnits.indexOf(unitId);
+    if (containsInLatest !== -1) {
+      latestUnits.splice(containsInLatest, 1);
+    }
+    // Add it to the beginning
+    latestUnits.unshift(id);
+    // Remove the last one if array is larger than 5
+    if (latestUnits.length > 5) {
+      latestUnits.pop();
+    }
+    // Post then reload app
+    API.post(`/user/latest/${user.uid}`, latestUnits);
+    setTimeout(() => {
+      const newUserLatestArtists = API.get(`/user/latest/${user.uid}`);
+      dispatch(setUserLatestArtists(newUserLatestArtists));
+    }, 3000);
+  }
 };

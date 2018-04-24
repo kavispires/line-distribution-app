@@ -6,13 +6,13 @@ import Artists from '../components/Artists';
 import {
   toggleIsLoading,
   updateCurrentUnit,
-  updateLatestUnits,
   updateShouldReset,
 } from '../reducers/app';
 
 import {
   filterArtists,
   loadArtists,
+  updateLatestUnits,
   updateSelectedArtist,
   updateSelectedUnit,
 } from '../reducers/artists';

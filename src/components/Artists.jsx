@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import LoginRequiredScreen from './LoginRequiredScreen';
 import LoadingScreen from './LoadingScreen';
+import UserArtistTable from './UserArtistTable';
 
 import { ARTITST_PLACEHOLDER } from '../constants';
 
@@ -23,9 +24,6 @@ class Artists extends Component {
   }
 
   render() {
-    const APP = this.props.app;
-    const ARTISTS = this.props.artists;
-
     // If user is not logged in
     if (!this.props.user.authenticated) {
       return <LoginRequiredScreen props={this.props} />;
@@ -35,8 +33,10 @@ class Artists extends Component {
       return <LoadingScreen />;
     }
 
+    const APP = this.props.app;
+    const ARTISTS = this.props.artists;
     const { artistList } = ARTISTS;
-    const currentArtist = APP.currentArtist ? APP.currentArtist : ARTITST_PLACEHOLDER;
+    const currentArtist = APP.currentArtist.id ? APP.currentArtist : ARTITST_PLACEHOLDER;
 
     const handleArtistClick = (e) => {
       // Get id of the closest tr element
@@ -45,12 +45,12 @@ class Artists extends Component {
       this.props.toggleIsLoading(false);
     };
 
-    const setArtistUnit = (bandId, unitId) => {
-      this.props.history.push(`/artist/${bandId}`);
+    const setArtistUnit = (unit) => {
+      this.props.history.push(`/artist/${unit.artist.id}`);
       this.props.toggleIsLoading(true);
       // Delays setting selected unit to override page landing functions
       setTimeout(() => {
-        this.props.updateSelectedUnit(unitId);
+        this.props.updateSelectedUnit(unit.id);
         this.props.toggleIsLoading(false);
       }, 1000);
     };
@@ -60,35 +60,25 @@ class Artists extends Component {
         <h1>Artists</h1>
         <p>Current Band: {currentArtist.name}</p>
 
-        {/* <h2>Your Latest Used Units</h2>
-        <table className="table table-50">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Genre</th>
-              <th>Unit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              APP.latestUnits.length > 0 ?
-              APP.latestUnits.map((id) => {
-                const unit = database.units[id];
-                const artist = database.artists[unit.bandId];
+        {
+          this.props.user.authenticated ? (
+            <div className="user-artists-container">
+              <UserArtistTable
+                title="Your Latest Artists"
+                unitList={ARTISTS.userLatestArtists}
+                action={setArtistUnit}
+                message="When you begin using the app, the 5 most recent artists you use will show up here."
+              />
+              <UserArtistTable
+                title="Your Favorite Artists"
+                unitList={ARTISTS.userFavoriteArtists}
+                action={setArtistUnit}
+                message="You may favorite up to 5 artists by clicking on the Star icon in the Artist page."
+              />
+            </div>
+          ) : null
+        }
 
-                return (
-                  <tr key={id} onClick={() => setArtistUnit(unit.bandId, id)}>
-                    <td>{artist.name}</td>
-                    <td>{artist.genre}</td>
-                    <td>{unit.name}</td>
-                  </tr>
-                );
-              })
-              :
-              <tr><td>No artists available within your search</td><td /><td /><td /></tr>
-            }
-          </tbody>
-        </table> */}
 
         <h2>All Artists</h2>
         <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.filterArtists} />

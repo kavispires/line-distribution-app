@@ -1,7 +1,8 @@
+import { toastr } from 'react-redux-toastr';
+
 import _ from 'lodash';
 
 import { base } from '../firebase';
-import { loadLocalStorage } from '../utils';
 
 /* ------------------   FIREBASE   ----------------- */
 
@@ -129,8 +130,6 @@ export const get = (str) => {
     case 'units':
       // API/units/all
       if (length === 3 && all) return GET.fetchAllUnits(true);
-      // API/units/latest
-      if (length === 3 && last === 'latest') return GET.fetchLatestUnits();
       // API/units/songs
       if (length === 3 && last === 'songs') return GET.fetchAllUnitsSongs();
       // API/units
@@ -146,14 +145,43 @@ export const get = (str) => {
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
+    case 'user':
+      // API/user/latest/:id
+      if (length === 4 && path[2] === 'latest') return GET.fetchUserLatestUnits(path[3]);
+      // API/user/favorite/:id
+      if (length === 4 && path[2] === 'favorite') return GET.fetchUserFavoriteUnits(path[3]);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
     default:
       return {};
   }
 };
 
-export const post = (str) => {
-  console.log('Posting api path:', str);
+export const post = (str, body) => {
+  const path = str.split('/');
+  const { length } = path;
+  const last = path[length - 1];
+  const all = last === 'all';
+
+  console.log('Posting to api path:', str);
   console.warn('Post is not available at the moment');
+
+  console.log('Fetching api path:', str);
+  switch (path[1]) {
+    case 'user':
+      // API/user/latest/:id
+      if (length === 4 && path[2] === 'latest') return POST.postUserLatestUnits(path[3], body);
+      // API/user/favorite/:id
+      if (length === 4 && path[2] === 'favorite') return POST.postUserFavoriteUnits(path[3], body);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    default:
+      return {};
+  }
 };
 
 /* ----------------   GET CALLS   ------------------- */
@@ -415,14 +443,6 @@ const GET = {
     return 'NO-COLOR-AVAILABLE';
   },
 
-  // API/
-  fetchLatestUnits: () => {
-    const LS = loadLocalStorage();
-    let result = [];
-    if (LS.latest) result = LS.latest;
-    return result;
-  },
-
   // API/members/:id
   fetchMember: (id, include) => {
     const response = _.cloneDeep(DB.members[id]);
@@ -532,4 +552,38 @@ const GET = {
     }
     return 'NO-SONGS-AVAILABLE';
   },
+
+  // API/user/latest/:id
+  fetchUserLatestUnits: (uid) => {
+    if (DB.users[uid] && DB.users[uid].latestUnits) {
+      const latest = DB.users[uid].latestUnits;
+      return latest.map(unitId => GET.fetchUnit(unitId, true));
+    }
+    return [];
+  },
+
+  // API/user/favorite/:id
+  fetchUserFavoriteUnits: (uid) => {
+    if (DB.users[uid] && DB.users[uid].favoriteUnits) {
+      const favorites = DB.users[uid].favoriteUnits;
+      return favorites.map(unitId => GET.fetchUnit(unitId, true));
+    }
+    return [];
+  },
 };
+
+const POST = {
+  // API/user/latest/:id
+  postUserLatestUnits: (uid, body) => {
+    if (DB.users[uid]) {
+      base.database().ref('users').child(uid).child('latestUnits').set(body);
+      toastr.info('Your Latest Units updated successfully');
+    }
+  },
+
+  // API/user/favorite/:id
+  postUserFavoriteUnits: (uid) => {
+    //TODO
+  },
+};
+

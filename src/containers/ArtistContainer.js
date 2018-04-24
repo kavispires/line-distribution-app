@@ -7,12 +7,12 @@ import {
   toggleIsLoading,
   updateCurrentSong,
   updateCurrentUnit,
-  updateLatestUnits,
   updateShouldReset,
 } from '../reducers/app';
 
 import {
   switchUnitsTab,
+  updateLatestUnits,
   updateSelectedArtist,
   updateSelectedUnit,
 } from '../reducers/artists';

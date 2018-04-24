@@ -1,6 +1,6 @@
 
 import firebase from 'firebase';
-import {toastr} from 'react-redux-toastr';
+import { toastr } from 'react-redux-toastr';
 import { base, googleProvider } from '../firebase';
 
 /* ------------------   ACTIONS   ------------------ */
