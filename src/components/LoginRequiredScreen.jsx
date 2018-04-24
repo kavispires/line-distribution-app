@@ -1,7 +1,7 @@
 import React from 'react';
 
 const LoginRequiredScreen = ({props, redirect = 'home'}) => {
-  console.log(props);
+
   return (
     <section className="container container-loading">
       <main>

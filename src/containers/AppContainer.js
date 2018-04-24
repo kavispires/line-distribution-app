@@ -6,7 +6,6 @@ import App from '../components/App';
 import { loadLocalStorage } from '../utils';
 
 import {
-  init,
   setCurrentSong,
 } from '../reducers/app';
 
@@ -43,7 +42,6 @@ const mapDispatchToProps = {
   handleReset,
   initDB,
   loadLocalStorage,
-  init,
   login,
   logout,
   resetDistribution,

@@ -64,6 +64,7 @@ class Artist extends Component {
       // Set unit, push history and update latest
       setArtistUnit('distribute', false);
       setTimeout(() => {
+        console.log('its this loading here')
         this.props.toggleIsLoading(true);
         this.props.updateCurrentSong(selectedSong);
       }, 1200);

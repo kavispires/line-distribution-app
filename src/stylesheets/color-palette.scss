@@ -20,7 +20,7 @@ $bgpercentage2: 60%;
 
 @for $i from 1 through length($colorCodes) {
   @for $j from 1 through length($colorCodes) {
-    .color-#{$i}-#{$j} {
+    .color-#{$i}-color-#{$j} {
       background-color: nth($colorCodes, $i);
       background: linear-gradient(nth($colorCodes, $i) $bgpercentage1, nth($colorCodes, $j) $bgpercentage2);
     }

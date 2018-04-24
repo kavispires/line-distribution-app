@@ -81,20 +81,13 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const init = () => async (dispatch) => {
-  // Start database
-  // await API.init();
-
-  // dispatch(getLatestUnits());
-};
-
 export const getLatestUnits = () => (dispatch) => {
   const latestUnits = API.get('/units/latest');
   dispatch(setLatestUnits(latestUnits));
 };
 
 export const toggleIsLoading = bool => (dispatch, getState) => {
-  if (bool) {
+  if (bool !== undefined) {
     dispatch(setIsLoading(bool));
   } else {
     const value = getState().app.isLoading;

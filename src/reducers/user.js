@@ -114,7 +114,6 @@ export const checkAuth = () => (dispatch) => {
       if (user.email === 'kavispires@gmail.com') {
         dispatch(setAdmin(true));
       }
-      console.log('user exists, yupi', user);
       // ...
     } else {
       // User is signed out.
@@ -122,6 +121,5 @@ export const checkAuth = () => (dispatch) => {
       dispatch(setUser({}));
       dispatch(setAuthenticated(false));
     }
-    console.log('Auth was checked');
   });
 };
