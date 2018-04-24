@@ -12,7 +12,6 @@ const mapStateToProps = state => ({
   app: state.app,
   db: state.db,
   user: state.user,
-  user: state.user,
 });
 
 const mapDispatchToProps = {

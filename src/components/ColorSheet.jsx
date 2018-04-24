@@ -19,7 +19,6 @@ class ColorSheet extends Component {
 
   render() {
     const ADMIN = this.props.admin;
-    const APP = this.props.app;
 
     return (
       <div className="container">

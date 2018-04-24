@@ -1,4 +1,3 @@
-import API from '../api';
 import { KEYS } from '../constants';
 
 import { toggleIsLoading } from './app';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ModalSave from './ModalSave';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
-import { getClosestIndex,  copyToClipboard } from '../utils';
+import { getClosestIndex } from '../utils';
 
 class Results extends Component {
   componentDidMount() {

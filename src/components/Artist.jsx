@@ -34,7 +34,6 @@ class Artist extends Component {
       selectedArtist,
       selectedUnits,
       selectedUnit,
-      selectedUnitSongs,
     } = ARTISTS;
 
     if (selectedArtist === undefined) {

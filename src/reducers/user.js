@@ -1,5 +1,6 @@
 
 import firebase from 'firebase';
+import {toastr} from 'react-redux-toastr';
 import { base, googleProvider } from '../firebase';
 
 /* ------------------   ACTIONS   ------------------ */
@@ -66,6 +67,7 @@ export const login = () => async (dispatch) => {
         if (user.emailVerified) {
           dispatch(setUser(user));
           dispatch(setAuthenticated(true));
+          toastr.success(null, `You are logged in as ${user.displayName}`);
           if (user.email === 'kavispires@gmail.com') {
             dispatch(setAdmin(true));
           }
@@ -79,6 +81,7 @@ export const login = () => async (dispatch) => {
         // The firebase.auth.AuthCredential type that was used.
         const { credential } = error;
         console.error(errorCode, errorMessage, email, credential);
+        toastr.error('Oh no', errorMessage);
       }));
 };
 
@@ -86,6 +89,7 @@ export const logout = () => (dispatch) => {
   base.auth().signOut().then(() => {
     dispatch(setUser({}));
     dispatch(setAuthenticated(false));
+    toastr.warning(null, 'You are logged out');
   }).catch((error) => {
     // An error happened.
     console.error(error);
@@ -106,6 +110,7 @@ export const checkAuth = () => (dispatch) => {
 
       dispatch(setUser(user));
       dispatch(setAuthenticated(true));
+      toastr.info('Welcome back!', `You are logged in as ${user.displayName}`);
       if (user.email === 'kavispires@gmail.com') {
         dispatch(setAdmin(true));
       }

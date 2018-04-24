@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+import { reducer as toastr } from 'react-redux-toastr';
+
 import admin from './admin';
 import app from './app';
 import artists from './artists';
@@ -23,6 +25,7 @@ const rootReducer = combineReducers({
   lyrics,
   results,
   songs,
+  toastr,
   user,
 });
 

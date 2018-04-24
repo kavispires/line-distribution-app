@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import API from '../api';
 
 import { makeSixDigit } from '../utils';
