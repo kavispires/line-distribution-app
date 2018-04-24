@@ -80,7 +80,7 @@ class Artists extends Component {
                 title="Your Favorite Artists"
                 unitList={ARTISTS.userFavoriteArtists}
                 action={setArtistUnit}
-                message="You may favorite up to 5 artists by clicking on the Star icon in the Artist page."
+                message="You may favorite up to 5 artists by clicking on the Heart icon in the Artist page."
               />
             </div>
           ) : null

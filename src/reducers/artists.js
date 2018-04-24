@@ -117,7 +117,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const loadArtists = () => (dispatch, getState) => {
+export const loadArtists = () => (dispatch) => {
   const artistList = API.get('/artists');
 
   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
@@ -126,6 +126,10 @@ export const loadArtists = () => (dispatch, getState) => {
   dispatch(setArtistListBackUp(sortedArtistList));
 
   // Also, load latest artists, and favorite units
+  dispatch(loadUserArtists());
+};
+
+export const loadUserArtists = () => (dispatch, getState) => {
   const { user } = getState().user;
   if (user.uid) {
     const userLatestArtists = API.get(`/user/latest/${user.uid}`);
@@ -281,6 +285,39 @@ export const updateLatestUnits = id => (dispatch, getState) => {
     setTimeout(() => {
       const newUserLatestArtists = API.get(`/user/latest/${user.uid}`);
       dispatch(setUserLatestArtists(newUserLatestArtists));
+    }, 3000);
+  }
+};
+
+export const updateFavoriteUnits = id => (dispatch, getState) => {
+  const unitId = id || getState().app.currentUnit.id;
+  console.log('updateFavoriteUnits!!', id);
+  const { user } = getState().user;
+  if (id && user.uid) {
+    let favoriteUnits = [];
+    const { userFavoriteArtists } = getState().artists;
+    if (userFavoriteArtists.length > 0) {
+      favoriteUnits = userFavoriteArtists.map(unit => unit.id);
+    }
+
+    // Check if it already contains, then remove it
+    const containsInFavorite = favoriteUnits.indexOf(unitId);
+    if (containsInFavorite !== -1) {
+      favoriteUnits.splice(containsInFavorite, 1);
+    } else {
+      // Add it to the beginning
+      favoriteUnits.unshift(id);
+    }
+
+    // Remove the last one if array is larger than 5
+    if (favoriteUnits.length > 5) {
+      favoriteUnits.pop();
+    }
+    // Post then reload app
+    API.post(`/user/favorite/${user.uid}`, favoriteUnits);
+    setTimeout(() => {
+      const newUserFavoriteArtists = API.get(`/user/favorite/${user.uid}`);
+      dispatch(setUserFavoriteArtists(newUserFavoriteArtists));
     }, 3000);
   }
 };

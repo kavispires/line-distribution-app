@@ -98,6 +98,7 @@ h2 {
 }
 
 .icon {
+  width: 100%;
   display: inline-block;
 }
 
@@ -116,6 +117,27 @@ h2 {
 .icon-pos {
   width: 24px;
   margin-bottom: $quarterUnit;
+}
+
+.icon-favorite {
+  width: 36px;
+  position: absolute;
+  right: 48px;
+  margin-top: 6px;
+  cursor: pointer;
+  border: 0;
+  background: none;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.icon-favorite-svg {
+  width: 36px;
+  &:hover {
+    opacity: 0.5;
+  }
 }
 
 .member-list-item {

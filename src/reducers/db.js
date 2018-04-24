@@ -165,17 +165,12 @@ export const post = (str, body) => {
   const all = last === 'all';
 
   console.log('Posting to api path:', str);
-  console.warn('Post is not available at the moment');
-
-  console.log('Fetching api path:', str);
   switch (path[1]) {
     case 'user':
       // API/user/latest/:id
       if (length === 4 && path[2] === 'latest') return POST.postUserLatestUnits(path[3], body);
       // API/user/favorite/:id
       if (length === 4 && path[2] === 'favorite') return POST.postUserFavoriteUnits(path[3], body);
-      // Error
-      console.error(`Wrong API path: ${str}`);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
@@ -577,13 +572,16 @@ const POST = {
   postUserLatestUnits: (uid, body) => {
     if (DB.users[uid]) {
       base.database().ref('users').child(uid).child('latestUnits').set(body);
-      toastr.info('Your Latest Units updated successfully');
+      toastr.success('Your Latest Units updated successfully');
     }
   },
 
   // API/user/favorite/:id
-  postUserFavoriteUnits: (uid) => {
-    //TODO
+  postUserFavoriteUnits: (uid, body) => {
+    if (DB.users[uid]) {
+      base.database().ref('users').child(uid).child('favoriteUnits').set(body);
+      toastr.success('Unit updated to Favorites successfully!', `You have ${body.length} favorite artists out of 5.`);
+    }
   },
 };
 

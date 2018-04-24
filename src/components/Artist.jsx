@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import FavoriteIcon from './icons/FavoriteIcon';
 import Member from './Member';
 import iconOfficial from '../images/icon-official.svg';
 import ArtistSongsTable from './ArtistSongsTable';
@@ -13,7 +14,7 @@ class Artist extends Component {
       if (artistId) {
         this.props.updateSelectedArtist(artistId);
       }
-      console.log('AND THE ARTIST ID IS', artistId);
+      this.props.loadUserArtists();
     }
   }
 
@@ -23,6 +24,7 @@ class Artist extends Component {
       if (artistId) {
         this.props.updateSelectedArtist(artistId);
       }
+      this.props.loadUserArtists();
     }
   }
 
@@ -103,6 +105,7 @@ class Artist extends Component {
         {
           selectedUnit && selectedUnit.id ? (
             <section className="unit-content">
+              <FavoriteIcon props={this.props} />
               <h3>Debut: {selectedUnit.debutYear}</h3>
               <h3>
                 <button className="btn btn-inline" onClick={() => setArtistUnit('distribute')}>Distribute</button>

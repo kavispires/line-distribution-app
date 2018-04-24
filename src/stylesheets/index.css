@@ -5705,6 +5705,7 @@ h2 {
   padding: 0 12px; }
 
 .icon {
+  width: 100%;
   display: inline-block; }
 
 .icon-tab {
@@ -5720,6 +5721,22 @@ h2 {
 .icon-pos {
   width: 24px;
   margin-bottom: 3px; }
+
+.icon-favorite {
+  width: 36px;
+  position: absolute;
+  right: 48px;
+  margin-top: 6px;
+  cursor: pointer;
+  border: 0;
+  background: none; }
+  .icon-favorite:focus {
+    outline: 0; }
+
+.icon-favorite-svg {
+  width: 36px; }
+  .icon-favorite-svg:hover {
+    opacity: 0.5; }
 
 .member-list-item {
   padding: 3px 6px;

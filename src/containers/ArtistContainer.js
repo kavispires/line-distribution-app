@@ -11,7 +11,9 @@ import {
 } from '../reducers/app';
 
 import {
+  loadUserArtists,
   switchUnitsTab,
+  updateFavoriteUnits,
   updateLatestUnits,
   updateSelectedArtist,
   updateSelectedUnit,
@@ -25,10 +27,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  loadUserArtists,
   switchUnitsTab,
   toggleIsLoading,
   updateCurrentSong,
   updateCurrentUnit,
+  updateFavoriteUnits,
   updateLatestUnits,
   updateSelectedArtist,
   updateSelectedUnit,
