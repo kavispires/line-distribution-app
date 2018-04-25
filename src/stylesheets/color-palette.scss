@@ -36,11 +36,11 @@ $bgpercentage2: 60%;
 $zero: 0;
 
 @for $i from 1 through length($colorCodes) {
-  .color-#{$i}-#{$zero} {
+  .color-#{$i}-color-#{$zero} {
     background-color: $negative;
     background: linear-gradient(nth($colorCodes, $i) $bgpercentage1, $negative $bgpercentage2);
   }
-  .color-#{$zero}-#{$i} {
+  .color-#{$zero}-color-#{$i} {
     background-color: $negative;
     background: linear-gradient($negative $bgpercentage1, nth($colorCodes, $i) $bgpercentage2);
   }

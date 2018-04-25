@@ -122,7 +122,7 @@ h2 {
 .icon-favorite {
   width: 36px;
   position: absolute;
-  right: 48px;
+  right: 24px;
   margin-top: 6px;
   cursor: pointer;
   border: 0;
@@ -147,6 +147,7 @@ h2 {
 }
 
 .unit-content {
+  position: relative;
   padding: $halfUnit;
   border: 1px solid $lightGrey;
 }
@@ -154,7 +155,6 @@ h2 {
 .unit-members {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between  ;
 }
 
 .unit-songs {
