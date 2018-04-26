@@ -133,7 +133,7 @@ export const updateCurrentUnit = (unit, artist) => (dispatch) => {
 
   dispatch(setCurrentArtist(currentArtist));
   dispatch(setCurrentUnit(currentUnit));
-  dispatch(setCurrentSong(0));
+  dispatch(setCurrentSong({}));
 };
 
 export const updateShouldReset = (bool = false) => (dispatch) => {

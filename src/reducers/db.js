@@ -174,6 +174,10 @@ export const post = (str, body) => {
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
+    case 'songs':
+      // API/songs
+      if (length === 2) return POST.postSong(body);
+      return {};
     default:
       return {};
   }
@@ -582,6 +586,69 @@ const POST = {
       base.database().ref('users').child(uid).child('favoriteUnits').set(body);
       toastr.success('Unit updated to Favorites successfully!', `You have ${body.length} favorite artists out of 5.`);
     }
+  },
+
+  // API/song
+  postSong: (body) => {
+    const missingInfo = [];
+    // Check if song has all necessary params. Optional: distribution, lyrics
+    if (!body.originalArtist) missingInfo.push('Original Artist\n'); // REMOVE THIS, DEBUGGING ONLY
+    if (!body.unitId) missingInfo.push('Unit Id\n'); // REMOVE THIS, DEBUGGING ONLY
+    if (!body.userUid) missingInfo.push('User Id (Are you logged in?\n'); // REMOVE THIS, DEBUGGING ONLY
+    if (!body.userEmail) missingInfo.push('User Email (Are you logged in?\n'); // REMOVE THIS, DEBUGGING ONLY
+    if (!body.title) missingInfo.push('Title\n');
+    if (!body.type) missingInfo.push('Type\n');
+    if (!body.originalArtist) missingInfo.push('Original Artist');
+
+    // If distribution is not stringified, stringify it!
+    if (body.distribution && typeof body.distribution !== 'string') {
+      body.distribution = JSON.stringify(body.distribution);
+    }
+    console.log(body);
+    if (missingInfo.length > 0) {
+      toastr.error(`Song missing information: \n${missingInfo.join(', ')}`);
+      return false;
+    }
+    const query = `${body.title} - ${body.originalArtist}`.toLowerCase();
+
+    const newSong = {
+      distribution: body.distribution,
+      lyrics: body.lyrics,
+      originalArtist: body.originalArtist,
+      query,
+      title: body.title,
+      type: body.type,
+      unitId: body.unitId,
+      userId: body.userEmail,
+    };
+
+    // If song has already an id and new user is the same, save over old one
+    if (body.songId) {
+      toastr.info('It has a song Id');
+      toastr.success('Your song was updated successfully!');
+      return true;
+    }
+
+    // Else, create a new song
+    base.database()
+      .ref('songs')
+      .push(newSong)
+      .then((snap) => {
+        const { key } = snap;
+        newSong.id = key;
+        const unitSongs = DB.units[newSong.unitId].songs || [];
+        unitSongs.push(key);
+        base.database()
+          .ref(`units/${newSong.unitId}/songs`)
+          .set(unitSongs);
+        base.database()
+          .ref(`songs/${key}`)
+          .set(newSong)
+          .then(() => {
+            toastr.success('Your song was saved successfully!');
+          });
+      });
+    return true;
   },
 };
 

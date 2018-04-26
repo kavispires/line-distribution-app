@@ -1,5 +1,8 @@
 import React from 'react';
 
+import iconYes from '../images/icon-yes.svg';
+import iconNo from '../images/icon-no.svg';
+
 const SaveModal = ({props}) => {
   const { results, distribute, lyrics } = props;
 
@@ -7,7 +10,7 @@ const SaveModal = ({props}) => {
     <section className="modal">
       <div className="modal-save">
         <h1>Save Song</h1>
-        <p>Songs are saved to localStorage and to clipboard.</p>
+        <p>Your distributions will be public for every user, but only you can modify your distributions.</p>
         <div className="modal-group">
           <label htmlFor="songTitle">Song Title*:</label>
           <input
@@ -46,27 +49,53 @@ const SaveModal = ({props}) => {
         <p>Contains Distribution:
           {
             distribute.history.length > 0 ? (
-              <span className="label-green">YES</span>
+              <img className="icon icon-tab" src={iconYes} alt="Yes" />
             ) : (
-              <span className="label-red">NO</span>
+              <span>
+                <img className="icon icon-tab" src={iconNo} alt="No" />
+                <span className="label-red">You must have a distribution to save a song.</span>
+              </span>
             )
           }
         </p>
         <p>Contains Lyrics:
           {
-            lyrics.formattedLyrics.length > 0 ? (
-              <span className="label-green">YES</span>
+            lyrics.lyrics.length > 0 ? (
+              <img className="icon icon-tab" src={iconYes} alt="Yes" />
             ) : (
-              <span className="label-red">NO</span>
+              <span>
+                <img className="icon icon-tab" src={iconNo} alt="No" />
+                <span className="label-red">You must have lyrics to save a song.</span>
+              </span>
             )
           }
         </p>
         <ul className="controls">
-          <li><button className="btn-lg btn-100" onClick={props.openSaveModal}>Cancel</button></li>
-          <li><button className="btn-lg btn-100" onClick={() => props.saveSong(false)}>Copy to clipboard...</button></li>
-          <li><button className="btn-lg btn-100" onClick={props.saveSong}>Save As...</button></li>
+          <li>
+            <button className="btn-lg btn-100" onClick={props.openSaveModal}>
+              Cancel
+            </button>
+          </li>
+          <li>
+            <button className="btn-lg btn-100" onClick={() => props.saveSong(false)}>
+              Copy to clipboard...
+            </button>
+          </li>
+          <li>
+            {
+              distribute.history.length > 0 && lyrics.lyrics.length > 0 ? (
+                <button className="btn-lg btn-100" onClick={props.saveSong}>
+                  Save
+                </button>
+              ) : (
+                <button className="btn-lg btn-100" disabled>
+                  Save
+                </button>
+              )
+            }
+          </li>
         </ul>
-        <small>At the moment, Save As saves a new instance of the distribution/song each time.</small>
+        <small>If you are modifying one song created by you, by clicking save we will update it for you.</small>
       </div>
       {
         results.tempInput ? (
