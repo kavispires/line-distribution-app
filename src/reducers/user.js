@@ -67,7 +67,7 @@ export const login = () => async (dispatch) => {
         if (user.emailVerified) {
           dispatch(setUser(user));
           dispatch(setAuthenticated(true));
-          toastr.success(null, `You are logged in as ${user.displayName}`);
+          toastr.success('', `You are logged in as ${user.displayName}`);
           if (user.email === 'kavispires@gmail.com') {
             dispatch(setAdmin(true));
           }
@@ -89,7 +89,7 @@ export const logout = () => (dispatch) => {
   base.auth().signOut().then(() => {
     dispatch(setUser({}));
     dispatch(setAuthenticated(false));
-    toastr.warning(null, 'You are logged out');
+    toastr.warning('', 'You are logged out');
   }).catch((error) => {
     // An error happened.
     console.error(error);
