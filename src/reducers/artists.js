@@ -260,13 +260,15 @@ export const updateSelectedUnit = id => (dispatch) => {
 
 export const updateLatestUnits = id => (dispatch, getState) => {
   const unitId = id || getState().app.currentUnit.id;
-
   const { user } = getState().user;
   if (id && user.uid) {
     let latestUnits = [];
     const { userLatestArtists } = getState().artists;
     if (userLatestArtists.length > 0) {
       latestUnits = userLatestArtists.map(unit => unit.id);
+    }
+    if (id === latestUnits[0]) {
+      return null;
     }
 
     // Check if it already contains, then remove it
@@ -291,7 +293,6 @@ export const updateLatestUnits = id => (dispatch, getState) => {
 
 export const updateFavoriteUnits = id => (dispatch, getState) => {
   const unitId = id || getState().app.currentUnit.id;
-  console.log('updateFavoriteUnits!!', id);
   const { user } = getState().user;
   if (id && user.uid) {
     let favoriteUnits = [];
