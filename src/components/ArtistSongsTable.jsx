@@ -34,7 +34,10 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
               }
               // const songDistribution = this.props.parseSong(song);
               return (
-                <tr key={song.id}>
+                <tr
+                  key={song.id}
+                  id={song.id}
+                >
                   <td>{song.title}</td>
                   <td>{type}</td>
                   <td>

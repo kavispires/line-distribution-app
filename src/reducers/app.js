@@ -95,7 +95,8 @@ export const toggleIsLoading = bool => (dispatch, getState) => {
   }
 };
 
-export const updateCurrentSong = song => (dispatch) => {
+export const updateCurrentSong = songId => (dispatch) => {
+  const song = API.get(`/songs/${songId}`);
   dispatch(setCurrentSong(song));
 };
 
