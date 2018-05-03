@@ -85,7 +85,7 @@ export const handleParser = evt => (dispatch, getState) => {
           j = MEMBERS.length;
         }
       }
-      if (!wasAdded) colorId += '0';
+      if (!wasAdded) colorId += 'color-0';
       if (i !== names.length - 1) colorId += '-';
       wasAdded = false;
     }
