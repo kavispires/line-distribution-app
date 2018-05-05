@@ -2,6 +2,8 @@ import API from '../api';
 
 import { makeSixDigit } from '../utils';
 
+import { updateCurrentSongInfo } from './results';
+
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
@@ -98,6 +100,7 @@ export const toggleIsLoading = bool => (dispatch, getState) => {
 export const updateCurrentSong = songId => (dispatch) => {
   const song = API.get(`/songs/${songId}`);
   dispatch(setCurrentSong(song));
+  dispatch(updateCurrentSongInfo(song));
 };
 
 export const updateCurrentUnit = (unit, artist) => (dispatch) => {

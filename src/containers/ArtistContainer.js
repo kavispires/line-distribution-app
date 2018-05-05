@@ -19,6 +19,10 @@ import {
   updateSelectedUnit,
 } from '../reducers/artists';
 
+import {
+  resetSongInfo,
+} from '../reducers/results';
+
 const mapStateToProps = state => ({
   app: state.app,
   artists: state.artists,
@@ -28,6 +32,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadUserArtists,
+  resetSongInfo,
   switchUnitsTab,
   toggleIsLoading,
   updateCurrentSong,

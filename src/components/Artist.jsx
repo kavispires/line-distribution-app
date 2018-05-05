@@ -48,14 +48,14 @@ class Artist extends Component {
     }
 
     const setArtistUnit = (path, shouldReset = true) => {
-      // this.props.toggleIsLoading(true);
-      // setTimeout(() => {
-        this.props.history.push(`/${path}`);
-        this.props.updateShouldReset(shouldReset);
-        this.props.updateCurrentUnit(selectedUnit, selectedArtist);
-        this.props.updateLatestUnits(selectedUnit.id);
-        this.props.toggleIsLoading(false);
-      // }, 1000);
+      this.props.history.push(`/${path}`);
+      this.props.updateShouldReset(shouldReset);
+      this.props.updateCurrentUnit(selectedUnit, selectedArtist);
+      this.props.updateLatestUnits(selectedUnit.id);
+      this.props.toggleIsLoading(false);
+      if (shouldReset) {
+        this.props.resetSongInfo();
+      }
     };
 
     const handleSongClick = (e) => {
@@ -149,6 +149,6 @@ class Artist extends Component {
       </section>
     );
   }
-};
+}
 
 export default Artist;

@@ -173,9 +173,16 @@ export const saveSong = (save = true) => (dispatch, getState) => {
       dispatch(toogleModal(false));
     }
   }
+};
 
-  // const clipboard = JSON.stringify(newJSON, null, 2);
-  // dispatch(setTempInput(clipboard));
-  // copyToClipboard();
+export const resetSongInfo = () => (dispatch) => {
+  dispatch(setSongTitle(''));
+  dispatch(setSongType(''));
+  dispatch(setOriginalArtist(''));
+};
 
+export const updateCurrentSongInfo = song => (dispatch) => {
+  dispatch(setSongTitle(song.title));
+  dispatch(setSongType(song.type));
+  dispatch(setOriginalArtist(song.originalArtist));
 };
