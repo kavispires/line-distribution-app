@@ -61,7 +61,9 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
                                   <span
                                     key={`${song.id}-${color}-${instance.memberId}`}
                                     className={`unit-songs-member ${color} bar-width-${barWidth}`}
-                                  />
+                                  >
+                                    {barWidth}%
+                                  </span>
                                 );
                               })
                             }

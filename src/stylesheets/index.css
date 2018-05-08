@@ -5761,7 +5761,10 @@ h2 {
   min-width: 200px; }
 
 .unit-songs-member {
-  height: 12px; }
+  height: 12px;
+  line-height: 13px;
+  text-align: center;
+  font-size: .7em; }
 
 .pill {
   width: 18%;
