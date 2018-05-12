@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
+
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
 import PositionIcons from './icons/PositionIcons';
@@ -19,6 +22,16 @@ class Lyrics extends Component {
   }
 
   render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/lyrics" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
     const APP = this.props.app;
     const LYRICS = this.props.lyrics;
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
@@ -104,7 +117,9 @@ class Lyrics extends Component {
 
 Lyrics.propTypes = {
   app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
   lyrics: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
   handleParser: PropTypes.func.isRequired,
   setDurations: PropTypes.func.isRequired,
   setHistory: PropTypes.func.isRequired,

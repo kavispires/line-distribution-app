@@ -9,6 +9,10 @@ import {
   songsFilter,
 } from '../reducers/songs';
 
+import {
+  login,
+} from '../reducers/user';
+
 const mapStateToProps = state => ({
   app: state.app,
   db: state.db,
@@ -19,6 +23,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadSong,
   loadSongs,
+  login,
   songsFilter,
 };
 

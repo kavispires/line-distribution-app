@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
+
 import CurrentArtistName from './widgets/CurrentArtistName';
 
 import { getLyricsSnippet } from '../utils';
@@ -13,6 +16,16 @@ class Songs extends Component {
   }
 
   render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/artists" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
     const APP = this.props.app;
     const SONGS = this.props.songs;
     const CURRENT_UNIT = APP.currentUnit;
@@ -81,7 +94,9 @@ class Songs extends Component {
 
 Songs.propTypes = {
   app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
   songs: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
   history: PropTypes.object.isRequired, // eslint-disable-line
   loadSong: PropTypes.func.isRequired,
   loadSongs: PropTypes.func.isRequired,

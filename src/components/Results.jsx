@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
+
 import ModalSave from './ModalSave';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
@@ -17,6 +20,16 @@ class Results extends Component {
   }
 
   render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/home" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
     const APP = this.props.app;
     const RESULTS = this.props.results;
 
@@ -79,7 +92,9 @@ class Results extends Component {
 
 Results.propTypes = {
   app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
   results: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
   history: PropTypes.object.isRequired, // eslint-disable-line
   location: PropTypes.object.isRequired, // eslint-disable-line
   calculateResults: PropTypes.func.isRequired,

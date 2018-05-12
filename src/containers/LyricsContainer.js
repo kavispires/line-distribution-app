@@ -14,6 +14,10 @@ import {
   setPercentages,
 } from '../reducers/distribute';
 
+import {
+  login,
+} from '../reducers/user';
+
 const mapStateToProps = state => ({
   app: state.app,
   db: state.db,
@@ -23,6 +27,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   handleParser,
+  login,
   setDurations,
   setHistory,
   setPercentages,

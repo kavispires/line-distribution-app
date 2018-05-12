@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import LoginRequiredScreen from './LoginRequiredScreen';
 import LoadingScreen from './LoadingScreen';
+
 import UserArtistTable from './UserArtistTable';
 
 import { ARTITST_PLACEHOLDER } from '../constants';
@@ -25,11 +26,12 @@ class Artists extends Component {
   }
 
   render() {
-    // If user is not logged in
-    if (!this.props.user.isAuthenticated) {
-      return <LoginRequiredScreen props={this.props} />;
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/artists" />;
     }
-    // If no db, show loading
+
+    // DB Check if db is ready
     if (this.props.db.loaded === false) {
       return <LoadingScreen />;
     }

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
+
 import Member from './Member';
 import ArtistSongsTable from './ArtistSongsTable';
 
@@ -31,8 +34,19 @@ class Artist extends Component {
   }
 
   render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/artists" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
     const APP = this.props.app;
     const ARTISTS = this.props.artists;
+    const USER = this.props.user;
 
     const {
       selectedArtist,
@@ -40,6 +54,7 @@ class Artist extends Component {
       selectedUnit,
     } = ARTISTS;
 
+    // SELECTED_ARTIST Check if there is a selected artist
     if (selectedArtist === undefined) {
       return (
         <section className="container">
@@ -157,6 +172,7 @@ Artist.propTypes = {
   app: PropTypes.object.isRequired, // eslint-disable-line
   artists: PropTypes.object.isRequired, // eslint-disable-line
   db: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
   history: PropTypes.object.isRequired, // eslint-disable-line
   match: PropTypes.object.isRequired, // eslint-disable-line
   loadUserArtists: PropTypes.func.isRequired,

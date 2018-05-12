@@ -17,6 +17,10 @@ import {
   updateSelectedUnit,
 } from '../reducers/artists';
 
+import {
+  login,
+} from '../reducers/user';
+
 const mapStateToProps = state => ({
   app: state.app,
   artists: state.artists,
@@ -27,6 +31,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   filterArtists,
   loadArtists,
+  login,
   toggleIsLoading,
   updateCurrentUnit,
   updateLatestUnits,
