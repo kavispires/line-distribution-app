@@ -10,7 +10,7 @@ import ArtistSongsTable from './ArtistSongsTable';
 
 import FavoriteIcon from './icons/FavoriteIcon';
 import LoadingIcon from './icons/LoadingIcon';
-import OfficialIcon from './icons/OfficialIcon';
+import Icon from './icons';
 
 class Artist extends Component {
   componentWillMount() {
@@ -46,7 +46,6 @@ class Artist extends Component {
 
     const APP = this.props.app;
     const ARTISTS = this.props.artists;
-    const USER = this.props.user;
 
     const {
       selectedArtist,
@@ -113,7 +112,7 @@ class Artist extends Component {
                   id={id}
                   onClick={() => this.props.updateSelectedUnit(id)}
                 >
-                  {name} {official ? <OfficialIcon /> : null }
+                  {name} {official ? <Icon type="official" /> : null }
                 </li>
               );
             })

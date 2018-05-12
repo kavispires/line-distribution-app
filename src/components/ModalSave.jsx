@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import NoIcon from './icons/NoIcon';
-import YesIcon from './icons/YesIcon';
+import Icon from './icons';
 
 const SaveModal = ({ props }) => {
   const { results, distribute, lyrics } = props;
@@ -50,10 +49,10 @@ const SaveModal = ({ props }) => {
         <p>Contains Distribution:
           {
             distribute.history.length > 0 ? (
-              <YesIcon />
+              <Icon type="yes" />
             ) : (
               <span>
-                <NoIcon />
+                <Icon type="no" />
                 <span className="label-red">You must have a distribution to save a song.</span>
               </span>
             )
@@ -62,10 +61,10 @@ const SaveModal = ({ props }) => {
         <p>Contains Lyrics:
           {
             lyrics.lyrics.length > 0 ? (
-              <YesIcon />
+              <Icon type="yes" />
             ) : (
               <span>
-                <NoIcon />
+                <Icon type="no" />
                 <span className="label-red">You must have lyrics to save a song.</span>
               </span>
             )

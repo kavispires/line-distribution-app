@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import NoIcon from './icons/NoIcon';
-import YesIcon from './icons/YesIcon';
+import Icon from './icons';
 
 const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
   const sortedSongs = _.sortBy(songs, ['title']);
@@ -41,11 +40,7 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
                 >
                   <td>{song.title}</td>
                   <td>{type}</td>
-                  <td>
-                    {
-                      song.lyrics ? <YesIcon /> : <NoIcon />
-                    }
-                  </td>
+                  <td><Icon type={song.lyrics ? 'yes' : 'no'} /></td>
                   <td>
                     {
                       song.result ?
@@ -68,7 +63,7 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
                           </span>
                         )
                         :
-                          <NoIcon />
+                          <Icon type="no" />
                     }
                   </td>
                 </tr>
