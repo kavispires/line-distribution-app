@@ -1,0 +1,51 @@
+@import './variables.scss';
+
+.pill {
+  width: 18%;
+  min-width: 180px;
+  max-width: 250px;
+  padding: $halfUnit;
+  margin-right: $unit;
+  margin-bottom: $unit;
+  border-right: 1px solid $lightGrey;
+  border-bottom: 1px solid $lightGrey;
+
+  p {
+    margin: $halfUnit 0;
+  }
+}
+
+.pill-color-bar {
+  width: 100%;
+  display: flex;
+  height: $halfUnit;
+  margin-bottom: $halfUnit;
+}
+
+.pill-color-main {
+  display: block;
+  height: $halfUnit;
+  width: 80%;
+}
+
+.pill-color-alt {
+  display: block;
+  height: $halfUnit;
+  width: 20%;
+}
+
+.pill-name {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.pill-positions {
+  margin-top: -12px;
+  padding-left: 0px;
+  list-style: none;
+}
+
+.pill-icon {
+  display: inline-block;
+  transform: translateY(10px);
+}
