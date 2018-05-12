@@ -6,9 +6,10 @@ const Home = props => (
     <iframe
       className="home-video"
       title="home-video"
-      src="https://www.youtube.com/embed/W0LHTWG-UmQ?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=W0LHTWG-UmQ"
+      src="https://www.youtube.com/embed/cudssvDuOpc?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=cudssvDuOpc"
       frameBorder="0"
       allowFullScreen
+
     />
     <div className="home-content">
       <img className="home-logo" src={logo} alt="Line Distribution" />
