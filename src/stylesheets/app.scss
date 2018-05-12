@@ -41,14 +41,23 @@ body {
   position: relative;
 }
 
-.container-loading {
+.container-center {
   display: flex;
   justify-content: center;
   align-items: center;
 
+  .icon-stop {
+    width: 120px;
+  }
+
   .icon-loading {
     width: 100px;
   }
+}
+
+.container-center--inner {
+  @extend .container-center;
+  flex-direction: column;
 }
 
 h1 {

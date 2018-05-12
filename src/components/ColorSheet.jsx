@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import AdminOnlyScreen from './AdminOnlyScreen';
+
 import { ALTERNATIVE_COLOR_LIST } from '../constants';
 import { makeSixDigit, makeIdNumber } from '../utils';
 
@@ -19,6 +21,11 @@ class ColorSheet extends Component {
 
   render() {
     const ADMIN = this.props.admin;
+    const USER = this.props.user;
+
+    if (!USER.isAdmin) {
+      return <AdminOnlyScreen />;
+    }
 
     return (
       <div className="container">

@@ -5664,12 +5664,17 @@ body {
   width: 100%;
   position: relative; }
 
-.container-loading {
+.container-center, .container-center--inner {
   display: flex;
   justify-content: center;
   align-items: center; }
-  .container-loading .icon-loading {
+  .container-center .icon-stop, .container-center--inner .icon-stop {
+    width: 120px; }
+  .container-center .icon-loading, .container-center--inner .icon-loading {
     width: 100px; }
+
+.container-center--inner {
+  flex-direction: column; }
 
 h1 {
   font-size: 1.5em;
