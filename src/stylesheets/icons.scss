@@ -32,6 +32,32 @@
   margin-bottom: $quarterUnit;
 }
 
+.icon-positions-inline .icon-pos {
+  transform: translateY(10px);
+  margin-right: 6px;
+  width: 18px;
+}
+
+.icon-positions-picker {
+  cursor: pointer;
+  margin-right: 6px;
+
+  &:hover .icon-pos {
+    border: 3px solid $darkGrey;
+    border-radius: 50%;
+  }
+
+  .icon-pos {
+    transform: translateY(10px);
+    width: 24px;
+  }
+
+  &.selected .icon-pos {
+    border: 3px solid $defaultBlue;
+    border-radius: 50%;
+  }
+}
+
 .icon-favorite {
   width: 36px;
   position: absolute;

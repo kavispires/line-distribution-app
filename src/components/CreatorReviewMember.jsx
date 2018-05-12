@@ -2,30 +2,39 @@ import React from 'react';
 
 import PositionIcons from './icons/PositionIcons';
 
-import { makeIdNumber } from '../utils';
+import { getTrueKeys, makeIdNumber } from '../utils';
 
-const CreatorMember = ({id, props}) => {
-  const MEMBER = props.admin.members[id];
+const CreatorMember = ({ id, props }) => {
+  let member;
+  let memberPositions;
+  if (typeof id === 'string') {
+    member = props.admin.members[id];
+    memberPositions = member.positions;
+  } else {
+    member = id;
+    memberPositions = getTrueKeys(member.positions);
+  }
+
+
+  const COLOR_NAME = props.admin.colors[member.colorId].name;
   const POSITIONS = props.admin.positions;
-  const COLOR_NAME = props.admin.colors[MEMBER.colorId].name;
 
   return (
     <div className="form-member">
-      <div className={`color-swatch color-${makeIdNumber(MEMBER.colorId)}`} />
+      <div className={`color-swatch color-${makeIdNumber(member.colorId)}`} />
       <div className="info">
-        <button className="btn-close" onClick={e => props.unloadMember(e, id)}>×</button>
         <label htmlFor="memberName">Name:</label>
         <input
           type="text"
           name="memberName"
-          value={MEMBER.name}
+          value={member.name}
           disabled="true"
         />
         <label htmlFor="memberBirthdate">Birthdate:</label>
         <input
-          type="number"
+          type="text"
           name="memberBirthdate"
-          value={MEMBER.birthdate}
+          value={member.birthdate}
           disabled="true"
         />
         <label htmlFor="memberColor">Color:</label>
@@ -38,10 +47,10 @@ const CreatorMember = ({id, props}) => {
         <label htmlFor="memberPosition">Position:</label>
         <ul className="pill-positions-creator">
           {
-            MEMBER.positions.map(posId => (
-              <li key={`${MEMBER.name}-${posId}`} className="pill-position">
+            memberPositions.map(posId => (
+              <li key={`${member.id}-${posId}`} className="pill-position">
                 <PositionIcons
-                  memberId={MEMBER.id}
+                  memberId={member.id}
                   positions={[posId]}
                   iconClass="icon-positions-inline"
                 />

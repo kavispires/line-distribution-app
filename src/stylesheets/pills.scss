@@ -45,6 +45,11 @@
   list-style: none;
 }
 
+.pill-positions-creator {
+  @extend .pill-positions;
+  margin-top: $quarterUnit;
+}
+
 .pill-icon {
   display: inline-block;
   transform: translateY(10px);

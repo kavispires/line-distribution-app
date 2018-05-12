@@ -1,13 +1,20 @@
 import _ from 'lodash';
 
+import API from '../api';
+
 import {
   copyToClipboard,
   getAlternativeColor,
   getLatestId,
+  getTrueKeys,
 } from '../utils';
-import API from '../api';
 
 /* ------------------   ACTIONS   ------------------ */
+
+const SET_TAB = 'SET_TAB';
+const SET_IS_VALID = 'SET_IS_VALID';
+const SET_MESSAGE = 'SET_MESSAGE';
+const SET_VALIDATION = 'SET_VALIDATION';
 
 const SET_TEMP_INPUT = 'SET_TEMP_INPUT';
 const SET_LOADED_ARTIST = 'SET_LOADED_ARTIST';
@@ -24,6 +31,11 @@ const SET_LOADED_MEMBER = 'SET_LOADED_MEMBER';
 const SET_NEW_MEMBERS = 'SET_NEW_MEMBERS';
 
 /* --------------   ACTION CREATORS   -------------- */
+
+const setTab = payload => dispatch => dispatch({ type: SET_TAB, payload });
+const setIsValid = payload => dispatch => dispatch({ type: SET_IS_VALID, payload });
+const setMessage = payload => dispatch => dispatch({ type: SET_MESSAGE, payload });
+const setValidation = payload => dispatch => dispatch({ type: SET_VALIDATION, payload });
 
 const setTempInput = payload => dispatch => dispatch({ type: SET_TEMP_INPUT, payload });
 const setLoadedArtist = payload => dispatch => dispatch({ type: SET_LOADED_ARTIST, payload });
@@ -42,6 +54,14 @@ const setNewMembers = payload => dispatch => dispatch({ type: SET_NEW_MEMBERS, p
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
+  tab: 'artist',
+  isValid: false,
+  message: {},
+  validation: {
+    artist: 'box-unchecked',
+    unit: 'box-unchecked',
+    members: 'box-unchecked',
+  },
   tempInput: '',
   loadedArtist: 0,
   newArtistName: '',
@@ -55,12 +75,29 @@ const initialState = {
   newUnitMembers: [],
   loadedMember: 0,
   newMembers: {},
+
 };
 
 export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+    case SET_TAB:
+      newState.tab = action.payload;
+      break;
+
+    case SET_IS_VALID:
+      newState.isValid = action.payload;
+      break;
+
+    case SET_MESSAGE:
+      newState.message = action.payload;
+      break;
+
+    case SET_VALIDATION:
+      newState.validation = action.payload;
+      break;
+
     case SET_TEMP_INPUT:
       newState.tempInput = action.payload;
       break;
@@ -125,12 +162,12 @@ export const loadArtist = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setLoadedArtist(value));
-  if (+value > 0) {
+  if (value !== 'art000000') {
     const artist = API.get(`/artists/${value}`);
     dispatch(setNewArtistName(artist.name));
-    dispatch(setNewArtistOtherNames(artist.otherNames));
+    dispatch(setNewArtistOtherNames(artist.otherNames || ''));
     dispatch(setNewArtistGenre(artist.genre));
-    dispatch(setNewArtistUnits(artist.units));
+    dispatch(setNewArtistUnits(artist.units || []));
     dispatch(setNewUnitName(''));
     dispatch(setNewUnitDebutYear(''));
     dispatch(setNewUnitOfficial(false));
@@ -141,6 +178,9 @@ export const loadArtist = event => (dispatch) => {
     dispatch(setNewArtistGenre('K-Pop'));
     dispatch(setNewArtistUnits([]));
   }
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewArtistName = event => (dispatch) => {
@@ -148,6 +188,9 @@ export const handleNewArtistName = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewArtistName(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewArtistOtherNames = event => (dispatch) => {
@@ -155,6 +198,9 @@ export const handleNewArtistOtherNames = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewArtistOtherNames(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewArtistGenre = event => (dispatch) => {
@@ -162,13 +208,16 @@ export const handleNewArtistGenre = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewArtistGenre(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const loadUnit = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setLoadedUnit(value));
-  if (+value > 0) {
+  if (value) {
     const unit = API.get(`/units/${value}`);
     dispatch(setNewUnitName(unit.name));
     dispatch(setNewUnitDebutYear(unit.debutYear));
@@ -180,6 +229,9 @@ export const loadUnit = event => (dispatch) => {
     dispatch(setNewUnitOfficial(false));
     dispatch(setNewUnitMembers([]));
   }
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewUnitName = event => (dispatch) => {
@@ -187,6 +239,9 @@ export const handleNewUnitName = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewUnitName(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewUnitDebutYear = event => (dispatch) => {
@@ -194,6 +249,9 @@ export const handleNewUnitDebutYear = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewUnitDebutYear(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewUnitOfficial = event => (dispatch) => {
@@ -201,18 +259,24 @@ export const handleNewUnitOfficial = event => (dispatch) => {
   dispatch(setTempInput(''));
   const value = event.target.checked;
   dispatch(setNewUnitOfficial(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const loadMember = event => (dispatch, getState) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
 
-  if (+value > 0) {
+  if (value) {
     const newUnitMembers = [...getState().creator.newUnitMembers];
     newUnitMembers.push(value);
     dispatch(setNewUnitMembers(newUnitMembers));
   }
   dispatch(setLoadedMember(0));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const unloadMember = (event, id) => (dispatch, getState) => {
@@ -227,6 +291,9 @@ export const unloadMember = (event, id) => (dispatch, getState) => {
     newUnitMembers.splice(index, 1);
   }
   dispatch(setNewUnitMembers(newUnitMembers));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const addNewMember = event => (dispatch, getState) => {
@@ -252,12 +319,29 @@ export const addNewMember = event => (dispatch, getState) => {
     colorId: 0,
     altColorId: 0,
     birthdate: 0,
-    positions: [],
+    positions: {
+      pos000001: false,
+      pos000002: false,
+      pos000003: false,
+      pos000004: false,
+      pos000005: false,
+      pos000006: false,
+      pos000007: false,
+      pos000008: false,
+      pos000009: false,
+      pos000010: false,
+      pos000011: false,
+      pos000012: false,
+      pos000013: false,
+    },
   };
 
   newMembers[newId] = blankMember;
 
   dispatch(setNewMembers(newMembers));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const removeNewMember = (event, id) => (dispatch, getState) => {
@@ -269,6 +353,9 @@ export const removeNewMember = (event, id) => (dispatch, getState) => {
   const newMembers = Object.assign({}, getState().creator.newMembers);
   delete newMembers[id];
   dispatch(setNewMembers(newMembers));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const updateNewMember = (event, id, field) => (dispatch, getState) => {
@@ -283,20 +370,62 @@ export const updateNewMember = (event, id, field) => (dispatch, getState) => {
   } else if (field === 'birthdate') {
     newMembers[id].birthdate = value;
   } else if (field === 'color' && value) {
-    newMembers[id].colorId = Number(value);
+    newMembers[id].colorId = value;
     newMembers[id].altColorId = getAlternativeColor(value);
   } else if (field === 'position' && value) {
-    if (newMembers[id].positions.indexOf(value) === -1) {
-      newMembers[id].positions.push(Number(value));
+    // Toggles positions that can't be with the same member
+    switch (value) {
+      case 'pos000002':
+        newMembers[id].positions.pos000005 = false;
+        newMembers[id].positions.pos000008 = false;
+        break;
+      case 'pos000005':
+        newMembers[id].positions.pos000002 = false;
+        newMembers[id].positions.pos000008 = false;
+        break;
+      case 'pos000008':
+        newMembers[id].positions.pos000002 = false;
+        newMembers[id].positions.pos000005 = false;
+        break;
+      case 'pos000003':
+        newMembers[id].positions.pos000006 = false;
+        newMembers[id].positions.pos000010 = false;
+        break;
+      case 'pos000006':
+        newMembers[id].positions.pos000003 = false;
+        newMembers[id].positions.pos000010 = false;
+        break;
+      case 'pos000010':
+        newMembers[id].positions.pos000003 = false;
+        newMembers[id].positions.pos000006 = false;
+        break;
+      case 'pos000004':
+        newMembers[id].positions.pos000007 = false;
+        newMembers[id].positions.pos000009 = false;
+        break;
+      case 'pos000007':
+        newMembers[id].positions.pos000004 = false;
+        newMembers[id].positions.pos000009 = false;
+        break;
+      case 'pos000009':
+        newMembers[id].positions.pos000004 = false;
+        newMembers[id].positions.pos000007 = false;
+        break;
+      default:
+        // Nothing
     }
+    newMembers[id].positions[value] = !newMembers[id].positions[value];
   }
 
   dispatch(setNewMembers(newMembers));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const removePosition = (event, id, field) => (dispatch, getState) => {
   event.preventDefault();
-
+  console.log('REMOVE POSITION');
   // Empty clipboard input
   dispatch(setTempInput(''));
 
@@ -305,6 +434,9 @@ export const removePosition = (event, id, field) => (dispatch, getState) => {
   newMembers[id].positions = newMembers[id].positions.filter(pos => pos !== field);
 
   dispatch(setNewMembers(newMembers));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const generateMembersJSON = (evt, skipClipboard = false) => (dispatch, getState) => {
@@ -452,3 +584,175 @@ export const generateFullJSON = event => (dispatch) => {
   copyToClipboard();
 };
 
+// NEW STUFF
+
+export const switchCreatorTab = event => (dispatch) => {
+  const { id } = event.target;
+  dispatch(setTab(id));
+};
+
+export const checkValidation = () => (dispatch, getState) => {
+  const { creator, admin } = getState();
+  const { tab, message } = creator;
+  const validation = Object.assign({}, creator.validation);
+
+  // ARTIST
+  if (tab === 'artist' || tab === 'review') {
+    if (!creator.newArtistName) {
+      message[1] = 'Missing Artist Name.\n';
+    } else {
+      const exists = _.find(admin.artists, o => o.name.toLowerCase() === creator.newArtistName.toLowerCase());
+      if (exists !== undefined && exists.id !== creator.loadedArtist) {
+        message[1] = 'Artist already exists. Please just load it.\n';
+        validation.artist = 'box-invalid';
+      } else {
+        delete message[1];
+        validation.artist = 'box-checked';
+      }
+    }
+  }
+
+  // UNIT
+  if (tab === 'unit' || tab === 'review') {
+    // Unit Name must be unique
+    if (!creator.newUnitName) {
+      message[2] = 'Missing Unit Name.\n';
+    } else {
+      const sameUnit = o => (
+        o.name.toLowerCase() === creator.newUnitName.toLowerCase()
+        && o.artistId === creator.loadedArtist
+      );
+
+      const exists = _.find(admin.units, sameUnit);
+      if (exists !== undefined && exists.id !== creator.loadedUnit) {
+        message[2] = 'Chosen unit name already exists for this group. Choose a different one.\n';
+        validation.unit = 'box-invalid';
+      } else {
+        delete message[2];
+        validation.unit = 'box-checked';
+      }
+      // Unit Debut Year required
+      if (!creator.newUnitDebutYear) {
+        message[3] = 'Missing Unit Debut Year.\n';
+        validation.unit = 'box-invalid';
+      } else {
+        delete message[3];
+      }
+    }
+  }
+
+  // MEMBERS
+  if (tab === 'members' || tab === 'review') {
+    const newMembersCount = Object.keys(creator.newMembers).length;
+    const existingMembersCount = creator.newUnitMembers.length;
+
+    if (existingMembersCount > 1 && newMembersCount === 0) {
+
+      validation.members = 'box-checked';
+    } else if (existingMembersCount + newMembersCount > 1) {
+      validation.members = 'box-unchecked';
+
+      // Loop through newMembers and check their fields
+      let membersMessages = '';
+      Object.keys(creator.newMembers).forEach((key, i) => {
+        const member = creator.newMembers[key];
+        let memberMessage = `Missing member ${i + 1}'s `;
+
+        if (!member.name) {
+          memberMessage += 'name, ';
+        }
+        if (!member.colorId) {
+          memberMessage += 'color, ';
+        }
+        if (!member.birthdate) {
+          memberMessage += 'birth date, ';
+        }
+        if (_.filter(member.positions, o => o).length === 0) {
+          memberMessage += 'positions.\n';
+        }
+        if (memberMessage.length > 20) {
+          membersMessages += memberMessage;
+        }
+      });
+
+      if (membersMessages) {
+        message[4] = membersMessages;
+        validation.members = 'box-invalid';
+      } else {
+        validation.members = 'box-checked';
+        delete message[4];
+      }
+    } else {
+      validation.members = 'box-unchecked';
+    }
+  }
+
+  if (validation.artist === 'box-checked' && validation.unit === 'box-checked' && validation.members === 'box-checked') {
+    dispatch(setIsValid(true));
+  } else {
+    dispatch(setIsValid(false));
+  }
+  dispatch(setValidation(validation));
+  dispatch(setMessage(message));
+};
+
+export const reset = () => dispatch => dispatch();
+
+export const clearPositions = (e, id) => (dispatch, getState) => {
+  e.preventDefault();
+
+  const newMembers = Object.assign({}, getState().creator.newMembers);
+  const validation = Object.assign({}, getState().creator.validation);
+
+  const positions = {
+    pos000001: false,
+    pos000002: false,
+    pos000003: false,
+    pos000004: false,
+    pos000005: false,
+    pos000006: false,
+    pos000007: false,
+    pos000008: false,
+    pos000009: false,
+    pos000010: false,
+    pos000011: false,
+    pos000012: false,
+    pos000013: false,
+  };
+  newMembers[id].positions = positions;
+  dispatch(setNewMembers(newMembers));
+  validation.members = 'box-invalid';
+  dispatch(setValidation(validation));
+};
+
+export const save = () => (dispatch, getState) => {
+  const { creator } = getState();
+
+  const body = {
+    wasArtistLoaded: creator.loadedArtist > 0,
+    artist: {
+      genre: creator.newArtistGenre,
+      name: creator.newArtistName,
+      otherNames: creator.newArtistOtherNames,
+    },
+    wasUnitLoaded: creator.loadedUnit > 0,
+    unit: {
+      artistId: creator.loadedArtist,
+      debutYear: creator.newUnitDebutYear,
+      members: creator.newUnitMembers,
+      name: creator.newUnitName,
+      official: creator.newUnitOfficial,
+    },
+    members: [],
+  };
+
+  // Prepare members
+  Object.keys(creator.newMembers).forEach((key) => {
+    const newMember = _.cloneDeep(creator.newMembers[key]);
+    newMember.birthdate = +newMember.birthdate.split('-').join('');
+    newMember.positions = getTrueKeys(newMember.positions);
+    body.members.push(newMember);
+  });
+  console.log(body);
+  API.post('/completeArtist', body);
+};

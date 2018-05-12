@@ -48,3 +48,19 @@
 .btn-20 {
   width: 20%;
 }
+
+.btn-close {
+  background: none;
+  border: 0;
+  transform: translateY(-2px);
+  color: $darkGrey;
+  cursor: pointer;
+
+  &:hover {
+    color: $defaultBlue;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

@@ -177,8 +177,18 @@ export const post = (str, body) => {
     case 'songs':
       // API/songs
       if (length === 2) return POST.postSong(body);
+      // Error
+      console.error(`Wrong API path: ${str}`);
+      return {};
+    case 'completeArtist':
+      // API/completeArtist
+      if (length === 2) return POST.postCompleteArtist(body);
+      // Error
+      console.error(`Wrong API path: ${str}`);
       return {};
     default:
+      // Error
+      console.error(`Wrong API path: ${str}`);
       return {};
   }
 };
@@ -241,7 +251,7 @@ const GET = {
     return response;
   },
 
-  // API/members FIX
+  // API/members
   fetchAllMembers: (include) => {
     const response = _.cloneDeep(DB.members);
 
@@ -604,7 +614,6 @@ const POST = {
     if (body.distribution && typeof body.distribution !== 'string') {
       body.distribution = JSON.stringify(body.distribution);
     }
-    console.log(body);
     if (missingInfo.length > 0) {
       toastr.error(`Song missing information: \n${missingInfo.join(', ')}`);
       return false;
@@ -650,5 +659,25 @@ const POST = {
       });
     return true;
   },
+
+  // API/completeArtist
+  postCompleteArtist: (body) => {
+    const missingInfo = [];
+    // Check if song has all necessary params. Optional: distribution, lyrics
+    // if (!body.originalArtist) missingInfo.push('Original Artist\n'); // REMOVE THIS, DEBUGGING ONLY
+
+    if (missingInfo.length > 0) {
+      toastr.error(`Missing information: \n${missingInfo.join(', ')}`);
+      return false;
+    }
+
+    // First, post all new members and get their ids;
+    // base.database()
+    //   .child('members')
+    //   .push
+    // Second, post the unit get its id
+
+    // Third, post
+  }
 };
 

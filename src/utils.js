@@ -95,8 +95,8 @@ export const getLatestId = (t) => {
 };
 
 export const getAlternativeColor = (colorId) => {
-  const list = [...ALTERNATIVE_COLOR_LIST[colorId]];
-  return list[Math.floor(Math.random() * list.length)];
+  const list = [...ALTERNATIVE_COLOR_LIST[makeIdNumber(colorId)]];
+  return makeSixDigit(list[Math.floor(Math.random() * list.length)]);
 };
 
 export const parseBirthDate = (d) => {
@@ -163,3 +163,13 @@ export const capitalizeWord = (str, separator = ' ') => (
 );
 
 export const spinalCaseWord = str => str.toLowerCase().split(' ').join('-');
+
+export const getTrueKeys = (obj) => {
+  const keys = [];
+
+  Object.keys(obj).forEach((key) => {
+    if (obj[key]) keys.push(key);
+  });
+
+  return keys;
+}
