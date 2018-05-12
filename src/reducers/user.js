@@ -18,7 +18,7 @@ export const setUser = payload => dispatch => dispatch({ type: SET_USER, payload
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  authenticated: false,
+  isAuthenticated: false,
   isAdmin: false,
   user: {},
 };
@@ -32,7 +32,7 @@ export default function reducer(prevState = initialState, action) {
       break;
 
     case SET_AUTHENTICATED:
-      newState.authenticated = action.payload;
+      newState.isAuthenticated = action.payload;
       break;
 
     case SET_USER:

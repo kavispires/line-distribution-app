@@ -25,7 +25,7 @@ class Artists extends Component {
 
   render() {
     // If user is not logged in
-    if (!this.props.user.authenticated) {
+    if (!this.props.user.isAuthenticated) {
       return <LoginRequiredScreen props={this.props} />;
     }
     // If no db, show loading

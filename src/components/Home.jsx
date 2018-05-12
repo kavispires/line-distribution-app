@@ -15,7 +15,7 @@ const Home = props => (
       <img className="home-logo" src={logo} alt="Line Distribution" />
       <div className="home-buttons">
         {
-          !props.user.authenticated ? (
+          !props.user.isAuthenticated ? (
             <button
               className="btn-home"
               onClick={props.login}
