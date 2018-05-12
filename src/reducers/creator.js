@@ -9,6 +9,11 @@ import API from '../api';
 
 /* ------------------   ACTIONS   ------------------ */
 
+const SET_TAB = 'SET_TAB';
+const SET_IS_VALID = 'SET_IS_VALID';
+const SET_MESSAGE = 'SET_MESSAGE';
+const SET_VALIDATION = 'SET_VALIDATION';
+
 const SET_TEMP_INPUT = 'SET_TEMP_INPUT';
 const SET_LOADED_ARTIST = 'SET_LOADED_ARTIST';
 const SET_NEW_ARTIST_NAME = 'SET_NEW_ARTIST_NAME';
@@ -24,6 +29,11 @@ const SET_LOADED_MEMBER = 'SET_LOADED_MEMBER';
 const SET_NEW_MEMBERS = 'SET_NEW_MEMBERS';
 
 /* --------------   ACTION CREATORS   -------------- */
+
+const setTab = payload => dispatch => dispatch({ type: SET_TAB, payload });
+const setIsValid = payload => dispatch => dispatch({ type: SET_IS_VALID, payload });
+const setMessage = payload => dispatch => dispatch({ type: SET_MESSAGE, payload });
+const setValidation = payload => dispatch => dispatch({ type: SET_VALIDATION, payload });
 
 const setTempInput = payload => dispatch => dispatch({ type: SET_TEMP_INPUT, payload });
 const setLoadedArtist = payload => dispatch => dispatch({ type: SET_LOADED_ARTIST, payload });
@@ -42,6 +52,14 @@ const setNewMembers = payload => dispatch => dispatch({ type: SET_NEW_MEMBERS, p
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
+  tab: 'artist',
+  isValid: false,
+  message: {},
+  validation: {
+    artist: 'box-unchecked',
+    unit: 'box-unchecked',
+    members: 'box-unchecked',
+  },
   tempInput: '',
   loadedArtist: 0,
   newArtistName: '',
@@ -55,12 +73,30 @@ const initialState = {
   newUnitMembers: [],
   loadedMember: 0,
   newMembers: {},
+
 };
 
 export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+
+    case SET_TAB:
+      newState.tab = action.payload;
+      break;
+
+    case SET_IS_VALID:
+      newState.isValid = action.payload;
+      break;
+
+    case SET_MESSAGE:
+      newState.message = action.payload;
+      break;
+
+    case SET_VALIDATION:
+      newState.validation = action.payload;
+      break;
+
     case SET_TEMP_INPUT:
       newState.tempInput = action.payload;
       break;
@@ -125,7 +161,7 @@ export const loadArtist = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setLoadedArtist(value));
-  if (+value > 0) {
+  if (value !== 'art000000') {
     const artist = API.get(`/artists/${value}`);
     dispatch(setNewArtistName(artist.name));
     dispatch(setNewArtistOtherNames(artist.otherNames));
@@ -141,6 +177,9 @@ export const loadArtist = event => (dispatch) => {
     dispatch(setNewArtistGenre('K-Pop'));
     dispatch(setNewArtistUnits([]));
   }
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewArtistName = event => (dispatch) => {
@@ -148,6 +187,9 @@ export const handleNewArtistName = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewArtistName(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewArtistOtherNames = event => (dispatch) => {
@@ -155,6 +197,9 @@ export const handleNewArtistOtherNames = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewArtistOtherNames(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewArtistGenre = event => (dispatch) => {
@@ -162,13 +207,16 @@ export const handleNewArtistGenre = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewArtistGenre(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const loadUnit = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setLoadedUnit(value));
-  if (+value > 0) {
+  if (value) {
     const unit = API.get(`/units/${value}`);
     dispatch(setNewUnitName(unit.name));
     dispatch(setNewUnitDebutYear(unit.debutYear));
@@ -180,6 +228,9 @@ export const loadUnit = event => (dispatch) => {
     dispatch(setNewUnitOfficial(false));
     dispatch(setNewUnitMembers([]));
   }
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewUnitName = event => (dispatch) => {
@@ -187,6 +238,9 @@ export const handleNewUnitName = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewUnitName(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewUnitDebutYear = event => (dispatch) => {
@@ -194,6 +248,9 @@ export const handleNewUnitDebutYear = event => (dispatch) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setNewUnitDebutYear(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const handleNewUnitOfficial = event => (dispatch) => {
@@ -201,13 +258,16 @@ export const handleNewUnitOfficial = event => (dispatch) => {
   dispatch(setTempInput(''));
   const value = event.target.checked;
   dispatch(setNewUnitOfficial(value));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
 };
 
 export const loadMember = event => (dispatch, getState) => {
   dispatch(setTempInput(''));
   const { value } = event.target;
 
-  if (+value > 0) {
+  if (value) {
     const newUnitMembers = [...getState().creator.newUnitMembers];
     newUnitMembers.push(value);
     dispatch(setNewUnitMembers(newUnitMembers));
@@ -452,3 +512,85 @@ export const generateFullJSON = event => (dispatch) => {
   copyToClipboard();
 };
 
+// NEW STUFF
+
+export const switchCreatorTab = event => (dispatch) => {
+  const { id } = event.target;
+  dispatch(setTab(id));
+};
+
+export const checkValidation = () => (dispatch, getState) => {
+  const { creator, admin } = getState();
+  const { tab, message } = creator;
+  const validation = Object.assign({}, creator.validation);
+
+  // ARTIST
+  if (tab === 'artist' || tab === 'review') {
+    if (!creator.newArtistName) {
+      message[1] = 'Missing Artist Name.\n';
+    } else {
+      const exists = _.find(admin.artists, o => o.name.toLowerCase() === creator.newArtistName.toLowerCase());
+      if (exists !== undefined && exists.id !== creator.loadedArtist) {
+        message[1] = 'Artist already exists. Please just load it.\n';
+        validation.artist = 'box-invalid';
+      } else {
+        delete message[1];
+        validation.artist = 'box-checked';
+      }
+    }
+  }
+
+  // UNIT
+  if (tab === 'unit' || tab === 'review') {
+    console.log('unit?')
+    // Unit Name must be unique
+    if (!creator.newUnitName) {
+      message[2] = 'Missing Unit Name.\n';
+    } else {
+      const sameUnit = o => (
+        o.name.toLowerCase() === creator.newUnitName.toLowerCase()
+        && o.artistId === creator.loadedArtist
+      );
+
+      const exists = _.find(admin.units, sameUnit);
+      if (exists !== undefined && exists.id !== creator.loadedUnit) {
+        message[2] = 'Chosen unit name already exists for this group. Choose a different one.\n';
+        validation.unit = 'box-invalid';
+      } else {
+        delete message[2];
+        validation.unit = 'box-checked';
+      }
+      // Unit Debut Year required
+      if (!creator.newUnitDebutYear) {
+        message[3] = 'Missing Unit Debut Year.\n';
+      } else {
+        delete message[3];
+      }
+    }
+  }
+
+  // MEMBERS
+  if (tab === 'member' || tab === 'review') {
+
+  }
+
+
+  // Artist Name is populated and doesn't match with any other
+
+
+  // UNIT
+
+
+  // Check if members are valid
+
+
+  if (validation.artist === 'checked' && validation.unit === 'checked' && validation.members === 'checked') {
+    dispatch(setIsValid(true));
+  } else {
+    dispatch(setIsValid(false));
+  }
+  dispatch(setValidation(validation));
+  dispatch(setMessage(message));
+};
+
+export const reset = () => dispatch => dispatch();

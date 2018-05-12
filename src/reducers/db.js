@@ -241,7 +241,7 @@ const GET = {
     return response;
   },
 
-  // API/members FIX
+  // API/members
   fetchAllMembers: (include) => {
     const response = _.cloneDeep(DB.members);
 

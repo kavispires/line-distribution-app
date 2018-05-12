@@ -4,6 +4,10 @@ import { withRouter } from 'react-router-dom';
 import Creator from '../components/Creator';
 
 import {
+  fetchCompleteDatabase,
+} from '../reducers/admin';
+
+import {
   loadArtist,
   handleNewArtistName,
   handleNewArtistOtherNames,
@@ -14,7 +18,7 @@ import {
   handleNewUnitOfficial,
   loadMember,
   unloadMember,
-
+  switchCreatorTab,
   addNewMember,
   generateArtistJSON,
   generateFullJSON,
@@ -25,6 +29,7 @@ import {
   removePosition,
   updateNewMember,
 
+  checkValidation,
 } from '../reducers/creator';
 
 const mapStateToProps = state => ({
@@ -47,7 +52,7 @@ const mapDispatchToProps = {
   handleNewUnitOfficial,
   loadMember,
   unloadMember,
-
+  switchCreatorTab,
   addNewMember,
   generateArtistJSON,
   generateFullJSON,
@@ -58,6 +63,8 @@ const mapDispatchToProps = {
   removePosition,
   updateNewMember,
 
+  fetchCompleteDatabase,
+  checkValidation,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Creator));

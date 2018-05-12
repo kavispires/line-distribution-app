@@ -1,6 +1,69 @@
 @import './variables.scss';
 
+.creator-container {
+  outline: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+}
+
+.creator-content {
+  flex: 1;
+  padding: $unit;
+}
+
+.creator-message {
+  background: #D14949;
+  margin: $unit 0;
+  color: white;
+  padding: $unit;
+  text-align: center;
+  border-radius: 3px;
+  min-height: 20px;
+  transition: min-height 1s;
+}
+
+.creator-message-close {
+  padding: 0;
+  height: 0;
+  transition: height 1s;
+}
+
+.creator-controls {
+  background: $lightGrey;
+  border: 1px solid $grey;
+  border-radius: 3px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.creator-validation {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.creator-validation-category span {
+  margin-left: $unit;
+  display: inline-block;
+  transform: translateY(-4px);
+}
+
+.creator-actions {
+  width: 40%;
+  min-width: 120px;
+  display: flex;
+  justify-content: flex-end;
+
+  .btn {
+    margin-left: $unit;
+    width: 45%;
+  }
+}
+
 .creator-form {
+  margin-top: $doubleUnit;
 
   fieldset {
     border: 1px solid $lightGrey;

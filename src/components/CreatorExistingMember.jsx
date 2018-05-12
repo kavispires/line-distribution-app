@@ -1,13 +1,17 @@
 import React from 'react';
 
-const CreatorMember = ({id, props}) => {
-  const MEMBER = props.database.members[id];
-  const POSITIONS = props.database.positions;
-  const COLOR_NAME = props.database.colors[MEMBER.colorId].name;
+import PositionIcons from './icons/PositionIcons';
 
+import { makeIdNumber } from '../utils';
+
+const CreatorMember = ({id, props}) => {
+  const MEMBER = props.admin.members[id];
+  const POSITIONS = props.admin.positions;
+  const COLOR_NAME = props.admin.colors[MEMBER.colorId].name;
+  console.log(POSITIONS, COLOR_NAME)
   return (
     <div className="form-member">
-      <div className={`color-swatch color-${MEMBER.colorId}`} />
+      <div className={`color-swatch color-${makeIdNumber(MEMBER.colorId)}`} />
       <div className="info">
         <button className="btn-close" onClick={(e) => props.unloadMember(e, id)}>×</button>
         <label htmlFor="memberName">Name:</label>
@@ -36,6 +40,10 @@ const CreatorMember = ({id, props}) => {
           {
             MEMBER.positions.map(posId => (
               <li key={`${MEMBER.name}-${posId}`} className="pill-position">
+                <PositionIcons
+                  memberId={MEMBER.id}
+                  positions={[posId]}
+                />
                 {POSITIONS[posId].name}
               </li>
             ))

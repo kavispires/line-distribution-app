@@ -27,8 +27,9 @@
   }
 
   &.selected {
-    border-bottom: $negative 2px solid;
-    text-decoration: underline;
+    border-bottom: #598FFD 2px solid;
+    font-weight: bold;
+    color: #598FFD;
   }
 }
 
