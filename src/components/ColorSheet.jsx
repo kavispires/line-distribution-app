@@ -5,6 +5,8 @@ import AdminOnlyScreen from './AdminOnlyScreen';
 import LoadingScreen from './LoadingScreen';
 import LoginRequiredScreen from './LoginRequiredScreen';
 
+import Tabs from './Tabs';
+
 import { ALTERNATIVE_COLOR_LIST } from '../constants';
 import { makeSixDigit, makeIdNumber } from '../utils';
 
@@ -39,6 +41,7 @@ class ColorSheet extends Component {
     }
 
     const ADMIN = this.props.admin;
+    const tabs = [{ id: 'list' }, { id: 'alternative' }];
 
     return (
       <div className="container">
@@ -55,10 +58,11 @@ class ColorSheet extends Component {
           ) : null
         }
 
-        <ul className="tabs" onClick={this.props.toggleColorSheetTab}>
-          <li className={`tab ${ADMIN.colorSheetTab === 'list' ? 'selected' : ''}`} id="list">List</li>
-          <li className={`tab ${ADMIN.colorSheetTab === 'alternative' ? 'selected' : ''}`} id="alternative">Alternative List</li>
-        </ul>
+        <Tabs
+          tabs={tabs}
+          active={ADMIN.colorSheetTab}
+          action={this.props.toggleColorSheetTab}
+        />
 
         {
           ADMIN.colorSheetTab === 'list' ? (
