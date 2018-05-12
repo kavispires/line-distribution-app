@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import AdminOnlyScreen from './AdminOnlyScreen';
+import LoadingScreen from './LoadingScreen';
+import LoginRequiredScreen from './LoginRequiredScreen';
 
 import { ALTERNATIVE_COLOR_LIST } from '../constants';
 import { makeSixDigit, makeIdNumber } from '../utils';
@@ -21,12 +23,22 @@ class ColorSheet extends Component {
   }
 
   render() {
-    const ADMIN = this.props.admin;
-    const USER = this.props.user;
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/artists" />;
+    }
 
-    if (!USER.isAdmin) {
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
+    // ADMIN Check if user has access to this page
+    if (this.props.user.isAdmin === false) {
       return <AdminOnlyScreen />;
     }
+
+    const ADMIN = this.props.admin;
 
     return (
       <div className="container">
