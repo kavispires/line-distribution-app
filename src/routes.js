@@ -13,7 +13,6 @@ import LyricsContainer from './containers/LyricsContainer';
 import ResultsContainer from './containers/ResultsContainer';
 import SongsContainer from './containers/SongsContainer';
 
-
 import './stylesheets/index.css';
 
 const routes = (

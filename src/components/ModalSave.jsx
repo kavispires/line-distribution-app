@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import NoIcon from './icons/NoIcon';
 import YesIcon from './icons/YesIcon';
 
-const SaveModal = ({props}) => {
+const SaveModal = ({ props }) => {
   const { results, distribute, lyrics } = props;
 
   return (
@@ -105,5 +106,18 @@ const SaveModal = ({props}) => {
     </section>
   );
 };
+
+SaveModal.propTypes = {
+  props: PropTypes.object.isRequired, // eslint-disable-line
+  distribute: PropTypes.object.isRequired, // eslint-disable-line
+  lyrics: PropTypes.object.isRequired, // eslint-disable-line
+  results: PropTypes.object.isRequired, // eslint-disable-line
+  handleOriginalArtist: PropTypes.func.isRequired,
+  handleSongTitle: PropTypes.func.isRequired,
+  handleSongType: PropTypes.func.isRequired,
+  openSaveModal: PropTypes.func.isRequired,
+  saveSong: PropTypes.func.isRequired,
+};
+
 
 export default SaveModal;

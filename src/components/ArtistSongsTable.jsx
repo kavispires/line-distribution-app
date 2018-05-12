@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import NoIcon from './icons/NoIcon';
 import YesIcon from './icons/YesIcon';
 
 const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
-
   const sortedSongs = _.sortBy(songs, ['title']);
 
   const memberColors = {};
@@ -24,7 +24,7 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
             <th>Distribution</th>
           </tr>
         </thead>
-        <tbody onClick={(e) => handleSongClick(e)}>
+        <tbody onClick={e => handleSongClick(e)}>
           {
             sortedSongs && sortedSongs.map((song) => {
               let type = 'Official';
@@ -81,6 +81,12 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
       <p>No songs available</p>
     )
   );
+};
+
+ArtistSongsTable.propTypes = {
+  songs: PropTypes.array.isRequired, // eslint-disable-line
+  members: PropTypes.array.isRequired, // eslint-disable-line
+  handleSongClick: PropTypes.func.isRequired,
 };
 
 export default ArtistSongsTable;

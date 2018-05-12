@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import logo from '../images/logo-alt.svg';
 
 const Home = props => (
@@ -34,5 +36,12 @@ const Home = props => (
     </div>
   </main>
 );
+
+Home.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
+  login: PropTypes.func.isRequired,
+};
 
 export default Home;

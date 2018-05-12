@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import CurrentArtistName from './widgets/CurrentArtistName';
@@ -55,7 +56,7 @@ class Songs extends Component {
               <th>Snippet</th>
             </tr>
           </thead>
-          <tbody onClick={(e) => handleSongLoadClick(e)}>
+          <tbody onClick={e => handleSongLoadClick(e)}>
             {
               songList.length > 0 ?
               songList.map((song) => {
@@ -77,5 +78,14 @@ class Songs extends Component {
     );
   }
 }
+
+Songs.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  songs: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  loadSong: PropTypes.func.isRequired,
+  loadSongs: PropTypes.func.isRequired,
+  songsFilter: PropTypes.func.isRequired,
+};
 
 export default Songs;

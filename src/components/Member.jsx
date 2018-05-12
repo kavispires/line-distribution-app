@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import PositionIcons from './icons/PositionIcons';
 import { parseBirthDate } from '../utils';
@@ -38,5 +39,13 @@ const Member = ({ member, props }) => {
     </section>
   );
 };
+
+Member.propTypes = {
+  props: PropTypes.object.isRequired, // eslint-disable-line
+  artists: PropTypes.object.isRequired, // eslint-disable-line
+  member: PropTypes.object.isRequired, // eslint-disable-line
+  results: PropTypes.object.isRequired, // eslint-disable-line
+};
+
 
 export default Member;

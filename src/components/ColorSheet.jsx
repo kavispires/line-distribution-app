@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import AdminOnlyScreen from './AdminOnlyScreen';
 
@@ -85,10 +86,8 @@ class ColorSheet extends Component {
                             <div key={`${key}-${altId}`} className={`palette-alt-swatch color-${num}`}>
                               {makeIdNumber(altId)}
                             </div>
-                          )
-                        }
-
-                        )
+                          );
+                        })
                       }
                     </div>
                   </li>
@@ -101,7 +100,14 @@ class ColorSheet extends Component {
       </div>
     );
   }
-
 }
+
+ColorSheet.propTypes = {
+  admin: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
+  initColorSheet: PropTypes.func.isRequired,
+  toggleColorSheetTab: PropTypes.func.isRequired,
+};
 
 export default ColorSheet;

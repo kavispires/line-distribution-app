@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Member from './Member';
 import ArtistSongsTable from './ArtistSongsTable';
@@ -152,4 +153,23 @@ class Artist extends Component {
   }
 }
 
+Artist.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  artists: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  match: PropTypes.object.isRequired, // eslint-disable-line
+  loadUserArtists: PropTypes.func.isRequired,
+  resetSongInfo: PropTypes.func.isRequired,
+  switchUnitsTab: PropTypes.func.isRequired,
+  toggleIsLoading: PropTypes.func.isRequired,
+  updateCurrentSong: PropTypes.func.isRequired,
+  updateCurrentUnit: PropTypes.func.isRequired,
+  updateLatestUnits: PropTypes.func.isRequired,
+  updateSelectedArtist: PropTypes.func.isRequired,
+  updateSelectedUnit: PropTypes.func.isRequired,
+  updateShouldReset: PropTypes.func.isRequired,
+};
+
 export default Artist;
+

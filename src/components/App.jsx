@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Header from './Header';
 
@@ -30,5 +31,16 @@ class App extends Component {
     return (<Header props={this.props} />);
   }
 }
+
+App.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  checkAuth: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+  initDB: PropTypes.func.isRequired,
+  resetDistribution: PropTypes.func.isRequired,
+  resetLyrics: PropTypes.func.isRequired,
+  setCurrentSong: PropTypes.func.isRequired,
+};
 
 export default App;

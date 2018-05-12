@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import LyricsEditor from './LyricsEditor';
@@ -186,7 +187,7 @@ class Distribute extends Component {
             <button className="btn btn-25" onClick={this.props.toggleEditLyrics}>{ this.props.distribute.editLyrics ? 'Close Editor' : 'Edit Lyrics'}</button>
             {
               this.props.distribute.editLyrics ? (
-                <p className="alert">Line Distribution is paused while you edit the lyrics. When you're done, press the 'Editing...' button to resume line distribution.</p>
+                <p className="alert">Line Distribution is paused while you edit the lyrics. When you&apos;re done, press the &quot;Close Editor&quot; button to resume your line distribution.</p>
               ) : null
             }
             {
@@ -205,5 +206,27 @@ class Distribute extends Component {
     );
   }
 }
+
+Distribute.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  distribute: PropTypes.object.isRequired, // eslint-disable-line
+  lyrics: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  location: PropTypes.object.isRequired, // eslint-disable-line
+  boxMouseDown: PropTypes.func.isRequired,
+  boxMouseUp: PropTypes.func.isRequired,
+  calculateDuration: PropTypes.func.isRequired,
+  handleDecrease: PropTypes.func.isRequired,
+  handleKeydown: PropTypes.func.isRequired,
+  handleKeyup: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+  handleUndo: PropTypes.func.isRequired,
+  handleParser: PropTypes.func.isRequired,
+  loadSong: PropTypes.func.isRequired,
+  resetDistribution: PropTypes.func.isRequired,
+  toggleEditLyrics: PropTypes.func.isRequired,
+  toggleIsLoading: PropTypes.func.isRequired,
+  toggleLyrics: PropTypes.func.isRequired,
+};
 
 export default Distribute;

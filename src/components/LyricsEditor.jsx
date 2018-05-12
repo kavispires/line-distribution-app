@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const LyricsEditor = ({placeholder, action, defaultValue}) => (
+const LyricsEditor = ({ placeholder, action, defaultValue }) => (
   <textarea
     className="editor"
     placeholder={placeholder}
@@ -8,5 +9,11 @@ const LyricsEditor = ({placeholder, action, defaultValue}) => (
     defaultValue={defaultValue}
   />
 );
+
+LyricsEditor.propTypes = {
+  action: PropTypes.func.isRequired,
+  defaultValue: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
 
 export default LyricsEditor;

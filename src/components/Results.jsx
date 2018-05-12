@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import ModalSave from './ModalSave';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
@@ -74,5 +76,16 @@ class Results extends Component {
     );
   }
 }
+
+Results.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  results: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  location: PropTypes.object.isRequired, // eslint-disable-line
+  calculateResults: PropTypes.func.isRequired,
+  openSaveModal: PropTypes.func.isRequired,
+  setResultType: PropTypes.func.isRequired,
+};
+
 
 export default Results;

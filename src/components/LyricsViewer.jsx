@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const LyricsEditor = ({ formattedLyrics }) => {
   let keyCount = 1;
@@ -36,6 +37,10 @@ const LyricsEditor = ({ formattedLyrics }) => {
       }
     </div>
   );
+};
+
+LyricsEditor.propTypes = {
+  formattedLyrics: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default LyricsEditor;

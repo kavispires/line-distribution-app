@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const UserArtistTable = ({
   title = 'User Table',
   message = 'No data to display',
-  action = () => alert('No callback function'),
+  action = () => {},
   unitList = [],
 }) => (
   <div className="user-artists-table">
@@ -41,5 +42,12 @@ const UserArtistTable = ({
     }
   </div>
 );
+
+UserArtistTable.propTypes = {
+  action: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  unitList: PropTypes.array.isRequired, // eslint-disable-line
+};
 
 export default UserArtistTable;

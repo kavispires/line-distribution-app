@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
 
@@ -28,7 +29,7 @@ const Header = ({ props }) => {
           }
       </div>
       {
-        props.user.authenticated ? (
+        props.user.isAuthenticated ? (
           <div className="app-header-user">
             <img
               className="user-photo"
@@ -56,6 +57,14 @@ const Header = ({ props }) => {
       }
     </header>
   );
+};
+
+Header.propTypes = {
+  user: PropTypes.object, // eslint-disable-line
+  history: PropTypes.object, // eslint-disable-line
+  props: PropTypes.any.isRequired, // eslint-disable-line
+  login: PropTypes.func, // eslint-disable-line
+  logout: PropTypes.func, // eslint-disable-line
 };
 
 export default Header;

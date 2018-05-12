@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import LoginRequiredScreen from './LoginRequiredScreen';
 import LoadingScreen from './LoadingScreen';
@@ -68,7 +69,7 @@ class Artists extends Component {
         <p>Current Band: {currentArtist.name}</p>
 
         {
-          this.props.user.authenticated ? (
+          this.props.user.isAuthenticated ? (
             <div className="user-artists-container">
               <UserArtistTable
                 title="Your Latest Artists"
@@ -98,7 +99,7 @@ class Artists extends Component {
               <th>Members</th>
             </tr>
           </thead>
-          <tbody onClick={(e) => handleArtistClick(e)}>
+          <tbody onClick={e => handleArtistClick(e)}>
             {
               artistList.length > 0 ?
               artistList.map((entry) => {
@@ -121,5 +122,18 @@ class Artists extends Component {
     );
   }
 }
+
+Artists.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  artists: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  location: PropTypes.object.isRequired, // eslint-disable-line
+  filterArtists: PropTypes.func.isRequired,
+  loadArtists: PropTypes.func.isRequired,
+  toggleIsLoading: PropTypes.func.isRequired,
+  updateSelectedUnit: PropTypes.func.isRequired,
+};
 
 export default Artists;
