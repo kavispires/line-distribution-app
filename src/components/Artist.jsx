@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import FavoriteIcon from './icons/FavoriteIcon';
 import Member from './Member';
 import ArtistSongsTable from './ArtistSongsTable';
+
+import FavoriteIcon from './icons/FavoriteIcon';
 import LoadingIcon from './icons/LoadingIcon';
 import OfficialIcon from './icons/OfficialIcon';
 

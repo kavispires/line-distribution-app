@@ -1,7 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import iconYes from '../images/icon-yes.svg';
-import iconNo from '../images/icon-no.svg';
+
+import NoIcon from './icons/NoIcon';
+import YesIcon from './icons/YesIcon';
 
 const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
 
@@ -42,10 +43,7 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
                   <td>{type}</td>
                   <td>
                     {
-                      song.lyrics ?
-                        <img className="icon icon-tab" src={iconYes} alt="Yes" />
-                        :
-                        <img className="icon icon-tab" src={iconNo} alt="No" />
+                      song.lyrics ? <YesIcon /> : <NoIcon />
                     }
                   </td>
                   <td>
@@ -70,7 +68,7 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
                           </span>
                         )
                         :
-                          <img className="icon icon-tab" src={iconNo} alt="No" />
+                          <NoIcon />
                     }
                   </td>
                 </tr>
@@ -82,7 +80,7 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
     ) : (
       <p>No songs available</p>
     )
-  )
+  );
 };
 
 export default ArtistSongsTable;

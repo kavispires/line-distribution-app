@@ -1,7 +1,7 @@
 import React from 'react';
 
-import iconYes from '../images/icon-yes.svg';
-import iconNo from '../images/icon-no.svg';
+import NoIcon from './icons/NoIcon';
+import YesIcon from './icons/YesIcon';
 
 const SaveModal = ({props}) => {
   const { results, distribute, lyrics } = props;
@@ -49,10 +49,10 @@ const SaveModal = ({props}) => {
         <p>Contains Distribution:
           {
             distribute.history.length > 0 ? (
-              <img className="icon icon-tab" src={iconYes} alt="Yes" />
+              <YesIcon />
             ) : (
               <span>
-                <img className="icon icon-tab" src={iconNo} alt="No" />
+                <NoIcon />
                 <span className="label-red">You must have a distribution to save a song.</span>
               </span>
             )
@@ -61,10 +61,10 @@ const SaveModal = ({props}) => {
         <p>Contains Lyrics:
           {
             lyrics.lyrics.length > 0 ? (
-              <img className="icon icon-tab" src={iconYes} alt="Yes" />
+              <YesIcon />
             ) : (
               <span>
-                <img className="icon icon-tab" src={iconNo} alt="No" />
+                <NoIcon />
                 <span className="label-red">You must have lyrics to save a song.</span>
               </span>
             )
