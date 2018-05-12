@@ -5,7 +5,7 @@ import FavoriteIcon from './icons/FavoriteIcon';
 import Member from './Member';
 import iconOfficial from '../images/icon-official.svg';
 import ArtistSongsTable from './ArtistSongsTable';
-import LoadingIcon from './LoadingIcon';
+import LoadingIcon from './icons/LoadingIcon';
 
 class Artist extends Component {
   componentWillMount() {

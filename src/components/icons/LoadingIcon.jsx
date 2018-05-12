@@ -1,6 +1,6 @@
 import React from 'react';
 
-import loading from '../images/loading.svg';
+import loading from '../../images/loading.svg';
 
 const LoadingIcon = () => (
   <div className="loading-centered">

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
-import LoadingIcon from './LoadingIcon';
+import LoadingIcon from './icons/LoadingIcon';
 import SwitchToggle from './widgets/SwitchToggle';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
