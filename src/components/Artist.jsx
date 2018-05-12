@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import FavoriteIcon from './icons/FavoriteIcon';
 import Member from './Member';
-import iconOfficial from '../images/icon-official.svg';
 import ArtistSongsTable from './ArtistSongsTable';
 import LoadingIcon from './icons/LoadingIcon';
+import OfficialIcon from './icons/OfficialIcon';
 
 class Artist extends Component {
   componentWillMount() {
@@ -96,7 +96,7 @@ class Artist extends Component {
                   id={id}
                   onClick={() => this.props.updateSelectedUnit(id)}
                 >
-                  {name} {official ? <img className="icon icon-tab" src={iconOfficial} alt="Official" /> : null }
+                  {name} {official ? <OfficialIcon /> : null }
                 </li>
               );
             })
