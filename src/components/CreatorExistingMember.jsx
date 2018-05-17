@@ -9,11 +9,6 @@ const CreatorMember = ({id, props}) => {
   const POSITIONS = props.admin.positions;
   const COLOR_NAME = props.admin.colors[MEMBER.colorId].name;
 
-const CreatorMember = ({id, props}) => {
-  const MEMBER = props.admin.members[id];
-  const POSITIONS = props.admin.positions;
-  const COLOR_NAME = props.admin.colors[MEMBER.colorId].name;
-
   return (
     <div className="form-member">
       <div className={`color-swatch color-${makeIdNumber(MEMBER.colorId)}`} />
