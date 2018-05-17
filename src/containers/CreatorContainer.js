@@ -28,10 +28,15 @@ import {
   removeNewMember,
   removePosition,
   updateNewMember,
+<<<<<<< HEAD
   reset,
   save,
   checkValidation,
   clearPositions,
+=======
+
+  checkValidation,
+>>>>>>> 8d43733c6b64ea9d373230bd63473522a2e7c616
 } from '../reducers/creator';
 
 const mapStateToProps = state => ({
@@ -64,11 +69,17 @@ const mapDispatchToProps = {
   removeNewMember,
   removePosition,
   updateNewMember,
+<<<<<<< HEAD
   reset,
   save,
   fetchCompleteDatabase,
   checkValidation,
   clearPositions,
+=======
+
+  fetchCompleteDatabase,
+  checkValidation,
+>>>>>>> 8d43733c6b64ea9d373230bd63473522a2e7c616
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Creator));
