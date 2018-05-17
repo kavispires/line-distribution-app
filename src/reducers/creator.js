@@ -82,6 +82,10 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d43733c6b64ea9d373230bd63473522a2e7c616
     case SET_TAB:
       newState.tab = action.payload;
       break;

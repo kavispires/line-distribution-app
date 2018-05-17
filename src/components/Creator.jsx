@@ -18,7 +18,6 @@ class Creator extends Component {
     if (this.props.db.loaded) {
       this.props.fetchCompleteDatabase();
     }
-    console.log('Creator.componentWillMount');
   }
 
   componentWillUpdate(nextProps) {
@@ -48,7 +47,6 @@ class Creator extends Component {
     const ADMIN = this.props.admin;
 
     const tabs = [{ id: 'artist' }, { id: 'unit' }, { id: 'members' }, { id: 'review' }];
-
     return (
       <section className="container creator-container">
         <div className="creator-header">

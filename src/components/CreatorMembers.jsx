@@ -6,6 +6,11 @@ import CreatorNewMember from './CreatorNewMember';
 import CreatorExistingMember from './CreatorExistingMember';
 
 const CreatorMembers = ({props}) => {
+<<<<<<< HEAD
+=======
+  console.log(props);
+
+>>>>>>> 8d43733c6b64ea9d373230bd63473522a2e7c616
   const sortedMembers = _.sortBy(props.admin.members, ['name']);
 
   const CREATOR = props.creator;
