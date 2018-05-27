@@ -1,14 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
-import iconYes from '../images/icon-yes.svg';
-import iconNo from '../images/icon-no.svg';
 
-const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
+import Icon from './icons';
 
-  const sortedSelectedUnitSongs = _.sortBy(selectedUnitSongs, ['title']);
+const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
+  const sortedSongs = _.sortBy(songs, ['title']);
+
+  const memberColors = {};
+  members.forEach((member) => {
+    memberColors[member.id] = member.color.class;
+  });
 
   return (
-    selectedUnitSongs && selectedUnitSongs.length > 0 ? (
+    songs && songs.length > 0 ? (
       <table className="table">
         <thead>
           <tr>
@@ -18,9 +23,9 @@ const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
             <th>Distribution</th>
           </tr>
         </thead>
-        <tbody onClick={(e) => handleSongClick(e)}>
+        <tbody onClick={e => handleSongClick(e)}>
           {
-            sortedSelectedUnitSongs && sortedSelectedUnitSongs.map((song) => {
+            sortedSongs && sortedSongs.map((song) => {
               let type = 'Official';
               if (song.type === 'would') {
                 type = `Originally by ${song.originalArtist}`;
@@ -29,17 +34,13 @@ const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
               }
               // const songDistribution = this.props.parseSong(song);
               return (
-                <tr key={song.id}>
+                <tr
+                  key={song.id}
+                  id={song.id}
+                >
                   <td>{song.title}</td>
                   <td>{type}</td>
-                  <td>
-                    {
-                      song.lyrics ?
-                        <img className="icon icon-tab" src={iconYes} alt="Yes" />
-                        :
-                        <img className="icon icon-tab" src={iconNo} alt="No" />
-                    }
-                  </td>
+                  <td><Icon type={song.lyrics ? 'yes' : 'no'} /></td>
                   <td>
                     {
                       song.result ?
@@ -47,20 +48,22 @@ const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
                           <span className="unit-songs-dist">
                             {
                               song.result.map((instance) => {
-                                const { colorId } = database.members[instance.memberId];
+                                const color = memberColors[instance.memberId];
                                 const barWidth = instance.memberTotal;
                                 return (
                                   <span
-                                    key={`${song.id}-${colorId}-${instance.memberId}`}
-                                    className={`unit-songs-member color-${colorId} bar-width-${barWidth}`}
-                                  />
+                                    key={`${song.id}-${color}-${instance.memberId}`}
+                                    className={`unit-songs-member ${color} bar-width-${barWidth}`}
+                                  >
+                                    {barWidth}%
+                                  </span>
                                 );
                               })
                             }
                           </span>
                         )
                         :
-                          <img className="icon icon-tab" src={iconNo} alt="No" />
+                          <Icon type="no" />
                     }
                   </td>
                 </tr>
@@ -72,7 +75,13 @@ const ArtistSongsTable = ({ database, selectedUnitSongs, handleSongClick }) => {
     ) : (
       <p>No songs available</p>
     )
-  )
+  );
+};
+
+ArtistSongsTable.propTypes = {
+  songs: PropTypes.array.isRequired, // eslint-disable-line
+  members: PropTypes.array.isRequired, // eslint-disable-line
+  handleSongClick: PropTypes.func.isRequired,
 };
 
 export default ArtistSongsTable;

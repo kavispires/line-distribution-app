@@ -6,13 +6,13 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers';
 
 const store = createStore(
-	rootReducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(
-      createLogger({collapsed: true}),
-      thunkMiddleware
-    )
-  )
+      createLogger({ collapsed: true }),
+      thunkMiddleware,
+    ),
+  ),
 );
 
 export default store;

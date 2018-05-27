@@ -1,182 +1,121 @@
-import React from 'react';
+import React,  { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import CreatorNewMember from './CreatorNewMember';
-import CreatorExistingMember from './CreatorExistingMember';
+import AdminOnlyScreen from './AdminOnlyScreen';
+import LoadingScreen from './LoadingScreen';
+import LoginRequiredScreen from './LoginRequiredScreen';
+import Icon from './icons';
 
-const Creator = (props) => {
-  const APP = props.app;
-  const DATABASE = props.database;
-  const CREATOR = props.creator;
+import Tabs from './Tabs';
 
-  const artistDisabled = +CREATOR.loadedArtist !== 0;
-  const unitDisabled = +CREATOR.loadedUnit !== 0;
+import CreatorArtist from './CreatorArtist';
+import CreatorMembers from './CreatorMembers';
+import CreatorReview from './CreatorReview';
+import CreatorUnit from './CreatorUnit';
 
-  return (
-    <div className="container">
-      <h1>Creator</h1>
-      <form className="creator-form">
-        <fieldset>
-          <legend>Artist Information</legend>
-          <div className="form-instance-full form-instance-highlighted">
-            <label htmlFor="loadArtist">Use Existing Artist:</label>
-            <select
-              name="loadArtist"
-              value={CREATOR.loadedArtist}
-              onChange={props.loadArtist}
+class Creator extends Component {
+  componentWillMount() {
+    if (this.props.db.loaded) {
+      this.props.fetchCompleteDatabase();
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.db.loaded !== this.props.db.loaded) {
+      this.props.fetchCompleteDatabase();
+      this.render();
+    }
+  }
+
+  render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/artists" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
+    // ADMIN Check if user has access to this page
+    if (this.props.user.isAdmin === false) {
+      return <AdminOnlyScreen />;
+    }
+
+    const CREATOR = this.props.creator;
+    const ADMIN = this.props.admin;
+
+    const tabs = [{ id: 'artist' }, { id: 'unit' }, { id: 'members' }, { id: 'review' }];
+    return (
+      <section className="container creator-container">
+        <div className="creator-header">
+          <h1>Creator</h1>
+          <Tabs
+            tabs={tabs}
+            active={CREATOR.tab}
+            action={this.props.switchCreatorTab}
+          />
+        </div>
+        <div className="creator-content">
+          <p>You need to have a complete artist to be able to save, consisting of artist, unit and members. <br />
+            You may follow your new artist validation in the bottom of the page.
+          </p>
+          {
+            CREATOR.tab === 'artist' ? <CreatorArtist props={this.props} /> : null
+          }
+          {
+            CREATOR.tab === 'unit' ? <CreatorUnit props={this.props} /> : null
+          }
+          {
+            CREATOR.tab === 'members' ? <CreatorMembers props={this.props} /> : null
+          }
+          {
+            CREATOR.tab === 'review' ? <CreatorReview props={this.props} /> : null
+          }
+        </div>
+        <div className={`creator-message${Object.keys(CREATOR.message).length > 0 ? '' : '-close'}`}>
+          {
+            Object.keys(CREATOR.message).map((m, i) => {
+              const key = `message${i}`;
+              return <p key={key}>{CREATOR.message[m]}</p>;
+            })
+          }
+        </div>
+        <div className="creator-controls">
+          <div className="creator-validation">
+            <div className="creator-validation-category">
+              <Icon type={CREATOR.validation.artist} size="medium" />
+              <span>Artist</span>
+            </div>
+            <div className="creator-validation-category">
+              <Icon type={CREATOR.validation.unit} size="medium" />
+              <span>Unit</span>
+            </div>
+            <div className="creator-validation-category">
+              <Icon type={CREATOR.validation.members} size="medium" />
+              <span>Members</span>
+            </div>
+          </div>
+          <div className="creator-actions">
+            <button
+              className="btn btn-lg btn-alternative"
+              onClick={this.props.reset}
             >
-              <option value="0">Select an artist to load...</option>
-              {
-                APP.artistListBackUp.map((artistId) => {
-                  const artist = DATABASE.artists[artistId];
-                  return (
-                    <option key={`artist-${artist.id}`} value={artist.id}>{artist.name}</option>
-                  );
-                })
-              }
-            </select>
-          </div>
-          <div className="form-instance">
-            <label htmlFor="newArtistName">Artist Name*:</label>
-            <input
-              type="text"
-              name="newArtistName"
-              value={CREATOR.newArtistName}
-              onChange={props.handleNewArtistName}
-              disabled={artistDisabled}
-            />
-          </div>
-          <div className="form-instance">
-            <label htmlFor="newArtistOtherNames">Other Names<span className="hint"> (Separated by commas)</span>:</label>
-            <input
-              type="text"
-              name="newArtistOtherNames"
-              value={CREATOR.newArtistOtherNames}
-              onChange={props.handleNewArtistOtherNames}
-              disabled={artistDisabled}
-            />
-          </div>
-          <div className="form-instance">
-            <label htmlFor="newArtistGenre">Genre:</label>
-            <select
-              name="newArtistGenre"
-              value={CREATOR.newArtistGenre}
-              onChange={props.handleNewArtistGenre}
-              disabled={artistDisabled}
+              Clear
+            </button>
+            <button
+              className="btn btn-lg btn-primary"
+              disabled={!CREATOR.isValid}
+              onClick={this.props.save}
             >
-              <option value="K-Pop">K-Pop</option>
-              <option value="Pop">Pop</option>
-              <option value="J-Pop">J-Pop</option>
-              <option value="Other">Other</option>
-            </select>
+              Save
+            </button>
           </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Unit Information</legend>
-          <div className="form-instance-full form-instance-highlighted">
-            <label htmlFor="loadUnit">Use Existing Unit:</label>
-            <select
-              name="loadUnit"
-              value={CREATOR.loadedUnit}
-              onChange={props.loadUnit}
-            >
-              <option value="0">Select an unit to load...</option>
-              {
-                CREATOR.newArtistUnits.map((unitId) => {
-                  const unit = DATABASE.units[unitId];
-                  return (
-                    <option key={`unit-${unit.id}`} value={unit.id}>{unit.name}</option>
-                  );
-                })
-              }
-            </select>
-          </div>
-          <div className="form-instance">
-            <label htmlFor="unitName">Unit/Version Name<span className="hint"> (e.g.: 'OT8', 'Feat. JYP', 'Season 2')</span>:</label>
-            <input
-              type="text"
-              name="unitName"
-              value={CREATOR.newUnitName}
-              onChange={props.handleNewUnitName}
-              disabled={unitDisabled}
-            />
-          </div>
-          <div className="form-instance">
-            <label htmlFor="debutYear">Debut Year:</label>
-            <input
-              type="text"
-              name="debutYear"
-              value={CREATOR.newUnitDebutYear}
-              onChange={props.handleNewUnitDebutYear}
-              disabled={unitDisabled}
-            />
-          </div>
-          <div className="form-instance-full">
-            <label htmlFor="official">Official:</label>
-            <input
-              type="checkbox"
-              name="official"
-              checked={CREATOR.newUnitOfficial}
-              onChange={props.handleNewUnitOfficial}
-              disabled={unitDisabled}
-            />
-            <small> (Mark this option only if it's an official assemble, not fanmade, and not special performance or tv show)</small>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Existing Members</legend>
-          <div className="form-instance-full form-instance-highlighted">
-            <label htmlFor="loadMember">Add Existing Member to Unit:</label>
-            <select
-              name="loadMember"
-              value={props.loadedMember}
-              onChange={props.loadMember}
-            >
-              <option value="0">Select an member to load...</option>
-              {
-                APP.membersList.map((memberId) => {
-                  const member = DATABASE.members[memberId];
-                  return (
-                    <option key={`member--${member.id}`} value={member.id}>{member.name}</option>
-                  );
-                })
-              }
-            </select>
-          </div>
-          <div className="form-member-group">
-            {
-              CREATOR.newUnitMembers.map(memberId => (
-                <CreatorExistingMember key={`exist-${memberId}`} id={memberId} props={props} />
-              ))
-            }
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>New Members</legend>
-          <button className="btn btn-default" onClick={props.addNewMember}>Add New Member</button>
-          <div className="form-member-group">
-            {
-              Object.keys(CREATOR.newMembers).map(id => (
-                <CreatorNewMember key={id} id={id} props={props} />
-              ))
-            }
-          </div>
-        </fieldset>
-      </form>
-      <ul className="controls">
-        <li><button className="btn-lg btn-100" onClick={props.generateArtistJSON}>Generate Artist JSON</button></li>
-        <li><button className="btn-lg btn-100" onClick={props.generateUnitJSON}>Generate Unit JSON</button></li>
-        <li><button className="btn-lg btn-100" onClick={props.generateMembersJSON}>Generate Members JSON</button></li>
-        <li><button className="btn-lg btn-100" onClick={props.generateFullJSON}>Generate Full JSON</button></li>
-      </ul>
-      {
-        CREATOR.tempInput ? (
-          <textarea className="temp-input" id="temp-input" value={CREATOR.tempInput} readOnly />
-        ) : null
-      }
-    </div>
+        </div>
+      </section>
     );
-};
+  }
+}
 
 export default Creator;

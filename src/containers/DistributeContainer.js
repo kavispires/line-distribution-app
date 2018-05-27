@@ -21,6 +21,7 @@ import {
   handleReset,
   toggleLyrics,
   handleUndo,
+  resetDistribution,
   toggleEditLyrics,
 } from '../reducers/distribute';
 
@@ -28,11 +29,16 @@ import {
   handleParser,
 } from '../reducers/lyrics';
 
+import {
+  login,
+} from '../reducers/user';
+
 const mapStateToProps = state => ({
   app: state.app,
-  database: state.database,
+  db: state.db,
   distribute: state.distribute,
   lyrics: state.lyrics,
+  user: state.user,
 });
 
 const mapDispatchToProps = {
@@ -40,18 +46,20 @@ const mapDispatchToProps = {
   boxMouseUp,
   calculateDuration,
   handleDecrease,
+  handleKeydown,
+  handleKeyup,
+  handleParser,
+  handleReset,
+  handleUndo,
+  loadSong,
+  login,
+  resetDistribution,
   setDurations,
   setHistory,
   setPercentages,
-  handleKeydown,
-  handleKeyup,
-  handleReset,
-  loadSong,
-  toggleLyrics,
-  handleUndo,
-  handleParser,
   toggleEditLyrics,
   toggleIsLoading,
+  toggleLyrics,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Distribute));

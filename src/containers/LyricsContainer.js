@@ -14,10 +14,20 @@ import {
   setPercentages,
 } from '../reducers/distribute';
 
-const mapStateToProps = state => ({ app: state.app, lyrics: state.lyrics });
+import {
+  login,
+} from '../reducers/user';
+
+const mapStateToProps = state => ({
+  app: state.app,
+  db: state.db,
+  lyrics: state.lyrics,
+  user: state.user,
+});
 
 const mapDispatchToProps = {
   handleParser,
+  login,
   setDurations,
   setHistory,
   setPercentages,

@@ -14,68 +14,71 @@ import pos11 from '../../images/icon-center.svg';
 import pos12 from '../../images/icon-visual.svg';
 import pos13 from '../../images/icon-maknae.svg';
 
-const PositionIcons = ({positions, memberId, iconClass = 'icon-positions'}) => {
-  return (
-    <span className={iconClass}>
-      {
-        positions.map((pos) => {
-          let img;
-          switch (pos) {
-            case 1:
-              img = pos1;
-              break;
-            case 2:
-              img = pos2;
-              break;
-            case 3:
-              img = pos3;
-              break;
-            case 4:
-              img = pos4;
-              break;
-            case 5:
-              img = pos5;
-              break;
-            case 6:
-              img = pos6;
-              break;
-            case 7:
-              img = pos7;
-              break;
-            case 8:
-              img = pos8;
-              break;
-            case 9:
-              img = pos9;
-              break;
-            case 10:
-              img = pos10;
-              break;
-            case 11:
-              img = pos11;
-              break;
-            case 12:
-              img = pos12;
-              break;
-            case 13:
-              img = pos13;
-              break;
-            default:
-              img = pos8;
-          }
+const PositionIcons = ({positions, memberId, iconClass = 'icon-positions', action = () => {}}) => (
+  <span
+    className={iconClass}
+    onClick={action}
+    role="button"
+    tabIndex={0}
+  >
+    {
+      positions.map((pos) => {
+        let img;
+        switch (pos) {
+          case 'pos000001':
+            img = pos1;
+            break;
+          case 'pos000002':
+            img = pos2;
+            break;
+          case 'pos000003':
+            img = pos3;
+            break;
+          case 'pos000004':
+            img = pos4;
+            break;
+          case 'pos000005':
+            img = pos5;
+            break;
+          case 'pos000006':
+            img = pos6;
+            break;
+          case 'pos000007':
+            img = pos7;
+            break;
+          case 'pos000008':
+            img = pos8;
+            break;
+          case 'pos000009':
+            img = pos9;
+            break;
+          case 'pos000010':
+            img = pos10;
+            break;
+          case 'pos000011':
+            img = pos11;
+            break;
+          case 'pos000012':
+            img = pos12;
+            break;
+          case 'pos000013':
+            img = pos13;
+            break;
+          default:
+            img = pos8;
+        }
 
-          return (
-            <img
-              key={`${memberId}-${pos}`}
-              className="icon icon-pos"
-              src={img}
-              alt="Position Icon"
-            />
-          );
-        })
-      }
-    </span>
-  );
-};
+        return (
+          <img
+            key={`${memberId}-${pos}`}
+            className="icon icon-pos"
+            src={img}
+            alt="Position Icon"
+          />
+        );
+      })
+    }
+  </span>
+);
 
 export default PositionIcons;

@@ -80,12 +80,12 @@ export const handleParser = evt => (dispatch, getState) => {
       const name = names[i].toLowerCase();
       for (let j = 0; j < MEMBERS.length; j++) {
         if (name === MEMBERS[j].name.toLowerCase()) {
-          colorId += MEMBERS[j].colorId;
+          colorId += MEMBERS[j].color.class;
           wasAdded = true;
           j = MEMBERS.length;
         }
       }
-      if (!wasAdded) colorId += '0';
+      if (!wasAdded) colorId += 'color-0';
       if (i !== names.length - 1) colorId += '-';
       wasAdded = false;
     }
@@ -229,4 +229,9 @@ export const handleParser = evt => (dispatch, getState) => {
 export const toggleRules = () => (dispatch, getState) => {
   const { showRules } = getState().lyrics;
   dispatch(setShowRules(!showRules));
+};
+
+export const resetLyrics = () => (dispatch) => {
+  dispatch(setLyrics(''));
+  dispatch(setFormattedLyrics([]));
 };

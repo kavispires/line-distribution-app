@@ -14,11 +14,17 @@ import {
   setResultType,
 } from '../reducers/results';
 
+import {
+  login,
+} from '../reducers/user';
+
 const mapStateToProps = state => ({
   app: state.app,
+  db: state.db,
   distribute: state.distribute,
   results: state.results,
   lyrics: state.lyrics,
+  user: state.user,
 });
 
 const mapDispatchToProps = {
@@ -27,6 +33,7 @@ const mapDispatchToProps = {
   handleSongTitle,
   handleSongType,
   handleSwitch,
+  login,
   openSaveModal,
   saveSong,
   setResultType,

@@ -95,8 +95,8 @@ export const getLatestId = (t) => {
 };
 
 export const getAlternativeColor = (colorId) => {
-  const list = [...ALTERNATIVE_COLOR_LIST[colorId]];
-  return list[Math.floor(Math.random() * list.length)];
+  const list = [...ALTERNATIVE_COLOR_LIST[makeIdNumber(colorId)]];
+  return makeSixDigit(list[Math.floor(Math.random() * list.length)]);
 };
 
 export const parseBirthDate = (d) => {
@@ -146,3 +146,30 @@ export const getLyricsSnippet = (str) => {
 
   return result;
 };
+
+export const makeSixDigit = (num) => {
+  const str = num.toString();
+  const pad = '000000';
+  return pad.substring(0, pad.length - str.length) + str;
+};
+
+export const makeIdNumber = (id) => {
+  const num = id.substring(3);
+  return Number(num);
+};
+
+export const capitalizeWord = (str, separator = ' ') => (
+  str.toString().split(separator).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+);
+
+export const spinalCaseWord = str => str.toLowerCase().split(' ').join('-');
+
+export const getTrueKeys = (obj) => {
+  const keys = [];
+
+  Object.keys(obj).forEach((key) => {
+    if (obj[key]) keys.push(key);
+  });
+
+  return keys;
+}

@@ -6,26 +6,47 @@ import App from '../components/App';
 import { loadLocalStorage } from '../utils';
 
 import {
-	artistsfilter,
-  init,
+  setCurrentSong,
 } from '../reducers/app';
 
 import {
+  initDB,
+} from '../reducers/db';
+
+import {
   handleParser,
+  resetLyrics,
 } from '../reducers/lyrics';
 
 import {
   handleReset,
+  resetDistribution,
 } from '../reducers/distribute';
 
-const mapStateToProps = state => ({ app: state.app, database: state.database });
+import {
+  checkAuth,
+  login,
+  logout,
+} from '../reducers/user';
+
+const mapStateToProps = state => ({
+  app: state.app,
+  db: state.db,
+  database: state.database,
+  user: state.user,
+});
 
 const mapDispatchToProps = {
-  artistsfilter,
-  init,
+  checkAuth,
   handleParser,
   handleReset,
+  initDB,
   loadLocalStorage,
+  login,
+  logout,
+  resetDistribution,
+  resetLyrics,
+  setCurrentSong,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

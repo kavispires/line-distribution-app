@@ -1,53 +1,53 @@
 @import './variables.scss';
 
 .lyrics-container {
-	display: flex;
+  display: flex;
 
-	.editor {
-		width: 100%;
-		padding: $halfUnit;
-		min-height: 100px;
-		resize: none;
-		border: 1px solid $darkGrey;
-	}
+  .editor {
+    width: 100%;
+    padding: $halfUnit;
+    min-height: 300px;
+    resize: none;
+    border: 1px solid $darkGrey;
+  }
 
-	.viewer {
-		@extend .editor;
-		min-height: 20px;
-		font-size: 11px;
+  .viewer {
+    @extend .editor;
+    min-height: 20px;
+    font-size: 11px;
 
-		p {
-			margin: 0;
-		}
-	}
+    p {
+      margin: 0;
+    }
+  }
 }
 
 .lyrics-blank-line {
-	margin-top: $halfUnit;
+  margin-top: $halfUnit;
 }
 
 .line {
-	padding: 0 3px;
-	margin-right: 1px;
+  padding: 0 3px;
+  margin-right: 1px;
 }
 
-.current-band {
-	border: 1px solid $lightGrey;
-	padding: 0 $unit;
+.current-artist {
+  border: 1px solid $lightGrey;
+  padding: 0 $unit;
 }
 
-.current-band-members {
-	display: flex;
+.current-artist-members {
+  display: flex;
 
-	.members-list {
-		list-style: none;
-		display: flex;
-		flex-wrap: wrap;
-	}
+  .members-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-	.member-list-item {
-		padding: $quarterUnit $halfUnit;
-		margin-left: $halfUnit;
-		border-radius: $quarterUnit;
-	}
+  .member-list-item {
+    padding: $quarterUnit $halfUnit;
+    margin-left: $halfUnit;
+    border-radius: $quarterUnit;
+  }
 }

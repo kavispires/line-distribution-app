@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import SwitchToggle from './widgets/SwitchToggle';
+import PropTypes from 'prop-types';
+
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
+
 import ModalSave from './ModalSave';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
-import { getClosestIndex,  copyToClipboard } from '../utils';
+import { getClosestIndex } from '../utils';
 
 class Results extends Component {
   componentDidMount() {
@@ -16,6 +20,16 @@ class Results extends Component {
   }
 
   render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/home" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
     const APP = this.props.app;
     const RESULTS = this.props.results;
 
@@ -33,15 +47,11 @@ class Results extends Component {
       closest = RESULTS.results[getClosestIndex(RESULTS.results, fairDistribution, 'percentage')].name;
     }
 
-    // Define switch buttons lables
-    const switchLabels = { left: 'Time', right: 'Percentage' };
-
     return (
       <section className="container">
         <h1 className="tiny-h1">Results
           <CurrentArtistName currentArtist={APP.currentArtist} />
         </h1>
-        <SwitchToggle action={this.props.handleSwitch} labels={switchLabels} />
         <ul className="results" id="ranking">
           {
             RESULTS.results.map((result, i) => (
@@ -49,13 +59,10 @@ class Results extends Component {
 
                 <span className="results-bar-text">
                   {
-                    RESULTS.showPercentage ?
                     `${i + 1}. ${result.name} [${result.percentage}%] ${Math.round(result.duration / 100) / 10} seconds`
-                    :
-                    `${i + 1}. ${result.name} [${Math.round(result.duration / 100) / 10} seconds]`
                   }
                 </span>
-                <span className={`results-bar-color color-${result.color} bar-width-${result.relativePercentage}`} />
+                <span className={`results-bar-color ${result.colorClass} bar-width-${result.relativePercentage}`} />
               </li>
             ))
           }
@@ -82,5 +89,18 @@ class Results extends Component {
     );
   }
 }
+
+Results.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  results: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  location: PropTypes.object.isRequired, // eslint-disable-line
+  calculateResults: PropTypes.func.isRequired,
+  openSaveModal: PropTypes.func.isRequired,
+  setResultType: PropTypes.func.isRequired,
+};
+
 
 export default Results;

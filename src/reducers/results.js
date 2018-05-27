@@ -91,7 +91,7 @@ export const calculateResults = () => (dispatch, getState) => {
     const relativePercentage = Math.round((durations[index] * 100) / max);
     const member = {
       name: CURRENT_UNIT.members[index].name,
-      color: CURRENT_UNIT.members[index].colorId,
+      colorClass: CURRENT_UNIT.members[index].color.class,
       relativePercentage,
       percentage: percentages[index],
       duration: durations[index],
@@ -128,13 +128,21 @@ export const handleOriginalArtist = event => (dispatch) => {
 };
 
 export const saveSong = (save = true) => (dispatch, getState) => {
+  const userUid = getState().user.user.uid;
+  const userEmail = getState().user.user.email;
+
   const unitId = getState().app.currentUnit.id;
   const title = getState().results.songTitle;
   const type = getState().results.songType;
   let { originalArtist } = getState().results;
   const { lyrics } = getState().lyrics;
   const distribution = _.cloneDeep(getState().distribute.history);
-  const id = Date.now();
+  const { currentSong } = getState().app.currentSong;
+
+  let songId = null;
+  if (currentSong && currentSong.id) {
+    songId = currentSong.id;
+  }
 
   // Reassign IDs to distribution
   const MEMBERS = getState().app.currentUnit.members;
@@ -145,23 +153,36 @@ export const saveSong = (save = true) => (dispatch, getState) => {
   if (!originalArtist) originalArtist = getState().app.currentArtist.name;
 
   const newJSON = {
-    id,
     unitId,
     title,
     type,
     originalArtist,
     lyrics,
     distribution,
+    userUid,
+    userEmail,
   };
 
-  if (save) {
-    API.post('/songs', newJSON);
-    alert('Saved to LocalStorage and copied to clipboard');
+  if (songId) {
+    newJSON.id = songId;
   }
 
-  const clipboard = JSON.stringify(newJSON, null, 2);
-  dispatch(setTempInput(clipboard));
-  copyToClipboard();
+  if (save) {
+    const result = API.post('/songs', newJSON);
+    if (result) {
+      dispatch(toogleModal(false));
+    }
+  }
+};
 
-  dispatch(toogleModal(false));
+export const resetSongInfo = () => (dispatch) => {
+  dispatch(setSongTitle(''));
+  dispatch(setSongType(''));
+  dispatch(setOriginalArtist(''));
+};
+
+export const updateCurrentSongInfo = song => (dispatch) => {
+  dispatch(setSongTitle(song.title));
+  dispatch(setSongType(song.type));
+  dispatch(setOriginalArtist(song.originalArtist));
 };

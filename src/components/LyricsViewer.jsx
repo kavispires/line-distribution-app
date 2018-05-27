@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const LyricsEditor = ({ formattedLyrics }) => {
   let keyCount = 1;
@@ -18,7 +19,7 @@ const LyricsEditor = ({ formattedLyrics }) => {
                     keyCount += 1;
                     const member = lyric.members[idx] ? `[${lyric.members[idx]}] ` : '';
                     const line = lyric.content[idx] ? `${lyric.content[idx]}` : '';
-                    const lineClass = `line color-${lyric.colors[idx]}`;
+                    const lineClass = `line ${lyric.colors[idx]}`;
 
                     return (
                       <span key={key2} className="lineGroup">
@@ -36,6 +37,10 @@ const LyricsEditor = ({ formattedLyrics }) => {
       }
     </div>
   );
+};
+
+LyricsEditor.propTypes = {
+  formattedLyrics: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default LyricsEditor;

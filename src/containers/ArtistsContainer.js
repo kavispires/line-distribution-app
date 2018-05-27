@@ -4,19 +4,34 @@ import { withRouter } from 'react-router-dom';
 import Artists from '../components/Artists';
 
 import {
-  artistsfilter,
   toggleIsLoading,
   updateCurrentUnit,
-  updateLatestUnits,
-  updateSelectedArtist,
-  updateSelectedUnit,
   updateShouldReset,
 } from '../reducers/app';
 
-const mapStateToProps = state => ({ app: state.app, database: state.database });
+import {
+  filterArtists,
+  loadArtists,
+  updateLatestUnits,
+  updateSelectedArtist,
+  updateSelectedUnit,
+} from '../reducers/artists';
+
+import {
+  login,
+} from '../reducers/user';
+
+const mapStateToProps = state => ({
+  app: state.app,
+  artists: state.artists,
+  db: state.db,
+  user: state.user,
+});
 
 const mapDispatchToProps = {
-  artistsfilter,
+  filterArtists,
+  loadArtists,
+  login,
   toggleIsLoading,
   updateCurrentUnit,
   updateLatestUnits,

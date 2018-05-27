@@ -1,4 +1,3 @@
-import API from '../api';
 import { KEYS } from '../constants';
 
 import { toggleIsLoading } from './app';
@@ -195,6 +194,22 @@ export const handleReset = () => (dispatch, getState) => {
   dispatch(setHistory([]));
 };
 
+export const resetDistribution = newUnit => (dispatch, getState) => {
+  if (!newUnit) {
+    newUnit = getState().app.currentUnit;
+  }
+
+  const newArray = new Array(newUnit.members.length).fill(0);
+  // Clear queue
+  dispatch(setQueue({}));
+  // Clear durations
+  dispatch(setDurations(newArray));
+  // Clear percentages
+  dispatch(setPercentages([...newArray]));
+  // Clear history
+  dispatch(setHistory([]));
+};
+
 export const handleUndo = () => (dispatch, getState) => {
   const { history } = getState().distribute;
   const removedNode = Object.assign({}, history[0]);
@@ -233,8 +248,7 @@ export const toggleEditLyrics = () => (dispatch, getState) => {
 
 export const loadSong = () => (dispatch, getState) => {
   dispatch(toggleIsLoading(true));
-  const songId = getState().app.currentSong;
-  const SONG = API.get(`/songs/${songId}`);
+  const SONG = getState().app.currentSong;
   const CURRENT_UNIT = getState().app.currentUnit;
 
   console.log(SONG);
@@ -248,7 +262,7 @@ export const loadSong = () => (dispatch, getState) => {
   dispatch(handleParser(SONG.lyrics));
 
   // TODO: It should load in reverse order
-  for (let i = SONG.distribution.length - 1; i >= 0; i--) {
+  for (let i = 0; i < SONG.distribution.length; i++) {
     const entry = SONG.distribution[i];
     const index = memberIndexDict[entry.memberId];
     dispatch(calculateDuration(index, 0, entry.duration));

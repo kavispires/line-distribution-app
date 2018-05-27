@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
-import LoadingIcon from './LoadingIcon';
+import LoadingIcon from './icons/LoadingIcon';
 import SwitchToggle from './widgets/SwitchToggle';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
@@ -24,33 +28,35 @@ class Distribute extends Component {
     //   && this.props.distribute.durations.length !== unitLength) {
     //     console.log('UNIT LENGTH', unitLength)
     //     console.log('componentDidMount RESET')
-    //   this.reset();
+    //   this.props.resetDistribution();
     // }
   }
 
   componentWillReceiveProps(nextProps) {
     const nextPropsCurrentUnit = nextProps.app.currentUnit;
     if (nextPropsCurrentUnit !== this.props.app.currentUnit && this.props.app.shouldReset) {
-      this.reset(nextPropsCurrentUnit);
+      this.props.resetDistribution(nextPropsCurrentUnit);
     }
-    const prevSongId = this.props.app.currentSong;
-    const songId = nextProps.app.currentSong;
+    const prevSongId = this.props.app.currentSong.id;
+    const songId = nextProps.app.currentSong.id;
     if (songId !== prevSongId) {
-      this.props.toggleIsLoading(true);
+      this.props.toggleIsLoading(false);
       this.props.loadSong();
     }
   }
 
-  reset(nextProps) {
-    const newArray = new Array(nextProps.members.length).fill(0);
-    this.props.setDurations([...newArray]);
-    this.props.setPercentages([...newArray]);
-    this.props.setHistory([]);
-  }
-
   render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/distribute" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
     const APP = this.props.app;
-    const DATABASE = this.props.database;
     const DISTRIBUTE = this.props.distribute;
     const LYRICS = this.props.lyrics;
     const CURRENT_UNIT = APP.currentUnit;
@@ -123,9 +129,9 @@ class Distribute extends Component {
             <h1 className="tiny-h1">Distribute
               <CurrentArtistName currentArtist={APP.currentArtist} />
               {
-                APP.currentSong ? (
+                APP.currentSong && APP.currentSong.id ? (
                   <span className="widget-h1-title">
-                     - {DATABASE.songs[APP.currentSong].title}
+                     - {APP.currentSong.title}
                   </span>
                 ) : null
               }
@@ -143,9 +149,9 @@ class Distribute extends Component {
               {
                 CURRENT_UNIT.members.map((member, index) => (
                   <div
-                    key={member.colorId}
+                    key={member.color.id}
                     id={`bar-${index}`}
-                    className={`bar color-${member.colorId} bar-width-${percentages[index]}`}
+                    className={`bar ${member.color.class} bar-width-${percentages[index]}`}
                   />
                 ))
               }
@@ -154,7 +160,13 @@ class Distribute extends Component {
               {
                 CURRENT_UNIT ?
                   CURRENT_UNIT.members.map((member, index) => (
-                    <button key={member.name} id={index} className={`box ${boxSize} color-${member.colorId}`} onMouseDown={this.props.boxMouseDown} onMouseUp={this.props.boxMouseUp}>
+                    <button
+                      key={member.name}
+                      id={index}
+                      className={`box ${boxSize} ${member.color.class}`}
+                      onMouseDown={this.props.boxMouseDown}
+                      onMouseUp={this.props.boxMouseUp}
+                    >
                       <span className="key">{KEY_LIST[index]}</span>
                       <span className="member-name">{member.name}</span>
                       <span className="timestamp">{Math.round(durations[index] / 100) / 10}</span>
@@ -171,7 +183,7 @@ class Distribute extends Component {
                   return (
                     <button
                       key={key}
-                      className={`log-item color-${CURRENT_UNIT.members[item.memberId].colorId}`}
+                      className={`log-item ${CURRENT_UNIT.members[item.memberId].color.class}`}
                       onClick={() => this.props.calculateDuration(item.memberId, item.duration, 0, true, i)}
                     >
                       {CURRENT_UNIT.members[item.memberId].name}
@@ -188,7 +200,7 @@ class Distribute extends Component {
             <button className="btn btn-25" onClick={this.props.toggleEditLyrics}>{ this.props.distribute.editLyrics ? 'Close Editor' : 'Edit Lyrics'}</button>
             {
               this.props.distribute.editLyrics ? (
-                <p className="alert">Line Distribution is paused while you edit the lyrics. When you're done, press the 'Editing...' button to resume line distribution.</p>
+                <p className="alert">Line Distribution is paused while you edit the lyrics. When you&apos;re done, press the &quot;Close Editor&quot; button to resume your line distribution.</p>
               ) : null
             }
             {
@@ -207,5 +219,29 @@ class Distribute extends Component {
     );
   }
 }
+
+Distribute.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  distribute: PropTypes.object.isRequired, // eslint-disable-line
+  lyrics: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  location: PropTypes.object.isRequired, // eslint-disable-line
+  boxMouseDown: PropTypes.func.isRequired,
+  boxMouseUp: PropTypes.func.isRequired,
+  calculateDuration: PropTypes.func.isRequired,
+  handleDecrease: PropTypes.func.isRequired,
+  handleKeydown: PropTypes.func.isRequired,
+  handleKeyup: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+  handleUndo: PropTypes.func.isRequired,
+  handleParser: PropTypes.func.isRequired,
+  loadSong: PropTypes.func.isRequired,
+  resetDistribution: PropTypes.func.isRequired,
+  toggleEditLyrics: PropTypes.func.isRequired,
+  toggleIsLoading: PropTypes.func.isRequired,
+  toggleLyrics: PropTypes.func.isRequired,
+};
 
 export default Distribute;

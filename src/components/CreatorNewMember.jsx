@@ -1,17 +1,28 @@
 import React from 'react';
 import ColorPicker from './ColorPicker';
 
+import PositionIcons from './icons/PositionIcons';
+
+import { makeIdNumber } from '../utils';
+
 const CreatorNewMember = ({id, props}) => {
-  const COLORS = props.database.colors;
-  const POSITIONS = props.database.positions;
+  const COLORS = props.admin.colors;
+  const POSITIONS = props.admin.positions;
   const MEMBER = props.creator.newMembers[id];
+
+  const posList = [
+    ['pos000001', 'pos000011', 'pos000012', 'pos000013'],
+    ['pos000002', 'pos000005', 'pos000008'],
+    ['pos000003', 'pos000006', 'pos000010'],
+    ['pos000004', 'pos000007', 'pos000009', 'clear'],
+  ];
 
   let selectedColor = 'temp';
   if (MEMBER.colorId) selectedColor = MEMBER.colorId;
 
   return (
     <div className="form-member">
-      <div className={`color-swatch color-${selectedColor}`} />
+      <div className={`color-swatch color-${makeIdNumber(selectedColor)}`} />
       <div className="info">
         <button className="btn-close" onClick={e => props.removeNewMember(e, id)}>×</button>
         <label htmlFor="memberName">Name*:</label>
@@ -19,74 +30,58 @@ const CreatorNewMember = ({id, props}) => {
           type="text"
           name="memberName"
           value={MEMBER.name}
-          onChange={e => props.updateNewMember(e, id, 'name')} />
+          onChange={e => props.updateNewMember(e, id, 'name')}
+        />
         <label htmlFor="memberBirthdate">Birthdate*:</label>
         <input
           type="date"
           name="memberBirthdate"
           value={MEMBER.birthdate}
-          onChange={e => props.updateNewMember(e, id, 'birthdate')} />
+          onChange={e => props.updateNewMember(e, id, 'birthdate')}
+        />
         <label htmlFor="memberColor">Color*:</label>
-        <select
+        <input
+          type="text"
           name="memberColor"
-          value={MEMBER.colorId}
-          onChange={e => props.updateNewMember(e, id, 'color')} >
-          <option value="">Select a Color</option>
-          {
-            Object.keys(COLORS).map((index) => {
-              const color = COLORS[index].name;
-              const colorId = COLORS[index].id;
-              return (
-                <option key={color} value={colorId}>{color}</option>
-              )
-            })
-          }
-        </select>
+          value={MEMBER.colorId ? COLORS[MEMBER.colorId].name : ''}
+          disabled
+        />
         <ColorPicker props={props} memberId={MEMBER.id} action={props.updateNewMember} />
-        <label htmlFor="memberPosition">Add Position*:</label>
-        <select name="memberPosition" required onChange={e => props.updateNewMember(e, id, 'position')} >
-          <option value="">Select Positions</option>
+        <label htmlFor="memberPosition">Add Position(s)*:</label>
+        <div className="form-member-position-list">
           {
-            Object.keys(POSITIONS).map((index) => {
-              const position = POSITIONS[index].name;
-              const positionId = POSITIONS[index].id;
+            posList.map((posGroup, i) => {
+              const keyG = `posGroup-${MEMBER.id}-${i}`;
               return (
-                <option key={position} value={positionId}>{position}</option>
-              )
+                <div key={keyG} className="form-member-position-list-group">
+                  {
+                    posGroup.map((posItem, j) => {
+                      const keyI = `posItem-${MEMBER.id}-${i}-${j}`;
+                      if (posItem === 'clear') {
+                        return (
+                          <button key={keyI} className="btn" onClick={e => props.clearPositions(e, id)}>Clear</button>
+                        );
+                      }
+                      const evt = { target: { value: posItem } };
+                      return (
+                        <PositionIcons
+                          key={keyI}
+                          memberId={MEMBER.id}
+                          positions={[posItem]}
+                          iconClass={`icon-positions-picker ${MEMBER.positions[posItem] ? 'selected' : ''}`}
+                          action={() => props.updateNewMember(evt, id, 'position')}
+                        />
+                      );
+                    })
+                  }
+                </div>
+              );
             })
           }
-        </select>
-        {
-          MEMBER.positions.length > 0 ? (
-            <div className="form-member-position-list">
-              <p>Positions List:</p>
-              <ul>
-                {
-                  MEMBER.positions.map((posId) => {
-                    const position = POSITIONS[posId].name;
-                    const positionId = POSITIONS[posId].id;
-                    return (
-                      <li
-                        key={position}
-                        className="form-member-position-item"
-                      >
-                        {position}
-                        <button
-                          className="btn-close"
-                          onClick={e => props.removePosition(e, id, positionId)}>
-                          ×
-                        </button>
-                      </li>
-                    );
-                  })
-                }
-              </ul>
-            </div>
-          ) : null
-        }
+        </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default CreatorNewMember;

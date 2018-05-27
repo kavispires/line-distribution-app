@@ -1,36 +1,60 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
 
 import Member from './Member';
-import iconOfficial from '../images/icon-official.svg';
 import ArtistSongsTable from './ArtistSongsTable';
-import LoadingIcon from './LoadingIcon';
+
+import FavoriteIcon from './icons/FavoriteIcon';
+import LoadingIcon from './icons/LoadingIcon';
+import Icon from './icons';
 
 class Artist extends Component {
-  componentDidMount() {
-    const artistId = this.props.match.params.artistId;
-    if (artistId) {
-      this.props.updateSelectedArtist(artistId);
+  componentWillMount() {
+    if (this.props.db.loaded) {
+      const { artistId } = this.props.match.params;
+      if (artistId) {
+        this.props.updateSelectedArtist(artistId);
+      }
+      this.props.loadUserArtists();
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.db.loaded !== this.props.db.loaded) {
+      const { artistId } = this.props.match.params;
+      if (artistId) {
+        this.props.updateSelectedArtist(artistId);
+      }
+      this.props.loadUserArtists();
     }
   }
 
   render() {
-    const { app, database } = this.props;
-    const ARTIST = database.artists[app.selectedArtist];
-    const { selectedUnits, selectedUnit, selectedUnitSongs } = app;
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/artists" />;
+    }
 
-    const setArtistUnit = (path, shouldReset = true) => {
-      // this.props.toggleIsLoading(true);
-      // setTimeout(() => {
-        this.props.history.push(`/${path}`);
-        this.props.updateShouldReset(shouldReset);
-        this.props.updateCurrentUnit();
-        this.props.updateLatestUnits();
-        // this.props.toggleIsLoading(false);
-      // }, 1000);
-    };
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
 
-    if (ARTIST === undefined) {
+    const APP = this.props.app;
+    const ARTISTS = this.props.artists;
+
+    const {
+      selectedArtist,
+      selectedUnits,
+      selectedUnit,
+    } = ARTISTS;
+
+    // SELECTED_ARTIST Check if there is a selected artist
+    if (selectedArtist === undefined) {
       return (
         <section className="container">
           <h1>Artist Page</h1>
@@ -39,28 +63,38 @@ class Artist extends Component {
       );
     }
 
+    const setArtistUnit = (path, shouldReset = true) => {
+      this.props.history.push(`/${path}`);
+      this.props.updateShouldReset(shouldReset);
+      this.props.updateCurrentUnit(selectedUnit, selectedArtist);
+      this.props.updateLatestUnits(selectedUnit.id);
+      this.props.toggleIsLoading(false);
+      if (shouldReset) {
+        this.props.resetSongInfo();
+      }
+    };
+
     const handleSongClick = (e) => {
       // Get id of the closest tr element
-      const songId = selectedUnitSongs[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))].id;
+      const selectedSongId = e.target.closest('tr').id;
       // Set unit, push history and update latest
       setArtistUnit('distribute', false);
       setTimeout(() => {
         this.props.toggleIsLoading(true);
-        this.props.updateCurrentSong(songId);
+        this.props.updateCurrentSong(selectedSongId);
       }, 1200);
     };
 
     return (
       <section className="container">
-        <h1>Artist Page: {ARTIST.name}</h1>
-        <p><b>Genre:</b> {ARTIST.genre}</p>
+        <h1>Artist Page: {selectedArtist.name}</h1>
+        <p><b>Genre:</b> {selectedArtist.genre}</p>
         <p><b>Members:</b>
           {
-            ARTIST.allMembersId.map((memberId) => {
-              const member = database.members[memberId];
+            selectedArtist.id && selectedArtist.memberList.map((member) => {
               const key = `member-${member.name}`;
               return (
-                <span key={key} className={`member-list-item color-${member.colorId}`}>
+                <span key={key} className={`member-list-item ${member.color.class}`}>
                   {member.name}
                 </span>
               );
@@ -74,11 +108,11 @@ class Artist extends Component {
               return (
                 <li
                   key={`tab-${name}`}
-                  className={`tab ${+app.artistPageTab === id ? 'selected' : ''}`}
+                  className={`tab ${+APP.artistPageTab === id ? 'selected' : ''}`}
                   id={id}
                   onClick={() => this.props.updateSelectedUnit(id)}
                 >
-                  {name} {official ? <img className="icon icon-tab" src={iconOfficial} alt="Official" /> : null }
+                  {name} {official ? <Icon type="official" /> : null }
                 </li>
               );
             })
@@ -87,6 +121,7 @@ class Artist extends Component {
         {
           selectedUnit && selectedUnit.id ? (
             <section className="unit-content">
+              <FavoriteIcon props={this.props} />
               <h3>Debut: {selectedUnit.debutYear}</h3>
               <h3>
                 <button className="btn btn-inline" onClick={() => setArtistUnit('distribute')}>Distribute</button>
@@ -96,10 +131,10 @@ class Artist extends Component {
               <h3>Members:</h3>
               <div className="unit-members">
                 {
-                  selectedUnit.members.map(memberId => (
+                  selectedUnit.members.map(member => (
                     <Member
-                      key={memberId}
-                      memberId={memberId}
+                      key={member.id}
+                      member={member}
                       props={this.props}
                     />
                   ))
@@ -108,8 +143,8 @@ class Artist extends Component {
               <h3>Songs:</h3>
               {
                 <ArtistSongsTable
-                  database={database}
-                  selectedUnitSongs={selectedUnitSongs}
+                  songs={selectedUnit.songs}
+                  members={selectedUnit.members}
                   handleSongClick={handleSongClick}
                 />
               }
@@ -118,10 +153,10 @@ class Artist extends Component {
           ) : (
             <div>
               {
-                app.isLoading ? (
+                APP.isLoading ? (
                   <LoadingIcon />
                 ) : (
-                  <p>Select a unit tab above.</p>
+                  <p className="tab-padding">Select a unit tab above.</p>
                 )
               }
             </div>
@@ -130,6 +165,26 @@ class Artist extends Component {
       </section>
     );
   }
+}
+
+Artist.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  artists: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
+  history: PropTypes.object.isRequired, // eslint-disable-line
+  match: PropTypes.object.isRequired, // eslint-disable-line
+  loadUserArtists: PropTypes.func.isRequired,
+  resetSongInfo: PropTypes.func.isRequired,
+  switchUnitsTab: PropTypes.func.isRequired,
+  toggleIsLoading: PropTypes.func.isRequired,
+  updateCurrentSong: PropTypes.func.isRequired,
+  updateCurrentUnit: PropTypes.func.isRequired,
+  updateLatestUnits: PropTypes.func.isRequired,
+  updateSelectedArtist: PropTypes.func.isRequired,
+  updateSelectedUnit: PropTypes.func.isRequired,
+  updateShouldReset: PropTypes.func.isRequired,
 };
 
 export default Artist;
+

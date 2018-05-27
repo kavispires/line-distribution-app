@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import LoginRequiredScreen from './LoginRequiredScreen';
+import LoadingScreen from './LoadingScreen';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
@@ -18,6 +22,16 @@ class Lyrics extends Component {
   }
 
   render() {
+    // LOGIN Check if user is logged in
+    if (this.props.user.isAuthenticated === false) {
+      return <LoginRequiredScreen props={this.props} redirect="/lyrics" />;
+    }
+
+    // DB Check if db is ready
+    if (this.props.db.loaded === false) {
+      return <LoadingScreen />;
+    }
+
     const APP = this.props.app;
     const LYRICS = this.props.lyrics;
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
@@ -41,19 +55,22 @@ class Lyrics extends Component {
         <h1>Lyrics<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
         {
           CURRENT_UNIT ?
-            <div className="current-band">
+            <div className="current-artist">
               <p>Current Band: <b>{CURRENT_UNIT.artist.name}</b></p>
-              <div className="current-band-members">
+              <div className="current-artist-members">
                 <p>Members:</p>
                 <ul className="members-list">
                   {
                     CURRENT_UNIT.members.map((member, i) => (
                       <li
                         key={`pill-${member.id}`}
-                        className={`member-list-item color-${CURRENT_UNIT.members[i].colorId}`}
+                        className={`member-list-item ${CURRENT_UNIT.members[i].color.class}`}
                       >
                         {member.name}
-                        <PositionIcons memberId={member.id} positions={member.positions} />
+                        <PositionIcons
+                          memberId={member.id}
+                          positions={member.positions.map(pos => pos.id)}
+                        />
                       </li>
                     ))
                   }
@@ -66,19 +83,19 @@ class Lyrics extends Component {
         <section className="container">
           <button
             className="btn"
-            onClick={ this.props.toggleRules}
+            onClick={this.props.toggleRules}
           >
             {LYRICS.showRules ? 'Minimize Instructions' : 'Show Instructions'}
           </button>
           {
             LYRICS.showRules ?
               <ul className="lyrics-rules">
-                <li>Assign who is singing but typing the member's name in square brackets. e.g.: <i>[BOB] <span className="color-1"> I can sing </span></i></li>
+                <li>Assign who is singing but typing the member&apos;s name in square brackets. e.g.: <i>[BOB] <span className="color-1"> I can sing </span></i></li>
                 <li>You may have multiple lines and members on the same line. e.g.: <i>[BOB] <span className="color-1"> I sing </span> [JACK] <span className="color-25"> I dance </span></i></li>
                 <li>If members share the same line, use / with no spaces. e.g.: <i>[BOB/JACK] <span className="color-1-25"> We can sing </span></i></li>
                 <li>If a member sings an ad-lib or a small part of the line, you may put her name in parenthesis.. e.g.: <i>[BOB (MEG)] <span className="color-1"> We can sing </span> <span className="color-15"> (Oh yeah) </span></i></li>
-                <li>If the next line doesn't have an assigned member, parser will repeat the member from the previous line.</li>
-                <li>If previous line is blank, parser will consider the current line an 'All' line</li>
+                <li>If the next line doesn&apos;t have an assigned member, parser will repeat the member from the previous line.</li>
+                <li>If previous line is blank, parser will consider the current line an &quot;All&quot; line</li>
               </ul>
             : null
           }
@@ -96,6 +113,19 @@ class Lyrics extends Component {
       </div>
     );
   }
+}
+
+Lyrics.propTypes = {
+  app: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired, // eslint-disable-line
+  lyrics: PropTypes.object.isRequired, // eslint-disable-line
+  user: PropTypes.object.isRequired, // eslint-disable-line
+  handleParser: PropTypes.func.isRequired,
+  setDurations: PropTypes.func.isRequired,
+  setHistory: PropTypes.func.isRequired,
+  setPercentages: PropTypes.func.isRequired,
+  toggleRules: PropTypes.func.isRequired,
 };
+
 
 export default Lyrics;

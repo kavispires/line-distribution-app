@@ -1,0 +1,80 @@
+@import './variables.scss';
+
+.icon {
+  width: 100%;
+  display: inline-block;
+}
+
+.icon-small {
+  width: 12px;
+  transform: translateY(2px);
+}
+
+.icon-medium {
+  width: 24px;
+  transform: translateY(4px);
+}
+
+.icon-large {
+  width: 36px;
+  transform: translateY(6px);
+}
+
+.icon-positions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.icon-pos {
+  width: 24px;
+  margin-bottom: $quarterUnit;
+}
+
+.icon-positions-inline .icon-pos {
+  transform: translateY(10px);
+  margin-right: 6px;
+  width: 18px;
+}
+
+.icon-positions-picker {
+  cursor: pointer;
+  margin-right: 6px;
+
+  &:hover .icon-pos {
+    border: 3px solid $darkGrey;
+    border-radius: 50%;
+  }
+
+  .icon-pos {
+    transform: translateY(10px);
+    width: 24px;
+  }
+
+  &.selected .icon-pos {
+    border: 3px solid $defaultBlue;
+    border-radius: 50%;
+  }
+}
+
+.icon-favorite {
+  width: 36px;
+  position: absolute;
+  right: 24px;
+  margin-top: 6px;
+  cursor: pointer;
+  border: 0;
+  background: none;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.icon-favorite-svg {
+  width: 36px;
+  &:hover {
+    opacity: 0.5;
+  }
+}
