@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import logo from '../images/logo-neg.svg';
 
+import Icon from './Icon';
+
 const LoginRequiredScreen = ({ props, redirect = '/home' }) => {
   const loginClick = () => {
     props.history.push(redirect);
@@ -18,7 +20,7 @@ const LoginRequiredScreen = ({ props, redirect = '/home' }) => {
           className="btn-home"
           onClick={loginClick}
         >
-          Sign-in now
+          <Icon type="sign-in" /> Sign-in now
         </button>
       </main>
     </section>

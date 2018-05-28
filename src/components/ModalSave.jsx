@@ -77,19 +77,14 @@ const SaveModal = ({ props }) => {
             </button>
           </li>
           <li>
-            <button className="btn-lg btn-100" onClick={() => props.saveSong(false)}>
-              Copy to clipboard...
-            </button>
-          </li>
-          <li>
             {
               distribute.history.length > 0 && lyrics.lyrics.length > 0 ? (
                 <button className="btn-lg btn-100" onClick={props.saveSong}>
-                  Save
+                  <Icon type="save" /> Save
                 </button>
               ) : (
                 <button className="btn-lg btn-100" disabled>
-                  Save
+                  <Icon type="save" /> Save
                 </button>
               )
             }
