@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import store from './store';
 import DB from './database/index.js';
 import { ALTERNATIVE_COLOR_LIST } from './constants';
@@ -172,4 +174,36 @@ export const getTrueKeys = (obj) => {
   });
 
   return keys;
-}
+};
+
+export const ensureColorUniqueness = (m) => {
+  const membersList = _.cloneDeep(m);
+  const dict = {};
+  const refactoredMembers = [];
+  // Loop through members and make color dict
+  membersList.forEach((member) => {
+    const colorId = member.color.id;
+    if (dict[colorId] === undefined) {
+      dict[colorId] = 1;
+    } else {
+      dict[colorId] += 1;
+    }
+  });
+
+  // Loop again and check for uniqueness, unique stays
+  membersList.forEach((member) => {
+    const colorId = member.color.id;
+    const altColorId = member.altColor.id;
+    if (dict[colorId] > 1) {
+      if (dict[altColorId] === undefined) {
+        const oldColor = member.color;
+        member.color = member.altColor;
+        member.altColor = oldColor;
+      } else {
+        console.warn(`Duplicated color for member ${member.id}`);
+      }
+    }
+    refactoredMembers.push(member);
+  });
+  return refactoredMembers;
+};

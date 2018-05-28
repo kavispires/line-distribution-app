@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 import { base } from '../firebase';
 
+import { ensureColorUniqueness } from '../utils';
+
 /* ------------------   FIREBASE   ----------------- */
 
 let dbRef = null;
@@ -312,6 +314,7 @@ const GET = {
             member.positions = mem.positions;
             return member;
           });
+          entry.members = ensureColorUniqueness(entry.members);
         }
         // Fetch songs
         if (entry.songs) {
@@ -370,7 +373,7 @@ const GET = {
             });
           }
         });
-        response.memberList = members;
+        response.memberList = ensureColorUniqueness(members);
       } else {
         response.memberList = [];
       }
@@ -531,7 +534,7 @@ const GET = {
             member.positions = mem.positions.map(pos => GET.fetchPosition(pos));
             return member;
           });
-          response.members = parsedMembers;
+          response.members = ensureColorUniqueness(parsedMembers);
         } else {
           response.members = [];
         }
