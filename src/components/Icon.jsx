@@ -95,7 +95,6 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid meet"
-        fit
         style={mergeStyles(
           styles,
           style, // This lets the parent pass custom styles
@@ -109,9 +108,9 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
 };
 
 Icon.propTypes = {
-  type: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(['small', 'medium', 'large']).isRequired,
-  styles: PropTypes.object.isRequired, // eslint-disable-line
+  type: PropTypes.string, // eslint-disable-line
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'x-large']), // eslint-disable-line
+  styles: PropTypes.object, // eslint-disable-line
 };
 
 export default Icon;
