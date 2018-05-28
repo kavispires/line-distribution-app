@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 import { base } from '../firebase';
 
+import { ensureColorUniqueness } from '../utils';
+
 /* ------------------   FIREBASE   ----------------- */
 
 let dbRef = null;
@@ -208,8 +210,8 @@ const GET = {
         const units = entry.units.map(unitId => GET.fetchUnit(unitId));
         units.forEach((unit) => {
           if (unit.members) {
-            unit.members.forEach((memberId) => {
-              members[memberId] = true;
+            unit.members.forEach((memberEntry) => {
+              members[memberEntry.memberId] = true;
             });
           }
         });
@@ -307,7 +309,12 @@ const GET = {
         }
         // Fetch members
         if (entry.members) {
-          entry.members = entry.members.map(mem => GET.fetchMember(mem));
+          entry.members = entry.members.map((mem) => {
+            const member = GET.fetchMember(mem.memberId);
+            member.positions = mem.positions;
+            return member;
+          });
+          entry.members = ensureColorUniqueness(entry.members);
         }
         // Fetch songs
         if (entry.songs) {
@@ -358,15 +365,15 @@ const GET = {
         const units = response.units.map(unitId => GET.fetchUnit(unitId));
         units.forEach((unit) => {
           if (unit.members) {
-            unit.members.forEach((memberId) => {
-              if (tracker[memberId] === undefined) {
-                members.push(GET.fetchMember(memberId, true));
-                tracker[memberId] = true;
+            unit.members.forEach((memberEntry) => {
+              if (tracker[memberEntry.memberId] === undefined) {
+                members.push(GET.fetchMember(memberEntry.memberId, true));
+                tracker[memberEntry.memberId] = true;
               }
             });
           }
         });
-        response.memberList = members;
+        response.memberList = ensureColorUniqueness(members);
       } else {
         response.memberList = [];
       }
@@ -522,7 +529,12 @@ const GET = {
         delete response.artistId;
         // Fetch members
         if (response.members) {
-          response.members = response.members.map(mem => GET.fetchMember(mem, true));
+          const parsedMembers = response.members.map((mem) => {
+            const member = GET.fetchMember(mem.memberId, true);
+            member.positions = mem.positions.map(pos => GET.fetchPosition(pos));
+            return member;
+          });
+          response.members = ensureColorUniqueness(parsedMembers);
         } else {
           response.members = [];
         }

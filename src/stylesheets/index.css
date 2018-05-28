@@ -5880,7 +5880,8 @@ h2 {
 
 .icon-sheet-list-container {
   width: 100%;
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap; }
 
 .icon-sheet-list-item {
   border: 1px solid #E6E6E6;

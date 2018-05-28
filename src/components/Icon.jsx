@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import icons from './icons';
 
-export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'stop', 'trash', 'view', 'yes'];
+export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'sign-in', 'sign-out', 'stop', 'trash', 'view', 'yes'];
 
 const Icon = ({ type, size = 'small', styles = {} }) => {
   let icon;
@@ -65,6 +65,14 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.save;
       break;
 
+    case 'sign-in':
+      icon = icons.signIn;
+      break;
+
+    case 'sign-out':
+      icon = icons.signOut;
+      break;
+
     case 'stop':
       icon = icons.stop;
       break;
@@ -95,7 +103,6 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid meet"
-        fit
         style={mergeStyles(
           styles,
           style, // This lets the parent pass custom styles
@@ -109,9 +116,9 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
 };
 
 Icon.propTypes = {
-  type: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(['small', 'medium', 'large']).isRequired,
-  styles: PropTypes.object.isRequired, // eslint-disable-line
+  type: PropTypes.string, // eslint-disable-line
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'x-large']), // eslint-disable-line
+  styles: PropTypes.object, // eslint-disable-line
 };
 
 export default Icon;

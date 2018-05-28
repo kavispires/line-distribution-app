@@ -42,7 +42,7 @@ const Member = ({ member, props }) => {
 
 Member.propTypes = {
   props: PropTypes.object.isRequired, // eslint-disable-line
-  artists: PropTypes.object.isRequired, // eslint-disable-line
+  artists: PropTypes.object, // eslint-disable-line
   member: PropTypes.object.isRequired, // eslint-disable-line
   results: PropTypes.object.isRequired, // eslint-disable-line
 };
