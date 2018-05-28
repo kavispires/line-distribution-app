@@ -137,14 +137,16 @@ class Distribute extends Component {
                 ) : null
               }
             </h1>
-            <div className="toggle-lyrics"> Lyrics <SwitchToggle action={this.props.toggleLyrics} labels={switchLabels} /></div>
+            <div className="options">
+              <button className="btn-lg btn-fx-150" onClick={this.props.handleReset}>
+                <Icon type="reset" /> Reset
+              </button>
+              <button className="btn-lg btn-fx-150" onClick={() => this.props.history.push('/results')}>
+                <Icon type="results" /> Results
+              </button>
+              <span className="toggle-lyrics"> Lyrics <SwitchToggle action={this.props.toggleLyrics} labels={switchLabels} /></span>
+            </div>
             <h2>{CURRENT_UNIT.bandName}</h2>
-            <ul className="controls">
-              <li><button className="btn-lg btn-100" onClick={this.props.handleReset}>Reset</button></li>
-              <li><button className="btn-lg btn-100" onClick={this.props.handleUndo}>Undo</button></li>
-              <li><button className={`btn-lg btn-100 ${decreaseClass}`} onClick={this.props.handleDecrease}>Decrease</button></li>
-              <li><button className="btn-lg btn-100" onClick={() => this.props.history.push('/results')}>Finish</button></li>
-            </ul>
             <h3 className="current-singer">{ whoSentence }</h3>
             <div className="progress-bar">
               {

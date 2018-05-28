@@ -177,8 +177,12 @@
   }
 }
 
-.toggle-lyrics {
+.options {
   position: absolute;
   top: 0;
   right: $halfUnit;
+
+  & > * {
+    margin-left: $unit;
+  }
 }
