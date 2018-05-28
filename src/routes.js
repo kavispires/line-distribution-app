@@ -9,9 +9,11 @@ import CreatorContainer from './containers/CreatorContainer';
 import DatabaseContainer from './containers/DatabaseContainer';
 import DistributeContainer from './containers/DistributeContainer';
 import HomeContainer from './containers/HomeContainer';
+import IconSheetContainer from './containers/IconSheetContainer';
 import LyricsContainer from './containers/LyricsContainer';
 import ResultsContainer from './containers/ResultsContainer';
 import SongsContainer from './containers/SongsContainer';
+import TestContainer from './containers/TestContainer';
 
 import './stylesheets/index.css';
 
@@ -25,9 +27,11 @@ const routes = (
       <Route path="/create" component={CreatorContainer} />
       <Route path="/database" component={DatabaseContainer} />
       <Route path="/distribute" component={DistributeContainer} />
+      <Route path="/iconsheet" component={IconSheetContainer} />
       <Route path="/lyrics" component={LyricsContainer} />
       <Route path="/results" component={ResultsContainer} />
       <Route path="/songs" component={SongsContainer} />
+      <Route path="/test" component={TestContainer} />
       <Route exact path="/" component={HomeContainer} />
     </div>
   </Router>

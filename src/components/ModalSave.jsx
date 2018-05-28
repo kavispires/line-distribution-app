@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from './icons';
+import Icon from './Icon';
 
 const SaveModal = ({ props }) => {
   const { results, distribute, lyrics } = props;

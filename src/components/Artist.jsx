@@ -10,7 +10,7 @@ import ArtistSongsTable from './ArtistSongsTable';
 
 import FavoriteIcon from './icons/FavoriteIcon';
 import LoadingIcon from './icons/LoadingIcon';
-import Icon from './icons';
+import Icon from './Icon';
 
 class Artist extends Component {
   componentWillMount() {

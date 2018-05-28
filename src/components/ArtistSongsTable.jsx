@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Icon from './icons';
+import Icon from './Icon';
 
 const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
   const sortedSongs = _.sortBy(songs, ['title']);

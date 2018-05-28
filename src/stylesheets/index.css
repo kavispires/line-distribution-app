@@ -5830,6 +5830,10 @@ h2 {
   width: 36px;
   transform: translateY(6px); }
 
+.icon-x-large {
+  width: 48px;
+  transform: translateY(8px); }
+
 .icon-positions {
   display: flex;
   flex-direction: column;
@@ -5874,45 +5878,132 @@ h2 {
   .icon-favorite-svg:hover {
     opacity: 0.5; }
 
-.app-header {
+.icon-sheet-list-container {
+  width: 100%;
+  display: flex; }
+
+.icon-sheet-list-item {
+  border: 1px solid #E6E6E6;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 3px; }
+  .icon-sheet-list-item h3 {
+    margin: 0;
+    margin-top: 12px; }
+
+.invisible {
+  fill: none; }
+
+.icon-default .st0, .icon-loading .st0 {
+  fill: #707070; }
+
+.icon-default .st1, .icon-loading .st1 {
+  fill: #598FFD; }
+
+.icon-default .st2, .icon-loading .st2 {
+  fill: #D14949; }
+
+.icon-default .st3, .icon-loading .st3 {
+  fill: #49D156; }
+
+.icon-default .st4, .icon-loading .st4 {
+  fill: #FFD700; }
+
+.icon-default .st5, .icon-loading .st5 {
+  fill: #273032; }
+
+.icon-default .st6, .icon-loading .st6 {
+  fill: #FEA245; }
+
+.icon-default .st7, .icon-loading .st7 {
+  fill: #34AC9E; }
+
+.icon-default .st8, .icon-loading .st8 {
+  fill: #FB9CF0; }
+
+.icon-default .st9, .icon-loading .st9 {
+  fill: #9E8EF0; }
+
+.icon-clock .primary {
+  fill: #598FFD; }
+
+.icon-heart .primary,
+.icon-no .primary {
+  fill: #D14949; }
+
+.icon-official .primary {
+  fill: #598FFD; }
+
+.icon-yes .primary {
+  fill: #49D156; }
+
+.icon-box-checked .primary {
+  fill: #707070; }
+
+.icon-box-checked .secondary {
+  fill: #49D156; }
+
+.icon-box-invalid .primary {
+  fill: #707070; }
+
+.icon-box-invalid .secondary {
+  fill: #D14949; }
+
+.icon-box-unchecked .primary {
+  fill: #707070; }
+
+.icon-results .st0 {
+  fill: #FEA245; }
+
+.icon-results .st1 {
+  fill: #9E8EF0; }
+
+.icon-results .st2 {
+  fill: #34AC9E; }
+
+.icon-results .st3 {
+  fill: #FB9CF0; }
+
+.app-header, .app-header-admin {
   background-color: #000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
-  min-height: 36px; }
+  min-height: 36px;
+  flex-wrap: wrap; }
 
 .app-header-nav {
   width: 70%;
   display: flex;
   align-items: center; }
 
-.app-logo {
+.app-logo, .app-logo-placeholder {
   max-height: 36px;
   padding: 6px 0;
   cursor: pointer; }
 
-.app-nav,
-.app-nav-admin {
+.app-nav {
   color: #fff; }
-  .app-nav a,
-  .app-nav-admin a {
+  .app-nav a, .app-nav span {
     color: #fff;
+    cursor: pointer;
     text-decoration: none;
     padding-left: 12px;
     padding-right: 12px; }
-    .app-nav a:not(:last-child),
-    .app-nav-admin a:not(:last-child) {
+    .app-nav a:not(:last-child), .app-nav span:not(:last-child) {
       border-right: 1px solid #707070; }
-    .app-nav a:hover,
-    .app-nav-admin a:hover {
+    .app-nav a:hover, .app-nav span:hover {
       border-bottom: 2px solid #CCC; }
-    .app-nav a:visited,
-    .app-nav-admin a:visited {
+    .app-nav a:visited, .app-nav span:visited {
       color: #fff; }
-    .app-nav a .selected,
-    .app-nav-admin a .selected {
+    .app-nav a .selected, .app-nav span .selected {
       border-bottom: 2px solid #707070; }
 
 .app-nav-admin {
@@ -5924,7 +6015,9 @@ h2 {
   padding: 6px 24px;
   color: #fff;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  justify-content: flex-end;
+  width: 30%; }
   .app-header-user .user-photo {
     max-height: 24px;
     padding-right: 6px;
@@ -5940,6 +6033,14 @@ h2 {
   border-radius: 4px; }
   .app-header-btn:hover {
     background: rgba(255, 255, 255, 0.5); }
+
+.app-header-admin {
+  width: 100%;
+  background: #707070;
+  justify-content: flex-start; }
+
+.app-logo-placeholder {
+  width: 160px; }
 
 .btn, .btn-lg {
   padding: 1px 6px 1px;
@@ -6834,11 +6935,7 @@ input:checked + .slider:before {
   background: #D14949;
   margin: 12px 0;
   color: white;
-<<<<<<< HEAD
-  padding: 0 12px;
-=======
   padding: 12px;
->>>>>>> 8d43733c6b64ea9d373230bd63473522a2e7c616
   text-align: center;
   border-radius: 3px;
   min-height: 20px;

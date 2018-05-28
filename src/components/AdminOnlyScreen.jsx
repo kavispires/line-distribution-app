@@ -1,15 +1,11 @@
 import React from 'react';
 
-import iconStop from '../images/icon-stop.svg';
+import Icon from './Icon';
 
 const AdminOnlyScreen = () => (
   <section className="container container-center">
     <div className="container-center--inner">
-      <img
-        className="icon icon-stop"
-        src={iconStop}
-        alt="Access Denied"
-      />
+      <Icon type="stop" size="x-large" />
       <h3>You must be an administrator to access this page.</h3>
     </div>
   </section>

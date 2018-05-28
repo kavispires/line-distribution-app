@@ -75,12 +75,14 @@ class Artists extends Component {
             <div className="user-artists-container">
               <UserArtistTable
                 title="Your Latest Artists"
+                icon="clock"
                 unitList={ARTISTS.userLatestArtists}
                 action={setArtistUnit}
                 message="When you begin using the app, the 5 most recent artists you use will show up here."
               />
               <UserArtistTable
                 title="Your Favorite Artists"
+                icon="heart"
                 unitList={ARTISTS.userFavoriteArtists}
                 action={setArtistUnit}
                 message="You may favorite up to 5 artists by clicking on the Heart icon in the Artist page."

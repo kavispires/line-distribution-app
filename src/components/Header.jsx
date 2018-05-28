@@ -1,3 +1,5 @@
+/* eslint react/require-default-props: 0 */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -17,16 +19,11 @@ const Header = ({ props }) => {
           <Link to="/distribute">Distribute</Link>
           <Link to="/lyrics">Lyrics</Link>
           <Link to="/songs">Songs</Link>
-        </nav>
-        {
-          props.user.isAdmin ? (
-            <nav className="app-nav-admin">
-              <Link to="/create">Create</Link>
-              <Link to="/colorsheet">Color Sheet</Link>
-              <Link to="/database">Database</Link>
-            </nav>
-          ) : null
+          {
+            props.user.isAdmin ? <span onClick={props.toggleAdminTools}>Admin Tools</span> : null
           }
+        </nav>
+
       </div>
       {
         props.user.isAuthenticated ? (
@@ -55,16 +52,31 @@ const Header = ({ props }) => {
           </div>
         )
       }
+      {
+        props.admin.adminTools ? (
+          <div className="app-header-admin">
+            <span className="app-logo-placeholder" />
+            <nav className="app-nav">
+              <Link to="/create">Create</Link>
+              <Link to="/colorsheet">Color Sheet</Link>
+              <Link to="/iconsheet">Icon Sheet</Link>
+              <Link to="/database">Database</Link>
+            </nav>
+          </div>
+        ) : null
+      }
     </header>
   );
 };
 
 Header.propTypes = {
+  admin: PropTypes.object, // eslint-disable-line
   user: PropTypes.object, // eslint-disable-line
   history: PropTypes.object, // eslint-disable-line
   props: PropTypes.any.isRequired, // eslint-disable-line
-  login: PropTypes.func, // eslint-disable-line
-  logout: PropTypes.func, // eslint-disable-line
+  login: PropTypes.func,
+  logout: PropTypes.func,
+  toggleAdminTools: PropTypes.func,
 };
 
 export default Header;
