@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AdminOnlyScreen from './AdminOnlyScreen';
 import LoadingScreen from './LoadingScreen';
 import LoginRequiredScreen from './LoginRequiredScreen';
-import Icon from './icons';
+import Icon from './Icon';
 
 import Tabs from './Tabs';
 

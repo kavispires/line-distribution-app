@@ -3,6 +3,7 @@ import API from '../api';
 
 /* ------------------   ACTIONS   ------------------ */
 
+const SET_ADMIN_TOOLS = 'SET_ADMIN_TOOLS';
 const SET_ARTISTS = 'SET_ARTISTS';
 const SET_COLOR_COUNT = 'SET_COLOR_COUNT';
 const SET_COLORS = 'SET_COLORS';
@@ -13,6 +14,7 @@ const SET_UNITS = 'SET_UNITS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
+export const setAdminTools = payload => dispatch => dispatch({ type: SET_ADMIN_TOOLS, payload });
 export const setArtists = payload => dispatch => dispatch({ type: SET_ARTISTS, payload });
 export const setColorCount = payload => dispatch => dispatch({ type: SET_COLOR_COUNT, payload });
 export const setColors = payload => dispatch => dispatch({ type: SET_COLORS, payload });
@@ -24,6 +26,7 @@ export const setUnits = payload => dispatch => dispatch({ type: SET_UNITS, paylo
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
+  adminTools: false,
   artists: {},
   colorCount: {},
   colors: {},
@@ -37,6 +40,10 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+    case SET_ADMIN_TOOLS:
+      newState.adminTools = action.payload;
+      break;
+
     case SET_ARTISTS:
       newState.artists = action.payload;
       break;
@@ -101,4 +108,9 @@ export const fetchCompleteDatabase = () => (dispatch) => {
   // Get Positions
   const positions = API.get('/positions');
   dispatch(setPositions(positions));
+};
+
+export const toggleAdminTools = () => (dispatch, getState) => {
+  const { adminTools } = getState().admin;
+  return dispatch(setAdminTools(!adminTools));
 };

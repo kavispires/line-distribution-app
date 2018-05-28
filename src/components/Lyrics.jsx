@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import LoginRequiredScreen from './LoginRequiredScreen';
 import LoadingScreen from './LoadingScreen';
+import Icon from './Icon';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
@@ -85,7 +86,12 @@ class Lyrics extends Component {
             className="btn"
             onClick={this.props.toggleRules}
           >
-            {LYRICS.showRules ? 'Minimize Instructions' : 'Show Instructions'}
+            {
+              LYRICS.showRules ?
+                <span><Icon type="hide" /> Hide Instructions</span>
+                :
+                <span><Icon type="view" /> Show Instructions</span>
+            }
           </button>
           {
             LYRICS.showRules ?

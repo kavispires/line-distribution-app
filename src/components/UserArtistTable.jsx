@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Icon from './Icon';
+
 const UserArtistTable = ({
   title = 'User Table',
+  icon = '',
   message = 'No data to display',
   action = () => {},
   unitList = [],
 }) => (
   <div className="user-artists-table">
-    <h2>{ title }</h2>
+    <h2><Icon type={icon} /> { title }</h2>
     {
       unitList.length > 0 ? (
         <table className="table">
@@ -47,6 +50,7 @@ UserArtistTable.propTypes = {
   action: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
   unitList: PropTypes.array.isRequired, // eslint-disable-line
 };
 

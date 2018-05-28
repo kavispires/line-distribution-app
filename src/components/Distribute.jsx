@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import LoginRequiredScreen from './LoginRequiredScreen';
 import LoadingScreen from './LoadingScreen';
 
+import Icon from './Icon';
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
 import LoadingIcon from './icons/LoadingIcon';
@@ -197,7 +198,7 @@ class Distribute extends Component {
 
           <section className={`section-lyrics ${sectionLyricsClasses} container-fixed`}>
             <h1 className="tiny-h1">Lyrics</h1>
-            <button className="btn btn-25" onClick={this.props.toggleEditLyrics}>{ this.props.distribute.editLyrics ? 'Close Editor' : 'Edit Lyrics'}</button>
+            <button className="btn btn-25" onClick={this.props.toggleEditLyrics}>{ this.props.distribute.editLyrics ? 'Close Editor' : <span><Icon type="edit" /> Edit Lyrics</span>}</button>
             {
               this.props.distribute.editLyrics ? (
                 <p className="alert">Line Distribution is paused while you edit the lyrics. When you&apos;re done, press the &quot;Close Editor&quot; button to resume your line distribution.</p>

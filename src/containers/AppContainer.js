@@ -10,6 +10,10 @@ import {
 } from '../reducers/app';
 
 import {
+  toggleAdminTools,
+} from '../reducers/admin';
+
+import {
   initDB,
 } from '../reducers/db';
 
@@ -31,6 +35,7 @@ import {
 
 const mapStateToProps = state => ({
   app: state.app,
+  admin: state.admin,
   db: state.db,
   database: state.database,
   user: state.user,
@@ -47,6 +52,7 @@ const mapDispatchToProps = {
   resetDistribution,
   resetLyrics,
   setCurrentSong,
+  toggleAdminTools,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
