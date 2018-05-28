@@ -5,7 +5,6 @@ import { handleParser } from './lyrics';
 
 /* ------------------   ACTIONS   ------------------ */
 
-const SET_DECREASE = 'SET_DECREASE';
 const SET_DURATIONS = 'SET_DURATIONS';
 const SET_HISTORY = 'SET_HISTORY';
 const SET_PERCENTAGES = 'SET_PERCENTAGES';
@@ -17,7 +16,6 @@ const SHOW_LYRICS = 'SHOW_LYRICS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setDecrease = payload => dispatch => dispatch({ type: SET_DECREASE, payload });
 export const setDurations = payload => dispatch => dispatch({ type: SET_DURATIONS, payload });
 export const setHistory = payload => dispatch => dispatch({ type: SET_HISTORY, payload });
 export const setPercentages = payload => dispatch => dispatch({ type: SET_PERCENTAGES, payload });
@@ -30,7 +28,6 @@ export const showLyrics = payload => dispatch => dispatch({ type: SHOW_LYRICS, p
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  decrease: false,
   durations: [],
   editLyrics: false,
   history: [],
@@ -45,10 +42,6 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
-    case SET_DECREASE:
-      newState.decrease = action.payload;
-      break;
-
     case SET_DURATIONS:
       newState.durations = action.payload;
       break;
@@ -103,18 +96,11 @@ export const updateHistory = (entry, add = 'true', index) => (dispatch, getState
 
 export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), dehistory = false, index = null) => (dispatch, getState) => {
   // Calculate and set
-  const { decrease } = getState().distribute;
   const duration = timestamp - startTimestamp;
   const durations = [...getState().distribute.durations];
   const CURRENT_UNIT = getState().app.currentUnit;
-  // Add or decrease
-  if (decrease) {
-    durations[id] -= duration;
-    if (durations[id] < 0) durations[id] = 0;
-    dispatch(setDecrease(false));
-  } else {
-    durations[id] += duration;
-  }
+
+  durations[id] += duration;
   dispatch(setDurations(durations));
 
   // Calculate percentage
@@ -216,11 +202,6 @@ export const handleUndo = () => (dispatch, getState) => {
   dispatch(calculateDuration(removedNode.memberId, 0, -removedNode.duration, true, 0));
 };
 
-export const handleDecrease = () => (dispatch, getState) => {
-  const { decrease } = getState().distribute;
-  dispatch(setDecrease(!decrease));
-};
-
 export const handleKeydown = e => (dispatch, getState) => {
   const CURRENT_UNIT = getState().app.currentUnit;
   if (Object.keys(CURRENT_UNIT).length > 0 && KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_UNIT.members.length) {
@@ -250,9 +231,6 @@ export const loadSong = () => (dispatch, getState) => {
   dispatch(toggleIsLoading(true));
   const SONG = getState().app.currentSong;
   const CURRENT_UNIT = getState().app.currentUnit;
-
-  console.log(SONG);
-  console.log(CURRENT_UNIT);
 
   const memberIndexDict = {};
   CURRENT_UNIT.members.forEach((member, index) => {

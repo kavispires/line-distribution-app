@@ -6091,6 +6091,15 @@ h2 {
   .btn-close:focus {
     outline: none; }
 
+.btn-fx-100 {
+  width: 100px; }
+
+.btn-fx-150 {
+  width: 150px; }
+
+.btn-fx-200 {
+  width: 200px; }
+
 .switch {
   position: relative;
   display: inline-block;
@@ -6867,10 +6876,12 @@ input:checked + .slider:before {
       display: inline-block;
       min-width: auto; }
 
-.toggle-lyrics {
+.options {
   position: absolute;
   top: 0;
   right: 6px; }
+  .options > * {
+    margin-left: 12px; }
 
 .results {
   padding: 0; }
