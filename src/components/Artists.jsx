@@ -109,7 +109,7 @@ class Artists extends Component {
               artistList.map((entry) => {
                 const unitCount = entry.units ? entry.units.length : 0;
                 return (
-                  <tr key={entry.id}>
+                  <tr key={`all-artists-${entry.id}`}>
                     <td>{entry.name}</td>
                     <td>{entry.genre}</td>
                     <td>{unitCount}</td>

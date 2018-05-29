@@ -709,7 +709,6 @@ const POST = {
 
     if (!body.wasArtistLoaded) {
       newArtistKey = base.database().ref().child('artists').push().key;
-      body.artist.id = newArtistKey;
       body.artist.units = [];
     }
     if (!body.wasUnitLoaded) {
@@ -719,6 +718,7 @@ const POST = {
       body.artist.units.push(newUnitKey);
     }
 
+    body.artist.id = newArtistKey;
     body.unit.members = membersKeysList;
 
     updates[`/artists/${newArtistKey}`] = body.artist;
