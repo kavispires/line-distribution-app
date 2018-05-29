@@ -173,3 +173,10 @@ export const ARTITST_PLACEHOLDER = {
   name: 'No Artists Selected',
   allMembers: [],
 };
+
+export const POS_LIST = [
+  ['pos000001', 'pos000011', 'pos000012', 'pos000013'],
+  ['pos000002', 'pos000005', 'pos000008'],
+  ['pos000003', 'pos000006', 'pos000010'],
+  ['pos000004', 'pos000007', 'pos000009', 'clear'],
+];

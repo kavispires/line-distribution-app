@@ -109,7 +109,7 @@ class Creator extends Component {
               disabled={!CREATOR.isValid}
               onClick={this.props.save}
             >
-              Save
+              <Icon type="save" /> Save
             </button>
           </div>
         </div>

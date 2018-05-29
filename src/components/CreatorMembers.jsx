@@ -21,7 +21,7 @@ const CreatorMembers = ({props}) => {
           value={props.loadedMember}
           onChange={props.loadMember}
         >
-          <option value="0">Select an member to load...</option>
+          <option value="0">Select a member to load...</option>
           {
             sortedMembers.map(member => (
               <option key={`member--${member.id}`} value={member.id}>{member.name}</option>
@@ -31,8 +31,8 @@ const CreatorMembers = ({props}) => {
       </div>
       <div className="form-member-group">
         {
-          CREATOR.newUnitMembers.map(memberId => (
-            <CreatorExistingMember key={`exist-${memberId}`} id={memberId} props={props} />
+          CREATOR.newUnitMembers.map(member => (
+            <CreatorExistingMember key={`exist-${member.id}`} member={member} props={props} />
           ))
         }
       </div>

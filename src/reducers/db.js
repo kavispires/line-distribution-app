@@ -673,7 +673,7 @@ const POST = {
   },
 
   // API/completeArtist
-  postCompleteArtist: (body) => {
+  postCompleteArtist: async (body) => {
     const missingInfo = [];
     // Check if song has all necessary params. Optional: distribution, lyrics
     // if (!body.originalArtist) missingInfo.push('Original Artist\n'); // REMOVE THIS, DEBUGGING ONLY
@@ -683,13 +683,49 @@ const POST = {
       return false;
     }
 
-    // First, post all new members and get their ids;
-    // base.database()
-    //   .child('members')
-    //   .push
-    // Second, post the unit get its id
+    const updates = {};
 
-    // Third, post
-  }
+    const membersKeysList = [];
+    // First, prepare existing members
+    for (let i = 0; i < body.existingMembers.length; i++) {
+      membersKeysList.push({
+        memberId: body.existingMembers[i].id,
+        positions: body.existingMembers[i].positions,
+      });
+    }
+    // Second, push new members
+    for (let i = 0; i < body.members.length; i++) {
+      const newMemberKey = base.database().ref().child('members').push().key;
+      membersKeysList.push({
+        memberId: newMemberKey,
+        positions: body.members[i].positions,
+      });
+      body.members[i].id = newMemberKey;
+      updates[`/members/${newMemberKey}`] = body.members[i];
+    }
+    // Third, push new unit and artist
+    let newArtistKey = body.wasArtistLoaded;
+    let newUnitKey = body.wasUnitLoaded;
+
+    if (!body.wasArtistLoaded) {
+      newArtistKey = base.database().ref().child('artists').push().key;
+      body.artist.id = newArtistKey;
+      body.artist.units = [];
+    }
+    if (!body.wasUnitLoaded) {
+      newUnitKey = base.database().ref().child('units').push().key;
+      body.unit.id = newUnitKey;
+      body.unit.artistId = newArtistKey;
+      body.artist.units.push(newUnitKey);
+    }
+
+    body.unit.members = membersKeysList;
+
+    updates[`/artists/${newArtistKey}`] = body.artist;
+    updates[`/units/${newUnitKey}`] = body.unit;
+
+    base.database().ref().update(updates);
+    toastr.success('New Artist added successfully');
+  },
 };
 

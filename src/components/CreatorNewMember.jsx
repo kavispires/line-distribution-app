@@ -4,18 +4,12 @@ import ColorPicker from './ColorPicker';
 import PositionIcons from './icons/PositionIcons';
 
 import { makeIdNumber } from '../utils';
+import { POS_LIST } from '../constants';
 
 const CreatorNewMember = ({id, props}) => {
   const COLORS = props.admin.colors;
   const POSITIONS = props.admin.positions;
   const MEMBER = props.creator.newMembers[id];
-
-  const posList = [
-    ['pos000001', 'pos000011', 'pos000012', 'pos000013'],
-    ['pos000002', 'pos000005', 'pos000008'],
-    ['pos000003', 'pos000006', 'pos000010'],
-    ['pos000004', 'pos000007', 'pos000009', 'clear'],
-  ];
 
   let selectedColor = 'temp';
   if (MEMBER.colorId) selectedColor = MEMBER.colorId;
@@ -50,7 +44,7 @@ const CreatorNewMember = ({id, props}) => {
         <label htmlFor="memberPosition">Add Position(s)*:</label>
         <div className="form-member-position-list">
           {
-            posList.map((posGroup, i) => {
+            POS_LIST.map((posGroup, i) => {
               const keyG = `posGroup-${MEMBER.id}-${i}`;
               return (
                 <div key={keyG} className="form-member-position-list-group">
