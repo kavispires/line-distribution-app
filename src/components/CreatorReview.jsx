@@ -31,7 +31,7 @@ const CreatorReview = ({ props }) => {
       </ul>
       <ul className="creator-review-category-members">
         {
-          CREATOR.newUnitMembers.length > 0 && CREATOR.newUnitMembers.map(memberId => <CreatorReviewMember key={memberId} id={memberId} props={props} />)
+          CREATOR.newUnitMembers.length > 0 && CREATOR.newUnitMembers.map(member => <CreatorReviewMember key={member.id} id={member.id} props={props} />)
         }
         {
           Object.keys(CREATOR.newMembers).length > 0 && Object.keys(CREATOR.newMembers).map(key => <CreatorReviewMember key={key} id={CREATOR.newMembers[key]} props={props} />)

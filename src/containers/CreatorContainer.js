@@ -8,30 +8,26 @@ import {
 } from '../reducers/admin';
 
 import {
-  loadArtist,
+  addNewMember,
+  checkValidation,
+  clearPositions,
+  handleNewArtistGenre,
   handleNewArtistName,
   handleNewArtistOtherNames,
-  handleNewArtistGenre,
-  loadUnit,
   handleNewUnitName,
   handleNewUnitDebutYear,
   handleNewUnitOfficial,
+  loadArtist,
   loadMember,
-  unloadMember,
-  switchCreatorTab,
-  addNewMember,
-  generateArtistJSON,
-  generateFullJSON,
-  generateUnitJSON,
-  generateMembersJSON,
-
+  loadUnit,
   removeNewMember,
   removePosition,
-  updateNewMember,
   reset,
   save,
-  checkValidation,
-  clearPositions,
+  switchCreatorTab,
+  unloadMember,
+  updateExistingMember,
+  updateNewMember,
 } from '../reducers/creator';
 
 const mapStateToProps = state => ({
@@ -44,31 +40,26 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadArtist,
+  addNewMember,
+  checkValidation,
+  clearPositions,
+  handleNewArtistGenre,
   handleNewArtistName,
   handleNewArtistOtherNames,
-  handleNewArtistGenre,
-  loadUnit,
   handleNewUnitName,
   handleNewUnitDebutYear,
   handleNewUnitOfficial,
+  loadArtist,
   loadMember,
-  unloadMember,
-  switchCreatorTab,
-  addNewMember,
-  generateArtistJSON,
-  generateFullJSON,
-  generateUnitJSON,
-  generateMembersJSON,
-
+  loadUnit,
   removeNewMember,
   removePosition,
-  updateNewMember,
   reset,
   save,
-  fetchCompleteDatabase,
-  checkValidation,
-  clearPositions,
+  switchCreatorTab,
+  unloadMember,
+  updateExistingMember,
+  updateNewMember,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Creator));

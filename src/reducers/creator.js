@@ -7,6 +7,7 @@ import {
   getAlternativeColor,
   getLatestId,
   getTrueKeys,
+  generatePushID,
 } from '../utils';
 
 /* ------------------   ACTIONS   ------------------ */
@@ -75,7 +76,6 @@ const initialState = {
   newUnitMembers: [],
   loadedMember: 0,
   newMembers: {},
-
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -219,10 +219,35 @@ export const loadUnit = event => (dispatch) => {
   dispatch(setLoadedUnit(value));
   if (value) {
     const unit = API.get(`/units/${value}`);
+    const members = unit.members.map((m) => {
+      const member = API.get(`/members/${m.memberId}`);
+      const positions = {
+        pos000001: false,
+        pos000002: false,
+        pos000003: false,
+        pos000004: false,
+        pos000005: false,
+        pos000006: false,
+        pos000007: false,
+        pos000008: false,
+        pos000009: false,
+        pos000010: false,
+        pos000011: false,
+        pos000012: false,
+        pos000013: false,
+      };
+
+      member.positions.forEach((posId) => {
+        positions[posId] = true;
+      });
+
+      member.positions = positions;
+      return member;
+    });
     dispatch(setNewUnitName(unit.name));
     dispatch(setNewUnitDebutYear(unit.debutYear));
     dispatch(setNewUnitOfficial(unit.official));
-    dispatch(setNewUnitMembers(unit.members));
+    dispatch(setNewUnitMembers(members));
   } else {
     dispatch(setNewUnitName(''));
     dispatch(setNewUnitDebutYear(''));
@@ -270,7 +295,31 @@ export const loadMember = event => (dispatch, getState) => {
 
   if (value) {
     const newUnitMembers = [...getState().creator.newUnitMembers];
-    newUnitMembers.push(value);
+    const loadedMember = API.get(`/members/${value}`);
+
+    const positions = {
+      pos000001: false,
+      pos000002: false,
+      pos000003: false,
+      pos000004: false,
+      pos000005: false,
+      pos000006: false,
+      pos000007: false,
+      pos000008: false,
+      pos000009: false,
+      pos000010: false,
+      pos000011: false,
+      pos000012: false,
+      pos000013: false,
+    };
+
+    loadedMember.positions.forEach((posId) => {
+      positions[posId] = true;
+    });
+
+    loadedMember.positions = positions;
+
+    newUnitMembers.push(loadedMember);
     dispatch(setNewUnitMembers(newUnitMembers));
   }
   dispatch(setLoadedMember(0));
@@ -286,7 +335,7 @@ export const unloadMember = (event, id) => (dispatch, getState) => {
   dispatch(setTempInput(''));
 
   const newUnitMembers = [...getState().creator.newUnitMembers];
-  const index = newUnitMembers.indexOf(id);
+  const index = _.findIndex(newUnitMembers, o => id === o.id);
   if (index > -1) {
     newUnitMembers.splice(index, 1);
   }
@@ -311,7 +360,7 @@ export const addNewMember = event => (dispatch, getState) => {
     return;
   }
 
-  const newId = Date.now();
+  const newId = generatePushID();
 
   const blankMember = {
     id: newId,
@@ -362,62 +411,122 @@ export const updateNewMember = (event, id, field) => (dispatch, getState) => {
   // Empty clipboard input
   dispatch(setTempInput(''));
 
-  const newMembers = Object.assign({}, getState().creator.newMembers);
+  const members = Object.assign({}, getState().creator.newMembers);
+
   const { value } = event.target;
 
   if (field === 'name') {
-    newMembers[id].name = value;
+    members[id].name = value;
   } else if (field === 'birthdate') {
-    newMembers[id].birthdate = value;
+    members[id].birthdate = value;
   } else if (field === 'color' && value) {
-    newMembers[id].colorId = value;
-    newMembers[id].altColorId = getAlternativeColor(value);
+    members[id].colorId = value;
+    members[id].altColorId = getAlternativeColor(value);
   } else if (field === 'position' && value) {
     // Toggles positions that can't be with the same member
     switch (value) {
       case 'pos000002':
-        newMembers[id].positions.pos000005 = false;
-        newMembers[id].positions.pos000008 = false;
+        members[id].positions.pos000005 = false;
+        members[id].positions.pos000008 = false;
         break;
       case 'pos000005':
-        newMembers[id].positions.pos000002 = false;
-        newMembers[id].positions.pos000008 = false;
+        members[id].positions.pos000002 = false;
+        members[id].positions.pos000008 = false;
         break;
       case 'pos000008':
-        newMembers[id].positions.pos000002 = false;
-        newMembers[id].positions.pos000005 = false;
+        members[id].positions.pos000002 = false;
+        members[id].positions.pos000005 = false;
         break;
       case 'pos000003':
-        newMembers[id].positions.pos000006 = false;
-        newMembers[id].positions.pos000010 = false;
+        members[id].positions.pos000006 = false;
+        members[id].positions.pos000010 = false;
         break;
       case 'pos000006':
-        newMembers[id].positions.pos000003 = false;
-        newMembers[id].positions.pos000010 = false;
+        members[id].positions.pos000003 = false;
+        members[id].positions.pos000010 = false;
         break;
       case 'pos000010':
-        newMembers[id].positions.pos000003 = false;
-        newMembers[id].positions.pos000006 = false;
+        members[id].positions.pos000003 = false;
+        members[id].positions.pos000006 = false;
         break;
       case 'pos000004':
-        newMembers[id].positions.pos000007 = false;
-        newMembers[id].positions.pos000009 = false;
+        members[id].positions.pos000007 = false;
+        members[id].positions.pos000009 = false;
         break;
       case 'pos000007':
-        newMembers[id].positions.pos000004 = false;
-        newMembers[id].positions.pos000009 = false;
+        members[id].positions.pos000004 = false;
+        members[id].positions.pos000009 = false;
         break;
       case 'pos000009':
-        newMembers[id].positions.pos000004 = false;
-        newMembers[id].positions.pos000007 = false;
+        members[id].positions.pos000004 = false;
+        members[id].positions.pos000007 = false;
         break;
       default:
         // Nothing
     }
-    newMembers[id].positions[value] = !newMembers[id].positions[value];
+    members[id].positions[value] = !members[id].positions[value];
   }
 
-  dispatch(setNewMembers(newMembers));
+  dispatch(setNewMembers(members));
+
+  // Lazy validation
+  setTimeout(dispatch(checkValidation()), 1000);
+};
+
+export const updateExistingMember = (event, id) => (dispatch, getState) => {
+  // Empty clipboard input
+  dispatch(setTempInput(''));
+
+  const members = [...getState().creator.newUnitMembers];
+
+  const index = _.findIndex(members, o => o.id === id);
+
+  const { value } = event.target;
+
+  // Toggles positions that can't be with the same member
+  switch (value) {
+    case 'pos000002':
+      members[index].positions.pos000005 = false;
+      members[index].positions.pos000008 = false;
+      break;
+    case 'pos000005':
+      members[index].positions.pos000002 = false;
+      members[index].positions.pos000008 = false;
+      break;
+    case 'pos000008':
+      members[index].positions.pos000002 = false;
+      members[index].positions.pos000005 = false;
+      break;
+    case 'pos000003':
+      members[index].positions.pos000006 = false;
+      members[index].positions.pos000010 = false;
+      break;
+    case 'pos000006':
+      members[index].positions.pos000003 = false;
+      members[index].positions.pos000010 = false;
+      break;
+    case 'pos000010':
+      members[index].positions.pos000003 = false;
+      members[index].positions.pos000006 = false;
+      break;
+    case 'pos000004':
+      members[index].positions.pos000007 = false;
+      members[index].positions.pos000009 = false;
+      break;
+    case 'pos000007':
+      members[index].positions.pos000004 = false;
+      members[index].positions.pos000009 = false;
+      break;
+    case 'pos000009':
+      members[index].positions.pos000004 = false;
+      members[index].positions.pos000007 = false;
+      break;
+    default:
+      // Nothing
+  }
+  members[index].positions[value] = !members[index].positions[value];
+
+  dispatch(setNewUnitMembers(members));
 
   // Lazy validation
   setTimeout(dispatch(checkValidation()), 1000);
@@ -425,7 +534,7 @@ export const updateNewMember = (event, id, field) => (dispatch, getState) => {
 
 export const removePosition = (event, id, field) => (dispatch, getState) => {
   event.preventDefault();
-  console.log('REMOVE POSITION');
+
   // Empty clipboard input
   dispatch(setTempInput(''));
 
@@ -437,151 +546,6 @@ export const removePosition = (event, id, field) => (dispatch, getState) => {
 
   // Lazy validation
   setTimeout(dispatch(checkValidation()), 1000);
-};
-
-export const generateMembersJSON = (evt, skipClipboard = false) => (dispatch, getState) => {
-  console.log('Generating Members JSON...');
-  const newMembers = _.cloneDeep(getState().creator.newMembers);
-
-  let id = getLatestId('members');
-
-  const newJSON = {};
-
-  // Loop through members, check fields and replace id
-  Object.keys(newMembers).forEach((key) => {
-    const currentMember = newMembers[key];
-    // Replace id
-    currentMember.id = id;
-    if (!currentMember.name) {
-      return alert('Member missing Name');
-    }
-    if (!currentMember.birthdate) {
-      return alert('Member missing Birthdate');
-    }
-    if (!currentMember.colorId) {
-      return alert('Member missing Color');
-    }
-    if (currentMember.positions.length === 0) {
-      return alert('Member missing Position');
-    }
-    // Sort positions
-    currentMember.positions = currentMember.positions.sort((a, b) => a - b);
-    // Convert birth date
-    currentMember.birthdate = +currentMember.birthdate.split('-').join('');
-    newJSON[id] = currentMember;
-    id += 1;
-  });
-
-  if (!skipClipboard) {
-    const clipboard = JSON.stringify(newJSON, null, 2);
-    dispatch(setTempInput(clipboard));
-    copyToClipboard();
-  }
-
-  // Get Existing Members, Get newJson, add them together and order by birthdayDate
-  const existingMembers = {};
-  const existingMembersIds = getState().creator.newUnitMembers;
-  const membersDatabase = getState().database.members;
-  existingMembersIds.forEach((mId) => {
-    const member = _.cloneDeep(membersDatabase[mId]);
-    existingMembers[mId] = member;
-  });
-  const allMembers = Object.assign({}, newJSON, existingMembers);
-
-  const ids = _.orderBy(allMembers, ['birthdate'], ['asc']).map(member => member.id);
-
-  return { members: newJSON, ids };
-};
-
-export const generateUnitJSON = (membersIds, skipClipboard = false) => (dispatch, getState) => {
-  console.log('Generating Unit JSON...');
-  const bandId = +getState().creator.loadedArtist;
-  const unitName = getState().creator.newUnitName;
-  const debutYear = getState().creator.newUnitDebutYear;
-  const official = getState().creator.newUnitOfficial || false;
-  const id = getLatestId('units');
-
-  if (!Array.isArray(membersIds)) {
-    membersIds = ['ADD-MEMBER-IDS'];
-  }
-
-  if (!unitName) {
-    return alert('Missing Band Name');
-  }
-
-  const newJSON = {
-    id,
-    bandId,
-    name: unitName,
-    debutYear,
-    official,
-    members: membersIds,
-    songs: [],
-  };
-
-  if (!skipClipboard) {
-    const clipboard = JSON.stringify(newJSON, null, 2);
-    dispatch(setTempInput(clipboard));
-    copyToClipboard();
-  }
-
-  return { unit: newJSON, id };
-};
-
-export const generateArtistJSON = (unitId, skipClipboard = false) => (dispatch, getState) => {
-  console.log('Generating Artist JSON...');
-  const artistName = getState().creator.newArtistName;
-  const otherNames = getState().creator.newArtistOtherNames;
-  const genre = getState().creator.newArtistGenre;
-  let units = [...getState().creator.newArtistUnits];
-  const { loadedUnit } = getState().creator;
-  const id = getLatestId('artists');
-
-  if (typeof unitId === 'number' || typeof unitId === 'string') {
-    unitId = [unitId];
-  } else if (loadedUnit) {
-    unitId = [loadedUnit];
-  } else {
-    unitId = [];
-  }
-  units = units.concat(unitId);
-
-  if (!artistName) {
-    return alert('Missing Artist Name');
-  }
-
-  const newJSON = {
-    id,
-    name: artistName,
-    otherNames,
-    genre,
-    units,
-  };
-
-  if (!skipClipboard) {
-    const clipboard = JSON.stringify(newJSON, null, 2);
-    dispatch(setTempInput(clipboard));
-    copyToClipboard();
-  }
-
-  return { artist: newJSON };
-};
-
-export const generateFullJSON = event => (dispatch) => {
-  console.log('Generating Full JSON...');
-
-  const members = dispatch(generateMembersJSON(event, true));
-  const unit = dispatch(generateUnitJSON(members.ids, true));
-  const artist = dispatch(generateArtistJSON(unit.id, true));
-  const newJSON = {};
-
-  newJSON.artist = artist.artist;
-  newJSON.unit = unit.unit;
-  newJSON.members = members.members;
-
-  const clipboard = JSON.stringify(newJSON, null, 2);
-  dispatch(setTempInput(clipboard));
-  copyToClipboard();
 };
 
 // NEW STUFF
@@ -698,11 +662,16 @@ export const checkValidation = () => (dispatch, getState) => {
 
 export const reset = () => dispatch => dispatch();
 
-export const clearPositions = (e, id) => (dispatch, getState) => {
+export const clearPositions = (e, id, isExisting = false) => (dispatch, getState) => {
   e.preventDefault();
-
-  const newMembers = Object.assign({}, getState().creator.newMembers);
-  const validation = Object.assign({}, getState().creator.validation);
+  let members;
+  let index;
+  if (isExisting) {
+    members = [...getState().creator.newUnitMembers];
+    index = _.findIndex(members, o => o.id === id);
+  } else {
+    members = Object.assign({}, getState().creator.newMembers);
+  }
 
   const positions = {
     pos000001: false,
@@ -719,8 +688,16 @@ export const clearPositions = (e, id) => (dispatch, getState) => {
     pos000012: false,
     pos000013: false,
   };
-  newMembers[id].positions = positions;
-  dispatch(setNewMembers(newMembers));
+
+  if (isExisting) {
+    members[index].positions = positions;
+    dispatch(setNewUnitMembers(members));
+  } else {
+    members[id].positions = positions;
+    dispatch(setNewMembers(members));
+  }
+
+  const validation = Object.assign({}, getState().creator.validation);
   validation.members = 'box-invalid';
   dispatch(setValidation(validation));
 };
@@ -729,30 +706,37 @@ export const save = () => (dispatch, getState) => {
   const { creator } = getState();
 
   const body = {
-    wasArtistLoaded: creator.loadedArtist > 0,
+    wasArtistLoaded: creator.loadedArtist,
     artist: {
       genre: creator.newArtistGenre,
       name: creator.newArtistName,
       otherNames: creator.newArtistOtherNames,
+      units: creator.newArtistUnits,
     },
-    wasUnitLoaded: creator.loadedUnit > 0,
+    wasUnitLoaded: creator.loadedUnit,
     unit: {
       artistId: creator.loadedArtist,
       debutYear: creator.newUnitDebutYear,
-      members: creator.newUnitMembers,
       name: creator.newUnitName,
       official: creator.newUnitOfficial,
     },
+    existingMembers: [],
     members: [],
   };
 
   // Prepare members
+  creator.newUnitMembers.forEach((member) => {
+    const newMember = _.cloneDeep(member);
+    newMember.positions = getTrueKeys(newMember.positions);
+    body.existingMembers.push(newMember);
+  });
   Object.keys(creator.newMembers).forEach((key) => {
     const newMember = _.cloneDeep(creator.newMembers[key]);
     newMember.birthdate = +newMember.birthdate.split('-').join('');
     newMember.positions = getTrueKeys(newMember.positions);
     body.members.push(newMember);
   });
+
   console.log(body);
   API.post('/completeArtist', body);
 };
