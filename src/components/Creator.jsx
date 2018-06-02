@@ -44,7 +44,6 @@ class Creator extends Component {
     }
 
     const CREATOR = this.props.creator;
-    const ADMIN = this.props.admin;
 
     const tabs = [{ id: 'artist' }, { id: 'unit' }, { id: 'members' }, { id: 'review' }];
     return (

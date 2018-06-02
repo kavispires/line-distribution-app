@@ -1,7 +1,10 @@
+/* eslint wrap-iife: 0 */
+/* eslint func-names: 0 */
+
 import _ from 'lodash';
 
 import store from './store';
-import DB from './database/index.js';
+import DB from './database/index';
 import { ALTERNATIVE_COLOR_LIST } from './constants';
 
 // From number of members, determine the box-size class for boxes in distribution
@@ -53,7 +56,7 @@ export const loadLocalStorage = () => {
   return JSON.parse(data);
 };
 
-export const saveLocalStorage = (obj, type) => {
+export const saveLocalStorage = (obj) => {
   console.log('Saving to localStorage...');
   window.localStorage.setItem('linedistribution', JSON.stringify(obj));
 };
@@ -63,9 +66,9 @@ export const copyToClipboard = (element = 'temp-input') => {
   setTimeout(() => {
     const copyText = document.getElementById(element);
     copyText.select();
-    document.execCommand("Copy");
-    console.log(`Copied to clipboard`);
-    alert(`Text copied to clipboard!`);
+    document.execCommand('Copy');
+    console.log('Copied to clipboard');
+    alert('Text copied to clipboard!');
   }, 1000);
 };
 
@@ -221,20 +224,20 @@ export const generatePushID = (function () {
   // "incremented" by one.
   const lastRandChars = [];
 
-  return function() {
-    var now = new Date().getTime();
-    var duplicateTime = (now === lastPushTime);
+  return function () {
+    let now = new Date().getTime();
+    const duplicateTime = (now === lastPushTime);
     lastPushTime = now;
-
-    var timeStampChars = new Array(8);
-    for (var i = 7; i >= 0; i--) {
+    let i;
+    const timeStampChars = new Array(8);
+    for (i = 7; i >= 0; i--) {
       timeStampChars[i] = PUSH_CHARS.charAt(now % 64);
       // NOTE: Can't use << here because javascript will convert to int and lose the upper bits.
       now = Math.floor(now / 64);
     }
     if (now !== 0) throw new Error('We should have converted the entire timestamp.');
 
-    var id = timeStampChars.join('');
+    let id = timeStampChars.join('');
 
     if (!duplicateTime) {
       for (i = 0; i < 12; i++) {
@@ -250,7 +253,7 @@ export const generatePushID = (function () {
     for (i = 0; i < 12; i++) {
       id += PUSH_CHARS.charAt(lastRandChars[i]);
     }
-    if(id.length != 20) throw new Error('Length should be 20.');
+    if (id.length !== 20) throw new Error('Length should be 20.');
 
     return id;
   };

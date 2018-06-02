@@ -5,9 +5,7 @@ import PositionIcons from './icons/PositionIcons';
 import { makeIdNumber } from '../utils';
 import { POS_LIST } from '../constants';
 
-const CreatorMember = ({member, props}) => {
-
-  const POSITIONS = props.admin.positions;
+const CreatorMember = ({ member, props }) => {
   const COLOR_NAME = props.admin.colors[member.colorId].name;
 
   return (

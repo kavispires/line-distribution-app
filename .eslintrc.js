@@ -12,5 +12,6 @@ module.exports = {
       "jsx-a11y/anchor-is-valid": "off",
       "no-use-before-define": "off",
       "jsx-a11y/label-has-for": "off",
+      "no-plusplus": "off"
     }
 };

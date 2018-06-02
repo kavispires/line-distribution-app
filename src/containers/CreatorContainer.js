@@ -4,10 +4,6 @@ import { withRouter } from 'react-router-dom';
 import Creator from '../components/Creator';
 
 import {
-  fetchCompleteDatabase,
-} from '../reducers/admin';
-
-import {
   addNewMember,
   checkValidation,
   clearPositions,

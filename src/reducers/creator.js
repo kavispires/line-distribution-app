@@ -3,9 +3,7 @@ import _ from 'lodash';
 import API from '../api';
 
 import {
-  copyToClipboard,
   getAlternativeColor,
-  getLatestId,
   getTrueKeys,
   generatePushID,
 } from '../utils';

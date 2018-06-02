@@ -102,11 +102,9 @@ class Distribute extends Component {
     const {
       durations,
       percentages,
-      decrease,
       who,
       showLyrics,
     } = DISTRIBUTE;
-    const decreaseClass = decrease ? 'btn-decrease' : null;
 
     // Define who sentence
     let whoSentence = '...';

@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { copyToClipboard } from '../utils';
 
 import API from '../api';
 
@@ -10,7 +9,6 @@ const SET_RESULTS = 'SET_RESULTS';
 const SET_RESULT_TYPE = 'SET_RESULT_TYPE';
 const SET_SONG_TITLE = 'SET_SONG_TITLE';
 const SET_SONG_TYPE = 'SET_SONG_TYPE';
-const SET_TEMP_INPUT = 'SET_TEMP_INPUT';
 const TOGGLE_MODAL = 'TOGGLE_MODAL';
 
 /* --------------   ACTION CREATORS   -------------- */
@@ -20,7 +18,6 @@ export const setResults = payload => dispatch => dispatch({ type: SET_RESULTS, p
 export const setResultType = payload => dispatch => dispatch({ type: SET_RESULT_TYPE, payload });
 export const setSongTitle = payload => dispatch => dispatch({ type: SET_SONG_TITLE, payload });
 export const setSongType = payload => dispatch => dispatch({ type: SET_SONG_TYPE, payload });
-const setTempInput = payload => dispatch => dispatch({ type: SET_TEMP_INPUT, payload });
 export const toogleModal = payload => dispatch => dispatch({ type: TOGGLE_MODAL, payload });
 
 /* -----------------   REDUCERS   ------------------ */
@@ -57,10 +54,6 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_SONG_TYPE:
       newState.songType = action.payload;
-      break;
-
-    case SET_TEMP_INPUT:
-      newState.tempInput = action.payload;
       break;
 
     case TOGGLE_MODAL:

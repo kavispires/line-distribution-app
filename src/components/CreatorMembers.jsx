@@ -5,11 +5,10 @@ import _ from 'lodash';
 import CreatorNewMember from './CreatorNewMember';
 import CreatorExistingMember from './CreatorExistingMember';
 
-const CreatorMembers = ({props}) => {
+const CreatorMembers = ({ props }) => {
   const sortedMembers = _.sortBy(props.admin.members, ['name']);
 
   const CREATOR = props.creator;
-  const ADMIN = props.admin
 
   return (
     <form className="creator-form">

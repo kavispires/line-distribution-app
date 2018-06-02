@@ -8,7 +8,6 @@ import { POS_LIST } from '../constants';
 
 const CreatorNewMember = ({id, props}) => {
   const COLORS = props.admin.colors;
-  const POSITIONS = props.admin.positions;
   const MEMBER = props.creator.newMembers[id];
 
   let selectedColor = 'temp';
