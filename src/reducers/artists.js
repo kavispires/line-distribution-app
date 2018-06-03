@@ -9,8 +9,10 @@ const SET_ARTIST_LIST_BACK_UP = 'SET_ARTISTS_LIST_BACK_UP';
 const SET_ARTIST_PAGE_TAB = 'SET_ARTIST_PAGE_TAB';
 const SET_DISTRIBUTION_PER_MEMBER = 'SET_DISTRIBUTION_PER_MEMBER';
 const SET_DISTRIBUTION_PER_MEMBER_OFFICIAL = 'SET_DISTRIBUTION_PER_MEMBER_OFFICIAL';
+const SET_DISTRIBUTION_PER_MEMBER_WOULD = 'SET_DISTRIBUTION_PER_MEMBER_WOULD';
 const SET_DISTRIBUTION_TOTAL = 'SET_DISTRIBUTION_TOTAL';
 const SET_DISTRIBUTION_TOTAL_OFFICIAL = 'SET_DISTRIBUTION_TOTAL_OFFICIAL';
+const SET_DISTRIBUTION_TOTAL_WOULD = 'SET_DISTRIBUTION_TOTAL_WOULD';
 const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
 const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
 const SET_SELECTED_UNIT_SONGS = 'SET_SELECTED_UNIT_SONGS';
@@ -25,8 +27,10 @@ export const setArtistListBackUp = payload => dispatch => dispatch({ type: SET_A
 export const setArtistPageTab = payload => dispatch => dispatch({ type: SET_ARTIST_PAGE_TAB, payload });
 export const setDistributionPerMember = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER, payload });
 export const setDistributionPerMemberOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_OFFICIAL, payload });
+export const setDistributionPerMemberWould = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_WOULD, payload });
 export const setDistributionTotal = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL, payload });
 export const setDistributionTotalOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL_OFFICIAL, payload });
+export const setDistributionTotalWould = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL_WOULD, payload });
 export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
 export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
 export const setSelectedUnitSongs = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT_SONGS, payload });
@@ -42,8 +46,10 @@ export const initialState = {
   artistPageTab: 0,
   distributionPerMember: {},
   distributionPerMemberOfficial: {},
+  distributionPerMemberWould: {},
   distributionTotal: 0,
   distributionTotalOfficial: 0,
+  distributionTotalWould: 0,
   selectedArtist: {},
   selectedUnit: {},
   selectedUnitSongs: [],
@@ -76,12 +82,20 @@ export default function reducer(prevState = initialState, action) {
       newState.distributionPerMemberOfficial = action.payload;
       break;
 
+    case SET_DISTRIBUTION_PER_MEMBER_WOULD:
+      newState.distributionPerMemberWould = action.payload;
+      break;
+
     case SET_DISTRIBUTION_TOTAL:
       newState.distributionTotal = action.payload;
       break;
 
     case SET_DISTRIBUTION_TOTAL_OFFICIAL:
       newState.distributionTotalOfficial = action.payload;
+      break;
+
+    case SET_DISTRIBUTION_TOTAL_WOULD:
+      newState.distributionTotalWould = action.payload;
       break;
 
     case SET_SELECTED_ARTIST:
@@ -164,8 +178,10 @@ export const filterArtists = e => (dispatch, getState) => {
 const parseUnitSongs = unit => (dispatch) => {
   const distributionPerMember = {};
   const distributionPerMemberOfficial = {};
+  const distributionPerMemberWould = {};
   let distributionTotal = 0;
   let distributionTotalOfficial = 0;
+  let distributionTotalWould = 0;
 
   unit.songs.forEach((song) => {
     const { distribution } = song;
@@ -194,7 +210,7 @@ const parseUnitSongs = unit => (dispatch) => {
         memberTotal,
       });
       totalPercentage += memberTotal;
-      // Add to state/reducer
+      // Add to
       if (distributionPerMember[key] === undefined) {
         distributionPerMember[key] = distDict[key];
       } else {
@@ -206,11 +222,19 @@ const parseUnitSongs = unit => (dispatch) => {
         } else {
           distributionPerMemberOfficial[key] += distDict[key];
         }
+      } else {
+        if (distributionPerMemberWould[key] === undefined) {
+          distributionPerMemberWould[key] = distDict[key];
+        } else {
+          distributionPerMemberWould[key] += distDict[key];
+        }
       }
     }
     distributionTotal += total;
     if (song.type === 'official') {
       distributionTotalOfficial += total;
+    } else {
+      distributionTotalWould += total;
     }
 
     const result = _.orderBy(distTotals, ['memberTotal'], ['desc']);
@@ -227,8 +251,10 @@ const parseUnitSongs = unit => (dispatch) => {
 
   dispatch(setDistributionPerMember(distributionPerMember));
   dispatch(setDistributionPerMemberOfficial(distributionPerMemberOfficial));
+  dispatch(setDistributionPerMemberWould(distributionPerMemberWould));
   dispatch(setDistributionTotal(distributionTotal));
   dispatch(setDistributionTotalOfficial(distributionTotalOfficial));
+  dispatch(setDistributionTotalWould(distributionTotalWould));
   dispatch(setSelectedUnit(unit));
 };
 
