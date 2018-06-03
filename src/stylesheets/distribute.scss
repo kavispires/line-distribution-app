@@ -2,6 +2,16 @@
 
 .container-distribution {
   display: flex;
+
+  .options {
+    position: absolute;
+    top: 0;
+    right: $halfUnit;
+
+    & > * {
+      margin-left: $unit;
+    }
+  }
 }
 
 .section-lyrics {
@@ -177,12 +187,3 @@
   }
 }
 
-.options {
-  position: absolute;
-  top: 0;
-  right: $halfUnit;
-
-  & > * {
-    margin-left: $unit;
-  }
-}

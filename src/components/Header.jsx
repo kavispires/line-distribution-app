@@ -13,14 +13,21 @@ const Header = ({ props }) => {
   return (
     <header className="app-header">
       <div className="app-header-nav">
-        <img className="app-logo" src={logo} alt="Logo" onClick={handleLogoClick} />
+        <img
+          className="app-logo"
+          src={logo}
+          alt="Logo"
+          role="button" // eslint-disable-line
+          tabIndex={0}
+          onClick={handleLogoClick}
+        />
         <nav className="app-nav">
           <Link to="/artists">Artists</Link>
           <Link to="/distribute">Distribute</Link>
           <Link to="/lyrics">Lyrics</Link>
           <Link to="/songs">Songs</Link>
           {
-            props.user.isAdmin ? <span onClick={props.toggleAdminTools}>Admin Tools</span> : null
+            props.user.isAdmin ? <span role="button" tabIndex={0} onClick={props.toggleAdminTools}>Admin Tools</span> : null
           }
         </nav>
 
@@ -57,10 +64,11 @@ const Header = ({ props }) => {
           <div className="app-header-admin">
             <span className="app-logo-placeholder" />
             <nav className="app-nav">
-              <Link to="/create">Create</Link>
-              <Link to="/colorsheet">Color Sheet</Link>
-              <Link to="/iconsheet">Icon Sheet</Link>
-              <Link to="/database">Database</Link>
+              <Link to="/admin/create">Create</Link>
+              <Link to="/admin/colorsheet">Color Sheet</Link>
+              <Link to="/admin/iconsheet">Icon Sheet</Link>
+              <Link to="/admin/romanizer">Romanizer</Link>
+              <Link to="/admin/database">Database</Link>
             </nav>
           </div>
         ) : null

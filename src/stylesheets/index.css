@@ -6245,6 +6245,12 @@ input:checked + .slider:before {
 
 .container-distribution {
   display: flex; }
+  .container-distribution .options {
+    position: absolute;
+    top: 0;
+    right: 6px; }
+    .container-distribution .options > * {
+      margin-left: 12px; }
 
 .section-lyrics {
   padding-left: 12px;
@@ -6877,13 +6883,6 @@ input:checked + .slider:before {
       display: inline-block;
       min-width: auto; }
 
-.options {
-  position: absolute;
-  top: 0;
-  right: 6px; }
-  .options > * {
-    margin-left: 12px; }
-
 .results {
   padding: 0; }
 
@@ -7085,7 +7084,7 @@ input:checked + .slider:before {
   .lyrics-container .editor, .lyrics-container .viewer {
     width: 100%;
     padding: 6px;
-    min-height: 300px;
+    min-height: 600px;
     resize: none;
     border: 1px solid #707070; }
   .lyrics-container .viewer {
@@ -7115,6 +7114,24 @@ input:checked + .slider:before {
     padding: 3px 6px;
     margin-left: 6px;
     border-radius: 3px; }
+
+.romanizer .options {
+  display: flex;
+  list-style: none;
+  padding: 0; }
+  .romanizer .options > li {
+    margin-right: 12px; }
+    .romanizer .options > li > input {
+      margin-right: 6px; }
+
+.romanizer-container {
+  display: flex; }
+  .romanizer-container .editor, .romanizer-container .section-lyrics .viewer, .section-lyrics .romanizer-container .viewer, .romanizer-container .lyrics-container .viewer, .lyrics-container .romanizer-container .viewer, .romanizer-container .viewer {
+    width: 50%;
+    max-width: 600px;
+    min-height: 600px;
+    resize: none;
+    border: 1px solid #707070; }
 
 .hidden {
   display: none !important; }
