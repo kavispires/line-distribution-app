@@ -30,6 +30,9 @@ class Romanizer extends Component {
 
     const ADMIN = this.props.admin;
 
+    console.log(ADMIN.hangul.split('\n').join(' '));
+
+
     return (
       <div className="container romanizer">
         <h1>Romanizer</h1>
