@@ -39,3 +39,11 @@
   @extend .container-center;
   flex-direction: column;
 }
+
+.container-lyrics {
+  max-height: 96vh;
+}
+
+.container-lyrics-menu {
+  position: sticky;
+}

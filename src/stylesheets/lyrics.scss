@@ -34,6 +34,7 @@
 .current-artist {
   border: 1px solid $lightGrey;
   padding: 0 $unit;
+  position: relative;
 }
 
 .current-artist-members {
@@ -49,5 +50,16 @@
     padding: $quarterUnit $halfUnit;
     margin-left: $halfUnit;
     border-radius: $quarterUnit;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(130%);
+    }
   }
+}
+
+.toggle-brackets {
+  position: absolute;
+  top: -8px;
+  right: 6px;
 }

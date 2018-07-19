@@ -108,7 +108,7 @@ class Artist extends Component {
               return (
                 <li
                   key={`tab-${name}`}
-                  className={`tab ${+APP.artistPageTab === id ? 'selected' : ''}`}
+                  className={`tab ${id === ARTISTS.selectedUnit.id ? 'selected' : ''}`}
                   id={id}
                   onClick={() => this.props.updateSelectedUnit(id)}
                 >

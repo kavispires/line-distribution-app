@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const LyricsEditor = ({ placeholder, action, defaultValue }) => (
   <textarea
+    id="lyrics-editor"
     className="editor"
     placeholder={placeholder}
     onChange={e => action(e)}

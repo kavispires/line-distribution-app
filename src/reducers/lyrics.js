@@ -1,14 +1,18 @@
+import { userInfo } from "os";
+
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_FORMATTED_LYRICS = 'SET_FORMATTED_LYRICS';
 const SET_LYRICS = 'SET_LYRICS';
 const SET_SHOW_RULES = 'SET_SHOW_RULES';
+const SET_USE_BRACKETS = 'SET_USE_BRACKETS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
 export const setFormattedLyrics = payload => dispatch => dispatch({ type: SET_FORMATTED_LYRICS, payload });
 export const setLyrics = payload => dispatch => dispatch({ type: SET_LYRICS, payload });
 export const setShowRules = payload => dispatch => dispatch({ type: SET_SHOW_RULES, payload });
+export const setUseBrackets = payload => dispatch => dispatch({ type: SET_USE_BRACKETS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -16,6 +20,7 @@ const initialState = {
   formattedLyrics: [],
   lyrics: '',
   showRules: false,
+  useBrackets: true,
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -32,6 +37,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_SHOW_RULES:
       newState.showRules = action.payload;
+      break;
+
+    case SET_USE_BRACKETS:
+      newState.useBrackets = action.payload;
       break;
 
     default:
@@ -234,4 +243,12 @@ export const toggleRules = () => (dispatch, getState) => {
 export const resetLyrics = () => (dispatch) => {
   dispatch(setLyrics(''));
   dispatch(setFormattedLyrics([]));
+};
+
+export const toggleBrackets = value => (dispatch, getState) => {
+  let useBrackets;
+  if (typeof value !== 'boolean') {
+    useBrackets = !getState().lyrics.useBrackets;
+  }
+  dispatch(setUseBrackets(useBrackets));
 };

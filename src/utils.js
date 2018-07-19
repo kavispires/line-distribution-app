@@ -258,3 +258,11 @@ export const generatePushID = (function () {
     return id;
   };
 })();
+
+export const insertAtCursor = (field, valueToInsert) => {
+  if ((field.selectionStart || field.selectionStart === 0) && field.selectionStart === field.selectionEnd) {
+    const startPos = field.selectionStart;
+    const endPos = field.selectionEnd;
+    field.value = field.value.substring(0, startPos) + valueToInsert + field.value.substring(endPos, field.value.length);
+  }
+};

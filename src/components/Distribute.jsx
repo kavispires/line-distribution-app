@@ -114,8 +114,6 @@ class Distribute extends Component {
       whoSentence = `${who.join(', ')} are singing.`;
     }
 
-    // Define Switch Button labels
-    const switchLabels = { left: '', right: '' };
     // Define toggling classes for lyrics panel
     const sectionLyricsClasses = showLyrics ? 'section-lyrics-on' : 'section-lyrics-off';
     // Define placeholder for lyrics input text
@@ -142,7 +140,7 @@ class Distribute extends Component {
               <button className="btn-lg btn-fx-150" onClick={() => this.props.history.push('/results')}>
                 <Icon type="results" /> Results
               </button>
-              <span className="toggle-lyrics"> Lyrics <SwitchToggle action={this.props.toggleLyrics} labels={switchLabels} /></span>
+              <span className="toggle-lyrics"> Lyrics <SwitchToggle action={this.props.toggleLyrics} /></span>
             </div>
             <h2>{CURRENT_UNIT.bandName}</h2>
             <h3 className="current-singer">{ whoSentence }</h3>

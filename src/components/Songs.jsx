@@ -51,6 +51,7 @@ class Songs extends Component {
       const song = SONGS.songList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
       this.props.loadSong(song);
       setTimeout(() => {
+        this.props.toggleBrackets(false);
         this.props.history.push('/lyrics/');
       }, 500);
     };
@@ -101,6 +102,7 @@ Songs.propTypes = {
   loadSong: PropTypes.func.isRequired,
   loadSongs: PropTypes.func.isRequired,
   songsFilter: PropTypes.func.isRequired,
+  toggleBrackets: PropTypes.func.isRequired,
 };
 
 export default Songs;
