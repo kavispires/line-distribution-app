@@ -49,5 +49,10 @@
     padding: $quarterUnit $halfUnit;
     margin-left: $halfUnit;
     border-radius: $quarterUnit;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(130%);
+    }
   }
 }

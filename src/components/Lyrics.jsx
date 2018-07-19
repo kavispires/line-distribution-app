@@ -11,6 +11,8 @@ import LyricsViewer from './LyricsViewer';
 import PositionIcons from './icons/PositionIcons';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
+import { insertAtCursor } from '../utils';
+
 class Lyrics extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.app.currentUnit !== this.props.app.currentUnit) {
@@ -38,6 +40,13 @@ class Lyrics extends Component {
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
     const CURRENT_UNIT = this.props.app.currentUnit;
 
+    const insertMember = (member) => {
+      const el = document.getElementById('lyrics-editor');
+      const str = `[${member.toUpperCase()}] `;
+      insertAtCursor(el, str);
+      this.props.handleParser(el.value);
+    };
+
     if (CURRENT_UNIT.id === undefined) {
       return (
         <div className="container-flex">
@@ -52,60 +61,64 @@ class Lyrics extends Component {
     }
 
     return (
-      <div className="container">
-        <h1>Lyrics<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
-        {
-          CURRENT_UNIT ?
-            <div className="current-artist">
-              <p>Current Band: <b>{CURRENT_UNIT.artist.name}</b></p>
-              <div className="current-artist-members">
-                <p>Members:</p>
-                <ul className="members-list">
-                  {
-                    CURRENT_UNIT.members.map((member, i) => (
-                      <li
-                        key={`pill-${member.id}`}
-                        className={`member-list-item ${CURRENT_UNIT.members[i].color.class}`}
-                      >
-                        {member.name}
-                        <PositionIcons
-                          memberId={member.id}
-                          positions={member.positions.map(pos => pos.id)}
-                        />
-                      </li>
-                    ))
-                  }
-                </ul>
+      <div className="container container-lyrics">
+        <div className="container container-lyrics-menu">
+          <h1>Lyrics<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
+          {
+            CURRENT_UNIT ?
+              <div className="current-artist">
+                <p>Current Band: <b>{CURRENT_UNIT.artist.name}</b></p>
+                <div className="current-artist-members">
+                  <p>Members:</p>
+                  <ul className="members-list">
+                    {
+                      CURRENT_UNIT.members.map((member, i) => (
+                        <li
+                          key={`pill-${member.id}`}
+                          className={`member-list-item ${CURRENT_UNIT.members[i].color.class}`}
+                          onClick={() => insertMember(member.name)}
+                        >
+                          {member.name}
+                          <PositionIcons
+                            memberId={member.id}
+                            positions={member.positions.map(pos => pos.id)}
+                          />
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
               </div>
-            </div>
-            :
-            <p>You must select an artist first for the parser to work properly.</p>
-        }
-        <section className="container">
-          <button
-            className="btn"
-            onClick={this.props.toggleRules}
-          >
+              :
+              <p>You must select an artist first for the parser to work properly.</p>
+          }
+          <section className="container">
+            <button
+              className="btn"
+              onClick={this.props.toggleRules}
+            >
+              {
+                LYRICS.showRules ?
+                  <span><Icon type="hide" /> Hide Instructions</span>
+                  :
+                  <span><Icon type="view" /> Show Instructions</span>
+              }
+            </button>
             {
               LYRICS.showRules ?
-                <span><Icon type="hide" /> Hide Instructions</span>
-                :
-                <span><Icon type="view" /> Show Instructions</span>
+                <ul className="lyrics-rules">
+                  <li>Assign who is singing but typing the member&apos;s name in square brackets. e.g.: <i>[BOB] <span className="color-1"> I can sing </span></i></li>
+                  <li>You may have multiple lines and members on the same line. e.g.: <i>[BOB] <span className="color-1"> I sing </span> [JACK] <span className="color-25"> I dance </span></i></li>
+                  <li>If members share the same line, use / with no spaces. e.g.: <i>[BOB/JACK] <span className="color-1-25"> We can sing </span></i></li>
+                  <li>If a member sings an ad-lib or a small part of the line, you may put her name in parenthesis.. e.g.: <i>[BOB (MEG)] <span className="color-1"> We can sing </span> <span className="color-15"> (Oh yeah) </span></i></li>
+                  <li>If the next line doesn&apos;t have an assigned member, parser will repeat the member from the previous line.</li>
+                  <li>If previous line is blank, parser will consider the current line an &quot;All&quot; line</li>
+                  <li>HINT: You may click  on the member list at the top of the page to insert a bracketed member [NAME] at the cursor into the lyrics!</li>
+                </ul>
+              : null
             }
-          </button>
-          {
-            LYRICS.showRules ?
-              <ul className="lyrics-rules">
-                <li>Assign who is singing but typing the member&apos;s name in square brackets. e.g.: <i>[BOB] <span className="color-1"> I can sing </span></i></li>
-                <li>You may have multiple lines and members on the same line. e.g.: <i>[BOB] <span className="color-1"> I sing </span> [JACK] <span className="color-25"> I dance </span></i></li>
-                <li>If members share the same line, use / with no spaces. e.g.: <i>[BOB/JACK] <span className="color-1-25"> We can sing </span></i></li>
-                <li>If a member sings an ad-lib or a small part of the line, you may put her name in parenthesis.. e.g.: <i>[BOB (MEG)] <span className="color-1"> We can sing </span> <span className="color-15"> (Oh yeah) </span></i></li>
-                <li>If the next line doesn&apos;t have an assigned member, parser will repeat the member from the previous line.</li>
-                <li>If previous line is blank, parser will consider the current line an &quot;All&quot; line</li>
-              </ul>
-            : null
-          }
-        </section>
+          </section>
+        </div>
         <section className="lyrics-container">
           <LyricsEditor
             placeholder={placeholder}
