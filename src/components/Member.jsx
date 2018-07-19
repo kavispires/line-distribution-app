@@ -9,11 +9,15 @@ const Member = ({ member, props }) => {
   // Calculate averages
   let average = 0;
   let averageOfficial = 0;
+  let averageWould = 0;
   if (ARTISTS.distributionPerMember[member.id]) {
     average = Math.round((ARTISTS.distributionPerMember[member.id] * 100) / ARTISTS.distributionTotal);
   }
   if (ARTISTS.distributionPerMemberOfficial[member.id]) {
     averageOfficial = Math.round((ARTISTS.distributionPerMemberOfficial[member.id] * 100) / ARTISTS.distributionTotalOfficial);
+  }
+  if (ARTISTS.distributionPerMemberWould[member.id]) {
+    averageWould = Math.round((ARTISTS.distributionPerMemberWould[member.id] * 100) / ARTISTS.distributionTotalWould);
   }
 
   return (
@@ -25,6 +29,7 @@ const Member = ({ member, props }) => {
       </span>
       <p><b>Date of Birth:</b> {parseBirthDate(member.birthdate)}</p>
       <p><b>Average per Official Song:</b> {averageOfficial}%</p>
+      <p><b>Average per Custom Song:</b> {averageWould}%</p>
       <p><b>Total Average per Song:</b> {average}%</p>
       <p><b>Positions:</b></p>
       <ul className="pill-positions">

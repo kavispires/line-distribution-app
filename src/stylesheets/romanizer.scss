@@ -1,0 +1,28 @@
+@import './variables.scss';
+
+.romanizer {
+  .options {
+    display: flex;
+    list-style: none;
+    padding: 0;
+
+    & > li {
+      margin-right: $unit;
+
+      & > input {
+        margin-right: $halfUnit;
+      }
+    }
+  }
+}
+.romanizer-container {
+  display: flex;
+
+  .editor, .viewer {
+    width: 50%;
+    max-width: 600px;
+    min-height: 600px;
+    resize: none;
+    border: 1px solid $darkGrey;
+  }
+}

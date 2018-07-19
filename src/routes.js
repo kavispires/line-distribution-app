@@ -12,6 +12,7 @@ import HomeContainer from './containers/HomeContainer';
 import IconSheetContainer from './containers/IconSheetContainer';
 import LyricsContainer from './containers/LyricsContainer';
 import ResultsContainer from './containers/ResultsContainer';
+import RomanizerContainer from './containers/RomanizerContainer';
 import SongsContainer from './containers/SongsContainer';
 import TestContainer from './containers/TestContainer';
 
@@ -23,15 +24,16 @@ const routes = (
       <AppContainer />
       <Route path="/artist/:artistId" component={ArtistContainer} />
       <Route path="/artists" component={ArtistsContainer} />
-      <Route path="/colorsheet" component={ColorSheetContainer} />
-      <Route path="/create" component={CreatorContainer} />
-      <Route path="/database" component={DatabaseContainer} />
       <Route path="/distribute" component={DistributeContainer} />
-      <Route path="/iconsheet" component={IconSheetContainer} />
       <Route path="/lyrics" component={LyricsContainer} />
       <Route path="/results" component={ResultsContainer} />
       <Route path="/songs" component={SongsContainer} />
-      <Route path="/test" component={TestContainer} />
+      <Route path="/admin/colorsheet" component={ColorSheetContainer} />
+      <Route path="/admin/create" component={CreatorContainer} />
+      <Route path="/admin/database" component={DatabaseContainer} />
+      <Route path="/admin/iconsheet" component={IconSheetContainer} />
+      <Route path="/admin/romanizer" component={RomanizerContainer} />
+      <Route path="/admin/test" component={TestContainer} />
       <Route exact path="/" component={HomeContainer} />
     </div>
   </Router>
