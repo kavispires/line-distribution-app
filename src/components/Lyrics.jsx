@@ -10,6 +10,7 @@ import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
 import PositionIcons from './icons/PositionIcons';
 import CurrentArtistName from './widgets/CurrentArtistName';
+import SwitchToggle from './widgets/SwitchToggle';
 
 import { insertAtCursor } from '../utils';
 
@@ -42,7 +43,10 @@ class Lyrics extends Component {
 
     const insertMember = (member) => {
       const el = document.getElementById('lyrics-editor');
-      const str = `[${member.toUpperCase()}] `;
+      let str = member.toUpperCase();
+      if (LYRICS.useBrackets) {
+        str = `[${member.toUpperCase()}] `;
+      }
       insertAtCursor(el, str);
       this.props.handleParser(el.value);
     };
@@ -67,7 +71,7 @@ class Lyrics extends Component {
           {
             CURRENT_UNIT ?
               <div className="current-artist">
-                <p>Current Band: <b>{CURRENT_UNIT.artist.name}</b></p>
+                <p>Current Band: <b>{CURRENT_UNIT.artist.name}</b></p><span className="toggle-brackets"> Toggle Brackets <SwitchToggle action={this.props.toggleBrackets} checked={LYRICS.useBrackets} /></span>
                 <div className="current-artist-members">
                   <p>Members:</p>
                   <ul className="members-list">
@@ -78,7 +82,7 @@ class Lyrics extends Component {
                           className={`member-list-item ${CURRENT_UNIT.members[i].color.class}`}
                           onClick={() => insertMember(member.name)}
                         >
-                          {member.name}
+                          { LYRICS.useBrackets ? `[${member.name}]` : member.name }
                           <PositionIcons
                             memberId={member.id}
                             positions={member.positions.map(pos => pos.id)}

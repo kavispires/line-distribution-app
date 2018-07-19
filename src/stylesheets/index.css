@@ -7108,7 +7108,8 @@ input:checked + .slider:before {
 
 .current-artist {
   border: 1px solid #E6E6E6;
-  padding: 0 12px; }
+  padding: 0 12px;
+  position: relative; }
 
 .current-artist-members {
   display: flex; }
@@ -7123,6 +7124,11 @@ input:checked + .slider:before {
     cursor: pointer; }
     .current-artist-members .member-list-item:hover {
       filter: brightness(130%); }
+
+.toggle-brackets {
+  position: absolute;
+  top: -8px;
+  right: 6px; }
 
 .romanizer .options {
   display: flex;

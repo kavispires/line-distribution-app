@@ -5,6 +5,7 @@ import Lyrics from '../components/Lyrics';
 
 import {
   handleParser,
+  toggleBrackets,
   toggleRules,
 } from '../reducers/lyrics';
 
@@ -31,6 +32,7 @@ const mapDispatchToProps = {
   setDurations,
   setHistory,
   setPercentages,
+  toggleBrackets,
   toggleRules,
 };
 
