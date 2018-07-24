@@ -70,6 +70,7 @@ class Artist extends Component {
       this.props.updateLatestUnits(selectedUnit.id);
       this.props.toggleIsLoading(false);
       if (shouldReset) {
+        this.props.resetDistribution();
         this.props.resetSongInfo();
       }
     };
@@ -175,6 +176,7 @@ Artist.propTypes = {
   history: PropTypes.object.isRequired, // eslint-disable-line
   match: PropTypes.object.isRequired, // eslint-disable-line
   loadUserArtists: PropTypes.func.isRequired,
+  resetDistribution: PropTypes.func.isRequired,
   resetSongInfo: PropTypes.func.isRequired,
   switchUnitsTab: PropTypes.func.isRequired,
   toggleIsLoading: PropTypes.func.isRequired,
