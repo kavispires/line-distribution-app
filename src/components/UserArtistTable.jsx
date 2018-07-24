@@ -11,7 +11,7 @@ const UserArtistTable = ({
   unitList = [],
 }) => (
   <div className="user-artists-table">
-    <h2><Icon type={icon} /> { title }</h2>
+    <h2><Icon type={icon} size="medium-inline" />{ title }</h2>
     {
       unitList.length > 0 ? (
         <table className="table">

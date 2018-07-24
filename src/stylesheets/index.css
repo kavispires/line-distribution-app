@@ -5833,12 +5833,22 @@ h2 {
   display: inline-block; }
 
 .icon-small {
+  width: 12px; }
+
+.icon-small-inline {
   width: 12px;
-  transform: translateY(2px); }
+  transform: translateY(2px);
+  margin-right: 6px; }
 
 .icon-medium {
   width: 24px;
-  transform: translateY(6px); }
+  transform: translateY(8px); }
+
+.icon-medium-inline {
+  width: 24px;
+  transform: translateY(8px);
+  margin-right: 12px;
+  margin-top: -8px; }
 
 .icon-large {
   width: 36px;
