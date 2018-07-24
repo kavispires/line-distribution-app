@@ -282,6 +282,14 @@ const iconTrash = (
   </g>
 );
 
+const iconUsed = (
+  <g className="icon-used">
+    <path className="primary" d="M50,0C22.5,0,0,22.5,0,50s22.5,50,50,50s50-22.5,50-50S77.5,0,50,0z M75.6,41.2L47.5,73.1
+      c-1.2,1.2-3.1,1.2-4.4,0.6L23.1,60c-1.9-1.3-1.9-3.1-0.6-4.4l6.2-8.8c0.6-1.9,2.5-1.9,4.4-1.2l6.9,5c1.2,1.2,3.1,0.6,4.4-0.6
+      l18.1-20c1.2-1.2,3.1-1.2,4.4,0l8.1,6.9C76.2,38.1,76.2,40,75.6,41.2z"/>
+  </g>
+);
+
 const iconView = (
   <g className="icon-view">
     <path className="primary" d="M100,49.9c0,1.2-0.4,2.5-1.2,3.9c-5.1,8.6-12,15.4-20.9,20.5c-8.7,5.2-18,7.8-27.9,7.8s-19.2-2.6-27.9-7.8
@@ -324,6 +332,7 @@ const icons = {
   signOut: iconSignOut,
   stop: iconStop,
   trash: iconTrash,
+  used: iconUsed,
   view: iconView,
   yes: iconYes,
 };

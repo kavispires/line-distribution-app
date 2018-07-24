@@ -26,6 +26,8 @@ import {
   updateNewMember,
 } from '../reducers/creator';
 
+import { fetchCompleteDatabase } from '../reducers/admin';
+
 const mapStateToProps = state => ({
   admin: state.admin,
   app: state.app,
@@ -39,6 +41,7 @@ const mapDispatchToProps = {
   addNewMember,
   checkValidation,
   clearPositions,
+  fetchCompleteDatabase,
   handleNewArtistGenre,
   handleNewArtistName,
   handleNewArtistOtherNames,

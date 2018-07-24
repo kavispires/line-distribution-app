@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import LoginRequiredScreen from './LoginRequiredScreen';
 import LoadingScreen from './LoadingScreen';
 
+import Icon from './Icon';
 import CurrentArtistName from './widgets/CurrentArtistName';
 
 import { getLyricsSnippet } from '../utils';
@@ -60,11 +61,13 @@ class Songs extends Component {
       <section className="container">
         <h1>Songs<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
         <p>Search for previously used songs and load its lyrics to the lyrics parser.</p>
+        <p><Icon type="used" size="small-inline" /> indicates songs already distributed by the selected artist.</p>
 
         <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.songsFilter} />
         <table className="table">
           <thead>
             <tr>
+              <th />
               <th>Title</th>
               <th>Artist</th>
               <th>Snippet</th>
@@ -77,6 +80,11 @@ class Songs extends Component {
                 const snippet = getLyricsSnippet(song.lyrics);
                 return (
                   <tr key={song.id}>
+                    <td>
+                      {
+                        APP.currentUnit.songTitleDictionary[song.title] ? <Icon type="used" /> : null
+                      }
+                    </td>
                     <td>{song.title}</td>
                     <td>{song.originalArtist}</td>
                     <td>{snippet}</td>

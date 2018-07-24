@@ -6,13 +6,25 @@
 }
 
 .icon-small {
-  width: 12px;
+  width: $unit;
+}
+
+.icon-small-inline {
+  width: $unit;
   transform: translateY(2px);
+  margin-right: $halfUnit;
 }
 
 .icon-medium {
-  width: 24px;
-  transform: translateY(6px);
+  width: $doubleUnit;
+  transform: translateY(8px);
+}
+
+.icon-medium-inline {
+  width: $doubleUnit;
+  transform: translateY(8px);
+  margin-right: $unit;
+  margin-top: -8px;
 }
 
 .icon-large {
@@ -146,6 +158,10 @@ $iconBlack: #273032;
 
 .icon-official {
   .primary{fill:$iconBlue;}
+}
+
+.icon-used {
+  .primary{fill:$iconYellow;}
 }
 
 .icon-yes {

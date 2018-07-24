@@ -66,7 +66,7 @@ class Lyrics extends Component {
 
     return (
       <div className="container container-lyrics">
-        <div className="container container-lyrics-menu">
+        <div className="container-lyrics-menu">
           <h1>Lyrics<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
           {
             CURRENT_UNIT ?

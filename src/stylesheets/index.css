@@ -5708,7 +5708,15 @@ h2 {
   justify-content: space-between; }
 
 .user-artists-table {
-  width: 48%; }
+  width: 48%;
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); }
+  .user-artists-table h2 {
+    margin: 0 0 6px 0;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #E6E6E6; }
 
 .user-artists-message {
   padding: 0 24px 12px 12px;
@@ -5825,12 +5833,22 @@ h2 {
   display: inline-block; }
 
 .icon-small {
+  width: 12px; }
+
+.icon-small-inline {
   width: 12px;
-  transform: translateY(2px); }
+  transform: translateY(2px);
+  margin-right: 6px; }
 
 .icon-medium {
   width: 24px;
-  transform: translateY(6px); }
+  transform: translateY(8px); }
+
+.icon-medium-inline {
+  width: 24px;
+  transform: translateY(8px);
+  margin-right: 12px;
+  margin-top: -8px; }
 
 .icon-large {
   width: 36px;
@@ -5945,6 +5963,9 @@ h2 {
 
 .icon-official .primary {
   fill: #598FFD; }
+
+.icon-used .primary {
+  fill: #FFD700; }
 
 .icon-yes .primary {
   fill: #49D156; }
@@ -6197,6 +6218,8 @@ input:checked + .slider:before {
   .table td {
     padding: 10px;
     border-bottom: 1px solid #E6E6E6; }
+  .table tr:last-child > td {
+    border-bottom: none; }
   .table tbody tr:hover {
     background: #E6E6E6;
     cursor: pointer; }
@@ -7120,6 +7143,7 @@ input:checked + .slider:before {
   .current-artist-members .member-list-item {
     padding: 3px 6px;
     margin-left: 6px;
+    margin-bottom: 6px;
     border-radius: 3px;
     cursor: pointer; }
     .current-artist-members .member-list-item:hover {
