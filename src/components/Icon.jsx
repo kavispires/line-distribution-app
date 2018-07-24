@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import icons from './icons';
 
-export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'sign-in', 'sign-out', 'stop', 'trash', 'view', 'yes'];
+export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'sign-in', 'sign-out', 'stop', 'trash', 'used', 'view', 'yes'];
 
 const Icon = ({ type, size = 'small', styles = {} }) => {
   let icon;
@@ -81,10 +81,13 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.trash;
       break;
 
+    case 'used':
+      icon = icons.used;
+      break;
+
     case 'view':
       icon = icons.view;
       break;
-
 
     case 'yes':
       icon = icons.yes;

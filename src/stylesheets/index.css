@@ -5964,6 +5964,9 @@ h2 {
 .icon-official .primary {
   fill: #598FFD; }
 
+.icon-used .primary {
+  fill: #FFD700; }
+
 .icon-yes .primary {
   fill: #49D156; }
 

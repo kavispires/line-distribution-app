@@ -135,6 +135,16 @@ export const updateCurrentUnit = (unit, artist) => (dispatch) => {
     }
   }
 
+  const songTitleDictionary = {};
+
+  if (Array.isArray(currentUnit.songs)) {
+    currentUnit.songs.forEach((song) => {
+      songTitleDictionary[song.title] = song.id;
+    });
+  }
+
+  currentUnit.songTitleDictionary = songTitleDictionary;
+
   dispatch(setCurrentArtist(currentArtist));
   dispatch(setCurrentUnit(currentUnit));
   dispatch(setCurrentSong({}));
