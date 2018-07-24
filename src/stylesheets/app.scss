@@ -107,6 +107,16 @@ h2 {
 
 .user-artists-table {
   width: 48%;
+  background: #f9f9f9;
+  padding: $unit;
+  border-radius: $quarterUnit;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+  h2 {
+    margin: 0 0 $halfUnit 0;
+    padding-bottom: $unit;
+    border-bottom: $quarterUnit solid #E6E6E6;
+  }
 }
 
 .user-artists-message {
