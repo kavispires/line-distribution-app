@@ -3,6 +3,10 @@ import _ from 'lodash';
 import API from '../api';
 
 import { setLyrics } from './lyrics';
+import {
+  setOriginalArtist,
+  setSongTitle,
+} from './results';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -100,4 +104,6 @@ export const loadSong = song => (dispatch) => {
   }
 
   dispatch(setLyrics(result.join('')));
+  dispatch(setOriginalArtist(song.originalArtist));
+  dispatch(setSongTitle(song.title));
 };
