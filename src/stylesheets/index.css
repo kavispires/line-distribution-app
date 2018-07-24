@@ -7140,6 +7140,7 @@ input:checked + .slider:before {
   .current-artist-members .member-list-item {
     padding: 3px 6px;
     margin-left: 6px;
+    margin-bottom: 6px;
     border-radius: 3px;
     cursor: pointer; }
     .current-artist-members .member-list-item:hover {
