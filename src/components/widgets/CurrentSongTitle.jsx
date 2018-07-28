@@ -1,10 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const CurrentArtist = ({currentArtist}) => {
+const CurrentArtist = ({ currentArtist }) => {
   let artistName = '';
   if (typeof currentArtist === 'string') {
     artistName = currentArtist;
-  } else if (typeof currentArtist === 'object' && currentArtist.name !== undefined) {
+  } else if (
+    typeof currentArtist === 'object' &&
+    currentArtist.name !== undefined
+  ) {
     artistName = currentArtist.name;
   }
 
@@ -17,6 +21,10 @@ const CurrentArtist = ({currentArtist}) => {
   }
 
   return <span />;
+};
+
+CurrentArtist.propTypes = {
+  currentArtist: PropTypes.object.isRequired,
 };
 
 export default CurrentArtist;

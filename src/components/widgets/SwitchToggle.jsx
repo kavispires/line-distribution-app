@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SwitchToggle = ({ action, labels, checked = false }) => {
   if (!labels) {
@@ -13,14 +14,24 @@ const SwitchToggle = ({ action, labels, checked = false }) => {
 
   return (
     <span>
-      <span className="slide-text-left">{ labels.left }</span>
+      <span className="slide-text-left">{labels.left}</span>
       <label className="switch">
         <input type="checkbox" onChange={action} checked={checked} />
         <span className="slider" />
       </label>
-      <span className="slide-text-right">{ labels.right }</span>
+      <span className="slide-text-right">{labels.right}</span>
     </span>
   );
+};
+
+SwitchToggle.propTypes = {
+  action: PropTypes.func.isRequired,
+  labels: PropTypes.object, // eslint-disable-line
+  checked: PropTypes.bool,
+};
+
+SwitchToggle.defaultProps = {
+  checked: false,
 };
 
 export default SwitchToggle;

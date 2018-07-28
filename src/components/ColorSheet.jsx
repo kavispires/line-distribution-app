@@ -47,16 +47,15 @@ class ColorSheet extends Component {
       <div className="container">
         <h1>Color Sheet</h1>
 
-        {
-          ADMIN.colorSheetTab === 'list' ? (
-            <p>The numbers indicate how many times each color appears in the database.</p>
-          ) : null
-        }
-        {
-          ADMIN.colorSheetTab === 'alternative' ? (
-            <p>Each swatch has 3-5 automatically generated alternative colors.</p>
-          ) : null
-        }
+        {ADMIN.colorSheetTab === 'list' ? (
+          <p>
+            The numbers indicate how many times each color appears in the
+            database.
+          </p>
+        ) : null}
+        {ADMIN.colorSheetTab === 'alternative' ? (
+          <p>Each swatch has 3-5 automatically generated alternative colors.</p>
+        ) : null}
 
         <Tabs
           tabs={tabs}
@@ -64,64 +63,60 @@ class ColorSheet extends Component {
           action={this.props.toggleColorSheetTab}
         />
 
-        {
-          ADMIN.colorSheetTab === 'list' ? (
-            <ul className="color-palette">
-              {
-                Object.keys(ADMIN.colors).map((key) => {
-                  const color = ADMIN.colors[key];
-                  return (
-                    <li key={color.id} className={`palette ${color.class}`}>
-                      {key}<br />
-                      {color.name}<br />
-                      {ADMIN.colorCount[key]} uses
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          ) : null
-        }
-        {
-          ADMIN.colorSheetTab === 'alternative' ? (
-            <ul className="color-palette">
-              {
-              Object.keys(ADMIN.colors).map((key) => {
-                const color = ADMIN.colors[key];
-                return (
-                  <li key={color.id} className="palette-alt">
-                    <div className={`palette-main ${color.class}`}>
-                      #{key}<br />
-                      {color.name}
-                    </div>
-                    <div className="palette-alt-group">
-                      {
-                        ALTERNATIVE_COLOR_LIST[makeIdNumber(key)].map((num) => {
-                          const altId = `col${makeSixDigit(num)}`;
-                          return (
-                            <div key={`${key}-${altId}`} className={`palette-alt-swatch color-${num}`}>
-                              {makeIdNumber(altId)}
-                            </div>
-                          );
-                        })
-                      }
-                    </div>
-                  </li>
-                );
-              })
-            }
-            </ul>
-          ) : null
-        }
+        {ADMIN.colorSheetTab === 'list' ? (
+          <ul className="color-palette">
+            {Object.keys(ADMIN.colors).map(key => {
+              const color = ADMIN.colors[key];
+              return (
+                <li key={color.id} className={`palette ${color.class}`}>
+                  {key}
+                  <br />
+                  {color.name}
+                  <br />
+                  {ADMIN.colorCount[key]} uses
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+        {ADMIN.colorSheetTab === 'alternative' ? (
+          <ul className="color-palette">
+            {Object.keys(ADMIN.colors).map(key => {
+              const color = ADMIN.colors[key];
+              return (
+                <li key={color.id} className="palette-alt">
+                  <div className={`palette-main ${color.class}`}>
+                    #{key}
+                    <br />
+                    {color.name}
+                  </div>
+                  <div className="palette-alt-group">
+                    {ALTERNATIVE_COLOR_LIST[makeIdNumber(key)].map(num => {
+                      const altId = `col${makeSixDigit(num)}`;
+                      return (
+                        <div
+                          key={`${key}-${altId}`}
+                          className={`palette-alt-swatch color-${num}`}
+                        >
+                          {makeIdNumber(altId)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
       </div>
     );
   }
 }
 
 ColorSheet.propTypes = {
-  admin: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
+  admin: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   initColorSheet: PropTypes.func.isRequired,
   toggleColorSheetTab: PropTypes.func.isRequired,
 };

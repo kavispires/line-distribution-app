@@ -109,16 +109,22 @@ describe('Utils', () => {
 
   describe('getLyricsSnippet', () => {
     it('limits lyric snippet to 100 characters', () => {
-      const lyric = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.";
+      const lyric =
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.";
       const result = getLyricsSnippet(lyric);
-      expect(result).toEqual('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...');
+      expect(result).toEqual(
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...'
+      );
       expect(result).toHaveLength(100);
     });
 
     it('returns complete lyric when it has up to 100 characters', () => {
-      const lyric = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
+      const lyric =
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
       const result = getLyricsSnippet(lyric);
-      expect(result).toEqual('Lorem Ipsum is simply dummy text of the printing and typesetting industry.');
+      expect(result).toEqual(
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+      );
     });
 
     it('adds / to every line break in the lyrics', () => {
@@ -128,7 +134,8 @@ describe('Utils', () => {
     });
 
     it('uses only the first 7 lines of the lyrics', () => {
-      const lyric = 'Lorem\nIpsum\nis\nsimply\ndummy\ntext\nof\nthe\nprinting\nand\ntypesetting\nindustry.';
+      const lyric =
+        'Lorem\nIpsum\nis\nsimply\ndummy\ntext\nof\nthe\nprinting\nand\ntypesetting\nindustry.';
       const result = getLyricsSnippet(lyric);
       expect(result).toEqual('Lorem / Ipsum / is / simply / dummy / text / of');
     });
@@ -180,7 +187,9 @@ describe('Utils', () => {
 
   describe('spinalCaseWord', () => {
     it('adds dashes between words', () => {
-      expect(spinalCaseWord('this is a sentence')).toEqual('this-is-a-sentence');
+      expect(spinalCaseWord('this is a sentence')).toEqual(
+        'this-is-a-sentence'
+      );
     });
   });
 
@@ -229,15 +238,21 @@ describe('Utils', () => {
     });
 
     it('parses a block with multiple modifiers', () => {
-      expect(bem('block', ['mod1', 'mod2'])).toEqual('block block--mod1 block--mod2');
+      expect(bem('block', ['mod1', 'mod2'])).toEqual(
+        'block block--mod1 block--mod2'
+      );
     });
 
     it('parses a block, a modifier, and an element', () => {
-      expect(bem('block', 'modifier', 'element')).toEqual('block__element block__element--modifier');
+      expect(bem('block', 'modifier', 'element')).toEqual(
+        'block__element block__element--modifier'
+      );
     });
 
     it('parses a block, multiple modifiers, and an element', () => {
-      expect(bem('block', ['mod1', 'mod2'], 'element')).toEqual('block__element block__element--mod1 block__element--mod2');
+      expect(bem('block', ['mod1', 'mod2'], 'element')).toEqual(
+        'block__element block__element--mod1 block__element--mod2'
+      );
     });
 
     it('parses a block and an element', () => {
@@ -245,15 +260,21 @@ describe('Utils', () => {
     });
 
     it('parses a block and a modifier and a non-BEM class', () => {
-      expect(bem('block', 'modifier', '', 'extra1')).toEqual('block block--modifier extra1');
+      expect(bem('block', 'modifier', '', 'extra1')).toEqual(
+        'block block--modifier extra1'
+      );
     });
 
     it('parses a block and a element and a non-BEM class', () => {
-      expect(bem('block', '', 'element', ['extra1', 'extra2'])).toEqual('block__element extra1 extra2');
+      expect(bem('block', '', 'element', ['extra1', 'extra2'])).toEqual(
+        'block__element extra1 extra2'
+      );
     });
 
     it('parses a block and a modifier and multiple non-BEM classes', () => {
-      expect(bem('block', 'modifier', 'element', ['extra1', 'extra2'])).toEqual('block__element block__element--modifier extra1 extra2');
+      expect(bem('block', 'modifier', 'element', ['extra1', 'extra2'])).toEqual(
+        'block__element block__element--modifier extra1 extra2'
+      );
     });
   });
 });

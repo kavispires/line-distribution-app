@@ -12,7 +12,7 @@ import './stylesheets/index.css';
 ReactDOM.render(
   <Provider store={store}>
     <div>
-      { routes }
+      {routes}
       <ReduxToastr
         timeOut={4000}
         newestOnTop={false}
@@ -23,5 +23,7 @@ ReactDOM.render(
         progressBar
       />
     </div>
-  </Provider>, document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root')
+);
 registerServiceWorker();

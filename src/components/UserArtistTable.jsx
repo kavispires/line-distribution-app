@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from './Icon';
-
-const UserArtistTable = ({
-  action,
-  list,
-  prefix
-}) => (
+const UserArtistTable = ({ action, list, prefix }) => (
   <table className="table">
     <thead>
       <tr>
@@ -17,25 +11,23 @@ const UserArtistTable = ({
       </tr>
     </thead>
     <tbody>
-      {
-        list.map((unit) => {
-          const key = `${prefix}-${unit.id}`;
-          return (
-            <tr key={key} onClick={() => action(unit)}>
-              <td>{unit.artist.name}</td>
-              <td>{unit.artist.genre}</td>
-              <td>{unit.name}</td>
-            </tr>
-          );
-        })
-      }
+      {list.map(unit => {
+        const key = `${prefix}-${unit.id}`;
+        return (
+          <tr key={key} onClick={() => action(unit)}>
+            <td>{unit.artist.name}</td>
+            <td>{unit.artist.genre}</td>
+            <td>{unit.name}</td>
+          </tr>
+        );
+      })}
     </tbody>
   </table>
 );
 
 UserArtistTable.propTypes = {
   action: PropTypes.func,
-  list: PropTypes.array, // eslint-disable-line
+  list: PropTypes.array,
   prefix: PropTypes.string.isRequired,
 };
 

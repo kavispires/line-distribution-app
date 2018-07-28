@@ -22,4 +22,9 @@ const mapDispatchToProps = {
   toggleTab,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Database));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Database)
+);

@@ -15,7 +15,6 @@ const CreatorMember = ({ id, props }) => {
     memberPositions = getTrueKeys(member.positions);
   }
 
-
   const COLOR_NAME = props.admin.colors[member.colorId].name;
   const POSITIONS = props.admin.positions;
 
@@ -46,18 +45,16 @@ const CreatorMember = ({ id, props }) => {
         />
         <label htmlFor="memberPosition">Position:</label>
         <ul className="pill-positions-creator">
-          {
-            memberPositions.map(posId => (
-              <li key={`${member.id}-${posId}`} className="pill-position">
-                <PositionIcons
-                  memberId={member.id}
-                  positions={[posId]}
-                  iconClass="icon-positions-inline"
-                />
-                {POSITIONS[posId].name}
-              </li>
-            ))
-          }
+          {memberPositions.map(posId => (
+            <li key={`${member.id}-${posId}`} className="pill-position">
+              <PositionIcons
+                memberId={member.id}
+                positions={[posId]}
+                iconClass="icon-positions-inline"
+              />
+              {POSITIONS[posId].name}
+            </li>
+          ))}
         </ul>
       </div>
     </div>

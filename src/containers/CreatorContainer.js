@@ -61,4 +61,9 @@ const mapDispatchToProps = {
   updateNewMember,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Creator));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Creator)
+);

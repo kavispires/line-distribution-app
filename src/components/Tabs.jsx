@@ -18,17 +18,11 @@ const Tabs = ({ tabs, active, action }) => {
 
   return (
     <ul className="tabs" onClick={action}>
-      {
-        tabs.map(tab => (
-          <li
-            key={tab.key}
-            className={`tab ${tab.isActive}`}
-            id={tab.id}
-          >
-            {tab.name}
-          </li>
-        ))
-      }
+      {tabs.map(tab => (
+        <li key={tab.key} className={`tab ${tab.isActive}`} id={tab.id}>
+          {tab.name}
+        </li>
+      ))}
     </ul>
   );
 };

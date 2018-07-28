@@ -17,14 +17,22 @@ const SET_IS_LOADING = 'SET_IS_LOADING';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
-export const setCurrentSong = payload => dispatch => dispatch({ type: SET_CURRENT_SONG, payload });
-export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
-export const setGlobal = payload => dispatch => dispatch({ type: SET_GLOBAL, payload });
-export const setLatestUnits = payload => dispatch => dispatch({ type: SET_LATEST_UNITS, payload });
-export const setMembersList = payload => dispatch => dispatch({ type: SET_MEMBERS_LIST, payload });
-export const setShouldReset = payload => dispatch => dispatch({ type: SET_SHOULD_RESET, payload });
-export const setIsLoading = payload => dispatch => dispatch({ type: SET_IS_LOADING, payload });
+export const setCurrentArtist = payload => dispatch =>
+  dispatch({ type: SET_CURRENT_ARTIST, payload });
+export const setCurrentSong = payload => dispatch =>
+  dispatch({ type: SET_CURRENT_SONG, payload });
+export const setCurrentUnit = payload => dispatch =>
+  dispatch({ type: SET_CURRENT_UNIT, payload });
+export const setGlobal = payload => dispatch =>
+  dispatch({ type: SET_GLOBAL, payload });
+export const setLatestUnits = payload => dispatch =>
+  dispatch({ type: SET_LATEST_UNITS, payload });
+export const setMembersList = payload => dispatch =>
+  dispatch({ type: SET_MEMBERS_LIST, payload });
+export const setShouldReset = payload => dispatch =>
+  dispatch({ type: SET_SHOULD_RESET, payload });
+export const setIsLoading = payload => dispatch =>
+  dispatch({ type: SET_IS_LOADING, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -84,7 +92,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const getLatestUnits = () => (dispatch) => {
+export const getLatestUnits = () => dispatch => {
   const latestUnits = API.get('/units/latest');
   dispatch(setLatestUnits(latestUnits));
 };
@@ -98,13 +106,13 @@ export const toggleIsLoading = bool => (dispatch, getState) => {
   }
 };
 
-export const updateCurrentSong = songId => (dispatch) => {
+export const updateCurrentSong = songId => dispatch => {
   const song = API.get(`/songs/${songId}`);
   dispatch(setCurrentSong(song));
   dispatch(updateCurrentSongInfo(song));
 };
 
-export const updateCurrentUnit = (unit, artist) => (dispatch) => {
+export const updateCurrentUnit = (unit, artist) => dispatch => {
   const currentUnit = Object.assign({}, unit);
   const currentArtist = Object.assign({}, artist);
 
@@ -139,7 +147,7 @@ export const updateCurrentUnit = (unit, artist) => (dispatch) => {
   const songTitleDictionary = {};
 
   if (Array.isArray(currentUnit.songs)) {
-    currentUnit.songs.forEach((song) => {
+    currentUnit.songs.forEach(song => {
       songTitleDictionary[song.title] = song.id;
     });
   }
@@ -151,7 +159,7 @@ export const updateCurrentUnit = (unit, artist) => (dispatch) => {
   dispatch(setCurrentSong({}));
 };
 
-export const updateShouldReset = (bool = false) => (dispatch) => {
+export const updateShouldReset = (bool = false) => dispatch => {
   dispatch(setShouldReset(bool));
 };
 

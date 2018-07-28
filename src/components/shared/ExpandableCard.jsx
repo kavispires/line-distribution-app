@@ -1,16 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import Icon from '../Icon';
 
-const ExpandableCard = ({
-  globalId,
-  title,
-  icon,
-  width,
-  ...props
-}) => {
+const ExpandableCard = ({ globalId, title, icon, width, ...props }) => {
   // Verify if icon is needed
   if (icon) {
     icon = <Icon type={icon} size="medium-inline" />;
@@ -25,12 +18,10 @@ const ExpandableCard = ({
   return (
     <div className={`shared-expandable-card shared-expandable-card--${width}`}>
       <h2 className="shared-expandable-card__title">
-        { icon }
-        { title }
+        {icon}
+        {title}
       </h2>
-      {
-        isExpanded ? props.children : null
-      }
+      {isExpanded ? props.children : null}
       <button
         className="shared-expandable-card__button"
         onClick={() => props.props.updateGlobal(globalId)}

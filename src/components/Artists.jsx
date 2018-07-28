@@ -40,11 +40,16 @@ class Artists extends Component {
     const APP = this.props.app;
     const ARTISTS = this.props.artists;
     const { artistList } = ARTISTS;
-    const currentArtist = APP.currentArtist.id ? APP.currentArtist : ARTITST_PLACEHOLDER;
+    const currentArtist = APP.currentArtist.id
+      ? APP.currentArtist
+      : ARTITST_PLACEHOLDER;
 
-    const handleArtistClick = (e) => {
+    const handleArtistClick = e => {
       // Get id of the closest tr element
-      const artist = ARTISTS.artistList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+      const artist =
+        ARTISTS.artistList[
+          [].indexOf.call(e.currentTarget.children, e.target.closest('tr'))
+        ];
       const artistId = artist.id;
       this.props.history.push(`/artist/${artistId}`);
       if (artist.units && artist.units.length > 0) {
@@ -56,7 +61,7 @@ class Artists extends Component {
       }
     };
 
-    const setArtistUnit = (unit) => {
+    const setArtistUnit = unit => {
       this.props.history.push(`/artist/${unit.artist.id}`);
       this.props.toggleIsLoading(true);
       // Delays setting selected unit to override page landing functions
@@ -71,58 +76,58 @@ class Artists extends Component {
         <h1>Artists</h1>
         <p>Current Band: {currentArtist.name}</p>
 
-        {
-          this.props.user.isAuthenticated ? (
-            <div className="user-artists-container">
-              <ExpandableCard
-                props={this.props}
-                globalId="user-latest-artists"
-                title="Your Latest Artists"
-                icon="clock"
-                width="half"
-              >
-                {
-                  ARTISTS.userLatestArtists.length > 0 ? (
-                    <UserArtistTable
-                      list={ARTISTS.userLatestArtists}
-                      action={setArtistUnit}
-                      prefix="user-latest-artists"
-                    />
-                  ) : (
-                    <p className="user-artists-message">
-                      When you begin using the app, the 5 most recent artists you use will show up here.
-                    </p>
-                  )
-                }
-              </ExpandableCard>
-              <ExpandableCard
-                props={this.props}
-                globalId="user-favorite-artists"
-                title="Your Favorite Artists"
-                icon="heart"
-                width="half"
-              >
-                {
-                  ARTISTS.userLatestArtists.length > 0 ? (
-                    <UserArtistTable
-                      list={ARTISTS.userFavoriteArtists}
-                      action={setArtistUnit}
-                      prefix="user-favorite-artists"
-                    />
-                  ) : (
-                    <p className="user-artists-message">
-                      You may favorite up to 5 artists by clicking on the Heart icon in the Artist page.
-                    </p>
-                  )
-                }
-              </ExpandableCard>
-            </div>
-          ) : null
-        }
-
+        {this.props.user.isAuthenticated ? (
+          <div className="user-artists-container">
+            <ExpandableCard
+              props={this.props}
+              globalId="user-latest-artists"
+              title="Your Latest Artists"
+              icon="clock"
+              width="half"
+            >
+              {ARTISTS.userLatestArtists.length > 0 ? (
+                <UserArtistTable
+                  list={ARTISTS.userLatestArtists}
+                  action={setArtistUnit}
+                  prefix="user-latest-artists"
+                />
+              ) : (
+                <p className="user-artists-message">
+                  When you begin using the app, the 5 most recent artists you
+                  use will show up here.
+                </p>
+              )}
+            </ExpandableCard>
+            <ExpandableCard
+              props={this.props}
+              globalId="user-favorite-artists"
+              title="Your Favorite Artists"
+              icon="heart"
+              width="half"
+            >
+              {ARTISTS.userLatestArtists.length > 0 ? (
+                <UserArtistTable
+                  list={ARTISTS.userFavoriteArtists}
+                  action={setArtistUnit}
+                  prefix="user-favorite-artists"
+                />
+              ) : (
+                <p className="user-artists-message">
+                  You may favorite up to 5 artists by clicking on the Heart icon
+                  in the Artist page.
+                </p>
+              )}
+            </ExpandableCard>
+          </div>
+        ) : null}
 
         <h2>All Artists</h2>
-        <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.filterArtists} />
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Filter..."
+          onChange={this.props.filterArtists}
+        />
         <table className="table">
           <thead>
             <tr>
@@ -133,9 +138,8 @@ class Artists extends Component {
             </tr>
           </thead>
           <tbody onClick={e => handleArtistClick(e)}>
-            {
-              artistList.length > 0 ?
-              artistList.map((entry) => {
+            {artistList.length > 0 ? (
+              artistList.map(entry => {
                 const unitCount = entry.units ? entry.units.length : 0;
                 return (
                   <tr key={`all-artists-${entry.id}`}>
@@ -146,9 +150,14 @@ class Artists extends Component {
                   </tr>
                 );
               })
-              :
-              <tr><td>No artists available within your search</td><td /><td /><td /></tr>
-            }
+            ) : (
+              <tr>
+                <td>No artists available within your search</td>
+                <td />
+                <td />
+                <td />
+              </tr>
+            )}
           </tbody>
         </table>
       </section>
@@ -157,12 +166,12 @@ class Artists extends Component {
 }
 
 Artists.propTypes = {
-  app: PropTypes.object.isRequired, // eslint-disable-line
-  artists: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
-  history: PropTypes.object.isRequired, // eslint-disable-line
-  location: PropTypes.object.isRequired, // eslint-disable-line
+  app: PropTypes.object.isRequired,
+  artists: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   filterArtists: PropTypes.func.isRequired,
   loadArtists: PropTypes.func.isRequired,
   toggleIsLoading: PropTypes.func.isRequired,

@@ -14,9 +14,7 @@ import {
   setResultType,
 } from '../reducers/results';
 
-import {
-  login,
-} from '../reducers/user';
+import { login } from '../reducers/user';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -39,4 +37,9 @@ const mapDispatchToProps = {
   setResultType,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Results));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Results)
+);

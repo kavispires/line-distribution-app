@@ -15,12 +15,18 @@ class App extends Component {
     }
 
     // If going to Distribute, reset distribute when unit is different
-    if (nextProps.location.pathname === '/distribute' && nextProps.app.currentUnit !== this.props.app.currentUnit) {
+    if (
+      nextProps.location.pathname === '/distribute' &&
+      nextProps.app.currentUnit !== this.props.app.currentUnit
+    ) {
       this.props.handleReset();
     }
 
     // Reset if a different unit was selected
-    if (nextProps.app.currentUnit !== this.props.app.currentUnit && this.props.app.currentUnit.id) {
+    if (
+      nextProps.app.currentUnit !== this.props.app.currentUnit &&
+      this.props.app.currentUnit.id
+    ) {
       this.props.setCurrentSong({});
       this.props.resetDistribution();
       this.props.resetLyrics();
@@ -28,13 +34,13 @@ class App extends Component {
   }
 
   render() {
-    return (<Header props={this.props} />);
+    return <Header props={this.props} />;
   }
 }
 
 App.propTypes = {
-  app: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
+  app: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   checkAuth: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
   initDB: PropTypes.func.isRequired,

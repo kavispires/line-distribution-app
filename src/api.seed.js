@@ -12,7 +12,7 @@ import firebase from './firebase';
  * Run app
  * */
 
-const makeSixDigit = (num) => {
+const makeSixDigit = num => {
   const str = num.toString();
   const pad = '000000';
   return pad.substring(0, pad.length - str.length) + str;
@@ -21,7 +21,7 @@ const makeSixDigit = (num) => {
 const populatePositions = () => {
   console.log('populatePositions');
   const result = {};
-  Object.keys(DB.POSITIONS).forEach((key) => {
+  Object.keys(DB.POSITIONS).forEach(key => {
     const position = DB.POSITIONS[key];
     const newId = `pos${makeSixDigit(position.id)}`;
     result[newId] = {
@@ -32,13 +32,16 @@ const populatePositions = () => {
   // dbRef.positions = result;
   // console.log(result);
   // console.log()
-  firebase.database().ref('positions').set(result);
+  firebase
+    .database()
+    .ref('positions')
+    .set(result);
 };
 
 const populateColors = () => {
   console.log('populateColors');
   const result = {};
-  Object.keys(DB.COLORS).forEach((key) => {
+  Object.keys(DB.COLORS).forEach(key => {
     const entry = DB.COLORS[key];
     const newId = `col${makeSixDigit(entry.id)}`;
     result[newId] = {
@@ -47,18 +50,21 @@ const populateColors = () => {
       hex: entry.hex,
     };
   });
-  firebase.database().ref('colors').set(result);
+  firebase
+    .database()
+    .ref('colors')
+    .set(result);
 };
 
 const populateMembers = () => {
   console.log('populateMembers');
   const result = {};
-  Object.keys(DB.MEMBERS).forEach((key) => {
+  Object.keys(DB.MEMBERS).forEach(key => {
     const entry = DB.MEMBERS[key];
     const newId = `mem${makeSixDigit(entry.id)}`;
 
     const positions = [];
-    entry.positions.forEach((val) => {
+    entry.positions.forEach(val => {
       const posId = `pos${makeSixDigit(val)}`;
       // positions[posId] = true;
       positions.push(posId);
@@ -73,7 +79,10 @@ const populateMembers = () => {
       positions,
     };
   });
-  firebase.database().ref('members').set(result);
+  firebase
+    .database()
+    .ref('members')
+    .set(result);
 };
 
 const populateUnits = () => {
@@ -81,7 +90,7 @@ const populateUnits = () => {
   const result = {};
 
   const songsDict = {};
-  Object.keys(DB.SONGS).forEach((key) => {
+  Object.keys(DB.SONGS).forEach(key => {
     const entry = DB.SONGS[key];
     const { unitId } = entry;
     if (songsDict[unitId] === undefined) {
@@ -90,12 +99,12 @@ const populateUnits = () => {
     songsDict[unitId].push(key);
   });
   console.log(songsDict);
-  Object.keys(DB.UNITS).forEach((key) => {
+  Object.keys(DB.UNITS).forEach(key => {
     const entry = DB.UNITS[key];
     const newId = `uni${makeSixDigit(entry.id)}`;
 
     const members = [];
-    entry.members.forEach((val) => {
+    entry.members.forEach(val => {
       const posId = `mem${makeSixDigit(val)}`;
       members.push(posId);
     });
@@ -113,18 +122,21 @@ const populateUnits = () => {
     };
   });
   console.log(result);
-  firebase.database().ref('units').set(result);
+  firebase
+    .database()
+    .ref('units')
+    .set(result);
 };
 
 const populateArtists = () => {
   console.log('populateArtists');
   const result = {};
-  Object.keys(DB.ARTISTS).forEach((key) => {
+  Object.keys(DB.ARTISTS).forEach(key => {
     const entry = DB.ARTISTS[key];
     const newId = `art${makeSixDigit(entry.id)}`;
 
     const units = [];
-    entry.units.forEach((val) => {
+    entry.units.forEach(val => {
       const posId = `uni${makeSixDigit(val)}`;
       units.push(posId);
     });
@@ -137,20 +149,23 @@ const populateArtists = () => {
       units,
     };
   });
-  firebase.database().ref('artists').set(result);
+  firebase
+    .database()
+    .ref('artists')
+    .set(result);
 };
 
 const populateSongs = () => {
   console.log('populateSongs');
   const result = {};
-  Object.keys(DB.SONGS).forEach((key) => {
+  Object.keys(DB.SONGS).forEach(key => {
     const entry = DB.SONGS[key];
 
     const unitId = `uni${makeSixDigit(entry.unitId)}`;
 
     const distribution = entry.distribution.reverse();
 
-    distribution.forEach((dist) => {
+    distribution.forEach(dist => {
       dist.memberId = `mem${makeSixDigit(dist.memberId)}`;
     });
 
@@ -168,7 +183,10 @@ const populateSongs = () => {
       query: query.toLowerCase(),
     };
   });
-  firebase.database().ref('songs').set(result);
+  firebase
+    .database()
+    .ref('songs')
+    .set(result);
 };
 
 setTimeout(() => {

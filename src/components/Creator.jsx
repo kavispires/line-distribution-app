@@ -1,4 +1,4 @@
-import React,  { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import AdminOnlyScreen from './AdminOnlyScreen';
@@ -45,7 +45,12 @@ class Creator extends Component {
 
     const CREATOR = this.props.creator;
 
-    const tabs = [{ id: 'artist' }, { id: 'unit' }, { id: 'members' }, { id: 'review' }];
+    const tabs = [
+      { id: 'artist' },
+      { id: 'unit' },
+      { id: 'members' },
+      { id: 'review' },
+    ];
     return (
       <section className="container creator-container">
         <div className="creator-header">
@@ -57,29 +62,31 @@ class Creator extends Component {
           />
         </div>
         <div className="creator-content">
-          <p>You need to have a complete artist to be able to save, consisting of artist, unit and members. <br />
+          <p>
+            You need to have a complete artist to be able to save, consisting of
+            artist, unit and members. <br />
             You may follow your new artist validation in the bottom of the page.
           </p>
-          {
-            CREATOR.tab === 'artist' ? <CreatorArtist props={this.props} /> : null
-          }
-          {
-            CREATOR.tab === 'unit' ? <CreatorUnit props={this.props} /> : null
-          }
-          {
-            CREATOR.tab === 'members' ? <CreatorMembers props={this.props} /> : null
-          }
-          {
-            CREATOR.tab === 'review' ? <CreatorReview props={this.props} /> : null
-          }
+          {CREATOR.tab === 'artist' ? (
+            <CreatorArtist props={this.props} />
+          ) : null}
+          {CREATOR.tab === 'unit' ? <CreatorUnit props={this.props} /> : null}
+          {CREATOR.tab === 'members' ? (
+            <CreatorMembers props={this.props} />
+          ) : null}
+          {CREATOR.tab === 'review' ? (
+            <CreatorReview props={this.props} />
+          ) : null}
         </div>
-        <div className={`creator-message${Object.keys(CREATOR.message).length > 0 ? '' : '-close'}`}>
-          {
-            Object.keys(CREATOR.message).map((m, i) => {
-              const key = `message${i}`;
-              return <p key={key}>{CREATOR.message[m]}</p>;
-            })
-          }
+        <div
+          className={`creator-message${
+            Object.keys(CREATOR.message).length > 0 ? '' : '-close'
+          }`}
+        >
+          {Object.keys(CREATOR.message).map((m, i) => {
+            const key = `message${i}`;
+            return <p key={key}>{CREATOR.message[m]}</p>;
+          })}
         </div>
         <div className="creator-controls">
           <div className="creator-validation">

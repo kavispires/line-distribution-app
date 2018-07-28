@@ -11,13 +11,22 @@ const Member = ({ member, props }) => {
   let averageOfficial = 0;
   let averageWould = 0;
   if (ARTISTS.distributionPerMember[member.id]) {
-    average = Math.round((ARTISTS.distributionPerMember[member.id] * 100) / ARTISTS.distributionTotal);
+    average = Math.round(
+      (ARTISTS.distributionPerMember[member.id] * 100) /
+        ARTISTS.distributionTotal
+    );
   }
   if (ARTISTS.distributionPerMemberOfficial[member.id]) {
-    averageOfficial = Math.round((ARTISTS.distributionPerMemberOfficial[member.id] * 100) / ARTISTS.distributionTotalOfficial);
+    averageOfficial = Math.round(
+      (ARTISTS.distributionPerMemberOfficial[member.id] * 100) /
+        ARTISTS.distributionTotalOfficial
+    );
   }
   if (ARTISTS.distributionPerMemberWould[member.id]) {
-    averageWould = Math.round((ARTISTS.distributionPerMemberWould[member.id] * 100) / ARTISTS.distributionTotalWould);
+    averageWould = Math.round(
+      (ARTISTS.distributionPerMemberWould[member.id] * 100) /
+        ARTISTS.distributionTotalWould
+    );
   }
 
   return (
@@ -27,30 +36,41 @@ const Member = ({ member, props }) => {
         <span className={`pill-color-main ${member.color.class}`} />
         <span className={`pill-color-alt ${member.altColor.class}`} />
       </span>
-      <p><b>Date of Birth:</b> {parseBirthDate(member.birthdate)}</p>
-      <p><b>Average per Official Song:</b> {averageOfficial}%</p>
-      <p><b>Average per Custom Song:</b> {averageWould}%</p>
-      <p><b>Total Average per Song:</b> {average}%</p>
-      <p><b>Positions:</b></p>
+      <p>
+        <b>Date of Birth:</b> {parseBirthDate(member.birthdate)}
+      </p>
+      <p>
+        <b>Average per Official Song:</b> {averageOfficial}%
+      </p>
+      <p>
+        <b>Average per Custom Song:</b> {averageWould}%
+      </p>
+      <p>
+        <b>Total Average per Song:</b> {average}%
+      </p>
+      <p>
+        <b>Positions:</b>
+      </p>
       <ul className="pill-positions">
-        {
-          member.positions.map(position => (
-            <li key={`${member.name}-${position.name}`} className="pill-position">
-              <PositionIcons positions={[position.id]} memberId={member.id} iconClass="pill-icon" /> {position.name}
-            </li>
-          ))
-        }
+        {member.positions.map(position => (
+          <li key={`${member.name}-${position.name}`} className="pill-position">
+            <PositionIcons
+              positions={[position.id]}
+              memberId={member.id}
+              iconClass="pill-icon"
+            />{' '}
+            {position.name}
+          </li>
+        ))}
       </ul>
     </section>
   );
 };
 
 Member.propTypes = {
-  props: PropTypes.object.isRequired, // eslint-disable-line
-  artists: PropTypes.object, // eslint-disable-line
-  member: PropTypes.object.isRequired, // eslint-disable-line
-  results: PropTypes.object.isRequired, // eslint-disable-line
+  props: PropTypes.object.isRequired,
+  artists: PropTypes.object,
+  member: PropTypes.object.isRequired,
 };
-
 
 export default Member;

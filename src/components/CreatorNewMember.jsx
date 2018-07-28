@@ -6,7 +6,7 @@ import PositionIcons from './icons/PositionIcons';
 import { makeIdNumber } from '../utils';
 import { POS_LIST } from '../constants';
 
-const CreatorNewMember = ({id, props}) => {
+const CreatorNewMember = ({ id, props }) => {
   const COLORS = props.admin.colors;
   const MEMBER = props.creator.newMembers[id];
 
@@ -17,7 +17,12 @@ const CreatorNewMember = ({id, props}) => {
     <div className="form-member">
       <div className={`color-swatch color-${makeIdNumber(selectedColor)}`} />
       <div className="info">
-        <button className="btn-close" onClick={e => props.removeNewMember(e, id)}>×</button>
+        <button
+          className="btn-close"
+          onClick={e => props.removeNewMember(e, id)}
+        >
+          ×
+        </button>
         <label htmlFor="memberName">Name*:</label>
         <input
           type="text"
@@ -39,38 +44,46 @@ const CreatorNewMember = ({id, props}) => {
           value={MEMBER.colorId ? COLORS[MEMBER.colorId].name : ''}
           disabled
         />
-        <ColorPicker props={props} memberId={MEMBER.id} action={props.updateNewMember} />
+        <ColorPicker
+          props={props}
+          memberId={MEMBER.id}
+          action={props.updateNewMember}
+        />
         <label htmlFor="memberPosition">Add Position(s)*:</label>
         <div className="form-member-position-list">
-          {
-            POS_LIST.map((posGroup, i) => {
-              const keyG = `posGroup-${MEMBER.id}-${i}`;
-              return (
-                <div key={keyG} className="form-member-position-list-group">
-                  {
-                    posGroup.map((posItem, j) => {
-                      const keyI = `posItem-${MEMBER.id}-${i}-${j}`;
-                      if (posItem === 'clear') {
-                        return (
-                          <button key={keyI} className="btn" onClick={e => props.clearPositions(e, id)}>Clear</button>
-                        );
-                      }
-                      const evt = { target: { value: posItem } };
-                      return (
-                        <PositionIcons
-                          key={keyI}
-                          memberId={MEMBER.id}
-                          positions={[posItem]}
-                          iconClass={`icon-positions-picker ${MEMBER.positions[posItem] ? 'selected' : ''}`}
-                          action={() => props.updateNewMember(evt, id, 'position')}
-                        />
-                      );
-                    })
+          {POS_LIST.map((posGroup, i) => {
+            const keyG = `posGroup-${MEMBER.id}-${i}`;
+            return (
+              <div key={keyG} className="form-member-position-list-group">
+                {posGroup.map((posItem, j) => {
+                  const keyI = `posItem-${MEMBER.id}-${i}-${j}`;
+                  if (posItem === 'clear') {
+                    return (
+                      <button
+                        key={keyI}
+                        className="btn"
+                        onClick={e => props.clearPositions(e, id)}
+                      >
+                        Clear
+                      </button>
+                    );
                   }
-                </div>
-              );
-            })
-          }
+                  const evt = { target: { value: posItem } };
+                  return (
+                    <PositionIcons
+                      key={keyI}
+                      memberId={MEMBER.id}
+                      positions={[posItem]}
+                      iconClass={`icon-positions-picker ${
+                        MEMBER.positions[posItem] ? 'selected' : ''
+                      }`}
+                      action={() => props.updateNewMember(evt, id, 'position')}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

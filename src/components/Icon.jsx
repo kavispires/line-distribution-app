@@ -3,7 +3,32 @@ import PropTypes from 'prop-types';
 
 import icons from './icons';
 
-export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'chevron-down', 'chevron-up', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'sign-in', 'sign-out', 'stop', 'trash', 'used', 'view', 'yes'];
+export const ICONS_LIST = [
+  'default',
+  'archive',
+  'box-checked',
+  'box-invalid',
+  'box-checked',
+  'chevron-down',
+  'chevron-up',
+  'clock',
+  'edit',
+  'heart',
+  'hide',
+  'loading',
+  'no',
+  'official',
+  'reset',
+  'results',
+  'save',
+  'sign-in',
+  'sign-out',
+  'stop',
+  'trash',
+  'used',
+  'view',
+  'yes',
+];
 
 const Icon = ({ type, size = 'small', styles = {} }) => {
   let icon;
@@ -116,20 +141,26 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
         preserveAspectRatio="xMidYMid meet"
         style={mergeStyles(
           styles,
-          style, // This lets the parent pass custom styles
+          style // This lets the parent pass custom styles
         )}
       >
-        { icon }
+        {icon}
       </svg>
     </span>
-
   );
 };
 
 Icon.propTypes = {
-  type: PropTypes.string, // eslint-disable-line
-  size: PropTypes.oneOf(['small', 'small-inline', 'medium', 'medium-inline', 'large', 'x-large']), // eslint-disable-line
-  styles: PropTypes.object, // eslint-disable-line
+  type: PropTypes.string,
+  size: PropTypes.oneOf([
+    'small',
+    'small-inline',
+    'medium',
+    'medium-inline',
+    'large',
+    'x-large',
+  ]),
+  styles: PropTypes.object,
 };
 
 Icon.defaultProps = {

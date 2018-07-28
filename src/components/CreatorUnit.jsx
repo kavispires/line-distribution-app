@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CreatorUnit = ({props}) => {
+const CreatorUnit = ({ props }) => {
   const ADMIN = props.admin;
   const CREATOR = props.creator;
   const unitDisabled = +CREATOR.loadedUnit !== 0;
@@ -16,18 +16,23 @@ const CreatorUnit = ({props}) => {
           onChange={props.loadUnit}
         >
           <option value="0">Select an unit to load...</option>
-          {
-            CREATOR.newArtistUnits.map((unitId) => {
-              const unit = ADMIN.units[unitId];
-              return (
-                <option key={`unit-${unit.id}`} value={unit.id}>{unit.name}</option>
-              );
-            })
-          }
+          {CREATOR.newArtistUnits.map(unitId => {
+            const unit = ADMIN.units[unitId];
+            return (
+              <option key={`unit-${unit.id}`} value={unit.id}>
+                {unit.name}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div className="form-instance">
-        <label htmlFor="unitName">Unit/Version Name<span className="hint"> (e.g.: 'OT8', 'Feat. JYP', 'Season 2')</span>:</label>
+        <label htmlFor="unitName">
+          Unit/Version Name<span className="hint">
+            {' '}
+            (e.g.: 'OT8', 'Feat. JYP', 'Season 2')
+          </span>:
+        </label>
         <input
           type="text"
           name="unitName"
@@ -55,7 +60,11 @@ const CreatorUnit = ({props}) => {
           onChange={props.handleNewUnitOfficial}
           disabled={unitDisabled}
         />
-        <small> (Mark this option only if it's an official assemble, not fanmade, and not special performance or tv show)</small>
+        <small>
+          {' '}
+          (Mark this option only if it's an official assemble, not fanmade, and
+          not special performance or tv show)
+        </small>
       </div>
     </form>
   );

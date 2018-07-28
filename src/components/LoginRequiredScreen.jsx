@@ -16,10 +16,7 @@ const LoginRequiredScreen = ({ props, redirect = '/home' }) => {
       <main className="container-center--inner">
         <img className="login-logo" src={logo} alt="Line Distribution" />
         <p>You must be loggin to access this page.</p>
-        <button
-          className="btn-home"
-          onClick={loginClick}
-        >
+        <button className="btn-home" onClick={loginClick}>
           <Icon type="sign-in" /> Sign-in now
         </button>
       </main>
@@ -28,9 +25,9 @@ const LoginRequiredScreen = ({ props, redirect = '/home' }) => {
 };
 
 LoginRequiredScreen.propTypes = {
-  props: PropTypes.object.isRequired, // eslint-disable-line
-  history: PropTypes.object, // eslint-disable-line
-  login: PropTypes.func, // eslint-disable-line
+  props: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
   redirect: PropTypes.string.isRequired,
 };
 

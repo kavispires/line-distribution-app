@@ -32,7 +32,6 @@ class Romanizer extends Component {
 
     console.log(ADMIN.hangul.split('\n').join(' '));
 
-
     return (
       <div className="container romanizer">
         <h1>Romanizer</h1>
@@ -81,9 +80,9 @@ class Romanizer extends Component {
 }
 
 Romanizer.propTypes = {
-  admin: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
+  admin: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default Romanizer;

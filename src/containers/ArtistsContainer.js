@@ -18,9 +18,7 @@ import {
   updateSelectedUnit,
 } from '../reducers/artists';
 
-import {
-  login,
-} from '../reducers/user';
+import { login } from '../reducers/user';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -42,4 +40,9 @@ const mapDispatchToProps = {
   updateShouldReset,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artists));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Artists)
+);

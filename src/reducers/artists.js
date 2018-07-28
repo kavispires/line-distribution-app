@@ -8,7 +8,8 @@ const SET_ARTIST_LIST = 'SET_ARTIST_LIST';
 const SET_ARTIST_LIST_BACK_UP = 'SET_ARTISTS_LIST_BACK_UP';
 const SET_ARTIST_PAGE_TAB = 'SET_ARTIST_PAGE_TAB';
 const SET_DISTRIBUTION_PER_MEMBER = 'SET_DISTRIBUTION_PER_MEMBER';
-const SET_DISTRIBUTION_PER_MEMBER_OFFICIAL = 'SET_DISTRIBUTION_PER_MEMBER_OFFICIAL';
+const SET_DISTRIBUTION_PER_MEMBER_OFFICIAL =
+  'SET_DISTRIBUTION_PER_MEMBER_OFFICIAL';
 const SET_DISTRIBUTION_PER_MEMBER_WOULD = 'SET_DISTRIBUTION_PER_MEMBER_WOULD';
 const SET_DISTRIBUTION_TOTAL = 'SET_DISTRIBUTION_TOTAL';
 const SET_DISTRIBUTION_TOTAL_OFFICIAL = 'SET_DISTRIBUTION_TOTAL_OFFICIAL';
@@ -22,21 +23,36 @@ const SET_USER_LATEST_ARTISTS = 'SET_USER_LATEST_ARTISTS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setArtistList = payload => dispatch => dispatch({ type: SET_ARTIST_LIST, payload });
-export const setArtistListBackUp = payload => dispatch => dispatch({ type: SET_ARTIST_LIST_BACK_UP, payload });
-export const setArtistPageTab = payload => dispatch => dispatch({ type: SET_ARTIST_PAGE_TAB, payload });
-export const setDistributionPerMember = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER, payload });
-export const setDistributionPerMemberOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_OFFICIAL, payload });
-export const setDistributionPerMemberWould = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_WOULD, payload });
-export const setDistributionTotal = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL, payload });
-export const setDistributionTotalOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL_OFFICIAL, payload });
-export const setDistributionTotalWould = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL_WOULD, payload });
-export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
-export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
-export const setSelectedUnitSongs = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT_SONGS, payload });
-export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
-export const setUserFavoriteArtists = payload => dispatch => dispatch({ type: SET_USER_FAVORITE_ARTISTS, payload });
-export const setUserLatestArtists = payload => dispatch => dispatch({ type: SET_USER_LATEST_ARTISTS, payload });
+export const setArtistList = payload => dispatch =>
+  dispatch({ type: SET_ARTIST_LIST, payload });
+export const setArtistListBackUp = payload => dispatch =>
+  dispatch({ type: SET_ARTIST_LIST_BACK_UP, payload });
+export const setArtistPageTab = payload => dispatch =>
+  dispatch({ type: SET_ARTIST_PAGE_TAB, payload });
+export const setDistributionPerMember = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_PER_MEMBER, payload });
+export const setDistributionPerMemberOfficial = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_OFFICIAL, payload });
+export const setDistributionPerMemberWould = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_WOULD, payload });
+export const setDistributionTotal = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_TOTAL, payload });
+export const setDistributionTotalOfficial = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_TOTAL_OFFICIAL, payload });
+export const setDistributionTotalWould = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_TOTAL_WOULD, payload });
+export const setSelectedArtist = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_ARTIST, payload });
+export const setSelectedUnit = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_UNIT, payload });
+export const setSelectedUnitSongs = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_UNIT_SONGS, payload });
+export const setSelectedUnits = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_UNITS, payload });
+export const setUserFavoriteArtists = payload => dispatch =>
+  dispatch({ type: SET_USER_FAVORITE_ARTISTS, payload });
+export const setUserLatestArtists = payload => dispatch =>
+  dispatch({ type: SET_USER_LATEST_ARTISTS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -131,7 +147,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const loadArtists = () => (dispatch) => {
+export const loadArtists = () => dispatch => {
   const artistList = API.get('/artists');
 
   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
@@ -175,7 +191,7 @@ export const filterArtists = e => (dispatch, getState) => {
   dispatch(setArtistList(filteredArtists));
 };
 
-const parseUnitSongs = unit => (dispatch) => {
+const parseUnitSongs = unit => dispatch => {
   const distributionPerMember = {};
   const distributionPerMemberOfficial = {};
   const distributionPerMemberWould = {};
@@ -183,7 +199,7 @@ const parseUnitSongs = unit => (dispatch) => {
   let distributionTotalOfficial = 0;
   let distributionTotalWould = 0;
 
-  unit.songs.forEach((song) => {
+  unit.songs.forEach(song => {
     const { distribution } = song;
     const distDict = {};
     let total = 0;
@@ -258,12 +274,12 @@ const parseUnitSongs = unit => (dispatch) => {
   dispatch(setSelectedUnit(unit));
 };
 
-export const switchUnitsTab = event => (dispatch) => {
+export const switchUnitsTab = event => dispatch => {
   const { id } = event.target;
   dispatch(setArtistPageTab(id));
 };
 
-export const updateSelectedArtist = id => (dispatch) => {
+export const updateSelectedArtist = id => dispatch => {
   const artist = API.get(`/artists/${id}`);
 
   dispatch(setSelectedArtist(artist));
@@ -278,7 +294,7 @@ export const updateSelectedArtist = id => (dispatch) => {
   // TO-DO: Remove this call from here. Don't use other reducer functions here
 };
 
-export const updateSelectedUnit = id => (dispatch) => {
+export const updateSelectedUnit = id => dispatch => {
   const unit = API.get(`/units/${id}/all`);
   dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));

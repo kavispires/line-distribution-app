@@ -3,11 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Lyrics from '../components/Lyrics';
 
-import {
-  handleParser,
-  toggleBrackets,
-  toggleRules,
-} from '../reducers/lyrics';
+import { handleParser, toggleBrackets, toggleRules } from '../reducers/lyrics';
 
 import {
   setDurations,
@@ -15,9 +11,7 @@ import {
   setPercentages,
 } from '../reducers/distribute';
 
-import {
-  login,
-} from '../reducers/user';
+import { login } from '../reducers/user';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -36,4 +30,9 @@ const mapDispatchToProps = {
   toggleRules,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Lyrics));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Lyrics)
+);

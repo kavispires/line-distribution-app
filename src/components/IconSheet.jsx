@@ -34,14 +34,12 @@ class IconSheet extends Component {
       <div className="container">
         <h1>Icons Sheet</h1>
         <div className="icon-sheet-list-container">
-          {
-            ICONS_LIST.map(item => (
-              <div className="icon-sheet-list-item">
-                <Icon type={item} size="x-large" />
-                <h3>{item}</h3>
-              </div>
-            ))
-          }
+          {ICONS_LIST.map(item => (
+            <div className="icon-sheet-list-item">
+              <Icon type={item} size="x-large" />
+              <h3>{item}</h3>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -49,9 +47,8 @@ class IconSheet extends Component {
 }
 
 IconSheet.propTypes = {
-  admin: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default IconSheet;

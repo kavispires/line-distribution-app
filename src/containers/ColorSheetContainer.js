@@ -3,10 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import ColorSheet from '../components/ColorSheet';
 
-import {
-  initColorSheet,
-  toggleColorSheetTab,
-} from '../reducers/admin';
+import { initColorSheet, toggleColorSheetTab } from '../reducers/admin';
 
 const mapStateToProps = state => ({
   admin: state.admin,
@@ -21,4 +18,9 @@ const mapDispatchToProps = {
   toggleColorSheetTab,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ColorSheet));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ColorSheet)
+);

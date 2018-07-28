@@ -2,11 +2,7 @@ import _ from 'lodash';
 
 import API from '../api';
 
-import {
-  getAlternativeColor,
-  getTrueKeys,
-  generatePushID,
-} from '../utils';
+import { getAlternativeColor, getTrueKeys, generatePushID } from '../utils';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -32,23 +28,39 @@ const SET_NEW_MEMBERS = 'SET_NEW_MEMBERS';
 /* --------------   ACTION CREATORS   -------------- */
 
 const setTab = payload => dispatch => dispatch({ type: SET_TAB, payload });
-const setIsValid = payload => dispatch => dispatch({ type: SET_IS_VALID, payload });
-const setMessage = payload => dispatch => dispatch({ type: SET_MESSAGE, payload });
-const setValidation = payload => dispatch => dispatch({ type: SET_VALIDATION, payload });
+const setIsValid = payload => dispatch =>
+  dispatch({ type: SET_IS_VALID, payload });
+const setMessage = payload => dispatch =>
+  dispatch({ type: SET_MESSAGE, payload });
+const setValidation = payload => dispatch =>
+  dispatch({ type: SET_VALIDATION, payload });
 
-const setTempInput = payload => dispatch => dispatch({ type: SET_TEMP_INPUT, payload });
-const setLoadedArtist = payload => dispatch => dispatch({ type: SET_LOADED_ARTIST, payload });
-const setNewArtistName = payload => dispatch => dispatch({ type: SET_NEW_ARTIST_NAME, payload });
-const setNewArtistOtherNames = payload => dispatch => dispatch({ type: SET_NEW_ARTIST_OTHER_NAMES, payload });
-const setNewArtistGenre = payload => dispatch => dispatch({ type: SET_NEW_ARTIST_GENRE, payload });
-const setNewArtistUnits = payload => dispatch => dispatch({ type: SET_NEW_ARTIST_UNITS, payload });
-const setLoadedUnit = payload => dispatch => dispatch({ type: SET_LOADED_UNIT, payload });
-const setNewUnitName = payload => dispatch => dispatch({ type: SET_NEW_UNIT_NAME, payload });
-const setNewUnitDebutYear = payload => dispatch => dispatch({ type: SET_NEW_UNIT_DEBUT_YEAR, payload });
-const setNewUnitOfficial = payload => dispatch => dispatch({ type: SET_NEW_UNIT_OFFICIAL, payload });
-const setNewUnitMembers = payload => dispatch => dispatch({ type: SET_NEW_UNIT_MEMBERS, payload });
-const setLoadedMember = payload => dispatch => dispatch({ type: SET_LOADED_MEMBER, payload });
-const setNewMembers = payload => dispatch => dispatch({ type: SET_NEW_MEMBERS, payload });
+const setTempInput = payload => dispatch =>
+  dispatch({ type: SET_TEMP_INPUT, payload });
+const setLoadedArtist = payload => dispatch =>
+  dispatch({ type: SET_LOADED_ARTIST, payload });
+const setNewArtistName = payload => dispatch =>
+  dispatch({ type: SET_NEW_ARTIST_NAME, payload });
+const setNewArtistOtherNames = payload => dispatch =>
+  dispatch({ type: SET_NEW_ARTIST_OTHER_NAMES, payload });
+const setNewArtistGenre = payload => dispatch =>
+  dispatch({ type: SET_NEW_ARTIST_GENRE, payload });
+const setNewArtistUnits = payload => dispatch =>
+  dispatch({ type: SET_NEW_ARTIST_UNITS, payload });
+const setLoadedUnit = payload => dispatch =>
+  dispatch({ type: SET_LOADED_UNIT, payload });
+const setNewUnitName = payload => dispatch =>
+  dispatch({ type: SET_NEW_UNIT_NAME, payload });
+const setNewUnitDebutYear = payload => dispatch =>
+  dispatch({ type: SET_NEW_UNIT_DEBUT_YEAR, payload });
+const setNewUnitOfficial = payload => dispatch =>
+  dispatch({ type: SET_NEW_UNIT_OFFICIAL, payload });
+const setNewUnitMembers = payload => dispatch =>
+  dispatch({ type: SET_NEW_UNIT_MEMBERS, payload });
+const setLoadedMember = payload => dispatch =>
+  dispatch({ type: SET_LOADED_MEMBER, payload });
+const setNewMembers = payload => dispatch =>
+  dispatch({ type: SET_NEW_MEMBERS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -156,7 +168,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const loadArtist = event => (dispatch) => {
+export const loadArtist = event => dispatch => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setLoadedArtist(value));
@@ -181,7 +193,7 @@ export const loadArtist = event => (dispatch) => {
   setTimeout(dispatch(checkValidation()), 1000);
 };
 
-export const handleNewArtistName = event => (dispatch) => {
+export const handleNewArtistName = event => dispatch => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const { value } = event.target;
@@ -191,7 +203,7 @@ export const handleNewArtistName = event => (dispatch) => {
   setTimeout(dispatch(checkValidation()), 1000);
 };
 
-export const handleNewArtistOtherNames = event => (dispatch) => {
+export const handleNewArtistOtherNames = event => dispatch => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const { value } = event.target;
@@ -201,7 +213,7 @@ export const handleNewArtistOtherNames = event => (dispatch) => {
   setTimeout(dispatch(checkValidation()), 1000);
 };
 
-export const handleNewArtistGenre = event => (dispatch) => {
+export const handleNewArtistGenre = event => dispatch => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const { value } = event.target;
@@ -211,13 +223,13 @@ export const handleNewArtistGenre = event => (dispatch) => {
   setTimeout(dispatch(checkValidation()), 1000);
 };
 
-export const loadUnit = event => (dispatch) => {
+export const loadUnit = event => dispatch => {
   dispatch(setTempInput(''));
   const { value } = event.target;
   dispatch(setLoadedUnit(value));
   if (value) {
     const unit = API.get(`/units/${value}`);
-    const members = unit.members.map((m) => {
+    const members = unit.members.map(m => {
       const member = API.get(`/members/${m.memberId}`);
       const positions = {
         pos000001: false,
@@ -235,7 +247,7 @@ export const loadUnit = event => (dispatch) => {
         pos000013: false,
       };
 
-      member.positions.forEach((posId) => {
+      member.positions.forEach(posId => {
         positions[posId] = true;
       });
 
@@ -257,7 +269,7 @@ export const loadUnit = event => (dispatch) => {
   setTimeout(dispatch(checkValidation()), 1000);
 };
 
-export const handleNewUnitName = event => (dispatch) => {
+export const handleNewUnitName = event => dispatch => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const { value } = event.target;
@@ -267,7 +279,7 @@ export const handleNewUnitName = event => (dispatch) => {
   setTimeout(dispatch(checkValidation()), 1000);
 };
 
-export const handleNewUnitDebutYear = event => (dispatch) => {
+export const handleNewUnitDebutYear = event => dispatch => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const { value } = event.target;
@@ -277,7 +289,7 @@ export const handleNewUnitDebutYear = event => (dispatch) => {
   setTimeout(dispatch(checkValidation()), 1000);
 };
 
-export const handleNewUnitOfficial = event => (dispatch) => {
+export const handleNewUnitOfficial = event => dispatch => {
   // Empty clipboard input
   dispatch(setTempInput(''));
   const value = event.target.checked;
@@ -311,7 +323,7 @@ export const loadMember = event => (dispatch, getState) => {
       pos000013: false,
     };
 
-    loadedMember.positions.forEach((posId) => {
+    loadedMember.positions.forEach(posId => {
       positions[posId] = true;
     });
 
@@ -353,7 +365,7 @@ export const addNewMember = event => (dispatch, getState) => {
   const newUnitMembers = Object.assign({}, getState().creator.newUnitMembers);
 
   // Prevent more than 25 members
-  if ((Object.keys(newMembers).length + newUnitMembers.length) === 25) {
+  if (Object.keys(newMembers).length + newUnitMembers.length === 25) {
     alert('You can NOT have more than 25 members in the same unit');
     return;
   }
@@ -460,7 +472,7 @@ export const updateNewMember = (event, id, field) => (dispatch, getState) => {
         members[id].positions.pos000007 = false;
         break;
       default:
-        // Nothing
+      // Nothing
     }
     members[id].positions[value] = !members[id].positions[value];
   }
@@ -520,7 +532,7 @@ export const updateExistingMember = (event, id) => (dispatch, getState) => {
       members[index].positions.pos000007 = false;
       break;
     default:
-      // Nothing
+    // Nothing
   }
   members[index].positions[value] = !members[index].positions[value];
 
@@ -538,7 +550,9 @@ export const removePosition = (event, id, field) => (dispatch, getState) => {
 
   const newMembers = Object.assign({}, getState().creator.newMembers);
 
-  newMembers[id].positions = newMembers[id].positions.filter(pos => pos !== field);
+  newMembers[id].positions = newMembers[id].positions.filter(
+    pos => pos !== field
+  );
 
   dispatch(setNewMembers(newMembers));
 
@@ -548,7 +562,7 @@ export const removePosition = (event, id, field) => (dispatch, getState) => {
 
 // NEW STUFF
 
-export const switchCreatorTab = event => (dispatch) => {
+export const switchCreatorTab = event => dispatch => {
   const { id } = event.target;
   dispatch(setTab(id));
 };
@@ -563,7 +577,10 @@ export const checkValidation = () => (dispatch, getState) => {
     if (!creator.newArtistName) {
       message[1] = 'Missing Artist Name.\n';
     } else {
-      const exists = _.find(admin.artists, o => o.name.toLowerCase() === creator.newArtistName.toLowerCase());
+      const exists = _.find(
+        admin.artists,
+        o => o.name.toLowerCase() === creator.newArtistName.toLowerCase()
+      );
       if (exists !== undefined && exists.id !== creator.loadedArtist) {
         message[1] = 'Artist already exists. Please just load it.\n';
         validation.artist = 'box-invalid';
@@ -580,14 +597,14 @@ export const checkValidation = () => (dispatch, getState) => {
     if (!creator.newUnitName) {
       message[2] = 'Missing Unit Name.\n';
     } else {
-      const sameUnit = o => (
-        o.name.toLowerCase() === creator.newUnitName.toLowerCase()
-        && o.artistId === creator.loadedArtist
-      );
+      const sameUnit = o =>
+        o.name.toLowerCase() === creator.newUnitName.toLowerCase() &&
+        o.artistId === creator.loadedArtist;
 
       const exists = _.find(admin.units, sameUnit);
       if (exists !== undefined && exists.id !== creator.loadedUnit) {
-        message[2] = 'Chosen unit name already exists for this group. Choose a different one.\n';
+        message[2] =
+          'Chosen unit name already exists for this group. Choose a different one.\n';
         validation.unit = 'box-invalid';
       } else {
         delete message[2];
@@ -609,7 +626,6 @@ export const checkValidation = () => (dispatch, getState) => {
     const existingMembersCount = creator.newUnitMembers.length;
 
     if (existingMembersCount > 1 && newMembersCount === 0) {
-
       validation.members = 'box-checked';
     } else if (existingMembersCount + newMembersCount > 1) {
       validation.members = 'box-unchecked';
@@ -649,7 +665,11 @@ export const checkValidation = () => (dispatch, getState) => {
     }
   }
 
-  if (validation.artist === 'box-checked' && validation.unit === 'box-checked' && validation.members === 'box-checked') {
+  if (
+    validation.artist === 'box-checked' &&
+    validation.unit === 'box-checked' &&
+    validation.members === 'box-checked'
+  ) {
     dispatch(setIsValid(true));
   } else {
     dispatch(setIsValid(false));
@@ -660,7 +680,10 @@ export const checkValidation = () => (dispatch, getState) => {
 
 export const reset = () => dispatch => dispatch();
 
-export const clearPositions = (e, id, isExisting = false) => (dispatch, getState) => {
+export const clearPositions = (e, id, isExisting = false) => (
+  dispatch,
+  getState
+) => {
   e.preventDefault();
   let members;
   let index;
@@ -723,12 +746,12 @@ export const save = () => (dispatch, getState) => {
   };
 
   // Prepare members
-  creator.newUnitMembers.forEach((member) => {
+  creator.newUnitMembers.forEach(member => {
     const newMember = _.cloneDeep(member);
     newMember.positions = getTrueKeys(newMember.positions);
     body.existingMembers.push(newMember);
   });
-  Object.keys(creator.newMembers).forEach((key) => {
+  Object.keys(creator.newMembers).forEach(key => {
     const newMember = _.cloneDeep(creator.newMembers[key]);
     newMember.birthdate = +newMember.birthdate.split('-').join('');
     newMember.positions = getTrueKeys(newMember.positions);

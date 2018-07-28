@@ -15,16 +15,26 @@ const SET_TAB = 'SET_TAB';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setArtists = payload => dispatch => dispatch({ type: SET_ARTISTS, payload });
-export const setColors = payload => dispatch => dispatch({ type: SET_COLORS, payload });
-export const setDisplay = payload => dispatch => dispatch({ type: SET_DISPLAY, payload });
-export const setDisplaySelect = payload => dispatch => dispatch({ type: SET_DISPLAY_SELECT, payload });
-export const setIncludeDependencies = payload => dispatch => dispatch({ type: SET_INCLUDE_DEPENDENCIES, payload });
-export const setMembers = payload => dispatch => dispatch({ type: SET_MEMBERS, payload });
-export const setPositions = payload => dispatch => dispatch({ type: SET_POSITIONS, payload });
-export const setSongs = payload => dispatch => dispatch({ type: SET_SONGS, payload });
-export const setUnits = payload => dispatch => dispatch({ type: SET_UNITS, payload });
-export const setTab = payload => dispatch => dispatch({ type: SET_TAB, payload });
+export const setArtists = payload => dispatch =>
+  dispatch({ type: SET_ARTISTS, payload });
+export const setColors = payload => dispatch =>
+  dispatch({ type: SET_COLORS, payload });
+export const setDisplay = payload => dispatch =>
+  dispatch({ type: SET_DISPLAY, payload });
+export const setDisplaySelect = payload => dispatch =>
+  dispatch({ type: SET_DISPLAY_SELECT, payload });
+export const setIncludeDependencies = payload => dispatch =>
+  dispatch({ type: SET_INCLUDE_DEPENDENCIES, payload });
+export const setMembers = payload => dispatch =>
+  dispatch({ type: SET_MEMBERS, payload });
+export const setPositions = payload => dispatch =>
+  dispatch({ type: SET_POSITIONS, payload });
+export const setSongs = payload => dispatch =>
+  dispatch({ type: SET_SONGS, payload });
+export const setUnits = payload => dispatch =>
+  dispatch({ type: SET_UNITS, payload });
+export const setTab = payload => dispatch =>
+  dispatch({ type: SET_TAB, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -94,7 +104,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const initDatabase = () => (dispatch) => {
+export const initDatabase = () => dispatch => {
   const artists = API.get('/artists');
   dispatch(setArtists(artists));
   const colors = API.get('/colors');
@@ -111,7 +121,9 @@ export const initDatabase = () => (dispatch) => {
 
 export const handleDisplay = event => (dispatch, getState) => {
   const { value } = event.target;
-  const includeDependencies = getState().database.includeDependencies ? '/all' : '';
+  const includeDependencies = getState().database.includeDependencies
+    ? '/all'
+    : '';
 
   let result;
 
@@ -147,12 +159,12 @@ export const handleDisplay = event => (dispatch, getState) => {
   dispatch(setDisplay(result));
 };
 
-export const toggleIncludeDependencies = event => (dispatch) => {
+export const toggleIncludeDependencies = event => dispatch => {
   const { checked } = event.target;
   dispatch(setIncludeDependencies(checked));
 };
 
-export const toggleTab = event => (dispatch) => {
+export const toggleTab = event => dispatch => {
   const { id } = event.target;
   dispatch(setTab(id));
 };

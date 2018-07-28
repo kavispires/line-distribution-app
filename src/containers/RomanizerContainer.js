@@ -21,4 +21,9 @@ const mapDispatchToProps = {
   updateRomanizationType,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Romanizer));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Romanizer)
+);
