@@ -9,7 +9,7 @@ const ExpandableCard = ({
   title,
   icon,
   width,
-  ...props,
+  ...props
 }) => {
   // Verify if icon is needed
   if (icon) {

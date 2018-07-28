@@ -74,20 +74,48 @@ class Artists extends Component {
         {
           this.props.user.isAuthenticated ? (
             <div className="user-artists-container">
-              <UserArtistTable
+              <ExpandableCard
+                props={this.props}
+                globalId="user-latest-artists"
                 title="Your Latest Artists"
                 icon="clock"
-                unitList={ARTISTS.userLatestArtists}
-                action={setArtistUnit}
-                message="When you begin using the app, the 5 most recent artists you use will show up here."
-              />
-              <UserArtistTable
+                width="half"
+              >
+                {
+                  ARTISTS.userLatestArtists.length > 0 ? (
+                    <UserArtistTable
+                      list={ARTISTS.userLatestArtists}
+                      action={setArtistUnit}
+                      prefix="user-latest-artists"
+                    />
+                  ) : (
+                    <p className="user-artists-message">
+                      When you begin using the app, the 5 most recent artists you use will show up here.
+                    </p>
+                  )
+                }
+              </ExpandableCard>
+              <ExpandableCard
+                props={this.props}
+                globalId="user-favorite-artists"
                 title="Your Favorite Artists"
                 icon="heart"
-                unitList={ARTISTS.userFavoriteArtists}
-                action={setArtistUnit}
-                message="You may favorite up to 5 artists by clicking on the Heart icon in the Artist page."
-              />
+                width="half"
+              >
+                {
+                  ARTISTS.userLatestArtists.length > 0 ? (
+                    <UserArtistTable
+                      list={ARTISTS.userFavoriteArtists}
+                      action={setArtistUnit}
+                      prefix="user-favorite-artists"
+                    />
+                  ) : (
+                    <p className="user-artists-message">
+                      You may favorite up to 5 artists by clicking on the Heart icon in the Artist page.
+                    </p>
+                  )
+                }
+              </ExpandableCard>
             </div>
           ) : null
         }

@@ -38,6 +38,7 @@ const mapStateToProps = state => ({
   admin: state.admin,
   db: state.db,
   database: state.database,
+  global: state.app.global,
   user: state.user,
 });
 
