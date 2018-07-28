@@ -167,6 +167,7 @@ export const post = (str, body) => {
   const all = last === 'all';
 
   console.log('Posting to api path:', str);
+  console.log('Body', body);
   switch (path[1]) {
     case 'user':
       // API/user/latest/:id
@@ -611,7 +612,7 @@ const POST = {
   },
 
   // API/song
-  postSong: (body) => {
+  postSong: async (body) => {
     const missingInfo = [];
     // Check if song has all necessary params. Optional: distribution, lyrics
     if (!body.originalArtist) missingInfo.push('Original Artist\n'); // REMOVE THIS, DEBUGGING ONLY
@@ -640,7 +641,7 @@ const POST = {
       title: body.title,
       type: body.type,
       unitId: body.unitId,
-      userId: body.userEmail,
+      userId: body.userUid,
     };
 
     // If song has already an id and new user is the same, save over old one
@@ -650,24 +651,60 @@ const POST = {
       return true;
     }
 
-    // Else, create a new song
-    base.database()
+    // // Else, create a new song
+    // base.database()
+    //   .ref('songs')
+    //   .push(newSong)
+    //   .then((snap) => {
+    //     console.log('snap', snap);
+    //     const { key } = snap;
+    //     newSong.id = key;
+    //     // Updates song with own id reference
+    //     base.database()
+    //       .ref(`songs/${key}`)
+    //       .set(newSong)
+    //       .then(() => {
+    //         toastr.success('Your song was saved successfully!');
+    //       });
+    //     // Pushes new songId to unit songs array
+    //     const unitSongs = DB.units[newSong.unitId].songs || [];
+    //     unitSongs.push(key);
+    //     base.database()
+    //       .ref(`units/${newSong.unitId}/songs`)
+    //       .set(unitSongs)
+    //       .then(;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.code);
+    //     toastr.error(`Error: ${error.message}`);
+    //   });
+    // return true;
+
+    const snap = await base.database()
       .ref('songs')
       .push(newSong)
       .then((snap) => {
+        console.log('snap', snap);
         const { key } = snap;
         newSong.id = key;
-        const unitSongs = DB.units[newSong.unitId].songs || [];
-        unitSongs.push(key);
-        base.database()
-          .ref(`units/${newSong.unitId}/songs`)
-          .set(unitSongs);
+        // Updates song with own id reference
         base.database()
           .ref(`songs/${key}`)
           .set(newSong)
           .then(() => {
             toastr.success('Your song was saved successfully!');
           });
+        // Pushes new songId to unit songs array
+        const unitSongs = DB.units[newSong.unitId].songs || [];
+        unitSongs.push(key);
+        base.database()
+          .ref(`units/${newSong.unitId}/songs`)
+          .set(unitSongs)
+          .then(;
+      })
+      .catch((error) => {
+        console.log(error.code);
+        toastr.error(`Error: ${error.message}`);
       });
     return true;
   },
