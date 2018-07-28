@@ -13,7 +13,6 @@ import {
 } from './utils';
 
 describe('Utils', () => {
-
   describe('boxSizeClass', () => {
     it('assigns correct class for 2 boxes', () => {
       expect(boxSizeClass(2)).toEqual('box-2');

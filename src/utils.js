@@ -1,7 +1,6 @@
 /* eslint wrap-iife: 0 */
 /* eslint func-names: 0 */
 
-
 import _ from 'lodash';
 
 import { ALTERNATIVE_COLOR_LIST } from './constants';
@@ -54,13 +53,10 @@ export const saveLocalStorage = (obj) => {
 };
 
 export const copyToClipboard = (element = 'temp-input') => {
-  console.log('Copying to clipboard...');
   setTimeout(() => {
     const copyText = document.getElementById(element);
     copyText.select();
     document.execCommand('Copy');
-    console.log('Copied to clipboard');
-    alert('Text copied to clipboard!');
   }, 1000);
 };
 
@@ -245,7 +241,7 @@ export const bem = (...args) => {
   const hasBlock = (block !== undefined && block !== null && block !== '');
   const hasModifiers = (modifiers !== undefined && modifiers !== null && modifiers !== '' && modifiers.length > 0);
   const hasElement = (element !== undefined && element !== null && element !== '');
-  const hasExtras = (extras !== undefined && extras !== null && extras !== '' || extras.length > 0);
+  const hasExtras = (extras !== undefined && extras !== null && extras !== '' && extras.length > 0);
 
   // Prepare modifiers
   if (hasModifiers) {

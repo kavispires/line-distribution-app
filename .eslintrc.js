@@ -1,5 +1,9 @@
 module.exports = {
   "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "jest": true
+  },
   "plugins": [
     "react",
     "jsx-a11y",
@@ -12,6 +16,7 @@ module.exports = {
       "jsx-a11y/anchor-is-valid": "off",
       "no-use-before-define": "off",
       "jsx-a11y/label-has-for": "off",
-      "no-plusplus": "off"
+      "no-plusplus": "off",
+      "no-param-reassign": "off"
     }
 };
