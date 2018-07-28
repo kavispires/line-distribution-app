@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import icons from './icons';
+import icons from '../icons';
 
 export const ICONS_LIST = [
   'default',

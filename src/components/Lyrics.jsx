@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import LoginRequiredScreen from './LoginRequiredScreen';
-import LoadingScreen from './LoadingScreen';
-import Icon from './Icon';
+import Icon from './shared/Icon';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import LoadingScreen from './shared/LoadingScreen';
 
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';

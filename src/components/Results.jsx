@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import LoginRequiredScreen from './LoginRequiredScreen';
-import LoadingScreen from './LoadingScreen';
-
-import Icon from './Icon';
+// Import shared components
+import Icon from './shared/Icon';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import LoadingScreen from './shared/LoadingScreen';
+// Import other components
 import ModalSave from './ModalSave';
 import CurrentArtistName from './widgets/CurrentArtistName';
-
+// Import utilities components
 import { getClosestIndex } from '../utils';
 
 class Results extends Component {

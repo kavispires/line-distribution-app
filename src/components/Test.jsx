@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Icon from './Icon';
+// Import shared components
+import Icon from './shared/Icon';
 
 const Test = props => (
   <main className="container">

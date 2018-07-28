@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { capitalizeWord, spinalCaseWord } from '../utils';
+import { capitalizeWord, spinalCaseWord } from '../../utils';
 
 const Tabs = ({ tabs, active, action }) => {
   // Check for names and ids

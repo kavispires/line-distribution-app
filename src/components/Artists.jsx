@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import LoginRequiredScreen from './LoginRequiredScreen';
-import LoadingScreen from './LoadingScreen';
-
-import UserArtistTable from './UserArtistTable';
-
-import { ARTITST_PLACEHOLDER } from '../constants';
+// Import shared components
 import ExpandableCard from './shared/ExpandableCard';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import LoadingScreen from './shared/LoadingScreen';
+// Import other components
+import UserArtistTable from './UserArtistTable';
+// Import constants
+import { ARTITST_PLACEHOLDER } from '../constants';
 
 class Artists extends Component {
   componentWillMount() {

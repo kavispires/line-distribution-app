@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AdminOnlyScreen from './AdminOnlyScreen';
-import LoadingScreen from './LoadingScreen';
-import LoginRequiredScreen from './LoginRequiredScreen';
-
-import Icon, { ICONS_LIST } from './Icon';
+// Import shared components
+import AdminOnlyScreen from './shared/AdminOnlyScreen';
+import Icon, { ICONS_LIST } from './shared/Icon';
+import LoadingScreen from './shared/LoadingScreen';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
 
 class IconSheet extends Component {
   componentWillUpdate(nextProps) {

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AdminOnlyScreen from './AdminOnlyScreen';
-import LoadingScreen from './LoadingScreen';
-import LoginRequiredScreen from './LoginRequiredScreen';
-
-import Tabs from './Tabs';
-
+// Import shared components
+import AdminOnlyScreen from './shared/AdminOnlyScreen';
+import LoadingScreen from './shared/LoadingScreen';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import Tabs from './shared/Tabs';
+// Import constants and utility functions
 import { ALTERNATIVE_COLOR_LIST } from '../constants';
 import { makeSixDigit, makeIdNumber } from '../utils';
 

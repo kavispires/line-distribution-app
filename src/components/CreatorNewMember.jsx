@@ -1,10 +1,12 @@
 import React from 'react';
+
+// Import other components
 import ColorPicker from './ColorPicker';
-
+// Import Icon components
 import PositionIcons from './icons/PositionIcons';
-
-import { makeIdNumber } from '../utils';
+// Import constants and utility functions
 import { POS_LIST } from '../constants';
+import { makeIdNumber } from '../utils';
 
 const CreatorNewMember = ({ id, props }) => {
   const COLORS = props.admin.colors;

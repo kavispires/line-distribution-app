@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from './Icon';
+// Import shared components
+import Icon from './shared/Icon';
 
 const SaveModal = ({ props }) => {
   const { results, distribute, lyrics } = props;

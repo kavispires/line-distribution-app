@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import LoginRequiredScreen from './LoginRequiredScreen';
-import LoadingScreen from './LoadingScreen';
-
+// Import shared components
+import Icon from './shared/Icon';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import LoadingScreen from './shared/LoadingScreen';
+// Import other components
 import Member from './Member';
 import ArtistSongsTable from './ArtistSongsTable';
-
+// Import Icon components
 import FavoriteIcon from './icons/FavoriteIcon';
 import LoadingIcon from './icons/LoadingIcon';
-import Icon from './Icon';
 
 class Artist extends Component {
   componentWillMount() {

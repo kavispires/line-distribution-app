@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Icon from './Icon';
+// Import shared components
+import Icon from './shared/Icon';
 
 const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
   const sortedSongs = _.sortBy(songs, ['title']);

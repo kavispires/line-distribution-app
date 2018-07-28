@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import LoginRequiredScreen from './LoginRequiredScreen';
-import LoadingScreen from './LoadingScreen';
-
-import Icon from './Icon';
+// Import shared components
+import Icon from './shared/Icon';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import LoadingScreen from './shared/LoadingScreen';
+// Import components
 import CurrentArtistName from './widgets/CurrentArtistName';
-
+// Import utilities
 import { getLyricsSnippet } from '../utils';
 
 class Songs extends Component {

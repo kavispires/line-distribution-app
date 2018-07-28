@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import LoginRequiredScreen from './LoginRequiredScreen';
-import LoadingScreen from './LoadingScreen';
-
-import Icon from './Icon';
+// Import shared components
+import Icon from './shared/Icon';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import LoadingScreen from './shared/LoadingScreen';
+// Import other components
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
+// Import Icon components
 import LoadingIcon from './icons/LoadingIcon';
+// Import widget components
 import SwitchToggle from './widgets/SwitchToggle';
 import CurrentArtistName from './widgets/CurrentArtistName';
-
+// Import constants and utility functions
 import { KEY_LIST } from '../constants';
 import { boxSizeClass } from '../utils';
 

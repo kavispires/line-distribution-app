@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AdminOnlyScreen from './AdminOnlyScreen';
-import LoadingScreen from './LoadingScreen';
-import LoginRequiredScreen from './LoginRequiredScreen';
-import Icon from './Icon';
-
-import Tabs from './Tabs';
-
+// Import shared components
+import AdminOnlyScreen from './shared/AdminOnlyScreen';
+import Icon from './shared/Icon';
+import LoadingScreen from './shared/LoadingScreen';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import Tabs from './shared/Tabs';
+// Import other components
 import CreatorArtist from './CreatorArtist';
 import CreatorMembers from './CreatorMembers';
 import CreatorReview from './CreatorReview';

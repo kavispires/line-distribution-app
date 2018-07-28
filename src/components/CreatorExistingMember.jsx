@@ -1,9 +1,10 @@
 import React from 'react';
 
+// Import icon components
 import PositionIcons from './icons/PositionIcons';
-
-import { makeIdNumber } from '../utils';
+// Import constants and utility functions
 import { POS_LIST } from '../constants';
+import { makeIdNumber } from '../utils';
 
 const CreatorMember = ({ member, props }) => {
   const COLOR_NAME = props.admin.colors[member.colorId].name;

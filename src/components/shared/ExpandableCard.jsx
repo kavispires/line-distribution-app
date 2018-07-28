@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from '../Icon';
+import Icon from './Icon';
 
 const ExpandableCard = ({ globalId, title, icon, width, ...props }) => {
   // Verify if icon is needed
