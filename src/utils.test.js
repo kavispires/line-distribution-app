@@ -2,15 +2,12 @@ import _ from 'lodash';
 
 import {
   boxSizeClass,
-  getClosestIndex,
   parseBirthDate,
   getLyricsSnippet,
   makeSixDigit,
   makeIdNumber,
   capitalizeWord,
   spinalCaseWord,
-  getTrueKeys,
-  ensureColorUniqueness,
   generatePushID,
   bem,
 } from './utils';
@@ -155,18 +152,18 @@ describe('Utils', () => {
 
   describe('makeIdNumber', () => {
     it('returns number retrived from string', () => {
-      expect(makeIdNumber("pos1029")).toEqual(1029);
-      expect(makeIdNumber("pos102")).toEqual(102);
+      expect(makeIdNumber('pos1029')).toEqual(1029);
+      expect(makeIdNumber('pos102')).toEqual(102);
     });
 
     it('returns 0 if argument is smaller than 4 characters', () => {
-      expect(makeIdNumber("po")).toEqual(0);
-      expect(makeIdNumber("pos")).toEqual(0);
+      expect(makeIdNumber('po')).toEqual(0);
+      expect(makeIdNumber('pos')).toEqual(0);
     });
 
     it('returns 0 when argument does contain numbers', () => {
-      expect(makeIdNumber("posss")).toEqual(0);
-      expect(makeIdNumber("posss0")).toEqual(0);
+      expect(makeIdNumber('posss')).toEqual(0);
+      expect(makeIdNumber('posss0')).toEqual(0);
     });
   });
 
@@ -259,6 +256,5 @@ describe('Utils', () => {
     it('parses a block and a modifier and multiple non-BEM classes', () => {
       expect(bem('block', 'modifier', 'element', ['extra1', 'extra2'])).toEqual('block__element block__element--modifier extra1 extra2');
     });
-
   });
 });

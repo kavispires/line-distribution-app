@@ -1,6 +1,7 @@
 /* eslint wrap-iife: 0 */
 /* eslint func-names: 0 */
 
+
 import _ from 'lodash';
 
 import { ALTERNATIVE_COLOR_LIST } from './constants';
@@ -290,17 +291,6 @@ export const bem = (...args) => {
       classes += ` ${block}${element}${m}`;
     });
   }
-
-
-
-
-
-
-
-
-  // console.log(hasBlock, hasModifiers, hasElement, hasExtras);
-
-
 
   return `${classes} ${extras.join(' ')}`.trim();
 };
