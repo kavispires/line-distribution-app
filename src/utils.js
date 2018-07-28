@@ -3,8 +3,6 @@
 
 import _ from 'lodash';
 
-import store from './store';
-import DB from './database/index';
 import { ALTERNATIVE_COLOR_LIST } from './constants';
 
 // From number of members, determine the box-size class for boxes in distribution
@@ -42,13 +40,6 @@ export const getClosestIndex = (collection, target, key) => {
   return closestIndex;
 };
 
-export const getCurrentBand = (bandId, artists) => {
-  bandId = bandId || store.getState().app.currentBand;
-  artists = artists || store.getState().app.artists;
-  if (artists[bandId] === undefined) console.warn('Couldn\'t find seleced artist id');
-  return artists[bandId];
-};
-
 export const loadLocalStorage = () => {
   console.log('Fetching from localStorage...');
   const { localStorage } = window;
@@ -70,33 +61,6 @@ export const copyToClipboard = (element = 'temp-input') => {
     console.log('Copied to clipboard');
     alert('Text copied to clipboard!');
   }, 1000);
-};
-
-export const getLatestId = (t) => {
-  const type = t.toUpperCase();
-
-  let lastId = -1;
-  let obj;
-
-  switch (type) {
-    case 'ARTISTS':
-      obj = DB.ARTISTS;
-      break;
-    case 'UNITS':
-      obj = DB.UNITS;
-      break;
-    case 'MEMBERS':
-      obj = DB.MEMBERS;
-      break;
-    case 'SONGS':
-      obj = DB.SONGS;
-      break;
-    default:
-      obj = {};
-  }
-
-  lastId = Math.max(...Object.keys(obj).filter(a => a < 1000));
-  return lastId + 1;
 };
 
 export const getAlternativeColor = (colorId) => {
@@ -153,18 +117,22 @@ export const getLyricsSnippet = (str) => {
 };
 
 export const makeSixDigit = (num) => {
-  const str = num.toString();
   const pad = '000000';
+  if (typeof num !== 'number') {
+    return pad;
+  }
+  const str = num.toString();
+
   return pad.substring(0, pad.length - str.length) + str;
 };
 
 export const makeIdNumber = (id) => {
   const num = id.substring(3);
-  return Number(num);
+  return Number(num) || 0;
 };
 
 export const capitalizeWord = (str, separator = ' ') => (
-  str.toString().split(separator).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+  str.toString().split(separator).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(separator)
 );
 
 export const spinalCaseWord = str => str.toLowerCase().split(' ').join('-');
@@ -176,7 +144,7 @@ export const getTrueKeys = (obj) => {
     if (obj[key]) keys.push(key);
   });
 
-  return keys;
+  return Object.keys(obj);
 };
 
 export const ensureColorUniqueness = (m) => {
@@ -265,4 +233,74 @@ export const insertAtCursor = (field, valueToInsert) => {
     const endPos = field.selectionEnd;
     field.value = field.value.substring(0, startPos) + valueToInsert + field.value.substring(endPos, field.value.length);
   }
+};
+
+export const bem = (...args) => {
+  const block = args[0];
+  let modifiers = args[1] || '';
+  let element = args[2];
+  let extras = args[3] || [];
+
+  const hasBlock = (block !== undefined && block !== null && block !== '');
+  const hasModifiers = (modifiers !== undefined && modifiers !== null && modifiers !== '' && modifiers.length > 0);
+  const hasElement = (element !== undefined && element !== null && element !== '');
+  const hasExtras = (extras !== undefined && extras !== null && extras !== '' || extras.length > 0);
+
+  // Prepare modifiers
+  if (hasModifiers) {
+    if (typeof modifiers === 'string') {
+      modifiers = [modifiers];
+    }
+    modifiers = modifiers.map(m => `--${m}`);
+  }
+  // Prepare element
+  if (hasElement) {
+    element = `__${element}`;
+  }
+  // Prepare Extras
+  if (hasExtras) {
+    if (typeof extras === 'string') {
+      extras = [extras];
+    }
+  }
+
+  // No Block
+  if (!hasBlock) {
+    throw new Error('Block string missing');
+  }
+
+  let classes = block;
+
+  // Only Modifiers
+  if (hasModifiers && !hasElement) {
+    modifiers.forEach((m) => {
+      classes += ` ${block}${m}`;
+    });
+  }
+
+  // Only Element
+  if (hasElement && !hasModifiers) {
+    classes = ` ${block}${element}`;
+  }
+
+  // Modifiers and Element
+  if (hasElement && hasModifiers) {
+    classes += `${element}`;
+    modifiers.forEach((m) => {
+      classes += ` ${block}${element}${m}`;
+    });
+  }
+
+
+
+
+
+
+
+
+  // console.log(hasBlock, hasModifiers, hasElement, hasExtras);
+
+
+
+  return `${classes} ${extras.join(' ')}`.trim();
 };
