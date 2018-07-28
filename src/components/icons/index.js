@@ -52,6 +52,20 @@ const iconBoxUnchecked = (
   </g>
 );
 
+const iconChevronDown = (
+  <g className="icon-chevron-down">
+    <path className="primary" d="M50.1,62.6c-0.7,0-1.4-0.1-2-0.3L10.8,49.1c-3.1-1.1-4.8-4.5-3.7-7.7c1.1-3.1,4.5-4.8,7.7-3.7l35.3,12.5l35-12.5
+      c3.1-1.1,6.6,0.5,7.7,3.6c1.1,3.1-0.5,6.6-3.6,7.7l-37,13.2C51.5,62.5,50.8,62.6,50.1,62.6z"/>
+  </g>
+);
+
+const iconChevronUp = (
+  <g className="icon-chevron-up">
+    <path className="primary" d="M49.9,37.4c0.7,0,1.4,0.1,2,0.3l37.3,13.2c3.1,1.1,4.8,4.5,3.7,7.7c-1.1,3.1-4.5,4.8-7.7,3.7L49.9,49.8l-35,12.5
+      c-3.1,1.1-6.6-0.5-7.7-3.6c-1.1-3.1,0.5-6.6,3.6-7.7l37-13.2C48.5,37.5,49.2,37.4,49.9,37.4z"/>
+  </g>
+);
+
 const iconClock = (
   <g className="icon-clock">
     <path className="primary" d="M100,50c0,9.4-2.2,17.8-6.6,25.1c-4.6,7.6-10.7,13.7-18.3,18.3C67.8,97.8,59.4,100,50,100s-17.8-2.2-25.1-6.6
@@ -317,6 +331,8 @@ const icons = {
   boxChecked: iconBoxChecked,
   boxInvalid: iconBoxInvalid,
   boxUnchecked: iconBoxUnchecked,
+  chevronDown: iconChevronDown,
+  chevronUp: iconChevronUp,
   clock: iconClock,
   default: iconDefault,
   edit: iconEdit,

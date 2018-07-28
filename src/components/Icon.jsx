@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import icons from './icons';
 
-export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'sign-in', 'sign-out', 'stop', 'trash', 'used', 'view', 'yes'];
+export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'chevron-down', 'chevron-up', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'sign-in', 'sign-out', 'stop', 'trash', 'used', 'view', 'yes'];
 
 const Icon = ({ type, size = 'small', styles = {} }) => {
   let icon;
@@ -23,6 +23,14 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
 
     case 'box-unchecked':
       icon = icons.boxUnchecked;
+      break;
+
+    case 'chevron-down':
+      icon = icons.chevronDown;
+      break;
+
+    case 'chevron-up':
+      icon = icons.chevronUp;
       break;
 
     case 'clock':
@@ -120,8 +128,14 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
 
 Icon.propTypes = {
   type: PropTypes.string, // eslint-disable-line
-  size: PropTypes.oneOf(['small', 'medium', 'large', 'x-large']), // eslint-disable-line
+  size: PropTypes.oneOf(['small', 'small-inline', 'medium', 'medium-inline', 'large', 'x-large']), // eslint-disable-line
   styles: PropTypes.object, // eslint-disable-line
+};
+
+Icon.defaultProps = {
+  type: 'default',
+  size: 'small',
+  styles: {},
 };
 
 export default Icon;

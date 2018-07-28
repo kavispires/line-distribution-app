@@ -9,11 +9,10 @@ import { updateCurrentSongInfo } from './results';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
 const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
+const SET_GLOBAL = 'SET_GLOBAL';
 const SET_LATEST_UNITS = 'SET_LATEST_UNITS';
 const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
-
 const SET_SHOULD_RESET = 'SET_SHOULD_RESET';
-
 const SET_IS_LOADING = 'SET_IS_LOADING';
 
 /* --------------   ACTION CREATORS   -------------- */
@@ -21,10 +20,9 @@ const SET_IS_LOADING = 'SET_IS_LOADING';
 export const setCurrentArtist = payload => dispatch => dispatch({ type: SET_CURRENT_ARTIST, payload });
 export const setCurrentSong = payload => dispatch => dispatch({ type: SET_CURRENT_SONG, payload });
 export const setCurrentUnit = payload => dispatch => dispatch({ type: SET_CURRENT_UNIT, payload });
-
+export const setGlobal = payload => dispatch => dispatch({ type: SET_GLOBAL, payload });
 export const setLatestUnits = payload => dispatch => dispatch({ type: SET_LATEST_UNITS, payload });
 export const setMembersList = payload => dispatch => dispatch({ type: SET_MEMBERS_LIST, payload });
-
 export const setShouldReset = payload => dispatch => dispatch({ type: SET_SHOULD_RESET, payload });
 export const setIsLoading = payload => dispatch => dispatch({ type: SET_IS_LOADING, payload });
 
@@ -34,11 +32,10 @@ const initialState = {
   currentArtist: {},
   currentSong: {},
   currentUnit: {},
-
+  global: {},
   isLoading: false,
   latestUnits: [],
   membersList: [],
-
   shouldReset: true,
 };
 
@@ -56,6 +53,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_CURRENT_UNIT:
       newState.currentUnit = action.payload;
+      break;
+
+    case SET_GLOBAL:
+      newState.global = action.payload;
       break;
 
     case SET_LATEST_UNITS:
@@ -152,4 +153,16 @@ export const updateCurrentUnit = (unit, artist) => (dispatch) => {
 
 export const updateShouldReset = (bool = false) => (dispatch) => {
   dispatch(setShouldReset(bool));
+};
+
+export const updateGlobal = id => (dispatch, getState) => {
+  const global = Object.assign({}, getState().app.global);
+
+  if (global[id] === undefined) {
+    global[id] = true;
+  } else {
+    global[id] = !global[id];
+  }
+
+  dispatch(setGlobal(global));
 };

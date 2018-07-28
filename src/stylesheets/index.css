@@ -7172,6 +7172,42 @@ input:checked + .slider:before {
     resize: none;
     border: 1px solid #707070; }
 
+.shared-expandable-card {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin-bottom: 12px; }
+  .shared-expandable-card--quarter {
+    width: 23%; }
+  .shared-expandable-card--third {
+    width: 31%; }
+  .shared-expandable-card--half {
+    width: 48%; }
+  .shared-expandable-card--full {
+    width: 100%; }
+  .shared-expandable-card__title {
+    margin: 0 0 6px 0;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #E6E6E6; }
+  .shared-expandable-card__button {
+    border-radius: 3px;
+    width: 100%;
+    border: 0;
+    background: none; }
+    .shared-expandable-card__button .icon-medium {
+      transform: translateY(2px); }
+    .shared-expandable-card__button:hover {
+      background: #fff; }
+      .shared-expandable-card__button:hover .icon-medium {
+        animation: bounce 1s ease-in-out infinite; }
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(2px); }
+  50% {
+    transform: translateY(-1px); } }
+
 .hidden {
   display: none !important; }
 

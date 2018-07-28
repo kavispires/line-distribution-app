@@ -6,6 +6,7 @@ import Artists from '../components/Artists';
 import {
   toggleIsLoading,
   updateCurrentUnit,
+  updateGlobal,
   updateShouldReset,
 } from '../reducers/app';
 
@@ -34,6 +35,7 @@ const mapDispatchToProps = {
   login,
   toggleIsLoading,
   updateCurrentUnit,
+  updateGlobal,
   updateLatestUnits,
   updateSelectedArtist,
   updateSelectedUnit,

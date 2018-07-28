@@ -7,6 +7,7 @@ import LoadingScreen from './LoadingScreen';
 import UserArtistTable from './UserArtistTable';
 
 import { ARTITST_PLACEHOLDER } from '../constants';
+import ExpandableCard from './shared/ExpandableCard';
 
 class Artists extends Component {
   componentWillMount() {
