@@ -8,15 +8,15 @@
   margin-bottom: $unit;
 
   &--quarter {
-    width: 23%;
+    width: 24%;
   }
 
   &--third {
-    width: 31%;
+    width: 32%;
   }
 
   &--half {
-    width: 48%;
+    width: 49%;
   }
 
   &--full {
@@ -45,6 +45,10 @@
       .icon-medium {
         animation: bounce 1s ease-in-out infinite;
       }
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 }

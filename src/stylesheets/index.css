@@ -7179,11 +7179,11 @@ input:checked + .slider:before {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   margin-bottom: 12px; }
   .shared-expandable-card--quarter {
-    width: 23%; }
+    width: 24%; }
   .shared-expandable-card--third {
-    width: 31%; }
+    width: 32%; }
   .shared-expandable-card--half {
-    width: 48%; }
+    width: 49%; }
   .shared-expandable-card--full {
     width: 100%; }
   .shared-expandable-card__title {
@@ -7201,6 +7201,8 @@ input:checked + .slider:before {
       background: #fff; }
       .shared-expandable-card__button:hover .icon-medium {
         animation: bounce 1s ease-in-out infinite; }
+    .shared-expandable-card__button:focus {
+      outline: none; }
 
 @keyframes bounce {
   0%, 100% {
