@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Icon from './shared/Icon';
 import LoginRequiredScreen from './shared/LoginRequiredScreen';
 import LoadingScreen from './shared/LoadingScreen';
+import Tabs from './shared/Tabs';
 // Import other components
 import Member from './Member';
 import ArtistSongsTable from './ArtistSongsTable';
@@ -107,23 +108,14 @@ class Artist extends Component {
               );
             })}
         </p>
-        <ul className="tabs" onClick={this.props.switchUnitsTab}>
-          {Object.keys(selectedUnits).map(unit => {
-            const { name, id, official } = selectedUnits[unit];
-            return (
-              <li
-                key={`tab-${name}`}
-                className={`tab ${
-                  id === ARTISTS.selectedUnit.id ? 'selected' : ''
-                }`}
-                id={id}
-                onClick={() => this.props.updateSelectedUnit(id)}
-              >
-                {name} {official ? <Icon type="official" /> : null}
-              </li>
-            );
-          })}
-        </ul>
+        <Tabs
+          tabs={Object.keys(selectedUnits).map(u => selectedUnits[u])}
+          active={ARTISTS.selectedUnit.id}
+          action={this.props.switchUnitsTab}
+          iconCondition="official"
+          iconType="official"
+        />
+
         {selectedUnit && selectedUnit.id ? (
           <section className="unit-content">
             <FavoriteIcon props={this.props} />

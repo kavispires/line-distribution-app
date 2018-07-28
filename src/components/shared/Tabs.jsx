@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { capitalizeWord, spinalCaseWord } from '../../utils';
+// Import shared components
+import Icon from './Icon';
+// Import utility functions
+import { capitalizeWord, spinalCaseWord, bem } from '../../utils';
 
-const Tabs = ({ tabs, active, action }) => {
+const Tabs = ({
+  tabs,
+  active,
+  action,
+  iconCondition,
+  iconType = 'default',
+}) => {
   // Check for names and ids
   tabs.forEach((tab, index) => {
     if (tab.id !== undefined && tab.name === undefined) {
@@ -16,11 +25,20 @@ const Tabs = ({ tabs, active, action }) => {
     tab.isActive = active === tab.id ? 'selected' : '';
   });
 
+  let icon;
+  if (iconCondition) {
+    icon = <Icon type={iconType} />;
+  }
+
   return (
     <ul className="tabs" onClick={action}>
       {tabs.map(tab => (
-        <li key={tab.key} className={`tab ${tab.isActive}`} id={tab.id}>
-          {tab.name}
+        <li
+          key={tab.key}
+          className={bem('tabs', tab.isActive, 'tab')}
+          id={tab.id}
+        >
+          {tab.name} {icon}
         </li>
       ))}
     </ul>
@@ -31,6 +49,13 @@ Tabs.propTypes = {
   action: PropTypes.func.isRequired,
   active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   tabs: PropTypes.array.isRequired,
+  iconCondition: PropTypes.string,
+  iconType: PropTypes.string,
+};
+
+Tabs.defaultProps = {
+  iconCondition: null,
+  iconType: 'default',
 };
 
 export default Tabs;

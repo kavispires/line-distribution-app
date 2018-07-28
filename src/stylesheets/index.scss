@@ -9,14 +9,17 @@
 // CONTAINERS
 @import './containers.scss';
 
-// TABS
-@import './tabs.scss';
+// SHARED/EXPANDABLE CARD
+@import './shared-expandable-card.scss';
+
+// ICONS
+@import './shared-icons.scss';
+
+// SHARED/TABS
+@import './shared-tabs.scss';
 
 // PILLS
 @import './pills.scss';
-
-// ICONS
-@import './icons.scss';
 
 // HEADER
 @import './header.scss';
@@ -54,11 +57,8 @@
 // ROMANIZER
 @import './romanizer.scss';
 
-// SHARED/EXPANDABLE CARD
-@import './shared-expandable-card.scss';
-
 .hidden {
-	display: none !important;
+  display: none !important;
 }
 
 // TOASTR MODULE

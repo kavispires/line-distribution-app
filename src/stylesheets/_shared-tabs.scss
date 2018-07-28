@@ -1,0 +1,44 @@
+@import './variables.scss';
+
+.tabs {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  border-bottom: $lightGrey 1px solid;
+  padding: 0;
+  margin-bottom: 0;
+
+  &__tab {
+    background: $lightGrey;
+    padding: $halfUnit $doubleUnit;
+    cursor: pointer;
+
+    &:first-child {
+      border-top-left-radius: $quarterUnit;
+    }
+
+    &:last-child {
+      border-top-right-radius: $quarterUnit;
+    }
+
+    &:hover {
+      background: $grey;
+    }
+
+    &--selected {
+      font-weight: bold;
+      color: $defaultBlue;
+      color: #598ffd;
+      border: 1px solid $lightGrey;
+      border-bottom: 2px solid $negative;
+      background: $negative;
+      transform: translateY(2px);
+      z-index: 10;
+
+      &:hover {
+        background: inherit;
+        cursor: auto;
+      }
+    }
+  }
+}
