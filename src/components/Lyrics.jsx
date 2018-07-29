@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+// Import shared components
+import ArtistUnitRequiredScreen from './shared/ArtistUnitRequiredScreen';
 import Icon from './shared/Icon';
 import LoginRequiredScreen from './shared/LoginRequiredScreen';
 import LoadingScreen from './shared/LoadingScreen';
-
+// Import other components
 import LyricsEditor from './LyricsEditor';
 import LyricsViewer from './LyricsViewer';
+// Import Icon components
 import PositionIcons from './icons/PositionIcons';
+// Import widget components
 import CurrentArtistName from './widgets/CurrentArtistName';
 import SwitchToggle from './widgets/SwitchToggle';
-
+// Import utility functions
 import { insertAtCursor, bem } from '../utils';
 
 class Lyrics extends Component {
@@ -55,18 +59,10 @@ class Lyrics extends Component {
 
     if (CURRENT_UNIT.id === undefined) {
       return (
-        <main className={bem('container', 'flex')}>
-          <section className="container container-distribution">
-            <section className="section--fixed">
-              <h1>Lyrics</h1>
-              <p>
-                You must select an Artist and Unit in the{' '}
-                <Link to="/artists">Artists Page</Link> before you can use the
-                Lyrics Color Coder.
-              </p>
-            </section>
-          </section>
-        </main>
+        <ArtistUnitRequiredScreen
+          title="Lyrics"
+          description="you can use the Lyrics Color Coder"
+        />
       );
     }
 

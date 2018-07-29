@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import shared components
+import ArtistUnitRequiredScreen from './shared/ArtistUnitRequiredScreen';
 import Icon from './shared/Icon';
 import LoginRequiredScreen from './shared/LoginRequiredScreen';
 import LoadingScreen from './shared/LoadingScreen';
@@ -85,20 +86,10 @@ class Distribute extends Component {
     // IF NO CURRENT_UNIT
     if (CURRENT_UNIT && !CURRENT_UNIT.members) {
       return (
-        <main className={bem('container', 'flex')}>
-          <section className="container container-distribution">
-            <section className="section--fixed">
-              <h1>Distribute</h1>
-              <div>
-                <p>
-                  You must select an Artist and Unit in the{' '}
-                  <Link to="/artists">Artists Page</Link> before you can create
-                  your line distribution.
-                </p>
-              </div>
-            </section>
-          </section>
-        </main>
+        <ArtistUnitRequiredScreen
+          title="Distribute"
+          description="you can create your line distribution"
+        />
       );
     }
 

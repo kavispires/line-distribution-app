@@ -52,6 +52,10 @@
     display: flex;
     flex-wrap: wrap;
   }
+
+  &--padding {
+    padding: $unit $doubleUnit;
+  }
 }
 
 .container-lyrics {

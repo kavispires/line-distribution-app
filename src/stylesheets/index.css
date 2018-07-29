@@ -7212,6 +7212,10 @@ h2 {
   flex-wrap: wrap;
 }
 
+.section--padding {
+  padding: 12px 24px;
+}
+
 .container-lyrics {
   max-height: 96vh;
 }
