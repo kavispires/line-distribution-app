@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Import shared components
@@ -16,7 +15,7 @@ import PositionIcons from './icons/PositionIcons';
 import CurrentArtistName from './widgets/CurrentArtistName';
 import SwitchToggle from './widgets/SwitchToggle';
 // Import utility functions
-import { insertAtCursor, bem } from '../utils';
+import { insertAtCursor } from '../utils';
 
 class Lyrics extends Component {
   componentWillReceiveProps(nextProps) {
