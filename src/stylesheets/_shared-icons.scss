@@ -119,6 +119,15 @@
   }
 }
 
+.icons-legend {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  & > li {
+    margin-right: $doubleUnit;
+  }
+}
+
 $iconRed: #d14949;
 $iconGreen: #49d156;
 $iconBlue: #598ffd;
@@ -175,7 +184,8 @@ $iconBlack: #273032;
 }
 
 .icon-heart,
-.icon-no {
+.icon-no,
+.icon-video {
   .primary {
     fill: $iconRed;
   }
@@ -235,5 +245,12 @@ $iconBlack: #273032;
   }
   .st3 {
     fill: $iconPink;
+  }
+}
+
+.icon-lyrics-connected,
+.icon-plug-connected {
+  .secondary {
+    fill: $iconOrange;
   }
 }

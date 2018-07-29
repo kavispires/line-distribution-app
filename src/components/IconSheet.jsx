@@ -29,13 +29,13 @@ class IconSheet extends Component {
     if (this.props.user.isAdmin === false) {
       return <AdminOnlyScreen />;
     }
-
+    console.log(ICONS_LIST);
     return (
       <main className="container">
         <h1>Icons Sheet</h1>
         <div className="icon-sheet-list-container">
           {ICONS_LIST.map(item => (
-            <div className="icon-sheet-list-item">
+            <div className="icon-sheet-list-item" key={item}>
               <Icon type={item} size="x-large" />
               <h3>{item}</h3>
             </div>

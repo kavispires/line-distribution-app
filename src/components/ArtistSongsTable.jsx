@@ -19,7 +19,7 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
         <tr>
           <th>Title</th>
           <th>Type</th>
-          <th>Lyrics</th>
+          <th>Stats</th>
           <th>Distribution</th>
         </tr>
       </thead>
@@ -32,13 +32,21 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
             } else if (song.type === 'should') {
               type = "How it should've been";
             }
+            console.log(song);
             // const songDistribution = this.props.parseSong(song);
             return (
               <tr key={song.id} id={song.id}>
                 <td>{song.title}</td>
                 <td>{type}</td>
                 <td>
-                  <Icon type={song.lyrics ? 'yes' : 'no'} />
+                  {song.video ? (
+                    <Icon type="video" size="small-inline" />
+                  ) : null}
+                  {song.connectedLyrics ? (
+                    <Icon type="lyrics-connected" size="small-inline" />
+                  ) : (
+                    <Icon type="lyrics" size="small-inline" />
+                  )}
                 </td>
                 <td>
                   {song.result ? (

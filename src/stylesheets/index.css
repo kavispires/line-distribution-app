@@ -7391,6 +7391,15 @@ h2 {
   margin-top: 12px;
 }
 
+.icons-legend {
+  list-style: none;
+  padding: 0;
+  display: flex;
+}
+.icons-legend > li {
+  margin-right: 24px;
+}
+
 .invisible {
   fill: none;
 }
@@ -7450,7 +7459,8 @@ h2 {
 }
 
 .icon-heart .primary,
-.icon-no .primary {
+.icon-no .primary,
+.icon-video .primary {
   fill: #d14949;
 }
 
@@ -7500,6 +7510,11 @@ h2 {
 
 .icon-results .st3 {
   fill: #fb9cf0;
+}
+
+.icon-lyrics-connected .secondary,
+.icon-plug-connected .secondary {
+  fill: #fea245;
 }
 
 .tabs {

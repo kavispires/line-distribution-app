@@ -149,6 +149,18 @@ class Artist extends Component {
               ))}
             </div>
             <h3>Songs:</h3>
+            <ul className="icons-legend">
+              <li>
+                <Icon type="video" size="small-inline" />: has video sync
+              </li>
+              <li>
+                <Icon type="lyrics" size="small-inline" />: has lyrics
+              </li>
+              <li>
+                <Icon type="lyrics-connected" size="small-inline" />: has
+                connected lyrics
+              </li>
+            </ul>
             {
               <ArtistSongsTable
                 songs={selectedUnit.songs}
@@ -187,7 +199,6 @@ Artist.propTypes = {
   updateCurrentUnit: PropTypes.func.isRequired,
   updateLatestUnits: PropTypes.func.isRequired,
   updateSelectedArtist: PropTypes.func.isRequired,
-  updateSelectedUnit: PropTypes.func.isRequired,
   updateShouldReset: PropTypes.func.isRequired,
 };
 

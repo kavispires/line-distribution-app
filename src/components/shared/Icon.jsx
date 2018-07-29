@@ -8,16 +8,21 @@ export const ICONS_LIST = [
   'archive',
   'box-checked',
   'box-invalid',
-  'box-checked',
+  'box-unchecked',
   'chevron-down',
   'chevron-up',
   'clock',
+  'connect',
   'edit',
   'heart',
   'hide',
   'loading',
+  'lyrics',
+  'lyrics-connected',
   'no',
   'official',
+  'plug',
+  'plug-connected',
   'reset',
   'results',
   'save',
@@ -26,6 +31,7 @@ export const ICONS_LIST = [
   'stop',
   'trash',
   'used',
+  'video',
   'view',
   'yes',
 ];
@@ -62,6 +68,10 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.clock;
       break;
 
+    case 'connect':
+      icon = icons.connect;
+      break;
+
     case 'edit':
       icon = icons.edit;
       break;
@@ -78,12 +88,28 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.loading;
       break;
 
+    case 'lyrics':
+      icon = icons.lyrics;
+      break;
+
+    case 'lyrics-connected':
+      icon = icons.lyricsConnected;
+      break;
+
     case 'no':
       icon = icons.no;
       break;
 
     case 'official':
       icon = icons.official;
+      break;
+
+    case 'plug':
+      icon = icons.plug;
+      break;
+
+    case 'plug-connected':
+      icon = icons.plugConnected;
       break;
 
     case 'reset':
@@ -116,6 +142,10 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
 
     case 'used':
       icon = icons.used;
+      break;
+
+    case 'video':
+      icon = icons.video;
       break;
 
     case 'view':
