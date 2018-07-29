@@ -58,7 +58,7 @@ class Results extends Component {
     }
 
     return (
-      <section className="container">
+      <main className="container">
         <h1 className="tiny-h1">
           Results
           <CurrentArtistName currentArtist={APP.currentArtist} />
@@ -111,7 +111,7 @@ class Results extends Component {
           value={RESULTS.tempInput}
           readOnly
         />
-      </section>
+      </main>
     );
   }
 }

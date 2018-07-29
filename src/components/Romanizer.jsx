@@ -34,7 +34,7 @@ class Romanizer extends Component {
     console.log(ADMIN.hangul.split('\n').join(' '));
 
     return (
-      <div className="container romanizer">
+      <main className="container romanizer">
         <h1>Romanizer</h1>
         <ul className="options">
           <li>
@@ -75,7 +75,7 @@ class Romanizer extends Component {
             disabled
           />
         </div>
-      </div>
+      </main>
     );
   }
 }

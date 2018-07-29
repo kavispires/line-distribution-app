@@ -52,7 +52,7 @@ class Creator extends Component {
       { id: 'review' },
     ];
     return (
-      <section className="container creator-container">
+      <main className="container creator-container">
         <div className="creator-header">
           <h1>Creator</h1>
           <Tabs
@@ -119,7 +119,7 @@ class Creator extends Component {
             </button>
           </div>
         </div>
-      </section>
+      </main>
     );
   }
 }

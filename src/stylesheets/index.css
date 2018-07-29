@@ -7082,6 +7082,7 @@ h2 {
   padding: 3px 6px;
   margin-left: 6px;
   border-radius: 3px;
+  margin-bottom: 3px;
 }
 
 .unit-content {
@@ -7171,39 +7172,44 @@ h2 {
   overflow: auto;
   flex: 1 1 auto;
 }
-
-.container-no-padding {
-  flex: 1 1 auto;
-}
-
-.container-flex {
+.container--flex {
   display: flex;
+  padding: 0;
+}
+.container--no-padding {
+  padding: 0;
+}
+.container--fixed {
+  width: 100%;
+  position: relative;
+}
+.container--center {
+  justify-content: center;
+  align-items: center;
+}
+.container--center .icon-stop {
+  width: 120px;
+}
+.container--center .icon-loading {
+  width: 100px;
+}
+.container__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.container-fixed {
+.section--fixed {
   flex: 1 1 auto;
   overflow: hidden;
   width: 100%;
   position: relative;
 }
 
-.container-center,
-.container-center--inner {
+.section--flex-wrap {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.container-center .icon-stop,
-.container-center--inner .icon-stop {
-  width: 120px;
-}
-.container-center .icon-loading,
-.container-center--inner .icon-loading {
-  width: 100px;
-}
-
-.container-center--inner {
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .container-lyrics {
@@ -7527,6 +7533,11 @@ h2 {
 .tabs__tab--selected:hover {
   background: inherit;
   cursor: auto;
+}
+.tabs__content {
+  border-left: #e6e6e6 1px solid;
+  border-right: #e6e6e6 1px solid;
+  padding: 6px;
 }
 
 .pill {

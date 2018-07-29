@@ -31,7 +31,7 @@ class IconSheet extends Component {
     }
 
     return (
-      <div className="container">
+      <main className="container">
         <h1>Icons Sheet</h1>
         <div className="icon-sheet-list-container">
           {ICONS_LIST.map(item => (
@@ -41,7 +41,7 @@ class IconSheet extends Component {
             </div>
           ))}
         </div>
-      </div>
+      </main>
     );
   }
 }

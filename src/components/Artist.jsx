@@ -54,13 +54,13 @@ class Artist extends Component {
     // SELECTED_ARTIST Check if there is a selected artist
     if (selectedArtist === undefined) {
       return (
-        <section className="container">
+        <main className="container">
           <h1>Artist Page</h1>
           <p>
             No artist has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group.
           </p>
-        </section>
+        </main>
       );
     }
 
@@ -88,26 +88,28 @@ class Artist extends Component {
     };
 
     return (
-      <section className="container">
-        <h1>Artist Page: {selectedArtist.name}</h1>
-        <p>
-          <b>Genre:</b> {selectedArtist.genre}
-        </p>
-        <p>
-          <b>Members:</b>
-          {selectedArtist.id &&
-            selectedArtist.memberList.map(member => {
-              const key = `member-${member.name}`;
-              return (
-                <span
-                  key={key}
-                  className={`member-list-item ${member.color.class}`}
-                >
-                  {member.name}
-                </span>
-              );
-            })}
-        </p>
+      <main className="container">
+        <section className="section">
+          <h1>Artist Page: {selectedArtist.name}</h1>
+          <p>
+            <b>Genre:</b> {selectedArtist.genre}
+          </p>
+          <p className="section--flex-wrap">
+            <b>Members:</b>
+            {selectedArtist.id &&
+              selectedArtist.memberList.map(member => {
+                const key = `member-${member.name}`;
+                return (
+                  <span
+                    key={key}
+                    className={`member-list-item ${member.color.class}`}
+                  >
+                    {member.name}
+                  </span>
+                );
+              })}
+          </p>
+        </section>
         <Tabs
           tabs={Object.keys(selectedUnits).map(u => selectedUnits[u])}
           active={ARTISTS.selectedUnit.id}
@@ -164,7 +166,7 @@ class Artist extends Component {
             )}
           </div>
         )}
-      </section>
+      </main>
     );
   }
 }

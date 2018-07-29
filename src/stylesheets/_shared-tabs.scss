@@ -41,4 +41,10 @@
       }
     }
   }
+
+  &__content {
+    border-left: $lightGrey 1px solid;
+    border-right: $lightGrey 1px solid;
+    padding: $halfUnit;
+  }
 }

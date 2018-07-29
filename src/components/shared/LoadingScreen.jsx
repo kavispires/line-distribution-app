@@ -2,10 +2,12 @@ import React from 'react';
 
 import loading from '../../images/loading.svg';
 
+import { bem } from '../../utils';
+
 const LoadingScreen = () => (
-  <section className="container container-center">
+  <main className={bem('container', ['flex', 'center'])}>
     <img className="icon icon-loading" src={loading} alt="Loading Icon" />
-  </section>
+  </main>
 );
 
 export default LoadingScreen;

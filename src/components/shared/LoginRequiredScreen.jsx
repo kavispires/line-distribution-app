@@ -5,6 +5,8 @@ import logo from '../../images/logo-neg.svg';
 
 import Icon from './Icon';
 
+import { bem } from '../../utils';
+
 const LoginRequiredScreen = ({ props, redirect = '/home' }) => {
   const loginClick = () => {
     props.history.push(redirect);
@@ -12,15 +14,15 @@ const LoginRequiredScreen = ({ props, redirect = '/home' }) => {
   };
 
   return (
-    <section className="container container-center">
-      <main className="container-center--inner">
+    <main className={bem('container', ['flex', 'center'])}>
+      <main className="container__inner">
         <img className="login-logo" src={logo} alt="Line Distribution" />
-        <p>You must be loggin to access this page.</p>
+        <p>You must be logged in to access this page.</p>
         <button className="btn-home" onClick={loginClick}>
           <Icon type="sign-in" /> Sign-in now
         </button>
       </main>
-    </section>
+    </main>
   );
 };
 

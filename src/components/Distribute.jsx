@@ -16,7 +16,7 @@ import SwitchToggle from './widgets/SwitchToggle';
 import CurrentArtistName from './widgets/CurrentArtistName';
 // Import constants and utility functions
 import { KEY_LIST } from '../constants';
-import { boxSizeClass } from '../utils';
+import { boxSizeClass, bem } from '../utils';
 
 class Distribute extends Component {
   componentDidMount() {
@@ -71,23 +71,23 @@ class Distribute extends Component {
     // IF LOADING
     if (APP.isLoading) {
       return (
-        <div className="container-flex">
+        <main className={bem('container', 'flex')}>
           <section className="container container-distribution">
-            <section className="section-distribution container-fixed">
+            <section className="section--fixed">
               <h1>Distribute</h1>
               <div>{APP.isLoading ? <LoadingIcon /> : null}</div>
             </section>
           </section>
-        </div>
+        </main>
       );
     }
 
     // IF NO CURRENT_UNIT
     if (CURRENT_UNIT && !CURRENT_UNIT.members) {
       return (
-        <div className="container-flex">
+        <main className={bem('container', 'flex')}>
           <section className="container container-distribution">
-            <section className="section-distribution container-fixed">
+            <section className="section--fixed">
               <h1>Distribute</h1>
               <div>
                 <p>
@@ -98,7 +98,7 @@ class Distribute extends Component {
               </div>
             </section>
           </section>
-        </div>
+        </main>
       );
     }
 
@@ -123,9 +123,9 @@ class Distribute extends Component {
     const placeholder = LYRICS.lyrics ? LYRICS.lyrics : 'Type your lyrics here';
 
     return (
-      <div className="container-flex">
+      <main className={bem('container', 'flex')}>
         <section className="container container-distribution">
-          <section className="section-distribution container-fixed">
+          <section className="section--fixed">
             <h1 className="tiny-h1">
               Distribute
               <CurrentArtistName currentArtist={APP.currentArtist} />
@@ -252,7 +252,7 @@ class Distribute extends Component {
             <LyricsViewer formattedLyrics={LYRICS.formattedLyrics} />
           </section>
         </section>
-      </div>
+      </main>
     );
   }
 }

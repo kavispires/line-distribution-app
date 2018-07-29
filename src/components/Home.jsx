@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 
 import logo from '../images/logo-alt.svg';
 
+// Import utility functions
+import { bem } from '../utils';
+
 const Home = props => (
-  <main className="container-no-padding">
+  <main className={bem('container', 'no-padding')}>
     <iframe
       className="home-video"
       title="home-video"

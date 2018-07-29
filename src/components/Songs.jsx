@@ -9,7 +9,7 @@ import LoadingScreen from './shared/LoadingScreen';
 // Import components
 import CurrentArtistName from './widgets/CurrentArtistName';
 // Import utilities
-import { getLyricsSnippet } from '../utils';
+import { getLyricsSnippet, bem } from '../utils';
 
 class Songs extends Component {
   componentDidMount() {
@@ -35,9 +35,9 @@ class Songs extends Component {
 
     if (CURRENT_UNIT && !CURRENT_UNIT.members) {
       return (
-        <div className="container-flex">
+        <main className={bem('container', 'flex')}>
           <section className="container container-distribution">
-            <section className="section-distribution container-fixed">
+            <section className="section--fixed">
               <h1>Songs</h1>
               <div>
                 <p>
@@ -48,7 +48,7 @@ class Songs extends Component {
               </div>
             </section>
           </section>
-        </div>
+        </main>
       );
     }
 
@@ -66,7 +66,7 @@ class Songs extends Component {
     };
 
     return (
-      <section className="container">
+      <main className="container">
         <h1>
           Songs<CurrentArtistName currentArtist={APP.currentArtist} />
         </h1>
@@ -120,7 +120,7 @@ class Songs extends Component {
             )}
           </tbody>
         </table>
-      </section>
+      </main>
     );
   }
 }

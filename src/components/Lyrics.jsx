@@ -12,7 +12,7 @@ import PositionIcons from './icons/PositionIcons';
 import CurrentArtistName from './widgets/CurrentArtistName';
 import SwitchToggle from './widgets/SwitchToggle';
 
-import { insertAtCursor } from '../utils';
+import { insertAtCursor, bem } from '../utils';
 
 class Lyrics extends Component {
   componentWillReceiveProps(nextProps) {
@@ -55,9 +55,9 @@ class Lyrics extends Component {
 
     if (CURRENT_UNIT.id === undefined) {
       return (
-        <div className="container-flex">
+        <main className={bem('container', 'flex')}>
           <section className="container container-distribution">
-            <section className="section-distribution container-fixed">
+            <section className="section--fixed">
               <h1>Lyrics</h1>
               <p>
                 You must select an Artist and Unit in the{' '}
@@ -66,12 +66,12 @@ class Lyrics extends Component {
               </p>
             </section>
           </section>
-        </div>
+        </main>
       );
     }
 
     return (
-      <div className="container container-lyrics">
+      <main className="container container-lyrics">
         <div className="container-lyrics-menu">
           <h1>
             Lyrics<CurrentArtistName currentArtist={APP.currentArtist} />
@@ -183,7 +183,7 @@ class Lyrics extends Component {
           />
           <LyricsViewer formattedLyrics={LYRICS.formattedLyrics} />
         </section>
-      </div>
+      </main>
     );
   }
 }

@@ -73,12 +73,12 @@ class Artists extends Component {
     };
 
     return (
-      <section className="container">
+      <main className="container">
         <h1>Artists</h1>
         <p>Current Band: {currentArtist.name}</p>
 
         {this.props.user.isAuthenticated ? (
-          <div className="user-artists-container">
+          <section className="user-artists-container">
             <ExpandableCard
               props={this.props}
               globalId="user-latest-artists"
@@ -119,7 +119,7 @@ class Artists extends Component {
                 </p>
               )}
             </ExpandableCard>
-          </div>
+          </section>
         ) : null}
 
         <h2>All Artists</h2>
@@ -161,7 +161,7 @@ class Artists extends Component {
             )}
           </tbody>
         </table>
-      </section>
+      </main>
     );
   }
 }

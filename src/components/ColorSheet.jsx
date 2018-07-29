@@ -44,7 +44,7 @@ class ColorSheet extends Component {
     const tabs = [{ id: 'list' }, { id: 'alternative' }];
 
     return (
-      <div className="container">
+      <main className="container">
         <h1>Color Sheet</h1>
 
         {ADMIN.colorSheetTab === 'list' ? (
@@ -64,7 +64,7 @@ class ColorSheet extends Component {
         />
 
         {ADMIN.colorSheetTab === 'list' ? (
-          <ul className="color-palette">
+          <ul className="tabs__content color-palette">
             {Object.keys(ADMIN.colors).map(key => {
               const color = ADMIN.colors[key];
               return (
@@ -80,7 +80,7 @@ class ColorSheet extends Component {
           </ul>
         ) : null}
         {ADMIN.colorSheetTab === 'alternative' ? (
-          <ul className="color-palette">
+          <ul className="tabs__content  color-palette">
             {Object.keys(ADMIN.colors).map(key => {
               const color = ADMIN.colors[key];
               return (
@@ -108,7 +108,7 @@ class ColorSheet extends Component {
             })}
           </ul>
         ) : null}
-      </div>
+      </main>
     );
   }
 }

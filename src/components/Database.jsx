@@ -3,7 +3,7 @@ import React from 'react';
 const Database = props => {
   const { database } = props;
   return (
-    <div className="container">
+    <main className="container">
       <h1>Database</h1>
       <p>
         Display:
@@ -120,7 +120,7 @@ const Database = props => {
           readOnly
         />
       ) : null}
-    </div>
+    </main>
   );
 };
 
