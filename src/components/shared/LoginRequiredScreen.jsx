@@ -28,9 +28,14 @@ const LoginRequiredScreen = ({ props, redirect = '/home' }) => {
 
 LoginRequiredScreen.propTypes = {
   props: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  login: PropTypes.func,
   redirect: PropTypes.string.isRequired,
+};
+
+LoginRequiredScreen.defaultProps = {
+  history: null,
+  login: null,
 };
 
 export default LoginRequiredScreen;
