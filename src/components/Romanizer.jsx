@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AdminOnlyScreen from './AdminOnlyScreen';
-import LoadingScreen from './LoadingScreen';
-import LoginRequiredScreen from './LoginRequiredScreen';
+// Import shared components
+import AdminOnlyScreen from './shared/AdminOnlyScreen';
+import LoadingScreen from './shared/LoadingScreen';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
 
 class Romanizer extends Component {
   componentWillUpdate(nextProps) {
@@ -32,9 +33,8 @@ class Romanizer extends Component {
 
     console.log(ADMIN.hangul.split('\n').join(' '));
 
-
     return (
-      <div className="container romanizer">
+      <main className="container romanizer">
         <h1>Romanizer</h1>
         <ul className="options">
           <li>
@@ -75,15 +75,15 @@ class Romanizer extends Component {
             disabled
           />
         </div>
-      </div>
+      </main>
     );
   }
 }
 
 Romanizer.propTypes = {
-  admin: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
+  admin: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default Romanizer;

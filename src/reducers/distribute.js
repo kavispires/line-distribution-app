@@ -16,14 +16,22 @@ const SHOW_LYRICS = 'SHOW_LYRICS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setDurations = payload => dispatch => dispatch({ type: SET_DURATIONS, payload });
-export const setHistory = payload => dispatch => dispatch({ type: SET_HISTORY, payload });
-export const setPercentages = payload => dispatch => dispatch({ type: SET_PERCENTAGES, payload });
-export const setQueue = payload => dispatch => dispatch({ type: SET_QUEUE, payload });
-export const setTotal = payload => dispatch => dispatch({ type: SET_TOTAL, payload });
-export const setWho = payload => dispatch => dispatch({ type: SET_WHO, payload });
-export const setEditLyrics = payload => dispatch => dispatch({ type: EDIT_LYRICS, payload });
-export const showLyrics = payload => dispatch => dispatch({ type: SHOW_LYRICS, payload });
+export const setDurations = payload => dispatch =>
+  dispatch({ type: SET_DURATIONS, payload });
+export const setHistory = payload => dispatch =>
+  dispatch({ type: SET_HISTORY, payload });
+export const setPercentages = payload => dispatch =>
+  dispatch({ type: SET_PERCENTAGES, payload });
+export const setQueue = payload => dispatch =>
+  dispatch({ type: SET_QUEUE, payload });
+export const setTotal = payload => dispatch =>
+  dispatch({ type: SET_TOTAL, payload });
+export const setWho = payload => dispatch =>
+  dispatch({ type: SET_WHO, payload });
+export const setEditLyrics = payload => dispatch =>
+  dispatch({ type: EDIT_LYRICS, payload });
+export const showLyrics = payload => dispatch =>
+  dispatch({ type: SHOW_LYRICS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -83,7 +91,10 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const updateHistory = (entry, add = 'true', index) => (dispatch, getState) => {
+export const updateHistory = (entry, add = 'true', index) => (
+  dispatch,
+  getState
+) => {
   let history = [...getState().distribute.history];
   if (add) {
     history.unshift(entry);
@@ -94,7 +105,13 @@ export const updateHistory = (entry, add = 'true', index) => (dispatch, getState
   }
 };
 
-export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), dehistory = false, index = null) => (dispatch, getState) => {
+export const calculateDuration = (
+  id,
+  startTimestamp,
+  timestamp = Date.now(),
+  dehistory = false,
+  index = null
+) => (dispatch, getState) => {
   // Calculate and set
   const duration = timestamp - startTimestamp;
   const durations = [...getState().distribute.durations];
@@ -124,7 +141,10 @@ export const calculateDuration = (id, startTimestamp, timestamp = Date.now(), de
   }
 };
 
-export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getState) => {
+export const enqueueCapture = (id, timestamp = Date.now()) => (
+  dispatch,
+  getState
+) => {
   if (getState().distribute.editLyrics) return;
   // Only if queue does NOT contains id
   if (getState().distribute.queue[id] === undefined) {
@@ -139,7 +159,10 @@ export const enqueueCapture = (id, timestamp = Date.now()) => (dispatch, getStat
   }
 };
 
-export const dequeueCapture = (id, timestamp = Date.now()) => (dispatch, getState) => {
+export const dequeueCapture = (id, timestamp = Date.now()) => (
+  dispatch,
+  getState
+) => {
   if (getState().distribute.editLyrics) return;
   // If queue contains id, set end and delete it from queue
   if (getState().distribute.queue[id] !== undefined) {
@@ -199,18 +222,24 @@ export const resetDistribution = newUnit => (dispatch, getState) => {
 export const handleUndo = () => (dispatch, getState) => {
   const { history } = getState().distribute;
   const removedNode = Object.assign({}, history[0]);
-  dispatch(calculateDuration(removedNode.memberId, 0, -removedNode.duration, true, 0));
+  dispatch(
+    calculateDuration(removedNode.memberId, 0, -removedNode.duration, true, 0)
+  );
 };
 
 export const handleKeydown = e => (dispatch, getState) => {
   const CURRENT_UNIT = getState().app.currentUnit;
-  if (Object.keys(CURRENT_UNIT).length > 0 && KEYS[e.keyCode] !== undefined && KEYS[e.keyCode].id < CURRENT_UNIT.members.length) {
+  if (
+    Object.keys(CURRENT_UNIT).length > 0 &&
+    KEYS[e.keyCode] !== undefined &&
+    KEYS[e.keyCode].id < CURRENT_UNIT.members.length
+  ) {
     const key = KEYS[e.keyCode];
     dispatch(enqueueCapture(key.id));
   }
 };
 
-export const handleKeyup = e => (dispatch) => {
+export const handleKeyup = e => dispatch => {
   if (KEYS[e.keyCode] !== undefined) {
     const key = KEYS[e.keyCode];
     dispatch(dequeueCapture(key.id));

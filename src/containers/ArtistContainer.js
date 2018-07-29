@@ -25,8 +25,6 @@ import { resetSongInfo } from '../reducers/results';
 
 import { login } from '../reducers/user';
 
-
-
 const mapStateToProps = state => ({
   app: state.app,
   artists: state.artists,
@@ -50,4 +48,9 @@ const mapDispatchToProps = {
   updateShouldReset,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artist));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Artist)
+);

@@ -6,6 +6,7 @@ import Artists from '../components/Artists';
 import {
   toggleIsLoading,
   updateCurrentUnit,
+  updateGlobal,
   updateShouldReset,
 } from '../reducers/app';
 
@@ -17,9 +18,7 @@ import {
   updateSelectedUnit,
 } from '../reducers/artists';
 
-import {
-  login,
-} from '../reducers/user';
+import { login } from '../reducers/user';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -34,10 +33,16 @@ const mapDispatchToProps = {
   login,
   toggleIsLoading,
   updateCurrentUnit,
+  updateGlobal,
   updateLatestUnits,
   updateSelectedArtist,
   updateSelectedUnit,
   updateShouldReset,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Artists));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Artists)
+);

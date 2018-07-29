@@ -5,39 +5,24 @@ import App from '../components/App';
 
 import { loadLocalStorage } from '../utils';
 
-import {
-  setCurrentSong,
-} from '../reducers/app';
+import { setCurrentSong } from '../reducers/app';
 
-import {
-  toggleAdminTools,
-} from '../reducers/admin';
+import { toggleAdminTools } from '../reducers/admin';
 
-import {
-  initDB,
-} from '../reducers/db';
+import { initDB } from '../reducers/db';
 
-import {
-  handleParser,
-  resetLyrics,
-} from '../reducers/lyrics';
+import { handleParser, resetLyrics } from '../reducers/lyrics';
 
-import {
-  handleReset,
-  resetDistribution,
-} from '../reducers/distribute';
+import { handleReset, resetDistribution } from '../reducers/distribute';
 
-import {
-  checkAuth,
-  login,
-  logout,
-} from '../reducers/user';
+import { checkAuth, login, logout } from '../reducers/user';
 
 const mapStateToProps = state => ({
   app: state.app,
   admin: state.admin,
   db: state.db,
   database: state.database,
+  global: state.app.global,
   user: state.user,
 });
 
@@ -55,4 +40,9 @@ const mapDispatchToProps = {
   toggleAdminTools,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

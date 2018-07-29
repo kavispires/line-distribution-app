@@ -3,9 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Distribute from '../components/Distribute';
 
-import {
-  toggleIsLoading,
-} from '../reducers/app';
+import { toggleIsLoading } from '../reducers/app';
 
 import {
   boxMouseDown,
@@ -24,13 +22,9 @@ import {
   toggleEditLyrics,
 } from '../reducers/distribute';
 
-import {
-  handleParser,
-} from '../reducers/lyrics';
+import { handleParser } from '../reducers/lyrics';
 
-import {
-  login,
-} from '../reducers/user';
+import { login } from '../reducers/user';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -60,4 +54,9 @@ const mapDispatchToProps = {
   toggleLyrics,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Distribute));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Distribute)
+);

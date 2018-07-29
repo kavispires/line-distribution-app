@@ -13,12 +13,18 @@ const TOGGLE_MODAL = 'TOGGLE_MODAL';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setOriginalArtist = payload => dispatch => dispatch({ type: SET_ORIGINAL_ARTIST, payload });
-export const setResults = payload => dispatch => dispatch({ type: SET_RESULTS, payload });
-export const setResultType = payload => dispatch => dispatch({ type: SET_RESULT_TYPE, payload });
-export const setSongTitle = payload => dispatch => dispatch({ type: SET_SONG_TITLE, payload });
-export const setSongType = payload => dispatch => dispatch({ type: SET_SONG_TYPE, payload });
-export const toogleModal = payload => dispatch => dispatch({ type: TOGGLE_MODAL, payload });
+export const setOriginalArtist = payload => dispatch =>
+  dispatch({ type: SET_ORIGINAL_ARTIST, payload });
+export const setResults = payload => dispatch =>
+  dispatch({ type: SET_RESULTS, payload });
+export const setResultType = payload => dispatch =>
+  dispatch({ type: SET_RESULT_TYPE, payload });
+export const setSongTitle = payload => dispatch =>
+  dispatch({ type: SET_SONG_TITLE, payload });
+export const setSongType = payload => dispatch =>
+  dispatch({ type: SET_SONG_TYPE, payload });
+export const toogleModal = payload => dispatch =>
+  dispatch({ type: TOGGLE_MODAL, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -105,17 +111,17 @@ export const openSaveModal = () => (dispatch, getState) => {
   dispatch(toogleModal(!modal));
 };
 
-export const handleSongTitle = event => (dispatch) => {
+export const handleSongTitle = event => dispatch => {
   const { value } = event.target;
   dispatch(setSongTitle(value));
 };
 
-export const handleSongType = event => (dispatch) => {
+export const handleSongType = event => dispatch => {
   const { value } = event.target;
   dispatch(setSongType(value));
 };
 
-export const handleOriginalArtist = event => (dispatch) => {
+export const handleOriginalArtist = event => dispatch => {
   const { value } = event.target;
   dispatch(setOriginalArtist(value));
 };
@@ -168,13 +174,13 @@ export const saveSong = (save = true) => (dispatch, getState) => {
   }
 };
 
-export const resetSongInfo = () => (dispatch) => {
+export const resetSongInfo = () => dispatch => {
   dispatch(setSongTitle(''));
   dispatch(setSongType(''));
   dispatch(setOriginalArtist(''));
 };
 
-export const updateCurrentSongInfo = song => (dispatch) => {
+export const updateCurrentSongInfo = song => dispatch => {
   dispatch(setSongTitle(song.title));
   dispatch(setSongType(song.type));
   dispatch(setOriginalArtist(song.originalArtist));

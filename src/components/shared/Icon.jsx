@@ -1,9 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import icons from './icons';
+import icons from '../icons';
 
-export const ICONS_LIST = ['default', 'archive', 'box-checked', 'box-invalid', 'box-checked', 'clock', 'edit', 'heart', 'hide', 'loading', 'no', 'official', 'reset', 'results', 'save', 'sign-in', 'sign-out', 'stop', 'trash', 'used', 'view', 'yes'];
+export const ICONS_LIST = [
+  'default',
+  'archive',
+  'box-checked',
+  'box-invalid',
+  'box-unchecked',
+  'chevron-down',
+  'chevron-up',
+  'clock',
+  'connect',
+  'edit',
+  'heart',
+  'hide',
+  'loading',
+  'lyrics',
+  'lyrics-connected',
+  'no',
+  'official',
+  'plug',
+  'plug-connected',
+  'reset',
+  'results',
+  'save',
+  'sign-in',
+  'sign-out',
+  'stop',
+  'trash',
+  'used',
+  'video',
+  'view',
+  'yes',
+];
 
 const Icon = ({ type, size = 'small', styles = {} }) => {
   let icon;
@@ -25,8 +56,20 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.boxUnchecked;
       break;
 
+    case 'chevron-down':
+      icon = icons.chevronDown;
+      break;
+
+    case 'chevron-up':
+      icon = icons.chevronUp;
+      break;
+
     case 'clock':
       icon = icons.clock;
+      break;
+
+    case 'connect':
+      icon = icons.connect;
       break;
 
     case 'edit':
@@ -45,12 +88,28 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.loading;
       break;
 
+    case 'lyrics':
+      icon = icons.lyrics;
+      break;
+
+    case 'lyrics-connected':
+      icon = icons.lyricsConnected;
+      break;
+
     case 'no':
       icon = icons.no;
       break;
 
     case 'official':
       icon = icons.official;
+      break;
+
+    case 'plug':
+      icon = icons.plug;
+      break;
+
+    case 'plug-connected':
+      icon = icons.plugConnected;
       break;
 
     case 'reset':
@@ -85,6 +144,10 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.used;
       break;
 
+    case 'video':
+      icon = icons.video;
+      break;
+
     case 'view':
       icon = icons.view;
       break;
@@ -108,20 +171,32 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
         preserveAspectRatio="xMidYMid meet"
         style={mergeStyles(
           styles,
-          style, // This lets the parent pass custom styles
+          style // This lets the parent pass custom styles
         )}
       >
-        { icon }
+        {icon}
       </svg>
     </span>
-
   );
 };
 
 Icon.propTypes = {
-  type: PropTypes.string, // eslint-disable-line
-  size: PropTypes.oneOf(['small', 'medium', 'large', 'x-large']), // eslint-disable-line
-  styles: PropTypes.object, // eslint-disable-line
+  type: PropTypes.string,
+  size: PropTypes.oneOf([
+    'small',
+    'small-inline',
+    'medium',
+    'medium-inline',
+    'large',
+    'x-large',
+  ]),
+  styles: PropTypes.object,
+};
+
+Icon.defaultProps = {
+  type: 'default',
+  size: 'small',
+  styles: {},
 };
 
 export default Icon;

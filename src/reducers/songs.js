@@ -3,10 +3,7 @@ import _ from 'lodash';
 import API from '../api';
 
 import { setLyrics } from './lyrics';
-import {
-  setOriginalArtist,
-  setSongTitle,
-} from './results';
+import { setOriginalArtist, setSongTitle } from './results';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -15,8 +12,10 @@ const SET_SONG_LIST_BACK_UP = 'SET_SONG_LIST_BACK_UP';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setSongList = payload => dispatch => dispatch({ type: SET_SONG_LIST, payload });
-export const setSongListBackUp = payload => dispatch => dispatch({ type: SET_SONG_LIST_BACK_UP, payload });
+export const setSongList = payload => dispatch =>
+  dispatch({ type: SET_SONG_LIST, payload });
+export const setSongListBackUp = payload => dispatch =>
+  dispatch({ type: SET_SONG_LIST_BACK_UP, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -82,7 +81,7 @@ export const songsFilter = e => (dispatch, getState) => {
   dispatch(setSongList(filteredSongs));
 };
 
-export const loadSong = song => (dispatch) => {
+export const loadSong = song => dispatch => {
   const result = song.lyrics.split('');
 
   // Go through every line and remove characters inside [] except ALL
@@ -93,7 +92,15 @@ export const loadSong = song => (dispatch) => {
     } else if (result[i] === ']') {
       deleteMode = false;
     } else if (deleteMode) {
-      if (result[i] === 'A' && result[i + 1] === 'L' && result[i + 2] === 'L' && (result[i + 3] === ' ' || result[i + 3] === '(' || result[i + 3] === ']' || result[i + 3] === ')')) {
+      if (
+        result[i] === 'A' &&
+        result[i + 1] === 'L' &&
+        result[i + 2] === 'L' &&
+        (result[i + 3] === ' ' ||
+          result[i + 3] === '(' ||
+          result[i + 3] === ']' ||
+          result[i + 3] === ')')
+      ) {
         i += 2;
       } else if (result[i] === ' ' || result[i] === '(' || result[i] === ')') {
         // do nothing

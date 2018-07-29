@@ -1,32 +1,43 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { makeIdNumber } from '../utils';
 
-const ColorPicker = ({ props, memberId, action }) => {
+const ColorPicker = ({ props, memberId }) => {
   const COLORS = props.admin.colors;
   const reactKey = Date.now();
   const memberColorId = props.creator.newMembers[memberId].colorId;
 
   return (
     <div className="color-picker">
-      {
-        Object.keys(COLORS).map((colorId) => {
-          const selected = memberColorId === colorId ? ' selected' : '';
-          const color = { target: { value: colorId } };
-          return (
-            <div
-              role="button"
-              tabIndex={0}
-              key={`color-${reactKey}-${colorId}`}
-              className={`color-picker-swatch color-${makeIdNumber(colorId)}${selected}`}
-              id={colorId}
-              onClick={() => props.updateNewMember(color, memberId, 'color')}
-            />
-          );
-        })
-      }
+      {Object.keys(COLORS).map(colorId => {
+        const selected = memberColorId === colorId ? ' selected' : '';
+        const color = { target: { value: colorId } };
+        return (
+          <div
+            role="button"
+            tabIndex={0}
+            key={`color-${reactKey}-${colorId}`}
+            className={`color-picker-swatch color-${makeIdNumber(
+              colorId
+            )}${selected}`}
+            id={colorId}
+            onClick={() => props.updateNewMember(color, memberId, 'color')}
+          />
+        );
+      })}
     </div>
   );
+};
+
+ColorPicker.propTypes = {
+  props: PropTypes.object.isRequired,
+  memberId: PropTypes.string.isRequired,
+  admin: PropTypes.object.isRequired,
+  colors: PropTypes.object.isRequired,
+  creator: PropTypes.object.isRequired,
+  newMembers: PropTypes.object.isRequired,
+  colorId: PropTypes.string.isRequired,
 };
 
 export default ColorPicker;

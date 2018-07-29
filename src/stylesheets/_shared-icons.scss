@@ -119,74 +119,138 @@
   }
 }
 
-$iconRed: #D14949;
-$iconGreen: #49D156;
-$iconBlue: #598FFD;
-$iconYellow: #FFD700;
+.icons-legend {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  & > li {
+    margin-right: $doubleUnit;
+  }
+}
+
+$iconRed: #d14949;
+$iconGreen: #49d156;
+$iconBlue: #598ffd;
+$iconYellow: #ffd700;
 $iconGrey: #707070;
-$iconOrange: #FEA245;
-$iconPurple: #9E8EF0;
-$iconPink: #FB9CF0;
-$iconTeal: #34AC9E;
+$iconOrange: #fea245;
+$iconPurple: #9e8ef0;
+$iconPink: #fb9cf0;
+$iconTeal: #34ac9e;
 $iconBlack: #273032;
 
 .invisible {
-  fill:none;
+  fill: none;
 }
 
-.icon-default, .icon-loading {
-  .st0{fill:$iconGrey;}
-  .st1{fill:$iconBlue;}
-  .st2{fill:$iconRed;}
-  .st3{fill:$iconGreen;}
-  .st4{fill:$iconYellow;}
-  .st5{fill:$iconBlack;}
-  .st6{fill:$iconOrange;}
-  .st7{fill:$iconTeal;}
-  .st8{fill:$iconPink;}
-  .st9{fill:$iconPurple;}
+.icon-default,
+.icon-loading {
+  .st0 {
+    fill: $iconGrey;
+  }
+  .st1 {
+    fill: $iconBlue;
+  }
+  .st2 {
+    fill: $iconRed;
+  }
+  .st3 {
+    fill: $iconGreen;
+  }
+  .st4 {
+    fill: $iconYellow;
+  }
+  .st5 {
+    fill: $iconBlack;
+  }
+  .st6 {
+    fill: $iconOrange;
+  }
+  .st7 {
+    fill: $iconTeal;
+  }
+  .st8 {
+    fill: $iconPink;
+  }
+  .st9 {
+    fill: $iconPurple;
+  }
 }
 
 .icon-clock {
-  .primary{fill:$iconBlue;}
+  .primary {
+    fill: $iconBlue;
+  }
 }
 
 .icon-heart,
-.icon-no {
-  .primary{fill: $iconRed;}
+.icon-no,
+.icon-video {
+  .primary {
+    fill: $iconRed;
+  }
 }
 
 .icon-official {
-  .primary{fill:$iconBlue;}
+  .primary {
+    fill: $iconBlue;
+  }
 }
 
 .icon-used {
-  .primary{fill:$iconYellow;}
+  .primary {
+    fill: $iconYellow;
+  }
 }
 
 .icon-yes {
-  .primary{fill:$iconGreen;}
+  .primary {
+    fill: $iconGreen;
+  }
 }
 
 .icon-box-checked {
-  .primary{fill:$iconGrey;}
-  .secondary{fill:$iconGreen;}
+  .primary {
+    fill: $iconGrey;
+  }
+  .secondary {
+    fill: $iconGreen;
+  }
 }
 
 .icon-box-invalid {
-  .primary{fill:$iconGrey;}
-  .secondary{fill:$iconRed;}
+  .primary {
+    fill: $iconGrey;
+  }
+  .secondary {
+    fill: $iconRed;
+  }
 }
 
 .icon-box-unchecked {
-  .primary{fill:$iconGrey;}
+  .primary {
+    fill: $iconGrey;
+  }
 }
 
 .icon-results {
-  .st0{fill:$iconOrange;}
-  .st1{fill:$iconPurple;}
-  .st2{fill:$iconTeal;}
-  .st3{fill:$iconPink;}
+  .st0 {
+    fill: $iconOrange;
+  }
+  .st1 {
+    fill: $iconPurple;
+  }
+  .st2 {
+    fill: $iconTeal;
+  }
+  .st3 {
+    fill: $iconPink;
+  }
 }
 
-
+.icon-lyrics-connected,
+.icon-plug-connected {
+  .secondary {
+    fill: $iconOrange;
+  }
+}

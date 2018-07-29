@@ -1,13 +1,13 @@
-import React,  { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AdminOnlyScreen from './AdminOnlyScreen';
-import LoadingScreen from './LoadingScreen';
-import LoginRequiredScreen from './LoginRequiredScreen';
-import Icon from './Icon';
-
-import Tabs from './Tabs';
-
+// Import shared components
+import AdminOnlyScreen from './shared/AdminOnlyScreen';
+import Icon from './shared/Icon';
+import LoadingScreen from './shared/LoadingScreen';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import Tabs from './shared/Tabs';
+// Import other components
 import CreatorArtist from './CreatorArtist';
 import CreatorMembers from './CreatorMembers';
 import CreatorReview from './CreatorReview';
@@ -45,9 +45,14 @@ class Creator extends Component {
 
     const CREATOR = this.props.creator;
 
-    const tabs = [{ id: 'artist' }, { id: 'unit' }, { id: 'members' }, { id: 'review' }];
+    const tabs = [
+      { id: 'artist' },
+      { id: 'unit' },
+      { id: 'members' },
+      { id: 'review' },
+    ];
     return (
-      <section className="container creator-container">
+      <main className="container creator-container">
         <div className="creator-header">
           <h1>Creator</h1>
           <Tabs
@@ -57,29 +62,31 @@ class Creator extends Component {
           />
         </div>
         <div className="creator-content">
-          <p>You need to have a complete artist to be able to save, consisting of artist, unit and members. <br />
+          <p>
+            You need to have a complete artist to be able to save, consisting of
+            artist, unit and members. <br />
             You may follow your new artist validation in the bottom of the page.
           </p>
-          {
-            CREATOR.tab === 'artist' ? <CreatorArtist props={this.props} /> : null
-          }
-          {
-            CREATOR.tab === 'unit' ? <CreatorUnit props={this.props} /> : null
-          }
-          {
-            CREATOR.tab === 'members' ? <CreatorMembers props={this.props} /> : null
-          }
-          {
-            CREATOR.tab === 'review' ? <CreatorReview props={this.props} /> : null
-          }
+          {CREATOR.tab === 'artist' ? (
+            <CreatorArtist props={this.props} />
+          ) : null}
+          {CREATOR.tab === 'unit' ? <CreatorUnit props={this.props} /> : null}
+          {CREATOR.tab === 'members' ? (
+            <CreatorMembers props={this.props} />
+          ) : null}
+          {CREATOR.tab === 'review' ? (
+            <CreatorReview props={this.props} />
+          ) : null}
         </div>
-        <div className={`creator-message${Object.keys(CREATOR.message).length > 0 ? '' : '-close'}`}>
-          {
-            Object.keys(CREATOR.message).map((m, i) => {
-              const key = `message${i}`;
-              return <p key={key}>{CREATOR.message[m]}</p>;
-            })
-          }
+        <div
+          className={`creator-message${
+            Object.keys(CREATOR.message).length > 0 ? '' : '-close'
+          }`}
+        >
+          {Object.keys(CREATOR.message).map((m, i) => {
+            const key = `message${i}`;
+            return <p key={key}>{CREATOR.message[m]}</p>;
+          })}
         </div>
         <div className="creator-controls">
           <div className="creator-validation">
@@ -112,7 +119,7 @@ class Creator extends Component {
             </button>
           </div>
         </div>
-      </section>
+      </main>
     );
   }
 }

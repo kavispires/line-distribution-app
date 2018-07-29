@@ -165,9 +165,61 @@ export const KEYS = {
   },
 };
 
-export const KEYCODE_LIST = [49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 65, 83, 68, 70, 71];
+export const KEYCODE_LIST = [
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  48,
+  81,
+  87,
+  69,
+  82,
+  84,
+  89,
+  85,
+  73,
+  79,
+  80,
+  65,
+  83,
+  68,
+  70,
+  71,
+];
 
-export const KEY_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G'];
+export const KEY_LIST = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  0,
+  'Q',
+  'W',
+  'E',
+  'R',
+  'T',
+  'Y',
+  'U',
+  'I',
+  'O',
+  'P',
+  'A',
+  'S',
+  'D',
+  'F',
+  'G',
+];
 
 export const ARTITST_PLACEHOLDER = {
   name: 'No Artists Selected',

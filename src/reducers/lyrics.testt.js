@@ -7,7 +7,7 @@ import mockLyrics from '../mock/mockLyrics';
 
 const currentUnit = API.get('/units/4/all');
 
-const handleParser = (input) => {
+const handleParser = input => {
   // DO-IN-REDUCER: get input from event, and dispatch it
   let lyricsToParse = input;
   // DO-IN-REDUCER: get current unit
@@ -52,7 +52,7 @@ const handleParser = (input) => {
 
   // Checks if member if present in the current unit
   function areMembersInUnit(str) {
-    const nameList = str.toLowerCase().replace(/[()/\s]/g,',');
+    const nameList = str.toLowerCase().replace(/[()/\s]/g, ',');
     if (nameList === 'all') return true;
 
     let wasFound = false;
@@ -115,13 +115,24 @@ const handleParser = (input) => {
         // Define color(s)
         if (lineToParse[0] === '[' && member && !member.includes('(')) {
           lastColor = getColorId(member);
-        } if (lineToParse[0] === '[' && member && member.includes('(')) {
+        }
+        if (lineToParse[0] === '[' && member && member.includes('(')) {
           const multiMember = member.split('(');
           lastColor = getColorId(multiMember[0].trim());
-          const adLibMembers = multiMember[1].substring(0, multiMember[1].length - 1);
+          const adLibMembers = multiMember[1].substring(
+            0,
+            multiMember[1].length - 1
+          );
           lastSubColor = getColorId(adLibMembers);
         }
-        console.log('COLOR:', lastColor, 'SUBCOLOR', lastSubColor, 'MEMBERS being pushed', member);
+        console.log(
+          'COLOR:',
+          lastColor,
+          'SUBCOLOR',
+          lastSubColor,
+          'MEMBERS being pushed',
+          member
+        );
 
         // If remainder has another member assignment, split in the bracket
         if (remainder.includes('[')) {
@@ -144,13 +155,18 @@ const handleParser = (input) => {
         // Check for adlibs on remainder
         if (remainder.includes('(')) {
           // Slipt in '(' or ')', remove those characters
-          const remainderSplit = remainder.split(/([()])/).filter(Boolean).map(r => r.trim());
+          const remainderSplit = remainder
+            .split(/([()])/)
+            .filter(Boolean)
+            .map(r => r.trim());
           console.log(remainderSplit);
           for (let e = 0; e < remainderSplit.length; e++) {
             const elem = remainderSplit[e];
             // If it's an adlib line
             if (elem === '(') {
-              const adlibLine = `${elem}${remainderSplit[e + 1]}${remainderSplit[e + 2]}`;
+              const adlibLine = `${elem}${remainderSplit[e + 1]}${
+                remainderSplit[e + 2]
+              }`;
               e += 2; // advances '(', the actual line, and ')'
               line.colors.push(`${lastSubColor}`);
               line.content.push(adlibLine);
@@ -232,7 +248,9 @@ describe('Lyrics Parser', () => {
   it('returns an array of objects', () => {
     expect(Array.isArray(formattedLyrics)).toBeTruthy();
     expect(typeof formattedLyrics[0] === 'object').toBeTruthy();
-    expect(typeof formattedLyrics[formattedLyrics.length - 1] === 'object').toBeTruthy();
+    expect(
+      typeof formattedLyrics[formattedLyrics.length - 1] === 'object'
+    ).toBeTruthy();
   });
 
   describe('Case 1: Blank Lines', () => {
@@ -292,7 +310,7 @@ describe('Lyrics Parser', () => {
     it('works with 3 members', () => {
       const result = {
         colors: ['18', '24', '3'],
-        content: ['I\'m 1', 'I\'m 2', 'I\'m 3'],
+        content: ["I'm 1", "I'm 2", "I'm 3"],
         members: ['BOM', 'DARA', 'CL'],
         adlibs: [false, false, false],
       };
@@ -302,7 +320,7 @@ describe('Lyrics Parser', () => {
     it('works with 4 members', () => {
       const result = {
         colors: ['18', '24', '3', '21'],
-        content: ['I\'m 1', 'I\'m 2', 'I\'m 3', 'I\'m 4'],
+        content: ["I'm 1", "I'm 2", "I'm 3", "I'm 4"],
         members: ['BOM', 'DARA', 'CL', 'MINZY'],
         adlibs: [false, false, false, false],
       };
@@ -312,7 +330,7 @@ describe('Lyrics Parser', () => {
     it('works with 5 members', () => {
       const result = {
         colors: ['18', '24', '3', '21', '0'],
-        content: ['I\'m 1', 'I\'m 2', 'I\'m 3', 'I\'m 4', 'I\'m 5'],
+        content: ["I'm 1", "I'm 2", "I'm 3", "I'm 4", "I'm 5"],
         members: ['BOM', 'DARA', 'CL', 'MINZY', '?'],
         adlibs: [false, false, false, false, false],
       };
@@ -407,7 +425,14 @@ describe('Lyrics Parser', () => {
     it('accepts multiple adlibs in line', () => {
       const result = {
         colors: ['18', '24', '18', '24', '18', '24'],
-        content: ['I sing', '(Yeah)', 'I walk', '(Yeah yeah)', 'I stare', '(Ooh yeah)'],
+        content: [
+          'I sing',
+          '(Yeah)',
+          'I walk',
+          '(Yeah yeah)',
+          'I stare',
+          '(Ooh yeah)',
+        ],
         members: ['BOM (DARA)', '', '', '', '', ''],
         adlibs: [false, true, false, true, false, true],
       };
@@ -505,4 +530,3 @@ describe('Lyrics Parser', () => {
     });
   });
 });
-

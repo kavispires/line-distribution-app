@@ -17,7 +17,8 @@ const SET_LOADED = 'SET_LOADED';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-const setLoaded = payload => dispatch => dispatch({ type: SET_LOADED, payload });
+const setLoaded = payload => dispatch =>
+  dispatch({ type: SET_LOADED, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -42,12 +43,12 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const initDB = () => (dispatch) => {
+export const initDB = () => dispatch => {
   // Initiate firebase db
   dbRef = base.database().ref();
   const time = Date.now();
 
-  dbRef.on('value', (snap) => {
+  dbRef.on('value', snap => {
     DB = snap.val();
     dispatch(setLoaded(true));
     console.log(`Database successfully loaded in ${Date.now() - time} ms`);
@@ -56,9 +57,10 @@ export const initDB = () => (dispatch) => {
 
 /* -------------------   API   --------------------- */
 
-export const get = (str) => {
+export const get = str => {
   // If the database is not loaded/ready
-  if (!DB) return console.error(`Enable to retrive ${str}, database is not ready.`);
+  if (!DB)
+    return console.error(`Enable to retrive ${str}, database is not ready.`);
 
   const path = str.split('/');
   const { length } = path;
@@ -75,9 +77,11 @@ export const get = (str) => {
       // API/artists/:id/all
       if (length === 4 && all) return GET.fetchArtist(path[2], true);
       // API/artists/:id/members
-      if (length === 4 && last === 'members') return GET.fetchArtistMembers(path[2]);
+      if (length === 4 && last === 'members')
+        return GET.fetchArtistMembers(path[2]);
       // API/artists/:id/units
-      if (length === 4 && last === 'units') return GET.fetchArtistUnits(path[2]);
+      if (length === 4 && last === 'units')
+        return GET.fetchArtistUnits(path[2]);
       // API/artists/:id
       if (length === 3) return GET.fetchArtist(path[2]);
       // Error
@@ -113,7 +117,8 @@ export const get = (str) => {
       // API/positions/:id
       if (length === 3) return GET.fetchPosition(path[2]);
       // API/colors/:id/name
-      if (length === 4 && last === 'name') return GET.fetchPositionName(path[2]);
+      if (length === 4 && last === 'name')
+        return GET.fetchPositionName(path[2]);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
@@ -143,15 +148,18 @@ export const get = (str) => {
       // API/units/:id/songs
       if (length === 4 && last === 'songs') return GET.fetchUnitSongs(path[2]);
       // API/units/:id/members
-      if (length === 4 && last === 'members') return GET.fetchUnitMembers(path[2]);
+      if (length === 4 && last === 'members')
+        return GET.fetchUnitMembers(path[2]);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
     case 'user':
       // API/user/latest/:id
-      if (length === 4 && path[2] === 'latest') return GET.fetchUserLatestUnits(path[3]);
+      if (length === 4 && path[2] === 'latest')
+        return GET.fetchUserLatestUnits(path[3]);
       // API/user/favorite/:id
-      if (length === 4 && path[2] === 'favorite') return GET.fetchUserFavoriteUnits(path[3]);
+      if (length === 4 && path[2] === 'favorite')
+        return GET.fetchUserFavoriteUnits(path[3]);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
@@ -167,12 +175,15 @@ export const post = (str, body) => {
   const all = last === 'all';
 
   console.log('Posting to api path:', str);
+  console.log('Body', body);
   switch (path[1]) {
     case 'user':
       // API/user/latest/:id
-      if (length === 4 && path[2] === 'latest') return POST.postUserLatestUnits(path[3], body);
+      if (length === 4 && path[2] === 'latest')
+        return POST.postUserLatestUnits(path[3], body);
       // API/user/favorite/:id
-      if (length === 4 && path[2] === 'favorite') return POST.postUserFavoriteUnits(path[3], body);
+      if (length === 4 && path[2] === 'favorite')
+        return POST.postUserFavoriteUnits(path[3], body);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
@@ -199,24 +210,26 @@ export const post = (str, body) => {
 
 const GET = {
   // API/artists
-  fetchAllArtists: (include) => {
+  fetchAllArtists: include => {
     const response = _.cloneDeep(DB.artists);
 
     // Always include list of members throughout units
-    Object.keys(response).forEach((key) => {
+    Object.keys(response).forEach(key => {
       const entry = response[key];
       const members = {};
       if (entry.units) {
         const units = entry.units.map(unitId => GET.fetchUnit(unitId));
-        units.forEach((unit) => {
+        units.forEach(unit => {
           if (unit.members) {
-            unit.members.forEach((memberEntry) => {
+            unit.members.forEach(memberEntry => {
               members[memberEntry.memberId] = true;
             });
           }
         });
         entry.memberListIds = Object.keys(members);
-        entry.memberList = Object.keys(members).map(m => GET.fetchMember(m).name);
+        entry.memberList = Object.keys(members).map(
+          m => GET.fetchMember(m).name
+        );
       } else {
         entry.memberListIds = [];
         entry.memberList = [];
@@ -231,7 +244,7 @@ const GET = {
 
     // Include dependencies?
     if (include) {
-      Object.keys(response).forEach((key) => {
+      Object.keys(response).forEach(key => {
         const entry = response[key];
         // Fetch units
         if (entry.units) {
@@ -245,7 +258,7 @@ const GET = {
   // API/colors
   fetchAllColors: () => {
     const response = _.cloneDeep(DB.colors);
-    Object.keys(response).forEach((key) => {
+    Object.keys(response).forEach(key => {
       const color = response[key];
       const parsedId = Number(color.id.substring(3)).toString();
       color.class = `color-${parsedId}`;
@@ -254,11 +267,11 @@ const GET = {
   },
 
   // API/members
-  fetchAllMembers: (include) => {
+  fetchAllMembers: include => {
     const response = _.cloneDeep(DB.members);
 
     if (include) {
-      Object.keys(response).forEach((key) => {
+      Object.keys(response).forEach(key => {
         const entry = response[key];
         // Fetch color
         entry.color = GET.fetchColor(entry.colorId);
@@ -277,11 +290,11 @@ const GET = {
   fetchAllPositions: () => _.cloneDeep(DB.positions),
 
   // API/songs
-  fetchAllSongs: (include) => {
+  fetchAllSongs: include => {
     const response = _.cloneDeep(DB.songs);
 
     if (include) {
-      Object.keys(response).forEach((key) => {
+      Object.keys(response).forEach(key => {
         const entry = response[key];
         // Fetch unit
         if (entry.unit) {
@@ -296,11 +309,11 @@ const GET = {
   },
 
   // API/units
-  fetchAllUnits: (include) => {
+  fetchAllUnits: include => {
     const response = _.cloneDeep(DB.units);
 
     if (include) {
-      Object.keys(response).forEach((key) => {
+      Object.keys(response).forEach(key => {
         const entry = response[key];
         // Fetch artist
         if (entry.artist) {
@@ -309,7 +322,7 @@ const GET = {
         }
         // Fetch members
         if (entry.members) {
-          entry.members = entry.members.map((mem) => {
+          entry.members = entry.members.map(mem => {
             const member = GET.fetchMember(mem.memberId);
             member.positions = mem.positions;
             return member;
@@ -332,7 +345,7 @@ const GET = {
     const songs = _.cloneDeep(DB.songs);
     const response = {};
 
-    Object.keys(songs).forEach((key) => {
+    Object.keys(songs).forEach(key => {
       const song = songs[key];
       const { unitId } = song;
       if (response[unitId] === undefined) {
@@ -342,11 +355,11 @@ const GET = {
       }
     });
 
-    Object.keys(response).forEach((key) => {
+    Object.keys(response).forEach(key => {
       response[key] = _.sortBy(response[key], 'title');
     });
 
-    Object.keys(response).forEach((key) => {
+    Object.keys(response).forEach(key => {
       response[key] = response[key].map(item => item.id);
     });
 
@@ -363,9 +376,9 @@ const GET = {
         const tracker = {};
         const members = [];
         const units = response.units.map(unitId => GET.fetchUnit(unitId));
-        units.forEach((unit) => {
+        units.forEach(unit => {
           if (unit.members) {
-            unit.members.forEach((memberEntry) => {
+            unit.members.forEach(memberEntry => {
               if (tracker[memberEntry.memberId] === undefined) {
                 members.push(GET.fetchMember(memberEntry.memberId, true));
                 tracker[memberEntry.memberId] = true;
@@ -392,13 +405,13 @@ const GET = {
   },
 
   // API/artists/:id/members
-  fetchArtistMembers: (id) => {
+  fetchArtistMembers: id => {
     const artist = GET.fetchArtist(id);
     const members = {};
     if (artist && artist.units) {
       const units = artist.units.map(unitId => GET.fetchUnit(unitId));
-      units.forEach((unit) => {
-        unit.members.forEach((memberId) => {
+      units.forEach(unit => {
+        unit.members.forEach(memberId => {
           members[memberId] = true;
         });
       });
@@ -408,11 +421,11 @@ const GET = {
   },
 
   // API/artists/:id/units
-  fetchArtistUnits: (id) => {
+  fetchArtistUnits: id => {
     const artist = GET.fetchArtist(id);
     const units = {};
     if (artist && artist.units) {
-      artist.units.forEach((unitId) => {
+      artist.units.forEach(unitId => {
         units[unitId] = GET.fetchUnit(unitId);
       });
       return units;
@@ -421,7 +434,7 @@ const GET = {
   },
 
   // API/color/:id
-  fetchColor: (id) => {
+  fetchColor: id => {
     const response = _.cloneDeep(DB.colors[id]);
     if (response !== undefined) {
       const parsedId = Number(response.id.substring(3)).toString();
@@ -438,11 +451,11 @@ const GET = {
 
     const colorCount = {};
     if (colors && members) {
-      Object.keys(colors).forEach((key) => {
+      Object.keys(colors).forEach(key => {
         colorCount[key] = 0;
       });
 
-      Object.keys(members).forEach((key) => {
+      Object.keys(members).forEach(key => {
         const { colorId } = members[key];
         colorCount[colorId] += 1;
       });
@@ -451,7 +464,7 @@ const GET = {
   },
 
   // API/color/:id/name
-  fetchColorName: (id) => {
+  fetchColorName: id => {
     const response = _.cloneDeep(DB.colors[id]);
     if (response !== undefined) {
       return response.name;
@@ -471,7 +484,9 @@ const GET = {
         response.altColor = GET.fetchColor(response.altColorId);
         delete response.altColorId;
         // Fetch position
-        response.positions = response.positions.map(pos => GET.fetchPosition(pos));
+        response.positions = response.positions.map(pos =>
+          GET.fetchPosition(pos)
+        );
       }
       return response;
     }
@@ -479,7 +494,7 @@ const GET = {
   },
 
   // API/position/:id
-  fetchPosition: (id) => {
+  fetchPosition: id => {
     const response = _.cloneDeep(DB.positions[id]);
     if (response !== undefined) {
       return response;
@@ -488,7 +503,7 @@ const GET = {
   },
 
   // API/position/:id/name
-  fetchPositionName: (id) => {
+  fetchPositionName: id => {
     const response = _.cloneDeep(DB.positions[id]);
     if (response !== undefined) {
       return response.name;
@@ -529,7 +544,7 @@ const GET = {
         delete response.artistId;
         // Fetch members
         if (response.members) {
-          const parsedMembers = response.members.map((mem) => {
+          const parsedMembers = response.members.map(mem => {
             const member = GET.fetchMember(mem.memberId, true);
             member.positions = mem.positions.map(pos => GET.fetchPosition(pos));
             return member;
@@ -551,7 +566,7 @@ const GET = {
   },
 
   // API/units/:id/members
-  fetchUnitMembers: (id) => {
+  fetchUnitMembers: id => {
     const unit = _.cloneDeep(DB.units[id]);
     let response;
     if (unit !== undefined && unit.members) {
@@ -563,7 +578,7 @@ const GET = {
   },
 
   // API/units/:id/songs
-  fetchUnitSongs: (id) => {
+  fetchUnitSongs: id => {
     const unit = _.cloneDeep(DB.units[id]);
     let response;
     if (unit !== undefined && unit.songs) {
@@ -575,7 +590,7 @@ const GET = {
   },
 
   // API/user/latest/:id
-  fetchUserLatestUnits: (uid) => {
+  fetchUserLatestUnits: uid => {
     if (DB.users[uid] && DB.users[uid].latestUnits) {
       const latest = DB.users[uid].latestUnits;
       return latest.map(unitId => GET.fetchUnit(unitId, true));
@@ -584,7 +599,7 @@ const GET = {
   },
 
   // API/user/favorite/:id
-  fetchUserFavoriteUnits: (uid) => {
+  fetchUserFavoriteUnits: uid => {
     if (DB.users[uid] && DB.users[uid].favoriteUnits) {
       const favorites = DB.users[uid].favoriteUnits;
       return favorites.map(unitId => GET.fetchUnit(unitId, true));
@@ -597,7 +612,12 @@ const POST = {
   // API/user/latest/:id
   postUserLatestUnits: (uid, body) => {
     if (DB.users[uid]) {
-      base.database().ref('users').child(uid).child('latestUnits').set(body);
+      base
+        .database()
+        .ref('users')
+        .child(uid)
+        .child('latestUnits')
+        .set(body);
       toastr.success('Your Latest Units updated successfully');
     }
   },
@@ -605,13 +625,21 @@ const POST = {
   // API/user/favorite/:id
   postUserFavoriteUnits: (uid, body) => {
     if (DB.users[uid]) {
-      base.database().ref('users').child(uid).child('favoriteUnits').set(body);
-      toastr.success('Unit updated to Favorites successfully!', `You have ${body.length} favorite artists out of 5.`);
+      base
+        .database()
+        .ref('users')
+        .child(uid)
+        .child('favoriteUnits')
+        .set(body);
+      toastr.success(
+        'Unit updated to Favorites successfully!',
+        `You have ${body.length} favorite artists out of 5.`
+      );
     }
   },
 
   // API/song
-  postSong: (body) => {
+  postSong: async body => {
     const missingInfo = [];
     // Check if song has all necessary params. Optional: distribution, lyrics
     if (!body.originalArtist) missingInfo.push('Original Artist\n'); // REMOVE THIS, DEBUGGING ONLY
@@ -640,7 +668,7 @@ const POST = {
       title: body.title,
       type: body.type,
       unitId: body.unitId,
-      userId: body.userEmail,
+      userId: body.userUid,
     };
 
     // If song has already an id and new user is the same, save over old one
@@ -651,29 +679,69 @@ const POST = {
     }
 
     // Else, create a new song
-    base.database()
+    base
+      .database()
       .ref('songs')
       .push(newSong)
-      .then((snap) => {
+      .then(snap => {
+        console.log('snap', snap);
         const { key } = snap;
         newSong.id = key;
-        const unitSongs = DB.units[newSong.unitId].songs || [];
-        unitSongs.push(key);
-        base.database()
-          .ref(`units/${newSong.unitId}/songs`)
-          .set(unitSongs);
-        base.database()
+        // Updates song with own id reference
+        base
+          .database()
           .ref(`songs/${key}`)
           .set(newSong)
           .then(() => {
             toastr.success('Your song was saved successfully!');
           });
+        // Pushes new songId to unit songs array
+        const unitSongs = DB.units[newSong.unitId].songs || [];
+        unitSongs.push(key);
+        base
+          .database()
+          .ref(`units/${newSong.unitId}/songs`)
+          .set(unitSongs);
+      })
+      .catch(error => {
+        console.log(error.code);
+        toastr.error(`Error: ${error.message}`);
       });
     return true;
+
+    // const snap = await base
+    //   .database()
+    //   .ref('songs')
+    //   .push(newSong)
+    //   .then(snap => {
+    //     console.log('snap', snap);
+    //     const { key } = snap;
+    //     newSong.id = key;
+    //     // Updates song with own id reference
+    //     base
+    //       .database()
+    //       .ref(`songs/${key}`)
+    //       .set(newSong)
+    //       .then(() => {
+    //         toastr.success('Your song was saved successfully!');
+    //       });
+    //     // Pushes new songId to unit songs array
+    //     const unitSongs = DB.units[newSong.unitId].songs || [];
+    //     unitSongs.push(key);
+    //     base
+    //       .database()
+    //       .ref(`units/${newSong.unitId}/songs`)
+    //       .set(unitSongs);
+    //   })
+    //   .catch(error => {
+    //     console.log(error.code);
+    //     toastr.error(`Error: ${error.message}`);
+    //   });
+    // return true;
   },
 
   // API/completeArtist
-  postCompleteArtist: async (body) => {
+  postCompleteArtist: async body => {
     const missingInfo = [];
     // Check if song has all necessary params. Optional: distribution, lyrics
     // if (!body.originalArtist) missingInfo.push('Original Artist\n'); // REMOVE THIS, DEBUGGING ONLY
@@ -695,7 +763,11 @@ const POST = {
     }
     // Second, push new members
     for (let i = 0; i < body.members.length; i++) {
-      const newMemberKey = base.database().ref().child('members').push().key;
+      const newMemberKey = base
+        .database()
+        .ref()
+        .child('members')
+        .push().key;
       membersKeysList.push({
         memberId: newMemberKey,
         positions: body.members[i].positions,
@@ -708,11 +780,19 @@ const POST = {
     let newUnitKey = body.wasUnitLoaded;
 
     if (!body.wasArtistLoaded) {
-      newArtistKey = base.database().ref().child('artists').push().key;
+      newArtistKey = base
+        .database()
+        .ref()
+        .child('artists')
+        .push().key;
       body.artist.units = [];
     }
     if (!body.wasUnitLoaded) {
-      newUnitKey = base.database().ref().child('units').push().key;
+      newUnitKey = base
+        .database()
+        .ref()
+        .child('units')
+        .push().key;
       body.unit.id = newUnitKey;
       body.unit.artistId = newArtistKey;
       body.artist.units.push(newUnitKey);
@@ -724,8 +804,10 @@ const POST = {
     updates[`/artists/${newArtistKey}`] = body.artist;
     updates[`/units/${newUnitKey}`] = body.unit;
 
-    base.database().ref().update(updates);
+    base
+      .database()
+      .ref()
+      .update(updates);
     toastr.success('New Artist added successfully');
   },
 };
-

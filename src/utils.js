@@ -3,12 +3,10 @@
 
 import _ from 'lodash';
 
-import store from './store';
-import DB from './database/index';
 import { ALTERNATIVE_COLOR_LIST } from './constants';
 
 // From number of members, determine the box-size class for boxes in distribution
-export const boxSizeClass = (num) => {
+export const boxSizeClass = num => {
   let className;
 
   if (num === 2 || num === 4) {
@@ -42,13 +40,6 @@ export const getClosestIndex = (collection, target, key) => {
   return closestIndex;
 };
 
-export const getCurrentBand = (bandId, artists) => {
-  bandId = bandId || store.getState().app.currentBand;
-  artists = artists || store.getState().app.artists;
-  if (artists[bandId] === undefined) console.warn('Couldn\'t find seleced artist id');
-  return artists[bandId];
-};
-
 export const loadLocalStorage = () => {
   console.log('Fetching from localStorage...');
   const { localStorage } = window;
@@ -56,55 +47,25 @@ export const loadLocalStorage = () => {
   return JSON.parse(data);
 };
 
-export const saveLocalStorage = (obj) => {
+export const saveLocalStorage = obj => {
   console.log('Saving to localStorage...');
   window.localStorage.setItem('linedistribution', JSON.stringify(obj));
 };
 
 export const copyToClipboard = (element = 'temp-input') => {
-  console.log('Copying to clipboard...');
   setTimeout(() => {
     const copyText = document.getElementById(element);
     copyText.select();
     document.execCommand('Copy');
-    console.log('Copied to clipboard');
-    alert('Text copied to clipboard!');
   }, 1000);
 };
 
-export const getLatestId = (t) => {
-  const type = t.toUpperCase();
-
-  let lastId = -1;
-  let obj;
-
-  switch (type) {
-    case 'ARTISTS':
-      obj = DB.ARTISTS;
-      break;
-    case 'UNITS':
-      obj = DB.UNITS;
-      break;
-    case 'MEMBERS':
-      obj = DB.MEMBERS;
-      break;
-    case 'SONGS':
-      obj = DB.SONGS;
-      break;
-    default:
-      obj = {};
-  }
-
-  lastId = Math.max(...Object.keys(obj).filter(a => a < 1000));
-  return lastId + 1;
-};
-
-export const getAlternativeColor = (colorId) => {
+export const getAlternativeColor = colorId => {
   const list = [...ALTERNATIVE_COLOR_LIST[makeIdNumber(colorId)]];
   return makeSixDigit(list[Math.floor(Math.random() * list.length)]);
 };
 
-export const parseBirthDate = (d) => {
+export const parseBirthDate = d => {
   const date = `${d}`;
   if (date.length < 5) {
     return date;
@@ -118,13 +79,16 @@ export const parseBirthDate = (d) => {
   return '?';
 };
 
-export const getLyricsSnippet = (str) => {
+export const getLyricsSnippet = str => {
   // Get first 5 lines, remove blanks, narrow down to 3
-  const lyrics = str.split('\n').slice(0, 7).filter(line => line !== '\n');
+  const lyrics = str
+    .split('\n')
+    .slice(0, 7)
+    .filter(line => line !== '\n');
 
   let result = [];
   // Remove assignments []
-  lyrics.forEach((lyricLine) => {
+  lyrics.forEach(lyricLine => {
     const line = lyricLine.split('');
     let toDelete = false;
     for (let i = 0; i < line.length; i++) {
@@ -152,39 +116,50 @@ export const getLyricsSnippet = (str) => {
   return result;
 };
 
-export const makeSixDigit = (num) => {
-  const str = num.toString();
+export const makeSixDigit = num => {
   const pad = '000000';
+  if (typeof num !== 'number') {
+    return pad;
+  }
+  const str = num.toString();
+
   return pad.substring(0, pad.length - str.length) + str;
 };
 
-export const makeIdNumber = (id) => {
+export const makeIdNumber = id => {
   const num = id.substring(3);
-  return Number(num);
+  return Number(num) || 0;
 };
 
-export const capitalizeWord = (str, separator = ' ') => (
-  str.toString().split(separator).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-);
+export const capitalizeWord = (str, separator = ' ') =>
+  str
+    .toString()
+    .split(separator)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(separator);
 
-export const spinalCaseWord = str => str.toLowerCase().split(' ').join('-');
+export const spinalCaseWord = str =>
+  str
+    .toLowerCase()
+    .split(' ')
+    .join('-');
 
-export const getTrueKeys = (obj) => {
+export const getTrueKeys = obj => {
   const keys = [];
 
-  Object.keys(obj).forEach((key) => {
+  Object.keys(obj).forEach(key => {
     if (obj[key]) keys.push(key);
   });
 
-  return keys;
+  return Object.keys(obj);
 };
 
-export const ensureColorUniqueness = (m) => {
+export const ensureColorUniqueness = m => {
   const membersList = _.cloneDeep(m);
   const dict = {};
   const refactoredMembers = [];
   // Loop through members and make color dict
-  membersList.forEach((member) => {
+  membersList.forEach(member => {
     const colorId = member.color.id;
     if (dict[colorId] === undefined) {
       dict[colorId] = 1;
@@ -194,7 +169,7 @@ export const ensureColorUniqueness = (m) => {
   });
 
   // Loop again and check for uniqueness, unique stays
-  membersList.forEach((member) => {
+  membersList.forEach(member => {
     const colorId = member.color.id;
     const altColorId = member.altColor.id;
     if (dict[colorId] > 1) {
@@ -211,9 +186,10 @@ export const ensureColorUniqueness = (m) => {
   return refactoredMembers;
 };
 
-export const generatePushID = (function () {
+export const generatePushID = (function() {
   // Modeled after base64 web-safe chars, but ordered by ASCII.
-  const PUSH_CHARS = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+  const PUSH_CHARS =
+    '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
 
   // Timestamp of last push, used to prevent local collisions if you push twice in one ms.
   let lastPushTime = 0;
@@ -224,9 +200,9 @@ export const generatePushID = (function () {
   // "incremented" by one.
   const lastRandChars = [];
 
-  return function () {
+  return function() {
     let now = new Date().getTime();
-    const duplicateTime = (now === lastPushTime);
+    const duplicateTime = now === lastPushTime;
     lastPushTime = now;
     let i;
     const timeStampChars = new Array(8);
@@ -235,7 +211,8 @@ export const generatePushID = (function () {
       // NOTE: Can't use << here because javascript will convert to int and lose the upper bits.
       now = Math.floor(now / 64);
     }
-    if (now !== 0) throw new Error('We should have converted the entire timestamp.');
+    if (now !== 0)
+      throw new Error('We should have converted the entire timestamp.');
 
     let id = timeStampChars.join('');
 
@@ -260,9 +237,83 @@ export const generatePushID = (function () {
 })();
 
 export const insertAtCursor = (field, valueToInsert) => {
-  if ((field.selectionStart || field.selectionStart === 0) && field.selectionStart === field.selectionEnd) {
+  if (
+    (field.selectionStart || field.selectionStart === 0) &&
+    field.selectionStart === field.selectionEnd
+  ) {
     const startPos = field.selectionStart;
     const endPos = field.selectionEnd;
-    field.value = field.value.substring(0, startPos) + valueToInsert + field.value.substring(endPos, field.value.length);
+    field.value =
+      field.value.substring(0, startPos) +
+      valueToInsert +
+      field.value.substring(endPos, field.value.length);
   }
+};
+
+export const bem = (...args) => {
+  const block = args[0];
+  let modifiers = args[1] || '';
+  let element = args[2];
+  let extras = args[3] || [];
+
+  const hasBlock = block !== undefined && block !== null && block !== '';
+  const hasModifiers =
+    modifiers !== undefined &&
+    modifiers !== null &&
+    modifiers !== '' &&
+    modifiers.length > 0;
+  const hasElement =
+    element !== undefined && element !== null && element !== '';
+  const hasExtras =
+    extras !== undefined &&
+    extras !== null &&
+    extras !== '' &&
+    extras.length > 0;
+
+  // Prepare modifiers
+  if (hasModifiers) {
+    if (typeof modifiers === 'string') {
+      modifiers = [modifiers];
+    }
+    modifiers = modifiers.map(m => `--${m}`);
+  }
+  // Prepare element
+  if (hasElement) {
+    element = `__${element}`;
+  }
+  // Prepare Extras
+  if (hasExtras) {
+    if (typeof extras === 'string') {
+      extras = [extras];
+    }
+  }
+
+  // No Block
+  if (!hasBlock) {
+    throw new Error('Block string missing');
+  }
+
+  let classes = block;
+
+  // Only Modifiers
+  if (hasModifiers && !hasElement) {
+    modifiers.forEach(m => {
+      classes += ` ${block}${m}`;
+    });
+  }
+
+  // Only Element
+  if (hasElement && !hasModifiers) {
+    classes = ` ${block}${element}`;
+  }
+
+  // Modifiers and Element
+  if (hasElement && hasModifiers) {
+    classes += `${element}`;
+    modifiers.forEach(m => {
+      classes += ` ${block}${element}${m}`;
+    });
+  }
+
+  return `${classes} ${extras.join(' ')}`.trim();
 };

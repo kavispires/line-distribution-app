@@ -8,7 +8,8 @@ const SET_ARTIST_LIST = 'SET_ARTIST_LIST';
 const SET_ARTIST_LIST_BACK_UP = 'SET_ARTISTS_LIST_BACK_UP';
 const SET_ARTIST_PAGE_TAB = 'SET_ARTIST_PAGE_TAB';
 const SET_DISTRIBUTION_PER_MEMBER = 'SET_DISTRIBUTION_PER_MEMBER';
-const SET_DISTRIBUTION_PER_MEMBER_OFFICIAL = 'SET_DISTRIBUTION_PER_MEMBER_OFFICIAL';
+const SET_DISTRIBUTION_PER_MEMBER_OFFICIAL =
+  'SET_DISTRIBUTION_PER_MEMBER_OFFICIAL';
 const SET_DISTRIBUTION_PER_MEMBER_WOULD = 'SET_DISTRIBUTION_PER_MEMBER_WOULD';
 const SET_DISTRIBUTION_TOTAL = 'SET_DISTRIBUTION_TOTAL';
 const SET_DISTRIBUTION_TOTAL_OFFICIAL = 'SET_DISTRIBUTION_TOTAL_OFFICIAL';
@@ -22,21 +23,36 @@ const SET_USER_LATEST_ARTISTS = 'SET_USER_LATEST_ARTISTS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setArtistList = payload => dispatch => dispatch({ type: SET_ARTIST_LIST, payload });
-export const setArtistListBackUp = payload => dispatch => dispatch({ type: SET_ARTIST_LIST_BACK_UP, payload });
-export const setArtistPageTab = payload => dispatch => dispatch({ type: SET_ARTIST_PAGE_TAB, payload });
-export const setDistributionPerMember = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER, payload });
-export const setDistributionPerMemberOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_OFFICIAL, payload });
-export const setDistributionPerMemberWould = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_WOULD, payload });
-export const setDistributionTotal = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL, payload });
-export const setDistributionTotalOfficial = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL_OFFICIAL, payload });
-export const setDistributionTotalWould = payload => dispatch => dispatch({ type: SET_DISTRIBUTION_TOTAL_WOULD, payload });
-export const setSelectedArtist = payload => dispatch => dispatch({ type: SET_SELECTED_ARTIST, payload });
-export const setSelectedUnit = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT, payload });
-export const setSelectedUnitSongs = payload => dispatch => dispatch({ type: SET_SELECTED_UNIT_SONGS, payload });
-export const setSelectedUnits = payload => dispatch => dispatch({ type: SET_SELECTED_UNITS, payload });
-export const setUserFavoriteArtists = payload => dispatch => dispatch({ type: SET_USER_FAVORITE_ARTISTS, payload });
-export const setUserLatestArtists = payload => dispatch => dispatch({ type: SET_USER_LATEST_ARTISTS, payload });
+export const setArtistList = payload => dispatch =>
+  dispatch({ type: SET_ARTIST_LIST, payload });
+export const setArtistListBackUp = payload => dispatch =>
+  dispatch({ type: SET_ARTIST_LIST_BACK_UP, payload });
+export const setArtistPageTab = payload => dispatch =>
+  dispatch({ type: SET_ARTIST_PAGE_TAB, payload });
+export const setDistributionPerMember = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_PER_MEMBER, payload });
+export const setDistributionPerMemberOfficial = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_OFFICIAL, payload });
+export const setDistributionPerMemberWould = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_PER_MEMBER_WOULD, payload });
+export const setDistributionTotal = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_TOTAL, payload });
+export const setDistributionTotalOfficial = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_TOTAL_OFFICIAL, payload });
+export const setDistributionTotalWould = payload => dispatch =>
+  dispatch({ type: SET_DISTRIBUTION_TOTAL_WOULD, payload });
+export const setSelectedArtist = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_ARTIST, payload });
+export const setSelectedUnit = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_UNIT, payload });
+export const setSelectedUnitSongs = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_UNIT_SONGS, payload });
+export const setSelectedUnits = payload => dispatch =>
+  dispatch({ type: SET_SELECTED_UNITS, payload });
+export const setUserFavoriteArtists = payload => dispatch =>
+  dispatch({ type: SET_USER_FAVORITE_ARTISTS, payload });
+export const setUserLatestArtists = payload => dispatch =>
+  dispatch({ type: SET_USER_LATEST_ARTISTS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -131,7 +147,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const loadArtists = () => (dispatch) => {
+export const loadArtists = () => dispatch => {
   const artistList = API.get('/artists');
 
   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
@@ -175,7 +191,7 @@ export const filterArtists = e => (dispatch, getState) => {
   dispatch(setArtistList(filteredArtists));
 };
 
-const parseUnitSongs = unit => (dispatch) => {
+const parseUnitSongs = unit => dispatch => {
   const distributionPerMember = {};
   const distributionPerMemberOfficial = {};
   const distributionPerMemberWould = {};
@@ -183,71 +199,73 @@ const parseUnitSongs = unit => (dispatch) => {
   let distributionTotalOfficial = 0;
   let distributionTotalWould = 0;
 
-  unit.songs.forEach((song) => {
-    const { distribution } = song;
-    const distDict = {};
-    let total = 0;
+  if (unit.songs) {
+    unit.songs.forEach(song => {
+      const { distribution } = song;
+      const distDict = {};
+      let total = 0;
 
-    // Get member totals
-    for (let i = 0; i < distribution.length; i++) {
-      const instance = distribution[i];
-      if (distDict[instance.memberId] === undefined) {
-        distDict[instance.memberId] = instance.duration;
-      } else {
-        distDict[instance.memberId] += instance.duration;
+      // Get member totals
+      for (let i = 0; i < distribution.length; i++) {
+        const instance = distribution[i];
+        if (distDict[instance.memberId] === undefined) {
+          distDict[instance.memberId] = instance.duration;
+        } else {
+          distDict[instance.memberId] += instance.duration;
+        }
+        total += instance.duration;
       }
-      total += instance.duration;
-    }
 
-    const distTotals = [];
-    let totalPercentage = 0;
-    for (let i = 0; i < Object.keys(distDict).length; i++) {
-      // Calculate bar
-      const key = Object.keys(distDict)[i];
-      const memberTotal = Math.round((distDict[key] * 100) / total);
-      distTotals.push({
-        memberId: key,
-        memberTotal,
-      });
-      totalPercentage += memberTotal;
-      // Add to
-      if (distributionPerMember[key] === undefined) {
-        distributionPerMember[key] = distDict[key];
-      } else {
-        distributionPerMember[key] += distDict[key];
+      const distTotals = [];
+      let totalPercentage = 0;
+      for (let i = 0; i < Object.keys(distDict).length; i++) {
+        // Calculate bar
+        const key = Object.keys(distDict)[i];
+        const memberTotal = Math.round((distDict[key] * 100) / total);
+        distTotals.push({
+          memberId: key,
+          memberTotal,
+        });
+        totalPercentage += memberTotal;
+        // Add to
+        if (distributionPerMember[key] === undefined) {
+          distributionPerMember[key] = distDict[key];
+        } else {
+          distributionPerMember[key] += distDict[key];
+        }
+        if (song.type === 'official') {
+          if (distributionPerMemberOfficial[key] === undefined) {
+            distributionPerMemberOfficial[key] = distDict[key];
+          } else {
+            distributionPerMemberOfficial[key] += distDict[key];
+          }
+        } else {
+          if (distributionPerMemberWould[key] === undefined) {
+            distributionPerMemberWould[key] = distDict[key];
+          } else {
+            distributionPerMemberWould[key] += distDict[key];
+          }
+        }
       }
+      distributionTotal += total;
       if (song.type === 'official') {
-        if (distributionPerMemberOfficial[key] === undefined) {
-          distributionPerMemberOfficial[key] = distDict[key];
-        } else {
-          distributionPerMemberOfficial[key] += distDict[key];
-        }
+        distributionTotalOfficial += total;
       } else {
-        if (distributionPerMemberWould[key] === undefined) {
-          distributionPerMemberWould[key] = distDict[key];
-        } else {
-          distributionPerMemberWould[key] += distDict[key];
-        }
+        distributionTotalWould += total;
       }
-    }
-    distributionTotal += total;
-    if (song.type === 'official') {
-      distributionTotalOfficial += total;
-    } else {
-      distributionTotalWould += total;
-    }
 
-    const result = _.orderBy(distTotals, ['memberTotal'], ['desc']);
-    if (totalPercentage < 100) {
-      const remaining = 100 - totalPercentage;
-      result[result.length - 1].memberTotal += remaining;
-    }
-    if (totalPercentage > 100) {
-      const remaining = totalPercentage - 100;
-      result[result.length - 1].memberTotal -= remaining;
-    }
-    song.result = result;
-  });
+      const result = _.orderBy(distTotals, ['memberTotal'], ['desc']);
+      if (totalPercentage < 100) {
+        const remaining = 100 - totalPercentage;
+        result[result.length - 1].memberTotal += remaining;
+      }
+      if (totalPercentage > 100) {
+        const remaining = totalPercentage - 100;
+        result[result.length - 1].memberTotal -= remaining;
+      }
+      song.result = result;
+    });
+  }
 
   dispatch(setDistributionPerMember(distributionPerMember));
   dispatch(setDistributionPerMemberOfficial(distributionPerMemberOfficial));
@@ -258,12 +276,14 @@ const parseUnitSongs = unit => (dispatch) => {
   dispatch(setSelectedUnit(unit));
 };
 
-export const switchUnitsTab = event => (dispatch) => {
+export const switchUnitsTab = event => dispatch => {
   const { id } = event.target;
+  console.log('switchUnitsTab', id);
   dispatch(setArtistPageTab(id));
+  dispatch(updateSelectedUnit(id));
 };
 
-export const updateSelectedArtist = id => (dispatch) => {
+export const updateSelectedArtist = id => dispatch => {
   const artist = API.get(`/artists/${id}`);
 
   dispatch(setSelectedArtist(artist));
@@ -278,7 +298,8 @@ export const updateSelectedArtist = id => (dispatch) => {
   // TO-DO: Remove this call from here. Don't use other reducer functions here
 };
 
-export const updateSelectedUnit = id => (dispatch) => {
+export const updateSelectedUnit = id => dispatch => {
+  console.log('updateSelectedUnit', id);
   const unit = API.get(`/units/${id}/all`);
   dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));

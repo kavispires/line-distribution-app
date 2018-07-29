@@ -5,11 +5,7 @@ import Songs from '../components/Songs';
 
 import { toggleBrackets } from '../reducers/lyrics';
 
-import {
-  loadSong,
-  loadSongs,
-  songsFilter,
-} from '../reducers/songs';
+import { loadSong, loadSongs, songsFilter } from '../reducers/songs';
 
 import { login } from '../reducers/user';
 
@@ -28,4 +24,9 @@ const mapDispatchToProps = {
   toggleBrackets,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Songs));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Songs)
+);

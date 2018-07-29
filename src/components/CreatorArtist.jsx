@@ -17,11 +17,11 @@ const CreatorArtist = ({ props }) => {
           onChange={props.loadArtist}
         >
           <option value="0">Select an artist to load...</option>
-          {
-            sortedArtists.map(artist => (
-              <option key={`artist-${artist.id}`} value={artist.id}>{artist.name}</option>
-            ))
-          }
+          {sortedArtists.map(artist => (
+            <option key={`artist-${artist.id}`} value={artist.id}>
+              {artist.name}
+            </option>
+          ))}
         </select>
       </div>
       <div className="form-instance">
@@ -35,7 +35,9 @@ const CreatorArtist = ({ props }) => {
         />
       </div>
       <div className="form-instance">
-        <label htmlFor="newArtistOtherNames">Other Names<span className="hint"> (Separated by commas)</span>:</label>
+        <label htmlFor="newArtistOtherNames">
+          Other Names<span className="hint"> (Separated by commas)</span>:
+        </label>
         <input
           type="text"
           name="newArtistOtherNames"

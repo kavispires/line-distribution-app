@@ -1,43 +1,61 @@
 @import './variables.scss';
 
 .container {
-	padding: $unit $doubleUnit;
-	overflow: auto;
-	flex: 1 1 auto;
-}
-
-.container-no-padding {
+  padding: $unit $doubleUnit;
+  overflow: auto;
   flex: 1 1 auto;
-}
 
-.container-flex {
-	display: flex;
-}
-
-.container-fixed {
-	flex: 1 1 auto;
-	overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-
-.container-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .icon-stop {
-    width: 120px;
+  &--flex {
+    display: flex;
+    padding: 0;
   }
 
-  .icon-loading {
-    width: 100px;
+  &--no-padding {
+    padding: 0;
+  }
+
+  &--fixed {
+    width: 100%;
+    position: relative;
+  }
+
+  &--center {
+    justify-content: center;
+    align-items: center;
+
+    .icon-stop {
+      width: 120px;
+    }
+
+    .icon-loading {
+      width: 100px;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }
 
-.container-center--inner {
-  @extend .container-center;
-  flex-direction: column;
+.section {
+  &--fixed {
+    flex: 1 1 auto;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  &--flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &--padding {
+    padding: $unit $doubleUnit;
+  }
 }
 
 .container-lyrics {
@@ -47,3 +65,51 @@
 .container-lyrics-menu {
   position: sticky;
 }
+
+// .container {
+// 	padding: $unit $doubleUnit;
+// 	overflow: auto;
+// 	flex: 1 1 auto;
+// }
+
+// .container-no-padding {
+//   flex: 1 1 auto;
+// }
+
+// .container-flex {
+// 	display: flex;
+// }
+
+// .container-fixed {
+// 	flex: 1 1 auto;
+// 	overflow: hidden;
+//   width: 100%;
+//   position: relative;
+// }
+
+// .container-center {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   .icon-stop {
+//     width: 120px;
+//   }
+
+//   .icon-loading {
+//     width: 100px;
+//   }
+// }
+
+// .container-center--inner {
+//   @extend .container-center;
+//   flex-direction: column;
+// }
+
+// .container-lyrics {
+//   max-height: 96vh;
+// }
+
+// .container-lyrics-menu {
+//   position: sticky;
+// }

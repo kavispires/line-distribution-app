@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AdminOnlyScreen from './AdminOnlyScreen';
-import LoadingScreen from './LoadingScreen';
-import LoginRequiredScreen from './LoginRequiredScreen';
-
-import Icon, { ICONS_LIST } from './Icon';
+// Import shared components
+import AdminOnlyScreen from './shared/AdminOnlyScreen';
+import Icon, { ICONS_LIST } from './shared/Icon';
+import LoadingScreen from './shared/LoadingScreen';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
 
 class IconSheet extends Component {
   componentWillUpdate(nextProps) {
@@ -29,29 +29,26 @@ class IconSheet extends Component {
     if (this.props.user.isAdmin === false) {
       return <AdminOnlyScreen />;
     }
-
+    console.log(ICONS_LIST);
     return (
-      <div className="container">
+      <main className="container">
         <h1>Icons Sheet</h1>
         <div className="icon-sheet-list-container">
-          {
-            ICONS_LIST.map(item => (
-              <div className="icon-sheet-list-item">
-                <Icon type={item} size="x-large" />
-                <h3>{item}</h3>
-              </div>
-            ))
-          }
+          {ICONS_LIST.map(item => (
+            <div className="icon-sheet-list-item" key={item}>
+              <Icon type={item} size="x-large" />
+              <h3>{item}</h3>
+            </div>
+          ))}
         </div>
-      </div>
+      </main>
     );
   }
 }
 
 IconSheet.propTypes = {
-  admin: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
+  db: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default IconSheet;

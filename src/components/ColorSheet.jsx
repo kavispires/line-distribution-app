@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AdminOnlyScreen from './AdminOnlyScreen';
-import LoadingScreen from './LoadingScreen';
-import LoginRequiredScreen from './LoginRequiredScreen';
-
-import Tabs from './Tabs';
-
+// Import shared components
+import AdminOnlyScreen from './shared/AdminOnlyScreen';
+import LoadingScreen from './shared/LoadingScreen';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import Tabs from './shared/Tabs';
+// Import constants and utility functions
 import { ALTERNATIVE_COLOR_LIST } from '../constants';
 import { makeSixDigit, makeIdNumber } from '../utils';
 
@@ -44,19 +44,18 @@ class ColorSheet extends Component {
     const tabs = [{ id: 'list' }, { id: 'alternative' }];
 
     return (
-      <div className="container">
+      <main className="container">
         <h1>Color Sheet</h1>
 
-        {
-          ADMIN.colorSheetTab === 'list' ? (
-            <p>The numbers indicate how many times each color appears in the database.</p>
-          ) : null
-        }
-        {
-          ADMIN.colorSheetTab === 'alternative' ? (
-            <p>Each swatch has 3-5 automatically generated alternative colors.</p>
-          ) : null
-        }
+        {ADMIN.colorSheetTab === 'list' ? (
+          <p>
+            The numbers indicate how many times each color appears in the
+            database.
+          </p>
+        ) : null}
+        {ADMIN.colorSheetTab === 'alternative' ? (
+          <p>Each swatch has 3-5 automatically generated alternative colors.</p>
+        ) : null}
 
         <Tabs
           tabs={tabs}
@@ -64,64 +63,60 @@ class ColorSheet extends Component {
           action={this.props.toggleColorSheetTab}
         />
 
-        {
-          ADMIN.colorSheetTab === 'list' ? (
-            <ul className="color-palette">
-              {
-                Object.keys(ADMIN.colors).map((key) => {
-                  const color = ADMIN.colors[key];
-                  return (
-                    <li key={color.id} className={`palette ${color.class}`}>
-                      {key}<br />
-                      {color.name}<br />
-                      {ADMIN.colorCount[key]} uses
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          ) : null
-        }
-        {
-          ADMIN.colorSheetTab === 'alternative' ? (
-            <ul className="color-palette">
-              {
-              Object.keys(ADMIN.colors).map((key) => {
-                const color = ADMIN.colors[key];
-                return (
-                  <li key={color.id} className="palette-alt">
-                    <div className={`palette-main ${color.class}`}>
-                      #{key}<br />
-                      {color.name}
-                    </div>
-                    <div className="palette-alt-group">
-                      {
-                        ALTERNATIVE_COLOR_LIST[makeIdNumber(key)].map((num) => {
-                          const altId = `col${makeSixDigit(num)}`;
-                          return (
-                            <div key={`${key}-${altId}`} className={`palette-alt-swatch color-${num}`}>
-                              {makeIdNumber(altId)}
-                            </div>
-                          );
-                        })
-                      }
-                    </div>
-                  </li>
-                );
-              })
-            }
-            </ul>
-          ) : null
-        }
-      </div>
+        {ADMIN.colorSheetTab === 'list' ? (
+          <ul className="tabs__content color-palette">
+            {Object.keys(ADMIN.colors).map(key => {
+              const color = ADMIN.colors[key];
+              return (
+                <li key={color.id} className={`palette ${color.class}`}>
+                  {key}
+                  <br />
+                  {color.name}
+                  <br />
+                  {ADMIN.colorCount[key]} uses
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+        {ADMIN.colorSheetTab === 'alternative' ? (
+          <ul className="tabs__content  color-palette">
+            {Object.keys(ADMIN.colors).map(key => {
+              const color = ADMIN.colors[key];
+              return (
+                <li key={color.id} className="palette-alt">
+                  <div className={`palette-main ${color.class}`}>
+                    #{key}
+                    <br />
+                    {color.name}
+                  </div>
+                  <div className="palette-alt-group">
+                    {ALTERNATIVE_COLOR_LIST[makeIdNumber(key)].map(num => {
+                      const altId = `col${makeSixDigit(num)}`;
+                      return (
+                        <div
+                          key={`${key}-${altId}`}
+                          className={`palette-alt-swatch color-${num}`}
+                        >
+                          {makeIdNumber(altId)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+      </main>
     );
   }
 }
 
 ColorSheet.propTypes = {
-  admin: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
+  admin: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   initColorSheet: PropTypes.func.isRequired,
   toggleColorSheetTab: PropTypes.func.isRequired,
 };

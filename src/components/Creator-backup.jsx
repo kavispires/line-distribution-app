@@ -1,11 +1,9 @@
-
-
 import React from 'react';
 
 import CreatorNewMember from './CreatorNewMember';
 import CreatorExistingMember from './CreatorExistingMember';
 
-const Creator = (props) => {
+const Creator = props => {
   const APP = props.app;
   const DATABASE = props.database;
   const CREATOR = props.creator;
@@ -27,14 +25,14 @@ const Creator = (props) => {
               onChange={props.loadArtist}
             >
               <option value="0">Select an artist to load...</option>
-              {
-                APP.artistListBackUp.map((artistId) => {
-                  const artist = DATABASE.artists[artistId];
-                  return (
-                    <option key={`artist-${artist.id}`} value={artist.id}>{artist.name}</option>
-                  );
-                })
-              }
+              {APP.artistListBackUp.map(artistId => {
+                const artist = DATABASE.artists[artistId];
+                return (
+                  <option key={`artist-${artist.id}`} value={artist.id}>
+                    {artist.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-instance">
@@ -48,7 +46,9 @@ const Creator = (props) => {
             />
           </div>
           <div className="form-instance">
-            <label htmlFor="newArtistOtherNames">Other Names<span className="hint"> (Separated by commas)</span>:</label>
+            <label htmlFor="newArtistOtherNames">
+              Other Names<span className="hint"> (Separated by commas)</span>:
+            </label>
             <input
               type="text"
               name="newArtistOtherNames"
@@ -83,18 +83,23 @@ const Creator = (props) => {
               onChange={props.loadUnit}
             >
               <option value="0">Select an unit to load...</option>
-              {
-                CREATOR.newArtistUnits.map((unitId) => {
-                  const unit = DATABASE.units[unitId];
-                  return (
-                    <option key={`unit-${unit.id}`} value={unit.id}>{unit.name}</option>
-                  );
-                })
-              }
+              {CREATOR.newArtistUnits.map(unitId => {
+                const unit = DATABASE.units[unitId];
+                return (
+                  <option key={`unit-${unit.id}`} value={unit.id}>
+                    {unit.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-instance">
-            <label htmlFor="unitName">Unit/Version Name<span className="hint"> (e.g.: 'OT8', 'Feat. JYP', 'Season 2')</span>:</label>
+            <label htmlFor="unitName">
+              Unit/Version Name<span className="hint">
+                {' '}
+                (e.g.: 'OT8', 'Feat. JYP', 'Season 2')
+              </span>:
+            </label>
             <input
               type="text"
               name="unitName"
@@ -122,7 +127,11 @@ const Creator = (props) => {
               onChange={props.handleNewUnitOfficial}
               disabled={unitDisabled}
             />
-            <small> (Mark this option only if it's an official assemble, not fanmade, and not special performance or tv show)</small>
+            <small>
+              {' '}
+              (Mark this option only if it's an official assemble, not fanmade,
+              and not special performance or tv show)
+            </small>
           </div>
         </fieldset>
 
@@ -136,49 +145,73 @@ const Creator = (props) => {
               onChange={props.loadMember}
             >
               <option value="0">Select an member to load...</option>
-              {
-                APP.membersList.map((memberId) => {
-                  const member = DATABASE.members[memberId];
-                  return (
-                    <option key={`member--${member.id}`} value={member.id}>{member.name}</option>
-                  );
-                })
-              }
+              {APP.membersList.map(memberId => {
+                const member = DATABASE.members[memberId];
+                return (
+                  <option key={`member--${member.id}`} value={member.id}>
+                    {member.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-member-group">
-            {
-              CREATOR.newUnitMembers.map(memberId => (
-                <CreatorExistingMember key={`exist-${memberId}`} id={memberId} props={props} />
-              ))
-            }
+            {CREATOR.newUnitMembers.map(memberId => (
+              <CreatorExistingMember
+                key={`exist-${memberId}`}
+                id={memberId}
+                props={props}
+              />
+            ))}
           </div>
         </fieldset>
         <fieldset>
           <legend>New Members</legend>
-          <button className="btn btn-default" onClick={props.addNewMember}>Add New Member</button>
+          <button className="btn btn-default" onClick={props.addNewMember}>
+            Add New Member
+          </button>
           <div className="form-member-group">
-            {
-              Object.keys(CREATOR.newMembers).map(id => (
-                <CreatorNewMember key={id} id={id} props={props} />
-              ))
-            }
+            {Object.keys(CREATOR.newMembers).map(id => (
+              <CreatorNewMember key={id} id={id} props={props} />
+            ))}
           </div>
         </fieldset>
       </form>
       <ul className="controls">
-        <li><button className="btn-lg btn-100" onClick={props.generateArtistJSON}>Generate Artist JSON</button></li>
-        <li><button className="btn-lg btn-100" onClick={props.generateUnitJSON}>Generate Unit JSON</button></li>
-        <li><button className="btn-lg btn-100" onClick={props.generateMembersJSON}>Generate Members JSON</button></li>
-        <li><button className="btn-lg btn-100" onClick={props.generateFullJSON}>Generate Full JSON</button></li>
+        <li>
+          <button className="btn-lg btn-100" onClick={props.generateArtistJSON}>
+            Generate Artist JSON
+          </button>
+        </li>
+        <li>
+          <button className="btn-lg btn-100" onClick={props.generateUnitJSON}>
+            Generate Unit JSON
+          </button>
+        </li>
+        <li>
+          <button
+            className="btn-lg btn-100"
+            onClick={props.generateMembersJSON}
+          >
+            Generate Members JSON
+          </button>
+        </li>
+        <li>
+          <button className="btn-lg btn-100" onClick={props.generateFullJSON}>
+            Generate Full JSON
+          </button>
+        </li>
       </ul>
-      {
-        CREATOR.tempInput ? (
-          <textarea className="temp-input" id="temp-input" value={CREATOR.tempInput} readOnly />
-        ) : null
-      }
+      {CREATOR.tempInput ? (
+        <textarea
+          className="temp-input"
+          id="temp-input"
+          value={CREATOR.tempInput}
+          readOnly
+        />
+      ) : null}
     </div>
-    );
+  );
 };
 
 export default Creator;

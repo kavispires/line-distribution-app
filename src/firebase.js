@@ -10,12 +10,12 @@ import firebase from 'firebase';
 // };
 
 const config = {
-  apiKey: "AIzaSyDzl2BYRNABWc_K-MO4nKIBEZVjLLFzY6Q",
-  authDomain: "line-distribution.firebaseapp.com",
-  databaseURL: "https://line-distribution.firebaseio.com",
-  projectId: "line-distribution",
-  storageBucket: "line-distribution.appspot.com",
-  messagingSenderId: "301160617788"
+  apiKey: 'AIzaSyDzl2BYRNABWc_K-MO4nKIBEZVjLLFzY6Q',
+  authDomain: 'line-distribution.firebaseapp.com',
+  databaseURL: 'https://line-distribution.firebaseio.com',
+  projectId: 'line-distribution',
+  storageBucket: 'line-distribution.appspot.com',
+  messagingSenderId: '301160617788',
 };
 
 const base = firebase.initializeApp(config);

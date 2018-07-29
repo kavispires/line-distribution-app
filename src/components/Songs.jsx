@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-import LoginRequiredScreen from './LoginRequiredScreen';
-import LoadingScreen from './LoadingScreen';
-
-import Icon from './Icon';
+// Import shared components
+import ArtistUnitRequiredScreen from './shared/ArtistUnitRequiredScreen';
+import Icon from './shared/Icon';
+import LoginRequiredScreen from './shared/LoginRequiredScreen';
+import LoadingScreen from './shared/LoadingScreen';
+// Import components
 import CurrentArtistName from './widgets/CurrentArtistName';
-
+// Import utilities
 import { getLyricsSnippet } from '../utils';
 
 class Songs extends Component {
@@ -34,22 +35,19 @@ class Songs extends Component {
 
     if (CURRENT_UNIT && !CURRENT_UNIT.members) {
       return (
-        <div className="container-flex">
-          <section className="container container-distribution">
-            <section className="section-distribution container-fixed">
-              <h1>Songs</h1>
-              <div>
-                <p>You must select an Artist and Unit in the <Link to="/artists">Artists Page</Link> before loading song lyrics.</p>
-              </div>
-            </section>
-          </section>
-        </div>
+        <ArtistUnitRequiredScreen
+          title="Songs"
+          description="loading song lyrics"
+        />
       );
     }
 
-    const handleSongLoadClick = (e) => {
+    const handleSongLoadClick = e => {
       // Get id of the closest tr element
-      const song = SONGS.songList[[].indexOf.call(e.currentTarget.children, e.target.closest('tr'))];
+      const song =
+        SONGS.songList[
+          [].indexOf.call(e.currentTarget.children, e.target.closest('tr'))
+        ];
       this.props.loadSong(song);
       setTimeout(() => {
         this.props.toggleBrackets(false);
@@ -58,12 +56,25 @@ class Songs extends Component {
     };
 
     return (
-      <section className="container">
-        <h1>Songs<CurrentArtistName currentArtist={APP.currentArtist} /></h1>
-        <p>Search for previously used songs and load its lyrics to the lyrics parser.</p>
-        <p><Icon type="used" size="small-inline" /> indicates songs already distributed by the selected artist.</p>
+      <main className="container">
+        <h1>
+          Songs<CurrentArtistName currentArtist={APP.currentArtist} />
+        </h1>
+        <p>
+          Search for previously used songs and load its lyrics to the lyrics
+          parser.
+        </p>
+        <p>
+          <Icon type="used" size="small-inline" /> indicates songs already
+          distributed by the selected artist.
+        </p>
 
-        <input className="search-bar" type="text" placeholder="Filter..." onChange={this.props.songsFilter} />
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Filter..."
+          onChange={this.props.songsFilter}
+        />
         <table className="table">
           <thead>
             <tr>
@@ -74,16 +85,15 @@ class Songs extends Component {
             </tr>
           </thead>
           <tbody onClick={e => handleSongLoadClick(e)}>
-            {
-              songList.length > 0 ?
-              songList.map((song) => {
+            {songList.length > 0 ? (
+              songList.map(song => {
                 const snippet = getLyricsSnippet(song.lyrics);
                 return (
                   <tr key={song.id}>
                     <td>
-                      {
-                        APP.currentUnit.songTitleDictionary[song.title] ? <Icon type="used" /> : null
-                      }
+                      {APP.currentUnit.songTitleDictionary[song.title] ? (
+                        <Icon type="used" />
+                      ) : null}
                     </td>
                     <td>{song.title}</td>
                     <td>{song.originalArtist}</td>
@@ -91,22 +101,26 @@ class Songs extends Component {
                   </tr>
                 );
               })
-              :
-              <tr><td>No songs available within your search</td><td /><td /></tr>
-            }
+            ) : (
+              <tr>
+                <td>No songs available within your search</td>
+                <td />
+                <td />
+              </tr>
+            )}
           </tbody>
         </table>
-      </section>
+      </main>
     );
   }
 }
 
 Songs.propTypes = {
-  app: PropTypes.object.isRequired, // eslint-disable-line
-  db: PropTypes.object.isRequired, // eslint-disable-line
-  songs: PropTypes.object.isRequired, // eslint-disable-line
-  user: PropTypes.object.isRequired, // eslint-disable-line
-  history: PropTypes.object.isRequired, // eslint-disable-line
+  app: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
+  songs: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   loadSong: PropTypes.func.isRequired,
   loadSongs: PropTypes.func.isRequired,
   songsFilter: PropTypes.func.isRequired,

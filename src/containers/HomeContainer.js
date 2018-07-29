@@ -3,10 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Home from '../components/Home';
 
-import {
-  login,
-  logout,
-} from '../reducers/user';
+import { login, logout } from '../reducers/user';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -19,4 +16,9 @@ const mapDispatchToProps = {
   logout,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+);

@@ -1,5 +1,3 @@
-import { userInfo } from "os";
-
 /* ------------------   ACTIONS   ------------------ */
 
 const SET_FORMATTED_LYRICS = 'SET_FORMATTED_LYRICS';
@@ -9,10 +7,14 @@ const SET_USE_BRACKETS = 'SET_USE_BRACKETS';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setFormattedLyrics = payload => dispatch => dispatch({ type: SET_FORMATTED_LYRICS, payload });
-export const setLyrics = payload => dispatch => dispatch({ type: SET_LYRICS, payload });
-export const setShowRules = payload => dispatch => dispatch({ type: SET_SHOW_RULES, payload });
-export const setUseBrackets = payload => dispatch => dispatch({ type: SET_USE_BRACKETS, payload });
+export const setFormattedLyrics = payload => dispatch =>
+  dispatch({ type: SET_FORMATTED_LYRICS, payload });
+export const setLyrics = payload => dispatch =>
+  dispatch({ type: SET_LYRICS, payload });
+export const setShowRules = payload => dispatch =>
+  dispatch({ type: SET_SHOW_RULES, payload });
+export const setUseBrackets = payload => dispatch =>
+  dispatch({ type: SET_USE_BRACKETS, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -103,7 +105,7 @@ export const handleParser = evt => (dispatch, getState) => {
 
   // Checks if member if present in the current unit
   function areMembersInUnit(str) {
-    const nameList = str.toLowerCase().replace(/[()/\s]/g,',');
+    const nameList = str.toLowerCase().replace(/[()/\s]/g, ',');
     if (nameList === 'all') return true;
 
     let wasFound = false;
@@ -144,7 +146,10 @@ export const handleParser = evt => (dispatch, getState) => {
       lastSubColor = 0;
     } else {
       // Runs the line string as many times necessary to parse string completely
-      while (lineToParse.length > 0 && lineToParse[lineToParse.length - 1] !== '[') {
+      while (
+        lineToParse.length > 0 &&
+        lineToParse[lineToParse.length - 1] !== '['
+      ) {
         let remainder = lineToParse;
         let member;
 
@@ -167,10 +172,14 @@ export const handleParser = evt => (dispatch, getState) => {
         // Define color(s)
         if (lineToParse[0] === '[' && member && !member.includes('(')) {
           lastColor = getColorId(member);
-        } if (lineToParse[0] === '[' && member && member.includes('(')) {
+        }
+        if (lineToParse[0] === '[' && member && member.includes('(')) {
           const multiMember = member.split('(');
           lastColor = getColorId(multiMember[0].trim());
-          const adLibMembers = multiMember[1].substring(0, multiMember[1].length - 1);
+          const adLibMembers = multiMember[1].substring(
+            0,
+            multiMember[1].length - 1
+          );
           lastSubColor = getColorId(adLibMembers);
         }
 
@@ -195,13 +204,18 @@ export const handleParser = evt => (dispatch, getState) => {
         // Check for adlibs on remainder
         if (remainder.includes('(')) {
           // Slipt in '(' or ')', remove those characters
-          const remainderSplit = remainder.split(/([()])/).filter(Boolean).map(r => r.trim());
+          const remainderSplit = remainder
+            .split(/([()])/)
+            .filter(Boolean)
+            .map(r => r.trim());
 
           for (let e = 0; e < remainderSplit.length; e++) {
             const elem = remainderSplit[e];
             // If it's an adlib line
             if (elem === '(') {
-              const adlibLine = `${elem}${remainderSplit[e + 1]}${remainderSplit[e + 2]}`;
+              const adlibLine = `${elem}${remainderSplit[e + 1]}${
+                remainderSplit[e + 2]
+              }`;
               e += 2; // advances '(', the actual line, and ')'
               line.colors.push(`${lastSubColor}`);
               line.content.push(adlibLine);
@@ -240,7 +254,7 @@ export const toggleRules = () => (dispatch, getState) => {
   dispatch(setShowRules(!showRules));
 };
 
-export const resetLyrics = () => (dispatch) => {
+export const resetLyrics = () => dispatch => {
   dispatch(setLyrics(''));
   dispatch(setFormattedLyrics([]));
 };

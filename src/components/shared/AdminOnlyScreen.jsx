@@ -2,13 +2,15 @@ import React from 'react';
 
 import Icon from './Icon';
 
+import { bem } from '../../utils';
+
 const AdminOnlyScreen = () => (
-  <section className="container container-center">
-    <div className="container-center--inner">
+  <main className={bem('container', ['flex', 'center'])}>
+    <div className="container__inner">
       <Icon type="stop" size="x-large" />
       <h3>You must be an administrator to access this page.</h3>
     </div>
-  </section>
+  </main>
 );
 
 export default AdminOnlyScreen;

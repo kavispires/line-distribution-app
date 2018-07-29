@@ -1,4 +1,3 @@
-
 import firebase from 'firebase';
 import { toastr } from 'react-redux-toastr';
 import { base, googleProvider } from '../firebase';
@@ -11,9 +10,12 @@ const SET_USER = 'SET_USER';
 
 /* --------------   ACTION CREATORS   -------------- */
 
-export const setAdmin = payload => dispatch => dispatch({ type: SET_ADMIN, payload });
-export const setAuthenticated = payload => dispatch => dispatch({ type: SET_AUTHENTICATED, payload });
-export const setUser = payload => dispatch => dispatch({ type: SET_USER, payload });
+export const setAdmin = payload => dispatch =>
+  dispatch({ type: SET_ADMIN, payload });
+export const setAuthenticated = payload => dispatch =>
+  dispatch({ type: SET_AUTHENTICATED, payload });
+export const setUser = payload => dispatch =>
+  dispatch({ type: SET_USER, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
@@ -48,7 +50,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const selectAction = event => (dispatch) => {
+export const selectAction = event => dispatch => {
   const { value } = event.target;
 
   if (value === 'reassign-songs-member-ids') {
@@ -56,48 +58,59 @@ export const selectAction = event => (dispatch) => {
   }
 };
 
-export const login = () => async (dispatch) => {
-  base.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    .then(() => base.auth().signInWithPopup(googleProvider)
-      .then((result) => {
-        // The signed-in user info.
-        const { user } = result;
-        // const token = result.credential.accessToken;
+export const login = () => async dispatch => {
+  base
+    .auth()
+    .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(() =>
+      base
+        .auth()
+        .signInWithPopup(googleProvider)
+        .then(result => {
+          // The signed-in user info.
+          const { user } = result;
+          // const token = result.credential.accessToken;
 
-        if (user.emailVerified) {
-          dispatch(setUser(user));
-          dispatch(setAuthenticated(true));
-          toastr.success('', `You are logged in as ${user.displayName}`);
-          if (user.email === 'kavispires@gmail.com') {
-            dispatch(setAdmin(true));
+          if (user.emailVerified) {
+            dispatch(setUser(user));
+            dispatch(setAuthenticated(true));
+            toastr.success('', `You are logged in as ${user.displayName}`);
+            if (user.email === 'kavispires@gmail.com') {
+              dispatch(setAdmin(true));
+            }
           }
-        }
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const { email } = error;
-        // The firebase.auth.AuthCredential type that was used.
-        const { credential } = error;
-        console.error(errorCode, errorMessage, email, credential);
-        toastr.error('Oh no', errorMessage);
-      }));
+        })
+        .catch(error => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const { email } = error;
+          // The firebase.auth.AuthCredential type that was used.
+          const { credential } = error;
+          console.error(errorCode, errorMessage, email, credential);
+          toastr.error('Oh no', errorMessage);
+        })
+    );
 };
 
-export const logout = () => (dispatch) => {
-  base.auth().signOut().then(() => {
-    dispatch(setUser({}));
-    dispatch(setAuthenticated(false));
-    toastr.warning('', 'You are logged out');
-  }).catch((error) => {
-    // An error happened.
-    console.error(error);
-  });
+export const logout = () => dispatch => {
+  base
+    .auth()
+    .signOut()
+    .then(() => {
+      dispatch(setUser({}));
+      dispatch(setAuthenticated(false));
+      toastr.warning('', 'You are logged out');
+    })
+    .catch(error => {
+      // An error happened.
+      console.error(error);
+    });
 };
 
-export const checkAuth = () => (dispatch) => {
-  base.auth().onAuthStateChanged((user) => {
+export const checkAuth = () => dispatch => {
+  base.auth().onAuthStateChanged(user => {
     if (user) {
       // User is signed in.
       // var displayName = user.displayName;

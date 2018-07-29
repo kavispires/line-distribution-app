@@ -3,23 +3,22 @@
 
 // BROWSER RESET AND DEFAULT
 body {
-	margin: 0;
-	padding: 0;
-	background: #fff;
-	font-size: $unit;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  font-size: $unit;
 }
 
 * {
-	box-sizing: border-box;
-	font-family: 'Nunito Sans', sans-serif;
+  box-sizing: border-box;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 .app {
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
-
 
 h1 {
   font-size: 1.5em;
@@ -35,6 +34,7 @@ h2 {
   padding: $quarterUnit $halfUnit;
   margin-left: $halfUnit;
   border-radius: $quarterUnit;
+  margin-bottom: $quarterUnit;
 }
 
 .unit-content {
@@ -62,7 +62,7 @@ h2 {
   height: $unit;
   line-height: 13px;
   text-align: center;
-  font-size: .7em;
+  font-size: 0.7em;
 }
 
 // .tiny-h1 {
@@ -115,7 +115,7 @@ h2 {
   h2 {
     margin: 0 0 $halfUnit 0;
     padding-bottom: $unit;
-    border-bottom: $quarterUnit solid #E6E6E6;
+    border-bottom: $quarterUnit solid #e6e6e6;
   }
 }
 
@@ -123,4 +123,8 @@ h2 {
   padding: 0 24px 12px 12px;
   font-style: italic;
   color: darkgray;
+}
+
+.tab-padding {
+  padding: 0 $unit;
 }
