@@ -14,12 +14,14 @@ class Artists extends Component {
   componentWillMount() {
     if (this.props.db.loaded) {
       this.props.loadArtists();
+      this.props.init();
     }
   }
 
   componentWillUpdate(nextProps) {
     if (nextProps.db.loaded !== this.props.db.loaded) {
       this.props.loadArtists();
+      this.props.init();
       this.render();
     }
     if (nextProps.location.pathname !== this.props.location.pathname) {
@@ -81,7 +83,7 @@ class Artists extends Component {
           <section className="user-artists-container">
             <ExpandableCard
               props={this.props}
-              globalId="user-latest-artists"
+              sessionId="user-latest-artists"
               title="Your Latest Artists"
               icon="clock"
               width="half"
@@ -101,7 +103,7 @@ class Artists extends Component {
             </ExpandableCard>
             <ExpandableCard
               props={this.props}
-              globalId="user-favorite-artists"
+              sessionId="user-favorite-artists"
               title="Your Favorite Artists"
               icon="heart"
               width="half"
