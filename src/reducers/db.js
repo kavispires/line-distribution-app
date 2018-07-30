@@ -722,7 +722,6 @@ const POST = {
       .ref('songs')
       .push(newSong)
       .then(snap => {
-        console.log('snap', snap);
         const { key } = snap;
         newSong.id = key;
         // Updates song with own id reference

@@ -278,7 +278,6 @@ const parseUnitSongs = unit => dispatch => {
 
 export const switchUnitsTab = event => dispatch => {
   const { id } = event.target;
-  console.log('switchUnitsTab', id);
   dispatch(setArtistPageTab(id));
   dispatch(updateSelectedUnit(id));
 };
@@ -299,7 +298,6 @@ export const updateSelectedArtist = id => dispatch => {
 };
 
 export const updateSelectedUnit = id => dispatch => {
-  console.log('updateSelectedUnit', id);
   const unit = API.get(`/units/${id}/all`);
   dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));
