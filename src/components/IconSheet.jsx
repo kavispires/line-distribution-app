@@ -29,7 +29,7 @@ class IconSheet extends Component {
     if (this.props.user.isAdmin === false) {
       return <AdminOnlyScreen />;
     }
-    console.log(ICONS_LIST);
+
     return (
       <main className="container">
         <h1>Icons Sheet</h1>

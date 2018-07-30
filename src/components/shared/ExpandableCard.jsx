@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Icon from './Icon';
 
-const ExpandableCard = ({ globalId, title, icon, width, ...props }) => {
+const ExpandableCard = ({ sessionId, title, icon, width, ...props }) => {
   // Verify if icon is needed
   if (icon) {
     icon = <Icon type={icon} size="medium-inline" />;
@@ -11,8 +11,8 @@ const ExpandableCard = ({ globalId, title, icon, width, ...props }) => {
     icon = null;
   }
 
-  const { global } = props.props.app;
-  const isExpanded = global[globalId] === undefined || !global[globalId];
+  const { session } = props.props.app;
+  const isExpanded = session[sessionId] === undefined || !session[sessionId];
   const expandableIcon = isExpanded ? 'chevron-up' : 'chevron-down';
 
   return (
@@ -24,7 +24,7 @@ const ExpandableCard = ({ globalId, title, icon, width, ...props }) => {
       {isExpanded ? props.children : null}
       <button
         className="shared-expandable-card__button"
-        onClick={() => props.props.updateGlobal(globalId)}
+        onClick={() => props.props.updateSession(sessionId)}
       >
         <Icon type={expandableIcon} size="medium" />
       </button>
@@ -33,7 +33,7 @@ const ExpandableCard = ({ globalId, title, icon, width, ...props }) => {
 };
 
 ExpandableCard.propTypes = {
-  globalId: PropTypes.string.isRequired,
+  sessionId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   icon: PropTypes.string,
   width: PropTypes.oneOf(['quarter', 'third', 'half', 'full']),

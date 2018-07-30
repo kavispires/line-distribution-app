@@ -32,7 +32,6 @@ const ArtistSongsTable = ({ songs, members, handleSongClick }) => {
             } else if (song.type === 'should') {
               type = "How it should've been";
             }
-            console.log(song);
             // const songDistribution = this.props.parseSong(song);
             return (
               <tr key={song.id} id={song.id}>

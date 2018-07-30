@@ -51,23 +51,24 @@ export const initDB = () => dispatch => {
   dbRef.on('value', snap => {
     DB = snap.val();
     dispatch(setLoaded(true));
-    console.log(`Database successfully loaded in ${Date.now() - time} ms`);
+    console.log(`Database successfully loaded in ${Date.now() - time} ms`); // eslint-disable-line
   });
 };
 
 /* -------------------   API   --------------------- */
 
-export const get = str => {
-  // If the database is not loaded/ready
-  if (!DB)
-    return console.error(`Enable to retrive ${str}, database is not ready.`);
+export const get = (str, include = false) => {
+  // Check if database is available
+  if (!DB) {
+    throw new Error(`Enable to retrive ${str}, database is not ready.`);
+  }
 
   const path = str.split('/');
   const { length } = path;
   const last = path[length - 1];
   const all = last === 'all';
 
-  console.log('Fetching api path:', str);
+  console.log('Fetching api path:', str); // eslint-disable-line
   switch (path[1]) {
     case 'artists':
       // API/artists/all
@@ -154,12 +155,15 @@ export const get = str => {
       console.error(`Wrong API path: ${str}`);
       return {};
     case 'user':
-      // API/user/latest/:id
-      if (length === 4 && path[2] === 'latest')
-        return GET.fetchUserLatestUnits(path[3]);
-      // API/user/favorite/:id
-      if (length === 4 && path[2] === 'favorite')
-        return GET.fetchUserFavoriteUnits(path[3]);
+      // API/user/:id/favorite
+      if (length === 4 && path[3] === 'favorite')
+        return GET.fetchUserFavoriteUnits(path[2]);
+      // API/user/:id/latest
+      if (length === 4 && path[3] === 'latest')
+        return GET.fetchUserLatestUnits(path[2]);
+      // API/user/:id/session
+      if (length === 4 && path[3] === 'session')
+        return GET.fetchUserSession(path[2]);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
@@ -174,16 +178,19 @@ export const post = (str, body) => {
   const last = path[length - 1];
   const all = last === 'all';
 
-  console.log('Posting to api path:', str);
-  console.log('Body', body);
+  console.log('Posting to api path:', str, body);
+
   switch (path[1]) {
     case 'user':
-      // API/user/latest/:id
-      if (length === 4 && path[2] === 'latest')
-        return POST.postUserLatestUnits(path[3], body);
-      // API/user/favorite/:id
-      if (length === 4 && path[2] === 'favorite')
-        return POST.postUserFavoriteUnits(path[3], body);
+      // API/user/:id/latest
+      if (length === 4 && path[3] === 'latest')
+        return POST.postUserLatestUnits(path[2], body);
+      // API/user/:id/favorite
+      if (length === 4 && path[3] === 'favorite')
+        return POST.postUserFavoriteUnits(path[2], body);
+      // API/user/:id/session
+      if (length === 4 && path[3] === 'session')
+        return POST.postUserSession(path[2], body);
       // Error
       console.error(`Wrong API path: ${str}`);
       return {};
@@ -401,7 +408,8 @@ const GET = {
       }
       return response;
     }
-    return 'NO-BAND-AVAILABLE';
+    console.error(`NO ARTIST AVAILABLE FOR ID ${id}`);
+    return 'NO-ARTIST-AVAILABLE';
   },
 
   // API/artists/:id/members
@@ -430,6 +438,7 @@ const GET = {
       });
       return units;
     }
+    console.error(`NO MEMBERS AVAILABLE FOR ARTIST ID ${id}`);
     return 'NO-UNITS-AVAILABE';
   },
 
@@ -441,6 +450,7 @@ const GET = {
       response.class = `color-${parsedId}`;
       return response;
     }
+    console.error(`NO COLOR AVAILABLE FOR ID ${id}`);
     return 'NO-COLOR-AVAILABLE';
   },
 
@@ -469,6 +479,7 @@ const GET = {
     if (response !== undefined) {
       return response.name;
     }
+    console.error(`NO COLOR AVAILABLE FOR ID ${id}`);
     return 'NO-COLOR-AVAILABLE';
   },
 
@@ -490,6 +501,7 @@ const GET = {
       }
       return response;
     }
+    console.error(`NO MEMBER AVAILABLE FOR ID ${id}`);
     return 'NO-MEMBER-AVAILABLE';
   },
 
@@ -499,6 +511,7 @@ const GET = {
     if (response !== undefined) {
       return response;
     }
+    console.error(`NO POSITION AVAILABLE FOR ID ${id}`);
     return 'NO-POSITION-AVAILABLE';
   },
 
@@ -508,6 +521,7 @@ const GET = {
     if (response !== undefined) {
       return response.name;
     }
+    console.error(`NO POSITION AVAILABLE FOR ID ${id}`);
     return 'NO-POSITION-AVAILABLE';
   },
 
@@ -530,6 +544,7 @@ const GET = {
       }
       return response;
     }
+    console.error(`NO SONG AVAILABLE FOR ID ${id}`);
     return 'NO-SONG-AVAILABLE';
   },
 
@@ -562,6 +577,7 @@ const GET = {
       }
       return response;
     }
+    console.error(`NO UNIT AVAILABLE FOR ID ${id}`);
     return 'NO-UNIT-AVAILABLE';
   },
 
@@ -574,6 +590,7 @@ const GET = {
       response = unit.members.map(memberId => GET.fetchMember(memberId));
       return response;
     }
+    console.error(`NO MEMBERS AVAILABLE FOR UNIT ID ${id}`);
     return 'NO-MEMBERS-AVAILABLE';
   },
 
@@ -586,10 +603,11 @@ const GET = {
       response = unit.songs.map(songId => GET.fetchSong(songId));
       return response;
     }
+    console.error(`NO SONGS AVAILABLE FOR UNIT ID ${id}`);
     return 'NO-SONGS-AVAILABLE';
   },
 
-  // API/user/latest/:id
+  // API/user/:id/latest
   fetchUserLatestUnits: uid => {
     if (DB.users[uid] && DB.users[uid].latestUnits) {
       const latest = DB.users[uid].latestUnits;
@@ -598,7 +616,7 @@ const GET = {
     return [];
   },
 
-  // API/user/favorite/:id
+  // API/user/:id/favorite
   fetchUserFavoriteUnits: uid => {
     if (DB.users[uid] && DB.users[uid].favoriteUnits) {
       const favorites = DB.users[uid].favoriteUnits;
@@ -606,23 +624,18 @@ const GET = {
     }
     return [];
   },
+
+  // API/user/:id/session
+  fetchUserSession: uid => {
+    if (DB.users[uid] && DB.users[uid].session) {
+      return DB.users[uid].session;
+    }
+    return {};
+  },
 };
 
 const POST = {
-  // API/user/latest/:id
-  postUserLatestUnits: (uid, body) => {
-    if (DB.users[uid]) {
-      base
-        .database()
-        .ref('users')
-        .child(uid)
-        .child('latestUnits')
-        .set(body);
-      toastr.success('Your Latest Units updated successfully');
-    }
-  },
-
-  // API/user/favorite/:id
+  // API/user/:id/favorite
   postUserFavoriteUnits: (uid, body) => {
     if (DB.users[uid]) {
       base
@@ -635,6 +648,31 @@ const POST = {
         'Unit updated to Favorites successfully!',
         `You have ${body.length} favorite artists out of 5.`
       );
+    }
+  },
+
+  // API/user/:id/latest
+  postUserLatestUnits: (uid, body) => {
+    if (DB.users[uid]) {
+      base
+        .database()
+        .ref('users')
+        .child(uid)
+        .child('latestUnits')
+        .set(body);
+      toastr.success('Your Latest Units updated successfully');
+    }
+  },
+
+  // API/user/:id/session
+  postUserSession: (uid, body) => {
+    if (DB.users[uid]) {
+      base
+        .database()
+        .ref('users')
+        .child(uid)
+        .child('session')
+        .set(body);
     }
   },
 
@@ -684,7 +722,6 @@ const POST = {
       .ref('songs')
       .push(newSong)
       .then(snap => {
-        console.log('snap', snap);
         const { key } = snap;
         newSong.id = key;
         // Updates song with own id reference
@@ -747,7 +784,11 @@ const POST = {
     // if (!body.originalArtist) missingInfo.push('Original Artist\n'); // REMOVE THIS, DEBUGGING ONLY
 
     if (missingInfo.length > 0) {
-      toastr.error(`Missing information: \n${missingInfo.join(', ')}`);
+      toastr.error(
+        `Missing information: \n${missingInfo.join(
+          ', '
+        )}. Artist was NOT saved.`
+      );
       return false;
     }
 

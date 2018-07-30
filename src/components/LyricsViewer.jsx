@@ -46,7 +46,7 @@ const LyricsEditor = ({ formattedLyrics }) => {
 };
 
 LyricsEditor.propTypes = {
-  formattedLyrics: PropTypes.object.isRequired,
+  formattedLyrics: PropTypes.array.isRequired,
 };
 
 export default LyricsEditor;

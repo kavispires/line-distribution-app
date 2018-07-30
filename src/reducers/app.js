@@ -9,7 +9,7 @@ import { updateCurrentSongInfo } from './results';
 const SET_CURRENT_ARTIST = 'SET_CURRENT_ARTIST';
 const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 const SET_CURRENT_UNIT = 'SET_CURRENT_UNIT';
-const SET_GLOBAL = 'SET_GLOBAL';
+const SET_SESSION = 'SET_SESSION';
 const SET_LATEST_UNITS = 'SET_LATEST_UNITS';
 const SET_MEMBERS_LIST = 'SET_MEMBERS_LIST';
 const SET_SHOULD_RESET = 'SET_SHOULD_RESET';
@@ -23,8 +23,8 @@ export const setCurrentSong = payload => dispatch =>
   dispatch({ type: SET_CURRENT_SONG, payload });
 export const setCurrentUnit = payload => dispatch =>
   dispatch({ type: SET_CURRENT_UNIT, payload });
-export const setGlobal = payload => dispatch =>
-  dispatch({ type: SET_GLOBAL, payload });
+export const setSession = payload => dispatch =>
+  dispatch({ type: SET_SESSION, payload });
 export const setLatestUnits = payload => dispatch =>
   dispatch({ type: SET_LATEST_UNITS, payload });
 export const setMembersList = payload => dispatch =>
@@ -40,7 +40,7 @@ const initialState = {
   currentArtist: {},
   currentSong: {},
   currentUnit: {},
-  global: {},
+  session: {},
   isLoading: false,
   latestUnits: [],
   membersList: [],
@@ -63,8 +63,8 @@ export default function reducer(prevState = initialState, action) {
       newState.currentUnit = action.payload;
       break;
 
-    case SET_GLOBAL:
-      newState.global = action.payload;
+    case SET_SESSION:
+      newState.session = action.payload;
       break;
 
     case SET_LATEST_UNITS:
@@ -91,6 +91,16 @@ export default function reducer(prevState = initialState, action) {
 }
 
 /* ---------------   DISPATCHERS   ----------------- */
+
+export const init = () => (dispatch, getState) => {
+  const { user } = getState().user;
+  console.warn('INIT BITCH', user);
+  if (user.uid) {
+    console.warn('INIT BITCH2');
+    const session = API.get(`/user/${user.uid}/session`);
+    dispatch(setSession(session));
+  }
+};
 
 export const getLatestUnits = () => dispatch => {
   const latestUnits = API.get('/units/latest');
@@ -163,14 +173,18 @@ export const updateShouldReset = (bool = false) => dispatch => {
   dispatch(setShouldReset(bool));
 };
 
-export const updateGlobal = id => (dispatch, getState) => {
-  const global = Object.assign({}, getState().app.global);
+export const updateSession = id => (dispatch, getState) => {
+  const session = Object.assign({}, getState().app.session);
 
-  if (global[id] === undefined) {
-    global[id] = true;
+  if (session[id] === undefined) {
+    session[id] = true;
   } else {
-    global[id] = !global[id];
+    session[id] = !session[id];
   }
 
-  dispatch(setGlobal(global));
+  const { user } = getState().user;
+
+  API.post(`/user/${user.uid}/session`, session);
+
+  dispatch(setSession(session));
 };

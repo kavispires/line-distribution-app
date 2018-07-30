@@ -162,9 +162,9 @@ export const loadArtists = () => dispatch => {
 export const loadUserArtists = () => (dispatch, getState) => {
   const { user } = getState().user;
   if (user.uid) {
-    const userLatestArtists = API.get(`/user/latest/${user.uid}`);
+    const userLatestArtists = API.get(`/user/${user.uid}/latest`);
     dispatch(setUserLatestArtists(userLatestArtists));
-    const userFavoriteArtists = API.get(`/user/favorite/${user.uid}`);
+    const userFavoriteArtists = API.get(`/user/${user.uid}/favorite`);
     dispatch(setUserFavoriteArtists(userFavoriteArtists));
   }
 };
@@ -278,7 +278,6 @@ const parseUnitSongs = unit => dispatch => {
 
 export const switchUnitsTab = event => dispatch => {
   const { id } = event.target;
-  console.log('switchUnitsTab', id);
   dispatch(setArtistPageTab(id));
   dispatch(updateSelectedUnit(id));
 };
@@ -299,7 +298,6 @@ export const updateSelectedArtist = id => dispatch => {
 };
 
 export const updateSelectedUnit = id => dispatch => {
-  console.log('updateSelectedUnit', id);
   const unit = API.get(`/units/${id}/all`);
   dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));
@@ -330,9 +328,9 @@ export const updateLatestUnits = id => (dispatch, getState) => {
       latestUnits.pop();
     }
     // Post then reload app
-    API.post(`/user/latest/${user.uid}`, latestUnits);
+    API.post(`/user/${user.uid}/latest`, latestUnits);
     setTimeout(() => {
-      const newUserLatestArtists = API.get(`/user/latest/${user.uid}`);
+      const newUserLatestArtists = API.get(`/user/${user.uid}/latest`);
       dispatch(setUserLatestArtists(newUserLatestArtists));
     }, 3000);
   }
@@ -362,9 +360,9 @@ export const updateFavoriteUnits = id => (dispatch, getState) => {
       favoriteUnits.pop();
     }
     // Post then reload app
-    API.post(`/user/favorite/${user.uid}`, favoriteUnits);
+    API.post(`/user/${user.uid}/favorite`, favoriteUnits);
     setTimeout(() => {
-      const newUserFavoriteArtists = API.get(`/user/favorite/${user.uid}`);
+      const newUserFavoriteArtists = API.get(`/user/${user.uid}/favorite`);
       dispatch(setUserFavoriteArtists(newUserFavoriteArtists));
     }, 3000);
   }

@@ -4,9 +4,10 @@ import { withRouter } from 'react-router-dom';
 import Artists from '../components/Artists';
 
 import {
+  init,
   toggleIsLoading,
   updateCurrentUnit,
-  updateGlobal,
+  updateSession,
   updateShouldReset,
 } from '../reducers/app';
 
@@ -30,13 +31,14 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   filterArtists,
   loadArtists,
+  init,
   login,
   toggleIsLoading,
   updateCurrentUnit,
-  updateGlobal,
   updateLatestUnits,
   updateSelectedArtist,
   updateSelectedUnit,
+  updateSession,
   updateShouldReset,
 };
 
