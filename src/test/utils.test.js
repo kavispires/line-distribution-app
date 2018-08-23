@@ -10,7 +10,7 @@ import {
   spinalCaseWord,
   generatePushID,
   bem,
-} from './utils';
+} from '../utils';
 
 describe('Utils', () => {
   describe('boxSizeClass', () => {

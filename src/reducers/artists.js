@@ -299,6 +299,7 @@ export const updateSelectedArtist = id => dispatch => {
 
 export const updateSelectedUnit = id => dispatch => {
   const unit = API.get(`/units/${id}/all`);
+  console.log(unit);
   dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));
 };
