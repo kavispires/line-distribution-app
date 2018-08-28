@@ -1,205 +1,9 @@
-/* This test suite does NOT test the reducer file. Instead, it contains a version
- * of the lyric parser and tests it within this file, because jest was constanly
- * returning the error 'Expected reducer to be a function'.
-*/
-import API from '../api';
-import mockLyrics from '../mock/mockLyrics';
+import mockLyrics from '../../mock/mock_lyrics';
+import mockMembers from '../../mock/mock_members';
 
-const currentUnit = API.get('/units/4/all');
+import { parseLyrics } from '../../reducers/lyrics';
 
-const handleParser = input => {
-  // DO-IN-REDUCER: get input from event, and dispatch it
-  let lyricsToParse = input;
-  // DO-IN-REDUCER: get current unit
-  const MEMBERS = currentUnit.members;
-
-  const parsedLyrics = [];
-
-  lyricsToParse = lyricsToParse.split('\n');
-
-  // Line constructor for each line
-  class Line {
-    constructor() {
-      this.colors = [];
-      this.members = [];
-      this.content = [];
-      this.adlibs = [];
-    }
-  }
-
-  // Gets the color id of a name
-  function getColorId(str) {
-    if (str === undefined) return '0';
-
-    let colorId = '';
-    let wasAdded = false;
-    const names = str.split('/');
-    for (let i = 0; i < names.length; i++) {
-      const name = names[i].toLowerCase();
-      for (let j = 0; j < MEMBERS.length; j++) {
-        if (name === MEMBERS[j].name.toLowerCase()) {
-          colorId += MEMBERS[j].colorId;
-          wasAdded = true;
-          j = MEMBERS.length;
-        }
-      }
-      if (!wasAdded) colorId += '0';
-      if (i !== names.length - 1) colorId += '-';
-      wasAdded = false;
-    }
-    return colorId;
-  }
-
-  // Checks if member if present in the current unit
-  function areMembersInUnit(str) {
-    const nameList = str.toLowerCase().replace(/[()/\s]/g, ',');
-    if (nameList === 'all') return true;
-
-    let wasFound = false;
-    const names = nameList.split(',');
-    let bool = false;
-    for (let i = 0; i < names.length; i++) {
-      const name = names[i];
-      if (name) {
-        wasFound = false;
-        for (let j = 0; j < MEMBERS.length; j++) {
-          const member = MEMBERS[j].name.toLowerCase();
-          if (name === member || name === 'all') {
-            wasFound = true;
-            j = MEMBERS.length;
-          }
-        }
-        bool = wasFound;
-      }
-    }
-    return bool;
-  }
-
-  let lastColor = null;
-  let lastSubColor = null;
-  let lastMember = null;
-
-  for (let i = 0; i < lyricsToParse.length; i++) {
-    let lineToParse = lyricsToParse[i].trim();
-    const line = new Line();
-
-    // Handles Case 0
-    if (lineToParse.length === 0) {
-      line.colors.push(0);
-      line.content.push('&nbsp;');
-      lastMember = null;
-      lastColor = 0;
-      lastSubColor = 0;
-    } else {
-      // Runs the line string as many times necessary to parse string completely
-      while (lineToParse.length > 0 || lineToParse !== '') {
-        let remainder = lineToParse;
-        let member;
-
-        // Define member(s) based on the first bracket
-        if (lineToParse[0] === '[') {
-          const firstClosingBracket = lineToParse.indexOf(']');
-          const foundMembers = lineToParse.slice(1, firstClosingBracket);
-          if (areMembersInUnit(foundMembers)) {
-            member = foundMembers.toUpperCase();
-          } else {
-            member = '?';
-          }
-          remainder = lineToParse.slice(firstClosingBracket + 1).trim();
-          lastMember = member;
-        }
-        if (!lastMember) {
-          member = 'ALL';
-        }
-
-        // Define color(s)
-        if (lineToParse[0] === '[' && member && !member.includes('(')) {
-          lastColor = getColorId(member);
-        }
-        if (lineToParse[0] === '[' && member && member.includes('(')) {
-          const multiMember = member.split('(');
-          lastColor = getColorId(multiMember[0].trim());
-          const adLibMembers = multiMember[1].substring(
-            0,
-            multiMember[1].length - 1
-          );
-          lastSubColor = getColorId(adLibMembers);
-        }
-        console.log(
-          'COLOR:',
-          lastColor,
-          'SUBCOLOR',
-          lastSubColor,
-          'MEMBERS being pushed',
-          member
-        );
-
-        // If remainder has another member assignment, split in the bracket
-        if (remainder.includes('[')) {
-          const nextBracket = remainder.indexOf('[');
-          const temp1 = remainder.slice(0, nextBracket - 1);
-          const temp2 = remainder.slice(nextBracket);
-          remainder = temp1;
-          lineToParse = temp2;
-          if (!lineToParse.includes(']')) {
-            lineToParse = '';
-          }
-        } else {
-          lineToParse = '';
-        }
-
-        // Add members, independently if they were assigned
-        if (!member) member = '';
-        line.members.push(member);
-
-        // Check for adlibs on remainder
-        if (remainder.includes('(')) {
-          // Slipt in '(' or ')', remove those characters
-          const remainderSplit = remainder
-            .split(/([()])/)
-            .filter(Boolean)
-            .map(r => r.trim());
-          console.log(remainderSplit);
-          for (let e = 0; e < remainderSplit.length; e++) {
-            const elem = remainderSplit[e];
-            // If it's an adlib line
-            if (elem === '(') {
-              const adlibLine = `${elem}${remainderSplit[e + 1]}${
-                remainderSplit[e + 2]
-              }`;
-              e += 2; // advances '(', the actual line, and ')'
-              line.colors.push(`${lastSubColor}`);
-              line.content.push(adlibLine);
-              line.adlibs.push(true);
-              if (e > 2) {
-                line.members.push('');
-              }
-            } else {
-              line.colors.push(`${lastColor}`);
-              line.content.push(elem);
-              line.adlibs.push(false);
-              if (e > 0) {
-                line.members.push('');
-              }
-            }
-          }
-
-          // line.content = line.content.concat(newRemainder);
-        } else {
-          line.colors.push(`${lastColor}`);
-          line.content.push(remainder);
-          line.adlibs.push(false);
-        }
-      }
-    }
-
-    parsedLyrics.push(line);
-  }
-
-  return parsedLyrics;
-};
-
-const formattedLyrics = handleParser(mockLyrics);
+const formattedLyrics = parseLyrics(mockLyrics, mockMembers);
 
 /* TESTING CASES
  * Case 1: Blank Lines
@@ -241,10 +45,6 @@ const formattedLyrics = handleParser(mockLyrics);
  */
 
 describe('Lyrics Parser', () => {
-  beforeEach(() => {
-    // console.log('bola');
-  });
-
   it('returns an array of objects', () => {
     expect(Array.isArray(formattedLyrics)).toBeTruthy();
     expect(typeof formattedLyrics[0] === 'object').toBeTruthy();
@@ -272,11 +72,11 @@ describe('Lyrics Parser', () => {
 
   describe('Case 2: One Member, One Part', () => {
     it('return capitalized member name', () => {
-      expect(formattedLyrics[2].members[0] === 'BOM').toBeTruthy();
+      expect(formattedLyrics[2].members[0] === 'BOB').toBeTruthy();
     });
 
     it('consider names case insensitive', () => {
-      expect(formattedLyrics[3].members[0] === 'DARA').toBeTruthy();
+      expect(formattedLyrics[3].members[0] === 'DAN').toBeTruthy();
     });
 
     it('does not break if member is not found', () => {
@@ -285,9 +85,9 @@ describe('Lyrics Parser', () => {
 
     it('parses the correct object', () => {
       const result = {
-        colors: ['18'],
+        colors: ['color-2'],
         content: ['I can sing'],
-        members: ['BOM'],
+        members: ['BOB'],
         adlibs: [false],
       };
       expect(formattedLyrics[2]).toEqual(result);
@@ -297,9 +97,9 @@ describe('Lyrics Parser', () => {
   describe('Case 3: Two Members, Two Parts', () => {
     it('parses the correct object', () => {
       const result = {
-        colors: ['18', '24'],
+        colors: ['color-2', 'color-4'],
         content: ['I can sing', 'I can rap'],
-        members: ['BOM', 'DARA'],
+        members: ['BOB', 'DAN'],
         adlibs: [false, false],
       };
       expect(formattedLyrics[5]).toEqual(result);
@@ -309,9 +109,9 @@ describe('Lyrics Parser', () => {
   describe('Case 4: Multiple Members, Same amout of parts', () => {
     it('works with 3 members', () => {
       const result = {
-        colors: ['18', '24', '3'],
+        colors: ['color-2', 'color-4', 'color-3'],
         content: ["I'm 1", "I'm 2", "I'm 3"],
-        members: ['BOM', 'DARA', 'CL'],
+        members: ['BOB', 'DAN', 'CARL'],
         adlibs: [false, false, false],
       };
       expect(formattedLyrics[6]).toEqual(result);
@@ -319,9 +119,9 @@ describe('Lyrics Parser', () => {
 
     it('works with 4 members', () => {
       const result = {
-        colors: ['18', '24', '3', '21'],
+        colors: ['color-2', 'color-4', 'color-3', 'color-1'],
         content: ["I'm 1", "I'm 2", "I'm 3", "I'm 4"],
-        members: ['BOM', 'DARA', 'CL', 'MINZY'],
+        members: ['BOB', 'DAN', 'CARL', 'ADAM'],
         adlibs: [false, false, false, false],
       };
       expect(formattedLyrics[7]).toEqual(result);
@@ -329,9 +129,9 @@ describe('Lyrics Parser', () => {
 
     it('works with 5 members', () => {
       const result = {
-        colors: ['18', '24', '3', '21', '0'],
+        colors: ['color-2', 'color-4', 'color-3', 'color-1', '0'],
         content: ["I'm 1", "I'm 2", "I'm 3", "I'm 4", "I'm 5"],
-        members: ['BOM', 'DARA', 'CL', 'MINZY', '?'],
+        members: ['BOB', 'DAN', 'CARL', 'ADAM', '?'],
         adlibs: [false, false, false, false, false],
       };
       expect(formattedLyrics[8]).toEqual(result);
@@ -351,7 +151,7 @@ describe('Lyrics Parser', () => {
 
     it('accepts "ALL" as a member', () => {
       const result = {
-        colors: ['0'],
+        colors: ['color-0'],
         content: ['We can sing'],
         members: ['ALL'],
         adlibs: [false],
@@ -371,7 +171,7 @@ describe('Lyrics Parser', () => {
 
     it('assigns non-brackets lines to the previous member', () => {
       const result = {
-        colors: ['18'],
+        colors: ['color-2'],
         content: ['I can walk'],
         members: [''],
         adlibs: [false],
@@ -393,16 +193,16 @@ describe('Lyrics Parser', () => {
   describe('Case 6: Multiple Members, One Part Only', () => {
     it('assigns both members to the same bracket with split color', () => {
       const result = {
-        colors: ['18-24'],
+        colors: ['color-2-color-4'],
         content: ['We can sing'],
-        members: ['BOM/DARA'],
+        members: ['BOB/DAN'],
         adlibs: [false],
       };
       expect(formattedLyrics[16]).toEqual(result);
     });
     it('keeps assignments to following unassigned line', () => {
       const result = {
-        colors: ['18-24'],
+        colors: ['color-2-color-4'],
         content: ['And we can dance'],
         members: [''],
         adlibs: [false],
@@ -414,9 +214,9 @@ describe('Lyrics Parser', () => {
   describe('Case 7: AdLibs', () => {
     it('assigns members in parenthesis as adlibs', () => {
       const result = {
-        colors: ['21', '3'],
+        colors: ['color-1', 'color-3'],
         content: ['I dance', '(I rap)'],
-        members: ['MINZY (CL)', ''],
+        members: ['ADAM (CARL)', ''],
         adlibs: [false, true],
       };
       expect(formattedLyrics[18]).toEqual(result);
@@ -424,7 +224,14 @@ describe('Lyrics Parser', () => {
 
     it('accepts multiple adlibs in line', () => {
       const result = {
-        colors: ['18', '24', '18', '24', '18', '24'],
+        colors: [
+          'color-2',
+          'color-4',
+          'color-2',
+          'color-4',
+          'color-2',
+          'color-4',
+        ],
         content: [
           'I sing',
           '(Yeah)',
@@ -433,7 +240,7 @@ describe('Lyrics Parser', () => {
           'I stare',
           '(Ooh yeah)',
         ],
-        members: ['BOM (DARA)', '', '', '', '', ''],
+        members: ['BOB (DAN)', '', '', '', '', ''],
         adlibs: [false, true, false, true, false, true],
       };
       expect(formattedLyrics[19]).toEqual(result);
@@ -451,9 +258,9 @@ describe('Lyrics Parser', () => {
 
     it('considers "ALL" to unassigned adlibs', () => {
       const result = {
-        colors: ['21', '0'],
+        colors: ['color-1', '0'],
         content: ['I dance', '(yeah yeah)'],
-        members: ['MINZY', ''],
+        members: ['ADAM', ''],
         adlibs: [false, true],
       };
       expect(formattedLyrics[22]).toEqual(result);
@@ -461,9 +268,9 @@ describe('Lyrics Parser', () => {
 
     it('accepts double members and an adlib member', () => {
       const result = {
-        colors: ['18-24', '3'],
+        colors: ['color-2-color-4', 'color-3'],
         content: ['We can sing', '(Oh yeah)'],
-        members: ['BOM/DARA (CL)', ''],
+        members: ['BOB/DAN (CARL)', ''],
         adlibs: [false, true],
       };
       expect(formattedLyrics[23]).toEqual(result);
@@ -471,9 +278,9 @@ describe('Lyrics Parser', () => {
 
     it('accepts double members and double adlib members', () => {
       const result = {
-        colors: ['3-24', '21-18'],
+        colors: ['color-3-color-4', 'color-1-color-2'],
         content: ['We rap', '(We look)'],
-        members: ['CL/DARA (MINZY/BOM)', ''],
+        members: ['CARL/DAN (ADAM/BOB)', ''],
         adlibs: [false, true],
       };
       expect(formattedLyrics[24]).toEqual(result);
@@ -481,7 +288,7 @@ describe('Lyrics Parser', () => {
 
     it('carries adlibs over next lines', () => {
       const result = {
-        colors: ['3-24', '21-18'],
+        colors: ['color-3-color-4', 'color-1-color-2'],
         content: ['We sing again', '(Oh wee)'],
         members: ['', ''],
         adlibs: [false, true],
@@ -491,7 +298,7 @@ describe('Lyrics Parser', () => {
 
     it('accepts that adlibs do not have to be used in the line which is declared', () => {
       const result = {
-        colors: ['18', '21'],
+        colors: ['color-2', 'color-1'],
         content: ['And I sing well', '(Oh yeah)'],
         members: ['', ''],
         adlibs: [false, true],
@@ -501,9 +308,9 @@ describe('Lyrics Parser', () => {
 
     it('accepts double members in a adlib', () => {
       const result = {
-        colors: ['3', '18-24'],
+        colors: ['color-3', 'color-2-color-4'],
         content: ['I can rap', '(Baby baby)'],
-        members: ['CL (BOM/DARA)', ''],
+        members: ['CARL (BOB/DAN)', ''],
         adlibs: [false, true],
       };
       expect(formattedLyrics[28]).toEqual(result);
@@ -511,9 +318,9 @@ describe('Lyrics Parser', () => {
 
     it('accepts a line starting with an adlib', () => {
       const result = {
-        colors: ['21', '18'],
+        colors: ['color-1', 'color-2'],
         content: ['(Oh yeah)', 'I can sing'],
-        members: ['BOM (MINZY)', ''],
+        members: ['BOB (ADAM)', ''],
         adlibs: [true, false],
       };
       expect(formattedLyrics[30]).toEqual(result);
@@ -521,7 +328,7 @@ describe('Lyrics Parser', () => {
 
     it('accepts an unassigned line starting with an adlib', () => {
       const result = {
-        colors: ['21', '18'],
+        colors: ['color-1', 'color-2'],
         content: ['(Oh wee)', 'You can do it'],
         members: ['', ''],
         adlibs: [true, false],
