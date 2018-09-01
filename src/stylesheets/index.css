@@ -7573,10 +7573,6 @@ h2 {
   margin: 6px 0;
 }
 
-.pill-member-header {
-  position: relative;
-}
-
 .pill-name {
   text-transform: uppercase;
   font-weight: bold;
@@ -7591,6 +7587,11 @@ h2 {
   width: 100%;
   object-fit: cover;
   height: 40px;
+  transition: height 0.3s ease-in-out;
+}
+.pill-profile-image:hover {
+  object-fit: fill;
+  height: auto;
 }
 
 .pill-color-bar {
@@ -7625,10 +7626,6 @@ h2 {
 .pill-icon {
   display: inline-block;
   transform: translateY(10px);
-}
-
-.pill-test {
-  border: red 1px solid;
 }
 
 .app-header,
