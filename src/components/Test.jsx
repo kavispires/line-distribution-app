@@ -8,8 +8,11 @@ const Test = props => (
   <main className="container">
     <h1>Test Page</h1>
     <div className="content">
-      <MemberProfile memberId="-LDcyPg_LQgDOBQ-wFPi" />
-      <MemberProfile memberId="bola" className="pill-test" />
+      <p>
+        <Icon type="default" size="medium" color="red" />
+      </p>
+      <button onClick={() => props.testFunction()}>Run test</button>
+      <p>{props.test.test1}</p>
     </div>
   </main>
 );

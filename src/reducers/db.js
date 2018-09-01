@@ -4,6 +4,11 @@ import _ from 'lodash';
 
 import { base } from '../firebase';
 
+import API_CREATE from '../api/create';
+import API_DESTROY from '../api/destroy';
+import API_READ from '../api/read';
+import API_UPDATE from '../api/update';
+
 import { ensureColorUniqueness } from '../utils';
 
 /* ------------------   FIREBASE   ----------------- */
@@ -56,6 +61,13 @@ export const initDB = () => dispatch => {
 };
 
 /* -------------------   API   --------------------- */
+
+export const API = {
+  post: (path, body) => API_CREATE(path, body, DB),
+  delete: path => API_DESTROY(path, DB),
+  get: path => API_READ(path, DB),
+  put: (path, body) => API_UPDATE(path, body, DB),
+};
 
 export const get = (str, include = false) => {
   // Check if database is available

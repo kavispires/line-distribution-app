@@ -62,10 +62,16 @@ export const handleParser = evt => (dispatch, getState) => {
     lyricsToParse = evt.target.value;
   }
 
-  dispatch(setLyrics(lyricsToParse));
-
   const MEMBERS = getState().app.currentUnit.members;
 
+  const parsedLyrics = parseLyrics(lyricsToParse, MEMBERS);
+
+  dispatch(setLyrics(lyricsToParse));
+
+  dispatch(setFormattedLyrics(parsedLyrics));
+};
+
+export const parseLyrics = (lyricsToParse, members) => {
   const parsedLyrics = [];
 
   lyricsToParse = lyricsToParse.split('\n');
@@ -82,18 +88,18 @@ export const handleParser = evt => (dispatch, getState) => {
 
   // Gets the color id of a name
   function getColorId(str) {
-    if (str === undefined) return '0';
+    if (str === undefined || str === '?') return '0';
 
     let colorId = '';
     let wasAdded = false;
     const names = str.split('/');
     for (let i = 0; i < names.length; i++) {
       const name = names[i].toLowerCase();
-      for (let j = 0; j < MEMBERS.length; j++) {
-        if (name === MEMBERS[j].name.toLowerCase()) {
-          colorId += MEMBERS[j].color.class;
+      for (let j = 0; j < members.length; j++) {
+        if (name === members[j].name.toLowerCase()) {
+          colorId += members[j].color.class;
           wasAdded = true;
-          j = MEMBERS.length;
+          j = members.length;
         }
       }
       if (!wasAdded) colorId += 'color-0';
@@ -106,6 +112,7 @@ export const handleParser = evt => (dispatch, getState) => {
   // Checks if member if present in the current unit
   function areMembersInUnit(str) {
     const nameList = str.toLowerCase().replace(/[()/\s]/g, ',');
+
     if (nameList === 'all') return true;
 
     let wasFound = false;
@@ -115,11 +122,11 @@ export const handleParser = evt => (dispatch, getState) => {
       const name = names[i];
       if (name) {
         wasFound = false;
-        for (let j = 0; j < MEMBERS.length; j++) {
-          const member = MEMBERS[j].name.toLowerCase();
+        for (let j = 0; j < members.length; j++) {
+          const member = members[j].name.toLowerCase();
           if (name === member || name === 'all') {
             wasFound = true;
-            j = MEMBERS.length;
+            j = members.length;
           }
         }
         bool = wasFound;
@@ -245,8 +252,7 @@ export const handleParser = evt => (dispatch, getState) => {
     parsedLyrics.push(line);
   }
 
-  dispatch(setFormattedLyrics(parsedLyrics));
-  // return parsedLyrics;
+  return parsedLyrics;
 };
 
 export const toggleRules = () => (dispatch, getState) => {

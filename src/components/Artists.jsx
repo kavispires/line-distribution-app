@@ -149,7 +149,7 @@ class Artists extends Component {
                     <td>{entry.name}</td>
                     <td>{entry.genre}</td>
                     <td>{unitCount}</td>
-                    <td>{entry.memberList.join(', ')}</td>
+                    <td>{entry.memberList.map(m => m.name).join(', ')}</td>
                   </tr>
                 );
               })

@@ -26,14 +26,6 @@ class Distribute extends Component {
       // Run Lyric parser once.
       this.props.handleParser(this.props.lyrics.lyrics);
     }
-
-    // const unitLength = Object.keys(this.props.app.currentUnit).length;
-    // if (unitLength > 0
-    //   && this.props.distribute.durations.length !== unitLength) {
-    //     console.log('UNIT LENGTH', unitLength)
-    //     console.log('componentDidMount RESET')
-    //   this.props.resetDistribution();
-    // }
   }
 
   componentWillReceiveProps(nextProps) {

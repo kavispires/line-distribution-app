@@ -207,7 +207,7 @@ export const resetDistribution = newUnit => (dispatch, getState) => {
   if (!newUnit) {
     newUnit = getState().app.currentUnit;
   }
-
+  console.log(getState());
   const newArray = new Array(newUnit.members.length).fill(0);
   // Clear queue
   dispatch(setQueue({}));

@@ -70,10 +70,12 @@ class Artist extends Component {
       this.props.updateCurrentUnit(selectedUnit, selectedArtist);
       this.props.updateLatestUnits(selectedUnit.id);
       this.props.toggleIsLoading(false);
-      if (shouldReset) {
-        this.props.resetDistribution();
-        this.props.resetSongInfo();
-      }
+      setTimeout(() => {
+        if (shouldReset) {
+          this.props.resetDistribution();
+          this.props.resetSongInfo();
+        }
+      }, 1000);
     };
 
     const handleSongClick = e => {
