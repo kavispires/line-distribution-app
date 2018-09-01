@@ -7573,11 +7573,30 @@ h2 {
   margin: 6px 0;
 }
 
+.pill-member-header {
+  position: relative;
+}
+
+.pill-name {
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0;
+  bottom: -1.5em;
+  color: #000;
+  font-size: 1.5em;
+}
+
+.pill-profile-image {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  height: 40px;
+}
+
 .pill-color-bar {
   width: 100%;
   display: flex;
   height: 6px;
-  margin-bottom: 6px;
 }
 
 .pill-color-main {
@@ -7590,11 +7609,6 @@ h2 {
   display: block;
   height: 6px;
   width: 20%;
-}
-
-.pill-name {
-  text-transform: uppercase;
-  font-weight: bold;
 }
 
 .pill-positions,
@@ -7611,6 +7625,10 @@ h2 {
 .pill-icon {
   display: inline-block;
   transform: translateY(10px);
+}
+
+.pill-test {
+  border: red 1px solid;
 }
 
 .app-header,

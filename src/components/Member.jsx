@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import PositionIcons from './icons/PositionIcons';
 import { parseBirthDate } from '../utils';
+import MemberProfile from './MemberProfile';
 
 const Member = ({ member, props }) => {
   const ARTISTS = props.artists;
@@ -31,22 +32,24 @@ const Member = ({ member, props }) => {
 
   return (
     <section className="pill">
-      <p className="pill-name">{member.name}</p>
+      {member.id}
+      <MemberProfile memberId={member.id} />
       <span className="pill-color-bar">
         <span className={`pill-color-main ${member.color.class}`} />
         <span className={`pill-color-alt ${member.altColor.class}`} />
       </span>
+      <h3 className="pill-name">{member.name}</h3>
       <p>
         <b>Date of Birth:</b> {parseBirthDate(member.birthdate)}
       </p>
       <p>
-        <b>Average per Official Song:</b> {averageOfficial}%
+        <b>Avg Official Song:</b> {averageOfficial}%
       </p>
       <p>
-        <b>Average per Custom Song:</b> {averageWould}%
+        <b>Avg Custom Song:</b> {averageWould}%
       </p>
       <p>
-        <b>Total Average per Song:</b> {average}%
+        <b>Avg Total:</b> {average}%
       </p>
       <p>
         <b>Positions:</b>

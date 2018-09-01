@@ -15,11 +15,33 @@
   }
 }
 
+.pill-member-header {
+  position: relative;
+}
+
+.pill-name {
+  text-transform: uppercase;
+  font-weight: bold;
+  // position: absolute;
+  margin: 0;
+  bottom: -1.5em;
+  color: $primary;
+  font-size: 1.5em;
+  // box-shadow: 2px 2px red;
+}
+
+.pill-profile-image {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  height: 40px;
+}
+
 .pill-color-bar {
   width: 100%;
   display: flex;
   height: $halfUnit;
-  margin-bottom: $halfUnit;
+  // margin-bottom: $halfUnit;
 }
 
 .pill-color-main {
@@ -32,11 +54,6 @@
   display: block;
   height: $halfUnit;
   width: 20%;
-}
-
-.pill-name {
-  text-transform: uppercase;
-  font-weight: bold;
 }
 
 .pill-positions {
@@ -53,4 +70,8 @@
 .pill-icon {
   display: inline-block;
   transform: translateY(10px);
+}
+
+.pill-test {
+  border: red 1px solid;
 }
