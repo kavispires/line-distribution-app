@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import API from '../api';
+import { API } from './db';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -126,7 +126,7 @@ export const handleOriginalArtist = event => dispatch => {
   dispatch(setOriginalArtist(value));
 };
 
-export const saveSong = (save = true) => (dispatch, getState) => {
+export const saveSong = (save = true) => async (dispatch, getState) => {
   const userUid = getState().user.user.uid;
   const userEmail = getState().user.user.email;
 
@@ -167,7 +167,7 @@ export const saveSong = (save = true) => (dispatch, getState) => {
   }
 
   if (save) {
-    const result = API.post('/songs', newJSON);
+    const result = await API.post('/songs', newJSON);
     if (result) {
       dispatch(toogleModal(false));
     }

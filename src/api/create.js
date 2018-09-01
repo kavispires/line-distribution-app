@@ -30,7 +30,6 @@ const create = (fullPath, body, database) => {
   const { length } = path;
   const root = path[1];
   const id = path[2] || '';
-  const subPath = path[length - 1];
 
   // Prevent calls to database root
   if (length < 2) {
@@ -251,13 +250,15 @@ const POST = {
 
     return response;
   },
-  postUserFavoriteUnits: (id, body) => {
+  postUserFavoriteUnits: async (id, body) => {
     // Verify body
     if (!Array.isArray(body))
       throw new Error('Failed to update Favorite Units, data is not an array');
 
+    let response = [];
+
     if (DB.users[id]) {
-      firebase
+      await firebase
         .database()
         .ref()
         .child(`/users/${id}/favoriteUnits`)
@@ -271,17 +272,21 @@ const POST = {
               'Unit updated to Favorites successfully!',
               `You have ${body.length} favorite artists out of 5.`
             );
+            response = body;
           }
         });
     }
+    return response;
   },
-  postUserLatestUnits: (id, body) => {
+  postUserLatestUnits: async (id, body) => {
     // Verify body
     if (!Array.isArray(body))
       throw new Error('Failed to update Favorite Units, data is not an array');
 
+    let response = [];
+
     if (DB.users[id]) {
-      firebase
+      await firebase
         .database()
         .ref()
         .child(`/users/${id}/latestUnits`)
@@ -290,17 +295,22 @@ const POST = {
             const message = `Failed to update Latest Units to user ${id}`;
             toastr.error(message, error);
             throw new Error(`${message}: ${error}`);
+          } else {
+            response = body;
           }
         });
     }
+    return response;
   },
-  postUserSession: (id, body) => {
+  postUserSession: async (id, body) => {
     // Verify body
     if (typeof body !== 'object' && Object.keys(body).length === 0)
       throw new Error('Failed to update Session, data was not provided');
 
+    let response = {};
+
     if (DB.users[id]) {
-      firebase
+      await firebase
         .database()
         .ref()
         .child(`/users/${id}/session`)
@@ -309,9 +319,13 @@ const POST = {
             const message = `Failed to update Session for user ${id}`;
             toastr.error(message, error);
             throw new Error(`${message}: ${error}`);
+          } else {
+            response = body;
           }
         });
     }
+
+    return response;
   },
 };
 

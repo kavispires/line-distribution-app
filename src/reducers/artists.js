@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import API from '../api';
+import { API } from './db';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -147,8 +147,8 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const loadArtists = () => dispatch => {
-  const artistList = API.get('/artists');
+export const loadArtists = () => async dispatch => {
+  const artistList = await API.get('/artists');
 
   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
 
@@ -159,12 +159,12 @@ export const loadArtists = () => dispatch => {
   dispatch(loadUserArtists());
 };
 
-export const loadUserArtists = () => (dispatch, getState) => {
+export const loadUserArtists = () => async (dispatch, getState) => {
   const { user } = getState().user;
   if (user.uid) {
-    const userLatestArtists = API.get(`/user/${user.uid}/latest`);
+    const userLatestArtists = await API.get(`/users/${user.uid}/latest`);
     dispatch(setUserLatestArtists(userLatestArtists));
-    const userFavoriteArtists = API.get(`/user/${user.uid}/favorite`);
+    const userFavoriteArtists = await API.get(`/users/${user.uid}/favorite`);
     dispatch(setUserFavoriteArtists(userFavoriteArtists));
   }
 };
@@ -282,29 +282,29 @@ export const switchUnitsTab = event => dispatch => {
   dispatch(updateSelectedUnit(id));
 };
 
-export const updateSelectedArtist = id => dispatch => {
-  const artist = API.get(`/artists/${id}`);
+export const updateSelectedArtist = id => async dispatch => {
+  const artist = await API.get(`/artists/${id}`);
 
   dispatch(setSelectedArtist(artist));
   // Reset selected unit
   dispatch(setSelectedUnit({}));
 
   // Update selected Units
-  const units = API.get(`/artists/${id}/units`);
+  const units = await API.get(`/artists/${id}/units`);
   dispatch(setSelectedUnits(units));
 
   // Reset song
   // TO-DO: Remove this call from here. Don't use other reducer functions here
 };
 
-export const updateSelectedUnit = id => dispatch => {
-  const unit = API.get(`/units/${id}/all`);
-  console.log(unit);
+export const updateSelectedUnit = id => async dispatch => {
+  const unit = await API.get(`/units/${id}`);
+
   dispatch(parseUnitSongs(unit));
   dispatch(setSelectedUnit(unit));
 };
 
-export const updateLatestUnits = id => (dispatch, getState) => {
+export const updateLatestUnits = id => async (dispatch, getState) => {
   const unitId = id || getState().app.currentUnit.id;
   const { user } = getState().user;
   if (id && user.uid) {
@@ -329,15 +329,16 @@ export const updateLatestUnits = id => (dispatch, getState) => {
       latestUnits.pop();
     }
     // Post then reload app
-    API.post(`/user/${user.uid}/latest`, latestUnits);
-    setTimeout(() => {
-      const newUserLatestArtists = API.get(`/user/${user.uid}/latest`);
-      dispatch(setUserLatestArtists(newUserLatestArtists));
-    }, 3000);
+    const newUserLatestArtists = await API.post(
+      `/users/${user.uid}/latest`,
+      latestUnits
+    );
+
+    dispatch(setUserLatestArtists(newUserLatestArtists));
   }
 };
 
-export const updateFavoriteUnits = id => (dispatch, getState) => {
+export const updateFavoriteUnits = id => async (dispatch, getState) => {
   const unitId = id || getState().app.currentUnit.id;
   const { user } = getState().user;
   if (id && user.uid) {
@@ -361,10 +362,11 @@ export const updateFavoriteUnits = id => (dispatch, getState) => {
       favoriteUnits.pop();
     }
     // Post then reload app
-    API.post(`/user/${user.uid}/favorite`, favoriteUnits);
-    setTimeout(() => {
-      const newUserFavoriteArtists = API.get(`/user/${user.uid}/favorite`);
-      dispatch(setUserFavoriteArtists(newUserFavoriteArtists));
-    }, 3000);
+    const newUserFavoriteArtists = await API.post(
+      `/users/${user.uid}/favorite`,
+      favoriteUnits
+    );
+
+    dispatch(setUserFavoriteArtists(newUserFavoriteArtists));
   }
 };

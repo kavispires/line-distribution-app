@@ -1,5 +1,3 @@
-import API from '../api';
-
 import create from '../api/create';
 import mockDB from '../mock/mock_db';
 

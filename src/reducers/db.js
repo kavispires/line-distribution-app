@@ -62,11 +62,11 @@ export const initDB = () => dispatch => {
 
 /* -------------------   API   --------------------- */
 
-export const API_FUNCTIONS = {
-  create: path => API_CREATE(path, DB),
-  destroy: path => API_DESTROY(path, DB),
-  read: path => API_READ(path, DB),
-  update: path => API_UPDATE(path, DB),
+export const API = {
+  post: (path, body) => API_CREATE(path, body, DB),
+  delete: path => API_DESTROY(path, DB),
+  get: path => API_READ(path, DB),
+  put: (path, body) => API_UPDATE(path, body, DB),
 };
 
 export const get = (str, include = false) => {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import API from '../api';
+import { API } from './db';
 
 import { setLyrics } from './lyrics';
 import { setOriginalArtist, setSongTitle } from './results';
@@ -45,12 +45,12 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const loadSongs = reload => (dispatch, getState) => {
+export const loadSongs = reload => async (dispatch, getState) => {
   if (reload) {
     const songList = _.deepClone(getState().songs.songListBackUp);
     dispatch(setSongList(songList));
   } else {
-    const songList = API.get('/songs');
+    const songList = await API.get('/songs');
     const sortedSongList = _.sortBy(songList, ['title']);
     const uniqSongList = _.uniqBy(sortedSongList, 'query');
 

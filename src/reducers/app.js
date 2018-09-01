@@ -1,4 +1,4 @@
-import API from '../api';
+import { API } from './db';
 
 import { makeSixDigit } from '../utils';
 
@@ -92,18 +92,18 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const init = () => (dispatch, getState) => {
+export const init = () => async (dispatch, getState) => {
   const { user } = getState().user;
-  console.warn('INIT BITCH', user);
+
   if (user.uid) {
-    console.warn('INIT BITCH2');
-    const session = API.get(`/user/${user.uid}/session`);
+    const session = await API.get(`/users/${user.uid}/session`);
+
     dispatch(setSession(session));
   }
 };
 
-export const getLatestUnits = () => dispatch => {
-  const latestUnits = API.get('/units/latest');
+export const getLatestUnits = () => async dispatch => {
+  const latestUnits = await API.get('/units/latest');
   dispatch(setLatestUnits(latestUnits));
 };
 
@@ -116,13 +116,13 @@ export const toggleIsLoading = bool => (dispatch, getState) => {
   }
 };
 
-export const updateCurrentSong = songId => dispatch => {
-  const song = API.get(`/songs/${songId}`);
+export const updateCurrentSong = songId => async dispatch => {
+  const song = await API.get(`/songs/${songId}`);
   dispatch(setCurrentSong(song));
   dispatch(updateCurrentSongInfo(song));
 };
 
-export const updateCurrentUnit = (unit, artist) => dispatch => {
+export const updateCurrentUnit = (unit, artist) => async dispatch => {
   const currentUnit = Object.assign({}, unit);
   const currentArtist = Object.assign({}, artist);
 
@@ -136,6 +136,8 @@ export const updateCurrentUnit = (unit, artist) => dispatch => {
     }
   }
   // Check color availability
+  const allColors = await API.get('/colors');
+
   for (let i = 0; i < currentUnit.members.length; i++) {
     const member = currentUnit.members[i];
     if (colorDict[member.color.id]) {
@@ -150,7 +152,7 @@ export const updateCurrentUnit = (unit, artist) => dispatch => {
         if (newColor > 36) newColor = 1;
       }
       newColor = `col${makeSixDigit(newColor)}`;
-      currentUnit.members[i].color = API.get(`/color/${newColor}`);
+      currentUnit.members[i].color = allColors[newColor];
     }
   }
 
@@ -173,7 +175,7 @@ export const updateShouldReset = (bool = false) => dispatch => {
   dispatch(setShouldReset(bool));
 };
 
-export const updateSession = id => (dispatch, getState) => {
+export const updateSession = id => async (dispatch, getState) => {
   const session = Object.assign({}, getState().app.session);
 
   if (session[id] === undefined) {
@@ -184,7 +186,7 @@ export const updateSession = id => (dispatch, getState) => {
 
   const { user } = getState().user;
 
-  API.post(`/user/${user.uid}/session`, session);
+  const newSession = await API.post(`/users/${user.uid}/session`, session);
 
-  dispatch(setSession(session));
+  dispatch(setSession(newSession));
 };

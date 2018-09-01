@@ -20,9 +20,11 @@ import { insertAtCursor } from '../utils';
 class Lyrics extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.app.currentUnit !== this.props.app.currentUnit) {
-      const newArray = new Array(
-        this.props.app.currentUnit.members.length
-      ).fill(0);
+      const len =
+        this.props.app.currentUnit && this.props.app.currentUnit.members
+          ? this.props.app.currentUnit.members.length
+          : 0;
+      const newArray = new Array(len).fill(0);
       this.props.setDurations([...newArray]);
       this.props.setPercentages([...newArray]);
       this.props.setHistory([]);
