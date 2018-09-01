@@ -32,7 +32,7 @@ const Member = ({ member, props }) => {
 
   return (
     <section className="pill">
-      {member.id}
+      {/* {member.id} */}
       <MemberProfile memberId={member.id} />
       <span className="pill-color-bar">
         <span className={`pill-color-main ${member.color.class}`} />
