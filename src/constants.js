@@ -232,3 +232,5 @@ export const POS_LIST = [
   ['pos000003', 'pos000006', 'pos000010'],
   ['pos000004', 'pos000007', 'pos000009', 'clear'],
 ];
+
+export const PROFILE_PICTURE_URL = '/images/profiles/';

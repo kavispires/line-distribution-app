@@ -2,7 +2,7 @@
   "name": "line-distribution-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.kavispires.com/line-distribution-app/",
+  "homepage": "http://kavispires.github.io/line-distribution-app/",
   "dependencies": {
     "firebase": "^4.13.0",
     "lodash": "^4.17.10",
