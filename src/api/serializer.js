@@ -73,9 +73,12 @@ const serializer = (schemaName, data) => {
   if (!schemaName.endsWith('-database') && data.id === undefined) {
     throw new Error('Missing id. Api calls MUST add the entry id to its data');
   }
+  // Verify schema existence
   if (typeof schema !== 'object') console.error(schemaName, schema);
+
   Object.keys(schema).forEach(key => {
     const type = schema[key];
+
     // Verify if schema is complete
     if (data[key] === undefined) {
       data[key] = DEFAULT_VALUES[type];
@@ -88,6 +91,7 @@ const serializer = (schemaName, data) => {
       schema: schemaName,
       key,
     };
+
     switch (type) {
       case 'array':
         isArrayType(entry);
@@ -112,6 +116,9 @@ const serializer = (schemaName, data) => {
       case 'object':
         isObjectType(entry);
         break;
+      case 'email':
+        isEmailType(entry);
+        break;
       case 'reference:color':
         isReferenceColorType(entry);
         break;
@@ -127,7 +134,6 @@ const serializer = (schemaName, data) => {
   if (missingKeys.length > 0) {
     console.warn(`Missing keys on ${schemaName}: ${missingKeys.join(', ')}`);
   }
-
   return data;
 };
 
@@ -220,6 +226,13 @@ function isLinkType({ entry, schema, key }) {
   if (entry !== null && !entry.startsWith('http'))
     throw new TypeError(
       `${key} on the ${schema} table must be a http link, instead got: ${typeof entry}`
+    );
+}
+
+function isEmailType({ entry, schema, key }) {
+  if (entry !== null && typeof entry !== 'string' && !entry.includes('@'))
+    throw new TypeError(
+      `${key} on the ${schema} table must be a email string, instead got: ${typeof entry}`
     );
 }
 

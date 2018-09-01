@@ -12,6 +12,7 @@ import distribute from './distribute';
 import lyrics from './lyrics';
 import results from './results';
 import songs from './songs';
+import test from './test';
 import user from './user';
 
 const rootReducer = combineReducers({
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   lyrics,
   results,
   songs,
+  test,
   toastr,
   user,
 });

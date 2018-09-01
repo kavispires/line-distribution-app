@@ -1,4 +1,5 @@
 const mockDB = {
+  mock: true,
   artists: {
     '-a000000000000000101': {
       genre: 'Pop',

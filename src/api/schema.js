@@ -160,7 +160,7 @@ export const UNIT_SCHEMA_DP = {
 };
 
 export const USER_SCHEMA = {
-  email: 'string',
+  email: 'email',
   favoriteUnits: 'list',
   isAdmin: 'boolean',
   latestUnits: 'list',
