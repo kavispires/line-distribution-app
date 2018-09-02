@@ -37,6 +37,7 @@ export const ARTIST_SCHEMA_DP = {
   otherNames: 'string',
   units: 'list',
   memberList: 'array',
+  private: 'boolean',
 };
 
 export const COLOR_SCHEMA_DB = {
@@ -72,6 +73,7 @@ export const MEMBER_SCHEMA_DB = {
   colorId: 'reference:color',
   name: 'string',
   positions: 'array',
+  referenceArtist: 'string',
 };
 
 export const MEMBER_SCHEMA_DP = {

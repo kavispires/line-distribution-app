@@ -19,7 +19,7 @@ export const setTest3 = payload => dispatch =>
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  test1: '',
+  test1: ' ',
   test2: '',
   test3: '',
 };
@@ -53,14 +53,13 @@ export const testFunction = () => async dispatch => {
   console.log('===== Running test =====');
 
   const body = {
-    name: 'Bob',
-    artistId: '-0000000000000000001',
+    name: `Test ${Date.now()}`,
   };
 
-  const response = await create('/units/mem001', body, mockDB);
+  const response = await create('/artists/', body, mockDB);
 
   console.log(response);
-  dispatch(setTest1(1));
+  dispatch(setTest1(response.id));
 
   console.log('/===== Done running test =====');
 };
