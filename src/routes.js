@@ -14,6 +14,7 @@ import LyricsContainer from './containers/LyricsContainer';
 import ResultsContainer from './containers/ResultsContainer';
 import RomanizerContainer from './containers/RomanizerContainer';
 import SongsContainer from './containers/SongsContainer';
+import SyncContainer from './containers/SyncContainer';
 import TestContainer from './containers/TestContainer';
 
 import './stylesheets/index.css';
@@ -35,7 +36,7 @@ const routes = (
       <Route path="/admin/colorsheet" component={ColorSheetContainer} />
       <Route path="/admin/iconsheet" component={IconSheetContainer} />
       <Route path="/admin/manage" component={TestContainer} />
-      <Route path="/admin/sync" component={TestContainer} />
+      <Route path="/admin/sync" component={SyncContainer} />
       <Route path="/admin/test" component={TestContainer} />
 
       <Route exact path="/" component={HomeContainer} />

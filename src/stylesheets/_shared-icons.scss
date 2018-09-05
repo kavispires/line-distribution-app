@@ -248,8 +248,23 @@ $iconBlack: #273032;
   }
 }
 
-.icon-lyrics-connected,
+.icon-plug-available {
+  .secondary {
+    fill: $iconRed;
+  }
+}
+
 .icon-plug-connected {
+  .secondary {
+    fill: $iconGreen;
+  }
+  .terciary {
+    fill: $iconBlue;
+  }
+}
+
+.icon-lyrics-connected,
+.icon-plug-linked {
   .secondary {
     fill: $iconOrange;
   }
