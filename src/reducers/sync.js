@@ -615,6 +615,6 @@ export const linkPillsSequence = () => async (dispatch, getState) => {
         dispatch(setLinkSequenceMode(false));
         dispatch(setActivePill(null));
       }
-    }, 1000);
+    }, 500);
   }
 };
