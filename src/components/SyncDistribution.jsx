@@ -69,7 +69,8 @@ class SyncDistribution extends React.Component {
           <div className="sync-log">
             {Object.keys(SYNC.pills).map(key => {
               const item = SYNC.pills[key];
-              const isActive = SYNC.activePill == item.pillId ? 'active' : '';
+              const isActive =
+                +SYNC.activePill === +item.pillId ? 'active' : '';
               const iconName = item.link ? 'plug-connected' : 'plug';
               return (
                 <span
@@ -115,7 +116,7 @@ class SyncDistribution extends React.Component {
                     {line.map((part, partIndex) => {
                       const partKey = `${key}-${partIndex}`;
                       const isActive =
-                        SYNC.activeLine == part.id ? 'active' : '';
+                        +SYNC.activeLine === +part.id ? 'active' : '';
                       const iconName = part.link
                         ? 'plug-connected'
                         : 'plug-available';
