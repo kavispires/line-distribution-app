@@ -24,7 +24,6 @@ const Header = ({ props }) => {
         <nav className="app-nav">
           <Link to="/artists">Artists</Link>
           <Link to="/distribute">Distribute</Link>
-          <Link to="/lyrics">Lyrics</Link>
           <Link to="/songs">Songs</Link>
           {props.user.isAdmin ? (
             <span role="button" tabIndex={0} onClick={props.toggleAdminTools}>
@@ -56,11 +55,15 @@ const Header = ({ props }) => {
         <div className="app-header-admin">
           <span className="app-logo-placeholder" />
           <nav className="app-nav">
-            <Link to="/admin/create">Create</Link>
             <Link to="/admin/colorsheet">Color Sheet</Link>
             <Link to="/admin/iconsheet">Icon Sheet</Link>
-            <Link to="/admin/romanizer">Romanizer</Link>
-            <Link to="/admin/database">Database</Link>
+            <Link to="/admin/manage">Manage</Link>
+            <Link to="/admin/sync">Sync</Link>
+            <Link to="/admin/test">Test</Link>
+
+            <Link to="/admin/create">xCreatex</Link>
+            <Link to="/admin/romanizer">xRomanizerx</Link>
+            <Link to="/admin/database">xDatabasex</Link>
           </nav>
         </div>
       ) : null}
@@ -76,6 +79,15 @@ Header.propTypes = {
   login: PropTypes.func,
   logout: PropTypes.func,
   toggleAdminTools: PropTypes.func,
+};
+
+Header.defaultProps = {
+  admin: {},
+  user: {},
+  history: {},
+  login: () => {},
+  logout: () => {},
+  toggleAdminTools: () => {},
 };
 
 export default Header;

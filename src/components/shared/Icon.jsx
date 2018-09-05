@@ -20,9 +20,17 @@ export const ICONS_LIST = [
   'lyrics',
   'lyrics-connected',
   'no',
+  'number',
+  'number-1',
+  'number-2',
+  'number-3',
+  'number-4',
+  'number-5',
   'official',
   'plug',
+  'plug-available',
   'plug-connected',
+  'plug-linked',
   'reset',
   'results',
   'save',
@@ -100,6 +108,30 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.no;
       break;
 
+    case 'number':
+      icon = icons.number;
+      break;
+
+    case 'number-1':
+      icon = icons.number1;
+      break;
+
+    case 'number-2':
+      icon = icons.number2;
+      break;
+
+    case 'number-3':
+      icon = icons.number3;
+      break;
+
+    case 'number-4':
+      icon = icons.number4;
+      break;
+
+    case 'number-5':
+      icon = icons.number5;
+      break;
+
     case 'official':
       icon = icons.official;
       break;
@@ -108,8 +140,16 @@ const Icon = ({ type, size = 'small', styles = {} }) => {
       icon = icons.plug;
       break;
 
+    case 'plug-available':
+      icon = icons.plugAvailable;
+      break;
+
     case 'plug-connected':
       icon = icons.plugConnected;
+      break;
+
+    case 'plug-linked':
+      icon = icons.plugLinked;
       break;
 
     case 'reset':

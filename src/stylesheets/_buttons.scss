@@ -9,28 +9,41 @@
   cursor: pointer;
   min-height: $doubleUnit;
 
-  &:hover {
+  &:hover:enabled {
     background: $lightGrey;
     border: 1px outset $grey;
+  }
+
+  &:disabled,
+  &[disabled] {
+    border: 1px solid $lightGrey;
+    box-shadow: none;
+    cursor: not-allowed;
   }
 }
 
 .btn-lg {
   @extend .btn;
   font-size: $unit;
-	width: auto;
-	padding: $unit;
-	font-size: 1.1em;
+  width: auto;
+  padding: $unit;
+  font-size: 1.1em;
   border-radius: 5px;
 }
 
 .btn-decrease {
-	border: 1px outset #FF1D25;
-  background-color: #FF6E73;
+  border: 1px outset #ff1d25;
+  background-color: #ff6e73;
 }
 
 .btn-inline {
   margin-right: $halfUnit;
+}
+
+.btn-block {
+  display: block;
+  margin: 0 auto;
+  margin-top: $doubleUnit;
 }
 
 .btn-100 {

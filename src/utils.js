@@ -248,6 +248,7 @@ export const insertAtCursor = (field, valueToInsert) => {
       valueToInsert +
       field.value.substring(endPos, field.value.length);
   }
+  return field.value;
 };
 
 export const bem = (...args) => {

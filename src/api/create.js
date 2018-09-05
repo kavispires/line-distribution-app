@@ -182,8 +182,42 @@ const POST = {
   },
 
   // Songs
-  postSong: (id, body) => {
-    // Serialize Body
+  postSong: async (id, body) => {
+    // Verify body
+    if (typeof body !== 'object' && Object.keys(body).length === 0)
+      throw new Error('Failed to post song, data was not provided');
+
+    // Serialize song
+    // const data = serializer('song-database', body);
+    const data = body; // TO-DO Redo schema
+
+    const key = (await DB.members[id])
+      ? id
+      : firebase
+          .database()
+          .ref()
+          .child('members')
+          .push().key;
+
+    let response = {};
+
+    await firebase
+      .database()
+      .ref()
+      .child(`/songs2/${key}`)
+      .update(data, error => {
+        if (error) {
+          const message = `Failed to post Song ${key}`;
+          toastr.error(message, error);
+          throw new Error(`${message}: ${error}`);
+        } else {
+          toastr.success(`Song ${key} updated successfully!`);
+          response = { ...data };
+          response.id = key;
+        }
+      });
+
+    return response;
   },
 
   // Units
@@ -200,7 +234,7 @@ const POST = {
       : firebase
           .database()
           .ref()
-          .child('test')
+          .child('units')
           .push().key;
 
     let response = {};
@@ -208,7 +242,7 @@ const POST = {
     await firebase
       .database()
       .ref()
-      .child(`/test/${key}`)
+      .child(`/units/${key}`)
       .update(data, error => {
         if (error) {
           const message = `Failed to post Unit ${key}`;

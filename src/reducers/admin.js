@@ -1,4 +1,4 @@
-import API from '../api';
+import { API } from './db';
 import romanize from '../utils/romanize';
 
 /* ------------------   ACTIONS   ------------------ */
@@ -113,10 +113,10 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const initColorSheet = () => dispatch => {
-  const colors = API.get('/colors');
+export const initColorSheet = () => async dispatch => {
+  const colors = await API.get('/colors');
   dispatch(setColors(colors));
-  const count = API.get('/colors/count');
+  const count = await API.get('/colors/count');
   dispatch(setColorCount(count));
 };
 

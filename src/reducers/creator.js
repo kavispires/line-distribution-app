@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import API from '../api';
+import { API } from './db';
 
 import { getAlternativeColor, getTrueKeys, generatePushID } from '../utils';
 
