@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Import shared components
 import Icon from './shared/Icon';
@@ -167,5 +168,11 @@ class SyncDistribution extends React.Component {
     );
   }
 }
+
+SyncDistribution.propTypes = {
+  props: PropTypes.object.isRequired,
+  player: PropTypes.object.isRequired,
+  playerHeight: PropTypes.number.isRequired,
+};
 
 export default SyncDistribution;

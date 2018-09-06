@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Import shared components
 import SyncVideoId from './SyncVideoId';
@@ -34,7 +35,14 @@ const Sync = props => {
     return <SyncMain props={props} />;
   }
 
-  return <div>?</div>;
+  return <div />;
 };
 
 export default Sync;
+
+Sync.propTypes = {
+  sync: PropTypes.object.isRequired,
+  updateForm: PropTypes.func.isRequired,
+  updateStep: PropTypes.func.isRequired,
+  updateVideoId: PropTypes.func.isRequired,
+};
