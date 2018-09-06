@@ -31,7 +31,7 @@ class Artists extends Component {
 
   render() {
     // LOGIN Check if user is logged in
-    if (this.props.user.isAuthenticated === false) {
+    if (this.props.auth.isAuthenticated === false) {
       return <LoginRequiredScreen props={this.props} redirect="/artists" />;
     }
 
@@ -42,6 +42,7 @@ class Artists extends Component {
 
     const APP = this.props.app;
     const ARTISTS = this.props.artists;
+    const USER = this.props.auth.user;
     const { artistList } = ARTISTS;
     const currentArtist = APP.currentArtist.id
       ? APP.currentArtist
@@ -79,7 +80,7 @@ class Artists extends Component {
         <h1>Artists</h1>
         <p>Current Band: {currentArtist.name}</p>
 
-        {this.props.user.isAuthenticated ? (
+        {this.props.auth.isAuthenticated ? (
           <section className="user-artists-container">
             <ExpandableCard
               props={this.props}
@@ -171,11 +172,12 @@ class Artists extends Component {
 Artists.propTypes = {
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   filterArtists: PropTypes.func.isRequired,
+  init: PropTypes.func.isRequired,
   loadArtists: PropTypes.func.isRequired,
   toggleIsLoading: PropTypes.func.isRequired,
   updateSelectedUnit: PropTypes.func.isRequired,

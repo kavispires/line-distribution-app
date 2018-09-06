@@ -127,8 +127,8 @@ export const handleOriginalArtist = event => dispatch => {
 };
 
 export const saveSong = (save = true) => async (dispatch, getState) => {
-  const userUid = getState().user.user.uid;
-  const userEmail = getState().user.user.email;
+  const userUid = getState().auth.user.uid;
+  const userEmail = getState().auth.user.email;
 
   const unitId = getState().app.currentUnit.id;
   const title = getState().results.songTitle;

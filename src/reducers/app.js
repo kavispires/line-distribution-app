@@ -93,7 +93,7 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const init = () => async (dispatch, getState) => {
-  const { user } = getState().user;
+  const { user } = getState().auth;
 
   if (user.uid) {
     const session = await API.get(`/users/${user.uid}/session`);
@@ -184,7 +184,7 @@ export const updateSession = id => async (dispatch, getState) => {
     session[id] = !session[id];
   }
 
-  const { user } = getState().user;
+  const { user } = getState().auth;
 
   const newSession = await API.post(`/users/${user.uid}/session`, session);
 

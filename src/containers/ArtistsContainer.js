@@ -19,13 +19,13 @@ import {
   updateSelectedUnit,
 } from '../reducers/artists';
 
-import { login } from '../reducers/user';
+import { login } from '../reducers/auth';
 
 const mapStateToProps = state => ({
   app: state.app,
   artists: state.artists,
+  auth: state.auth,
   db: state.db,
-  user: state.user,
 });
 
 const mapDispatchToProps = {

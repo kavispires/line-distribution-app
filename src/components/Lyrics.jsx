@@ -34,7 +34,7 @@ class Lyrics extends Component {
 
   render() {
     // LOGIN Check if user is logged in
-    if (this.props.user.isAuthenticated === false) {
+    if (this.props.auth.isAuthenticated === false) {
       return <LoginRequiredScreen props={this.props} redirect="/lyrics" />;
     }
 
@@ -187,9 +187,9 @@ class Lyrics extends Component {
 
 Lyrics.propTypes = {
   app: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
   lyrics: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   handleParser: PropTypes.func.isRequired,
   setDurations: PropTypes.func.isRequired,
   setHistory: PropTypes.func.isRequired,

@@ -160,7 +160,7 @@ export const loadArtists = () => async dispatch => {
 };
 
 export const loadUserArtists = () => async (dispatch, getState) => {
-  const { user } = getState().user;
+  const { user } = getState().auth;
   if (user.uid) {
     const userLatestArtists = await API.get(`/users/${user.uid}/latest`);
     dispatch(setUserLatestArtists(userLatestArtists));
@@ -306,7 +306,7 @@ export const updateSelectedUnit = id => async dispatch => {
 
 export const updateLatestUnits = id => async (dispatch, getState) => {
   const unitId = id || getState().app.currentUnit.id;
-  const { user } = getState().user;
+  const { user } = getState().auth;
   if (id && user.uid) {
     let latestUnits = [];
     const { userLatestArtists } = getState().artists;
@@ -340,7 +340,7 @@ export const updateLatestUnits = id => async (dispatch, getState) => {
 
 export const updateFavoriteUnits = id => async (dispatch, getState) => {
   const unitId = id || getState().app.currentUnit.id;
-  const { user } = getState().user;
+  const { user } = getState().auth;
   if (id && user.uid) {
     let favoriteUnits = [];
     const { userFavoriteArtists } = getState().artists;

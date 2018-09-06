@@ -31,10 +31,10 @@ import { fetchCompleteDatabase } from '../reducers/admin';
 const mapStateToProps = state => ({
   admin: state.admin,
   app: state.app,
+  auth: state.auth,
   creator: state.creator,
   database: state.database,
   db: state.db,
-  user: state.user,
 });
 
 const mapDispatchToProps = {

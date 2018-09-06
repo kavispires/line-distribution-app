@@ -1,6 +1,7 @@
-import firebase from 'firebase';
+import firebase, { auth } from 'firebase';
 import { toastr } from 'react-redux-toastr';
 import { base, googleProvider } from '../firebase';
+import { API } from './db';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -69,10 +70,9 @@ export const login = () => async dispatch => {
         .then(result => {
           // The signed-in user info.
           const { user } = result;
-          // const token = result.credential.accessToken;
 
           if (user.emailVerified) {
-            dispatch(setUser(user));
+            dispatch(mergeUser(user));
             dispatch(setAuthenticated(true));
             toastr.success('', `You are logged in as ${user.displayName}`);
             if (user.email === 'kavispires@gmail.com') {
@@ -112,16 +112,7 @@ export const logout = () => dispatch => {
 export const checkAuth = () => dispatch => {
   base.auth().onAuthStateChanged(user => {
     if (user) {
-      // User is signed in.
-      // var displayName = user.displayName;
-      // var email = user.email;
-      // var emailVerified = user.emailVerified;
-      // var photoURL = user.photoURL;
-      // var isAnonymous = user.isAnonymous;
-      // var uid = user.uid;
-      // var providerData = user.providerData;
-
-      dispatch(setUser(user));
+      dispatch(mergeUser(user));
       dispatch(setAuthenticated(true));
       toastr.info('Welcome back!', `You are logged in as ${user.displayName}`);
       if (user.email === 'kavispires@gmail.com') {
@@ -135,4 +126,29 @@ export const checkAuth = () => dispatch => {
       dispatch(setAuthenticated(false));
     }
   });
+};
+
+export const mergeUser = authUser => async (dispatch, getState) => {
+  // Only if db is loaded
+  if (!getState().db.loaded) return;
+
+  let user;
+  try {
+    user = await API.get(`/users/${authUser.uid}`);
+  } catch (e) {
+    // If user doesn't existe, create one
+    const body = {
+      email: authUser.email,
+      isAdmin: false,
+    };
+    user = await API.post(`/users/${authUser.uid}`, body);
+  }
+
+  if (user) {
+    user.displayName = authUser.displayName;
+    user.photoURL = authUser.photoURL;
+    user.uid = authUser.uid;
+  }
+
+  dispatch(setUser(user));
 };

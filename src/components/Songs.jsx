@@ -19,7 +19,7 @@ class Songs extends Component {
 
   render() {
     // LOGIN Check if user is logged in
-    if (this.props.user.isAuthenticated === false) {
+    if (this.props.auth.isAuthenticated === false) {
       return <LoginRequiredScreen props={this.props} redirect="/artists" />;
     }
 
@@ -117,9 +117,9 @@ class Songs extends Component {
 
 Songs.propTypes = {
   app: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
   songs: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadSong: PropTypes.func.isRequired,
   loadSongs: PropTypes.func.isRequired,

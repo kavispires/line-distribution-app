@@ -15,15 +15,15 @@ import { handleParser, resetLyrics } from '../reducers/lyrics';
 
 import { handleReset, resetDistribution } from '../reducers/distribute';
 
-import { checkAuth, login, logout } from '../reducers/user';
+import { checkAuth, login, logout } from '../reducers/auth';
 
 const mapStateToProps = state => ({
-  app: state.app,
   admin: state.admin,
+  app: state.app,
+  auth: state.auth,
   db: state.db,
   database: state.database,
   global: state.app.global,
-  user: state.user,
 });
 
 const mapDispatchToProps = {

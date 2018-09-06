@@ -14,15 +14,15 @@ import {
   setResultType,
 } from '../reducers/results';
 
-import { login } from '../reducers/user';
+import { login } from '../reducers/auth';
 
 const mapStateToProps = state => ({
   app: state.app,
+  auth: state.auth,
   db: state.db,
   distribute: state.distribute,
   results: state.results,
   lyrics: state.lyrics,
-  user: state.user,
 });
 
 const mapDispatchToProps = {

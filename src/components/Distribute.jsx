@@ -46,7 +46,7 @@ class Distribute extends Component {
 
   render() {
     // LOGIN Check if user is logged in
-    if (this.props.user.isAuthenticated === false) {
+    if (this.props.auth.isAuthenticated === false) {
       return <LoginRequiredScreen props={this.props} redirect="/distribute" />;
     }
 
@@ -241,10 +241,10 @@ class Distribute extends Component {
 
 Distribute.propTypes = {
   app: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
   distribute: PropTypes.object.isRequired,
   lyrics: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   boxMouseDown: PropTypes.func.isRequired,
