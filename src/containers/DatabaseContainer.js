@@ -11,9 +11,9 @@ import {
 
 const mapStateToProps = state => ({
   admin: state.admon,
+  auth: state.auth,
   database: state.database,
   db: state.db,
-  user: state.user,
 });
 
 const mapDispatchToProps = {

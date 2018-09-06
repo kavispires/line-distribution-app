@@ -25,21 +25,21 @@ const Header = ({ props }) => {
           <Link to="/artists">Artists</Link>
           <Link to="/distribute">Distribute</Link>
           <Link to="/songs">Songs</Link>
-          {props.user.isAdmin ? (
+          {props.auth.isAdmin ? (
             <span role="button" tabIndex={0} onClick={props.toggleAdminTools}>
               Admin Tools
             </span>
           ) : null}
         </nav>
       </div>
-      {props.user.isAuthenticated ? (
+      {props.auth.isAuthenticated ? (
         <div className="app-header-user">
           <img
             className="user-photo"
-            src={props.user.user.photoURL}
+            src={props.auth.user.photoURL}
             alt="user"
           />
-          {props.user.user.displayName}
+          {props.auth.user.displayName}
           <button className="app-header-btn" onClick={props.logout}>
             Sign out
           </button>
@@ -73,7 +73,7 @@ const Header = ({ props }) => {
 
 Header.propTypes = {
   admin: PropTypes.object,
-  user: PropTypes.object,
+  auth: PropTypes.object,
   history: PropTypes.object,
   props: PropTypes.any.isRequired,
   login: PropTypes.func,
@@ -83,7 +83,7 @@ Header.propTypes = {
 
 Header.defaultProps = {
   admin: {},
-  user: {},
+  auth: {},
   history: {},
   login: () => {},
   logout: () => {},

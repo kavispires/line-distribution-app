@@ -26,7 +26,7 @@ class ColorSheet extends Component {
 
   render() {
     // LOGIN Check if user is logged in
-    if (this.props.user.isAuthenticated === false) {
+    if (this.props.auth.isAuthenticated === false) {
       return <LoginRequiredScreen props={this.props} redirect="/artists" />;
     }
 
@@ -36,7 +36,7 @@ class ColorSheet extends Component {
     }
 
     // ADMIN Check if user has access to this page
-    if (this.props.user.isAdmin === false) {
+    if (this.props.auth.isAdmin === false) {
       return <AdminOnlyScreen />;
     }
 
@@ -115,8 +115,8 @@ class ColorSheet extends Component {
 
 ColorSheet.propTypes = {
   admin: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   initColorSheet: PropTypes.func.isRequired,
   toggleColorSheetTab: PropTypes.func.isRequired,
 };

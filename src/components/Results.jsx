@@ -26,7 +26,7 @@ class Results extends Component {
 
   render() {
     // LOGIN Check if user is logged in
-    if (this.props.user.isAuthenticated === false) {
+    if (this.props.auth.isAuthenticated === false) {
       return <LoginRequiredScreen props={this.props} redirect="/home" />;
     }
 
@@ -118,9 +118,9 @@ class Results extends Component {
 
 Results.propTypes = {
   app: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
   results: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   calculateResults: PropTypes.func.isRequired,

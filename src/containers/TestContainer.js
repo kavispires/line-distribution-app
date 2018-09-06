@@ -7,9 +7,9 @@ import { testFunction } from '../reducers/test';
 
 const mapStateToProps = state => ({
   app: state.app,
+  auth: state.auth,
   db: state.db,
   database: state.database,
-  user: state.user,
   test: state.test,
 });
 

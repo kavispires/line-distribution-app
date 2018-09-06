@@ -24,14 +24,14 @@ import {
 
 import { handleParser } from '../reducers/lyrics';
 
-import { login } from '../reducers/user';
+import { login } from '../reducers/auth';
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   app: state.app,
   db: state.db,
   distribute: state.distribute,
   lyrics: state.lyrics,
-  user: state.user,
 });
 
 const mapDispatchToProps = {

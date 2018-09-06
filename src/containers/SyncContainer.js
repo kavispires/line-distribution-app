@@ -27,9 +27,9 @@ import {
 
 const mapStateToProps = state => ({
   app: state.app,
+  auth: state.auth,
   db: state.db,
   sync: state.sync,
-  user: state.user,
 });
 
 const mapDispatchToProps = {
