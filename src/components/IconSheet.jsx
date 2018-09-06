@@ -8,8 +8,8 @@ import LoadingScreen from './shared/LoadingScreen';
 import LoginRequiredScreen from './shared/LoginRequiredScreen';
 
 class IconSheet extends Component {
-  componentWillUpdate(nextProps) {
-    if (nextProps.db.loaded !== this.props.db.loaded) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.db.loaded !== this.props.db.loaded) {
       this.render();
     }
   }

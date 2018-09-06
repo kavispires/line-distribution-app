@@ -15,24 +15,24 @@ import FavoriteIcon from './icons/FavoriteIcon';
 import LoadingIcon from './icons/LoadingIcon';
 
 class Artist extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.db.loaded) {
-      const { artistId } = this.props.match.params;
-      if (artistId) {
-        this.props.updateSelectedArtist(artistId);
-      }
-      this.props.loadUserArtists();
+      this.artistInit();
     }
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.db.loaded !== this.props.db.loaded) {
-      const { artistId } = this.props.match.params;
-      if (artistId) {
-        this.props.updateSelectedArtist(artistId);
-      }
-      this.props.loadUserArtists();
+  componentDidUpdate(prevProps) {
+    if (prevProps.db.loaded !== this.props.db.loaded) {
+      this.artistInit();
     }
+  }
+
+  artistInit() {
+    const { artistId } = this.props.match.params;
+    if (artistId) {
+      this.props.updateSelectedArtist(artistId);
+    }
+    this.props.loadUserArtists();
   }
 
   render() {

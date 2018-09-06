@@ -11,22 +11,27 @@ import UserArtistTable from './UserArtistTable';
 import { ARTITST_PLACEHOLDER } from '../constants';
 
 class Artists extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.db.loaded) {
-      this.props.loadArtists();
-      this.props.init();
+      this.artistsInit();
     }
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.db.loaded !== this.props.db.loaded) {
-      this.props.loadArtists();
-      this.props.init();
-      this.render();
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.db.loaded !== this.props.db.loaded ||
+      prevProps.auth.user !== this.props.auth.user
+    ) {
+      this.artistsInit();
     }
-    if (nextProps.location.pathname !== this.props.location.pathname) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
       this.props.filterArtists('');
     }
+  }
+
+  artistsInit() {
+    this.props.loadArtists();
+    this.props.init();
   }
 
   render() {
@@ -42,7 +47,6 @@ class Artists extends Component {
 
     const APP = this.props.app;
     const ARTISTS = this.props.artists;
-    const USER = this.props.auth.user;
     const { artistList } = ARTISTS;
     const currentArtist = APP.currentArtist.id
       ? APP.currentArtist

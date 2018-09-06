@@ -20,28 +20,31 @@ import { boxSizeClass, bem } from '../utils';
 
 class Distribute extends Component {
   componentDidMount() {
-    if (this.props.location.pathname === '/distribute') {
-      window.addEventListener('keydown', this.props.handleKeydown);
-      window.addEventListener('keyup', this.props.handleKeyup);
-      // Run Lyric parser once.
-      this.props.handleParser(this.props.lyrics.lyrics);
-    }
+    window.addEventListener('keydown', this.props.handleKeydown);
+    window.addEventListener('keyup', this.props.handleKeyup);
+    // Run Lyric parser once.
+    this.props.handleParser(this.props.lyrics.lyrics);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextPropsCurrentUnit = nextProps.app.currentUnit;
+  componentDidUpdate(prevProps) {
+    const prevPropsCurrentUnit = prevProps.app.currentUnit;
     if (
-      nextPropsCurrentUnit !== this.props.app.currentUnit &&
+      prevPropsCurrentUnit !== this.props.app.currentUnit &&
       this.props.app.shouldReset
     ) {
-      this.props.resetDistribution(nextPropsCurrentUnit);
+      this.props.resetDistribution(prevPropsCurrentUnit);
     }
     const prevSongId = this.props.app.currentSong.id;
-    const songId = nextProps.app.currentSong.id;
+    const songId = prevProps.app.currentSong.id;
     if (songId !== prevSongId) {
       this.props.toggleIsLoading(false);
       this.props.loadSong();
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.props.handleKeydown);
+    window.removeEventListener('keyup', this.props.handleKeyup);
   }
 
   render() {

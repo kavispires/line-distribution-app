@@ -11,14 +11,14 @@ import { ALTERNATIVE_COLOR_LIST } from '../constants';
 import { makeSixDigit, makeIdNumber } from '../utils';
 
 class ColorSheet extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.db.loaded) {
       this.props.initColorSheet();
     }
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.db.loaded !== this.props.db.loaded) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.db.loaded !== this.props.db.loaded) {
       this.props.initColorSheet();
       this.render();
     }

@@ -14,16 +14,15 @@ import CreatorReview from './CreatorReview';
 import CreatorUnit from './CreatorUnit';
 
 class Creator extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.db.loaded) {
       this.props.fetchCompleteDatabase();
     }
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.db.loaded !== this.props.db.loaded) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.db.loaded !== this.props.db.loaded) {
       this.props.fetchCompleteDatabase();
-      this.render();
     }
   }
 
