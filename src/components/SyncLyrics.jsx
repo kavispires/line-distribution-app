@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Import utility functions
 import { insertAtCursor } from '../utils';
@@ -64,5 +65,9 @@ class SyncLyrics extends React.Component {
     );
   }
 }
+
+SyncLyrics.propTypes = {
+  props: PropTypes.object.isRequired,
+};
 
 export default SyncLyrics;

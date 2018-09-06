@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-let linesOn = {};
+const linesOn = {};
 
 class SyncVerify extends React.Component {
   componentDidMount() {
@@ -165,5 +166,11 @@ class SyncVerify extends React.Component {
     );
   }
 }
+
+SyncVerify.propTypes = {
+  props: PropTypes.object.isRequired,
+  currentTime: PropTypes.number.isRequired,
+  playerHeight: PropTypes.number.isRequired,
+};
 
 export default SyncVerify;

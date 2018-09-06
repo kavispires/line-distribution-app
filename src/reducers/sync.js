@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { SYNC_KEY_LIST } from '../constants';
 import { API } from './db';
 
@@ -425,7 +424,7 @@ export const connect = (lineId, pillId) => (dispatch, getState) => {
   function modifyPart(collection, searchId, id, key, newValue) {
     return collection.map(l =>
       l.map(part => {
-        if (part[searchId] == id) {
+        if (+part[searchId] === +id) {
           part[key] = newValue;
         }
         return part;
@@ -489,7 +488,7 @@ export const deletePill = () => (dispatch, getState) => {
 const nullifyLine = (collection, item, partId = '') => {
   collection.forEach(l =>
     l.forEach(part => {
-      if (part.link == item) part.link = null;
+      if (+part.link === +item) part.link = null;
     })
   );
   // Also remove from backup
@@ -501,7 +500,7 @@ const nullifyLine = (collection, item, partId = '') => {
 const nullifyPill = (collection, item) => {
   Object.keys(collection).forEach(k => {
     const pill = collection[k];
-    if (pill.link == item) pill.link = null;
+    if (+pill.link === +item) pill.link = null;
   });
   return collection;
 };

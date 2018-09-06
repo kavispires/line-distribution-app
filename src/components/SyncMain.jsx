@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Import shared components
 import SyncInstructions from './SyncInstructions';
@@ -113,5 +114,11 @@ class SyncMain extends React.Component {
     );
   }
 }
+
+SyncMain.propTypes = {
+  props: PropTypes.object.isRequired,
+  sync: PropTypes.object.isRequired,
+  step: PropTypes.number.isRequired,
+};
 
 export default SyncMain;
