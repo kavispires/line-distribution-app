@@ -47,13 +47,14 @@ const Tabs = ({
 
 Tabs.propTypes = {
   action: PropTypes.func.isRequired,
-  active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   tabs: PropTypes.array.isRequired,
   iconCondition: PropTypes.string,
   iconType: PropTypes.string,
 };
 
 Tabs.defaultProps = {
+  active: 0,
   iconCondition: null,
   iconType: 'default',
 };

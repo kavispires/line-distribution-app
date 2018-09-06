@@ -27,8 +27,13 @@ const FavoriteIcon = ({ props }) => {
 
 FavoriteIcon.propTypes = {
   props: PropTypes.object.isRequired,
-  artists: PropTypes.object.isRequired,
-  updateFavoriteUnits: PropTypes.func.isRequired,
+  artists: PropTypes.object,
+  updateFavoriteUnits: PropTypes.func,
+};
+
+FavoriteIcon.defaultProps = {
+  artists: {},
+  updateFavoriteUnits: () => {},
 };
 
 export default FavoriteIcon;
