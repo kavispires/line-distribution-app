@@ -17,6 +17,7 @@ import {
   UNIT_SCHEMA_DB,
   UNIT_SCHEMA_DP,
   USER_SCHEMA,
+  TEST_SCHEMA,
 } from './schema';
 
 const SCHEMA_DICT = {
@@ -38,6 +39,7 @@ const SCHEMA_DICT = {
   'unit-database': UNIT_SCHEMA_DB,
   'unit-dependencies': UNIT_SCHEMA_DP,
   'user-database': USER_SCHEMA,
+  test: TEST_SCHEMA,
 };
 
 const DEFAULT_VALUES = {
@@ -48,6 +50,8 @@ const DEFAULT_VALUES = {
   number: 0,
   object: {},
   reference: null,
+  'reference:color': null,
+  'reference:id': null,
   string: '',
   link: null,
 };
@@ -63,18 +67,27 @@ const SCHEMA_WITH_PUSH_ID = {
   'song-dependencies': true,
   unit: true,
   'unit-dependencies': true,
+  test: true,
 };
 
 const serializer = (schemaName, data) => {
+  if (!schemaName) {
+    throw new Error('Failed to provide schema name');
+  }
+
   const schema = SCHEMA_DICT[schemaName];
-  const missingKeys = [];
+
+  // Verify schema existence
+  if (typeof schema !== 'object') {
+    throw new Error('Invalid schema provided');
+  }
 
   // Required Id when it is not a database data
   if (!schemaName.endsWith('-database') && data.id === undefined) {
     throw new Error('Missing id. Api calls MUST add the entry id to its data');
   }
-  // Verify schema existence
-  if (typeof schema !== 'object') console.error(schemaName, schema);
+
+  const missingKeys = [];
 
   Object.keys(schema).forEach(key => {
     const type = schema[key];
@@ -97,9 +110,13 @@ const serializer = (schemaName, data) => {
         isArrayType(entry);
         break;
       case 'boolean':
+        isBooleanType(entry);
+        break;
       case 'number':
+        isNumberType(entry);
+        break;
       case 'string':
-        isPrimitiveType(entry);
+        isStringType(entry);
         break;
       case 'hex':
         isHexType(entry);
@@ -137,21 +154,39 @@ const serializer = (schemaName, data) => {
   return data;
 };
 
-function isPrimitiveType({ entry, type, schema, key }) {
-  if (
-    typeof entry !== 'boolean' &&
-    typeof entry !== 'number' &&
-    typeof entry !== 'string'
-  )
+function isBooleanType({ entry, type, schema, key }) {
+  if (typeof entry !== 'boolean')
+    throw new TypeError(
+      `${key} type for ${schema} must be a ${type}, instead got: ${typeof entry}`
+    );
+}
+
+function isNumberType({ entry, type, schema, key }) {
+  if (typeof entry !== 'number')
+    throw new TypeError(
+      `${key} type for ${schema} must be a ${type}, instead got: ${typeof entry}`
+    );
+}
+
+function isStringType({ entry, type, schema, key }) {
+  if (typeof entry !== 'string')
     throw new TypeError(
       `${key} type for ${schema} must be a ${type}, instead got: ${typeof entry}`
     );
 }
 
 function isHexType({ entry, schema, key }) {
-  if (typeof entry !== 'string' && entry[0] !== '#' && entry.length !== 7)
+  if (typeof entry !== 'string')
     throw new TypeError(
-      `${key} on the ${schema} table must be a 7-digit string beginning with #, instead got: ${entry}`
+      `${key} on the ${schema} table must be a string, instead got: ${typeof entry}`
+    );
+  if (entry[0] !== '#')
+    throw new TypeError(
+      `${key} on the ${schema} table must begin with a hash #, instead got: ${entry}`
+    );
+  if (entry.length !== 7)
+    throw new TypeError(
+      `${key} on the ${schema} table has 7 digits, instead got: ${entry}`
     );
 }
 
@@ -188,52 +223,96 @@ function isListType({ entry, schema, key }) {
     );
 }
 
-function isIdType({ entry, schema }) {
-  if (
-    entry !== null &&
-    SCHEMA_WITH_PUSH_ID[schema] === undefined &&
-    entry.length !== 9
-  ) {
-    throw new TypeError(
-      `Ids for the ${schema} table must have 9 digits, instead got: ${typeof entry}`
-    );
+function isIdType({ entry, schema, key }) {
+  if (entry !== null) {
+    if (SCHEMA_WITH_PUSH_ID[schema] === undefined) {
+      if (typeof entry !== 'string')
+        throw new TypeError(
+          `${key} on the ${schema} table must be a string, instead got: ${typeof entry}`
+        );
+
+      if (entry.length !== 9) {
+        throw new TypeError(
+          `Ids for the ${schema} table must have 9 digits, instead got: ${entry}`
+        );
+      }
+    } else {
+      if (typeof entry !== 'string')
+        throw new TypeError(
+          `${key} on the ${schema} table must be a string, instead got: ${typeof entry}`
+        );
+
+      if (entry[0] !== '-')
+        throw new TypeError(
+          `Ids for the ${schema} table must start with a dash, instead got: ${entry}`
+        );
+      if (entry.length !== 20)
+        throw new TypeError(
+          `Ids for the ${schema} table must have 20 digits, instead got: ${entry}`
+        );
+    }
   }
-  if (
-    entry !== null &&
-    SCHEMA_WITH_PUSH_ID[schema] &&
-    (entry.length !== 20 || entry[0] !== '-')
-  )
-    throw new TypeError(
-      `Ids for the ${schema} table must have 20 digits and start with a dash, instead got: ${typeof entry}`
-    );
 }
 
 function isReferenceColorType({ entry, schema, key }) {
-  if (entry.length !== 9 && !entry.startsWith('col'))
-    throw new TypeError(
-      `${key} on the ${schema} table must be a color id, instead got: ${typeof entry}`
-    );
+  if (entry !== null) {
+    if (typeof entry !== 'string')
+      throw new TypeError(
+        `${key} on the ${schema} table must be a string, instead got: ${typeof entry}`
+      );
+    if (!entry.startsWith('col'))
+      throw new TypeError(
+        `${key} on the ${schema} table must start with prefix 'col', instead got: ${entry}`
+      );
+    if (entry.length !== 9)
+      throw new TypeError(
+        `${key} on the ${schema} table must be 9 digits id, instead got: ${entry}`
+      );
+  }
 }
 
 function isReferenceIdType({ entry, schema, key }) {
-  if (entry.length !== 20 && !entry.startsWith('-'))
-    throw new TypeError(
-      `${key} on the ${schema} table must be a push id with 20 digits and starting with a dash, instead got: ${typeof entry}`
-    );
+  if (entry !== null) {
+    if (typeof entry !== 'string')
+      throw new TypeError(
+        `${key} on the ${schema} table must be a string, instead got: ${typeof entry}`
+      );
+    if (!entry.startsWith('-'))
+      throw new TypeError(
+        `${key} on the ${schema} table must start with a dash, instead got: ${entry}`
+      );
+    if (entry.length !== 20)
+      throw new TypeError(
+        `${key} on the ${schema} table must have 20 digits, instead got: ${entry}`
+      );
+  }
 }
 
 function isLinkType({ entry, schema, key }) {
-  if (entry !== null && !entry.startsWith('http'))
-    throw new TypeError(
-      `${key} on the ${schema} table must be a http link, instead got: ${typeof entry}`
-    );
+  if (entry !== null) {
+    if (typeof entry !== 'string')
+      throw new TypeError(
+        `${key} on the ${schema} table must be a string, instead got: ${typeof entry}`
+      );
+
+    if (!entry.startsWith('http'))
+      throw new TypeError(
+        `${key} on the ${schema} table must be a http link, instead got: ${entry}`
+      );
+  }
 }
 
 function isEmailType({ entry, schema, key }) {
-  if (entry !== null && typeof entry !== 'string' && !entry.includes('@'))
-    throw new TypeError(
-      `${key} on the ${schema} table must be a email string, instead got: ${typeof entry}`
-    );
+  if (entry !== null) {
+    if (typeof entry !== 'string')
+      throw new TypeError(
+        `${key} on the ${schema} table must be a string, instead got: ${typeof entry}`
+      );
+    if (!entry.includes('@'))
+      throw new TypeError(
+        `${key} on the ${schema} table must be a email string with an @, instead got: ${entry}`
+      );
+  }
 }
 
 export default serializer;
