@@ -7159,8 +7159,9 @@ h2 {
 }
 
 .member-nationality-flag {
-  height: 20px;
+  height: 13px;
   width: auto;
+  transform: translateY(3px);
 }
 
 .container {
