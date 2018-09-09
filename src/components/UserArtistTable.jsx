@@ -11,16 +11,17 @@ const UserArtistTable = ({ action, list, prefix }) => (
       </tr>
     </thead>
     <tbody>
-      {list.map(unit => {
-        const key = `${prefix}-${unit.id}`;
-        return (
-          <tr key={key} onClick={() => action(unit)}>
-            <td>{unit.artist.name}</td>
-            <td>{unit.artist.genre}</td>
-            <td>{unit.name}</td>
-          </tr>
-        );
-      })}
+      {list &&
+        list.map(unit => {
+          const key = `${prefix}-${unit.id}`;
+          return (
+            <tr key={key} onClick={() => action(unit)}>
+              <td>{unit.artist.name}</td>
+              <td>{unit.artist.genre}</td>
+              <td>{unit.name}</td>
+            </tr>
+          );
+        })}
     </tbody>
   </table>
 );
@@ -33,7 +34,7 @@ UserArtistTable.propTypes = {
 
 UserArtistTable.defaultProps = {
   action: () => {},
-  list: [],
+  list: null,
 };
 
 export default UserArtistTable;

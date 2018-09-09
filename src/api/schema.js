@@ -43,6 +43,9 @@ export const ARTIST_SCHEMA_DP = {
 export const COLOR_SCHEMA_DB = {
   hex: 'hex',
   name: 'string',
+  r: 'number',
+  g: 'number',
+  b: 'number',
 };
 
 export const COLOR_SCHEMA = {
@@ -50,6 +53,9 @@ export const COLOR_SCHEMA = {
   hex: 'hex',
   id: 'id',
   name: 'string',
+  r: 'number',
+  g: 'number',
+  b: 'number',
 };
 
 export const LYRIC_SCHEMA = {
@@ -167,4 +173,19 @@ export const USER_SCHEMA = {
   isAdmin: 'boolean',
   latestUnits: 'list',
   session: 'object',
+};
+
+export const TEST_SCHEMA = {
+  array: 'array',
+  boolean: 'boolean',
+  string: 'string',
+  number: 'number',
+  hex: 'hex',
+  id: 'id',
+  link: 'link',
+  list: 'list',
+  object: 'object',
+  email: 'email',
+  referenceColor: 'reference:color',
+  referenceId: 'reference:id',
 };

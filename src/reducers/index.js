@@ -14,7 +14,7 @@ import lyrics from './lyrics';
 import results from './results';
 import songs from './songs';
 import sync from './sync';
-import test from './test';
+import test from './temp';
 
 const rootReducer = combineReducers({
   admin,
