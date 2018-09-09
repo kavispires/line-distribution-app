@@ -7158,6 +7158,11 @@ h2 {
   padding: 0 12px;
 }
 
+.member-nationality-flag {
+  height: 20px;
+  width: auto;
+}
+
 .container {
   padding: 12px 24px;
   overflow: auto;
