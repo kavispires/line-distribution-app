@@ -1,6 +1,10 @@
 @import './variables.scss';
 
-$colorCodes:  #E72408, #FF6347, #FFA07A, #8B4513, #FF8E2A, #cd7f32, #D2B48C, #B8850B, #E2B631, #FFE400, #808000, #FFFF66, #CCFF26, #7FB817, #33602d, #008000, #59FF84, #15AA98, #83EEEA, #39BADD, #1F4C75, #406FFF, #6687FF, #7B68EE, #A177EF, #F7D0FF, #9E35AE, #FC6BE9, #9C1465, #E62E8A, #7F1F2F, #FFABB9, #D01f3C, #A6A89D, #777278, #414549;
+$colorCodes: #ce311b, #ff6347, #ffa07a, #9a5827, #ff8e2a, #cd7f32, #d2b48c,
+  #b8850b, #e2b631, #ffe400, #808000, #ffff66, #ccff26, #7fb817, #5d8c56,
+  #147d14, #59ff84, #15aa98, #83eeea, #39badd, #285986, #406fff, #6687ff,
+  #7b68ee, #a177ef, #f7d0ff, #9e35ae, #fc6be9, #9c1465, #e62e8a, #983c4b,
+  #ffabb9, #d01f3c, #a6a89d, #777278, #575d63;
 
 // COLOR CLASSES
 @for $i from 1 through length($colorCodes) {
@@ -9,10 +13,15 @@ $colorCodes:  #E72408, #FF6347, #FFA07A, #8B4513, #FF8E2A, #cd7f32, #D2B48C, #B8
   }
 }
 
-// Dark colors get white lettering
-.color-4, .color-15, .color-21, .color-29, .color-31, .color-36 {
-  color: #fff !important;
-}
+// // Dark colors get white lettering
+// .color-4,
+// .color-15,
+// .color-21,
+// .color-29,
+// .color-31,
+// .color-36 {
+//   color: #fff !important;
+// }
 
 // GRADIENT CLASSES
 $bgpercentage1: 50%;
@@ -22,15 +31,19 @@ $bgpercentage2: 60%;
   @for $j from 1 through length($colorCodes) {
     .color-#{$i}-color-#{$j} {
       background-color: nth($colorCodes, $i);
-      background: linear-gradient(nth($colorCodes, $i) $bgpercentage1, nth($colorCodes, $j) $bgpercentage2);
+      background: linear-gradient(
+        nth($colorCodes, $i) $bgpercentage1,
+        nth($colorCodes, $j) $bgpercentage2
+      );
     }
   }
 }
 
 // UNDEFINED COLOR CLASSES
 
-.color-0, .color-undefined {
-  background-color: #FFFFFF;
+.color-0,
+.color-undefined {
+  background-color: #ffffff;
 }
 
 $zero: 0;
@@ -38,11 +51,17 @@ $zero: 0;
 @for $i from 1 through length($colorCodes) {
   .color-#{$i}-color-#{$zero} {
     background-color: $negative;
-    background: linear-gradient(nth($colorCodes, $i) $bgpercentage1, $negative $bgpercentage2);
+    background: linear-gradient(
+      nth($colorCodes, $i) $bgpercentage1,
+      $negative $bgpercentage2
+    );
   }
   .color-#{$zero}-color-#{$i} {
     background-color: $negative;
-    background: linear-gradient($negative $bgpercentage1, nth($colorCodes, $i) $bgpercentage2);
+    background: linear-gradient(
+      $negative $bgpercentage1,
+      nth($colorCodes, $i) $bgpercentage2
+    );
   }
 }
 

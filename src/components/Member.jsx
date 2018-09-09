@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import PositionIcons from './icons/PositionIcons';
 import { parseBirthDate } from '../utils';
 import MemberProfile from './MemberProfile';
+import MemberNationalty from './MemberNationality';
 
 const Member = ({ member, props }) => {
   const ARTISTS = props.artists;
@@ -41,6 +42,10 @@ const Member = ({ member, props }) => {
       <h3 className="pill-name">{member.name}</h3>
       <p>
         <b>Date of Birth:</b> {parseBirthDate(member.birthdate)}
+      </p>
+      <p>
+        <b>Nationality:</b>{' '}
+        <MemberNationalty nationality={member.nationality} />
       </p>
       <p>
         <b>Avg Official Song:</b> {averageOfficial}%

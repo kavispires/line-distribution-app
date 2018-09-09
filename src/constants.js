@@ -235,6 +235,19 @@ export const POS_LIST = [
 
 export const PROFILE_PICTURE_URL = '/images/profiles/';
 
+export const NATIONALITY_FLAG_URL = '/images/flags/';
+
+export const FLAGS_LIST = {
+  american: 'usa',
+  brazilian: 'brazil',
+  canadian: 'canada',
+  chinese: 'china',
+  japanese: 'japan',
+  korean: 'korea',
+  taiwanese: 'taiwan',
+  thai: 'thailand',
+};
+
 export const SYNC_KEY_LIST = {
   1: true,
   2: true,
