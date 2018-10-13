@@ -18,11 +18,9 @@ const Home = props => (
     <div className="home-content">
       <img className="home-logo" src={logo} alt="Line Distribution" />
       <div className="home-buttons">
-        {!props.auth.isAuthenticated ? (
-          <button className="btn-home" onClick={props.login}>
-            Sign-in
-          </button>
-        ) : null}
+        {/* {!props.auth.isAuthenticated ? ( */}
+        <button className="btn-home">Sign-in</button>
+        {/* ) : null} */}
         <button className="btn-home">Learm more</button>
       </div>
     </div>
@@ -30,8 +28,8 @@ const Home = props => (
 );
 
 Home.propTypes = {
-  auth: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
+  // auth: PropTypes.object.isRequired,
+  // login: PropTypes.func.isRequired,
 };
 
 export default Home;
