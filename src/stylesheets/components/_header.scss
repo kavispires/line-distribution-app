@@ -1,0 +1,82 @@
+$header_height: 36px;
+
+.header {
+  width: 100%;
+  display: flex;
+  padding: $padding;
+  background-color: $color-primary;
+  background: linear-gradient(to right, #000000, #000d71);
+}
+
+.header-nav {
+  width: 70%;
+  display: flex;
+  align-items: center;
+
+  &__logo {
+    height: $header_height;
+    margin-right: $unit;
+  }
+
+  &__links {
+    color: $color-negative;
+
+    a,
+    button {
+      font-size: $unit;
+      background: transparent;
+      color: $color-negative;
+      text-decoration: none;
+      padding: $unit-p2 $unit;
+      border-width: 2px;
+      border-style: solid;
+      border-color: transparent;
+      border-right-color: $color-grey-2;
+      border-right-width: 1px;
+
+      &:last-child {
+        border-right-color: transparent;
+      }
+
+      &:visited {
+        color: $color-negative;
+      }
+
+      &:hover {
+        border-bottom-color: $color-grey-2;
+      }
+
+      &.active {
+        border-bottom-color: $color-negative;
+      }
+    }
+  }
+}
+
+.header-user {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &__nav {
+    font-size: $unit;
+    background: transparent;
+    color: $color-negative;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      border-bottom-color: $color-negative;
+    }
+  }
+
+  &__photo {
+    height: $header_height;
+    margin-right: $unit;
+    border-radius: 50%;
+  }
+}

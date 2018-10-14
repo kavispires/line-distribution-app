@@ -1,13 +1,24 @@
-$quarterUnit: 3px;
-$halfUnit: 6px;
+// UNITS
+$unit-p4: 3px;
+$unit-p2: 6px;
 $unit: 12px;
-$doubleUnit: 24px;
-$padding: 6px;
-$outerMargin: 48px;
+$unit-x2: 24px;
+$unit-x4: 48px;
 
-$lightGrey: #e6e6e6;
-$grey: #ccc;
-$primary: #000;
-$darkGrey: #707070;
-$negative: #fff;
-$defaultBlue: #598ffd;
+$padding: 6px;
+
+// COLORS
+$color-primary: #111111;
+$color-negative: #ebebf2;
+$color-grey-1: #b5b5ba;
+$color-grey-2: #7e7e82;
+$color-grey-3: #484849;
+
+$color-blue: #598ffd;
+
+// $quarterUnit: 3px;
+// $halfUnit: 6px;
+// $unit: 12px;
+// $doubleUnit: 24px;
+// $padding: 6px;
+// $outerMargin: 48px;

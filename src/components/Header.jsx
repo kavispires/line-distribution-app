@@ -4,6 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
+import userPlaceholder from '../images/user-placeholder.svg';
+import Icon from './Icon';
 
 const Header = ({ props }) => {
   const handleLogoClick = () => {
@@ -11,34 +13,40 @@ const Header = ({ props }) => {
   };
 
   return (
-    <header className="app-header">
-      <div className="app-header-nav">
-        <img className="app-logo" src={logo} alt="Logo" />
-        <nav className="app-nav">
-          <Link to="/artists">Artists</Link>
+    <header className="header">
+      <div className="header-nav">
+        <img className="header-nav__logo" src={logo} alt="Logo" />
+        <nav className="header-nav__links">
+          <Link to="/artists" className="active">
+            Artists
+          </Link>
           <Link to="/distribute">Distribute</Link>
           <Link to="/songs">Songs</Link>
+          <Link to="/lab">Lab</Link>
           {/* {props.auth.isAdmin ? ( */}
-          <span role="button" tabIndex={0}>
-            Admin Tools
-          </span>
+          <button>Admin Tools</button>
           {/* ) : null} */}
         </nav>
       </div>
       {/* {props.auth.isAuthenticated ? ( */}
-      <div className="app-header-user">
-        <img className="user-photo" src={null} alt="user" />
-        {/* {props.auth.user.displayName} */}
-        Bob
-        <button className="app-header-btn">Sign out</button>
+      <div className="header-user">
+        <button className="header-user__nav">
+          <img
+            className="header-user__photo"
+            src={userPlaceholder}
+            alt="user"
+          />
+          {/* {props.auth.user.displayName} */}
+          Bob the placeholder
+        </button>
       </div>
       {/* ) : ( */}
-      <div className="app-header-user">
-        <button className="app-header-btn">Sign in</button>
-      </div>
+      {/* <button className="header-user__btn">
+        <Icon type="login" />
+      </button> */}
       {/* )} */}
       {/* {props.admin.adminTools ? ( */}
-      <div className="app-header-admin">
+      {/* <div className="app-header-admin">
         <span className="app-logo-placeholder" />
         <nav className="app-nav">
           <Link to="/admin/colorsheet">Color Sheet</Link>
@@ -50,7 +58,7 @@ const Header = ({ props }) => {
           <Link to="/admin/create">xCreatex</Link>
         </nav>
       </div>
-      {/* ) : null} */}
+      ) : null} */}
     </header>
   );
 };

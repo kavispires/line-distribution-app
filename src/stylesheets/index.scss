@@ -3,7 +3,12 @@
 @import './variables.scss';
 // @import './color-palette.scss';
 
+// BROWSER RESETS
+@import './app.scss';
+
 // COMPONENTS
+@import './components/containers.scss';
+@import './components/header.scss';
 
 // PAGES
 @import './pages/home.scss';

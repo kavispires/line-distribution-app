@@ -3,25 +3,26 @@ import PropTypes from 'prop-types';
 
 import logo from '../images/logo-alt.svg';
 
-// Import utility functions
-import { bem } from '../utils';
-
 const Home = props => (
-  <main className={bem('container', 'no-padding')}>
-    <iframe
-      className="home-video"
-      title="home-video"
-      src="https://www.youtube.com/embed/cudssvDuOpc?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=cudssvDuOpc"
-      frameBorder="0"
-      allowFullScreen
-    />
-    <div className="home-content">
-      <img className="home-logo" src={logo} alt="Line Distribution" />
-      <div className="home-buttons">
-        {/* {!props.auth.isAuthenticated ? ( */}
-        <button className="btn-home">Sign-in</button>
-        {/* ) : null} */}
-        <button className="btn-home">Learm more</button>
+  <main className="container container--no-padding">
+    <div className="home__container">
+      <div className="home__video">
+        <iframe
+          className="home__iframe"
+          title="home__video"
+          src="https://www.youtube.com/embed/cudssvDuOpc?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=cudssvDuOpc"
+          frameBorder="0"
+          allowFullScreen
+        />
+      </div>
+      <div className="home__content">
+        <img className="home__logo" src={logo} alt="Line Distribution" />
+        <div className="home__buttons">
+          {/* {!props.auth.isAuthenticated ? ( */}
+          <button className="btn-home">Sign-in</button>
+          {/* ) : null} */}
+          <button className="btn-home">Learm more</button>
+        </div>
       </div>
     </div>
   </main>
