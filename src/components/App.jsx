@@ -5,8 +5,12 @@ import Header from './Header';
 import LoadingBar from './LoadingBar';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.setIsLoading(true);
+    this.props.initDB();
+  }
+
   render() {
-    console.log(this.props);
     return (
       <div>
         <Header props={this.props} />
@@ -16,6 +20,10 @@ class App extends Component {
   }
 }
 
-App.propTypes = {};
+App.propTypes = {
+  initDB: PropTypes.func.isRequired,
+  app: PropTypes.object.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
+};
 
 export default App;

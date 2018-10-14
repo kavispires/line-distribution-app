@@ -10,7 +10,7 @@ export const setIsLoading = payload => dispatch =>
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
 };
 
 export default function reducer(prevState = initialState, action) {
