@@ -1,5 +1,37 @@
 $header_height: 36px;
 
+.dropdown {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 11;
+  top: 42px;
+  border-top: 6px solid transparent;
+
+  hr {
+    border: 1px solid $color-grey-1;
+    background-color: $color-negative;
+    margin: 0;
+  }
+
+  a {
+    background-color: $color-negative;
+    color: $color-primary;
+    padding: $unit-p2;
+    text-decoration: none;
+    display: block;
+    border-left-width: 3px;
+    border-color: transparent;
+    border-style: solid;
+
+    &:hover {
+      background-color: $color-grey-1;
+      border-left-color: $color-blue;
+    }
+  }
+}
+
 .header {
   width: 100%;
   display: flex;
@@ -16,12 +48,13 @@ $header_height: 36px;
   &__logo {
     height: $header_height;
     margin-right: $unit;
+    cursor: pointer;
   }
 
   &__links {
     color: $color-negative;
 
-    a,
+    & > a,
     button {
       font-size: $unit;
       background: transparent;
@@ -33,10 +66,7 @@ $header_height: 36px;
       border-color: transparent;
       border-right-color: $color-grey-3;
       border-right-width: 1px;
-
-      &:last-child {
-        border-right-color: transparent;
-      }
+      cursor: pointer;
 
       &:visited {
         color: $color-negative;
@@ -50,6 +80,26 @@ $header_height: 36px;
         border-bottom-color: $color-negative;
       }
     }
+  }
+}
+
+.header-admin {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+
+  &__nav {
+    border-right-color: transparent !important;
+  }
+
+  &__dropdown {
+    @extend .dropdown;
+    top: 32px;
+    border-top: 10px solid transparent;
+  }
+
+  &:hover .dropdown {
+    display: block;
   }
 }
 
@@ -70,6 +120,7 @@ $header_height: 36px;
     display: flex;
     align-items: center;
     border-radius: $border-radius;
+    cursor: pointer;
 
     &:hover {
       background: rgba(255, 255, 255, 0.25);
@@ -83,36 +134,10 @@ $header_height: 36px;
   }
 
   &__dropdown {
-    display: none;
-    position: absolute;
-    background-color: $color-negative;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 11;
-    top: 42px;
-    border-top: 6px solid #00076f;
-
-    hr {
-      border: 1px solid $color-grey-1;
-    }
-
-    a {
-      color: $color-primary;
-      padding: $unit-p2;
-      text-decoration: none;
-      display: block;
-      border-left-width: 3px;
-      border-color: transparent;
-      border-style: solid;
-
-      &:hover {
-        background-color: $color-grey-1;
-        border-left-color: $color-blue;
-      }
-    }
+    @extend .dropdown;
   }
 
-  &:hover .header-user__dropdown {
+  &:hover .dropdown {
     display: block;
   }
 }

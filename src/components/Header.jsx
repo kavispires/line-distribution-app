@@ -15,7 +15,12 @@ const Header = ({ props }) => {
   return (
     <header className="header">
       <div className="header-nav">
-        <img className="header-nav__logo" src={logo} alt="Logo" />
+        <img
+          className="header-nav__logo"
+          src={logo}
+          alt="Logo"
+          onClick={() => handleLogoClick()}
+        />
         <nav className="header-nav__links">
           <Link to="/artists" className="active">
             Artists
@@ -24,7 +29,16 @@ const Header = ({ props }) => {
           <Link to="/songs">Songs</Link>
           <Link to="/lab">Lab</Link>
           {/* {props.auth.isAdmin ? ( */}
-          <button>Admin Tools</button>
+          <div className="header-admin">
+            <button className="header-admin__nav">Admin Tools</button>
+            <div className="header-admin__dropdown">
+              <Link to="/admin/colorsheet">Color Sheet</Link>
+              <Link to="/admin/iconsheet">Icon Sheet</Link>
+              <Link to="/admin/manage">Manage</Link>
+              <Link to="/admin/sync">Sync</Link>
+              <Link to="/admin/test">Test</Link>
+            </div>
+          </div>
           {/* ) : null} */}
         </nav>
       </div>
@@ -40,12 +54,11 @@ const Header = ({ props }) => {
           Bob the placeholder
         </button>
         <div className="header-user__dropdown">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
+          <Link to="/user/artists">My Artists</Link>
+          <Link to="/user/distributions">My Distributions</Link>
           <hr />
           <a href="#">
-            <Icon type="login" />Sign out
+            <Icon type="logout" />Sign out
           </a>
         </div>
       </div>

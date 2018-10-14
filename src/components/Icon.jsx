@@ -14,9 +14,7 @@ const Icon = ({ type, size, color }) => {
     },
   };
 
-  console.log(type);
-  console.log(color);
-  console.log(size);
+  console.log('Icon props', type, color, size);
 
   return (
     <svg
@@ -38,7 +36,7 @@ Icon.propTypes = {
 
 Icon.defaultProps = {
   size: 16,
-  color: 'red',
+  color: '#ff0000',
 };
 
 export default Icon;
