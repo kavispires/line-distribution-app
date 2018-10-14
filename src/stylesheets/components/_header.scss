@@ -31,7 +31,7 @@ $header_height: 36px;
       border-width: 2px;
       border-style: solid;
       border-color: transparent;
-      border-right-color: $color-grey-2;
+      border-right-color: $color-grey-3;
       border-right-width: 1px;
 
       &:last-child {
@@ -43,7 +43,7 @@ $header_height: 36px;
       }
 
       &:hover {
-        border-bottom-color: $color-grey-2;
+        border-bottom-color: $color-grey-3;
       }
 
       &.active {
@@ -58,6 +58,7 @@ $header_height: 36px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
 
   &__nav {
     font-size: $unit;
@@ -68,9 +69,10 @@ $header_height: 36px;
     border-color: transparent;
     display: flex;
     align-items: center;
+    border-radius: $border-radius;
 
     &:hover {
-      border-bottom-color: $color-negative;
+      background: rgba(255, 255, 255, 0.25);
     }
   }
 
@@ -78,5 +80,39 @@ $header_height: 36px;
     height: $header_height;
     margin-right: $unit;
     border-radius: 50%;
+  }
+
+  &__dropdown {
+    display: none;
+    position: absolute;
+    background-color: $color-negative;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 11;
+    top: 42px;
+    border-top: 6px solid #00076f;
+
+    hr {
+      border: 1px solid $color-grey-1;
+    }
+
+    a {
+      color: $color-primary;
+      padding: $unit-p2;
+      text-decoration: none;
+      display: block;
+      border-left-width: 3px;
+      border-color: transparent;
+      border-style: solid;
+
+      &:hover {
+        background-color: $color-grey-1;
+        border-left-color: $color-blue;
+      }
+    }
+  }
+
+  &:hover .header-user__dropdown {
+    display: block;
   }
 }

@@ -39,6 +39,15 @@ const Header = ({ props }) => {
           {/* {props.auth.user.displayName} */}
           Bob the placeholder
         </button>
+        <div className="header-user__dropdown">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+          <hr />
+          <a href="#">
+            <Icon type="login" />Sign out
+          </a>
+        </div>
       </div>
       {/* ) : ( */}
       {/* <button className="header-user__btn">

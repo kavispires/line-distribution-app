@@ -2,15 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import logo from '../images/logo-alt.svg';
+import { YOUTUBE_URLS } from '../constants';
 
-const Home = props => (
-  <main className="container container--no-padding">
-    <div className="home__container">
+const Home = props => {
+  const youtubeUrl =
+    YOUTUBE_URLS[Math.floor(Math.random() * YOUTUBE_URLS.length)];
+  return (
+    <main className="container container--no-padding">
       <div className="home__video">
         <iframe
           className="home__iframe"
           title="home__video"
-          src="https://www.youtube.com/embed/cudssvDuOpc?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=cudssvDuOpc"
+          src={`https://www.youtube.com/embed/${youtubeUrl}?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=${youtubeUrl}`}
           frameBorder="0"
           allowFullScreen
         />
@@ -24,9 +27,9 @@ const Home = props => (
           <button className="btn-home">Learm more</button>
         </div>
       </div>
-    </div>
-  </main>
-);
+    </main>
+  );
+};
 
 Home.propTypes = {
   // auth: PropTypes.object.isRequired,
