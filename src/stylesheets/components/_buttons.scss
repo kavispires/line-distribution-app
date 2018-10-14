@@ -1,0 +1,18 @@
+.btn {
+  padding: $unit-p2 $unit;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+}
+
+.btn-hollow {
+  margin: $unit-p2;
+  color: $color-negative;
+  background: none;
+  cursor: pointer;
+  min-height: $unit-x2;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+}

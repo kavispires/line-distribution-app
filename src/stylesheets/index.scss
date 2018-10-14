@@ -8,8 +8,12 @@
 
 // COMPONENTS
 @import './components/containers.scss';
+@import './components/buttons.scss';
 @import './components/header.scss';
 @import './components/loading-bar.scss';
 
 // PAGES
 @import './pages/home.scss';
+
+// TOASTR MODULE
+@import 'react-redux-toastr/src/styles/index';

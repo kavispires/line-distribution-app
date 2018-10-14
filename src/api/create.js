@@ -26,6 +26,8 @@ const create = (fullPath, body, database) => {
     throw new Error(`Unable to write ${fullPath}, body was not provided.`);
   }
 
+  console.log('CREATE WAS USED!');
+
   const path = fullPath.split('/');
   const { length } = path;
   const root = path[1];

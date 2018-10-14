@@ -3,9 +3,17 @@ import { withRouter } from 'react-router-dom';
 
 import Home from '../components/Home';
 
-const mapStateToProps = state => ({});
+import { login } from '../reducers/auth';
 
-const mapDispatchToProps = {};
+const mapStateToProps = state => ({
+  app: state.app,
+  auth: state.auth,
+  db: state.db,
+});
+
+const mapDispatchToProps = {
+  login,
+};
 
 export default withRouter(
   connect(

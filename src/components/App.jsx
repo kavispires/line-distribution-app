@@ -8,6 +8,13 @@ class App extends Component {
   componentDidMount() {
     this.props.setIsLoading(true);
     this.props.initDB();
+    this.props.checkAuth();
+  }
+
+  componentDidUpdate(nextProps) {
+    if (nextProps.db.loaded !== this.props.db.loaded) {
+      this.props.checkAuth();
+    }
   }
 
   render() {
@@ -21,8 +28,10 @@ class App extends Component {
 }
 
 App.propTypes = {
-  initDB: PropTypes.func.isRequired,
   app: PropTypes.object.isRequired,
+  checkAuth: PropTypes.func.isRequired,
+  db: PropTypes.object.isRequired,
+  initDB: PropTypes.func.isRequired,
   setIsLoading: PropTypes.func.isRequired,
 };
 

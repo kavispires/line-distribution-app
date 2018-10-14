@@ -29,11 +29,11 @@ const Home = props => {
       <div className="home__content">
         <img className="home__logo" src={logo} alt="Line Distribution" />
         <div className="home__buttons">
-          {/* {!props.auth.isAuthenticated ? ( */}
-          <button className="btn-home">
-            Sign-in <Icon type="logout" color="white" inline />
-          </button>
-          {/* ) : null} */}
+          {!props.auth.isAuthenticated ? (
+            <button className="btn-home" onClick={props.login}>
+              Sign-in <Icon type="logout" color="white" inline />
+            </button>
+          ) : null}
           <button className="btn-home" onClick={() => handleLearnMoreClick()}>
             Learm more
           </button>
@@ -44,8 +44,8 @@ const Home = props => {
 };
 
 Home.propTypes = {
-  // auth: PropTypes.object.isRequired,
-  // login: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 

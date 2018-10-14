@@ -23,6 +23,8 @@ const read = (fullPath, database, testing = false) => {
     return null;
   }
 
+  console.log('READ WAS USED!');
+
   const path = fullPath.split('/');
   const { length } = path;
   const root = path[1];

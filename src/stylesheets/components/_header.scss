@@ -64,8 +64,8 @@ $header_height: 36px;
       border-width: 2px;
       border-style: solid;
       border-color: transparent;
-      border-right-color: $color-grey-3;
-      border-right-width: 1px;
+      border-left-color: $color-grey-3;
+      border-left-width: 1px;
       cursor: pointer;
 
       &:visited {
@@ -79,6 +79,10 @@ $header_height: 36px;
       &.active {
         border-bottom-color: $color-negative;
       }
+
+      &:first-child {
+        border-left-color: transparent;
+      }
     }
   }
 }
@@ -89,7 +93,7 @@ $header_height: 36px;
   height: 100%;
 
   &__nav {
-    border-right-color: transparent !important;
+    border-left-color: $color-grey-3 !important;
   }
 
   &__dropdown {
@@ -139,5 +143,13 @@ $header_height: 36px;
 
   &:hover .dropdown {
     display: block;
+  }
+
+  &__btn {
+    border-color: $color-negative;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
   }
 }
