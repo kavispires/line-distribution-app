@@ -12,6 +12,9 @@ const Header = ({ props }) => {
     props.history.push('/');
   };
 
+  const { pathname } = props.location;
+
+  console.log(pathname);
   return (
     <header className="header">
       <div className="header-nav">
@@ -22,15 +25,35 @@ const Header = ({ props }) => {
           onClick={() => handleLogoClick()}
         />
         <nav className="header-nav__links">
-          <Link to="/artists" className="active">
+          <Link
+            to="/artists"
+            className={pathname === '/artists' ? 'active' : ''}
+          >
             Artists
           </Link>
-          <Link to="/distribute">Distribute</Link>
-          <Link to="/songs">Songs</Link>
-          <Link to="/lab">Lab</Link>
+          <Link
+            to="/distribute"
+            className={pathname === '/distribute' ? 'active' : ''}
+          >
+            Distribute
+          </Link>
+          <Link to="/songs" className={pathname === '/songs' ? 'active' : ''}>
+            Songs
+          </Link>
+          <Link to="/lab" className={pathname === '/lab' ? 'active' : ''}>
+            Lab
+          </Link>
           {/* {props.auth.isAdmin ? ( */}
           <div className="header-admin">
-            <button className="header-admin__nav">Admin Tools</button>
+            <button
+              className={
+                pathname.includes('/admin')
+                  ? 'header-admin__nav active'
+                  : 'header-admin__nav'
+              }
+            >
+              Admin Tools
+            </button>
             <div className="header-admin__dropdown">
               <Link to="/admin/color-sheet">Color Sheet</Link>
               <Link to="/admin/icon-sheet">Icon Sheet</Link>
@@ -67,20 +90,6 @@ const Header = ({ props }) => {
         <Icon type="login" />
       </button> */}
       {/* )} */}
-      {/* {props.admin.adminTools ? ( */}
-      {/* <div className="app-header-admin">
-        <span className="app-logo-placeholder" />
-        <nav className="app-nav">
-          <Link to="/admin/colorsheet">Color Sheet</Link>
-          <Link to="/admin/iconsheet">Icon Sheet</Link>
-          <Link to="/admin/manage">Manage</Link>
-          <Link to="/admin/sync">Sync</Link>
-          <Link to="/admin/test">Test</Link>
-
-          <Link to="/admin/create">xCreatex</Link>
-        </nav>
-      </div>
-      ) : null} */}
     </header>
   );
 };
