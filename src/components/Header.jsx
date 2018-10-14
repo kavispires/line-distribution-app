@@ -32,8 +32,8 @@ const Header = ({ props }) => {
           <div className="header-admin">
             <button className="header-admin__nav">Admin Tools</button>
             <div className="header-admin__dropdown">
-              <Link to="/admin/colorsheet">Color Sheet</Link>
-              <Link to="/admin/iconsheet">Icon Sheet</Link>
+              <Link to="/admin/color-sheet">Color Sheet</Link>
+              <Link to="/admin/icon-sheet">Icon Sheet</Link>
               <Link to="/admin/manage">Manage</Link>
               <Link to="/admin/sync">Sync</Link>
               <Link to="/admin/test">Test</Link>
@@ -54,8 +54,8 @@ const Header = ({ props }) => {
           Bob the placeholder
         </button>
         <div className="header-user__dropdown">
-          <Link to="/user/artists">My Artists</Link>
-          <Link to="/user/distributions">My Distributions</Link>
+          <Link to="/user/my-artists">My Artists</Link>
+          <Link to="/user/my-distributions">My Distributions</Link>
           <hr />
           <a href="#">
             <Icon type="logout" />Sign out
