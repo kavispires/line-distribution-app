@@ -3,7 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import App from '../components/App';
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  app: state.app,
+});
 
 const mapDispatchToProps = {};
 

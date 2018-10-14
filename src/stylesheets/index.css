@@ -165,6 +165,168 @@ body {
   display: block;
 }
 
+.loading-bar {
+  background-color: #ffffff;
+  width: 100%;
+  height: 4px;
+  position: absolute;
+  top: 55px;
+  display: flex;
+  z-index: 0;
+}
+
+.bar-container {
+  position: relative;
+  width: 100%;
+}
+.bar-container .bar {
+  height: 4px;
+  position: absolute;
+  z-index: 30;
+}
+.bar-container .bar-0 {
+  background-color: #fb9cf0;
+  animation: grow0 4s forwards;
+  z-index: 28;
+}
+.bar-container .bar-1 {
+  background-color: #9e8ef0;
+  animation: grow1 4s ease-in infinite;
+}
+.bar-container .bar-2 {
+  background-color: #598ffd;
+  animation: grow2 4s ease-in infinite;
+}
+.bar-container .bar-3 {
+  background-color: #34ac9e;
+  animation: grow3 4s ease-in infinite;
+}
+.bar-container .bar-4 {
+  background-color: #49d156;
+  animation: grow4 4s ease-in infinite;
+}
+.bar-container .bar-5 {
+  background-color: #ffd700;
+  animation: grow5 4s ease-in infinite;
+}
+.bar-container .bar-6 {
+  background-color: #fea245;
+  animation: grow6 4s ease-in infinite;
+}
+.bar-container .bar-7 {
+  background-color: #d14949;
+  animation: grow7 4s ease-in infinite;
+}
+.bar-container .bar-8 {
+  background-color: #fb9cf0;
+  animation: grow8 4s ease-in infinite;
+}
+
+@keyframes grow1 {
+  0% {
+    width: 0%;
+  }
+  22% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow2 {
+  11% {
+    width: 0%;
+  }
+  33% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow3 {
+  22% {
+    width: 0%;
+  }
+  44% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow4 {
+  33% {
+    width: 0%;
+  }
+  55% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow5 {
+  44% {
+    width: 0%;
+  }
+  66% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow6 {
+  55% {
+    width: 0%;
+  }
+  77% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow7 {
+  66% {
+    width: 0%;
+  }
+  88% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow8 {
+  77% {
+    width: 0%;
+  }
+  99% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes grow0 {
+  88% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
 .home__video {
   position: absolute;
   width: 100%;

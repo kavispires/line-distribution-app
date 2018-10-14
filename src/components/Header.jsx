@@ -14,7 +14,6 @@ const Header = ({ props }) => {
 
   const { pathname } = props.location;
 
-  console.log(pathname);
   return (
     <header className="header">
       <div className="header-nav">
