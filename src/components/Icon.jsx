@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ICONS, ICON_COLORS } from '../constants';
+import { ICONS, DEFAULT_COLORS } from '../constants';
 
 const Icon = ({ type, size, color, inline }) => {
   const margin = inline ? '0 3px' : 0;
@@ -13,7 +13,7 @@ const Icon = ({ type, size, color, inline }) => {
       margin,
     },
     path: {
-      fill: ICON_COLORS[color],
+      fill: DEFAULT_COLORS[color],
     },
   };
 
@@ -31,7 +31,7 @@ const Icon = ({ type, size, color, inline }) => {
 
 Icon.propTypes = {
   type: PropTypes.string.isRequired,
-  size: PropTypes.number,
+  size: PropTypes.oneOf(PropTypes.number, PropTypes.string),
   color: PropTypes.string,
   inline: PropTypes.bool,
 };

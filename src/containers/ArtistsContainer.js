@@ -3,9 +3,19 @@ import { withRouter } from 'react-router-dom';
 
 import Artists from '../components/Artists';
 
-const mapStateToProps = state => ({});
+import { loadArtists, setSearchQuery } from '../reducers/artists';
 
-const mapDispatchToProps = {};
+const mapStateToProps = state => ({
+  app: state.app,
+  artists: state.artists,
+  auth: state.auth,
+  db: state.db,
+});
+
+const mapDispatchToProps = {
+  loadArtists,
+  setSearchQuery,
+};
 
 export default withRouter(
   connect(

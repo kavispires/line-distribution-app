@@ -1,0 +1,41 @@
+.table {
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+
+  thead {
+    text-align: left;
+
+    th {
+      padding: 10px;
+      border-bottom: 2px solid $color-gray-3;
+    }
+
+    .th-num {
+      max-width: 60px;
+    }
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid $color-gray-1;
+  }
+
+  tr:last-child > td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: $color-gray-1;
+    cursor: pointer;
+  }
+
+  p {
+    margin: $unit-p2;
+  }
+
+  ul {
+    list-style: none;
+    margin-bottom: $unit;
+  }
+}

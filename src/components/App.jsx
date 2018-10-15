@@ -14,6 +14,10 @@ class App extends Component {
   componentDidUpdate(nextProps) {
     if (nextProps.db.loaded !== this.props.db.loaded) {
       this.props.checkAuth();
+
+      if (this.props.location.pathname === '/artists') {
+        this.props.loadArtists();
+      }
     }
   }
 
@@ -32,6 +36,8 @@ App.propTypes = {
   checkAuth: PropTypes.func.isRequired,
   db: PropTypes.object.isRequired,
   initDB: PropTypes.func.isRequired,
+  loadArtists: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
   setIsLoading: PropTypes.func.isRequired,
 };
 

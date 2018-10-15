@@ -20,10 +20,35 @@ body {
   padding: 0;
 }
 
+h1 {
+  font-size: 1.5em;
+  margin: 12px 0;
+}
+
+h2 {
+  font-size: 1.25em;
+  margin: 12px 0;
+}
+
+h3 {
+  font-size: 1.15em;
+  margin: 6px 0;
+}
+
+p {
+  font-size: 1em;
+  margin: 6px 0;
+}
+
 .container {
   width: 100%;
   height: 100%;
   padding: 24px;
+  overflow-y: auto;
+}
+.container:first-child {
+  padding-top: 0;
+  margin-top: 0;
 }
 .container--no-padding {
   padding: 0;
@@ -353,6 +378,53 @@ body {
   100% {
     width: 100%;
   }
+}
+
+.table {
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+}
+.table thead {
+  text-align: left;
+}
+.table thead th {
+  padding: 10px;
+  border-bottom: 2px solid #7e7e82;
+}
+.table thead .th-num {
+  max-width: 60px;
+}
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #ebebf2;
+}
+.table tr:last-child > td {
+  border-bottom: none;
+}
+.table tbody tr:hover {
+  background: #ebebf2;
+  cursor: pointer;
+}
+.table p {
+  margin: 6px;
+}
+.table ul {
+  list-style: none;
+  margin-bottom: 12px;
+}
+
+.artists__section {
+  width: 100%;
+  overflow: auto;
+}
+
+.artists__search-bar {
+  padding: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #ebebf2;
+  width: 30%;
+  min-width: 300px;
 }
 
 .home__video {
