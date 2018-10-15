@@ -109,7 +109,7 @@ const read = (fullPath, database, testing = false) => {
       if (length === 3) return GET.fetchUser(path[2]);
       // API/users/:id/favorite
       if (length === 4 && path[3] === 'favorite')
-        return GET.fetchUserFavoriteUnits(path[2]);
+        return GET.fetchUserFavoriteArtists(path[2]);
       // API/users/:id/latest
       if (length === 4 && path[3] === 'latest')
         return GET.fetchUserLatestUnits(path[2]);
@@ -375,14 +375,14 @@ const GET = {
     }
     throw new Error(`Failed to retrieve user for id: ${id}`);
   },
-  fetchUserFavoriteUnits: id => {
+  fetchUserFavoriteArtists: id => {
     let response = [];
     try {
-      response = GET.fetchUser(id).favoriteUnits;
+      response = GET.fetchUser(id).favorite;
     } catch (error) {
       throw new Error(`Failed to get favorite units for user: ${id}`);
     }
-    return response.map(unitId => GET.fetchUnit(unitId, true));
+    return response;
   },
   fetchUserLatestUnits: id => {
     let response = [];

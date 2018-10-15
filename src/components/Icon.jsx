@@ -31,7 +31,7 @@ const Icon = ({ type, size, color, inline }) => {
 
 Icon.propTypes = {
   type: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(PropTypes.number, PropTypes.string),
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   inline: PropTypes.bool,
 };

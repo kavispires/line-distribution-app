@@ -5,6 +5,8 @@ import Artists from '../components/Artists';
 
 import { loadArtists, setSearchQuery } from '../reducers/artists';
 
+import { updateFavoriteArtists } from '../reducers/auth';
+
 const mapStateToProps = state => ({
   app: state.app,
   artists: state.artists,
@@ -15,6 +17,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadArtists,
   setSearchQuery,
+  updateFavoriteArtists,
 };
 
 export default withRouter(

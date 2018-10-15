@@ -150,3 +150,25 @@ export const mergeUser = authUser => async (dispatch, getState) => {
 
   dispatch(setUser(user));
 };
+
+export const updateFavoriteArtists = id => async (dispatch, getState) => {
+  const user = { ...getState().auth.user };
+  const userFavoriteArtists = { ...user.favoriteArtists } || {};
+
+  if (user.uid) {
+    if (userFavoriteArtists[id]) {
+      delete userFavoriteArtists[id];
+    } else {
+      userFavoriteArtists[id] = true;
+    }
+
+    const newUserFavoriteArtists = await API.post(
+      `/users/${user.uid}/favorite`,
+      userFavoriteArtists
+    );
+
+    user.favoriteArtists = newUserFavoriteArtists;
+
+    dispatch(setUser(user));
+  }
+};

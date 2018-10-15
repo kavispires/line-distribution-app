@@ -10,6 +10,7 @@ const SET_SELECTED_ARTIST = 'SET_SELECTED_ARTIST';
 const SET_SELECTED_UNIT = 'SET_SELECTED_UNIT';
 const SET_SELECTED_UNIT_SONGS = 'SET_SELECTED_UNIT_SONGS';
 const SET_SELECTED_UNITS = 'SET_SELECTED_UNITS';
+const SET_USER_FAVORITE_ARTISTS = 'SET_USER_FAVORITE_ARTISTS';
 const SET_USER_LATEST_ARTISTS = 'SET_USER_LATEST_ARTISTS';
 
 /* --------------   ACTION CREATORS   -------------- */
@@ -26,6 +27,8 @@ export const setSelectedUnitSongs = payload => dispatch =>
   dispatch({ type: SET_SELECTED_UNIT_SONGS, payload });
 export const setSelectedUnits = payload => dispatch =>
   dispatch({ type: SET_SELECTED_UNITS, payload });
+export const setUserFavoriteArtists = payload => dispatch =>
+  dispatch({ type: SET_USER_FAVORITE_ARTISTS, payload });
 export const setUserLatestArtists = payload => dispatch =>
   dispatch({ type: SET_USER_LATEST_ARTISTS, payload });
 
@@ -38,6 +41,7 @@ export const initialState = {
   selectedUnit: {},
   selectedUnitSongs: [],
   selectedUnits: {},
+  userFavoriteArtists: {},
   userLatestArtists: [],
 };
 
@@ -71,6 +75,10 @@ export default function reducer(prevState = initialState, action) {
 
     case SET_USER_LATEST_ARTISTS:
       newState.userLatestArtists = action.payload;
+      break;
+
+    case SET_USER_FAVORITE_ARTISTS:
+      newState.userFavoriteArtists = action.payload;
       break;
 
     default:

@@ -149,7 +149,7 @@ const serializer = (schemaName, data) => {
 
   // Warn about missing keys
   if (missingKeys.length > 0) {
-    console.warn(`Missing keys on ${schemaName}: ${missingKeys.join(', ')}`);
+    // console.warn(`Missing keys on ${schemaName}: ${missingKeys.join(', ')}`);
   }
   return data;
 };

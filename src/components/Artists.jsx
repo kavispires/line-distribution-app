@@ -7,13 +7,13 @@ import CurrentArtist from './CurrentArtist';
 
 class Artists extends Component {
   componentDidMount() {
-    console.log(this.props);
     this.props.loadArtists();
     this.props.setSearchQuery('');
   }
   render() {
-    const { app, artists } = this.props;
+    const { app, artists, auth } = this.props;
     const { artistList, searchQuery, userLatestArtists } = artists;
+    const { user } = auth;
 
     let filteredArtists = artistList;
     if (searchQuery) {
@@ -22,9 +22,14 @@ class Artists extends Component {
       );
     }
 
-    console.log(searchQuery);
-
-    const handleArtistClick = () => {};
+    const handleTableClick = e => {
+      const { id } = e.target.parentNode;
+      const { className } = e.target;
+      if (id && className !== 'favorite') {
+        const artistId = id.substring(2);
+        console.warn('Updating selected artist with...', artistId);
+      }
+    };
 
     return (
       <main className="container container--artists">
@@ -47,15 +52,14 @@ class Artists extends Component {
                   <th>Members</th>
                 </tr>
               </thead>
-              <tbody onClick={e => handleArtistClick(e)}>
+              <tbody onClick={handleTableClick}>
                 {userLatestArtists.map(entry => {
-                  const unitCount = entry.units ? entry.units.length : 0;
                   return (
                     <tr key={`all-artists-${entry.id}`}>
+                      <td>{entry.artist.name}</td>
+                      <td>{entry.artist.genre}</td>
                       <td>{entry.name}</td>
-                      <td>{entry.genre}</td>
-                      <td>{unitCount}</td>
-                      <td>{entry.memberList.map(m => m.name).join(', ')}</td>
+                      <td>{entry.members.map(m => m.name).join(', ')}</td>
                     </tr>
                   );
                 })}
@@ -77,18 +81,33 @@ class Artists extends Component {
           <table className="table">
             <thead>
               <tr>
+                <th />
                 <th>Name</th>
                 <th>Genre</th>
                 <th>Units</th>
                 <th>Members</th>
               </tr>
             </thead>
-            <tbody onClick={e => handleArtistClick(e)}>
+            <tbody onClick={handleTableClick}>
               {filteredArtists.length > 0 ? (
                 filteredArtists.map(entry => {
                   const unitCount = entry.units ? entry.units.length : 0;
+
                   return (
-                    <tr key={`all-artists-${entry.id}`}>
+                    <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
+                      <td
+                        className="favorite"
+                        onClick={() =>
+                          this.props.updateFavoriteArtists(entry.id)
+                        }
+                      >
+                        {user.favoriteArtists &&
+                        user.favoriteArtists[entry.id] ? (
+                          <Icon type="heart" color="red" />
+                        ) : (
+                          <Icon type="heart-hollow" color="gray" />
+                        )}
+                      </td>
                       <td>{entry.name}</td>
                       <td>{entry.genre}</td>
                       <td>{unitCount}</td>
@@ -98,10 +117,7 @@ class Artists extends Component {
                 })
               ) : (
                 <tr>
-                  <td>No artists available within your search</td>
-                  <td />
-                  <td />
-                  <td />
+                  <td colSpan="4">No artists available within your search</td>
                 </tr>
               )}
             </tbody>
@@ -112,7 +128,14 @@ class Artists extends Component {
   }
 }
 
-Artists.propTypes = {};
+Artists.propTypes = {
+  app: PropTypes.object.isRequired,
+  artists: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  loadArtists: PropTypes.func.isRequired,
+  setSearchQuery: PropTypes.func.isRequired,
+  updateFavoriteArtists: PropTypes.func.isRequired,
+};
 
 Artists.defaultProps = {};
 

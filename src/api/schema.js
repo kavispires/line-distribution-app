@@ -171,7 +171,7 @@ export const UNIT_SCHEMA_DP = {
 
 export const USER_SCHEMA = {
   email: 'email',
-  favoriteUnits: 'list',
+  favoriteArtists: 'object',
   isAdmin: 'boolean',
   latestUnits: 'list',
   session: 'object',

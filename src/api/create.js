@@ -90,7 +90,7 @@ const create = (fullPath, body, database) => {
       if (length === 3) return POST.postUser(id, body);
       // API/users/:id/favorite
       if (length === 4 && path[3] === 'favorite')
-        return POST.postUserFavoriteUnits(id, body);
+        return POST.postUserFavoriteArtists(id, body);
       // API/users/:id/latest
       if (length === 4 && path[3] === 'latest')
         return POST.postUserLatestUnits(id, body);
@@ -286,28 +286,26 @@ const POST = {
 
     return response;
   },
-  postUserFavoriteUnits: async (id, body) => {
+  postUserFavoriteArtists: async (id, body) => {
     // Verify body
-    if (!Array.isArray(body))
-      throw new Error('Failed to update Favorite Units, data is not an array');
+    if (typeof body !== 'object' && Object.keys(body).length === 0)
+      throw new Error(
+        'Failed to update Favorite Artists, data is not an object'
+      );
 
-    let response = [];
+    let response = {};
 
     if (DB.users[id]) {
       await firebase
         .database()
         .ref()
-        .child(`/users/${id}/favoriteUnits`)
+        .child(`/users/${id}/favoriteArtists`)
         .set(body, error => {
           if (error) {
-            const message = `Failed to post Favorite Units to user ${id}`;
+            const message = `Failed to post Favorite Artists to user ${id}`;
             toastr.error(message, error);
             throw new Error(`${message}: ${error}`);
           } else {
-            toastr.success(
-              'Unit updated to Favorites successfully!',
-              `You have ${body.length} favorite artists out of 5.`
-            );
             response = body;
           }
         });
@@ -317,7 +315,7 @@ const POST = {
   postUserLatestUnits: async (id, body) => {
     // Verify body
     if (!Array.isArray(body))
-      throw new Error('Failed to update Favorite Units, data is not an array');
+      throw new Error('Failed to update Latest Units, data is not an array');
 
     let response = [];
 
