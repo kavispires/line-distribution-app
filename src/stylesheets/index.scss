@@ -9,13 +9,19 @@
 // COMPONENTS
 @import './components/containers.scss';
 @import './components/buttons.scss';
+@import './components/icons.scss';
 @import './components/header.scss';
 @import './components/loading-bar.scss';
+@import './components/pills.scss';
 @import './components/tables.scss';
 
 // PAGES
 @import './pages/artists.scss';
 @import './pages/home.scss';
+@import './pages/login-required.scss';
+
+// COLORS
+@import './components/colors.scss';
 
 // TOASTR MODULE
 @import 'react-redux-toastr/src/styles/index';

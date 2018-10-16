@@ -16,3 +16,26 @@
     background: rgba(255, 255, 255, 0.5);
   }
 }
+
+.btn-simple {
+  margin: $unit-p2;
+  color: $color-primary;
+  border-color: $color-primary;
+  background: none;
+  cursor: pointer;
+  min-height: $unit-x2;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.btn-transparent {
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+
+  &:focus {
+    outline: none;
+  }
+}

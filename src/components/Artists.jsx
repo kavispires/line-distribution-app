@@ -27,7 +27,8 @@ class Artists extends Component {
       const { className } = e.target;
       if (id && className !== 'favorite') {
         const artistId = id.substring(2);
-        console.warn('Updating selected artist with...', artistId);
+        this.props.setIsLoading(true);
+        this.props.history.push(`/artists/${artistId}`);
       }
     };
 
@@ -53,16 +54,14 @@ class Artists extends Component {
                 </tr>
               </thead>
               <tbody onClick={handleTableClick}>
-                {userLatestArtists.map(entry => {
-                  return (
-                    <tr key={`all-artists-${entry.id}`}>
-                      <td>{entry.artist.name}</td>
-                      <td>{entry.artist.genre}</td>
-                      <td>{entry.name}</td>
-                      <td>{entry.members.map(m => m.name).join(', ')}</td>
-                    </tr>
-                  );
-                })}
+                {userLatestArtists.map(entry => (
+                  <tr key={`all-artists-${entry.id}`}>
+                    <td>{entry.artist.name}</td>
+                    <td>{entry.artist.genre}</td>
+                    <td>{entry.name}</td>
+                    <td>{entry.members.map(m => m.name).join(', ')}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </section>
@@ -132,7 +131,9 @@ Artists.propTypes = {
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };

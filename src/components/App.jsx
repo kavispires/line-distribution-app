@@ -15,8 +15,14 @@ class App extends Component {
     if (nextProps.db.loaded !== this.props.db.loaded) {
       this.props.checkAuth();
 
-      if (this.props.location.pathname === '/artists') {
+      const { location } = this.props;
+
+      if (location.pathname === '/artists') {
         this.props.loadArtists();
+      }
+
+      if (location.pathname.includes('/artists/')) {
+        this.props.loadArtist(location.pathname.substr(9), location.search);
       }
     }
   }
@@ -36,6 +42,7 @@ App.propTypes = {
   checkAuth: PropTypes.func.isRequired,
   db: PropTypes.object.isRequired,
   initDB: PropTypes.func.isRequired,
+  loadArtist: PropTypes.func.isRequired,
   loadArtists: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   setIsLoading: PropTypes.func.isRequired,

@@ -53,7 +53,7 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const login = () => async dispatch => {
+export const login = () => async (dispatch, getState) => {
   dispatch(setIsLoading(true));
   base
     .auth()
@@ -73,7 +73,9 @@ export const login = () => async dispatch => {
             if (user.email === 'kavispires@gmail.com') {
               dispatch(setAdmin(true));
             }
-            dispatch(setIsLoading(false));
+            if (getState().db.loaded) {
+              dispatch(setIsLoading(false));
+            }
           }
         })
         .catch(error => {
@@ -86,7 +88,9 @@ export const login = () => async dispatch => {
           const { credential } = error;
           console.error(errorCode, errorMessage, email, credential);
           toastr.error('Oh no', errorMessage);
-          dispatch(setIsLoading(false));
+          if (getState().db.loaded) {
+            dispatch(setIsLoading(false));
+          }
         })
     );
 };

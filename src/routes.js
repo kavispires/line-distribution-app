@@ -23,8 +23,9 @@ const routes = (
   <Router>
     <div className="app">
       <AppContainer />
-      <Route path="/artist" component={ArtistContainer} />
-      <Route path="/artists" component={ArtistsContainer} />
+      <Route path="/artists/:artistId" component={ArtistContainer} />
+      <Route exact path="/artists" component={ArtistsContainer} />
+
       <Route path="/distribute" component={DistributeContainer} />
       <Route path="/lab" component={LabContainer} />
       <Route path="/learn-more" component={LearnMoreContainer} />

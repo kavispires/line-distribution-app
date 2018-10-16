@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+import { setIsLoading } from './app';
 import { API } from './db';
 
 /* ------------------   ACTIONS   ------------------ */
@@ -109,25 +110,35 @@ export const loadUserArtists = () => async (dispatch, getState) => {
   }
 };
 
-export const updateSelectedArtist = id => async dispatch => {
-  const artist = await API.get(`/artists/${id}`);
-
+export const loadArtist = (artistId, queryParams) => async (
+  dispatch,
+  getState
+) => {
+  const artist = await API.get(`/artists/${artistId}`);
   dispatch(setSelectedArtist(artist));
-  // Reset selected unit
-  dispatch(setSelectedUnit({}));
 
   // Update selected Units
-  const units = await API.get(`/artists/${id}/units`);
+  const units = await API.get(`/artists/${artistId}/units`);
   dispatch(setSelectedUnits(units));
 
-  // Reset song
-  // TO-DO: Remove this call from here. Don't use other reducer functions here
-};
+  // Reset selected unit
+  const unitsIds = units ? Object.keys(units) : [];
 
-export const updateSelectedUnit = id => async dispatch => {
-  const unit = await API.get(`/units/${id}`);
+  if (unitsIds.length > 0) {
+    let unit = { ...units[unitsIds[0]] };
 
-  dispatch(setSelectedUnit(unit));
+    if (unitsIds[queryParams]) {
+      unit = unitsIds[queryParams];
+    }
+
+    dispatch(setSelectedUnit(unit));
+  } else {
+    dispatch(setSelectedUnit({}));
+  }
+
+  if (getState().db.loaded) {
+    dispatch(setIsLoading(false));
+  }
 };
 
 export const updateLatestUnits = id => async (dispatch, getState) => {
@@ -162,4 +173,29 @@ export const updateLatestUnits = id => async (dispatch, getState) => {
 
     dispatch(setUserLatestArtists(newUserLatestArtists));
   }
+};
+
+export const updateSelectedArtist = id => async (dispatch, getState) => {
+  const artist = await API.get(`/artists/${id}`);
+
+  dispatch(setSelectedArtist(artist));
+  // Reset selected unit
+  dispatch(setSelectedUnit({}));
+
+  // Update selected Units
+  const units = await API.get(`/artists/${id}/units`);
+  dispatch(setSelectedUnits(units));
+
+  // Reset song
+  // TO-DO: Remove this call from here. Don't use other reducer functions here
+
+  if (getState().db.loaded) {
+    dispatch(setIsLoading(false));
+  }
+};
+
+export const updateSelectedUnit = id => async dispatch => {
+  const unit = await API.get(`/units/${id}`);
+
+  dispatch(setSelectedUnit(unit));
 };

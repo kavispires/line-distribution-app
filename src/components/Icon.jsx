@@ -24,7 +24,7 @@ const Icon = ({ type, size, color, inline }) => {
       height={`${size}px`}
       viewBox="0 0 100 100"
     >
-      <path style={styles.path} d={ICONS[type]} />
+      <path style={styles.path} d={ICONS[type]} className={`icon-${type}`} />
     </svg>
   );
 };
