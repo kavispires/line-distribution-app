@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Import utility functions
-import { parseBirthDate } from '../../utils';
+// Import Member components
 import MemberNationaltyFlag from './MemberNationalityFlag';
 import MemberPicture from './MemberPicture';
+// Import utility functions
+import { parseBirthDate } from '../../utils';
 
 const MemberCard = ({ member }) => {
-  console.log(member);
+  // TO-DO Avg logic
   return (
     <div className="card">
-      <MemberPicture memberId={member.id} />
+      <MemberPicture
+        gender={member.gender}
+        memberId={member.id}
+        name={member.name}
+      />
       <span className="card__color-bar">
         <span
           className={`card__color-bar--main background-${member.color.class}`}
@@ -44,7 +49,9 @@ const MemberCard = ({ member }) => {
   );
 };
 
-MemberCard.propTypes = {};
+MemberCard.propTypes = {
+  member: PropTypes.object.isRequired,
+};
 
 MemberCard.defaultProps = {};
 

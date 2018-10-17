@@ -13,12 +13,15 @@ class MemberPicture extends Component {
 
   render() {
     const pictureUrl = `${process.env.PUBLIC_URL}${PROFILE_PICTURE_URL}${
-      this.props.memberId
-    }.jpg`;
+      this.props.name
+    }${this.props.memberId}.jpg`;
+
+    const gender = this.props.gender === 'female' ? 'f' : 'm';
 
     const pictureFallback = `${
       process.env.PUBLIC_URL
-    }${PROFILE_PICTURE_URL}profile${Math.floor(Math.random() * 5) + 1}.jpg`;
+    }${PROFILE_PICTURE_URL}-profile-${gender}-${Math.floor(Math.random() * 5) +
+      1}.jpg`;
 
     if (this.state.failed) {
       return (
@@ -41,12 +44,16 @@ class MemberPicture extends Component {
 }
 
 MemberPicture.propTypes = {
-  memberId: PropTypes.string.isRequired,
   className: PropTypes.string,
+  gender: PropTypes.string,
+  memberId: PropTypes.string.isRequired,
+  name: PropTypes.string,
 };
 
 MemberPicture.defaultProps = {
   className: 'card__profile-image',
+  gender: 'female',
+  name: '',
 };
 
 export default MemberPicture;

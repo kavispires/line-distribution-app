@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FLAGS_LIST, NATIONALITY_FLAG_URL } from '../../constants';
 
 const MemberNationaltyFlag = ({ nationality }) => {
-  console.log('nationality', nationality);
   const flag = FLAGS_LIST[nationality];
 
   let flagUrl = `${process.env.PUBLIC_URL}${NATIONALITY_FLAG_URL}unknown.jpg`;
