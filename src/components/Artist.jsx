@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import components
-import LoginRequired from './LoginRequired';
 import Icon from './shared/Icon';
+import LoginRequired from './LoginRequired';
 // Import shared components
-import Tabs from './shared/Tabs';
+import FavoriteIcon from './shared/FavoriteIcon';
 import MemberCard from './member/MemberCard';
+import Tabs from './shared/Tabs';
 
 class Artist extends Component {
   componentDidMount() {
@@ -45,19 +46,17 @@ class Artist extends Component {
       <main className="container container--artist">
         <h1>
           Artist Page: {selectedArtist.name}
-          <button
-            className="btn btn-transparent"
-            onClick={() => this.props.updateFavoriteArtists(selectedArtist.id)}
-          >
-            {selectedArtist &&
-            selectedArtist.id &&
-            auth.user &&
-            auth.user.favoriteArtists[selectedArtist.id] ? (
-              <Icon type="heart" color="red" size="20" />
-            ) : (
-              <Icon type="heart-hollow" color="gray" size="20" />
-            )}
-          </button>
+          <FavoriteIcon
+            action={this.props.updateFavoriteArtists}
+            id={selectedArtist.id}
+            size="20"
+            state={
+              selectedArtist &&
+              selectedArtist.id &&
+              auth.user &&
+              auth.user.favoriteArtists[selectedArtist.id]
+            }
+          />
         </h1>
         <section className="artist__section">
           <p>

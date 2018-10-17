@@ -16,6 +16,12 @@ const MemberCard = ({ member }) => {
         memberId={member.id}
         name={member.name}
       />
+      {/* <FavoriteIcon
+        action={this.props.updateFavoriteArtists}
+        id={entry.id}
+        size="12"
+        state={user.favoriteArtists && user.favoriteArtists[entry.id]}
+      /> */}
       <span className="card__color-bar">
         <span
           className={`card__color-bar--main background-${member.color.class}`}

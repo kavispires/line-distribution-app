@@ -5,6 +5,7 @@ import _ from 'lodash';
 // Import components
 import CurrentArtist from './CurrentArtist';
 // Import shared components
+import FavoriteIcon from './shared/FavoriteIcon';
 import Icon from './shared/Icon';
 
 class Artists extends Component {
@@ -96,18 +97,16 @@ class Artists extends Component {
 
                   return (
                     <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
-                      <td
-                        className="favorite"
-                        onClick={() =>
-                          this.props.updateFavoriteArtists(entry.id)
-                        }
-                      >
-                        {user.favoriteArtists &&
-                        user.favoriteArtists[entry.id] ? (
-                          <Icon type="heart" color="red" />
-                        ) : (
-                          <Icon type="heart-hollow" color="gray" />
-                        )}
+                      <td className="favorite">
+                        <FavoriteIcon
+                          action={this.props.updateFavoriteArtists}
+                          id={entry.id}
+                          size="12"
+                          state={
+                            user.favoriteArtists &&
+                            user.favoriteArtists[entry.id]
+                          }
+                        />
                       </td>
                       <td>{entry.name}</td>
                       <td>{entry.genre}</td>
