@@ -14,8 +14,10 @@
 @import './components/loading-bar.scss';
 @import './components/pills.scss';
 @import './components/tables.scss';
+@import './components/tabs.scss';
 
 // PAGES
+@import './pages/artist.scss';
 @import './pages/artists.scss';
 @import './pages/home.scss';
 @import './pages/login-required.scss';

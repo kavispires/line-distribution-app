@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Icon from './Icon';
+// Import components
 import CurrentArtist from './CurrentArtist';
+// Import shared components
+import Icon from './shared/Icon';
 
 class Artists extends Component {
   componentDidMount() {

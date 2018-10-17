@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ICONS, DEFAULT_COLORS } from '../constants';
+import { ICONS, DEFAULT_COLORS } from '../../constants';
 
 const Icon = ({ type, size, color, inline }) => {
   const margin = inline ? '0 3px' : 0;

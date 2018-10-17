@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import logo from '../images/logo-neg.svg';
 
-import Icon from './Icon';
+import Icon from './shared/Icon';
 
 const LoginRequired = ({ login }) => (
   <main className="container container--flex container--center container--login-required">

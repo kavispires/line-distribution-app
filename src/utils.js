@@ -115,3 +115,16 @@ export const ensureColorUniqueness = members => {
   });
   return refactoredMembers;
 };
+
+export const capitalizeWord = (str, separator = ' ') =>
+  str
+    .toString()
+    .split(separator)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(separator);
+
+export const spinalCaseWord = str =>
+  str
+    .toLowerCase()
+    .split(' ')
+    .join('-');

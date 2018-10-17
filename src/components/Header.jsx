@@ -3,9 +3,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+// Import shared components
+import Icon from './shared/Icon';
+// Import images
 import logo from '../images/logo.svg';
 import userPlaceholder from '../images/user-placeholder.svg';
-import Icon from './Icon';
 
 const Header = ({ props }) => {
   const handleLogoClick = () => {

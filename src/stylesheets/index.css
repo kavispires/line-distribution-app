@@ -455,6 +455,66 @@ p {
   margin-bottom: 12px;
 }
 
+.tabs {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  border-bottom: #ebebf2 1px solid;
+  padding: 0;
+  margin-bottom: 0;
+}
+.tabs__tab {
+  background: #ebebf2;
+  padding: 6px 24px;
+  cursor: pointer;
+}
+.tabs__tab:first-child {
+  border-top-left-radius: 3px;
+}
+.tabs__tab:last-child {
+  border-top-right-radius: 3px;
+}
+.tabs__tab:hover {
+  background: #b5b5ba;
+}
+.tabs__tab--selected {
+  font-weight: bold;
+  color: #598ffd;
+  border: 1px solid #ebebf2;
+  border-bottom: 2px solid #ffffff;
+  background: #ffffff;
+  transform: translateY(2px);
+  z-index: 10;
+}
+.tabs__tab--selected:hover {
+  background: inherit;
+  cursor: auto;
+}
+.tabs__content {
+  border-left: #ebebf2 1px solid;
+  border-right: #ebebf2 1px solid;
+  padding: 12px 6px;
+}
+
+.artist__section {
+  margin: 12px 0;
+}
+
+.unit-section {
+  display: flex;
+}
+.unit-section__group {
+  width: 50%;
+}
+.unit-section__group--right .btn {
+  display: block;
+  float: right;
+  clear: both;
+  min-width: 120px;
+  min-width: 120px;
+  margin-bottom: 6px;
+}
+
 .artists__section {
   width: 100%;
   overflow: auto;

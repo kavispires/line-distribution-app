@@ -5,7 +5,7 @@ import logo from '../images/logo-alt.svg';
 
 import { YOUTUBE_URLS } from '../constants';
 
-import Icon from './Icon';
+import Icon from './shared/Icon';
 
 const Home = props => {
   const youtubeUrl =

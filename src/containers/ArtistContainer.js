@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import Artist from '../components/Artist';
-import { loadArtist } from '../reducers/artists';
+import { loadArtist, switchUnitsTab } from '../reducers/artists';
 import { login, updateFavoriteArtists } from '../reducers/auth';
 
 const mapStateToProps = state => ({
@@ -15,6 +15,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadArtist,
   login,
+  switchUnitsTab,
   updateFavoriteArtists,
 };
 
