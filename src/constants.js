@@ -1,3 +1,29 @@
+export const DEFAULT_COLORS = {
+  default: '#000000',
+  black: '#000000',
+  blue: '#598ffd',
+  gray: '#707070',
+  green: '#49d156',
+  orange: '#fea245',
+  pink: '#fb9cf0',
+  purple: '#9e8ef0',
+  red: '#d14949',
+  teal: '#34ac9e',
+  white: 'FFFFFF',
+  yellow: '#ffd700',
+};
+
+export const FLAGS_LIST = {
+  american: 'usa',
+  brazilian: 'brazil',
+  canadian: 'canada',
+  chinese: 'china',
+  japanese: 'japan',
+  korean: 'korea',
+  taiwanese: 'taiwan',
+  thai: 'thailand',
+};
+
 export const ICONS = {
   check:
     'M50,0C22.5,0,0,22.5,0,50s22.5,50,50,50s50-22.5,50-50S77.5,0,50,0z M75.6,41.2L47.5,73.1 c-1.2,1.2-3.1,1.2-4.4,0.6L23.1,60c-1.9-1.3-1.9-3.1-0.6-4.4l6.2-8.8c0.6-1.9,2.5-1.9,4.4-1.2l6.9,5c1.2,1.2,3.1,0.6,4.4-0.6 l18.1-20c1.2-1.2,3.1-1.2,4.4,0l8.1,6.9C76.2,38.1,76.2,40,75.6,41.2z',
@@ -13,19 +39,8 @@ export const ICONS = {
     'M0,27l0,21l0,4l0,21c0,9.7,5,14.4,9.1,16.7c4.3,2.3,8.4,2.3,8.9,2.3h20c2.2,0,4-1.8,4-4s-1.8-4-4-4H18c-1.6,0-10-0.7-10-11 V52v-4V27c0-10.3,8.4-11,10-11h20c2.2,0,4-1.8,4-4s-1.8-4-4-4H18C13,8,0,11.4,0,27z M100.2,50c0,1.1-0.5,2.1-1.4,3L63.4,88.4 c-0.9,0.9-1.9,1.4-3,1.4c-1.1,0-2.1-0.5-3-1.4c-0.8-0.8-1.1-1.8-1.1-3V66.7H27.1c-0.9,0-1.9-0.4-3-1.1c-0.8-0.8-1.1-1.8-1.1-3V37.4 c0-1.2,0.4-2.2,1.1-3c1.1-0.8,2.1-1.1,3-1.1h29.2V14.6c0-1.2,0.4-2.2,1.1-3c0.9-0.9,1.9-1.4,3-1.4c1.1,0,2.1,0.5,3,1.4L98.8,47 C99.7,47.9,100.2,48.9,100.2,50z',
 };
 
-export const DEFAULT_COLORS = {
-  default: '#000000',
-  black: '#000000',
-  blue: '#598ffd',
-  gray: '#707070',
-  green: '#49d156',
-  orange: '#fea245',
-  pink: '#fb9cf0',
-  purple: '#9e8ef0',
-  red: '#d14949',
-  teal: '#34ac9e',
-  white: 'FFFFFF',
-  yellow: '#ffd700',
-};
+export const NATIONALITY_FLAG_URL = '/images/flags/';
+
+export const PROFILE_PICTURE_URL = '/images/profiles/';
 
 export const YOUTUBE_URLS = ['cudssvDuOpc'];

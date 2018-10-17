@@ -7,6 +7,7 @@ import LoginRequired from './LoginRequired';
 import Icon from './shared/Icon';
 // Import shared components
 import Tabs from './shared/Tabs';
+import MemberCard from './member/MemberCard';
 
 class Artist extends Component {
   componentDidMount() {
@@ -88,8 +89,8 @@ class Artist extends Component {
               icon={<Icon type="check" color="blue" inline />}
             />
             <div className="tabs__content">
-              <section className="unit-section">
-                <div className="unit-section__group">
+              <section className="unit-section__top">
+                <div className="unit-section__summary">
                   <p>
                     <b>Debut Year:</b> {selectedUnit.debutYear}
                   </p>
@@ -100,7 +101,7 @@ class Artist extends Component {
                     <b>Total Number of Songs:</b> NUMBER
                   </p>
                 </div>
-                <div className="unit-section__group unit-section__group--right">
+                <div className="unit-section__actions">
                   <button className="btn">Load Song</button>
                   <button className="btn">PLACEHOLDER</button>
                   <button className="btn">PLACEHOLDER</button>
@@ -110,11 +111,11 @@ class Artist extends Component {
               {selectedUnit.members && selectedUnit.members.length > 0 ? (
                 <section className="unit-section">
                   <h3>Members</h3>
-                  <ul className="unit-section__group unit-section__group--members">
-                    {selectedUnit.members.map(member => {
-                      return <li key={member.id}>{member.name}</li>;
-                    })}
-                  </ul>
+                  <div className="unit-section__members">
+                    {selectedUnit.members.map(member => (
+                      <MemberCard key={member.id} member={member} />
+                    ))}
+                  </div>
                 </section>
               ) : null}
             </div>

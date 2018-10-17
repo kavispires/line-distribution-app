@@ -496,23 +496,85 @@ p {
   padding: 12px 6px;
 }
 
+.card {
+  width: 18%;
+  min-width: 200px;
+  max-width: 250px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  padding: 6px;
+  background: #ffffff;
+  border-right: 1px solid #ebebf2;
+  border-bottom: 1px solid #ebebf2;
+}
+.card__profile-image {
+  display: block;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  height: 40px;
+  transition: height 0.3s ease-in-out;
+}
+.card__profile-image:hover {
+  object-fit: fill;
+  height: auto;
+}
+.card__color-bar {
+  width: 100%;
+  display: flex;
+  height: 6px;
+}
+.card__color-bar--main {
+  display: block;
+  width: calc(100% - 6px);
+  height: 6px;
+}
+.card__color-bar--alt {
+  display: block;
+  height: 6px;
+  width: 6px;
+}
+.card__name {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0;
+  bottom: -1.5em;
+  color: #000;
+  font-size: 1.5em;
+}
+.card__flag {
+  height: 13px;
+  width: auto;
+  transform: translateY(3px);
+}
+
 .artist__section {
   margin: 12px 0;
 }
 
-.unit-section {
+.unit-section__top {
   display: flex;
 }
-.unit-section__group {
+
+.unit-section__summary {
   width: 50%;
 }
-.unit-section__group--right .btn {
+
+.unit-section__actions {
+  width: 50%;
+}
+.unit-section__actions .btn {
   display: block;
   float: right;
   clear: both;
   min-width: 120px;
   min-width: 120px;
   margin-bottom: 6px;
+}
+
+.unit-section__members {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .artists__section {

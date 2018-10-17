@@ -128,3 +128,17 @@ export const spinalCaseWord = str =>
     .toLowerCase()
     .split(' ')
     .join('-');
+
+export const parseBirthDate = d => {
+  const date = `${d}`;
+  if (date.length < 5) {
+    return date;
+  }
+  if (date.length === 8) {
+    const year = date.substring(0, 4);
+    const month = date.substring(4, 6);
+    const day = date.substring(6);
+    return `${month}/${day}/${year}`;
+  }
+  return '?';
+};
