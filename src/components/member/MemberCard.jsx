@@ -6,8 +6,9 @@ import MemberNationaltyFlag from './MemberNationalityFlag';
 import MemberPicture from './MemberPicture';
 // Import utility functions
 import { parseBirthDate } from '../../utils';
+import FavoriteIcon from '../shared/FavoriteIcon';
 
-const MemberCard = ({ member }) => {
+const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
   // TO-DO Avg logic
   return (
     <div className="card">
@@ -30,7 +31,15 @@ const MemberCard = ({ member }) => {
           className={`card__color-bar--alt background-${member.altColor.class}`}
         />
       </span>
-      <h3 className="card__name">{member.name}</h3>
+      <h3 className="card__name">
+        {member.name}
+        <FavoriteIcon
+          action={updateFavoriteMembers}
+          id={member.id}
+          size="20"
+          state={favoriteState}
+        />
+      </h3>
       <p>
         <b>Date of Birth:</b> {parseBirthDate(member.birthdate)}
       </p>
@@ -56,9 +65,13 @@ const MemberCard = ({ member }) => {
 };
 
 MemberCard.propTypes = {
+  favoriteState: PropTypes.bool,
   member: PropTypes.object.isRequired,
+  updateFavoriteMembers: PropTypes.func.isRequired,
 };
 
-MemberCard.defaultProps = {};
+MemberCard.defaultProps = {
+  favoriteState: false,
+};
 
 export default MemberCard;

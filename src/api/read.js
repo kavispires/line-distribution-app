@@ -107,9 +107,12 @@ const read = (fullPath, database, testing = false) => {
     case 'users':
       // API/users/:id
       if (length === 3) return GET.fetchUser(path[2]);
-      // API/users/:id/favorite
-      if (length === 4 && path[3] === 'favorite')
+      // API/users/:id/favorite-artists
+      if (length === 4 && path[3] === 'favorite-artists')
         return GET.fetchUserFavoriteArtists(path[2]);
+      // API/users/:id/favorite-members
+      if (length === 4 && path[3] === 'favorite-members')
+        return GET.fetchUserFavoriteMembers(path[2]);
       // API/users/:id/latest
       if (length === 4 && path[3] === 'latest')
         return GET.fetchUserLatestUnits(path[2]);
@@ -378,9 +381,18 @@ const GET = {
   fetchUserFavoriteArtists: id => {
     let response = [];
     try {
-      response = GET.fetchUser(id).favorite;
+      response = GET.fetchUser(id).favoriteArtists;
     } catch (error) {
-      throw new Error(`Failed to get favorite units for user: ${id}`);
+      throw new Error(`Failed to get favorite artists for user: ${id}`);
+    }
+    return response;
+  },
+  fetchUserFavoriteMembers: id => {
+    let response = [];
+    try {
+      response = GET.fetchUser(id).favoriteMembers;
+    } catch (error) {
+      throw new Error(`Failed to get favorite members for user: ${id}`);
     }
     return response;
   },

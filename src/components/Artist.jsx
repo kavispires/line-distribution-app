@@ -112,7 +112,12 @@ class Artist extends Component {
                   <h3>Members</h3>
                   <div className="unit-section__members">
                     {selectedUnit.members.map(member => (
-                      <MemberCard key={member.id} member={member} />
+                      <MemberCard
+                        key={member.id}
+                        favoriteState={auth.user.favoriteMembers[member.id]}
+                        member={member}
+                        updateFavoriteMembers={this.props.updateFavoriteMembers}
+                      />
                     ))}
                   </div>
                 </section>
@@ -136,6 +141,7 @@ Artist.propTypes = {
   match: PropTypes.object.isRequired,
   switchUnitsTab: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
+  updateFavoriteMembers: PropTypes.func.isRequired,
 };
 
 Artist.defaultProps = {};

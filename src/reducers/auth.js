@@ -167,10 +167,34 @@ export const updateFavoriteArtists = id => async (dispatch, getState) => {
     }
 
     const newUserFavoriteArtists = await API.post(
-      `/users/${user.uid}/favorite`,
+      `/users/${user.uid}/favorite-artists`,
       userFavoriteArtists
     );
 
+    user.favoriteArtists = newUserFavoriteArtists;
+
+    dispatch(setUser(user));
+  }
+};
+
+export const updateFavoriteMembers = id => async (dispatch, getState) => {
+  const user = { ...getState().auth.user };
+  const userFavoriteMembers = { ...user.favoriteMembers } || {};
+  console.log('userFavoriteMembers', userFavoriteMembers);
+  console.log('id', id);
+
+  if (user.uid) {
+    if (userFavoriteMembers[id]) {
+      delete userFavoriteMembers[id];
+    } else {
+      userFavoriteMembers[id] = true;
+    }
+
+    const newUserFavoriteArtists = await API.post(
+      `/users/${user.uid}/favorite-members`,
+      userFavoriteMembers
+    );
+    console.log('newUserFavoriteArtists', newUserFavoriteArtists);
     user.favoriteArtists = newUserFavoriteArtists;
 
     dispatch(setUser(user));

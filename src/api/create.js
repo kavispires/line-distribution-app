@@ -88,9 +88,12 @@ const create = (fullPath, body, database) => {
     case 'users':
       // API/users/:id
       if (length === 3) return POST.postUser(id, body);
-      // API/users/:id/favorite
-      if (length === 4 && path[3] === 'favorite')
+      // API/users/:id/favorite-artists
+      if (length === 4 && path[3] === 'favorite-artists')
         return POST.postUserFavoriteArtists(id, body);
+      // API/users/:id/favorite-members
+      if (length === 4 && path[3] === 'favorite-members')
+        return POST.postUserFavoriteMembers(id, body);
       // API/users/:id/latest
       if (length === 4 && path[3] === 'latest')
         return POST.postUserLatestUnits(id, body);
@@ -310,6 +313,33 @@ const POST = {
           }
         });
     }
+    return response;
+  },
+  postUserFavoriteMembers: async (id, body) => {
+    // Verify body
+    if (typeof body !== 'object' && Object.keys(body).length === 0)
+      throw new Error(
+        'Failed to update Favorite Members, data is not an object'
+      );
+    console.log('body', body);
+    let response = {};
+
+    if (DB.users[id]) {
+      await firebase
+        .database()
+        .ref()
+        .child(`/users/${id}/favoriteMembers`)
+        .set(body, error => {
+          if (error) {
+            const message = `Failed to post Favorite Members to user ${id}`;
+            toastr.error(message, error);
+            throw new Error(`${message}: ${error}`);
+          } else {
+            response = body;
+          }
+        });
+    }
+    // console.log('response', response);
     return response;
   },
   postUserLatestUnits: async (id, body) => {
