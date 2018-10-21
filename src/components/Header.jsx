@@ -42,6 +42,12 @@ const Header = ({ props }) => {
           <Link to="/songs" className={pathname === '/songs' ? 'active' : ''}>
             Songs
           </Link>
+          <Link
+            to="/members"
+            className={pathname === '/members' ? 'active' : ''}
+          >
+            Members
+          </Link>
           <Link to="/lab" className={pathname === '/lab' ? 'active' : ''}>
             Lab
           </Link>

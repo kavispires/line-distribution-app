@@ -11,6 +11,8 @@ import IconSheetContainer from './containers/IconSheetContainer';
 import LabContainer from './containers/LabContainer';
 import LearnMoreContainer from './containers/LearnMoreContainer';
 import ManageContainer from './containers/ManageContainer';
+import MemberContainer from './containers/MemberContainer';
+import MembersContainer from './containers/MembersContainer';
 import MyArtistsContainer from './containers/MyArtistsContainer';
 import MyDistributionsContainer from './containers/MyDistributionsContainer';
 import SongsContainer from './containers/SongsContainer';
@@ -25,10 +27,11 @@ const routes = (
       <AppContainer />
       <Route path="/artists/:artistId" component={ArtistContainer} />
       <Route exact path="/artists" component={ArtistsContainer} />
-
       <Route path="/distribute" component={DistributeContainer} />
       <Route path="/lab" component={LabContainer} />
       <Route path="/learn-more" component={LearnMoreContainer} />
+      <Route path="/member/:memberId" component={MemberContainer} />
+      <Route path="/members" component={MembersContainer} />
       <Route path="/songs" component={SongsContainer} />
 
       <Route path="/admin/color-sheet" component={ColorSheetContainer} />
