@@ -1,6 +1,6 @@
 import { base } from '../firebase';
 
-import { setIsLoading } from './app';
+import { setLoading } from './app';
 
 import API_CREATE from '../api/create';
 import API_DESTROY from '../api/destroy';
@@ -45,6 +45,7 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const initDB = () => dispatch => {
+  dispatch(setLoading(true, 'db'));
   // Initiate firebase db
   dbRef = base.database().ref();
   const time = Date.now();
@@ -52,7 +53,7 @@ export const initDB = () => dispatch => {
   dbRef.on('value', snap => {
     DB = snap.val();
     dispatch(setLoaded(true));
-    dispatch(setIsLoading(false));
+    dispatch(setLoading(false, 'db'));
     console.log(`Database successfully loaded in ${Date.now() - time} ms`); // eslint-disable-line
   });
 };

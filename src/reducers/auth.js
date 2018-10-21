@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import { toastr } from 'react-redux-toastr';
 import { base, googleProvider } from '../firebase';
 
-import { setIsLoading } from './app';
+import { setLoading } from './app';
 import { API } from './db';
 
 /* ------------------   ACTIONS   ------------------ */
@@ -54,7 +54,7 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const login = () => async (dispatch, getState) => {
-  dispatch(setIsLoading(true));
+  dispatch(setLoading(true, 'auth'));
   base
     .auth()
     .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -74,7 +74,7 @@ export const login = () => async (dispatch, getState) => {
               dispatch(setAdmin(true));
             }
             if (getState().db.loaded) {
-              dispatch(setIsLoading(false));
+              dispatch(setLoading(false, 'auth'));
             }
           }
         })
@@ -89,7 +89,7 @@ export const login = () => async (dispatch, getState) => {
           console.error(errorCode, errorMessage, email, credential);
           toastr.error('Oh no', errorMessage);
           if (getState().db.loaded) {
-            dispatch(setIsLoading(false));
+            dispatch(setLoading(false, 'auth'));
           }
         })
     );
@@ -180,8 +180,6 @@ export const updateFavoriteArtists = id => async (dispatch, getState) => {
 export const updateFavoriteMembers = id => async (dispatch, getState) => {
   const user = { ...getState().auth.user };
   const userFavoriteMembers = { ...user.favoriteMembers } || {};
-  console.log('userFavoriteMembers', userFavoriteMembers);
-  console.log('id', id);
 
   if (user.uid) {
     if (userFavoriteMembers[id]) {
@@ -194,7 +192,6 @@ export const updateFavoriteMembers = id => async (dispatch, getState) => {
       `/users/${user.uid}/favorite-members`,
       userFavoriteMembers
     );
-    console.log('newUserFavoriteArtists', newUserFavoriteArtists);
     user.favoriteArtists = newUserFavoriteArtists;
 
     dispatch(setUser(user));

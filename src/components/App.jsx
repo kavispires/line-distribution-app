@@ -6,7 +6,6 @@ import LoadingBar from './LoadingBar';
 
 class App extends Component {
   componentDidMount() {
-    this.props.setIsLoading(true);
     this.props.initDB();
     this.props.checkAuth();
   }
@@ -45,7 +44,6 @@ App.propTypes = {
   loadArtist: PropTypes.func.isRequired,
   loadArtists: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  setIsLoading: PropTypes.func.isRequired,
 };
 
 export default App;

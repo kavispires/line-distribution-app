@@ -30,7 +30,6 @@ class Artists extends Component {
       const { className } = e.target;
       if (id && className !== 'favorite') {
         const artistId = id.substring(2);
-        this.props.setIsLoading(true);
         this.props.history.push(`/artists/${artistId}`);
       }
     };
@@ -134,7 +133,6 @@ Artists.propTypes = {
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
-  setIsLoading: PropTypes.func.isRequired,
   setSearchQuery: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };

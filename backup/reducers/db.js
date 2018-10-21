@@ -10,6 +10,7 @@ import API_READ from '../api/read';
 import API_UPDATE from '../api/update';
 
 import { ensureColorUniqueness } from '../utils';
+import { setLoading } from '../../src/reducers/app';
 
 /* ------------------   FIREBASE   ----------------- */
 
@@ -49,6 +50,7 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const initDB = () => dispatch => {
+  dispatch(setLoading(true, 'db'));
   // Initiate firebase db
   dbRef = base.database().ref();
   const time = Date.now();
@@ -56,6 +58,7 @@ export const initDB = () => dispatch => {
   dbRef.on('value', snap => {
     DB = snap.val();
     dispatch(setLoaded(true));
+    dispatch(setLoading(false, 'db'));
     console.log(`Database successfully loaded in ${Date.now() - time} ms`); // eslint-disable-line
   });
 };

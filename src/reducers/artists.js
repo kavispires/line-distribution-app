@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { setIsLoading } from './app';
+import { setLoading } from './app';
 import { API } from './db';
 
 /* ------------------   ACTIONS   ------------------ */
@@ -92,6 +92,7 @@ export default function reducer(prevState = initialState, action) {
 /* ---------------   DISPATCHERS   ----------------- */
 
 export const loadArtists = () => async dispatch => {
+  dispatch(setLoading(true, 'artists'));
   const artistList = await API.get('/artists');
 
   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
@@ -100,6 +101,7 @@ export const loadArtists = () => async dispatch => {
 
   // Also, load latest artists, and favorite units
   dispatch(loadUserArtists());
+  dispatch(setLoading(false, 'artists'));
 };
 
 export const loadUserArtists = () => async (dispatch, getState) => {
@@ -114,6 +116,7 @@ export const loadArtist = (artistId, queryParams) => async (
   dispatch,
   getState
 ) => {
+  dispatch(setLoading(true, 'artist'));
   const artist = await API.get(`/artists/${artistId}`);
 
   // Update selected Units
@@ -136,9 +139,7 @@ export const loadArtist = (artistId, queryParams) => async (
   dispatch(setSelectedUnits(units));
   dispatch(setSelectedArtist(artist));
 
-  if (getState().db.loaded) {
-    dispatch(setIsLoading(false));
-  }
+  dispatch(setLoading(false, 'artist'));
 };
 
 export const updateLatestUnits = id => async (dispatch, getState) => {
