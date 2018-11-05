@@ -2,6 +2,10 @@
 
 For a live version of this project, click [here](http://www.kavispires.com/line-distribution-app/#/)
 
+## Bugs
+
+- Favorite Member button does not update
+
 ## Sitemap
 
 - Home
