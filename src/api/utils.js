@@ -65,4 +65,44 @@ export class NewResponse {
   }
 }
 
-export const placeholder = () => {};
+export const breadcrumble = path => {
+  if (!path) {
+    throw new Error(
+      `${HttpStatus.UNAUTHORIZED}: A path is required to make api requests`
+    );
+  }
+
+  if (typeof path !== 'string') {
+    throw new Error(
+      `${HttpStatus.BAD_REQUEST}: Breadcrumble path argument must be a string`
+    );
+  }
+
+  const urlSplit = path.split('?');
+  const fullPath = urlSplit[0].split('/');
+  const queryParams = urlSplit[1] || null;
+  const queryResult = {};
+
+  if (queryParams) {
+    const querySplit = queryParams.split('&');
+    for (let i = 0; i < querySplit.length; i++) {
+      const subQuery = querySplit[i].split('=');
+      if (subQuery.length === 2) {
+        const queryName = subQuery[0];
+        let queryValue = subQuery[1];
+        if (queryValue.includes(',')) {
+          queryValue = queryValue.split(',');
+        }
+        queryResult[queryName] = queryValue;
+      }
+    }
+  }
+
+  return {
+    length: fullPath.length - 1,
+    root: fullPath[1],
+    referenceId: fullPath[2] || null,
+    subPath: fullPath[3] || null,
+    queryParams: Object.keys(queryResult).length > 0 ? queryResult : null,
+  };
+};

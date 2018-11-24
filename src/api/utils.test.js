@@ -115,4 +115,88 @@ describe('API/Utils', () => {
       expect(catcher).toThrowError('500: No data provided by the api');
     });
   });
+
+  describe('Breadcrumble', () => {
+    it('it throws an error if no path is provided', () => {
+      function catcher() {
+        breadcrumble();
+      }
+
+      expect(catcher).toThrowError(
+        '401: A path is required to make api requests'
+      );
+    });
+
+    it('it throws an error if no path is not a string', () => {
+      function catcher() {
+        breadcrumble(123);
+      }
+
+      expect(catcher).toThrowError(
+        '400: Breadcrumble path argument must be a string'
+      );
+    });
+
+    it('it returns the expected breadcrumble object', () => {
+      const result = breadcrumble('/artists');
+
+      expect(result).toStrictEqual({
+        length: 1,
+        root: 'artists',
+        referenceId: null,
+        subPath: null,
+        queryParams: null,
+      });
+    });
+
+    it('it treats the second part of the path as a reference id', () => {
+      const result = breadcrumble('/artists/123');
+
+      expect(result).toStrictEqual({
+        length: 2,
+        root: 'artists',
+        referenceId: '123',
+        subPath: null,
+        queryParams: null,
+      });
+    });
+
+    it('it treats the third part of the path as a subpath', () => {
+      const result = breadcrumble('/artists/123/units');
+
+      expect(result).toStrictEqual({
+        length: 3,
+        root: 'artists',
+        referenceId: '123',
+        subPath: 'units',
+        queryParams: null,
+      });
+    });
+
+    it('it accepts query params', () => {
+      const result = breadcrumble('/artists/123/units?units=123,456');
+
+      expect(result).toStrictEqual({
+        length: 3,
+        root: 'artists',
+        referenceId: '123',
+        subPath: 'units',
+        queryParams: { units: ['123', '456'] },
+      });
+    });
+
+    it('it accepts more than one query param', () => {
+      const result = breadcrumble(
+        '/artists/123/units?units=123,456,789&user=1'
+      );
+
+      expect(result).toStrictEqual({
+        length: 3,
+        root: 'artists',
+        referenceId: '123',
+        subPath: 'units',
+        queryParams: { units: ['123', '456', '789'], user: '1' },
+      });
+    });
+  });
 });
