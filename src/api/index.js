@@ -49,9 +49,6 @@ export class API {
    * @returns {Boolean}
    */
   async init() {
-    if (this.testing) {
-    }
-
     console.warn('Running init...');
     const response = new NewResponse();
 
@@ -94,18 +91,36 @@ export class API {
   }
 
   async login() {
-    console.warn('Running login...', this);
+    console.warn('Running login...');
     const response = new NewResponse();
+
+    let result;
+    try {
+      await fb.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+      result = await fb.auth().signInWithPopup(googleProvider);
+    } catch (error) {
+      response.error(error.code, error.message);
+      return response.resolve();
+    }
+
+    try {
+      const { user } = result;
+      if (user.emailVerified) {
+        this.authenticated = true;
+        // TO-DO: merge user: create or fetch
+
+        // TO-DO: Check for admin
+      }
+    } catch (error) {
+      console.error(error);
+    }
 
     return response.resolve();
   }
 
   async logoff() {
     console.warn('Running logout...', this);
-
-    const response = new NewResponse();
-
-    return response.resolve();
   }
 
   async get(path) {
@@ -114,6 +129,77 @@ export class API {
     if (!this.loaded || !this.authenticated) {
       return this.throwDBError('GET');
     }
+
+    const route = breadcrumble(path);
+
+    let result;
+
+    switch (route.root) {
+      // API/users
+      case 'users':
+        // API/users/<id>
+        result = getFunctions.fetchUser();
+        break;
+      // API/aritsts
+      case 'artists':
+        // API/artists/<id>/units
+        if (route.referenceId && route.subPath === 'units') {
+          // TO-DO: fetch artists units
+        }
+        // API/artists/<id>
+        else if (route.referenceId) {
+          // TO-DO: fetch artist
+        }
+        // API/aritsts
+        else {
+          // TO-DO: fetch all artists
+        }
+        break;
+      // API/units
+      case 'units':
+        // API/units/<id>/distributions
+        if (route.referenceId && route.subPath === 'distributions') {
+          // TO-DO: fetch units distributions
+        }
+        // API/units/<id>/members
+        else if (route.referenceId && route.subPath === 'units') {
+          // TO-DO: fetch units members
+        }
+        // API/units/<id>
+        else if (route.referenceId) {
+          // TO-DO: fetch unit
+        }
+        break;
+      case 'members':
+        // API/members/<id>
+        if (route.referenceId) {
+          // TO-DO: fetch member
+        }
+        break;
+      // API/songs
+      case 'songs':
+        // API/songs/<id>
+        if (route.referenceId) {
+          // TO-DO: fetch song
+        }
+        // API/songs
+        else {
+          // TO-DO: fetch all songs
+        }
+        break;
+      // API/positions
+      case 'positions':
+        // TO-DO: fetch all positions
+        break;
+      // API/colors
+      case 'colors':
+        // TO-DO: fetch all colors
+        break;
+      default:
+        return this.throwPathError('path');
+    }
+
+    const response = new NewResponse();
   }
 
   async post(path, body) {
