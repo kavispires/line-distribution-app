@@ -1,3 +1,5 @@
+/* eslint arrow-body-style: 0 */
+
 import { buildArtistQuery, buildMemberInitials } from './utils';
 
 const UNKNOWN = 'UNKNOWN';
@@ -48,9 +50,9 @@ export const serialize = {
       id: data.id || id,
       type: 'member',
       attributes: {
-        altColorId: data.colorId || null,
+        altColorId: data.altColorId || null,
         birthdate: data.birthdate || 0,
-        colorId: data.colorId || null,
+        colorId: data.colorId,
         createdBy: data.createdBy || null,
         gender: data.gender || UNKNOWN,
         initials: data.initials || buildMemberInitials(data.name),
@@ -91,6 +93,7 @@ export const serialize = {
         distributions: data.distributions || [],
         distributions_legacy: data.distributions_legacy || [],
         name: data.name,
+        members: data.members || [],
         official: data.official || false,
         private: data.private || false,
       },
@@ -116,4 +119,4 @@ export const serialize = {
 };
 
 export const serializeCollection = (object, type) =>
-  Object.keys(object).map(key => serialize[type](object[key], object[key].id));
+  Object.keys(object).map(key => serialize[type](object[key], key));
