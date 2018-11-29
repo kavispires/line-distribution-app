@@ -1,4 +1,9 @@
-import { NewResponse, breadcrumble } from './utils';
+import {
+  NewResponse,
+  breadcrumble,
+  buildArtistQuery,
+  buildMemberInitials,
+} from './utils';
 
 let response;
 
@@ -17,6 +22,11 @@ describe('API/Utils', () => {
 
     it('its status method sets a status code', () => {
       response.status(200);
+      expect(response.statusCode).toEqual(200);
+    });
+
+    it('its ok method sets a status code to 200', () => {
+      response.ok();
       expect(response.statusCode).toEqual(200);
     });
 
@@ -197,6 +207,49 @@ describe('API/Utils', () => {
         subPath: 'units',
         queryParams: { units: ['123', '456', '789'], user: '1' },
       });
+    });
+  });
+
+  describe('buildArtistQuery', () => {
+    it('it builds a correct querry', () => {
+      const data = {
+        name: 'test',
+        otherNames: 'testie',
+        memberList: [{ name: 'testing' }, { name: 'tested' }],
+      };
+      const res = buildArtistQuery(data);
+
+      expect(res).toEqual('test testie testing tested');
+    });
+
+    it('its otherNames data value is optional', () => {
+      const data = {
+        name: 'test',
+        memberList: [{ name: 'testing' }, { name: 'tested' }],
+      };
+      const res = buildArtistQuery(data);
+
+      expect(res).toEqual('test  testing tested');
+    });
+
+    it('its memberList data value is optional', () => {
+      const data = {
+        name: 'test',
+        otherNames: 'testie',
+      };
+      const res = buildArtistQuery(data);
+
+      expect(res).toEqual('test testie ');
+    });
+  });
+
+  describe('buildMemberInitials', () => {
+    it('it builds member initials correctly', () => {
+      expect(buildMemberInitials('test')).toEqual('TS');
+      expect(buildMemberInitials('christopher')).toEqual('CT');
+      expect(buildMemberInitials('melody')).toEqual('MO');
+      expect(buildMemberInitials('hyoyeon')).toEqual('HY');
+      expect(buildMemberInitials('bob')).toEqual('BO');
     });
   });
 });

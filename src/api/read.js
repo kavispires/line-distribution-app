@@ -4,7 +4,7 @@ import { ensureColorUniqueness } from '../utils';
 
 import { ROOT_PATHS } from './schema';
 
-import serializer from './serializer';
+import serializer from './serializer-old';
 
 import mockDB from '../test/mock/mock_db';
 

@@ -11,6 +11,10 @@ export class NewResponse {
     this.statusCode = code;
   }
 
+  ok() {
+    this.statusCode = HttpStatus.OK;
+  }
+
   data(dt, code = HttpStatus.OK) {
     this.statusCode = code;
     if (dt && dt.id && dt.type && dt.attributes) {
@@ -106,3 +110,14 @@ export const breadcrumble = path => {
     queryParams: Object.keys(queryResult).length > 0 ? queryResult : null,
   };
 };
+
+export const buildArtistQuery = data => {
+  const { name } = data;
+  const otherNames = data.otherNames || '';
+  const memberList = data.memberList || [];
+  const memberNames = memberList.map(member => member.name || '').join(' ');
+  return `${name} ${otherNames} ${memberNames}`;
+};
+
+export const buildMemberInitials = name =>
+  `${name[0]}${name[Math.floor(name.length / 2)]}`.toUpperCase();
