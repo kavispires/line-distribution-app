@@ -14,8 +14,40 @@ class App extends Component {
     try {
       console.log('==== TRY/CATCH START ====');
       const startDB = await API.init();
+      API.setter(true);
       console.log(startDB);
-      const get = API.get();
+      const testArtists = await API.get(`/artists`);
+      console.log('testArtists', testArtists);
+      const testArtist = await API.get(`/artists/-LDcyPgcJaR4gd8pvVKb`);
+      console.log('testArtist', testArtist);
+      const testArtistUnits = await API.get(
+        `/artists/-LDcyPgcJaR4gd8pvVKb/units`
+      );
+      console.log('testArtistUnits', testArtistUnits);
+      const testColors = await API.get(`/colors`);
+      console.log('testColors', testColors);
+      const testMembers = await API.get(`/members`);
+      console.log('testMembers', testMembers);
+      const testMember = await API.get(`/members/-LDcyPg_LQgDOBQ-wFP3`);
+      console.log('testMember', testMember);
+      // const testPositions = await API.get(`/positions`);
+      // console.log('testPositions', testPositions);
+      const testSongs = await API.get(`/songs`);
+      console.log('testSongs', testSongs);
+      const testSong = await API.get(`/songs/-LLcdNSHFJj1TqkK0y9f`);
+      console.log('testSong', testSong);
+      const testUnit = await API.get(`/units/-LDcyPgbytNzK2BkYaLN`);
+      console.log('testUnit', testUnit);
+      const testUnitDistributions = await API.get(
+        `/units/-LDcyPgbytNzK2BkYaLN/distributions`
+      );
+      console.log('testUnitDistributions', testUnitDistributions);
+      const testUnitMembers = await API.get(
+        `/units/-LDcyPgbytNzK2BkYaLN/members`
+      );
+      console.log('testUnitMembers', testUnitMembers);
+      const testUser = await API.get(`/users/hbFlRswbZkepQfaONzoyB6EuJSA2`);
+      console.log('testUser', testUser);
     } catch (error) {
       console.log('ERROR BITCH!!!', error);
     } finally {

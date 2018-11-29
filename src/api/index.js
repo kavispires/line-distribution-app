@@ -1,27 +1,34 @@
-import firebase from 'firebase';
 import HttpStatus from 'http-status-codes';
 import { NewResponse, breadcrumble } from './utils';
 
-const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+import { serialize, serializeCollection } from './serializers';
+
+import { fb, googleProvider } from './firebase';
+
+const db = {
+  artists: {},
+  colors: {},
+  distributions: {},
+  members: {},
+  positions: {},
+  songs: {},
+  units: {},
+  users: {},
 };
 
-let fb = firebase.initializeApp(config);
-const googleProvider = new firebase.auth.GoogleAuthProvider();
+let dbRef = null;
 
-export class API {
-  constructor(testing = false) {
-    this.testing = testing;
-    const db = {};
+class API {
+  constructor() {
+    // const db = {};
     this.authenticated = false;
     this.admin = false;
     this.loaded = false;
-    this.dbRef = null;
+    this.loggedInThisSession = false;
+  }
+
+  dbRef() {
+    return this.loaded ? dbRef : null;
   }
 
   /**
@@ -52,9 +59,9 @@ export class API {
     console.warn('Running init...');
     const response = new NewResponse();
 
-    this.dbRef = await fb.database().ref();
+    dbRef = await fb.database();
 
-    if (this.dbRef) {
+    if (dbRef) {
       this.loaded = true;
       response.status(HttpStatus.OK);
       response.data(this.dbInfo().data);
@@ -66,7 +73,8 @@ export class API {
       );
     }
 
-    return response.resolve();
+    response.resolve();
+    return this;
   }
 
   /**
@@ -78,12 +86,17 @@ export class API {
     console.warn('Running auth...');
     const response = new NewResponse();
 
-    await fb.auth().onAuthStateChanged(user => {
+    await fb.auth().onAuthStateChanged(async user => {
       if (user) {
         this.authenticated = true;
-        // TO-DO: It should merge and merge with user
+        // TO-DO If users doesn't exist, create it, then merge
+        const userRes = await this.get(`/users/${user.uuid}`); // TO-DO: this might break
+        userRes.attributes.displayName = user.displayName;
+        userRes.attributes.photoUrl = user.photoUrl;
 
-        return user;
+        this.admin = userRes.attributes.isAdmin;
+        response.data(userRes);
+        return response.resolve();
       }
       this.authenticated = false;
       return {};
@@ -96,7 +109,7 @@ export class API {
 
     let result;
     try {
-      await fb.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+      await fb.auth().setPersistence(fb.auth.Auth.Persistence.LOCAL);
 
       result = await fb.auth().signInWithPopup(googleProvider);
     } catch (error) {
@@ -108,9 +121,13 @@ export class API {
       const { user } = result;
       if (user.emailVerified) {
         this.authenticated = true;
-        // TO-DO: merge user: create or fetch
 
-        // TO-DO: Check for admin
+        const userRes = await this.get(`/users/${user.uuid}`);
+        userRes.attributes.displayName = user.displayName;
+        userRes.attributes.photoUrl = user.photoUrl;
+
+        this.admin = userRes.attributes.isAdmin;
+        response.data(userRes);
       }
     } catch (error) {
       console.error(error);
@@ -120,86 +137,119 @@ export class API {
   }
 
   async logoff() {
-    console.warn('Running logout...', this);
+    console.warn('Running logout...');
+    const response = new NewResponse();
+
+    try {
+      await fb.auth().signOut();
+      this.authenticated = false;
+      response.ok();
+      response.data(true);
+    } catch (error) {
+      response.error(error.code, error.message);
+    }
+
+    return response.resolve();
   }
 
   async get(path) {
-    console.warn('Fatching data...');
+    console.warn('Fetching data...', path);
+    /**
+     * List of possible get calls:
+     * /artists
+     * /artists/<id>
+     * /artists/<id>/units
+     * /colors
+     * /members
+     * /members/<id>
+     * /positions
+     * /songs
+     * /songs/<id>
+     * /units/<id>
+     * /units/<id>/distribution
+     * /units/<id>/members
+     * /users/<id>
+     **/
 
     if (!this.loaded || !this.authenticated) {
       return this.throwDBError('GET');
     }
 
     const route = breadcrumble(path);
-
     let result;
 
     switch (route.root) {
-      // API/users
-      case 'users':
-        // API/users/<id>
-        result = getFunctions.fetchUser();
-        break;
-      // API/aritsts
+      // API/artists
       case 'artists':
         // API/artists/<id>/units
         if (route.referenceId && route.subPath === 'units') {
-          // TO-DO: fetch artists units
+          result = await getFunctions.fetchArtistUnits(route.referenceId);
         }
         // API/artists/<id>
         else if (route.referenceId) {
-          // TO-DO: fetch artist
+          result = await getFunctions.fetchArtist(route.referenceId);
         }
         // API/aritsts
         else {
-          // TO-DO: fetch all artists
+          result = await getFunctions.fetchArtists();
         }
         break;
-      // API/units
-      case 'units':
-        // API/units/<id>/distributions
-        if (route.referenceId && route.subPath === 'distributions') {
-          // TO-DO: fetch units distributions
-        }
-        // API/units/<id>/members
-        else if (route.referenceId && route.subPath === 'units') {
-          // TO-DO: fetch units members
-        }
-        // API/units/<id>
-        else if (route.referenceId) {
-          // TO-DO: fetch unit
-        }
+      // API/colors
+      case 'colors':
+        result = await getFunctions.fetchColors();
         break;
       case 'members':
         // API/members/<id>
         if (route.referenceId) {
-          // TO-DO: fetch member
+          result = await getFunctions.fetchMember(route.referenceId);
         }
-        break;
-      // API/songs
-      case 'songs':
-        // API/songs/<id>
-        if (route.referenceId) {
-          // TO-DO: fetch song
-        }
-        // API/songs
+        // API/members
         else {
-          // TO-DO: fetch all songs
+          result = await getFunctions.fetchMembers();
         }
         break;
       // API/positions
       case 'positions':
         // TO-DO: fetch all positions
         break;
-      // API/colors
-      case 'colors':
-        // TO-DO: fetch all colors
+      // API/songs
+      case 'songs':
+        // API/songs/<id>
+        if (route.referenceId) {
+          result = await getFunctions.fetchSong(route.referenceId);
+        }
+        // API/songs
+        else {
+          result = await getFunctions.fetchSongs();
+        }
+        break;
+      // API/units
+      case 'units':
+        // API/units/<id>/distributions
+        if (route.referenceId && route.subPath === 'distributions') {
+          result = await getFunctions.fetchUnitDistributions(route.referenceId);
+        }
+        // API/units/<id>/members
+        else if (route.referenceId && route.subPath === 'members') {
+          result = await getFunctions.fetchUnitMembers(route.referenceId);
+        }
+        // API/units/<id>
+        else if (route.referenceId) {
+          result = await getFunctions.fetchUnit(route.referenceId);
+        }
+        break;
+      // API/users
+      case 'users':
+        // API/users/<id>
+        result = await getFunctions.fetchUser(route.referenceId);
         break;
       default:
         return this.throwPathError('path');
     }
 
     const response = new NewResponse();
+    response.data(result);
+    return response.resolve();
   }
 
   async post(path, body) {
@@ -304,6 +354,168 @@ export class API {
 
     return response.resolve();
   }
+
+  async test() {
+    let r = 'bola';
+    await this.dbRef().once('value', snap => {
+      r = snap.val();
+      return r;
+    });
+
+    return r;
+  }
+
+  async setter(authenticated) {
+    this.authenticated = authenticated;
+    return authenticated;
+  }
 }
+
+const getFunctions = {
+  // Fetches all artists
+  fetchArtists: async () => {
+    if (Object.keys(db.artists).length === 0) {
+      // TO-DO: Add 00 id to database, remove it in the serializer collection for a better cache check
+      let response = {};
+      await dbRef.ref(`/artists`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.artists = response;
+    }
+    return serializeCollection(db.artists, 'artist');
+  },
+  // Fetches single artist
+  fetchArtist: async id => {
+    if (!db.artists[id]) {
+      let response = {};
+      await dbRef.ref(`/artists/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.artists[id] = response;
+    }
+    return serialize.artist(db.artists[id], id);
+  },
+  // Fetches units from a single artist
+  fetchArtistUnits: async id => {
+    const artist = await getFunctions.fetchArtist(id);
+    const response = await artist.attributes.units.map(unitId =>
+      getFunctions.fetchUnit(unitId)
+    );
+    return Promise.all(response);
+  },
+  // Fetches all colors
+  fetchColors: async () => {
+    if (Object.keys(db.colors).length === 0) {
+      let response = {};
+      await dbRef.ref(`/colors`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.colors = response;
+    }
+    return serializeCollection(db.colors, 'color');
+  },
+  // Fetches single distribution
+  fetchDistribution: async id => {
+    if (!db.distributions[id]) {
+      let response = {};
+      await dbRef.ref(`/distributions/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.distributions[id] = response;
+    }
+    return serialize.distribution(db.distributions[id], id);
+  },
+  // Fetches all members
+  fetchMembers: async () => {
+    if (Object.keys(db.members).length === 0) {
+      let response = {};
+      await dbRef.ref(`/members`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.members = response;
+    }
+    return serializeCollection(db.members, 'member');
+  },
+  // Fetches single member
+  fetchMember: async id => {
+    if (!db.members[id]) {
+      let response = {};
+      await this.dbRef()
+        .ref(`/members/${id}`)
+        .once('value', snapshot => {
+          response = snapshot.val();
+        });
+      db.members[id] = response;
+    }
+    return serialize.member(db.members[id], id);
+  },
+  // Fetches all songs
+  fetchSongs: async () => {
+    if (Object.keys(db.songs).length === 0) {
+      // TO-DO: Add 00 id to database, remove it in the serializer collection for a better cache check
+      let response = {};
+      await dbRef.ref(`/songs`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.songs = response;
+    }
+    return serializeCollection(db.songs, 'song');
+  },
+  // Fetches single song
+  fetchSong: async id => {
+    if (!db.songs[id]) {
+      let response = {};
+      await dbRef.ref(`/songs/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.songs[id] = response;
+    }
+    return serialize.song(db.songs[id], id);
+  },
+  // Fetches single unit
+  fetchUnit: async id => {
+    if (!db.units[id]) {
+      let response = {};
+      await dbRef.ref(`/units/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.units[id] = response;
+    }
+    return serialize.unit(db.units[id], id);
+  },
+  // Fetches units from a single artist
+  fetchUnitDistributions: async id => {
+    const unit = await getFunctions.fetchUnit(id);
+    const response = await unit.attributes.distributions.map(distributionId =>
+      getFunctions.fetchDistribution(distributionId)
+    );
+    return Promise.all(response);
+  },
+  // Fetches units from a single artist
+  fetchUnitMembers: async id => {
+    const unit = await getFunctions.fetchUnit(id);
+    const membersResponse = await unit.attributes.members.map(member =>
+      getFunctions.fetchMember(member.memberId)
+    );
+    const promiseResponse = await Promise.all(membersResponse);
+    const response = promiseResponse.map((member, index) => {
+      member.attributes.positions = unit.attributes.members[index].positions;
+      return member;
+    });
+
+    return response;
+  },
+  // Fetches single user
+  fetchUser: async id => {
+    if (!db.users[id]) {
+      let response = {};
+      await dbRef.ref(`/users/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.users[id] = response;
+    }
+    return serialize.user(db.users[id], id);
+  },
+};
 
 export default new API();
