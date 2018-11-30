@@ -254,46 +254,127 @@ class API {
 
   async post(path, body) {
     console.warn('Writting data...');
+    /**
+     * List of possible post calls:
+     * /artists/<id>
+     * /distributions/<id>
+     * /members/<id>
+     * /songs/<id>
+     * /units/<id>
+     * /users/<id>
+     **/
 
     if (!this.loaded || !this.authenticated) {
       return this.throwDBError('POST');
     }
 
     const route = breadcrumble(path);
-    // API/users/<id>
+    let result;
 
-    // API/artists/<id>
-    // API/units/<id>
-    // API/distributions/<id>
-    // API/members/<id>
-    // API/songs/<id>
+    if (!route.referenceId) {
+      // TO-DO: throw error
+    }
+
+    switch (route.root) {
+      // API/artists/<id>
+      case 'artists':
+        result = await postFunctions.createArtist(route.referenceId, body);
+        break;
+      // API/distributions/<id>
+      case 'distributions':
+        result = await postFunctions.createDistribution(
+          route.referenceId,
+          body
+        );
+        break;
+      // API/members/<id>
+      case 'members':
+        result = await postFunctions.createMember(route.referenceId, body);
+        break;
+      // API/songs/<id>
+      case 'songs':
+        result = await postFunctions.createSong(route.referenceId, body);
+        break;
+      // API/units/<id>
+      case 'units':
+        result = await postFunctions.createUnit(route.referenceId, body);
+        break;
+      // API/users/<id>
+      case 'users':
+        result = await postFunctions.createUser(route.referenceId, body);
+        break;
+      default:
+        return this.throwPathError('path');
+    }
+
+    const response = new NewResponse();
+    response.data(result);
+    return response.resolve();
   }
 
   async put(path, body) {
     console.warn('Updating data...');
+    /**
+     * List of possible put calls:
+     * /artists/<id>
+     * /distributions/<id>
+     * /members/<id>
+     * /songs/<id>
+     * /units/<id>
+     * /users/<id>
+     **/
 
     if (!this.loaded || !this.authenticated) {
       return this.throwDBError('PUT');
     }
 
-    if (!path) {
-      return this.throwPathError('PUT', 'path');
+    const route = breadcrumble(path);
+    let result;
+
+    if (!route.referenceId) {
+      // TO-DO: throw error
     }
 
-    if (!body) {
-      return this.throwPathError('PUT', 'body');
+    switch (route.root) {
+      // API/artists/<id>
+      case 'artists':
+        result = await putFunctions.updateArtist(route.referenceId, body);
+        break;
+      // API/distributions/<id>
+      case 'distributions':
+        result = await putFunctions.updateDistribution(route.referenceId, body);
+        break;
+      // API/members/<id>
+      case 'members':
+        result = await putFunctions.updateMember(route.referenceId, body);
+        break;
+      // API/songs/<id>
+      case 'songs':
+        result = await putFunctions.updateSong(route.referenceId, body);
+        break;
+      // API/units/<id>
+      case 'units':
+        result = await putFunctions.updateUnit(route.referenceId, body);
+        break;
+      // API/users/<id>
+      case 'users':
+        result = await putFunctions.updateUser(route.referenceId, body);
+        break;
+      default:
+        return this.throwPathError('path');
     }
 
-    // API/artists/<id>
-    // API/units/<id>
-    // API/distributions/<id>
-    // API/members/<id>
-    // API/songs/<id>
-    // API/users/<id>
+    const response = new NewResponse();
+    response.data(result);
+    return response.resolve();
   }
 
   async delete(path) {
     console.warn('Deleting data...');
+    /**
+     * List of possible delete calls:
+     * /users/<id>
+     **/
 
     if (!this.loaded || !this.authenticated) {
       return this.throwDBError('DELETE');
@@ -303,7 +384,25 @@ class API {
       return this.throwPathError('DELETE', 'path');
     }
 
-    // API/users/<id>
+    const route = breadcrumble(path);
+    let result;
+
+    if (!route.referenceId) {
+      // TO-DO: throw error
+    }
+
+    switch (route.root) {
+      // API/users/<id>
+      case 'users':
+        result = await deleteFunctions.destroyUser(route.referenceId);
+        break;
+      default:
+        return this.throwPathError('path');
+    }
+
+    const response = new NewResponse();
+    response.data(result);
+    return response.resolve();
   }
 
   /**
@@ -516,6 +615,41 @@ const getFunctions = {
     }
     return serialize.user(db.users[id], id);
   },
+};
+
+const postFunctions = {
+  // Creates single artist
+  createArtist: async (id, body) => {},
+  // Creates single distribution
+  createDistribution: async (id, body) => {},
+  // Creates single member
+  createMember: async (id, body) => {},
+  // Creates single song
+  createSong: async (id, body) => {},
+  // Creates single unit
+  createUnit: async (id, body) => {},
+  // Creates single user
+  createUser: async (id, body) => {},
+};
+
+const putFunctions = {
+  // Updates single artist
+  updateArtist: async (id, body) => {},
+  // Updates single distribution
+  updateDistribution: async (id, body) => {},
+  // Updates single member
+  updateMember: async (id, body) => {},
+  // Updates single song
+  updateSong: async (id, body) => {},
+  // Updates single unit
+  updateUnit: async (id, body) => {},
+  // Updates single user
+  updateUser: async (id, body) => {},
+};
+
+const deleteFunctions = {
+  // Destroys single user
+  destroyUser: async (id, body) => {},
 };
 
 export default new API();
