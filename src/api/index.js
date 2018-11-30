@@ -25,6 +25,7 @@ class API {
     this.admin = false;
     this.loaded = false;
     this.loggedInThisSession = false;
+    this.uuid = null;
   }
 
   dbRef() {
@@ -89,6 +90,7 @@ class API {
     await fb.auth().onAuthStateChanged(async user => {
       if (user) {
         this.authenticated = true;
+        this.uuid = user.uuid;
         // TO-DO If users doesn't exist, create it, then merge
         const userRes = await this.get(`/users/${user.uuid}`); // TO-DO: this might break
         userRes.attributes.displayName = user.displayName;
@@ -99,6 +101,7 @@ class API {
         return response.resolve();
       }
       this.authenticated = false;
+      this.uuuid = null;
       return {};
     });
   }
@@ -121,6 +124,7 @@ class API {
       const { user } = result;
       if (user.emailVerified) {
         this.authenticated = true;
+        this.uuid = user.uuid;
 
         const userRes = await this.get(`/users/${user.uuid}`);
         userRes.attributes.displayName = user.displayName;
@@ -143,6 +147,7 @@ class API {
     try {
       await fb.auth().signOut();
       this.authenticated = false;
+      this.uuid = null;
       response.ok();
       response.data(true);
     } catch (error) {
