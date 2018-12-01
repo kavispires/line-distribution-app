@@ -2,9 +2,9 @@ import HttpStatus from 'http-status-codes';
 import { NewResponse, breadcrumble } from './utils';
 
 import { serialize, serializeCollection } from './serializers';
+import { deserialize } from './deserializers';
 
 import { fb, googleProvider } from './firebase';
-import { deserialize } from './deserializers';
 
 export const db = {
   artists: {},
@@ -229,6 +229,14 @@ class API {
         else {
           result = await getFunctions.fetchMembers();
         }
+        // API/members
+        else {
+          result = await this.getFunctions().fetchMembers();
+        }
+        break;
+      // API/positions
+      case 'positions':
+        // TO-DO: fetch all positions
         break;
       // API/positions
       case 'positions':
