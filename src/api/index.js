@@ -92,8 +92,16 @@ class API {
       if (user) {
         this._authenticated = true;
         this._uid = user.uid;
-        // TO-DO If users doesn't exist, create it, then merge
-        const userRes = await this.get(`/users/${user.uid}`); // TO-DO: this might break
+
+        let userRes;
+        try {
+          userRes = await this.get(`/users/${user.uid}`);
+        } catch (_) {}
+
+        if (!userRes) {
+          userRes = await this.post(`/users/${user.uid}`);
+        }
+
         userRes.attributes.displayName = user.displayName;
         userRes.attributes.photoUrl = user.photoUrl;
 
@@ -127,7 +135,15 @@ class API {
         this._authenticated = true;
         this._uid = user.uid;
 
-        const userRes = await this.get(`/users/${user.uid}`);
+        let userRes;
+        try {
+          userRes = await this.get(`/users/${user.uid}`);
+        } catch (_) {}
+
+        if (!userRes) {
+          userRes = await this.post(`/users/${user.uid}`);
+        }
+
         userRes.attributes.displayName = user.displayName;
         userRes.attributes.photoUrl = user.photoUrl;
 
