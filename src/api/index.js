@@ -4,8 +4,9 @@ import { NewResponse, breadcrumble } from './utils';
 import { serialize, serializeCollection } from './serializers';
 
 import { fb, googleProvider } from './firebase';
+import { deserialize } from './deserializers';
 
-const db = {
+export const db = {
   artists: {},
   colors: {},
   distributions: {},
@@ -16,20 +17,20 @@ const db = {
   users: {},
 };
 
-let dbRef = null;
+export let dbRef = null;
 
 class API {
   constructor() {
     // const db = {};
-    this.authenticated = false;
-    this.admin = false;
-    this.loaded = false;
-    this.loggedInThisSession = false;
-    this.uuid = null;
+    this._authenticated = false;
+    this._admin = false;
+    this._loaded = false;
+    this._loggedInThisSession = false;
+    this._uid = null;
   }
 
   dbRef() {
-    return this.loaded ? dbRef : null;
+    return this._loaded ? dbRef : null;
   }
 
   /**
@@ -43,9 +44,9 @@ class API {
 
     response.status(HttpStatus.OK);
     response.data({
-      admin: this.authenticated ? this.admin : false,
-      authenticated: this.authenticated,
-      loaded: this.loaded,
+      admin: this._authenticated ? this._admin : false,
+      authenticated: this._authenticated,
+      loaded: this._loaded,
     });
 
     return response.resolve();
@@ -63,10 +64,10 @@ class API {
     dbRef = await fb.database();
 
     if (dbRef) {
-      this.loaded = true;
+      this._loaded = true;
       response.status(HttpStatus.OK);
       response.data(this.dbInfo().data);
-      this.loaded = true;
+      this._loaded = true;
     } else {
       response.error(
         HttpStatus.BAD_REQUEST,
@@ -89,19 +90,19 @@ class API {
 
     await fb.auth().onAuthStateChanged(async user => {
       if (user) {
-        this.authenticated = true;
-        this.uuid = user.uuid;
+        this._authenticated = true;
+        this._uid = user.uid;
         // TO-DO If users doesn't exist, create it, then merge
-        const userRes = await this.get(`/users/${user.uuid}`); // TO-DO: this might break
+        const userRes = await this.get(`/users/${user.uid}`); // TO-DO: this might break
         userRes.attributes.displayName = user.displayName;
         userRes.attributes.photoUrl = user.photoUrl;
 
-        this.admin = userRes.attributes.isAdmin;
+        this._admin = userRes.attributes.isAdmin;
         response.data(userRes);
         return response.resolve();
       }
-      this.authenticated = false;
-      this.uuuid = null;
+      this._authenticated = false;
+      this._uid = null;
       return {};
     });
   }
@@ -123,14 +124,14 @@ class API {
     try {
       const { user } = result;
       if (user.emailVerified) {
-        this.authenticated = true;
-        this.uuid = user.uuid;
+        this._authenticated = true;
+        this._uid = user.uid;
 
-        const userRes = await this.get(`/users/${user.uuid}`);
+        const userRes = await this.get(`/users/${user.uid}`);
         userRes.attributes.displayName = user.displayName;
         userRes.attributes.photoUrl = user.photoUrl;
 
-        this.admin = userRes.attributes.isAdmin;
+        this._admin = userRes.attributes.isAdmin;
         response.data(userRes);
       }
     } catch (error) {
@@ -146,8 +147,8 @@ class API {
 
     try {
       await fb.auth().signOut();
-      this.authenticated = false;
-      this.uuid = null;
+      this._authenticated = false;
+      this._uid = null;
       response.ok();
       response.data(true);
     } catch (error) {
@@ -176,7 +177,7 @@ class API {
      * /users/<id>
      **/
 
-    if (!this.loaded || !this.authenticated) {
+    if (!this._loaded || !this._authenticated) {
       return this.throwDBError('GET');
     }
 
@@ -261,52 +262,45 @@ class API {
     console.warn('Writting data...');
     /**
      * List of possible post calls:
-     * /artists/<id>
-     * /distributions/<id>
-     * /members/<id>
-     * /songs/<id>
-     * /units/<id>
-     * /users/<id>
+     * /artists
+     * /distributions
+     * /members
+     * /songs
+     * /units
+     * /users
      **/
 
-    if (!this.loaded || !this.authenticated) {
+    if (!this._loaded || !this._authenticated) {
       return this.throwDBError('POST');
     }
 
     const route = breadcrumble(path);
     let result;
 
-    if (!route.referenceId) {
-      // TO-DO: throw error
-    }
-
     switch (route.root) {
       // API/artists/<id>
       case 'artists':
-        result = await postFunctions.createArtist(route.referenceId, body);
+        result = await postFunctions.createArtist(body, this._uid);
         break;
       // API/distributions/<id>
       case 'distributions':
-        result = await postFunctions.createDistribution(
-          route.referenceId,
-          body
-        );
+        result = await postFunctions.createDistribution(body, this._uid);
         break;
       // API/members/<id>
       case 'members':
-        result = await postFunctions.createMember(route.referenceId, body);
+        result = await postFunctions.createMember(body, this._uid);
         break;
       // API/songs/<id>
       case 'songs':
-        result = await postFunctions.createSong(route.referenceId, body);
+        result = await postFunctions.createSong(body, this._uid);
         break;
       // API/units/<id>
       case 'units':
-        result = await postFunctions.createUnit(route.referenceId, body);
+        result = await postFunctions.createUnit(body, this._uid);
         break;
       // API/users/<id>
       case 'users':
-        result = await postFunctions.createUser(route.referenceId, body);
+        result = await postFunctions.createUser(body, this._uid);
         break;
       default:
         return this.throwPathError('path');
@@ -329,7 +323,7 @@ class API {
      * /users/<id>
      **/
 
-    if (!this.loaded || !this.authenticated) {
+    if (!this._loaded || !this._authenticated) {
       return this.throwDBError('PUT');
     }
 
@@ -381,7 +375,7 @@ class API {
      * /users/<id>
      **/
 
-    if (!this.loaded || !this.authenticated) {
+    if (!this._loaded || !this._authenticated) {
       return this.throwDBError('DELETE');
     }
 
@@ -418,12 +412,12 @@ class API {
    */
   throwDBError(action = '') {
     const response = new NewResponse();
-    if (!this.loaded) {
+    if (!this._loaded) {
       response.error(
         HttpStatus.INTERNAL_SERVER_ERROR,
         `Unable to perform ${action} action, database is not ready`
       );
-    } else if (!this.authenticated) {
+    } else if (!this._authenticated) {
       response.error(
         HttpStatus.INTERNAL_SERVER_ERROR,
         `Unable to perform ${action} action, you are not logged in`
@@ -442,12 +436,12 @@ class API {
    */
   throwPathError(action = '', type = 'path') {
     const response = new NewResponse();
-    if (this.loaded && type === 'body') {
+    if (this._loaded && type === 'body') {
       response.error(
         HttpStatus.INTERNAL_SERVER_ERROR,
         `Unable to perform ${action} action, data was not provided`
       );
-    } else if (this.loaded && type === 'path') {
+    } else if (this._loaded && type === 'path') {
       response.error(
         HttpStatus.BAD_REQUEST,
         `Unable to perform ${action} action, path doesn't exist`
@@ -469,9 +463,13 @@ class API {
     return r;
   }
 
-  async setter(authenticated) {
-    this.authenticated = authenticated;
-    return authenticated;
+  async getDB() {
+    return db;
+  }
+
+  async setter(key, value) {
+    this[key] = value;
+    return value;
   }
 }
 
@@ -624,17 +622,104 @@ const getFunctions = {
 
 const postFunctions = {
   // Creates single artist
-  createArtist: async (id, body) => {},
+  createArtist: async (body, uid) => {
+    const key = await dbRef.ref(`/artists`).push().key;
+    const data = deserialize.post.artist(body, key, uid);
+    let response = {};
+    await dbRef.ref(`/artists/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to post Artist ${key}: ${data.name}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    db.artists[key] = serialize.artist(response);
+    return db.artists[key];
+  },
+  // Creates single color
+  // TO-DO: Delete this after feeding firebase
+  createColor: async body => {
+    const key = await dbRef.ref(`/colors`).push().key;
+    const data = deserialize.post.color(body, key);
+    let response = {};
+    await dbRef.ref(`/colors/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to post Color ${key}: ${data.name}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    db.colors[key] = serialize.color(response);
+    return db.colors[key];
+  },
   // Creates single distribution
-  createDistribution: async (id, body) => {},
+  createDistribution: async body => {},
   // Creates single member
-  createMember: async (id, body) => {},
+  createMember: async (body, uid) => {
+    const key = await dbRef.ref(`/members`).push().key;
+    const data = deserialize.post.member(body, key, uid);
+    let response = {};
+    await dbRef.ref(`/members/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to post Member ${key}: ${data.name}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    db.members[key] = serialize.member(response);
+    return db.members[key];
+  },
   // Creates single song
-  createSong: async (id, body) => {},
+  createSong: async (body, uid) => {
+    const key = await dbRef.ref(`/songs`).push().key;
+    const data = deserialize.post.song(body, key, uid);
+    let response = {};
+    await dbRef.ref(`/songs/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to post Song ${key}: ${data.title}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    db.songs[key] = serialize.song(response);
+    return db.songs[key];
+  },
   // Creates single unit
-  createUnit: async (id, body) => {},
+  createUnit: async (body, uid) => {
+    const key = await dbRef.ref(`/units`).push().key;
+    const data = deserialize.post.unit(body, key, uid);
+    let response = {};
+    await dbRef.ref(`/units/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to post Unit ${key}: ${data.name}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    db.units[key] = serialize.unit(response);
+    return db.units[key];
+  },
   // Creates single user
-  createUser: async (id, body) => {},
+  createUser: async (body, uid) => {
+    const key = uid;
+    const data = deserialize.post.user(body, key);
+    let response = {};
+    await dbRef.ref(`/users/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to post User ${key}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    db.users[key] = serialize.user(response);
+    return db.users[key];
+  },
 };
 
 const putFunctions = {
