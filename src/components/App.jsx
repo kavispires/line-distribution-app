@@ -86,6 +86,37 @@ class App extends Component {
       //   email: 'kavis@kavis.com'
       // });
       // console.log('postUsers', postUsers);
+
+      // console.log('ARTIST');
+      // const putArtist = await API.put('/artists/-LSbfcWFw7DJtlUP17Oi', {
+      //   genre: 'BUCETUDO',
+      //   otherNames: 'bucetinha'
+      // });
+      // console.log('putArtist', putArtist);
+
+      // console.log('MEMBERS');
+      // const putMember = await API.put('/members/-LSbjEq0FROFS5qBMG43', {
+      //   colorId: 'col000002',
+      // });
+      // console.log('putMember', putMember);
+
+      // console.log('SONGS');
+      // const putSong = await API.put('/songs/-LSblcgEWRR0k-KKduw1', {
+      //   groupSize: 4,
+      // });
+      // console.log('putSong', putSong);
+
+      console.log('UNITS');
+      const putUnit = await API.put('/units/-LSbnom0ncciQ9KB4id8', {
+        name: 'OT2',
+      });
+      console.log('putUnit', putUnit);
+
+      // console.log('USERS');
+      // const putSong = await API.put('/songs/-LSblcgEWRR0k-KKduw1', {
+      //   groupSize: 4,
+      // });
+      // console.log('putSong', putSong);
     } catch (error) {
       console.log('ERROR BITCH!!!', error);
     } finally {
