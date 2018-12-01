@@ -1,5 +1,7 @@
 import HttpStatus from 'http-status-codes';
 
+import { ALTERNATIVE_COLOR_LIST } from './constants';
+
 export class NewResponse {
   constructor() {
     this.statusCode = null;
@@ -121,3 +123,43 @@ export const buildArtistQuery = data => {
 
 export const buildMemberInitials = name =>
   `${name[0]}${name[Math.floor(name.length / 2)]}`.toUpperCase();
+
+export const verifyRequirements = (data, id, uid, fields) => {
+  const missing = [];
+  fields.forEach(field => {
+    if (field === 'id' && (id === undefined || id === null)) {
+      missing.push('id');
+    } else if (field === 'uid' && (id === undefined || uid === null)) {
+      missing.push('user uid');
+    } else if (field !== 'id' && field !== 'uid' && data[field] === undefined) {
+      missing.push(field);
+    }
+  });
+
+  if (missing.length > 0) {
+    throw new Error(
+      `${HttpStatus.BAD_REQUEST}: Can NOT perform post request for ${id ||
+        null}, missing the following data: ${missing.join(', ')}`
+    );
+  }
+};
+
+export const getAlternativeColor = colorId => {
+  const list = [...ALTERNATIVE_COLOR_LIST[makeIdNumber(colorId)]];
+  return makeSixDigit(list[Math.floor(Math.random() * list.length)]);
+};
+
+export const makeSixDigit = num => {
+  const pad = '000000';
+  if (typeof num !== 'number') {
+    return pad;
+  }
+  const str = num.toString();
+
+  return pad.substring(0, pad.length - str.length) + str;
+};
+
+export const makeIdNumber = id => {
+  const num = id.substring(3);
+  return Number(num) || 0;
+};
