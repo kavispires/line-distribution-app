@@ -337,23 +337,43 @@ class API {
     switch (route.root) {
       // API/artists/<id>
       case 'artists':
-        result = await putFunctions.updateArtist(route.referenceId, body);
+        result = await putFunctions.updateArtist(
+          route.referenceId,
+          body,
+          this._uid
+        );
         break;
       // API/distributions/<id>
       case 'distributions':
-        result = await putFunctions.updateDistribution(route.referenceId, body);
+        result = await putFunctions.updateDistribution(
+          route.referenceId,
+          body,
+          this._uid
+        );
         break;
       // API/members/<id>
       case 'members':
-        result = await putFunctions.updateMember(route.referenceId, body);
+        result = await putFunctions.updateMember(
+          route.referenceId,
+          body,
+          this._uid
+        );
         break;
       // API/songs/<id>
       case 'songs':
-        result = await putFunctions.updateSong(route.referenceId, body);
+        result = await putFunctions.updateSong(
+          route.referenceId,
+          body,
+          this._uid
+        );
         break;
       // API/units/<id>
       case 'units':
-        result = await putFunctions.updateUnit(route.referenceId, body);
+        result = await putFunctions.updateUnit(
+          route.referenceId,
+          body,
+          this._uid
+        );
         break;
       // API/users/<id>
       case 'users':
@@ -628,14 +648,14 @@ const postFunctions = {
     let response = {};
     await dbRef.ref(`/artists/${key}`).update(data, error => {
       if (error) {
-        const message = `Failed to post Artist ${key}: ${data.name}`;
+        const message = `Failed to create Artist ${key}: ${data.name}`;
         throw new Error(`${message}: ${error}`);
       } else {
         response = { ...data };
       }
     });
-    db.artists[key] = serialize.artist(response);
-    return db.artists[key];
+    db.artists[key] = response;
+    return serialize.artist(db.artists[key]);
   },
   // Creates single color
   // TO-DO: Delete this after feeding firebase
@@ -645,14 +665,14 @@ const postFunctions = {
     let response = {};
     await dbRef.ref(`/colors/${key}`).update(data, error => {
       if (error) {
-        const message = `Failed to post Color ${key}: ${data.name}`;
+        const message = `Failed to create Color ${key}: ${data.name}`;
         throw new Error(`${message}: ${error}`);
       } else {
         response = { ...data };
       }
     });
-    db.colors[key] = serialize.color(response);
-    return db.colors[key];
+    db.colors[key] = response;
+    return serialize.color(db.colors[key]);
   },
   // Creates single distribution
   createDistribution: async body => {},
@@ -663,14 +683,14 @@ const postFunctions = {
     let response = {};
     await dbRef.ref(`/members/${key}`).update(data, error => {
       if (error) {
-        const message = `Failed to post Member ${key}: ${data.name}`;
+        const message = `Failed to create Member ${key}: ${data.name}`;
         throw new Error(`${message}: ${error}`);
       } else {
         response = { ...data };
       }
     });
-    db.members[key] = serialize.member(response);
-    return db.members[key];
+    db.members[key] = response;
+    return serialize.member(db.members[key]);
   },
   // Creates single song
   createSong: async (body, uid) => {
@@ -679,14 +699,14 @@ const postFunctions = {
     let response = {};
     await dbRef.ref(`/songs/${key}`).update(data, error => {
       if (error) {
-        const message = `Failed to post Song ${key}: ${data.title}`;
+        const message = `Failed to create Song ${key}: ${data.title}`;
         throw new Error(`${message}: ${error}`);
       } else {
         response = { ...data };
       }
     });
-    db.songs[key] = serialize.song(response);
-    return db.songs[key];
+    db.songs[key] = response;
+    return serialize.song(db.songs[key]);
   },
   // Creates single unit
   createUnit: async (body, uid) => {
@@ -695,14 +715,14 @@ const postFunctions = {
     let response = {};
     await dbRef.ref(`/units/${key}`).update(data, error => {
       if (error) {
-        const message = `Failed to post Unit ${key}: ${data.name}`;
+        const message = `Failed to create Unit ${key}: ${data.name}`;
         throw new Error(`${message}: ${error}`);
       } else {
         response = { ...data };
       }
     });
-    db.units[key] = serialize.unit(response);
-    return db.units[key];
+    db.units[key] = response;
+    return serialize.unit(db.units[key]);
   },
   // Creates single user
   createUser: async (body, uid) => {
@@ -711,35 +731,116 @@ const postFunctions = {
     let response = {};
     await dbRef.ref(`/users/${key}`).update(data, error => {
       if (error) {
-        const message = `Failed to post User ${key}`;
+        const message = `Failed to create User ${key}`;
         throw new Error(`${message}: ${error}`);
       } else {
         response = { ...data };
       }
     });
-    db.users[key] = serialize.user(response);
-    return db.users[key];
+    db.users[key] = response;
+    return serialize.user(db.users[key]);
   },
 };
 
 const putFunctions = {
   // Updates single artist
-  updateArtist: async (id, body) => {},
+  updateArtist: async (id, body, uid) => {
+    const key = id;
+    const data = deserialize.put.artist(body, key, uid);
+    await dbRef.ref(`/artists/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to update Artist ${key}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    let response = {};
+    await dbRef.ref(`/artists/${key}`).once('value', snapshot => {
+      response = snapshot.val();
+    });
+    db.artists[key] = response;
+    return serialize.artist(db.artists[key]);
+  },
   // Updates single distribution
-  updateDistribution: async (id, body) => {},
+  updateDistribution: async (id, body, uid) => {},
   // Updates single member
-  updateMember: async (id, body) => {},
+  updateMember: async (id, body, uid) => {
+    console.log(id, body, uid);
+    const key = id;
+    const data = deserialize.put.member(body, key, uid);
+    await dbRef.ref(`/members/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to update Member ${key}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    let response = {};
+    await dbRef.ref(`/members/${key}`).once('value', snapshot => {
+      response = snapshot.val();
+    });
+    db.members[key] = response;
+    return serialize.member(db.members[key]);
+  },
   // Updates single song
-  updateSong: async (id, body) => {},
+  updateSong: async (id, body, uid) => {
+    const key = id;
+    const data = deserialize.put.song(body, key, uid);
+    await dbRef.ref(`/songs/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to update Song ${key}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    let response = {};
+    await dbRef.ref(`/songs/${key}`).once('value', snapshot => {
+      response = snapshot.val();
+    });
+    db.songs[key] = response;
+    return serialize.song(db.songs[key]);
+  },
   // Updates single unit
-  updateUnit: async (id, body) => {},
+  updateUnit: async (id, body, uid) => {
+    const key = id;
+    const data = deserialize.put.unit(body, key, uid);
+    await dbRef.ref(`/units/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to update Unit ${key}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    let response = {};
+    await dbRef.ref(`/units/${key}`).once('value', snapshot => {
+      response = snapshot.val();
+    });
+    db.units[key] = response;
+    return serialize.unit(db.units[key]);
+  },
   // Updates single user
-  updateUser: async (id, body) => {},
+  updateUser: async (id, body, uid) => {
+    const key = id;
+    const data = deserialize.put.user(body, key, uid);
+    await dbRef.ref(`/users/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to update User ${key}: ${data.name}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    let response = {};
+    await dbRef.ref(`/users/${key}`).once('value', snapshot => {
+      response = snapshot.val();
+    });
+    db.users[key] = response;
+    return serialize.user(db.users[key]);
+  },
 };
 
 const deleteFunctions = {
   // Destroys single user
-  destroyUser: async (id, body) => {},
+  destroyUser: async (id, uid) => {
+    if (id === uid) {
+      await dbRef.ref(`/users/${uid}`).remove();
+      return { [id]: true };
+    }
+  },
 };
 
 export default new API();
