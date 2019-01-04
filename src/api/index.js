@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_authenticated", "_admin", _loaded, _loggedInThisSession, _uid] }] */
+
 import HttpStatus from 'http-status-codes';
 import { NewResponse, breadcrumble } from './utils';
 
@@ -229,10 +231,6 @@ class API {
         else {
           result = await getFunctions.fetchMembers();
         }
-        break;
-      // API/positions
-      case 'positions':
-        // TO-DO: fetch all positions
         break;
       // API/positions
       case 'positions':

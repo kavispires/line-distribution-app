@@ -1,15 +1,23 @@
+import { toastr } from 'react-redux-toastr';
+
+import API from '../api';
+
 /* ------------------   ACTIONS   ------------------ */
 
+const SET_DATABASE_READY = 'SET_DATABASE_READY';
 const SET_IS_LOADING = 'SET_IS_LOADING';
 
 /* --------------   ACTION CREATORS   -------------- */
 
+export const setDatabaseReady = payload => dispatch =>
+  dispatch({ type: SET_DATABASE_READY, payload });
 export const setIsLoading = payload => dispatch =>
   dispatch({ type: SET_IS_LOADING, payload });
 
 /* -----------------   REDUCERS   ------------------ */
 
 const initialState = {
+  databaseReady: false,
   isLoading: false,
 };
 
@@ -17,6 +25,10 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+    case SET_DATABASE_READY:
+      newState.databaseReady = action.payload;
+      break;
+
     case SET_IS_LOADING:
       newState.isLoading = action.payload;
       break;
@@ -30,7 +42,20 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-let dictArray = [];
+export const init = () => async dispatch => {
+  dispatch(setLoading(true, 'init'));
+  try {
+    const dbStart = await API.init();
+    const status = dbStart.dbInfo();
+    await dispatch(setDatabaseReady(status.data.loaded));
+  } catch (err) {
+    toastr.error('Unable to reach database', err);
+  } finally {
+    dispatch(setLoading(false, 'init'));
+  }
+};
+
+const loadingDict = {};
 
 export const setLoading = (value, instance) => dispatch => {
   // Check if value and instance were passed as argument
@@ -40,21 +65,21 @@ export const setLoading = (value, instance) => dispatch => {
   if (typeof value !== 'boolean') {
     return console.error('Missing boolean value string');
   }
-  // Check if dict has instance
-  const index = dictArray.indexOf(instance);
-  // Instance does not exsist
-  if (index === -1 && value) {
-    dictArray.push(instance);
+
+  // Check if instance is in the dictonary or not.
+  if (loadingDict[instance] === undefined && value) {
+    loadingDict[instance] = true;
     dispatch(setIsLoading(true));
-    console.log('LOADING IS ON');
+    console.log('ALERT: LOADING IS ON');
+  } else if (loadingDict[instance] && !value) {
+    delete loadingDict[instance];
+    console.log('ALERT: LOADING INSTANCE WAS REMOVED');
   }
-  // Instance exists
-  else if (index > -1 && !value) {
-    dictArray.splice(index, 1);
-  }
-  // When dictarray is empty
-  if (dictArray.length === 0) {
+
+  // If there are no loading instances, remove loading bar
+  if (Object.keys(loadingDict).length === 0) {
     dispatch(setIsLoading(false));
     console.log('LOADING IS OFF');
   }
+  console.log(loadingDict);
 };

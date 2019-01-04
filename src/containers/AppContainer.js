@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import App from '../components/App';
 
+import { init, setLoading } from '../reducers/app';
 import { loadArtist, loadArtists } from '../reducers/artists';
 import { checkAuth, login, logout } from '../reducers/auth';
 import { initDB } from '../reducers/db';
@@ -14,12 +15,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  init,
   checkAuth,
   initDB,
   loadArtist,
   loadArtists,
   login,
   logout,
+  setLoading,
 };
 
 export default withRouter(
