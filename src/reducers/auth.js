@@ -98,7 +98,7 @@ export const login = () => async (dispatch, getState) => {
     );
 };
 
-export const logout = () => dispatch => {
+export const logout = () => async dispatch => {
   base
     .auth()
     .signOut()
@@ -132,10 +132,15 @@ export const checkAuth = () => async dispatch => {
       user.id = loggedUser.id;
       dispatch(setUser(user));
       dispatch(setAuthenticated(true));
+
       toastr.success(
         'Welcome back!',
         `You are logged in as ${user.displayName}`
       );
+
+      if (user.isAdmin) {
+        dispatch(setAdmin(true));
+      }
     }
 
     dispatch(setLoading(false, 'auth'));
