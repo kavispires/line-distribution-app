@@ -12,6 +12,7 @@ export const serialize = {
       attributes: {
         createdBy: data.createdBy || null,
         genre: data.genre || UNKNOWN,
+        memberIds: data.memberIds || [],
         memberList: data.memberList || [],
         modifiedBy: data.modifiedBy || null,
         name: data.name,
@@ -81,6 +82,7 @@ export const serialize = {
         originalArtist: data.originalArtist || '',
         originalArtistId: data.originalArtistId || null,
         private: data.private || false,
+        query: `${data.title} - ${data.originalArtist} - ${data.album}`,
         single: data.single || false,
         title: data.title,
         videoId: data.videoId || null,
@@ -93,11 +95,12 @@ export const serialize = {
       type: 'unit',
       attributes: {
         artistId: data.artistId,
+        averages: data.averages || [],
         createdBy: data.createdBy || null,
         debutYear: data.debutYear,
         distributions: data.distributions || [],
         distributions_legacy: data.distributions_legacy || [],
-        members: data.members || [],
+        members: data.members ? parseUnitMembers(data.members) : [],
         modifiedBy: data.modifiedBy || null,
         name: data.name,
         official: data.official || false,
@@ -126,3 +129,35 @@ export const serialize = {
 
 export const serializeCollection = (object, type) =>
   Object.keys(object).map(key => serialize[type](object[key], key));
+
+// Utils
+
+const parseUnitMembers = membersObj => {
+  const dict = {};
+  Object.keys(membersObj).forEach(key => {
+    const entrySplit = key.split(':');
+    const memberId = entrySplit[0];
+    const memberName = entrySplit[1];
+    const memberPosition = entrySplit[2];
+
+    if (dict[memberId] === undefined) {
+      dict[memberId] = {
+        positions: {},
+      };
+    }
+
+    dict[memberId].memberId = memberId;
+    dict[memberId].name = memberName;
+
+    dict[memberId].positions[memberPosition] = true;
+  });
+
+  return Object.keys(dict).map(entry => {
+    const result = {
+      memberId: dict[entry].memberId,
+      name: dict[entry].name,
+      positions: Object.keys(dict[entry].positions),
+    };
+    return result;
+  });
+};

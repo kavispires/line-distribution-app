@@ -11,7 +11,7 @@ export const deserialize = {
     artist: (data, id, uid) => {
       verifyRequirements(data, id, uid, ['id', 'uid', 'name']);
       return {
-        id: id,
+        id,
         createdBy: uid,
         genre: data.genre || null,
         name: data.name,
@@ -23,7 +23,7 @@ export const deserialize = {
     color: (data, id) => {
       verifyRequirements(data, id, null, ['id', 'name', 'hex', 'r', 'g', 'b']);
       return {
-        id: id,
+        id,
         b: data.b,
         g: data.g,
         hex: data.hex,
@@ -50,7 +50,7 @@ export const deserialize = {
         'referenceArtist',
       ]);
       return {
-        id: id,
+        id,
         createdBy: uid,
         altColorId:
           data.altColorId || `col${getAlternativeColor(data.colorId)}`,
@@ -73,7 +73,7 @@ export const deserialize = {
         'title',
       ]);
       return {
-        id: id,
+        id,
         createdBy: uid,
         album: data.album || null,
         distribution: data.distribution,
@@ -95,7 +95,7 @@ export const deserialize = {
         'name',
       ]);
       return {
-        id: id,
+        id,
         createdBy: uid,
         artistId: data.artistId,
         debutYear: data.debutYear,
@@ -127,7 +127,6 @@ export const deserialize = {
     artist: (data, id, uid) => {
       verifyRequirements(data, id, uid, ['id', 'uid']);
       const res = {};
-      console.log(data);
       if (uid) res.modifiedBy = uid;
       if (data.genre) res.genre = data.genre;
       if (data.memberList) res.memberList = data.memberList;
@@ -199,6 +198,7 @@ export const deserialize = {
       if (data.distributions) res.distributions = data.distributions;
       if (data.distributions_legacy)
         res.distributions_legacy = data.distributions_legacy;
+      if (data.members) res.members = data.members;
       if (data.name) res.name = data.name;
       if (data.official) res.official = data.official;
       if (data.private) res.private = data.private;
@@ -222,3 +222,5 @@ export const deserialize = {
     },
   },
 };
+
+export default deserialize;

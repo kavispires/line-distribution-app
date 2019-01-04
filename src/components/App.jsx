@@ -60,12 +60,12 @@ class App extends Component {
       // });
       // console.log('postArtist', postColor);
       // const postMember = await API.post('/members', {
-      //   name: 'bob',
+      //   name: 'Adam',
       //   birthdate: '123',
       //   colorId: 'col000001',
       //   gender: 'MALE',
       //   nationality: 'BRITISH',
-      //   referenceArtist: 'B.O.B.'
+      //   referenceArtist: 'BAND'
       // });
       // console.log('postMember', postMember);
       // console.log('SONG');
@@ -95,8 +95,8 @@ class App extends Component {
       // console.log('putArtist', putArtist);
 
       // console.log('MEMBERS');
-      // const putMember = await API.put('/members/-LSbjEq0FROFS5qBMG43', {
-      //   colorId: 'col000002',
+      // const putMember = await API.put('/members/-LSciS9M_mmqRt2Qeoz4', {
+      //   colorId: 'col000001',
       // });
       // console.log('putMember', putMember);
 
@@ -106,17 +106,75 @@ class App extends Component {
       // });
       // console.log('putSong', putSong);
 
-      console.log('UNITS');
-      const putUnit = await API.put('/units/-LSbnom0ncciQ9KB4id8', {
-        name: 'OT2',
-      });
-      console.log('putUnit', putUnit);
+      // console.log('UNITS');
+      // const putUnit = await API.put('/units/-LSbnom0ncciQ9KB4id8', {
+      //   name: 'OT2',
+      // });
+      // console.log('putUnit', putUnit);
 
       // console.log('USERS');
       // const putSong = await API.put('/songs/-LSblcgEWRR0k-KKduw1', {
       //   groupSize: 4,
       // });
       // console.log('putSong', putSong);
+
+      // await API.post('/members', {
+      //   name: 'Adam',
+      //   birthdate: '121',
+      //   colorId: 'col000001',
+      //   gender: 'MALE',
+      //   nationality: 'BRITISH',
+      //   referenceArtist: 'BAND'
+      // });
+
+      // await API.post('/members', {
+      //   name: 'Bob',
+      //   birthdate: '122',
+      //   colorId: 'col000002',
+      //   gender: 'MALE',
+      //   nationality: 'BRITISH',
+      //   referenceArtist: 'BAND'
+      // });
+
+      // await API.post('/members', {
+      //   name: 'Cam',
+      //   birthdate: '123',
+      //   colorId: 'col000003',
+      //   gender: 'MALE',
+      //   nationality: 'BRITISH',
+      //   referenceArtist: 'BAND'
+      // });
+
+      // await API.post('/artists', {
+      //   name: 'The Test band',
+      // });
+
+      // Artist Id
+      // -LSflTBYX_OeiNell2ia
+
+      // Member ids
+      // -LSffMf0uvh3wCPTYFDi
+      // -LSffNFtTbTrE2LNIp09
+      // -LSffNGoyhjEUNz5AE6J
+
+      // await API.post('/units', {
+      //   name: 'OT3',
+      //   debutYear: 2018,
+      //   artistId: '-LSflTBYX_OeiNell2ia',
+      // });
+
+      // Unit Id
+      // -LSkH2zzNHstIpUtg3wK
+
+      const res = await API.put('/units/-LSkH2zzNHstIpUtg3wK', {
+        members: {
+          '-LSffMf0uvh3wCPTYFDi:Adam:DANCER': true,
+          '-LSffMf0uvh3wCPTYFDi:Adam:VOCALIST': true,
+          '-LSffNFtTbTrE2LNIp09:Bob:VOCALIST': true,
+          '-LSffNGoyhjEUNz5AE6J:Cam:RAPPER': true,
+        },
+      });
+      console.log(res);
     } catch (error) {
       console.log('ERROR BITCH!!!', error);
     } finally {

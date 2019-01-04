@@ -229,10 +229,6 @@ class API {
         else {
           result = await getFunctions.fetchMembers();
         }
-        // API/members
-        else {
-          result = await this.getFunctions().fetchMembers();
-        }
         break;
       // API/positions
       case 'positions':
