@@ -7,6 +7,7 @@ import app from './app';
 import artists from './artists';
 import auth from './auth';
 import db from './db';
+import temp from './temp';
 
 const rootReducer = combineReducers({
   admin,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   auth,
   artists,
   db,
+  temp,
   toastr,
 });
 

@@ -17,7 +17,7 @@ import MyArtistsContainer from './containers/MyArtistsContainer';
 import MyDistributionsContainer from './containers/MyDistributionsContainer';
 import SongsContainer from './containers/SongsContainer';
 import SyncContainer from './containers/SyncContainer';
-import TestContainer from './containers/TestContainer';
+import TempContainer from './containers/TempContainer';
 
 import './stylesheets/index.css';
 
@@ -38,7 +38,7 @@ const routes = (
       <Route path="/admin/icon-sheet" component={IconSheetContainer} />
       <Route path="/admin/manage" component={ManageContainer} />
       <Route path="/admin/sync" component={SyncContainer} />
-      <Route path="/admin/test" component={TestContainer} />
+      <Route path="/admin/temp" component={TempContainer} />
 
       <Route path="/user/my-artists" component={MyArtistsContainer} />
       <Route
