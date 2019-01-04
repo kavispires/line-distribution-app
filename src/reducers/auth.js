@@ -99,19 +99,20 @@ export const login = () => async (dispatch, getState) => {
 };
 
 export const logout = () => async dispatch => {
-  base
-    .auth()
-    .signOut()
-    .then(() => {
-      dispatch(setUser({}));
-      dispatch(setAuthenticated(false));
-      toastr.warning('', 'You are logged out');
-    })
-    .catch(error => {
-      // An error happened.
-      console.error(error);
-      toastr.error('Oh no', error.errorMessage);
-    });
+  dispatch(setLoading(true, 'logoff'));
+
+  try {
+    await API.logoff();
+    dispatch(setAuthenticated(false));
+    dispatch(setAdmin(false));
+    dispatch(setUser({}));
+    toastr.warning('', 'You are logged out');
+  } catch (error) {
+    console.error(error);
+    toastr.error('Oh no', error.errorMessage);
+  } finally {
+    dispatch(setLoading(false, 'logoff'));
+  }
 };
 
 // Verifies if the users is still logged from a previous session, since it depends
