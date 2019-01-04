@@ -121,7 +121,7 @@ export const serialize = {
         latestUnits: data.latesUnits || [],
         session: data.session || {},
         displayName: null, // merged from auth
-        photoUrl: null, // merged from auth
+        photoURL: null, // merged from auth
       },
     };
   },

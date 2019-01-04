@@ -6,7 +6,7 @@ import { NewResponse, breadcrumble } from './utils';
 import { serialize, serializeCollection } from './serializers';
 import { deserialize } from './deserializers';
 
-import { fb, googleProvider } from './firebase';
+import { fb, googleProvider, userSession } from './firebase';
 
 export const db = {
   artists: {},
@@ -90,31 +90,30 @@ class API {
     console.warn('Running auth...');
     const response = new NewResponse();
 
-    await fb.auth().onAuthStateChanged(async user => {
-      if (user) {
-        this._authenticated = true;
-        this._uid = user.uid;
+    const { user } = userSession;
 
-        let userRes;
-        try {
-          userRes = await this.get(`/users/${user.uid}`);
-        } catch (_) {}
+    if (user) {
+      this._authenticated = true;
+      this._uid = user.uid;
 
-        if (!userRes) {
-          userRes = await this.post(`/users/${user.uid}`);
-        }
-
-        userRes.attributes.displayName = user.displayName;
-        userRes.attributes.photoUrl = user.photoUrl;
-
-        this._admin = userRes.attributes.isAdmin;
-        response.data(userRes);
-        return response.resolve();
+      let userRes;
+      try {
+        userRes = await this.get(`/users/${user.uid}`);
+      } catch (_) {
+        userRes = await this.post(`/users/${user.uid}`);
       }
+
+      userRes.data.attributes.displayName = user.displayName;
+      userRes.data.attributes.photoURL = user.photoURL;
+
+      this._admin = userRes.data.attributes.isAdmin;
+      response.data(userRes.data);
+    } else {
       this._authenticated = false;
       this._uid = null;
-      return {};
-    });
+      response.data({}, HttpStatus.NO_CONTENT);
+    }
+    return response.resolve();
   }
 
   async login() {
@@ -147,7 +146,7 @@ class API {
         }
 
         userRes.attributes.displayName = user.displayName;
-        userRes.attributes.photoUrl = user.photoUrl;
+        userRes.attributes.photoURL = user.photoURL;
 
         this._admin = userRes.attributes.isAdmin;
         response.data(userRes);

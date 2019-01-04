@@ -1,9 +1,12 @@
-import firebase from 'firebase';
 import { toastr } from 'react-redux-toastr';
+
+import firebase from 'firebase';
+
 import { base, googleProvider } from '../firebase';
 
 import { setLoading } from './app';
-import { API } from './db';
+
+import API from '../api';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -111,23 +114,32 @@ export const logout = () => dispatch => {
     });
 };
 
-export const checkAuth = () => dispatch => {
-  base.auth().onAuthStateChanged(user => {
-    if (user) {
-      dispatch(mergeUser(user));
-      dispatch(setAuthenticated(true));
-      toastr.info('Welcome back!', `You are logged in as ${user.displayName}`);
-      if (user.email === 'kavispires@gmail.com') {
-        dispatch(setAdmin(true));
-      }
-      // ...
-    } else {
-      // User is signed out.
-      // ...
-      dispatch(setUser({}));
-      dispatch(setAuthenticated(false));
+// Verifies if the users is still logged from a previous session, since it depends
+// on a firebase observer, we have to trigger it at least two seconds after the db is ready
+export const checkAuth = () => async dispatch => {
+  dispatch(setLoading(true, 'auth'));
+  setTimeout(async () => {
+    let loggedUser = null;
+    try {
+      loggedUser = await API.auth();
+      loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
+    } catch (_) {
+      // Do nothing if user has no session
     }
-  });
+
+    if (loggedUser) {
+      const user = loggedUser.attributes;
+      user.id = loggedUser.id;
+      dispatch(setUser(user));
+      dispatch(setAuthenticated(true));
+      toastr.success(
+        'Welcome back!',
+        `You are logged in as ${user.displayName}`
+      );
+    }
+
+    dispatch(setLoading(false, 'auth'));
+  }, 2000);
 };
 
 export const mergeUser = authUser => async (dispatch, getState) => {
@@ -152,7 +164,10 @@ export const mergeUser = authUser => async (dispatch, getState) => {
     user.uid = authUser.uid;
   }
 
-  dispatch(setUser(user));
+  const returnedUser = user.attributes;
+  returnedUser.id = user.id;
+
+  dispatch(setUser(returnedUser));
 };
 
 export const updateFavoriteArtists = id => async (dispatch, getState) => {

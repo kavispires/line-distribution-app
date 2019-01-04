@@ -11,5 +11,13 @@ const config = {
 
 export const fb = firebase.initializeApp(config);
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const userSession = { user: {} };
+
+// Verify user auth session presence
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    userSession.user = user;
+  }
+});
 
 export default fb;

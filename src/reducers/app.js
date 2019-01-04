@@ -70,16 +70,12 @@ export const setLoading = (value, instance) => dispatch => {
   if (loadingDict[instance] === undefined && value) {
     loadingDict[instance] = true;
     dispatch(setIsLoading(true));
-    console.log('ALERT: LOADING IS ON');
   } else if (loadingDict[instance] && !value) {
     delete loadingDict[instance];
-    console.log('ALERT: LOADING INSTANCE WAS REMOVED');
   }
 
   // If there are no loading instances, remove loading bar
   if (Object.keys(loadingDict).length === 0) {
     dispatch(setIsLoading(false));
-    console.log('LOADING IS OFF');
   }
-  console.log(loadingDict);
 };

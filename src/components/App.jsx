@@ -9,7 +9,7 @@ import LoadingBar from './LoadingBar';
 class App extends Component {
   async componentDidMount() {
     await this.props.init();
-    // this.props.checkAuth();
+    await this.props.checkAuth();
 
     // try {
     //   console.log('==== TRY/CATCH START ====');
