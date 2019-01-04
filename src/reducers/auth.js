@@ -56,46 +56,32 @@ export default function reducer(prevState = initialState, action) {
 
 /* ---------------   DISPATCHERS   ----------------- */
 
-export const login = () => async (dispatch, getState) => {
-  dispatch(setLoading(true, 'auth'));
-  base
-    .auth()
-    .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    .then(() =>
-      base
-        .auth()
-        .signInWithPopup(googleProvider)
-        .then(result => {
-          // The signed-in user info.
-          const { user } = result;
+export const login = () => async dispatch => {
+  dispatch(setLoading(true, 'login'));
 
-          if (user.emailVerified) {
-            dispatch(mergeUser(user));
-            dispatch(setAuthenticated(true));
-            toastr.success('', `You are logged in as ${user.displayName}`);
-            if (user.email === 'kavispires@gmail.com') {
-              dispatch(setAdmin(true));
-            }
-            if (getState().db.loaded) {
-              dispatch(setLoading(false, 'auth'));
-            }
-          }
-        })
-        .catch(error => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // The email of the user's account used.
-          const { email } = error;
-          // The firebase.auth.AuthCredential type that was used.
-          const { credential } = error;
-          console.error(errorCode, errorMessage, email, credential);
-          toastr.error('Oh no', errorMessage);
-          if (getState().db.loaded) {
-            dispatch(setLoading(false, 'auth'));
-          }
-        })
-    );
+  let loggedUser = null;
+  try {
+    loggedUser = await API.login();
+    loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
+  } catch (error) {
+    console.error(error);
+    toastr.error('Oh no!', error.toString());
+  }
+
+  if (loggedUser) {
+    const user = loggedUser.attributes;
+    user.id = loggedUser.id;
+    dispatch(setUser(user));
+    dispatch(setAuthenticated(true));
+
+    toastr.success('Hello!', `You are logged in as ${user.displayName}`);
+
+    if (user.isAdmin) {
+      dispatch(setAdmin(true));
+    }
+  }
+
+  dispatch(setLoading(false, 'login'));
 };
 
 export const logout = () => async dispatch => {

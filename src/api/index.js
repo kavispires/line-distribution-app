@@ -1,5 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_authenticated", "_admin", _loaded, _loggedInThisSession, _uid] }] */
 
+import firebase from 'firebase';
 import HttpStatus from 'http-status-codes';
 import { NewResponse, breadcrumble } from './utils';
 
@@ -92,7 +93,7 @@ class API {
 
     const { user } = userSession;
 
-    if (user) {
+    if (user.emailVerified) {
       this._authenticated = true;
       this._uid = user.uid;
 
@@ -121,9 +122,9 @@ class API {
     const response = new NewResponse();
 
     let result;
-    try {
-      await fb.auth().setPersistence(fb.auth.Auth.Persistence.LOCAL);
 
+    try {
+      await fb.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
       result = await fb.auth().signInWithPopup(googleProvider);
     } catch (error) {
       response.error(error.code, error.message);
@@ -139,20 +140,18 @@ class API {
         let userRes;
         try {
           userRes = await this.get(`/users/${user.uid}`);
-        } catch (_) {}
-
-        if (!userRes) {
+        } catch (_) {
           userRes = await this.post(`/users/${user.uid}`);
         }
 
-        userRes.attributes.displayName = user.displayName;
-        userRes.attributes.photoURL = user.photoURL;
+        userRes.data.attributes.displayName = user.displayName;
+        userRes.data.attributes.photoURL = user.photoURL;
 
-        this._admin = userRes.attributes.isAdmin;
-        response.data(userRes);
+        this._admin = userRes.data.attributes.isAdmin;
+        response.data(userRes.data);
       }
     } catch (error) {
-      console.error(error);
+      response.error(error.code, error.message);
     }
 
     return response.resolve();
