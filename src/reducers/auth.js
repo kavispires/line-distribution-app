@@ -1,9 +1,5 @@
 import { toastr } from 'react-redux-toastr';
 
-import firebase from 'firebase';
-
-import { base, googleProvider } from '../firebase';
-
 import { setLoading } from './app';
 
 import API from '../api';
@@ -132,34 +128,6 @@ export const checkAuth = () => async dispatch => {
 
     dispatch(setLoading(false, 'auth'));
   }, 2000);
-};
-
-export const mergeUser = authUser => async (dispatch, getState) => {
-  // Only if db is loaded
-  if (!getState().db.loaded) return;
-
-  let user;
-  try {
-    user = await API.get(`/users/${authUser.uid}`);
-  } catch (e) {
-    // If user doesn't existe, create one
-    const body = {
-      email: authUser.email,
-      isAdmin: false,
-    };
-    user = await API.post(`/users/${authUser.uid}`, body);
-  }
-
-  if (user) {
-    user.displayName = authUser.displayName;
-    user.photoURL = authUser.photoURL;
-    user.uid = authUser.uid;
-  }
-
-  const returnedUser = user.attributes;
-  returnedUser.id = user.id;
-
-  dispatch(setUser(returnedUser));
 };
 
 export const updateFavoriteArtists = id => async (dispatch, getState) => {
