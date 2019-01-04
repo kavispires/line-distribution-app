@@ -198,8 +198,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <Header props={this.props} /> */}
-        {/* {this.props.app.isLoading ? <LoadingBar /> : null} */}
+        <Header props={this.props} />
+        {this.props.app.isLoading ? <LoadingBar /> : null}
       </div>
     );
   }

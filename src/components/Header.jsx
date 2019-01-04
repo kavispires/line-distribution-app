@@ -17,6 +17,12 @@ const Header = ({ props }) => {
 
   const { pathname } = props.location;
 
+  // Hide parts of the menu if user is not authenticaded
+  const authHideClass = props.auth.isAuthenticated ? '' : 'hidden';
+
+  // Hide parts of the menu if user is not an administrator
+  const adminHideClass = props.auth.isAdmin ? '' : 'hidden';
+
   return (
     <header className="header">
       <div className="header-nav">
@@ -26,7 +32,7 @@ const Header = ({ props }) => {
           alt="Logo"
           onClick={() => handleLogoClick()}
         />
-        <nav className="header-nav__links">
+        <nav className={`header-nav__links ${authHideClass}`}>
           <Link
             to="/artists"
             className={pathname === '/artists' ? 'active' : ''}
@@ -51,26 +57,24 @@ const Header = ({ props }) => {
           <Link to="/lab" className={pathname === '/lab' ? 'active' : ''}>
             Lab
           </Link>
-          {props.auth.isAdmin ? (
-            <div className="header-admin">
-              <button
-                className={
-                  pathname.includes('/admin')
-                    ? 'header-admin__nav active'
-                    : 'header-admin__nav'
-                }
-              >
-                Admin Tools
-              </button>
-              <div className="header-admin__dropdown">
-                <Link to="/admin/color-sheet">Color Sheet</Link>
-                <Link to="/admin/icon-sheet">Icon Sheet</Link>
-                <Link to="/admin/manage">Manage</Link>
-                <Link to="/admin/sync">Sync</Link>
-                <Link to="/admin/test">Test</Link>
-              </div>
+          <div className={`header-admin ${adminHideClass}`}>
+            <button
+              className={
+                pathname.includes('/admin')
+                  ? 'header-admin__nav active'
+                  : 'header-admin__nav'
+              }
+            >
+              Admin Tools
+            </button>
+            <div className="header-admin__dropdown">
+              <Link to="/admin/color-sheet">Color Sheet</Link>
+              <Link to="/admin/icon-sheet">Icon Sheet</Link>
+              <Link to="/admin/manage">Manage</Link>
+              <Link to="/admin/sync">Sync</Link>
+              <Link to="/admin/test">Test</Link>
             </div>
-          ) : null}
+          </div>
         </nav>
       </div>
       {props.auth.isAuthenticated ? (
