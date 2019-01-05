@@ -1,7 +1,5 @@
 import HttpStatus from 'http-status-codes';
 
-import { ALTERNATIVE_COLOR_LIST } from './constants';
-
 export class NewResponse {
   constructor() {
     this.statusCode = null;
@@ -121,6 +119,13 @@ export const buildArtistQuery = data => {
   return `${name} ${otherNames} ${memberNames}`.toLowerCase();
 };
 
+export const buildSongQuery = data => {
+  const { title } = data;
+  const originalArtist = data.originalArtist || '';
+  const album = data.album || [];
+  return `${title} ${originalArtist} ${album}`.toLowerCase();
+};
+
 export const buildMemberInitials = name =>
   `${name[0]}${name[Math.floor(name.length / 2)]}`.toUpperCase();
 
@@ -144,14 +149,21 @@ export const verifyRequirements = (data, id, uid, fields) => {
   }
 };
 
+export const getNumberFromColorId = colorId => Number(colorId.split('0000')[1]);
+
 export const getAlternativeColor = colorId => {
-  const list = [...ALTERNATIVE_COLOR_LIST[makeIdNumber(colorId)]];
+  const oni = getNumberFromColorId(colorId);
+  const num = oni + 15;
+  let list = [num, num - 2, num - 1, num + 1, num + 2];
+  list = list.map(item => (item > 30 ? item - 30 : item));
   return makeSixDigit(list[Math.floor(Math.random() * list.length)]);
 };
 
 export const makeSixDigit = num => {
   const pad = '000000';
-  if (typeof num !== 'number') {
+
+  // if it's not a number nor a stringified number
+  if (Number.isNaN(Number(num)) || typeof num === 'boolean') {
     return pad;
   }
   const str = num.toString();
@@ -159,9 +171,4 @@ export const makeSixDigit = num => {
   return pad.substring(0, pad.length - str.length) + str;
 };
 
-export const makeIdNumber = id => {
-  const num = id.substring(3);
-  return Number(num) || 0;
-};
-
-export const wait = ms => new Promise((r, j) => setTimeout(r, ms));
+export const wait = ms => new Promise((r, j) => setTimeout(r, ms)); // eslint-disable-line

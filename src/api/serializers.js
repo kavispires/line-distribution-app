@@ -1,6 +1,11 @@
 /* eslint arrow-body-style: 0 */
 
-import { buildArtistQuery, buildMemberInitials } from './utils';
+import {
+  buildArtistQuery,
+  buildMemberInitials,
+  getNumberFromColorId,
+  buildSongQuery,
+} from './utils';
 
 const UNKNOWN = 'UNKNOWN';
 
@@ -34,8 +39,8 @@ export const serialize = {
         hex: data.hex,
         name: data.name,
         number: data.id
-          ? Number(data.id.split('0000')[1])
-          : Number(id.split('0000')[1]),
+          ? getNumberFromColorId(data.id)
+          : getNumberFromColorId(id),
         r: data.r,
       },
     };
@@ -85,7 +90,7 @@ export const serialize = {
         originalArtist: data.originalArtist || '',
         originalArtistId: data.originalArtistId || null,
         private: data.private || false,
-        query: `${data.title} - ${data.originalArtist} - ${data.album}`,
+        query: data.query || buildSongQuery(data),
         single: data.single || false,
         title: data.title,
         videoId: data.videoId || null,

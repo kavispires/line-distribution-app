@@ -3,6 +3,10 @@ import {
   breadcrumble,
   buildArtistQuery,
   buildMemberInitials,
+  getNumberFromColorId,
+  getAlternativeColor,
+  buildSongQuery,
+  makeSixDigit,
 } from './utils';
 
 let response;
@@ -215,7 +219,7 @@ describe('API/Utils', () => {
       const data = {
         name: 'test',
         otherNames: 'testie',
-        memberList: [{ name: 'testing' }, { name: 'tested' }],
+        memberList: ['testing', 'tested'],
       };
       const res = buildArtistQuery(data);
 
@@ -225,7 +229,7 @@ describe('API/Utils', () => {
     it('its otherNames data value is optional', () => {
       const data = {
         name: 'test',
-        memberList: [{ name: 'testing' }, { name: 'tested' }],
+        memberList: ['testing', 'tested'],
       };
       const res = buildArtistQuery(data);
 
@@ -243,6 +247,39 @@ describe('API/Utils', () => {
     });
   });
 
+  describe('buildSongQuery', () => {
+    it('it builds a correct querry', () => {
+      const data = {
+        title: 'test',
+        originalArtist: 'testie',
+        album: 'testing',
+      };
+      const res = buildSongQuery(data);
+
+      expect(res).toEqual('test testie testing');
+    });
+
+    it('its originalArtist data value is optional', () => {
+      const data = {
+        title: 'test',
+        album: 'testing',
+      };
+      const res = buildSongQuery(data);
+
+      expect(res).toEqual('test  testing');
+    });
+
+    it('its album data value is optional', () => {
+      const data = {
+        title: 'test',
+        originalArtist: 'testie',
+      };
+      const res = buildSongQuery(data);
+
+      expect(res).toEqual('test testie ');
+    });
+  });
+
   describe('buildMemberInitials', () => {
     it('it builds member initials correctly', () => {
       expect(buildMemberInitials('test')).toEqual('TS');
@@ -250,6 +287,56 @@ describe('API/Utils', () => {
       expect(buildMemberInitials('melody')).toEqual('MO');
       expect(buildMemberInitials('hyoyeon')).toEqual('HY');
       expect(buildMemberInitials('bob')).toEqual('BO');
+    });
+  });
+
+  describe('getNumberFromColorId', () => {
+    it('it returns a number from a color id', () => {
+      expect(getNumberFromColorId('col000012')).toEqual(12);
+      expect(getNumberFromColorId('col000001')).toEqual(1);
+      expect(getNumberFromColorId('col000025')).toEqual(25);
+    });
+  });
+
+  describe('getAlternativeColor', () => {
+    it('it returns a valid alternative color id', () => {
+      let result = getNumberFromColorId(getAlternativeColor('col000012'));
+      expect(result).toBeGreaterThanOrEqual(25);
+      expect(result).toBeLessThanOrEqual(29);
+
+      result = getNumberFromColorId(getAlternativeColor('col000025'));
+      expect(result).toBeGreaterThanOrEqual(8);
+      expect(result).toBeLessThanOrEqual(12);
+
+      result = getNumberFromColorId(getAlternativeColor('col000016'));
+      if (result < 4) {
+        expect(result).toBeLessThanOrEqual(3);
+        expect(result).toBeGreaterThanOrEqual(1);
+      } else {
+        expect(result).toBeLessThanOrEqual(30);
+        expect(result).toBeGreaterThanOrEqual(29);
+      }
+    });
+  });
+
+  describe('makeSixDigit', () => {
+    it('it returns correct number', () => {
+      expect(makeSixDigit(1)).toEqual('000001');
+      expect(makeSixDigit(123)).toEqual('000123');
+      expect(makeSixDigit(444444)).toEqual('444444');
+    });
+
+    it('it accepts stringified numbers', () => {
+      expect(makeSixDigit('1')).toEqual('000001');
+      expect(makeSixDigit('123')).toEqual('000123');
+      expect(makeSixDigit('444444')).toEqual('444444');
+    });
+
+    it('it returns the placeholder when parameter is not a number', () => {
+      expect(makeSixDigit('abc')).toEqual('000000');
+      expect(makeSixDigit([])).toEqual('000000');
+      expect(makeSixDigit({})).toEqual('000000');
+      expect(makeSixDigit(true)).toEqual('000000');
     });
   });
 });

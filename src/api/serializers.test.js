@@ -20,7 +20,7 @@ describe('API/Serializers', () => {
           name: 'Band',
           otherNames: 'bandit',
           private: false,
-          query: 'Band bandit ',
+          query: 'band bandit ',
           units: [],
         },
       });
@@ -30,7 +30,7 @@ describe('API/Serializers', () => {
   describe('color', () => {
     it('it serializes data correctly', () => {
       const data = {
-        id: '1',
+        id: 'col000001',
         name: 'white',
         hex: '#FFFFFF',
         r: 255,
@@ -38,7 +38,7 @@ describe('API/Serializers', () => {
         b: 255,
       };
       expect(serialize.color(data)).toEqual({
-        id: '1',
+        id: 'col000001',
         type: 'color',
         attributes: {
           b: 255,
@@ -46,6 +46,7 @@ describe('API/Serializers', () => {
           g: 255,
           hex: '#FFFFFF',
           name: 'white',
+          number: 1,
           r: 255,
         },
       });
@@ -117,6 +118,7 @@ describe('API/Serializers', () => {
           originalArtist: '',
           originalArtistId: null,
           private: false,
+          query: 'song title  ',
           single: false,
           title: 'Song Title',
           videoId: null,
@@ -138,6 +140,7 @@ describe('API/Serializers', () => {
         type: 'unit',
         attributes: {
           artistId: '2',
+          averages: [],
           createdBy: null,
           debutYear: 2018,
           distributions: [],
@@ -170,7 +173,7 @@ describe('API/Serializers', () => {
           latestUnits: [],
           session: {},
           displayName: null,
-          photoUrl: null,
+          photoURL: null,
         },
       });
     });
@@ -201,7 +204,7 @@ describe('API/Serializers', () => {
             name: 'Band',
             otherNames: 'bandit',
             private: false,
-            query: 'Band bandit ',
+            query: 'band bandit ',
             units: [],
           },
         },
@@ -217,7 +220,7 @@ describe('API/Serializers', () => {
             name: 'Group',
             otherNames: 'groupie',
             private: false,
-            query: 'Group groupie ',
+            query: 'group groupie ',
             units: [],
           },
         },
