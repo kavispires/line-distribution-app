@@ -256,7 +256,7 @@ VOCALIST: 'Vocalist',
 RAPPER: 'Rapper',
 DANCER: 'Dancer',
 CENTER: 'Center',
-FACE_OF_THE_GROUP: 'Face of the Group',
+FACE: 'Face of the Group',
 VISUAL: 'Visual',
 MAKNAE: 'Maknae',
 }

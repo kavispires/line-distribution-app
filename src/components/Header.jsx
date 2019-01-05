@@ -52,7 +52,7 @@ const Header = ({ props }) => {
             to="/members"
             className={pathname === '/members' ? 'active' : ''}
           >
-            Members
+            Idols
           </Link>
           <Link to="/lab" className={pathname === '/lab' ? 'active' : ''}>
             Lab
@@ -72,7 +72,7 @@ const Header = ({ props }) => {
               <Link to="/admin/icon-sheet">Icon Sheet</Link>
               <Link to="/admin/manage">Manage</Link>
               <Link to="/admin/sync">Sync</Link>
-              <Link to="/admin/test">Test</Link>
+              <Link to="/admin/temp">Test/Temp</Link>
             </div>
           </div>
         </nav>

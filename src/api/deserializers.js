@@ -14,6 +14,7 @@ export const deserialize = {
         id,
         createdBy: uid,
         genre: data.genre || null,
+        modifiedBy: uid,
         name: data.name,
         otherNames: data.otherNames || null,
         private: data.private || false,
@@ -36,6 +37,7 @@ export const deserialize = {
       return {
         songId: data.songId,
         createdBy: uid,
+        modifiedBy: uid,
       };
     },
     member: (data, id, uid) => {
@@ -58,6 +60,7 @@ export const deserialize = {
         colorId: data.colorId,
         gender: data.gender,
         initials: data.initials || buildMemberInitials(data.name),
+        modifiedBy: uid,
         name: data.name,
         nationality: data.nationality,
         private: data.private || false,
@@ -78,6 +81,7 @@ export const deserialize = {
         album: data.album || null,
         distribution: data.distribution,
         groupSize: data.groupSize || 0,
+        modifiedBy: uid,
         originalArtist: data.originalArtist || '',
         originalArtistId: data.originalArtistId || null,
         private: data.private || false,
@@ -101,6 +105,7 @@ export const deserialize = {
         debutYear: data.debutYear,
         distributions: data.distributions || [],
         distributions_legacy: data.distributions_legacy || [],
+        modifiedBy: uid,
         name: data.name,
         members: data.members || [],
         official: data.official || false,

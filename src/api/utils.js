@@ -117,7 +117,7 @@ export const buildArtistQuery = data => {
   const { name } = data;
   const otherNames = data.otherNames || '';
   const memberList = data.memberList || [];
-  const memberNames = memberList.map(member => member.name || '').join(' ');
+  const memberNames = memberList.join(' ');
   return `${name} ${otherNames} ${memberNames}`;
 };
 

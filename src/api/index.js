@@ -20,7 +20,7 @@ export const db = {
   users: {},
 };
 
-export let dbRef = null;
+export let dbRef = null; // eslint-disable-line
 
 class API {
   constructor() {
@@ -176,7 +176,7 @@ class API {
 
   async get(path) {
     console.warn('Fetching data...', path);
-    /**
+    /*
      * List of possible get calls:
      * /artists
      * /artists/<id>
@@ -191,7 +191,7 @@ class API {
      * /units/<id>/distribution
      * /units/<id>/members
      * /users/<id>
-     **/
+     */
 
     if (!this._loaded || !this._authenticated) {
       return this.throwDBError('GET');
@@ -276,7 +276,7 @@ class API {
 
   async post(path, body) {
     console.warn('Writting data...');
-    /**
+    /*
      * List of possible post calls:
      * /artists
      * /distributions
@@ -284,7 +284,7 @@ class API {
      * /songs
      * /units
      * /users
-     **/
+     */
 
     if (!this._loaded || !this._authenticated) {
       return this.throwDBError('POST');
@@ -329,7 +329,7 @@ class API {
 
   async put(path, body) {
     console.warn('Updating data...');
-    /**
+    /*
      * List of possible put calls:
      * /artists/<id>
      * /distributions/<id>
@@ -337,7 +337,7 @@ class API {
      * /songs/<id>
      * /units/<id>
      * /users/<id>
-     **/
+     */
 
     if (!this._loaded || !this._authenticated) {
       return this.throwDBError('PUT');
@@ -406,10 +406,10 @@ class API {
 
   async delete(path) {
     console.warn('Deleting data...');
-    /**
+    /*
      * List of possible delete calls:
      * /users/<id>
-     **/
+     */
 
     if (!this._loaded || !this._authenticated) {
       return this.throwDBError('DELETE');

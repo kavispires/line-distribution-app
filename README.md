@@ -21,8 +21,10 @@ For a live version of this project, click [here](http://www.kavispires.com/line-
 - Songs
 - Extra
 - Admin Tools
-  - Color Sheet
-  - Icon Sheet
+  - UI Reference
+    - Color Sheet
+    - Icon Sheet
+    - Components
   - Manage
   - Sync
   - Test
