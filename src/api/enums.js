@@ -17,7 +17,7 @@ export const NATIONALITIES = {
   BRAZILIAN: 'Brazilian',
   BRITISH: 'British',
   CHINESE: 'Chinese',
-  JAPANZE: 'Japanese',
+  JAPANESE: 'Japanese',
   KOREAN: 'Korean',
   OTHER: 'Other',
   THAI: 'Thai',

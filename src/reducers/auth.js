@@ -1,8 +1,9 @@
 import { toastr } from 'react-redux-toastr';
 
-import { setLoading } from './app';
-
 import API from '../api';
+
+import { setLoading } from './app';
+import { parseResponse } from '../utils';
 
 /* ------------------   ACTIONS   ------------------ */
 
@@ -65,8 +66,7 @@ export const login = () => async dispatch => {
   }
 
   if (loggedUser) {
-    const user = loggedUser.attributes;
-    user.id = loggedUser.id;
+    const user = parseResponse(loggedUser);
     dispatch(setUser(user));
     dispatch(setAuthenticated(true));
 
@@ -111,8 +111,8 @@ export const checkAuth = () => async dispatch => {
     }
 
     if (loggedUser) {
-      const user = loggedUser.attributes;
-      user.id = loggedUser.id;
+      const user = parseResponse(loggedUser);
+
       dispatch(setUser(user));
       dispatch(setAuthenticated(true));
 

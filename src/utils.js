@@ -142,3 +142,37 @@ export const parseBirthDate = d => {
   }
   return '?';
 };
+
+export const parseResponse = response => {
+  const responseParser = obj => {
+    return {
+      id: obj.id,
+      ...obj.attributes,
+    };
+  };
+
+  // Response has a single object instance without the "data" object
+  if (response && response.id && response.attributes) {
+    return responseParser(response);
+  }
+
+  // Response has a "data" object
+  if (response && response.data) {
+    response = response.data;
+
+    // If response.data is not an array
+    if (response && response.id && response.attributes) {
+      return responseParser(response);
+    }
+
+    if (Array.isArray(response)) {
+      const result = [];
+      for (let i = 0; i < response.length; i++) {
+        result.push(responseParser(response[i]));
+      }
+      return result;
+    }
+  }
+
+  throw new Error('parserResponse failed. Object is not a response');
+};
