@@ -4,9 +4,8 @@ import { withRouter } from 'react-router-dom';
 import App from '../components/App';
 
 import { init, setLoading } from '../reducers/app';
-import { loadArtist, loadArtists } from '../reducers/artists';
 import { checkAuth, login, logout } from '../reducers/auth';
-import { initDB } from '../reducers/db';
+import { loadColors } from '../reducers/db';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -17,9 +16,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   init,
   checkAuth,
-  initDB,
-  loadArtist,
-  loadArtists,
+  loadColors,
   login,
   logout,
   setLoading,

@@ -176,3 +176,25 @@ export const parseResponse = response => {
 
   throw new Error('parserResponse failed. Object is not a response');
 };
+
+export const parseResponseToObject = response => {
+  if (response && response.data) {
+    response = response.data;
+
+    if (Array.isArray(response)) {
+      const result = {};
+      for (let i = 0; i < response.length; i++) {
+        const instance = response[i];
+        result[instance.id] = {
+          id: instance.id,
+          ...instance.attributes,
+        };
+      }
+      return result;
+    }
+  }
+
+  throw new Error(
+    'parserResponseToObject failed. Object is not an array response'
+  );
+};

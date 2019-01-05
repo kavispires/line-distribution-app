@@ -33,6 +33,9 @@ export const serialize = {
         g: data.g,
         hex: data.hex,
         name: data.name,
+        number: data.id
+          ? Number(data.id.split('0000')[1])
+          : Number(id.split('0000')[1]),
         r: data.r,
       },
     };
