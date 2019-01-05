@@ -118,7 +118,7 @@ export const buildArtistQuery = data => {
   const otherNames = data.otherNames || '';
   const memberList = data.memberList || [];
   const memberNames = memberList.join(' ');
-  return `${name} ${otherNames} ${memberNames}`;
+  return `${name} ${otherNames} ${memberNames}`.toLowerCase();
 };
 
 export const buildMemberInitials = name =>
@@ -163,3 +163,5 @@ export const makeIdNumber = id => {
   const num = id.substring(3);
   return Number(num) || 0;
 };
+
+export const wait = ms => new Promise((r, j) => setTimeout(r, ms));

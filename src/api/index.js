@@ -1,13 +1,16 @@
-/* eslint no-underscore-dangle: ["error", { "allow": ["_authenticated", "_admin", _loaded, _loggedInThisSession, _uid] }] */
+/* eslint no-underscore-dangle: ["error", { "allow": ["_authenticated", "_admin", _loaded, _loggedInThisSession, _uid, _tries] }] */
 
 import firebase from 'firebase';
 import HttpStatus from 'http-status-codes';
-import { NewResponse, breadcrumble } from './utils';
+import { NewResponse, breadcrumble, wait } from './utils';
 
 import { serialize, serializeCollection } from './serializers';
 import { deserialize } from './deserializers';
 
 import { fb, googleProvider, userSession } from './firebase';
+
+const WAIT_DB_TIME = 3000;
+const WAIT_AUTH_TIME = 2000;
 
 export const db = {
   artists: {},
@@ -29,6 +32,7 @@ class API {
     this._admin = false;
     this._loaded = false;
     this._loggedInThisSession = false;
+    this._tries = 0;
     this._uid = null;
   }
 
@@ -90,6 +94,10 @@ class API {
   async auth() {
     console.warn('Running auth...');
     const response = new NewResponse();
+
+    if (!this._loaded) {
+      await wait(WAIT_AUTH_TIME);
+    }
 
     const { user } = userSession;
 
@@ -194,7 +202,11 @@ class API {
      */
 
     if (!this._loaded || !this._authenticated) {
-      return this.throwDBError('GET');
+      await wait(WAIT_DB_TIME);
+
+      if (!this._loaded || !this._authenticated) {
+        return this.throwDBError('GET');
+      }
     }
 
     const route = breadcrumble(path);
