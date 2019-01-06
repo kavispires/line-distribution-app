@@ -27,7 +27,7 @@ const ArtistsTable = ({
     <table className="table">
       <thead>
         <tr>
-          <th />
+          <th className="artists-table__favorite-col" />
           <th>Name</th>
           <th>Genre</th>
           <th>Units</th>
@@ -39,9 +39,12 @@ const ArtistsTable = ({
           filteredArtists.map(entry => {
             return (
               <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
-                <td className="favorite">
+                <td
+                  className="artists-cell-favorite"
+                  onClick={() => favoriteAction(entry.id)}
+                >
                   <FavoriteIcon
-                    action={favoriteAction}
+                    action={() => {}}
                     id={entry.id}
                     size="12"
                     state={

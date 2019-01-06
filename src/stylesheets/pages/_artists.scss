@@ -13,3 +13,13 @@
     min-width: 300px;
   }
 }
+
+.artists-table {
+  &__favorite-col {
+    width: 60px;
+  }
+}
+
+.artists-cell-favorite:hover {
+  background: rgba(209, 73, 73, 0.2);
+}

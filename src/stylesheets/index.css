@@ -595,6 +595,14 @@ p {
   min-width: 300px;
 }
 
+.artists-table__favorite-col {
+  width: 60px;
+}
+
+.artists-cell-favorite:hover {
+  background: rgba(209, 73, 73, 0.2);
+}
+
 .color-palette {
   width: 100%;
   display: flex;

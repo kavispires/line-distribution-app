@@ -31,7 +31,25 @@ const loadArtists = () => async dispatch => {
 
 const loadUserArtists = () => async (dispatch, getState) => {};
 
-const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {};
+const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {
+  let selectedArtist = {};
+
+  try {
+    dispatch(appOperations.setLoading(true, 'artist'));
+
+    const response = await API.get(`/artists/${artistId}`);
+    selectedArtist = utils.parseResponse(response);
+    console.log(selectedArtist);
+    // Get units
+  } catch (error) {
+    console.log(error);
+    toastr.error(`Unable to load artist ${artistId} database`, error);
+  } finally {
+    dispatch(appOperations.setLoading(false, 'artist'));
+  }
+
+  dispatch(actions.setSelectedArtist(selectedArtist));
+};
 
 const updateSearchQuery = value => dispatch => {
   if (value === '' || value.length > 2) {

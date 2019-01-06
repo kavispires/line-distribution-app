@@ -5,7 +5,7 @@ import _ from 'lodash';
 // Import components
 // import CurrentArtist from './CurrentArtist';
 // Import common components
-import { Icon, FavoriteIcon } from '../../../common';
+import { Icon } from '../../../common';
 import ArtistsTable from './ArtistsTable';
 
 class Artists extends Component {
@@ -25,17 +25,14 @@ class Artists extends Component {
       );
     }
 
+    // Row click should send user to the selected artist page
     const handleTableClick = e => {
       const { id } = e.target.parentNode;
       const { className } = e.target;
-      if (id && className !== 'favorite') {
+      if (id && className !== 'artists-cell-favorite') {
         const artistId = id.substring(2);
         this.props.history.push(`/artists/${artistId}`);
       }
-    };
-
-    const log = () => {
-      console.log('test');
     };
 
     const log2 = () => {
@@ -57,7 +54,7 @@ class Artists extends Component {
 
             <ArtistsTable
               artists={filteredArtists}
-              rowAction={log}
+              rowAction={handleTableClick}
               favoriteAction={log2}
               user={user}
             />
@@ -75,7 +72,7 @@ class Artists extends Component {
           <ArtistsTable
             artists={filteredArtists}
             searchQuery={searchQuery}
-            rowAction={log}
+            rowAction={handleTableClick}
             favoriteAction={log2}
             user={user}
           />
@@ -86,7 +83,6 @@ class Artists extends Component {
 }
 
 Artists.propTypes = {
-  app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
