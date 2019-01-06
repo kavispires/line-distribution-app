@@ -7,15 +7,15 @@
 @import './app.scss';
 
 // COMPONENTS
-@import './components/containers.scss';
-@import './components/buttons.scss';
-@import './components/icons.scss';
-@import './components/header.scss';
-@import './components/loading-bar.scss';
-@import './components/pills.scss';
-@import './components/tables.scss';
-@import './components/tabs.scss';
-@import './components/cards.scss';
+@import './common/containers.scss';
+@import './common/buttons.scss';
+@import './common/icons.scss';
+@import './common/header.scss';
+@import './common/loading-bar.scss';
+@import './common/pills.scss';
+@import './common/tables.scss';
+@import './common/tabs.scss';
+@import './common/cards.scss';
 
 // PAGES
 @import './pages/artist.scss';
@@ -26,7 +26,7 @@
 @import './pages/ui-reference.scss';
 
 // COLORS
-@import './components/colors.scss';
+@import './common/colors.scss';
 
 // TOASTR MODULE
 @import 'react-redux-toastr/src/styles/index';
