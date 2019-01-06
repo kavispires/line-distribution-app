@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import shared components
-import Icon from './Icon';
+import { Icon } from '../../app/common';
 
 const FavoriteIcon = ({ action, className, id, size, state }) => {
   return (

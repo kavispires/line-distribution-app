@@ -5,7 +5,8 @@ import logo from '../../../../images/logo-alt.svg';
 
 import { YOUTUBE_URLS } from '../../../../utils/constants';
 
-import Icon from '../../../../components/shared/Icon';
+// Import common components
+import { Icon } from '../../../common';
 
 const Home = props => {
   // Randomly choose one video in the playlist

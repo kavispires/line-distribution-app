@@ -4,8 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-// Import shared components
-import Icon from '../../../../components/shared/Icon';
+// Import common components
+import { Icon } from '../../../common';
 // Import images
 import logo from '../../../../images/logo.svg';
 import userPlaceholder from '../../../../images/user-placeholder.svg';

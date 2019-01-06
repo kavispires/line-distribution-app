@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import components
-import Icon from './shared/Icon';
+import { Icon } from '../app/common';
 import LoginRequired from './LoginRequired';
 // Import shared components
 import FavoriteIcon from './shared/FavoriteIcon';
