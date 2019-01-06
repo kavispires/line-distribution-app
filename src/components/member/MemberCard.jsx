@@ -6,7 +6,7 @@ import MemberNationaltyFlag from './MemberNationalityFlag';
 import MemberPicture from './MemberPicture';
 // Import utility functions
 import utils from '../../utils';
-import FavoriteIcon from '../shared/FavoriteIcon';
+import { FavoriteIcon } from '../../app/common';
 
 const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
   // TO-DO Avg logic

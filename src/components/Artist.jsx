@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import components
-import { Icon } from '../app/common';
-import LoginRequired from './LoginRequired';
-// Import shared components
-import FavoriteIcon from './shared/FavoriteIcon';
 import MemberCard from './member/MemberCard';
+import LoginRequired from './LoginRequired';
+// Import common components
+import { Icon, FavoriteIcon } from '../app/common';
 import Tabs from './shared/Tabs';
 
 class Artist extends Component {

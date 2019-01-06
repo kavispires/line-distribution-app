@@ -9,7 +9,7 @@ import { deserialize } from './deserializers';
 
 import { fb, googleProvider, userSession } from './firebase';
 
-const WAIT_DB_TIME = 3000;
+const WAIT_DB_TIME = 3500;
 const WAIT_AUTH_TIME = 2000;
 
 export const db = {

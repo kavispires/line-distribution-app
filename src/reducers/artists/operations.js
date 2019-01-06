@@ -22,12 +22,11 @@ const loadArtists = () => async dispatch => {
     console.log(error);
     toastr.error('Unable to load artists database', error);
   } finally {
-    dispatch(actions.setLoading(false, 'artists'));
+    dispatch(appOperations.setLoading(false, 'artists'));
   }
 
   // Also, load latest artists, and favorite units
   // dispatch(loadUserArtists());
-  dispatch(appOperations.setLoading(false, 'artists'));
 };
 
 const loadUserArtists = () => async (dispatch, getState) => {};

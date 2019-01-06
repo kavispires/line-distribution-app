@@ -4,9 +4,8 @@ import _ from 'lodash';
 
 // Import components
 import CurrentArtist from './CurrentArtist';
-// Import shared components
-import FavoriteIcon from './shared/FavoriteIcon';
-import { Icon } from '../app/common';
+// Import common components
+import { Icon, FavoriteIcon } from '../app/common';
 import ArtistsTableContainer from '../containers/ArtistsTableContainer';
 
 class Artists extends Component {
