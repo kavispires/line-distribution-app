@@ -81,7 +81,7 @@ const checkAuth = () => async dispatch => {
     }
 
     dispatch(appOperations.setLoading(false, 'auth'));
-  }, 2000);
+  }, 3000);
 };
 
 const updateFavoriteArtists = id => async (dispatch, getState) => {

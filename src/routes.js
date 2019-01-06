@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 
-import AppContainer from './containers/AppContainer';
+import Header from './app/pages/header';
 import ArtistContainer from './containers/ArtistContainer';
 import ArtistsContainer from './containers/ArtistsContainer';
 import ColorSheetContainer from './containers/ColorSheetContainer';
@@ -24,7 +24,7 @@ import './stylesheets/index.css';
 const routes = (
   <Router>
     <div className="app">
-      <AppContainer />
+      <Header />
       <Route path="/artists/:artistId" component={ArtistContainer} />
       <Route exact path="/artists" component={ArtistsContainer} />
       <Route path="/distribute" component={DistributeContainer} />

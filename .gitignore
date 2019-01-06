@@ -26,3 +26,6 @@ src/**/*.css
 
 ## Except
 !src/**/index.css
+
+# Other folders
+/src/api/temp/

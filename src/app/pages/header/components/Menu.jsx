@@ -5,23 +5,23 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import shared components
-import Icon from './shared/Icon';
+import Icon from '../../../../components/shared/Icon';
 // Import images
-import logo from '../images/logo.svg';
-import userPlaceholder from '../images/user-placeholder.svg';
+import logo from '../../../../images/logo.svg';
+import userPlaceholder from '../../../../images/user-placeholder.svg';
 
-const Header = ({ props }) => {
+const Menu = ({ auth, history, location, login, logout }) => {
   const handleLogoClick = () => {
-    props.history.push('/');
+    history.push('/');
   };
 
-  const { pathname } = props.location;
+  const { pathname } = location;
 
   // Hide parts of the menu if user is not authenticaded
-  const authHideClass = props.auth.isAuthenticated ? '' : 'hidden';
+  const authHideClass = auth.isAuthenticated ? '' : 'hidden';
 
   // Hide parts of the menu if user is not an administrator
-  const adminHideClass = props.auth.isAdmin ? '' : 'hidden';
+  const adminHideClass = auth.isAdmin ? '' : 'hidden';
 
   return (
     <header className="header">
@@ -77,31 +77,28 @@ const Header = ({ props }) => {
           </div>
         </nav>
       </div>
-      {props.auth.isAuthenticated ? (
+      {auth.isAuthenticated ? (
         <div className="header-user">
           <button className="header-user__nav">
             <img
               className="header-user__photo"
-              src={props.auth.user.photoURL || userPlaceholder}
+              src={auth.user.photoURL || userPlaceholder}
               alt="user"
             />
-            {props.auth.user.displayName}
+            {auth.user.displayName}
           </button>
           <div className="header-user__dropdown">
             <Link to="/user/my-artists">My Artists</Link>
             <Link to="/user/my-distributions">My Distributions</Link>
             <hr />
-            <a href="#" onClick={props.logout}>
+            <a href="#" onClick={logout}>
               Sign out <Icon type="logout" inline />
             </a>
           </div>
         </div>
       ) : (
         <div className="header-user">
-          <button
-            className="btn btn-hollow header-user__btn"
-            onClick={props.login}
-          >
+          <button className="btn btn-hollow header-user__btn" onClick={login}>
             Sign-in<Icon type="login" color="white" inline />
           </button>
         </div>
@@ -110,8 +107,7 @@ const Header = ({ props }) => {
   );
 };
 
-Header.propTypes = {
-  props: PropTypes.object.isRequired,
+Menu.propTypes = {
   auth: PropTypes.object,
   history: PropTypes.object,
   location: PropTypes.object,
@@ -119,7 +115,7 @@ Header.propTypes = {
   logout: PropTypes.func,
 };
 
-Header.defaultProps = {
+Menu.defaultProps = {
   auth: {},
   history: {},
   location: {},
@@ -127,4 +123,4 @@ Header.defaultProps = {
   logout: () => {},
 };
 
-export default Header;
+export default Menu;
