@@ -3,14 +3,14 @@ import { withRouter } from 'react-router-dom';
 
 import ArtistsTable from '../components/ArtistsTable';
 
-import { updateFavoriteArtists } from '../reducers/auth';
+import { authOperations } from '../reducers/auth';
 
 const mapStateToProps = state => ({
   auth: state.auth,
 });
 
 const mapDispatchToProps = {
-  updateFavoriteArtists,
+  ...authOperations,
 };
 
 export default withRouter(

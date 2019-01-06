@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import utility functions
-import { capitalizeWord, spinalCaseWord, bem } from '../../utils';
+import utils from '../../utils';
 
 const Tabs = ({ tabs, active, action, iconCondition, icon }) => {
   // Check for names and ids
   tabs.forEach((tab, index) => {
     if (tab.id !== undefined && tab.name === undefined) {
-      tab.name = capitalizeWord(tab.id);
+      tab.name = utils.capitalizeWord(tab.id);
     }
     if (tab.id === undefined && tab.name !== undefined) {
-      tab.id = spinalCaseWord(tab.name);
+      tab.id = utils.spinalCaseWord(tab.name);
     }
     tab.key = `${tab.id}-${index}`;
     tab.isActive = active === tab.id ? 'selected' : '';
@@ -28,7 +28,7 @@ const Tabs = ({ tabs, active, action, iconCondition, icon }) => {
       {tabs.map(tab => (
         <li
           key={tab.key}
-          className={bem('tabs', tab.isActive, 'tab')}
+          className={utils.bem('tabs', tab.isActive, 'tab')}
           id={tab.id}
         >
           {tab.name} {tab.showIcon ? iconComponent : null}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import MemberNationaltyFlag from './MemberNationalityFlag';
 import MemberPicture from './MemberPicture';
 // Import utility functions
-import { parseBirthDate } from '../../utils';
+import utils from '../../utils';
 import FavoriteIcon from '../shared/FavoriteIcon';
 
 const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
@@ -41,7 +41,7 @@ const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
         />
       </h3>
       <p>
-        <b>Date of Birth:</b> {parseBirthDate(member.birthdate)}
+        <b>Date of Birth:</b> {utils.parseBirthDate(member.birthdate)}
       </p>
       <p>
         <b>Nationality:</b>{' '}

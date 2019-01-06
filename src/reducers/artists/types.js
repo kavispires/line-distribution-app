@@ -1,0 +1,7 @@
+const SET_ARTIST_LIST = 'SET_ARTIST_LIST';
+const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';
+
+export default {
+  SET_ARTIST_LIST,
+  SET_SEARCH_QUERY,
+};

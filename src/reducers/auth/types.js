@@ -1,0 +1,9 @@
+const SET_ADMIN = 'SET_ADMIN';
+const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+const SET_USER = 'SET_USER';
+
+export default {
+  SET_ADMIN,
+  SET_AUTHENTICATED,
+  SET_USER,
+};

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Home from '../components/Home';
 
-import { login } from '../reducers/auth';
+import { authOperations } from '../reducers/auth';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  login,
+  login: authOperations.login,
 };
 
 export default withRouter(

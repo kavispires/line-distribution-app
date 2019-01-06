@@ -3,9 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import App from '../components/App';
 
-import { init, setLoading } from '../reducers/app';
-import { checkAuth, login, logout } from '../reducers/auth';
-import { loadColors } from '../reducers/db';
+import { appOperations } from '../reducers/app';
+import { authOperations } from '../reducers/auth';
+import { dbOperations } from '../reducers/db';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -14,12 +14,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  init,
-  checkAuth,
-  loadColors,
-  login,
-  logout,
-  setLoading,
+  init: appOperations.init,
+  checkAuth: authOperations.checkAuth,
+  loadColors: dbOperations.loadColors,
+  login: authOperations.login,
+  logout: authOperations.logout,
+  setLoading: appOperations.setLoading,
 };
 
 export default withRouter(

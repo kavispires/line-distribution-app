@@ -11,7 +11,7 @@ import _ from 'lodash';
  * @param {extra} extras
  * @returns {string} bem-class
  */
-export const bem = (...args) => {
+const bem = (...args) => {
   const block = args[0];
   let modifiers = args[1] || '';
   let element = args[2];
@@ -84,7 +84,7 @@ export const bem = (...args) => {
  * @param {Array} members
  * @returns {Array} members with unique colors
  */
-export const ensureColorUniqueness = members => {
+const ensureColorUniqueness = members => {
   const membersList = _.cloneDeep(members);
   const dict = {};
   const refactoredMembers = [];
@@ -116,20 +116,20 @@ export const ensureColorUniqueness = members => {
   return refactoredMembers;
 };
 
-export const capitalizeWord = (str, separator = ' ') =>
+const capitalizeWord = (str, separator = ' ') =>
   str
     .toString()
     .split(separator)
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(separator);
 
-export const spinalCaseWord = str =>
+const spinalCaseWord = str =>
   str
     .toLowerCase()
     .split(' ')
     .join('-');
 
-export const parseBirthDate = d => {
+const parseBirthDate = d => {
   const date = `${d}`;
   if (date.length < 5) {
     return date;
@@ -143,7 +143,7 @@ export const parseBirthDate = d => {
   return '?';
 };
 
-export const parseResponse = response => {
+const parseResponse = response => {
   const responseParser = obj => {
     return {
       id: obj.id,
@@ -177,7 +177,7 @@ export const parseResponse = response => {
   throw new Error('parserResponse failed. Object is not a response');
 };
 
-export const parseResponseToObject = response => {
+const parseResponseToObject = response => {
   if (response && response.data) {
     response = response.data;
 
@@ -197,4 +197,14 @@ export const parseResponseToObject = response => {
   throw new Error(
     'parserResponseToObject failed. Object is not an array response'
   );
+};
+
+export default {
+  bem,
+  ensureColorUniqueness,
+  capitalizeWord,
+  spinalCaseWord,
+  parseBirthDate,
+  parseResponse,
+  parseResponseToObject,
 };
