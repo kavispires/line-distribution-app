@@ -35,10 +35,6 @@ class Artists extends Component {
       }
     };
 
-    const log2 = () => {
-      console.log('test2');
-    };
-
     return (
       <main className="container container--artists">
         <h1>Artists</h1>
@@ -55,7 +51,7 @@ class Artists extends Component {
             <ArtistsTable
               artists={filteredArtists}
               rowAction={handleTableClick}
-              favoriteAction={log2}
+              favoriteAction={this.props.updateFavoriteArtists}
               user={user}
             />
           </section>
@@ -73,7 +69,7 @@ class Artists extends Component {
             artists={filteredArtists}
             searchQuery={searchQuery}
             rowAction={handleTableClick}
-            favoriteAction={log2}
+            favoriteAction={this.props.updateFavoriteArtists}
             user={user}
           />
         </section>

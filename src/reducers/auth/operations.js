@@ -87,20 +87,20 @@ const checkAuth = () => async dispatch => {
 const updateFavoriteArtists = id => async (dispatch, getState) => {
   const user = { ...getState().auth.user };
   const userFavoriteArtists = { ...user.favoriteArtists } || {};
-
-  if (user.uid) {
+  console.log(userFavoriteArtists);
+  if (user.id) {
     if (userFavoriteArtists[id]) {
-      delete userFavoriteArtists[id];
+      userFavoriteArtists[id] = false;
     } else {
       userFavoriteArtists[id] = true;
     }
-
+    console.log(userFavoriteArtists);
     try {
-      const newUserFavoriteArtists = await API.post(
-        `/users/${user.uid}/favorite-artists`,
+      const newUserFavoriteArtists = await API.put(
+        `/users/${user.id}/favorite-artists`,
         userFavoriteArtists
       );
-      user.favoriteArtists = newUserFavoriteArtists;
+      user.favoriteArtists = newUserFavoriteArtists.data;
 
       dispatch(actions.setUser(user));
     } catch (error) {
@@ -114,19 +114,19 @@ const updateFavoriteMembers = id => async (dispatch, getState) => {
   const user = { ...getState().auth.user };
   const userFavoriteMembers = { ...user.favoriteMembers } || {};
 
-  if (user.uid) {
+  if (user.id) {
     if (userFavoriteMembers[id]) {
-      delete userFavoriteMembers[id];
+      userFavoriteMembers[id] = false;
     } else {
       userFavoriteMembers[id] = true;
     }
 
     try {
-      const newUserFavoriteArtists = await API.post(
-        `/users/${user.uid}/favorite-members`,
+      const newUserFavoriteMembers = await API.put(
+        `/users/${user.id}/favorite-members`,
         userFavoriteMembers
       );
-      user.favoriteArtists = newUserFavoriteArtists;
+      user.userFavoriteMembers = newUserFavoriteMembers.data;
 
       dispatch(actions.setUser(user));
     } catch (error) {

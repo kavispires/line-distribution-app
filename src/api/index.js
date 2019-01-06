@@ -405,7 +405,27 @@ class API {
         break;
       // API/users/<id>
       case 'users':
-        result = await putFunctions.updateUser(route.referenceId, body);
+        if (route.subPath === 'biases') {
+          result = await putFunctions.updateUserBiases(route.referenceId, body);
+        } else if (route.subPath === 'favorite-artists') {
+          result = await putFunctions.updateUserFavoriteArtists(
+            route.referenceId,
+            body
+          );
+        } else if (route.subPath === 'favorite-members') {
+          result = await putFunctions.updateUserFavoriteMembers(
+            route.referenceId,
+            body
+          );
+        } else if (route.subPath === 'latest-units') {
+          result = await putFunctions.updateUserLatestUnits(
+            route.referenceId,
+            body
+          );
+        } else {
+          result = await putFunctions.updateUser(route.referenceId, body);
+        }
+
         break;
       default:
         return this.throwPathError('path');
@@ -843,9 +863,9 @@ const putFunctions = {
     return serialize.unit(db.units[key]);
   },
   // Updates single user
-  updateUser: async (id, body, uid) => {
+  updateUser: async (id, body) => {
     const key = id;
-    const data = deserialize.put.user(body, key, uid);
+    const data = deserialize.put.user(body, key);
     await dbRef.ref(`/users/${key}`).update(data, error => {
       if (error) {
         const message = `Failed to update User ${key}: ${data.name}`;
@@ -858,6 +878,54 @@ const putFunctions = {
     });
     db.users[key] = response;
     return serialize.user(db.users[key]);
+  },
+  updateUserBiases: async (id, body) => {
+    const key = id;
+    await dbRef.ref(`/users/${key}/biases`).update(body, error => {
+      if (error) {
+        const message = `Failed to update User's Biases ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    return body;
+  },
+  updateUserFavoriteArtists: async (id, body) => {
+    const key = id;
+    await dbRef.ref(`/users/${key}/favoriteArtists`).update(body, error => {
+      if (error) {
+        const message = `Failed to update User's Favorite Artists ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    return body;
+  },
+  updateUserFavoriteMembers: async (id, body) => {
+    const key = id;
+    await dbRef.ref(`/users/${key}/favoriteMembers`).update(body, error => {
+      if (error) {
+        const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    return body;
+  },
+  updateUserLatestUnits: async (id, body) => {
+    const key = id;
+    await dbRef.ref(`/users/${key}/latestUnits`).update(body, error => {
+      if (error) {
+        const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    return body;
   },
 };
 
