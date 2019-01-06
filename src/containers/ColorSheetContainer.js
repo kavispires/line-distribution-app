@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import ColorSheet from '../components/ColorSheet';
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({ db: state.db });
 
 const mapDispatchToProps = {};
 

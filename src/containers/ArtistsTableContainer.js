@@ -1,22 +1,21 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import Temp from '../components/Temp';
+import ArtistsTable from '../components/ArtistsTable';
 
-import { testFunction1, testFunction2 } from '../reducers/temp';
+import { updateFavoriteArtists } from '../reducers/auth';
 
 const mapStateToProps = state => ({
-  temp: state.temp,
+  auth: state.auth,
 });
 
 const mapDispatchToProps = {
-  testFunction1,
-  testFunction2,
+  updateFavoriteArtists,
 };
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Temp)
+  )(ArtistsTable)
 );

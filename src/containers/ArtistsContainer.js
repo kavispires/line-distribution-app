@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Artists from '../components/Artists';
 
-import { loadArtists, setSearchQuery } from '../reducers/artists';
+import { loadArtists, updateSearchQuery } from '../reducers/artists';
 import { login, updateFavoriteArtists } from '../reducers/auth';
 
 const mapStateToProps = state => ({
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadArtists,
   login,
-  setSearchQuery,
+  updateSearchQuery,
   updateFavoriteArtists,
 };
 

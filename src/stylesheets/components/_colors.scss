@@ -1,11 +1,13 @@
-$colorCodes: #ce311b, #ff6347, #ffa07a, #9a5827, #ff8e2a, #cd7f32, #d2b48c,
-  #b8850b, #e2b631, #ffe400, #808000, #ffff66, #ccff26, #7fb817, #5d8c56,
-  #147d14, #59ff84, #15aa98, #83eeea, #39badd, #285986, #406fff, #6687ff,
-  #7b68ee, #a177ef, #f7d0ff, #9e35ae, #fc6be9, #9c1465, #e62e8a, #983c4b,
-  #ffabb9, #d01f3c, #a6a89d, #777278, #575d63;
+$colorCodes: #d01f3c, #ce311b, #ff6347, #ffa07a, #9a5827, #ff8e2a, #e2b631,
+  #ffe400, #808000, #ffff52, #ccff26, #7fb817, #5d8c56, #147d14, #59ff84,
+  #15aa98, #83eeea, #39badd, #285986, #406fff, #7391ff, #7b68ee, #a177ef,
+  #f7d0ff, #9e35ae, #fc6be9, #9c1465, #e62e8a, #983c4b, #ffabb9;
 
 @for $i from 1 through length($colorCodes) {
   .background-color-#{$i} {
     background-color: #{nth($colorCodes, $i)} !important;
+  }
+  .foreground-color-#{$i} {
+    color: #{nth($colorCodes, $i)} !important;
   }
 }

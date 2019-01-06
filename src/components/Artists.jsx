@@ -7,14 +7,16 @@ import CurrentArtist from './CurrentArtist';
 // Import shared components
 import FavoriteIcon from './shared/FavoriteIcon';
 import Icon from './shared/Icon';
+import ArtistsTable from './ArtistsTable';
+import ArtistsTableContainer from '../containers/ArtistsTableContainer';
 
 class Artists extends Component {
   componentDidMount() {
     this.props.loadArtists();
-    this.props.setSearchQuery('');
+    this.props.updateSearchQuery('');
   }
   render() {
-    const { app, artists, auth } = this.props;
+    const { artists, auth } = this.props;
     const { artistList, searchQuery, userLatestArtists } = artists;
     const { user } = auth;
 
@@ -34,11 +36,21 @@ class Artists extends Component {
       }
     };
 
+    const log = () => {
+      console.log('test');
+    };
+
     return (
       <main className="container container--artists">
         <h1>Artists</h1>
 
         <CurrentArtist props={this.props} />
+
+        <ArtistsTableContainer
+          artists={filteredArtists}
+          searchQuery={searchQuery}
+          rowAction={log}
+        />
 
         {userLatestArtists.length > 0 ? (
           <section className="artists__section">
@@ -61,7 +73,7 @@ class Artists extends Component {
                     <td>{entry.artist.name}</td>
                     <td>{entry.artist.genre}</td>
                     <td>{entry.name}</td>
-                    <td>{entry.members.map(m => m.name).join(', ')}</td>
+                    <td>{entry.memberList.join(', ')}</td>
                   </tr>
                 ))}
               </tbody>
@@ -75,9 +87,7 @@ class Artists extends Component {
             className="artists__search-bar"
             type="text"
             placeholder="Filter..."
-            onChange={e =>
-              this.props.setSearchQuery(e.target.value.toUpperCase())
-            }
+            onChange={e => this.props.updateSearchQuery(e.target.value)}
           />
           <table className="table">
             <thead>
@@ -110,7 +120,7 @@ class Artists extends Component {
                       <td>{entry.name}</td>
                       <td>{entry.genre}</td>
                       <td>{unitCount}</td>
-                      <td>{entry.memberList.map(m => m.name).join(', ')}</td>
+                      <td>{entry.memberList.join(', ')}</td>
                     </tr>
                   );
                 })
@@ -133,7 +143,7 @@ Artists.propTypes = {
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
-  setSearchQuery: PropTypes.func.isRequired,
+  updateSearchQuery: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };
 
