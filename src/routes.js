@@ -2,11 +2,12 @@ import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Header from './app/pages/header';
+import Home from './app/pages/home';
 import ArtistContainer from './containers/ArtistContainer';
 import ArtistsContainer from './containers/ArtistsContainer';
 import ColorSheetContainer from './containers/ColorSheetContainer';
 import DistributeContainer from './containers/DistributeContainer';
-import HomeContainer from './containers/HomeContainer';
+
 import IconSheetContainer from './containers/IconSheetContainer';
 import LabContainer from './containers/LabContainer';
 import LearnMoreContainer from './containers/LearnMoreContainer';
@@ -46,7 +47,7 @@ const routes = (
         component={MyDistributionsContainer}
       />
 
-      <Route exact path="/" component={HomeContainer} />
+      <Route exact path="/" component={Home} />
     </div>
   </Router>
 );

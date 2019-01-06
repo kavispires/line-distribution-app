@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Home from '../components/Home';
 
-import { authOperations } from '../reducers/auth';
+import { authOperations } from '../../../../reducers/auth';
 
 const mapStateToProps = state => ({
   app: state.app,

@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import logo from '../images/logo-alt.svg';
+import logo from '../../../../images/logo-alt.svg';
 
-import { YOUTUBE_URLS } from '../utils/constants';
+import { YOUTUBE_URLS } from '../../../../utils/constants';
 
-import Icon from './shared/Icon';
+import Icon from '../../../../components/shared/Icon';
 
 const Home = props => {
+  // Randomly choose one video in the playlist
   const youtubeUrl =
     YOUTUBE_URLS[Math.floor(Math.random() * YOUTUBE_URLS.length)];
 
