@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import logo from '../images/logo-alt.svg';
 
-import { YOUTUBE_URLS } from '../constants';
+import { YOUTUBE_URLS } from '../utils/constants';
 
 import Icon from './shared/Icon';
 

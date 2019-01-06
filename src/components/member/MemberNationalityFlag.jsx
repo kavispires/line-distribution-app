@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FLAGS_LIST, NATIONALITY_FLAG_URL } from '../../constants';
+import { FLAGS_LIST, NATIONALITY_FLAG_URL } from '../../utils/constants';
 
 const MemberNationaltyFlag = ({ nationality }) => {
   const flag = FLAGS_LIST[nationality];

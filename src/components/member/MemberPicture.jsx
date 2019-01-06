@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { PROFILE_PICTURE_URL } from '../../constants';
+import { PROFILE_PICTURE_URL } from '../../utils/constants';
 
 class MemberPicture extends Component {
   constructor() {
