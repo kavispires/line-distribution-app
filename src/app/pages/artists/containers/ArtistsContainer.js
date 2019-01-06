@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import Artists from '../components/Artists';
 
-import { artistsOperations } from '../reducers/artists';
-import { authOperations } from '../reducers/auth';
+import { artistsOperations } from '../../../../reducers/artists';
+import { authOperations } from '../../../../reducers/auth';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -14,10 +14,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadArtists: artistsOperations.loadArtists,
-  login: authOperations.login,
-  updateSearchQuery: artistsOperations.updateSearchQuery,
-  updateFavoriteArtists: authOperations.updateFavoriteArtists,
+  ...artistsOperations,
+  ...authOperations,
 };
 
 export default withRouter(

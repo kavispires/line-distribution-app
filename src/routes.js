@@ -3,8 +3,8 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Header from './app/pages/header';
 import Home from './app/pages/home';
+import Artists from './app/pages/artists';
 import ArtistContainer from './containers/ArtistContainer';
-import ArtistsContainer from './containers/ArtistsContainer';
 import ColorSheetContainer from './containers/ColorSheetContainer';
 import DistributeContainer from './containers/DistributeContainer';
 
@@ -27,7 +27,7 @@ const routes = (
     <div className="app">
       <Header />
       <Route path="/artists/:artistId" component={ArtistContainer} />
-      <Route exact path="/artists" component={ArtistsContainer} />
+      <Route exact path="/artists" component={Artists} />
       <Route path="/distribute" component={DistributeContainer} />
       <Route path="/lab" component={LabContainer} />
       <Route path="/learn-more" component={LearnMoreContainer} />
