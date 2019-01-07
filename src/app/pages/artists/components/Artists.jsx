@@ -5,7 +5,7 @@ import _ from 'lodash';
 // Import components
 // import CurrentArtist from './CurrentArtist';
 // Import common components
-import { Icon, Switch } from '../../../common';
+import { Icon, Switch, RequirementWrapper } from '../../../common';
 import ArtistsTable from './ArtistsTable';
 
 class Artists extends Component {
@@ -39,49 +39,51 @@ class Artists extends Component {
     };
 
     return (
-      <main className="container container--artists">
-        <h1>Artists</h1>
+      <RequirementWrapper>
+        <main className="container container--artists">
+          <h1>Artists</h1>
 
-        {/* <CurrentArtist props={this.props} /> */}
+          {/* <CurrentArtist props={this.props} /> */}
 
-        {userLatestArtists.length > 0 ? (
+          {userLatestArtists.length > 0 ? (
+            <section className="artists__section">
+              <h2>
+                <Icon type="clock" size="20" color="blue" /> Your Recently Used
+                Artists
+              </h2>
+
+              <ArtistsTable
+                artists={filteredArtists}
+                rowAction={handleTableClick}
+                favoriteAction={this.props.updateFavoriteArtists}
+                user={user}
+              />
+            </section>
+          ) : null}
+
           <section className="artists__section">
-            <h2>
-              <Icon type="clock" size="20" color="blue" /> Your Recently Used
-              Artists
-            </h2>
-
+            <h2>All Artists</h2>
+            <input
+              className="artists__search-bar"
+              type="text"
+              placeholder="Filter..."
+              onChange={e => this.props.updateSearchQuery(e.target.value)}
+            />{' '}
+            Show Favorite Artists Only:{' '}
+            <Switch
+              action={this.props.showFavoriteArtistsOnlyToggle}
+              checked={showFavoriteArtistsOnly}
+            />
             <ArtistsTable
               artists={filteredArtists}
+              searchQuery={searchQuery}
               rowAction={handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
               user={user}
             />
           </section>
-        ) : null}
-
-        <section className="artists__section">
-          <h2>All Artists</h2>
-          <input
-            className="artists__search-bar"
-            type="text"
-            placeholder="Filter..."
-            onChange={e => this.props.updateSearchQuery(e.target.value)}
-          />{' '}
-          Show Favorite Artists Only:{' '}
-          <Switch
-            action={this.props.showFavoriteArtistsOnlyToggle}
-            checked={showFavoriteArtistsOnly}
-          />
-          <ArtistsTable
-            artists={filteredArtists}
-            searchQuery={searchQuery}
-            rowAction={handleTableClick}
-            favoriteAction={this.props.updateFavoriteArtists}
-            user={user}
-          />
-        </section>
-      </main>
+        </main>
+      </RequirementWrapper>
     );
   }
 }

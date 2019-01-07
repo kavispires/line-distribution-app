@@ -36,31 +36,27 @@ const ArtistsTable = ({
       </thead>
       <tbody onClick={rowAction}>
         {filteredArtists.length > 0 ? (
-          filteredArtists.map(entry => {
-            return (
-              <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
-                <td
-                  className="artists-cell-favorite"
-                  onClick={() => favoriteAction(entry.id)}
-                >
-                  <FavoriteIcon
-                    action={() => {}}
-                    id={entry.id}
-                    size="12"
-                    state={
-                      user.favoriteArtists && user.favoriteArtists[entry.id]
-                    }
-                  />
-                </td>
-                <td>{entry.name}</td>
-                <td>{entry.genre}</td>
-                <td>{entry.units ? entry.units.length : 0}</td>
-                <td>
-                  {entry.memberList.join(', ')} ({entry.memberList.length})
-                </td>
-              </tr>
-            );
-          })
+          filteredArtists.map(entry => (
+            <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
+              <td
+                className="artists-cell-favorite"
+                onClick={() => favoriteAction(entry.id)}
+              >
+                <FavoriteIcon
+                  action={() => {}}
+                  id={entry.id}
+                  size="12"
+                  state={user.favoriteArtists && user.favoriteArtists[entry.id]}
+                />
+              </td>
+              <td>{entry.name}</td>
+              <td>{entry.genre}</td>
+              <td>{entry.units ? entry.units.length : 0}</td>
+              <td>
+                {entry.memberList.join(', ')} ({entry.memberList.length})
+              </td>
+            </tr>
+          ))
         ) : (
           <tr>
             <td colSpan="5">{emptyTableMessage}</td>
