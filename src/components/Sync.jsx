@@ -1,48 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// Import shared components
-import SyncVideoId from './SyncVideoId';
-import SyncMain from './SyncMain';
-import SyncForm from './SyncForm';
-
-const Sync = props => {
-  const SYNC = props.sync;
-
-  if (SYNC.step === 1) {
-    return (
-      <SyncVideoId
-        step={SYNC.step}
-        videoId={SYNC.videoId}
-        updateVideoId={props.updateVideoId}
-        updateStep={props.updateStep}
-      />
-    );
+class Sync extends Component {
+  render() {
+    return <h1>Sync</h1>;
   }
+}
 
-  if (SYNC.step === 2) {
-    return (
-      <SyncForm
-        step={SYNC.step}
-        form={SYNC.form}
-        updateForm={props.updateForm}
-        updateStep={props.updateStep}
-      />
-    );
-  }
+Sync.propTypes = {};
 
-  if (SYNC.step === 3 || SYNC.step === 4 || SYNC.step === 5) {
-    return <SyncMain props={props} />;
-  }
-
-  return <div />;
-};
+Sync.defaultProps = {};
 
 export default Sync;
-
-Sync.propTypes = {
-  sync: PropTypes.object.isRequired,
-  updateForm: PropTypes.func.isRequired,
-  updateStep: PropTypes.func.isRequired,
-  updateVideoId: PropTypes.func.isRequired,
-};

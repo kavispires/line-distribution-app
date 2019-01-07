@@ -1,0 +1,25 @@
+.artists {
+  &__section {
+    width: 100%;
+    overflow: auto;
+    margin: $unit-x2 0;
+  }
+
+  &__search-bar {
+    padding: $unit-p2;
+    margin-bottom: $unit;
+    border: 1px solid $color-gray-1;
+    width: 30%;
+    min-width: 300px;
+  }
+}
+
+.artists-table {
+  &__favorite-col {
+    width: 60px;
+  }
+}
+
+.artists-cell-favorite:hover {
+  background: rgba(209, 73, 73, 0.2);
+}

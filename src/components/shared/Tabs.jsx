@@ -1,33 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Import shared components
-import Icon from './Icon';
 // Import utility functions
-import { capitalizeWord, spinalCaseWord, bem } from '../../utils';
+import utils from '../../utils';
 
-const Tabs = ({
-  tabs,
-  active,
-  action,
-  iconCondition,
-  iconType = 'default',
-}) => {
+const Tabs = ({ tabs, active, action, iconCondition, icon }) => {
   // Check for names and ids
   tabs.forEach((tab, index) => {
     if (tab.id !== undefined && tab.name === undefined) {
-      tab.name = capitalizeWord(tab.id);
+      tab.name = utils.capitalizeWord(tab.id);
     }
     if (tab.id === undefined && tab.name !== undefined) {
-      tab.id = spinalCaseWord(tab.name);
+      tab.id = utils.spinalCaseWord(tab.name);
     }
     tab.key = `${tab.id}-${index}`;
     tab.isActive = active === tab.id ? 'selected' : '';
+    tab.showIcon = tab[iconCondition] || false;
   });
 
-  let icon;
+  let iconComponent;
   if (iconCondition) {
-    icon = <Icon type={iconType} />;
+    iconComponent = icon;
   }
 
   return (
@@ -35,10 +28,10 @@ const Tabs = ({
       {tabs.map(tab => (
         <li
           key={tab.key}
-          className={bem('tabs', tab.isActive, 'tab')}
+          className={utils.bem('tabs', tab.isActive, 'tab')}
           id={tab.id}
         >
-          {tab.name} {icon}
+          {tab.name} {tab.showIcon ? iconComponent : null}
         </li>
       ))}
     </ul>
@@ -50,13 +43,13 @@ Tabs.propTypes = {
   active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   tabs: PropTypes.array.isRequired,
   iconCondition: PropTypes.string,
-  iconType: PropTypes.string,
+  icon: PropTypes.object,
 };
 
 Tabs.defaultProps = {
   active: 0,
-  iconCondition: null,
-  iconType: 'default',
+  iconCondition: '',
+  icon: null,
 };
 
 export default Tabs;

@@ -3,26 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import Songs from '../components/Songs';
 
-import { toggleBrackets } from '../reducers/lyrics';
+const mapStateToProps = state => ({});
 
-import { loadSong, loadSongs, songsFilter } from '../reducers/songs';
-
-import { login } from '../reducers/auth';
-
-const mapStateToProps = state => ({
-  app: state.app,
-  auth: state.auth,
-  db: state.db,
-  songs: state.songs,
-});
-
-const mapDispatchToProps = {
-  loadSong,
-  loadSongs,
-  login,
-  songsFilter,
-  toggleBrackets,
-};
+const mapDispatchToProps = {};
 
 export default withRouter(
   connect(

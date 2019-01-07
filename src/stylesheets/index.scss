@@ -1,71 +1,33 @@
 // @import url('https://fonts.googleapis.com/css?family=Ubuntu:300,500');
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700');
 @import './variables.scss';
-@import './color-palette.scss';
+// @import './color-palette.scss';
 
-// APP DEFAULT
+// BROWSER RESETS
 @import './app.scss';
 
-// CONTAINERS
-@import './containers.scss';
+// COMPONENTS
+@import './common/containers.scss';
+@import './common/buttons.scss';
+@import './common/icons.scss';
+@import './common/header.scss';
+@import './common/loading-bar.scss';
+@import './common/pills.scss';
+@import './common/tables.scss';
+@import './common/tabs.scss';
+@import './common/cards.scss';
+@import './common/widgets.scss';
 
-// SHARED/EXPANDABLE CARD
-@import './shared-expandable-card.scss';
+// PAGES
+@import './pages/artist.scss';
+@import './pages/artists.scss';
+@import './pages/color-sheet.scss';
+@import './pages/home.scss';
+@import './pages/login-required.scss';
+@import './pages/ui-reference.scss';
 
-// ICONS
-@import './shared-icons.scss';
-
-// SHARED/TABS
-@import './shared-tabs.scss';
-
-// PILLS
-@import './pills.scss';
-
-// HEADER
-@import './header.scss';
-
-// TYPOGRAPHY
-// @import './typography.scss';
-
-// FORMS
-@import './forms.scss';
-
-// BUTTONS
-@import './buttons.scss';
-
-// WIDJETS
-@import './widgets.scss';
-
-// INPUTS
-@import './inputs.scss';
-
-// TABLES
-@import './tables.scss';
-
-// HOME
-@import './home.scss';
-
-// SYNC
-@import './sync.scss';
-
-// DISTRIBUTE
-@import './distribute.scss';
-
-// RESULTS
-@import './results.scss';
-
-// CREATOR
-@import './creator.scss';
-
-// LYRICS PARSER
-@import './lyrics.scss';
-
-// ROMANIZER
-@import './romanizer.scss';
-
-.hidden {
-  display: none !important;
-}
+// COLORS
+@import './common/colors.scss';
 
 // TOASTR MODULE
 @import 'react-redux-toastr/src/styles/index';

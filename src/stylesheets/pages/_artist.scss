@@ -1,0 +1,31 @@
+.artist__section {
+  margin: $unit 0;
+}
+
+.unit-section {
+  &__top {
+    display: flex;
+  }
+
+  &__summary {
+    width: 50%;
+  }
+
+  &__actions {
+    width: 50%;
+
+    .btn {
+      display: block;
+      float: right;
+      clear: both;
+      min-width: 120px;
+      min-width: 120px;
+      margin-bottom: $unit-p2;
+    }
+  }
+
+  &__members {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

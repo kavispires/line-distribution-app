@@ -1,0 +1,136 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+// BROWSER RESET AND DEFAULT
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  font-size: $unit;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin: 1.66em 0 0.83em 0;
+}
+
+.member-list-item {
+  padding: $quarterUnit $halfUnit;
+  margin-left: $halfUnit;
+  border-radius: $quarterUnit;
+  margin-bottom: $quarterUnit;
+}
+
+.unit-content {
+  position: relative;
+  padding: $halfUnit;
+  border: 1px solid $lightGrey;
+}
+
+.unit-members {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.unit-songs {
+  outline: 1px dashed $grey;
+}
+
+.unit-songs-dist {
+  display: flex;
+  width: 100%;
+  min-width: 200px;
+}
+
+.unit-songs-member {
+  height: $unit;
+  line-height: 13px;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+// .tiny-h1 {
+// 	margin: 0;
+//   margin-top: $doubleUnit;
+//   font-size: 12px;
+//   border-bottom: 1px solid #ccc;
+//   padding: $unit 0;
+// }
+
+.latest-units {
+  display: flex;
+  margin-bottom: $unit;
+
+  p {
+    font-weight: 700;
+    margin: 0;
+    margin-right: $unit;
+  }
+
+  .btn {
+    margin-right: $unit;
+  }
+}
+
+.converter-output {
+  margin-top: $unit;
+  width: 100%;
+  resize: vertical;
+  min-height: 150px;
+}
+
+.loading-centered {
+  display: flex;
+  justify-content: center;
+}
+
+.user-artists-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-artists-table {
+  width: 48%;
+  background: #f9f9f9;
+  padding: $unit;
+  border-radius: $quarterUnit;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+  h2 {
+    margin: 0 0 $halfUnit 0;
+    padding-bottom: $unit;
+    border-bottom: $quarterUnit solid #e6e6e6;
+  }
+}
+
+.user-artists-message {
+  padding: 0 24px 12px 12px;
+  font-style: italic;
+  color: darkgray;
+}
+
+.tab-padding {
+  padding: 0 $unit;
+}
+
+.member-nationality-flag {
+  height: 13px;
+  width: auto;
+  transform: translateY(3px);
+}

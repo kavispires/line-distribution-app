@@ -3,20 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import IconSheet from '../components/IconSheet';
 
-import { initColorSheet, toggleColorSheetTab } from '../reducers/admin';
+const mapStateToProps = state => ({});
 
-const mapStateToProps = state => ({
-  admin: state.admin,
-  app: state.app,
-  auth: state.auth,
-  database: state.database,
-  db: state.db,
-});
-
-const mapDispatchToProps = {
-  initColorSheet,
-  toggleColorSheetTab,
-};
+const mapDispatchToProps = {};
 
 export default withRouter(
   connect(

@@ -3,56 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import Distribute from '../components/Distribute';
 
-import { toggleIsLoading } from '../reducers/app';
+const mapStateToProps = state => ({});
 
-import {
-  boxMouseDown,
-  boxMouseUp,
-  calculateDuration,
-  loadSong,
-  setDurations,
-  setHistory,
-  setPercentages,
-  handleKeydown,
-  handleKeyup,
-  handleReset,
-  toggleLyrics,
-  handleUndo,
-  resetDistribution,
-  toggleEditLyrics,
-} from '../reducers/distribute';
-
-import { handleParser } from '../reducers/lyrics';
-
-import { login } from '../reducers/auth';
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  app: state.app,
-  db: state.db,
-  distribute: state.distribute,
-  lyrics: state.lyrics,
-});
-
-const mapDispatchToProps = {
-  boxMouseDown,
-  boxMouseUp,
-  calculateDuration,
-  handleKeydown,
-  handleKeyup,
-  handleParser,
-  handleReset,
-  handleUndo,
-  loadSong,
-  login,
-  resetDistribution,
-  setDurations,
-  setHistory,
-  setPercentages,
-  toggleEditLyrics,
-  toggleIsLoading,
-  toggleLyrics,
-};
+const mapDispatchToProps = {};
 
 export default withRouter(
   connect(

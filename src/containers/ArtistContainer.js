@@ -2,28 +2,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import Artist from '../components/Artist';
-
-import {
-  toggleIsLoading,
-  updateCurrentSong,
-  updateCurrentUnit,
-  updateShouldReset,
-} from '../reducers/app';
-
-import {
-  loadUserArtists,
-  switchUnitsTab,
-  updateFavoriteUnits,
-  updateLatestUnits,
-  updateSelectedArtist,
-  updateSelectedUnit,
-} from '../reducers/artists';
-
-import { resetDistribution } from '../reducers/distribute';
-
-import { resetSongInfo } from '../reducers/results';
-
-import { login } from '../reducers/auth';
+import { artistsOperations } from '../reducers/artists';
+import { authOperations } from '../reducers/auth';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -33,19 +13,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadUserArtists,
-  login,
-  resetDistribution,
-  resetSongInfo,
-  switchUnitsTab,
-  toggleIsLoading,
-  updateCurrentSong,
-  updateCurrentUnit,
-  updateFavoriteUnits,
-  updateLatestUnits,
-  updateSelectedArtist,
-  updateSelectedUnit,
-  updateShouldReset,
+  loadArtist: artistsOperations.loadArtist,
+  login: authOperations.login,
+  switchUnitsTab: artistsOperations.switchUnitsTab,
+  updateFavoriteArtists: authOperations.updateFavoriteArtists,
+  updateFavoriteMembers: authOperations.updateFavoriteMembers,
 };
 
 export default withRouter(

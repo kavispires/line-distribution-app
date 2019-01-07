@@ -1,15 +1,35 @@
-$quarterUnit: 3px;
-$halfUnit: 6px;
+// UNITS
+$unit-p4: 3px;
+$unit-p2: 6px;
 $unit: 12px;
-$doubleUnit: 24px;
+$unit-x2: 24px;
+$unit-x4: 48px;
+
 $padding: 6px;
-$outerMargin: 48px;
+$border-radius: 3px;
 
-$lightGrey: #E6E6E6;
-$grey: #CCC;
-$primary: #000;
-$darkGrey: #707070;
-$negative: #fff;
-$defaultBlue: #598FFD;
+// COLORS
+$color-primary: #111111;
+$color-negative: #ffffff;
+$color-gray-1: #ebebf2;
+$color-gray-2: #b5b5ba;
+$color-gray-3: #7e7e82;
+$color-gray-4: #484849;
 
+$color-black: #273032;
+$color-blue: #598ffd;
+$color-gray: #707070;
+$color-green: #49d156;
+$color-orange: #fea245;
+$color-pink: #fb9cf0;
+$color-purple: #9e8ef0;
+$color-red: #d14949;
+$color-teal: #34ac9e;
+$color-yellow: #ffd700;
 
+// $quarterUnit: 3px;
+// $halfUnit: 6px;
+// $unit: 12px;
+// $doubleUnit: 24px;
+// $padding: 6px;
+// $outerMargin: 48px;
