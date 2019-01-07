@@ -650,6 +650,33 @@ input:checked + .slider:before {
   margin: 12px 0;
 }
 
+.artist-page__name {
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+.artist-page__name--fav-icon {
+  transform: translateY(-12px);
+}
+
+.artist-page__genre {
+  margin: 0;
+  font-style: italic;
+}
+
+.artist-page__members-list {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.artist-page__member-pill {
+  background: #b5b5ba;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+
 .unit-section__top {
   display: flex;
 }

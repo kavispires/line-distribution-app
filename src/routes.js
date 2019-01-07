@@ -4,10 +4,10 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import Header from './app/pages/header';
 import Home from './app/pages/home';
 import Artists from './app/pages/artists';
-import ArtistContainer from './containers/ArtistContainer';
+import Artist from './app/pages/artist';
+
 import ColorSheetContainer from './containers/ColorSheetContainer';
 import DistributeContainer from './containers/DistributeContainer';
-
 import IconSheetContainer from './containers/IconSheetContainer';
 import LabContainer from './containers/LabContainer';
 import LearnMoreContainer from './containers/LearnMoreContainer';
@@ -26,7 +26,7 @@ const routes = (
   <Router>
     <div className="app">
       <Header />
-      <Route path="/artists/:artistId" component={ArtistContainer} />
+      <Route path="/artists/:artistId" component={Artist} />
       <Route exact path="/artists" component={Artists} />
       <Route path="/distribute" component={DistributeContainer} />
       <Route path="/lab" component={LabContainer} />

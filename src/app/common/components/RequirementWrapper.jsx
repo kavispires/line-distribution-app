@@ -18,26 +18,17 @@ class RequirementWrapper extends Component {
       activeArtist: false,
     };
   }
+
   componentDidMount() {
     this.props.requirements.forEach(requirement => {
       this.setState({ [requirement]: true });
     });
   }
+
   render() {
     // Verify Database
     if (this.state.database && !this.props.app.databaseReady) {
-      return (
-        <main className="container container--flex container--center container--requirement-wrapper">
-          <div className="requirement-wrapper__container">
-            <img
-              className="requirement-wrapper__loading-icon"
-              src={loading}
-              alt="Loading Icon"
-            />
-            <p>Fetching database...</p>
-          </div>
-        </main>
-      );
+      return <Loading message="Fecthing database..." />;
     }
 
     // Verify Authentication
@@ -69,6 +60,26 @@ class RequirementWrapper extends Component {
       );
     }
 
+    // Verify Selected Artist
+    if (
+      this.state.selectedArtist &&
+      (!this.props.artists.selectedArtist ||
+        !this.props.artists.selectedArtist.id)
+    ) {
+      if (this.props.app.isLoading) {
+        return <Loading message="Fecthing artist..." />;
+      }
+      return (
+        <main className="container container--artist">
+          <h1>Artist Page</h1>
+          <p>
+            No artist has been selected. Go to the{' '}
+            <Link to="/artists">Artists Page</Link> and select a group.
+          </p>
+        </main>
+      );
+    }
+
     // Verify Active Artist
     if (
       this.state.activeArtist &&
@@ -80,7 +91,8 @@ class RequirementWrapper extends Component {
           <h1>Artist Required</h1>
           <p>
             No artist has been selected. Go to the{' '}
-            <Link to="/artists">Artists Page</Link> and select a group.
+            <Link to="/artists">Artists Page</Link> and select a group and then
+            a unit.
           </p>
         </main>
       );
@@ -89,6 +101,19 @@ class RequirementWrapper extends Component {
     return <div className="wrapper">{this.props.children}</div>;
   }
 }
+
+const Loading = ({ message = '' }) => (
+  <main className="container container--flex container--center container--requirement-wrapper">
+    <div className="requirement-wrapper__container">
+      <img
+        className="requirement-wrapper__loading-icon"
+        src={loading}
+        alt="Loading Icon"
+      />
+      <p>{message}</p>
+    </div>
+  </main>
+);
 
 RequirementWrapper.propTypes = {
   app: PropTypes.object.isRequired,
@@ -101,6 +126,14 @@ RequirementWrapper.propTypes = {
 
 RequirementWrapper.defaultProps = {
   requirements: [],
+};
+
+Loading.propTypes = {
+  message: PropTypes.string,
+};
+
+Loading.defaultProps = {
+  message: '',
 };
 
 export default RequirementWrapper;
