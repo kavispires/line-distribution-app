@@ -14,7 +14,7 @@ const ArtistsTable = ({
 }) => {
   // Filter table rows based on searchQuery
   let filteredArtists = artists;
-  if (searchQuery && filteredArtists[0].query) {
+  if (searchQuery && filteredArtists[0]) {
     filteredArtists = _.filter(artists, o => o.query.includes(searchQuery));
   }
   // Message to be display when table has no rows

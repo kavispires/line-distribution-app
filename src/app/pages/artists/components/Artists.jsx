@@ -5,7 +5,7 @@ import _ from 'lodash';
 // Import components
 // import CurrentArtist from './CurrentArtist';
 // Import common components
-import { Icon } from '../../../common';
+import { Icon, Switch } from '../../../common';
 import ArtistsTable from './ArtistsTable';
 
 class Artists extends Component {
@@ -15,14 +15,17 @@ class Artists extends Component {
   }
   render() {
     const { artists, auth } = this.props;
-    const { artistList, searchQuery, userLatestArtists } = artists;
+    const {
+      artistList,
+      searchQuery,
+      showFavoriteArtistsOnly,
+      userLatestArtists,
+    } = artists;
     const { user } = auth;
 
     let filteredArtists = artistList;
-    if (searchQuery) {
-      filteredArtists = _.filter(artistList, o =>
-        o.query.includes(searchQuery)
-      );
+    if (showFavoriteArtistsOnly) {
+      filteredArtists = _.filter(artistList, o => user.favoriteArtists[o.id]);
     }
 
     // Row click should send user to the selected artist page
@@ -64,6 +67,11 @@ class Artists extends Component {
             type="text"
             placeholder="Filter..."
             onChange={e => this.props.updateSearchQuery(e.target.value)}
+          />{' '}
+          Show Favorite Artists Only:{' '}
+          <Switch
+            action={this.props.showFavoriteArtistsOnlyToggle}
+            checked={showFavoriteArtistsOnly}
           />
           <ArtistsTable
             artists={filteredArtists}
@@ -83,6 +91,7 @@ Artists.propTypes = {
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
+  showFavoriteArtistsOnlyToggle: PropTypes.func.isRequired,
   updateSearchQuery: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };

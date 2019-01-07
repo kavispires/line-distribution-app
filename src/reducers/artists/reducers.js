@@ -4,6 +4,7 @@ const initialState = {
   artistList: [],
   searchQuery: '',
   selectedArtist: {},
+  showFavoriteArtistsOnly: false,
   userFavoriteArtists: {},
   userLatestArtists: [],
 };
@@ -22,6 +23,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_SELECTED_ARTIST:
       newState.selectedArtist = action.payload;
+      break;
+
+    case types.SET_SHOW_FAVORITE_ARTISTS_ONLY:
+      newState.showFavoriteArtistsOnly = action.payload;
       break;
 
     default:

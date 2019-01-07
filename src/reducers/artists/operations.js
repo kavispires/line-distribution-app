@@ -57,6 +57,12 @@ const updateSearchQuery = value => dispatch => {
   }
 };
 
+const showFavoriteArtistsOnlyToggle = () => (dispatch, getState) => {
+  const { showFavoriteArtistsOnly } = getState().artists;
+
+  dispatch(actions.setShowFavoriteArtistsOnly(!showFavoriteArtistsOnly));
+};
+
 const updateLatestUnits = id => async (dispatch, getState) => {};
 
 const switchUnitsTab = e => async dispatch => {};
@@ -67,5 +73,6 @@ export default {
   loadArtist,
   updateSearchQuery,
   updateLatestUnits,
+  showFavoriteArtistsOnlyToggle,
   switchUnitsTab,
 };

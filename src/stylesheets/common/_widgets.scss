@@ -1,0 +1,62 @@
+.switch {
+  position: relative;
+  display: inline-block;
+  top: $unit-p4;
+  width: 46px;
+  height: 20px;
+}
+
+// Slider
+.switch input {
+  display: none;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 4px;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  background-color: $color-gray-2;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 13px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: $color-negative;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: $color-blue;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $color-blue;
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+.slide-text-left {
+  margin-right: $unit-p2;
+}
+
+.slide-text-right {
+  margin-left: $unit;
+}
+
+.widget-h1-title {
+  font-size: $unit;
+  font-weight: normal;
+  color: $color-gray-4;
+  margin-left: $unit;
+}
