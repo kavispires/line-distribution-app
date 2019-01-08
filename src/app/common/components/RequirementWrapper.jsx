@@ -16,16 +16,28 @@ class RequirementWrapper extends Component {
       authentication: true,
       admin: false,
       activeArtist: false,
+      ready: false,
     };
   }
 
   componentDidMount() {
+    if (!this.state.ready) {
+      this.parseRequirements();
+    }
+  }
+
+  parseRequirements() {
     this.props.requirements.forEach(requirement => {
       this.setState({ [requirement]: true });
     });
+    this.setState({ ready: true });
   }
 
   render() {
+    if (!this.state.ready) {
+      return <Loading message="Loading..." />;
+    }
+
     // Verify Database
     if (this.state.database && !this.props.app.databaseReady) {
       return <Loading message="Fecthing database..." />;
