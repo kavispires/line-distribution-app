@@ -6,16 +6,22 @@ import utils from '../../../utils';
 
 const Tabs = ({ tabs, active, action, iconCondition, icon, ...props }) => {
   // Check for names and ids
-  tabs.forEach((tab, index) => {
+  tabs = tabs.map((tab, index) => {
+    const tabObj = {
+      name: tab.name || '',
+      id: tab.id || '',
+    };
     if (tab.id !== undefined && tab.name === undefined) {
-      tab.name = utils.capitalizeWord(tab.id);
+      tabObj.name = utils.capitalizeWord(tab.id);
     }
     if (tab.id === undefined && tab.name !== undefined) {
-      tab.id = utils.spinalCaseWord(tab.name);
+      tabObj.id = utils.spinalCaseWord(tab.name);
     }
-    tab.key = `${tab.id}-${index}`;
-    tab.isActive = active === tab.id ? 'selected' : '';
-    tab.showIcon = tab[iconCondition] || false;
+
+    tabObj.key = `${tab.id}-${index}`;
+    tabObj.isActive = active === tab.id ? 'selected' : '';
+    tabObj.showIcon = tab[iconCondition] || false;
+    return tabObj;
   });
 
   // Build icon component
