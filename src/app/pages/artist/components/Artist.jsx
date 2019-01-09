@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 // import MemberCard from './member/MemberCard';
 // import LoginRequired from './LoginRequired';
 // Import common components
-import { FavoriteIcon, RequirementWrapper } from '../../../common';
+import { FavoriteIcon, RequirementWrapper, Tabs, Icon } from '../../../common';
 // import { Icon, FavoriteIcon } from '../app/common';
 // import Tabs from './shared/Tabs';
 
@@ -17,19 +17,14 @@ class Artist extends Component {
       this.props.artists.selectedArtist &&
       this.props.artists.selectedArtist.id !== artistId
     ) {
+      console.log(artistId);
       this.props.loadArtist(artistId, this.props.location.search);
     }
   }
 
   render() {
     const { artists, auth, db } = this.props;
-    const { selectedArtist, selectedUnit, selectedUnits } = artists;
-
-    // if (db.loaded && (!auth.user || !auth.user.uid)) {
-    //   return <LoginRequired login={this.props.login} />;
-    // }
-
-    console.log(selectedArtist);
+    const { artistPageTab, selectedArtist, selectedUnit } = artists;
 
     return (
       <RequirementWrapper requirements={['selectedArtist']}>
@@ -40,7 +35,7 @@ class Artist extends Component {
               {selectedArtist.name}
               <FavoriteIcon
                 action={this.props.updateFavoriteArtists}
-                id={selectedArtist.id}
+                id={selectedArtist.id || ''}
                 className="artist-page__name--fav-icon"
                 size="20"
                 state={
@@ -55,16 +50,50 @@ class Artist extends Component {
             <ul className="artist-page__members-list">
               {selectedArtist.memberList &&
                 selectedArtist.memberList.map(memberName => (
-                  <li className="artist-page__member-pill">{memberName}</li>
+                  <li
+                    className="artist-page__member-pill"
+                    key={`mp-${memberName}`}
+                  >
+                    {memberName}
+                  </li>
                 ))}
             </ul>
           </section>
 
           <section className="artist__section">
-            <h2>Units</h2>
-            <h2>Members in this Unit</h2>
-            <h2>Distributions for the unit</h2>
-            <h2>Legacy Distributions for the unit</h2>
+            <Tabs
+              tabs={selectedArtist.units || []}
+              action={this.props.switchArtistPageTab}
+              active={artistPageTab}
+              icon={<Icon type="check" color="blue" />}
+              iconCondition="official"
+            >
+              {selectedUnit.id ? (
+                <div>
+                  <p>
+                    <b>Debut Year:</b> {selectedUnit.debutYear || '?'}
+                  </p>
+                  <p>
+                    <b>Official Distributions:</b>{' '}
+                    {selectedUnit.distributions.length || 0}
+                  </p>
+                  <p>
+                    <b>Custom Distributions:</b>{' '}
+                    {selectedUnit.distributions_legacy.length || 0}
+                  </p>
+                  <hr />
+                  <p>Navigation buttons go here</p>
+                  <hr />
+                  <h2>Members:</h2>
+                  <hr />
+                  <h2>Distributions for the unit</h2>
+                  <hr />
+                  <h2>Legacy Distributions for the unit</h2>
+                </div>
+              ) : (
+                <p>The selected Artist has no units.</p>
+              )}
+            </Tabs>
           </section>
 
           {/*
@@ -128,9 +157,8 @@ Artist.propTypes = {
   db: PropTypes.object.isRequired,
   loadArtist: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  switchUnitsTab: PropTypes.func.isRequired,
+  switchArtistPageTab: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
 };

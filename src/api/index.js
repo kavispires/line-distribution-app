@@ -2,7 +2,7 @@
 
 import firebase from 'firebase';
 import HttpStatus from 'http-status-codes';
-import { NewResponse, breadcrumble, wait } from './utils';
+import { NewResponse, breadcrumble, wait, mergeMembers } from './utils';
 
 import { serialize, serializeCollection } from './serializers';
 import { deserialize } from './deserializers';
@@ -610,11 +610,9 @@ const getFunctions = {
   fetchMember: async id => {
     if (!db.members[id]) {
       let response = {};
-      await this.dbRef()
-        .ref(`/members/${id}`)
-        .once('value', snapshot => {
-          response = snapshot.val();
-        });
+      await dbRef.ref(`/members/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
       db.members[id] = response;
     }
     return serialize.member(db.members[id], id);
@@ -667,13 +665,16 @@ const getFunctions = {
     const membersResponse = await unit.attributes.members.map(member =>
       getFunctions.fetchMember(member.memberId)
     );
+
     const promiseResponse = await Promise.all(membersResponse);
+
     const response = promiseResponse.map((member, index) => {
+      member.attributes.id = member.id;
       member.attributes.positions = unit.attributes.members[index].positions;
       return member;
     });
 
-    return response;
+    return mergeMembers(unit.attributes.members, response);
   },
   // Fetches single user
   fetchUser: async id => {

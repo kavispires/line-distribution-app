@@ -19,7 +19,7 @@ const loadArtists = () => async dispatch => {
     const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
     dispatch(actions.setArtistList(sortedArtistList));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     toastr.error('Unable to load artists database', error);
   } finally {
     dispatch(appOperations.setLoading(false, 'artists'));
@@ -32,23 +32,95 @@ const loadArtists = () => async dispatch => {
 const loadUserArtists = () => async (dispatch, getState) => {};
 
 const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {
+  dispatch(appOperations.setLoading(true, 'artist'));
+
   let selectedArtist = {};
 
+  // Fetch Artist
   try {
-    dispatch(appOperations.setLoading(true, 'artist'));
-
     const response = await API.get(`/artists/${artistId}`);
     selectedArtist = utils.parseResponse(response);
-    console.log(selectedArtist);
-    // Get units
   } catch (error) {
-    console.log(error);
-    toastr.error(`Unable to load artist ${artistId} database`, error);
-  } finally {
+    console.error(error);
+    toastr.error(`Unable to load artist ${artistId} from database`, error);
     dispatch(appOperations.setLoading(false, 'artist'));
   }
 
+  // Select default unit id
+  queryParams = utils.parseQueryParams(queryParams);
+  let selectedUnitId = selectedArtist.units[0];
+  let unitIndex = 0;
+  if (
+    queryParams &&
+    queryParams.unit &&
+    selectedArtist.units.includes(queryParams.unit)
+  ) {
+    selectedUnitId = queryParams.unit;
+    unitIndex = selectedArtist.units.indexOf(selectedUnitId);
+  }
+
+  // Fetch Artist's Units
+  try {
+    const response = await API.get(`/artists/${artistId}/units`);
+
+    selectedArtist.units = utils.parseResponse(response);
+  } catch (error) {
+    console.error(error);
+    toastr.error(
+      `Unable to load artist ${artistId}'s units from database`,
+      error
+    );
+  }
+
+  // Fetch complete unit for default unit
+  selectedArtist = await loadCompleteUnit(selectedUnitId, selectedArtist);
+
+  dispatch(actions.setArtistPageTab(selectedUnitId));
   dispatch(actions.setSelectedArtist(selectedArtist));
+  dispatch(actions.setSelectedUnit(selectedArtist.units[unitIndex]));
+
+  dispatch(appOperations.setLoading(false, 'artist'));
+};
+
+const findUnitIndex = (units, unitId) => units.findIndex(u => u.id === unitId);
+
+const loadCompleteUnit = async (unitId, selectedArtist) => {
+  const artist = { ...selectedArtist };
+
+  // Find unit in artist
+  const unitIndex = findUnitIndex(artist.units, unitId);
+
+  if (unitIndex !== -1) {
+    const unit = { ...artist.units[unitIndex] };
+
+    // Fetch unit members
+    if (unit.members[0].id === undefined) {
+      try {
+        const response = await API.get(`/units/${unitId}/members`);
+        unit.members = utils.parseResponse(response);
+      } catch (error) {
+        console.error(error);
+        toastr.error(`Unable to load unitId 's units from database: ${error}`);
+      }
+    }
+
+    // Fetch unit distributions
+    if (unit.distributions[0] && unit.distributions[0].id === undefined) {
+      console.log('should fetch unit distributions');
+    }
+
+    // Fetch unit legacy distributions
+    if (
+      unit.distributions_legacy[0] &&
+      unit.distributions_legacy[0].id === undefined
+    ) {
+      console.log('should fetch unit legacy distributions');
+    }
+
+    artist.units[unitIndex] = unit;
+  }
+
+  return artist;
 };
 
 const updateSearchQuery = value => dispatch => {
@@ -65,7 +137,18 @@ const showFavoriteArtistsOnlyToggle = () => (dispatch, getState) => {
 
 const updateLatestUnits = id => async (dispatch, getState) => {};
 
-const switchUnitsTab = e => async dispatch => {};
+const switchArtistPageTab = event => async (dispatch, getState) => {
+  const { id } = event.target;
+  let selectedArtist = { ...getState().artists.selectedArtist };
+  selectedArtist = await loadCompleteUnit(id, selectedArtist);
+  const unitIndex = findUnitIndex(selectedArtist.units, id);
+  dispatch(actions.setArtistPageTab(id));
+  dispatch(actions.setSelectedArtist(selectedArtist));
+  dispatch(actions.setSelectedUnit(selectedArtist.units[unitIndex]));
+
+  // dispatch(updateSelectedUnit(id));
+  console.log(selectedArtist.units[unitIndex]);
+};
 
 export default {
   loadArtists,
@@ -74,5 +157,5 @@ export default {
   updateSearchQuery,
   updateLatestUnits,
   showFavoriteArtistsOnlyToggle,
-  switchUnitsTab,
+  switchArtistPageTab,
 };

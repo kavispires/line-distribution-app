@@ -199,12 +199,32 @@ const parseResponseToObject = response => {
   );
 };
 
+const parseQueryParams = query => {
+  if (!query) return null;
+
+  if (query[0] === '?') {
+    query = query.substring(1);
+  }
+
+  const params = {};
+  query.split('&').forEach(item => {
+    const pair = item.split('=');
+    const key = pair[0];
+    if (key) {
+      params[key] = pair[1] || null;
+    }
+  });
+
+  return params;
+};
+
 export default {
   bem,
   ensureColorUniqueness,
   capitalizeWord,
-  spinalCaseWord,
   parseBirthDate,
+  parseQueryParams,
   parseResponse,
   parseResponseToObject,
+  spinalCaseWord,
 };

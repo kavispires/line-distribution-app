@@ -172,3 +172,16 @@ export const makeSixDigit = num => {
 };
 
 export const wait = ms => new Promise((r, j) => setTimeout(r, ms)); // eslint-disable-line
+
+export const mergeMembers = (unitMembersArr, membersArr) => {
+  const dict = {};
+
+  unitMembersArr.forEach(member => {
+    dict[member.memberId] = member.positions;
+  });
+
+  return membersArr.map(member => ({
+    ...member.attributes,
+    positions: dict[member.id],
+  }));
+};

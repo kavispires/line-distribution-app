@@ -2,8 +2,10 @@ import types from './types';
 
 const initialState = {
   artistList: [],
+  artistPageTab: '',
   searchQuery: '',
   selectedArtist: {},
+  selectedUnit: {},
   showFavoriteArtistsOnly: false,
   userFavoriteArtists: {},
   userLatestArtists: [],
@@ -17,12 +19,20 @@ export default function reducer(prevState = initialState, action) {
       newState.artistList = action.payload;
       break;
 
+    case types.SET_ARTIST_PAGE_TAB:
+      newState.artistPageTab = action.payload;
+      break;
+
     case types.SET_SEARCH_QUERY:
       newState.searchQuery = action.payload;
       break;
 
     case types.SET_SELECTED_ARTIST:
       newState.selectedArtist = action.payload;
+      break;
+
+    case types.SET_SELECTED_UNIT:
+      newState.selectedUnit = action.payload;
       break;
 
     case types.SET_SHOW_FAVORITE_ARTISTS_ONLY:
