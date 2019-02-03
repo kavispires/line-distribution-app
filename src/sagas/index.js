@@ -88,15 +88,62 @@ function* initializer(action) {
   }
 }
 
+function* runLogin(action) {
+  yield call(setLoading, action.type, true);
+
+  try {
+    let loggedUser = yield API.login();
+    loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
+
+    if (loggedUser) {
+      const user = utils.parseResponse(loggedUser);
+
+      yield put({ type: types.SET_USER, payload: user });
+      yield put({ type: types.SET_AUTHENTICATED, payload: true });
+
+      toastr.success('Hello!', `You are logged in as ${user.displayName}`);
+
+      if (user.isAdmin) {
+        yield put({ type: types.SET_ADMIN, payload: true });
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    toastr.error('Oh no!', error.toString());
+  } finally {
+    yield call(setLoading, action.type, false);
+  }
+}
+
+function* runLogout(action) {
+  yield call(setLoading, action.type, true);
+
+  try {
+    yield API.logoff();
+
+    yield put({ type: types.SET_USER, payload: {} });
+    yield put({ type: types.SET_AUTHENTICATED, payload: false });
+    yield put({ type: types.SET_ADMIN, payload: false });
+    toastr.warning('', 'You are logged out');
+  } catch (error) {
+    console.error(error);
+    toastr.error('Oh no!', error.toString());
+  } finally {
+    yield call(setLoading, action.type, false);
+  }
+}
+
 // TO-DO: Remove this
 function* test(action) {
-  yield console.log('it call this function');
+  yield console.log('it calls test worker');
   yield console.log(action);
 }
 
 function* ldSaga() {
   yield takeLatest('INITIALIZER', initializer);
-  yield takeEvery('RUN_LOGIN', test);
+  yield takeLatest('RUN_LOGIN', runLogin);
+  yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeEvery('TEST', test);
 }
 
 export default ldSaga;
