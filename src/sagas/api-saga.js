@@ -44,15 +44,14 @@ function* initializer(action) {
         actionType: action.type,
       });
     }
-
-    // TO-DO: Resolve this when artist is selected
-    let colors = yield API.get('/colors');
-    colors = utils.parseResponseToObject(colors);
-    yield put({ type: types.SET_COLORS, payload: colors });
   } catch (error) {
-    // TO-DO: Create a proper error screen
-    console.error(error);
-    // toastr.error('Unable to reach database', error);
+    yield put({
+      type: 'ERROR',
+      message: error,
+      actionType: action.type,
+    });
+  } finally {
+    yield put({ type: 'CLEAR_PENDING', actionType: action.type });
   }
 }
 
@@ -100,7 +99,7 @@ function* runLogout(action) {
 
     yield put({
       type: 'WARNING_TOAST',
-      message: ['', 'You are logged out'],
+      message: 'You are logged out',
       actionType: action.type,
     });
   } catch (error) {
@@ -114,8 +113,8 @@ function* runLogout(action) {
 
 // TO-DO: Remove this
 function* test(action) {
-  yield console.log('it calls test worker');
-  yield console.log(action);
+  yield console.log('it calls test worker'); // eslint-disable-line
+  yield console.log(action); // eslint-disable-line
 }
 
 function* apiSaga() {

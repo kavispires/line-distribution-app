@@ -7,6 +7,7 @@ import { Icon } from '..';
 // Import images
 import logo from '../../../images/logo-neg.svg';
 import loading from '../../../images/loading.svg';
+import ErrorPage from '../../pages/error';
 
 class RequirementWrapper extends Component {
   constructor(props) {
@@ -34,6 +35,13 @@ class RequirementWrapper extends Component {
   }
 
   render() {
+    // If error is active
+    if (this.props.app.error) {
+      console.log('AN ERROR HAS HAPPENED!');
+      // this.props.history.push('error');
+      return <ErrorPage />;
+    }
+
     if (!this.state.ready) {
       return <Loading message="Loading..." />;
     }
