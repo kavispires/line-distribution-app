@@ -51,39 +51,6 @@ const logout = () => async dispatch => {
   }
 };
 
-// Verifies if the users is still logged from a previous session, since it depends
-// on a firebase observer, we have to trigger it at least two seconds after the db is ready
-const checkAuth = () => async dispatch => {
-  dispatch(appOperations.setLoading(true, 'auth'));
-  setTimeout(async () => {
-    let loggedUser = null;
-    try {
-      loggedUser = await API.auth();
-      loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
-    } catch (_) {
-      // Do nothing if user has no session
-    }
-
-    if (loggedUser) {
-      const user = utils.parseResponse(loggedUser);
-
-      dispatch(actions.setUser(user));
-      dispatch(actions.setAuthenticated(true));
-
-      toastr.success(
-        'Welcome back!',
-        `You are logged in as ${user.displayName}`
-      );
-
-      if (user.isAdmin) {
-        dispatch(actions.setAdmin(true));
-      }
-    }
-
-    dispatch(appOperations.setLoading(false, 'auth'));
-  }, 3000);
-};
-
 const updateFavoriteArtists = id => async (dispatch, getState) => {
   const user = { ...getState().auth.user };
   const userFavoriteArtists = { ...user.favoriteArtists } || {};
@@ -139,7 +106,6 @@ const updateFavoriteMembers = id => async (dispatch, getState) => {
 export default {
   login,
   logout,
-  checkAuth,
   updateFavoriteArtists,
   updateFavoriteMembers,
 };

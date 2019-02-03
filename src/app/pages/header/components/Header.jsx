@@ -5,10 +5,8 @@ import Menu from './Menu';
 import LoadingBar from './LoadingBar';
 
 class App extends Component {
-  async componentDidMount() {
-    await this.props.init();
-    await this.props.checkAuth();
-    await this.props.loadColors();
+  componentDidMount() {
+    this.props.init();
   }
 
   render() {
@@ -29,9 +27,7 @@ class App extends Component {
 
 App.propTypes = {
   app: PropTypes.object.isRequired,
-  checkAuth: PropTypes.func.isRequired,
   init: PropTypes.func.isRequired,
-  loadColors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,

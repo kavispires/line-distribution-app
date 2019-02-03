@@ -7,6 +7,9 @@ import { YOUTUBE_URLS } from '../../../../utils/constants';
 
 // Import common components
 import { Icon } from '../../../common';
+import store from '../../../../store';
+
+let test = 0;
 
 const Home = props => {
   // Randomly choose one video in the playlist
