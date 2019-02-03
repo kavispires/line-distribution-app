@@ -19,7 +19,9 @@ class App extends Component {
           login={this.props.login}
           logout={this.props.logout}
         />
-        {this.props.app.isLoading ? <LoadingBar /> : null}
+        {this.props.app.isLoading || this.props.app.pending ? (
+          <LoadingBar />
+        ) : null}
       </div>
     );
   }
