@@ -23,7 +23,7 @@ const Units = ({ props, switchArtistPageTab }) => {
     );
   }
 
-  const isUnitPending = app.pending && !Object.keys(selectedUnit).length;
+  const isUnitPending = app.pending;
 
   return (
     <section className="artist__section">
@@ -51,11 +51,16 @@ const Units = ({ props, switchArtistPageTab }) => {
             <p>Navigation buttons go here</p>
             <hr />
             <h2>Members:</h2>
-            <div className="unit-section__members">
-              {Object.values(selectedUnit.members).map(member => (
-                <MemberCard member={member} key={member.id} />
-              ))}
-            </div>
+            {isUnitPending ? (
+              <LoadingIcon />
+            ) : (
+              <div className="unit-section__members">
+                {Object.values(selectedUnit.members).map(member => (
+                  <MemberCard member={member} key={member.id} />
+                ))}
+              </div>
+            )}
+
             <hr />
             <h2>Distributions for the unit go here</h2>
             <hr />

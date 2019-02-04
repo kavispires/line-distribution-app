@@ -8,7 +8,7 @@ import utils from '../utils';
 
 // Delay helper to make API look more realistic
 const delay = ms => new Promise(res => setTimeout(res, ms));
-const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 500 : 0;
+const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 1000 : 0;
 
 // API Workers
 
@@ -148,6 +148,7 @@ function* requestArtist(action) {
 function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   const actionType = 'REQUEST_UNIT';
   yield put({ type: 'PENDING', actionType });
+  yield delay(DELAY_DURATION);
 
   let unit = {};
   try {
