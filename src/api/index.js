@@ -563,7 +563,7 @@ const getFunctions = {
       });
       db.artists[id] = response;
     }
-    return serialize.artist(db.artists[id], id);
+    return serialize.artist({ ...db.artists[id] }, id);
   },
   // Fetches units from a single artist
   fetchArtistUnits: async id => {

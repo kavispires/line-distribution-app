@@ -52,7 +52,11 @@ class RequirementWrapper extends Component {
     }
 
     // Verify Authentication
-    if (this.state.authentication && !this.props.auth.isAuthenticated) {
+    if (
+      !this.props.app.pending &&
+      this.state.authentication &&
+      !this.props.auth.isAuthenticated
+    ) {
       return (
         <main className="container container--flex container--center container--requirement-wrapper">
           <div className="requirement-wrapper__container">
@@ -67,7 +71,11 @@ class RequirementWrapper extends Component {
     }
 
     // Verify Admin
-    if (this.state.admin && !this.props.auth.isAdmin) {
+    if (
+      !this.props.app.pending &&
+      this.state.admin &&
+      !this.props.auth.isAdmin
+    ) {
       return (
         <main className="container container--flex container--center container--requirement-wrapper">
           <div className="requirement-wrapper__container">
@@ -82,6 +90,7 @@ class RequirementWrapper extends Component {
 
     // Verify Selected Artist
     if (
+      !this.props.app.pending &&
       this.state.selectedArtist &&
       (!this.props.artists.selectedArtist ||
         !this.props.artists.selectedArtist.id)
@@ -102,6 +111,7 @@ class RequirementWrapper extends Component {
 
     // Verify Active Artist
     if (
+      !this.props.app.pending &&
       this.state.activeArtist &&
       this.props.artists.activeArtist &&
       this.props.artists.activeArtist.id

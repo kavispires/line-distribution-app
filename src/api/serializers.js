@@ -1,4 +1,5 @@
 /* eslint arrow-body-style: 0 */
+import _ from 'lodash';
 
 import {
   buildArtistQuery,
@@ -11,6 +12,7 @@ const UNKNOWN = 'UNKNOWN';
 
 export const serialize = {
   artist: (data, id) => {
+    data = _.cloneDeep(data);
     return {
       id: data.id || id,
       type: 'artist',
@@ -29,6 +31,7 @@ export const serialize = {
     };
   },
   color: (data, id) => {
+    data = _.cloneDeep(data);
     return {
       id: data.id || id,
       type: 'color',
@@ -46,6 +49,7 @@ export const serialize = {
     };
   },
   distribution: (data, id) => {
+    data = _.cloneDeep(data);
     return {
       id: data.id || id,
       type: 'distribution',
@@ -58,6 +62,7 @@ export const serialize = {
     };
   },
   member: (data, id) => {
+    data = _.cloneDeep(data);
     return {
       id: data.id || id,
       type: 'member',
@@ -78,6 +83,7 @@ export const serialize = {
     };
   },
   song: (data, id) => {
+    data = _.cloneDeep(data);
     return {
       id: data.id || id,
       type: 'song',
@@ -98,6 +104,7 @@ export const serialize = {
     };
   },
   unit: (data, id) => {
+    data = _.cloneDeep(data);
     return {
       id: data.id || id,
       type: 'unit',
@@ -117,6 +124,7 @@ export const serialize = {
     };
   },
   user: (data, id) => {
+    data = _.cloneDeep(data);
     return {
       id: data.id || id,
       type: 'user',

@@ -80,7 +80,69 @@ function* requestArtists(action) {
 }
 
 function* requestArtist(action) {
-  yield console.log(action);
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const { artistId } = action;
+  let { queryParams } = action;
+
+  let selectedArtist = {};
+
+  // Fetch Artist
+  try {
+    const response = yield API.get(`/artists/${artistId}`);
+    selectedArtist = utils.parseResponse(response);
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load artist ${artistId} from database`,
+        error.toString(),
+      ],
+      actionType: action.type,
+    });
+  }
+
+  // Select default unit id
+  queryParams = utils.parseQueryParams(queryParams);
+  let selectedUnitId = selectedArtist.units[0];
+  let unitIndex = 0;
+  if (
+    queryParams &&
+    queryParams.unit &&
+    selectedArtist.units.includes(queryParams.unit)
+  ) {
+    selectedUnitId = queryParams.unit;
+    unitIndex = selectedArtist.units.indexOf(selectedUnitId);
+  }
+
+  // Fetch Artist's Units
+  try {
+    const response = yield API.get(`/artists/${artistId}/units`);
+
+    selectedArtist.units = utils.parseResponse(response);
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load artist ${artistId}'s units from database`,
+        error.toString(),
+      ],
+      actionType: action.type,
+    });
+  }
+
+  // Fetch complete unit for default unit
+  // selectedArtist = yield call(requestUnit, [selectedUnitId, selectedArtist]);
+
+  yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
+  yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
+  yield put({
+    type: types.SET_SELECTED_UNIT,
+    payload: selectedArtist.units[unitIndex],
+  });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 function* requestUnit(action) {
