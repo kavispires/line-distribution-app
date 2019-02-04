@@ -237,10 +237,38 @@ const parseQueryParams = query => {
   return params;
 };
 
+const humanize = (string, option = 'Sentence') => {
+  if (typeof string !== 'string') {
+    throw new Error('String used in humanize is not a string');
+  }
+
+  string = string.toLowerCase();
+
+  // Remove _ or -
+  string = string.replace(/([\-|\_])/g, ' ');
+
+  function captalizeFirstLetter(word) {
+    return word[0].toUpperCase() + word.substring(1);
+  }
+
+  switch (option) {
+    case 'Sentence':
+      return captalizeFirstLetter(string);
+    case 'Capital':
+      return string
+        .split(' ')
+        .map(word => captalizeFirstLetter(word))
+        .join(' ');
+    default:
+      return string;
+  }
+};
+
 export default {
   bem,
-  ensureColorUniqueness,
   capitalizeWord,
+  ensureColorUniqueness,
+  humanize,
   parseBirthDate,
   parseQueryParams,
   parseArrayToObject,

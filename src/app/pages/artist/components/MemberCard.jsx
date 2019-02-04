@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // Import Member components
 import MemberNationaltyFlag from './MemberNationalityFlag';
 import MemberPicture from './MemberPicture';
+import MemberPositions from './MemberPositions';
 // Import utility functions
 import utils from '../../../../utils';
 import { FavoriteIcon } from '../../../../app/common';
@@ -64,7 +65,10 @@ const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
       <p>
         <b>Positions:</b>
       </p>
-      POSITIONS_LIST
+      <MemberPositions
+        memberID={member.memberId}
+        positions={member.positions}
+      />
     </div>
   );
 };
