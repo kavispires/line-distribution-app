@@ -8,6 +8,12 @@
   border-bottom: $color-gray-1 1px solid;
   border-right: $color-gray-1 1px solid;
   margin-bottom: -12px;
+
+  &--empty {
+    padding: $unit;
+    border: $color-gray-1 1px solid;
+    margin-bottom: -12px;
+  }
 }
 
 .tabs {

@@ -478,6 +478,11 @@ p {
   border-right: #ebebf2 1px solid;
   margin-bottom: -12px;
 }
+.tabs-content--empty {
+  padding: 12px;
+  border: #ebebf2 1px solid;
+  margin-bottom: -12px;
+}
 
 .tabs {
   width: 100%;

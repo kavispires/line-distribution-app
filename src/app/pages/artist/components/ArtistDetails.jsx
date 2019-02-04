@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FavoriteIcon } from '../../../common';
+import Units from './Units';
 
-const ArtistDetails = ({ props, updateFavoriteArtists }) => {
+const ArtistDetails = ({
+  props,
+  switchArtistPageTab,
+  updateFavoriteArtists,
+}) => {
   const { artists, auth } = props;
   const { selectedArtist } = artists;
 
@@ -33,6 +38,7 @@ const ArtistDetails = ({ props, updateFavoriteArtists }) => {
             </li>
           ))}
       </ul>
+      <Units props={props} switchArtistPageTab={switchArtistPageTab} />
     </section>
   );
 };
@@ -41,6 +47,7 @@ ArtistDetails.propTypes = {
   artists: PropTypes.object,
   auth: PropTypes.object,
   props: PropTypes.object.isRequired,
+  switchArtistPageTab: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };
 
