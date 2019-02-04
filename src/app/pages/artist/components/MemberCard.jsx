@@ -9,7 +9,7 @@ import utils from '../../../../utils';
 import { FavoriteIcon } from '../../../../app/common';
 
 const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
-  // TO-DO Avg logic
+  // TO-DO: Avg logic
   console.log(member);
   return (
     <div className="card">
@@ -25,11 +25,16 @@ const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
         state={user.favoriteArtists && user.favoriteArtists[entry.id]}
       /> */}
       <span className="card__color-bar">
-        {/* <span
+        <span
           className={`card__color-bar--main background-color-${
             member.color.number
           }`}
-        /> */}
+        />
+        <span
+          className={`card__color-bar--alt background-color-${
+            member.altColor.number
+          }`}
+        />
       </span>
       <h3 className="card__name">
         {member.name}

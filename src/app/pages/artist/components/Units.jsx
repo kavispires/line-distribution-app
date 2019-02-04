@@ -1,12 +1,9 @@
 import React from 'react';
 
-import {
-  FavoriteIcon,
-  RequirementWrapper,
-  Tabs,
-  Icon,
-  LoadingIcon,
-} from '../../../common';
+// Import components
+import MemberCard from './MemberCard';
+// Import common components
+import { Tabs, Icon, LoadingIcon } from '../../../common';
 
 const Units = ({ props, switchArtistPageTab }) => {
   // console.log(props);
@@ -38,7 +35,7 @@ const Units = ({ props, switchArtistPageTab }) => {
         iconCondition="official"
       >
         {selectedUnit.id ? (
-          <div>
+          <div className="unit-section">
             <p>
               <b>Debut Year:</b> {selectedUnit.debutYear || '?'}
             </p>
@@ -54,9 +51,11 @@ const Units = ({ props, switchArtistPageTab }) => {
             <p>Navigation buttons go here</p>
             <hr />
             <h2>Members:</h2>
-            {Object.values(selectedUnit.members).map(member => (
-              <span>{member.name}</span>
-            ))}
+            <div className="unit-section__members">
+              {Object.values(selectedUnit.members).map(member => (
+                <MemberCard member={member} key={member.id} />
+              ))}
+            </div>
             <hr />
             <h2>Distributions for the unit go here</h2>
             <hr />
