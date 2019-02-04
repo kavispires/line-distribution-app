@@ -31,6 +31,10 @@ function* clearPending(actionType) {
  * @param {string} actionType
  */
 function* clearPendingInline(actionType) {
+  if (typeof actionType === 'object') {
+    actionType = actionType.actionType; // eslint-disable-line
+  }
+
   if (pendingInlineCache[actionType]) {
     delete pendingInlineCache[actionType];
   }
@@ -38,6 +42,8 @@ function* clearPendingInline(actionType) {
   if (Object.keys(pendingInlineCache).length === 0) {
     yield put({ type: types.SET_PENDING_INLINE, payload: false });
   }
+
+  yield call(clearPending, actionType);
 }
 
 /**
@@ -70,6 +76,8 @@ function* pendingInline({ actionType }) {
   } else {
     yield put({ type: types.SET_PENDING_INLINE, payload: false });
   }
+
+  yield call(pending, { actionType });
 }
 
 // ERROR WORKERS
@@ -84,6 +92,7 @@ function* error({ message, actionType }) {
   yield put({ type: types.SET_ERROR_MESSAGE, payload: errorMessage });
   yield put({ type: types.SET_ERROR, payload: true });
   console.error(errorMessage); // eslint-disable-line
+  yield toastr.error(errorMessage);
   yield call(clearPending, actionType);
 }
 

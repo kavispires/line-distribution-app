@@ -17,7 +17,6 @@ class Artist extends Component {
       this.props.artists.selectedArtist &&
       this.props.artists.selectedArtist.id !== artistId
     ) {
-      console.log(artistId);
       this.props.loadArtist(artistId, this.props.location.search);
     }
   }
@@ -25,6 +24,12 @@ class Artist extends Component {
   render() {
     const { artists, auth, db } = this.props;
     const { artistPageTab, selectedArtist, selectedUnit } = artists;
+
+    console.log('artistPageTab', artistPageTab);
+    console.log('selectedArtist', selectedArtist);
+    console.log('selectedUnit', selectedUnit);
+
+    return <div>Whatever</div>;
 
     return (
       <RequirementWrapper requirements={['selectedArtist']}>

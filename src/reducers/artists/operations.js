@@ -9,33 +9,16 @@ import utils from '../../utils';
 
 import { appOperations } from '../app';
 
-const loadArtists = () => async dispatch => {
-  dispatch(appOperations.setLoading(true, 'artists'));
+const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
 
-  try {
-    const response = await API.get('/artists');
-    const artistList = utils.parseResponse(response);
-
-    const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
-    dispatch(actions.setArtistList(sortedArtistList));
-  } catch (error) {
-    console.error(error);
-    toastr.error('Unable to load artists database', error);
-  } finally {
-    dispatch(appOperations.setLoading(false, 'artists'));
-  }
-
-  // Also, load latest artists, and favorite units
-  // dispatch(loadUserArtists());
-};
+// const loadArtist = (artistId, queryParams) => dispatch =>
+//   dispatch({ type: 'REQUEST_ARTIST', artistId, queryParams });
 
 const loadUserArtists = () => async (dispatch, getState) => {};
 
 const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {
   dispatch(appOperations.setLoading(true, 'artist'));
-
   let selectedArtist = {};
-
   // Fetch Artist
   try {
     const response = await API.get(`/artists/${artistId}`);
@@ -45,7 +28,6 @@ const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {
     toastr.error(`Unable to load artist ${artistId} from database`, error);
     dispatch(appOperations.setLoading(false, 'artist'));
   }
-
   // Select default unit id
   queryParams = utils.parseQueryParams(queryParams);
   let selectedUnitId = selectedArtist.units[0];
@@ -58,11 +40,9 @@ const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {
     selectedUnitId = queryParams.unit;
     unitIndex = selectedArtist.units.indexOf(selectedUnitId);
   }
-
   // Fetch Artist's Units
   try {
     const response = await API.get(`/artists/${artistId}/units`);
-
     selectedArtist.units = utils.parseResponse(response);
   } catch (error) {
     console.error(error);
@@ -71,14 +51,11 @@ const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {
       error
     );
   }
-
   // Fetch complete unit for default unit
   selectedArtist = await loadCompleteUnit(selectedUnitId, selectedArtist);
-
   dispatch(actions.setArtistPageTab(selectedUnitId));
   dispatch(actions.setSelectedArtist(selectedArtist));
   dispatch(actions.setSelectedUnit(selectedArtist.units[unitIndex]));
-
   dispatch(appOperations.setLoading(false, 'artist'));
 };
 

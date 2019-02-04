@@ -417,6 +417,14 @@ p {
   }
 }
 
+.loading-icon {
+  max-width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+
 .pill {
   display: inline-block;
   margin-left: 6px;

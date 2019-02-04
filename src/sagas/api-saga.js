@@ -1,4 +1,5 @@
-import { put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import _ from 'lodash';
 
 import API from '../api';
 
@@ -50,9 +51,40 @@ function* initializer(action) {
       message: error,
       actionType: action.type,
     });
-  } finally {
-    yield put({ type: 'CLEAR_PENDING', actionType: action.type });
   }
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* requestArtists(action) {
+  yield put({ type: 'PENDING_INLINE', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    const response = yield API.get('/artists');
+    const artistList = utils.parseResponse(response);
+
+    const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
+    yield put({ type: types.SET_ARTIST_LIST, payload: sortedArtistList });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: ['Unable to load artists database', error.toString()],
+      actionType: action.type,
+    });
+  }
+
+  // TO-DO: Load latest artists, and favorite units
+
+  yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+}
+
+function* requestArtist(action) {
+  yield console.log(action);
+}
+
+function* requestUnit(action) {
+  yield console.log(action);
 }
 
 function* runLogin(action) {
@@ -119,8 +151,12 @@ function* test(action) {
 
 function* apiSaga() {
   yield takeLatest('INITIALIZER', initializer);
+  yield takeLatest('REQUEST_ARTISTS', requestArtists);
+  yield takeLatest('REQUEST_ARTIST', requestArtist);
+  yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+
   yield takeEvery('TEST', test);
 }
 

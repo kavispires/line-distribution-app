@@ -14,7 +14,7 @@ class Artists extends Component {
     this.props.updateSearchQuery('');
   }
   render() {
-    const { artists, auth } = this.props;
+    const { app, artists, auth } = this.props;
     const {
       artistList,
       searchQuery,
@@ -56,6 +56,7 @@ class Artists extends Component {
                 artists={filteredArtists}
                 rowAction={handleTableClick}
                 favoriteAction={this.props.updateFavoriteArtists}
+                pending={app.pendingInline}
                 user={user}
               />
             </section>
@@ -77,6 +78,7 @@ class Artists extends Component {
             <ArtistsTable
               artists={filteredArtists}
               searchQuery={searchQuery}
+              pending={app.pendingInline}
               rowAction={handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
               user={user}
