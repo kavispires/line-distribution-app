@@ -199,6 +199,25 @@ const parseResponseToObject = response => {
   );
 };
 
+const parseArrayToObject = response => {
+  if (response && response.data) {
+    response = response.data;
+
+    if (Array.isArray(response)) {
+      const result = {};
+      for (let i = 0; i < response.length; i++) {
+        const instance = response[i];
+        result[instance.id] = instance;
+      }
+      return result;
+    }
+  }
+
+  throw new Error(
+    'parserResponseToObject failed. Object is not an array response'
+  );
+};
+
 const parseQueryParams = query => {
   if (!query) return null;
 
@@ -224,6 +243,7 @@ export default {
   capitalizeWord,
   parseBirthDate,
   parseQueryParams,
+  parseArrayToObject,
   parseResponse,
   parseResponseToObject,
   spinalCaseWord,

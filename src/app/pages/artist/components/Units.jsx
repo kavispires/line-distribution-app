@@ -9,13 +9,12 @@ import {
 } from '../../../common';
 
 const Units = ({ props, switchArtistPageTab }) => {
-  console.log(props);
+  // console.log(props);
   const { app, artists, auth } = props;
   const { artistPageTab, selectedArtist, selectedUnit } = artists;
 
   // If Artist has no unit
-  const noUnitsFallback = !app.pending && !Object.keys(selectedUnit).length;
-  if (noUnitsFallback) {
+  if (!app.pending && !Object.keys(selectedUnit).length) {
     return (
       <section className="artist__section">
         <div className="tabs-container">
@@ -55,6 +54,9 @@ const Units = ({ props, switchArtistPageTab }) => {
             <p>Navigation buttons go here</p>
             <hr />
             <h2>Members:</h2>
+            {Object.values(selectedUnit.members).map(member => (
+              <span>{member.name}</span>
+            ))}
             <hr />
             <h2>Distributions for the unit go here</h2>
             <hr />

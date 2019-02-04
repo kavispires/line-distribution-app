@@ -8,7 +8,7 @@ import utils from '../utils';
 
 // Delay helper to make API look more realistic
 const delay = ms => new Promise(res => setTimeout(res, ms));
-const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 1000 : 0;
+const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 500 : 0;
 
 // API Workers
 
@@ -119,7 +119,6 @@ function* requestArtist(action) {
   // Fetch Artist's Units
   try {
     const response = yield API.get(`/artists/${artistId}/units`);
-
     selectedArtist.units = utils.parseResponse(response);
   } catch (error) {
     yield put({
@@ -133,20 +132,75 @@ function* requestArtist(action) {
   }
 
   // Fetch complete unit for default unit
-  // selectedArtist = yield call(requestUnit, [selectedUnitId, selectedArtist]);
+  const selectedUnit = yield call(requestUnit, {
+    unitId: selectedUnitId,
+  });
+
+  selectedArtist.units[unitIndex] = selectedUnit;
 
   yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
   yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
-  yield put({
-    type: types.SET_SELECTED_UNIT,
-    payload: selectedArtist.units[unitIndex],
-  });
+  yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
-function* requestUnit(action) {
-  yield console.log(action);
+function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
+  const actionType = 'REQUEST_UNIT';
+  yield put({ type: 'PENDING', actionType });
+
+  let unit = {};
+  try {
+    const response = yield API.get(`/units/${unitId}`);
+    unit = utils.parseResponse(response);
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load unit ${unitId} from database`,
+        error.toString(),
+      ],
+      actionType,
+    });
+  }
+
+  // Fetch members
+  let members = {};
+  try {
+    const response = yield API.get(`/units/${unitId}/members`);
+    members = utils.parseArrayToObject(response);
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load members from unit ${unitId} from database`,
+        error.toString(),
+      ],
+      actionType,
+    });
+  }
+  unit.members = members;
+
+  // Fetch distributions and merge
+
+  // Fetch legacy distributions and merge
+
+  // Calculate averages
+
+  // Flag unit as complete
+  unit.complete = true;
+
+  // The following if statements are used when the unit tab is updated in the UI
+  if (type) {
+    yield put({ type: types.SET_SELECTED_UNIT, payload: unit });
+  }
+  if (selectedArtist) {
+    selectedArtist.units[unitIndex] = unit;
+    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
+  }
+
+  yield put({ type: 'CLEAR_PENDING', actionType });
+  return unit;
 }
 
 function* runLogin(action) {

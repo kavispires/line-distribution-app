@@ -68,8 +68,10 @@ export const serialize = {
       type: 'member',
       attributes: {
         altColorId: data.altColorId || null,
+        altColor: data.altColor || null,
         birthdate: data.birthdate || 0,
         colorId: data.colorId,
+        color: data.color || null,
         createdBy: data.createdBy || null,
         gender: data.gender || UNKNOWN,
         initials: data.initials || buildMemberInitials(data.name),

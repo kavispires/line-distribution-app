@@ -190,6 +190,7 @@ class API {
      * /artists/<id>
      * /artists/<id>/units
      * /colors
+     * /colors/<id>
      * /members
      * /members/<id>
      * /positions
@@ -230,7 +231,14 @@ class API {
         break;
       // API/colors
       case 'colors':
-        result = await getFunctions.fetchColors();
+        // API/colors/<id>
+        if (route.referenceId) {
+          result = await getFunctions.fetchColor(route.referenceId);
+        }
+        // API/colors
+        else {
+          result = await getFunctions.fetchColors();
+        }
         break;
       case 'members':
         // API/members/<id>
@@ -544,7 +552,7 @@ class API {
 const getFunctions = {
   // Fetches all artists
   fetchArtists: async () => {
-    if (Object.keys(db.artists).length === 0) {
+    if (Object.keys(db.artists).length < 2) {
       // TO-DO: Add 00 id to database, remove it in the serializer collection for a better cache check
       let response = {};
       await dbRef.ref(`/artists`).once('value', snapshot => {
@@ -563,7 +571,7 @@ const getFunctions = {
       });
       db.artists[id] = response;
     }
-    return serialize.artist({ ...db.artists[id] }, id);
+    return serialize.artist(db.artists[id], id);
   },
   // Fetches units from a single artist
   fetchArtistUnits: async id => {
@@ -583,6 +591,17 @@ const getFunctions = {
       db.colors = response;
     }
     return serializeCollection(db.colors, 'color');
+  },
+  // Fetches single color
+  fetchColor: async id => {
+    if (!db.colors[id]) {
+      let response = {};
+      await dbRef.ref(`/colors/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.colors[id] = response;
+    }
+    return serialize.color(db.colors[id], id);
   },
   // Fetches single distribution
   fetchDistribution: async id => {
@@ -613,6 +632,23 @@ const getFunctions = {
       await dbRef.ref(`/members/${id}`).once('value', snapshot => {
         response = snapshot.val();
       });
+
+      const { altColorId = 'default', colorId = 'default' } = response;
+      if (colorId) {
+        const color = await getFunctions.fetchColor(colorId);
+        response.color = {
+          ...color.attributes,
+          id: color.id,
+        };
+      }
+      if (altColorId) {
+        const altColor = await getFunctions.fetchColor(altColorId);
+        response.altColor = {
+          ...altColor.attributes,
+          id: altColor.id,
+        };
+      }
+
       db.members[id] = response;
     }
     return serialize.member(db.members[id], id);
@@ -673,7 +709,6 @@ const getFunctions = {
       member.attributes.positions = unit.attributes.members[index].positions;
       return member;
     });
-
     return mergeMembers(unit.attributes.members, response);
   },
   // Fetches single user
