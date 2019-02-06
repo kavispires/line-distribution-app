@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Import components
-import ArtistDetails from './ArtistDetails';
+import Units from './Units';
 // Import common components
-import { RequirementWrapper, LoadingIcon } from '../../../common';
+import { FavoriteIcon, LoadingIcon, RequirementWrapper } from '../../../common';
 
 class Artist extends Component {
   componentDidMount() {
@@ -18,7 +18,7 @@ class Artist extends Component {
   }
 
   render() {
-    const { app, artists } = this.props;
+    const { app, artists, auth } = this.props;
     const { selectedArtist } = artists;
 
     const isArtistPending = app.pending && !Object.keys(selectedArtist).length;
@@ -30,11 +30,36 @@ class Artist extends Component {
           {isArtistPending ? (
             <LoadingIcon />
           ) : (
-            <ArtistDetails
-              props={this.props}
-              switchArtistPageTab={this.props.switchArtistPageTab}
-              updateFavoriteArtists={this.props.updateFavoriteArtists}
-            />
+            <section className="artist__section">
+              <h2 className="artist-page__name">
+                {selectedArtist.name}
+                <FavoriteIcon
+                  action={this.props.updateFavoriteArtists}
+                  id={selectedArtist.id || ''}
+                  className="artist-page__name--fav-icon"
+                  size="20"
+                  state={
+                    selectedArtist &&
+                    selectedArtist.id &&
+                    auth.user &&
+                    auth.user.favoriteArtists[selectedArtist.id]
+                  }
+                />
+              </h2>
+              <p className="artist-page__genre">{selectedArtist.genre}</p>
+              <ul className="artist-page__members-list">
+                {selectedArtist.memberList &&
+                  selectedArtist.memberList.map(memberName => (
+                    <li
+                      className="artist-page__member-pill"
+                      key={`mp-${memberName}`}
+                    >
+                      {memberName}
+                    </li>
+                  ))}
+              </ul>
+              <Units props={this.props} />
+            </section>
           )}
         </main>
       </RequirementWrapper>
@@ -45,10 +70,10 @@ class Artist extends Component {
 Artist.propTypes = {
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   loadArtist: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  switchArtistPageTab: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };
 

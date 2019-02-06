@@ -11,33 +11,27 @@ const logout = () => dispatch => dispatch({ type: 'RUN_LOGOUT' });
 const updateFavoriteArtists = id => async (dispatch, getState) => {
   const user = { ...getState().auth.user };
   const userFavoriteArtists = { ...user.favoriteArtists } || {};
-  console.log(userFavoriteArtists);
   if (user.id) {
     if (userFavoriteArtists[id]) {
       userFavoriteArtists[id] = false;
     } else {
       userFavoriteArtists[id] = true;
     }
-    console.log(userFavoriteArtists);
-    try {
-      const newUserFavoriteArtists = await API.put(
-        `/users/${user.id}/favorite-artists`,
-        userFavoriteArtists
-      );
-      user.favoriteArtists = newUserFavoriteArtists.data;
 
-      dispatch(actions.setUser(user));
-    } catch (error) {
-      console.error(error);
-      toastr.error('Oh no', error.errorMessage);
-    }
+    await dispatch({
+      type: 'UPDATE_USER_FAVORITE_ARTISTS',
+      userFavoriteArtists,
+      userId: user.id,
+    });
+
+    user.favoriteArtists = userFavoriteArtists;
+    dispatch(actions.setUser(user));
   }
 };
 
 const updateFavoriteMembers = id => async (dispatch, getState) => {
   const user = { ...getState().auth.user };
   const userFavoriteMembers = { ...user.favoriteMembers } || {};
-
   if (user.id) {
     if (userFavoriteMembers[id]) {
       userFavoriteMembers[id] = false;
@@ -45,18 +39,14 @@ const updateFavoriteMembers = id => async (dispatch, getState) => {
       userFavoriteMembers[id] = true;
     }
 
-    try {
-      const newUserFavoriteMembers = await API.put(
-        `/users/${user.id}/favorite-members`,
-        userFavoriteMembers
-      );
-      user.userFavoriteMembers = newUserFavoriteMembers.data;
+    await dispatch({
+      type: 'UPDATE_USER_FAVORITE_MEMBERS',
+      userFavoriteMembers,
+      userId: user.id,
+    });
 
-      dispatch(actions.setUser(user));
-    } catch (error) {
-      console.error(error);
-      toastr.error('Oh no', error.errorMessage);
-    }
+    user.favoriteMembers = userFavoriteMembers;
+    dispatch(actions.setUser(user));
   }
 };
 

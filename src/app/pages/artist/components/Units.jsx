@@ -1,12 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Import components
 import MemberCard from './MemberCard';
 // Import common components
 import { Tabs, Icon, LoadingIcon } from '../../../common';
 
-const Units = ({ props, switchArtistPageTab }) => {
-  // console.log(props);
+const Units = ({ props }) => {
   const { app, artists, auth } = props;
   const { artistPageTab, selectedArtist, selectedUnit } = artists;
 
@@ -23,13 +23,13 @@ const Units = ({ props, switchArtistPageTab }) => {
     );
   }
 
-  const isUnitPending = app.pending;
+  const isUnitPending = app.pending && app.pendingInline;
 
   return (
     <section className="artist__section">
       <Tabs
         tabs={selectedArtist.units || []}
-        action={switchArtistPageTab}
+        action={props.switchArtistPageTab}
         active={artistPageTab}
         icon={<Icon type="check" color="blue" />}
         iconCondition="official"
@@ -72,7 +72,15 @@ const Units = ({ props, switchArtistPageTab }) => {
             ) : (
               <div className="unit-section__members">
                 {Object.values(selectedUnit.members).map(member => (
-                  <MemberCard member={member} key={member.id} />
+                  <MemberCard
+                    member={member}
+                    key={member.id}
+                    favoriteState={
+                      auth.user.favoriteMembers &&
+                      auth.user.favoriteMembers[member.id]
+                    }
+                    updateFavoriteMembers={props.updateFavoriteMembers}
+                  />
                 ))}
               </div>
             )}
@@ -87,56 +95,15 @@ const Units = ({ props, switchArtistPageTab }) => {
       </Tabs>
     </section>
   );
+};
 
-  //   {/*
-  // {selectedUnits ? (
-  //   <section className="artist__section">
-  //     <Tabs
-  //       tabs={Object.keys(selectedUnits).map(u => selectedUnits[u])}
-  //       active={selectedUnit.id}
-  //       action={this.props.switchUnitsTab}
-  //       iconCondition="official"
-  //       icon={<Icon type="check" color="blue" inline />}
-  //     />
-  //     <div className="tabs__content">
-  //       <section className="unit-section__top">
-  //         <div className="unit-section__summary">
-  //           <p>
-  //             <b>Debut Year:</b> {selectedUnit.debutYear}
-  //           </p>
-  //           <p>
-  //             <b>Number of Members:</b> {selectedUnit.members.length}
-  //           </p>
-  //           <p>
-  //             <b>Total Number of Songs:</b> NUMBER
-  //           </p>
-  //         </div>
-  //         <div className="unit-section__actions">
-  //           <button className="btn">Load Song</button>
-  //           <button className="btn">PLACEHOLDER</button>
-  //           <button className="btn">PLACEHOLDER</button>
-  //         </div>
-  //       </section>
-
-  //       {selectedUnit.members && selectedUnit.members.length > 0 ? (
-  //         <section className="unit-section">
-  //           <h3>Members</h3>
-  //           <div className="unit-section__members">
-  //             {selectedUnit.members.map(member => (
-  //               <MemberCard
-  //                 key={member.id}
-  //                 favoriteState={auth.user.favoriteMembers[member.id]}
-  //                 member={member}
-  //                 updateFavoriteMembers={this.props.updateFavoriteMembers}
-  //               />
-  //             ))}
-  //           </div>
-  //         </section>
-  //       ) : null}
-  //     </div>
-  //     <div className="tabs__content">SONGS TABLE</div>
-  //   </section>
-  // ) : null} */}
+Units.propTypes = {
+  props: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired,
+  artists: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  switchArtistPageTab: PropTypes.func.isRequired,
+  updateFavoriteMembers: PropTypes.func.isRequired,
 };
 
 export default Units;

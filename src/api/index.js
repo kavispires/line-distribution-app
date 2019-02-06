@@ -23,6 +23,16 @@ export const db = {
   users: {},
 };
 
+export const fullyLoaded = {
+  artists: false,
+  colors: false,
+  distributions: false,
+  members: false,
+  positions: false,
+  songs: false,
+  units: false,
+};
+
 export let dbRef = null; // eslint-disable-line
 
 class API {
@@ -413,6 +423,7 @@ class API {
         break;
       // API/users/<id>
       case 'users':
+        console.log(route);
         if (route.subPath === 'biases') {
           result = await putFunctions.updateUserBiases(route.referenceId, body);
         } else if (route.subPath === 'favorite-artists') {
@@ -552,13 +563,14 @@ class API {
 const getFunctions = {
   // Fetches all artists
   fetchArtists: async () => {
-    if (Object.keys(db.artists).length < 2) {
+    if (fullyLoaded.artists === false) {
       // TO-DO: Add 00 id to database, remove it in the serializer collection for a better cache check
       let response = {};
       await dbRef.ref(`/artists`).once('value', snapshot => {
         response = snapshot.val();
       });
       db.artists = response;
+      fullyLoaded.artists = true;
     }
     return serializeCollection(db.artists, 'artist');
   },
@@ -583,12 +595,13 @@ const getFunctions = {
   },
   // Fetches all colors
   fetchColors: async () => {
-    if (Object.keys(db.colors).length === 0) {
+    if (fullyLoaded.colors === false) {
       let response = {};
       await dbRef.ref(`/colors`).once('value', snapshot => {
         response = snapshot.val();
       });
       db.colors = response;
+      fullyLoaded.artists = true;
     }
     return serializeCollection(db.colors, 'color');
   },
@@ -616,12 +629,13 @@ const getFunctions = {
   },
   // Fetches all members
   fetchMembers: async () => {
-    if (Object.keys(db.members).length === 0) {
+    if (fullyLoaded.members === false) {
       let response = {};
       await dbRef.ref(`/members`).once('value', snapshot => {
         response = snapshot.val();
       });
       db.members = response;
+      fullyLoaded.members = true;
     }
     return serializeCollection(db.members, 'member');
   },
@@ -655,13 +669,14 @@ const getFunctions = {
   },
   // Fetches all songs
   fetchSongs: async () => {
-    if (Object.keys(db.songs).length === 0) {
+    if (fullyLoaded.songs === false) {
       // TO-DO: Add 00 id to database, remove it in the serializer collection for a better cache check
       let response = {};
       await dbRef.ref(`/songs`).once('value', snapshot => {
         response = snapshot.val();
       });
       db.songs = response;
+      fullyLoaded.songs = true;
     }
     return serializeCollection(db.songs, 'song');
   },
@@ -739,6 +754,7 @@ const postFunctions = {
       }
     });
     db.artists[key] = response;
+    fullyLoaded.artists = false;
     return serialize.artist(db.artists[key]);
   },
   // Creates single color
@@ -756,6 +772,7 @@ const postFunctions = {
       }
     });
     db.colors[key] = response;
+    fullyLoaded.colors = false;
     return serialize.color(db.colors[key]);
   },
   // Creates single distribution
@@ -774,6 +791,7 @@ const postFunctions = {
       }
     });
     db.members[key] = response;
+    fullyLoaded.members = false;
     return serialize.member(db.members[key]);
   },
   // Creates single song
@@ -790,6 +808,7 @@ const postFunctions = {
       }
     });
     db.songs[key] = response;
+    fullyLoaded.songs = false;
     return serialize.song(db.songs[key]);
   },
   // Creates single unit
@@ -806,6 +825,7 @@ const postFunctions = {
       }
     });
     db.units[key] = response;
+    fullyLoaded.units = false;
     return serialize.unit(db.units[key]);
   },
   // Creates single user
@@ -842,6 +862,7 @@ const putFunctions = {
       response = snapshot.val();
     });
     db.artists[key] = response;
+    fullyLoaded.artists = false;
     return serialize.artist(db.artists[key]);
   },
   // Updates single distribution
@@ -862,6 +883,7 @@ const putFunctions = {
       response = snapshot.val();
     });
     db.members[key] = response;
+    fullyLoaded.members = false;
     return serialize.member(db.members[key]);
   },
   // Updates single song
@@ -879,6 +901,7 @@ const putFunctions = {
       response = snapshot.val();
     });
     db.songs[key] = response;
+    fullyLoaded.songs = false;
     return serialize.song(db.songs[key]);
   },
   // Updates single unit
@@ -896,6 +919,7 @@ const putFunctions = {
       response = snapshot.val();
     });
     db.units[key] = response;
+    fullyLoaded.units = false;
     return serialize.unit(db.units[key]);
   },
   // Updates single user
@@ -941,6 +965,8 @@ const putFunctions = {
   },
   updateUserFavoriteMembers: async (id, body) => {
     const key = id;
+    console.log('key', key);
+    console.log('body', body);
     await dbRef.ref(`/users/${key}/favoriteMembers`).update(body, error => {
       if (error) {
         const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(

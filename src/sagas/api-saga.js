@@ -260,6 +260,44 @@ function* runLogout(action) {
   }
 }
 
+function* updateUserFavoriteArtists(action) {
+  yield put({ type: 'PENDING_INLINE', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    yield API.put(
+      `/users/${action.userId}/favorite-artists`,
+      action.userFavoriteArtists
+    );
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: error.toString(),
+      actionType: action.type,
+    });
+  }
+  yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+}
+
+function* updateUserFavoriteMembers(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    yield API.put(
+      `/users/${action.userId}/favorite-members`,
+      action.userFavoriteMembers
+    );
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: error.toString(),
+      actionType: action.type,
+    });
+  }
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 // TO-DO: Remove this
 function* test(action) {
   yield console.log('it calls test worker'); // eslint-disable-line
@@ -273,6 +311,8 @@ function* apiSaga() {
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
+  yield takeLatest('UPDATE_USER_FAVORITE_MEMBERS', updateUserFavoriteMembers);
 
   yield takeEvery('TEST', test);
 }

@@ -91,6 +91,7 @@ class Artists extends Component {
 }
 
 Artists.propTypes = {
+  app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
