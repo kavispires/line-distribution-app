@@ -1,13 +1,8 @@
-import _ from 'lodash';
-import { toastr } from 'react-redux-toastr';
-
 import actions from './actions';
 
 import API from '../../api';
 
 import utils from '../../utils';
-
-import { appOperations } from '../app';
 
 const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
 
@@ -26,7 +21,6 @@ const updateSearchQuery = value => dispatch => {
 
 const showFavoriteArtistsOnlyToggle = () => (dispatch, getState) => {
   const { showFavoriteArtistsOnly } = getState().artists;
-
   dispatch(actions.setShowFavoriteArtistsOnly(!showFavoriteArtistsOnly));
 };
 

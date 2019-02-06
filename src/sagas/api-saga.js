@@ -260,6 +260,40 @@ function* runLogout(action) {
   }
 }
 
+function* updateUserFavoriteArtists(action) {
+  yield put({ type: 'PENDING_INLINE', actionType: action.type });
+
+  console.log(action);
+
+  try {
+    const newUserFavoriteArtists = yield API.put(
+      `/users/${action.userId}/favorite-artists`,
+      action.userFavoriteArtists
+    );
+    console.log(newUserFavoriteArtists);
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: error.toString(),
+      actionType: action.type,
+    });
+  }
+  // try {
+  //   const response = yield API.get('/artists');
+  //   const artistList = utils.parseResponse(response);
+
+  //   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
+  //   yield put({ type: types.SET_ARTIST_LIST, payload: sortedArtistList });
+  // } catch (error) {
+  //   yield put({
+  //     type: 'ERROR',
+  //     message: ['Unable to load artists database', error.toString()],
+  //     actionType: action.type,
+  //   });
+  // }
+  yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+}
+
 // TO-DO: Remove this
 function* test(action) {
   yield console.log('it calls test worker'); // eslint-disable-line
@@ -273,6 +307,7 @@ function* apiSaga() {
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
 
   yield takeEvery('TEST', test);
 }
