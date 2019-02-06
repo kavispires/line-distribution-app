@@ -11,7 +11,7 @@ import { FavoriteIcon } from '../../../../app/common';
 
 const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
   // TO-DO: Avg logic
-  console.log(member);
+
   return (
     <div className="card">
       <MemberPicture
@@ -19,12 +19,6 @@ const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
         memberId={member.id}
         name={member.name}
       />
-      {/* <FavoriteIcon
-        action={this.props.updateFavoriteArtists}
-        id={entry.id}
-        size="12"
-        state={user.favoriteArtists && user.favoriteArtists[entry.id]}
-      /> */}
       <span className="card__color-bar">
         <span
           className={`card__color-bar--main background-color-${

@@ -423,6 +423,7 @@ class API {
         break;
       // API/users/<id>
       case 'users':
+        console.log(route);
         if (route.subPath === 'biases') {
           result = await putFunctions.updateUserBiases(route.referenceId, body);
         } else if (route.subPath === 'favorite-artists') {
@@ -964,6 +965,8 @@ const putFunctions = {
   },
   updateUserFavoriteMembers: async (id, body) => {
     const key = id;
+    console.log('key', key);
+    console.log('body', body);
     await dbRef.ref(`/users/${key}/favoriteMembers`).update(body, error => {
       if (error) {
         const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(

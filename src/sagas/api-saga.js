@@ -262,15 +262,13 @@ function* runLogout(action) {
 
 function* updateUserFavoriteArtists(action) {
   yield put({ type: 'PENDING_INLINE', actionType: action.type });
-
-  console.log(action);
+  yield delay(DELAY_DURATION);
 
   try {
-    const newUserFavoriteArtists = yield API.put(
+    yield API.put(
       `/users/${action.userId}/favorite-artists`,
       action.userFavoriteArtists
     );
-    console.log(newUserFavoriteArtists);
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',
@@ -278,20 +276,26 @@ function* updateUserFavoriteArtists(action) {
       actionType: action.type,
     });
   }
-  // try {
-  //   const response = yield API.get('/artists');
-  //   const artistList = utils.parseResponse(response);
-
-  //   const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
-  //   yield put({ type: types.SET_ARTIST_LIST, payload: sortedArtistList });
-  // } catch (error) {
-  //   yield put({
-  //     type: 'ERROR',
-  //     message: ['Unable to load artists database', error.toString()],
-  //     actionType: action.type,
-  //   });
-  // }
   yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+}
+
+function* updateUserFavoriteMembers(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    yield API.put(
+      `/users/${action.userId}/favorite-members`,
+      action.userFavoriteMembers
+    );
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: error.toString(),
+      actionType: action.type,
+    });
+  }
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 // TO-DO: Remove this
@@ -308,6 +312,7 @@ function* apiSaga() {
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
+  yield takeLatest('UPDATE_USER_FAVORITE_MEMBERS', updateUserFavoriteMembers);
 
   yield takeEvery('TEST', test);
 }

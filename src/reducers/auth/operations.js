@@ -32,7 +32,6 @@ const updateFavoriteArtists = id => async (dispatch, getState) => {
 const updateFavoriteMembers = id => async (dispatch, getState) => {
   const user = { ...getState().auth.user };
   const userFavoriteMembers = { ...user.favoriteMembers } || {};
-
   if (user.id) {
     if (userFavoriteMembers[id]) {
       userFavoriteMembers[id] = false;
@@ -40,18 +39,14 @@ const updateFavoriteMembers = id => async (dispatch, getState) => {
       userFavoriteMembers[id] = true;
     }
 
-    try {
-      const newUserFavoriteMembers = await API.put(
-        `/users/${user.id}/favorite-members`,
-        userFavoriteMembers
-      );
-      user.userFavoriteMembers = newUserFavoriteMembers.data;
+    await dispatch({
+      type: 'UPDATE_USER_FAVORITE_MEMBERS',
+      userFavoriteMembers,
+      userId: user.id,
+    });
 
-      dispatch(actions.setUser(user));
-    } catch (error) {
-      console.error(error);
-      toastr.error('Oh no', error.errorMessage);
-    }
+    user.favoriteMembers = userFavoriteMembers;
+    dispatch(actions.setUser(user));
   }
 };
 
