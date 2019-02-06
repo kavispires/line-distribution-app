@@ -47,8 +47,24 @@ const Units = ({ props, switchArtistPageTab }) => {
               <b>Custom Distributions:</b>{' '}
               {selectedUnit.distributions_legacy.length || 0}
             </p>
-            <hr />
-            <p>Navigation buttons go here</p>
+            {isUnitPending ? (
+              <LoadingIcon size="small" />
+            ) : (
+              <div className="unit-section__actions">
+                <button className="btn" disabled>
+                  Distribute
+                </button>
+                <button className="btn" disabled>
+                  Play with Lyrics <span className="restriction">*</span>
+                </button>
+                <button className="btn" disabled>
+                  Random Song
+                </button>
+                <p>
+                  <small>* You won&apos;t be able to save this.</small>
+                </p>
+              </div>
+            )}
             <hr />
             <h2>Members:</h2>
             {isUnitPending ? (
@@ -60,7 +76,6 @@ const Units = ({ props, switchArtistPageTab }) => {
                 ))}
               </div>
             )}
-
             <hr />
             <h2>Distributions for the unit go here</h2>
             <hr />

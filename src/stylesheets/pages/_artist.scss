@@ -42,12 +42,11 @@
   }
 
   &__actions {
-    width: 50%;
+    width: 100%;
 
     .btn {
-      display: block;
-      float: right;
-      clear: both;
+      display: inline-block;
+      margin-right: $unit-p2;
       min-width: 120px;
       min-width: 120px;
       margin-bottom: $unit-p2;
