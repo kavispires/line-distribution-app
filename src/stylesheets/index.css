@@ -576,6 +576,16 @@ p {
   width: auto;
   transform: translateY(3px);
 }
+.card__positions {
+  padding: 0;
+  list-style: none;
+  margin-top: -6px;
+}
+.card__position-icon {
+  height: 24px;
+  padding-right: 6px;
+  transform: translateY(6px);
+}
 
 .switch {
   position: relative;

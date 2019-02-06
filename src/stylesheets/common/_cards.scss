@@ -55,4 +55,16 @@
     width: auto;
     transform: translateY(3px);
   }
+
+  &__positions {
+    padding: 0;
+    list-style: none;
+    margin-top: -6px;
+  }
+
+  &__position-icon {
+    height: $unit-x2;
+    padding-right: $unit-p2;
+    transform: translateY(6px);
+  }
 }

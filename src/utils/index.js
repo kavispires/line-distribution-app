@@ -264,8 +264,28 @@ const humanize = (string, option = 'Sentence') => {
   }
 };
 
+const camelCase = string => {
+  if (typeof string !== 'string') {
+    throw new Error('String used in humanize is not a string');
+  }
+
+  string = string.toLowerCase();
+
+  // Remove _ or -
+  string = string.replace(/([\-|\_])/g, ' ');
+
+  return string
+    .split(' ')
+    .map((word, index) => {
+      if (index === 0) return word;
+      return word[0].toUpperCase() + word.substring(1);
+    })
+    .join('');
+};
+
 export default {
   bem,
+  camelCase,
   capitalizeWord,
   ensureColorUniqueness,
   humanize,
