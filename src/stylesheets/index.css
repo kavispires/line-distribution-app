@@ -417,6 +417,26 @@ p {
   }
 }
 
+.loading-icon {
+  max-width: 100%;
+  height: 96px;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+.loading-icon--tiny {
+  height: 24px;
+}
+.loading-icon--small {
+  height: 48px;
+}
+.loading-icon--medium {
+  height: 96px;
+}
+.loading-icon--large {
+  height: 144px;
+}
+
 .pill {
   display: inline-block;
   margin-left: 6px;
@@ -459,13 +479,30 @@ p {
   margin-bottom: 12px;
 }
 
+.tabs-container {
+  width: 100%;
+}
+
+.tabs-content {
+  padding: 12px;
+  border-left: #ebebf2 1px solid;
+  border-bottom: #ebebf2 1px solid;
+  border-right: #ebebf2 1px solid;
+  margin-bottom: -12px;
+}
+.tabs-content--empty {
+  padding: 12px;
+  border: #ebebf2 1px solid;
+  margin-bottom: -12px;
+}
+
 .tabs {
   width: 100%;
   list-style: none;
   display: flex;
   border-bottom: #ebebf2 1px solid;
   padding: 0;
-  margin-bottom: 0;
+  margin: 0;
 }
 .tabs__tab {
   background: #ebebf2;
@@ -551,6 +588,16 @@ p {
   width: auto;
   transform: translateY(3px);
 }
+.card__positions {
+  padding: 0;
+  list-style: none;
+  margin-top: -6px;
+}
+.card__position-icon {
+  height: 24px;
+  padding-right: 6px;
+  transform: translateY(6px);
+}
 
 .switch {
   position: relative;
@@ -614,8 +661,67 @@ input:checked + .slider:before {
   margin-left: 12px;
 }
 
+.container--requirement-wrapper {
+  background: linear-gradient(#ffffff, #ebebf2);
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.requirement-wrapper__container {
+  width: 50%;
+  max-width: 500px;
+}
+.requirement-wrapper__container p {
+  text-align: center;
+  margin: 24px 0;
+}
+.requirement-wrapper__container button {
+  display: block;
+  margin: 0 auto;
+}
+
+.requirement-wrapper__loading-icon {
+  width: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.requirement-wrapper__big-icon {
+  text-align: center;
+}
+
 .artist__section {
   margin: 12px 0;
+}
+
+.artist-page__name {
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+.artist-page__name--fav-icon {
+  transform: translateY(-12px);
+}
+
+.artist-page__genre {
+  margin: 0;
+  font-style: italic;
+}
+
+.artist-page__members-list {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.artist-page__member-pill {
+  background: #b5b5ba;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin-right: 6px;
 }
 
 .unit-section__top {
@@ -627,12 +733,11 @@ input:checked + .slider:before {
 }
 
 .unit-section__actions {
-  width: 50%;
+  width: 100%;
 }
 .unit-section__actions .btn {
-  display: block;
-  float: right;
-  clear: both;
+  display: inline-block;
+  margin-right: 6px;
   min-width: 120px;
   min-width: 120px;
   margin-bottom: 6px;
@@ -733,23 +838,6 @@ input:checked + .slider:before {
 }
 .home__buttons .btn-home:hover {
   background: rgba(255, 255, 255, 0.5);
-}
-
-.container--login-required {
-  background: linear-gradient(#ffffff, #ebebf2);
-}
-
-.login-required-content {
-  width: 50%;
-  max-width: 500px;
-}
-.login-required-content p {
-  text-align: center;
-  margin: 24px 0;
-}
-.login-required-content button {
-  display: block;
-  margin: 0 auto;
 }
 
 .textareas {

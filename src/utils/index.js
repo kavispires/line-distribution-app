@@ -199,12 +199,100 @@ const parseResponseToObject = response => {
   );
 };
 
+const parseArrayToObject = response => {
+  if (response && response.data) {
+    response = response.data;
+
+    if (Array.isArray(response)) {
+      const result = {};
+      for (let i = 0; i < response.length; i++) {
+        const instance = response[i];
+        result[instance.id] = instance;
+      }
+      return result;
+    }
+  }
+
+  throw new Error(
+    'parserResponseToObject failed. Object is not an array response'
+  );
+};
+
+const parseQueryParams = query => {
+  if (!query) return null;
+
+  if (query[0] === '?') {
+    query = query.substring(1);
+  }
+
+  const params = {};
+  query.split('&').forEach(item => {
+    const pair = item.split('=');
+    const key = pair[0];
+    if (key) {
+      params[key] = pair[1] || null;
+    }
+  });
+
+  return params;
+};
+
+const humanize = (string, option = 'Sentence') => {
+  if (typeof string !== 'string') {
+    throw new Error('String used in humanize is not a string');
+  }
+
+  string = string.toLowerCase();
+
+  // Remove _ or -
+  string = string.replace(/([\-|\_])/g, ' ');
+
+  function captalizeFirstLetter(word) {
+    return word[0].toUpperCase() + word.substring(1);
+  }
+
+  switch (option) {
+    case 'Sentence':
+      return captalizeFirstLetter(string);
+    case 'Capital':
+      return string
+        .split(' ')
+        .map(word => captalizeFirstLetter(word))
+        .join(' ');
+    default:
+      return string;
+  }
+};
+
+const camelCase = string => {
+  if (typeof string !== 'string') {
+    throw new Error('String used in humanize is not a string');
+  }
+
+  string = string.toLowerCase();
+
+  // Remove _ or -
+  string = string.replace(/([\-|\_])/g, ' ');
+
+  return string
+    .split(' ')
+    .map((word, index) => {
+      if (index === 0) return word;
+      return word[0].toUpperCase() + word.substring(1);
+    })
+    .join('');
+};
+
 export default {
   bem,
-  ensureColorUniqueness,
+  camelCase,
   capitalizeWord,
-  spinalCaseWord,
+  ensureColorUniqueness,
+  humanize,
   parseBirthDate,
+  parseQueryParams,
+  parseArrayToObject,
   parseResponse,
   parseResponseToObject,
+  spinalCaseWord,
 };

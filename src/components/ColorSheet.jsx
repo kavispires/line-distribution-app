@@ -6,12 +6,13 @@ class ColorSheet extends Component {
     // nothing
   }
   render() {
+    const colors = Object.values(this.props.db.colors);
     return (
       <main className="container">
         <h1>Color Sheet</h1>
         <ul className="color-palette">
-          {this.props.db.colors &&
-            this.props.db.colors.map(colorObj => (
+          {colors &&
+            colors.map(colorObj => (
               <li
                 key={colorObj.id}
                 className={`palette background-color-${colorObj.number}`}

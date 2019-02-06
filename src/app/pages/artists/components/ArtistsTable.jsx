@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // Import shared components
-import { FavoriteIcon } from '../../../common';
+import { FavoriteIcon, LoadingIcon } from '../../../common';
 
 const ArtistsTable = ({
   artists,
-  rowAction,
   favoriteAction,
+  pending,
+  rowAction,
   searchQuery,
   user,
 }) => {
@@ -23,6 +24,23 @@ const ArtistsTable = ({
       ? 'No artists available within your search'
       : 'No artists available';
 
+  const rowFallback = () => {
+    if (pending) {
+      return (
+        <tr>
+          <td colSpan="5">
+            <LoadingIcon />
+          </td>
+        </tr>
+      );
+    }
+    return (
+      <tr>
+        <td colSpan="5">{emptyTableMessage}</td>
+      </tr>
+    );
+  };
+
   return (
     <table className="table">
       <thead>
@@ -35,9 +53,8 @@ const ArtistsTable = ({
         </tr>
       </thead>
       <tbody onClick={rowAction}>
-        {filteredArtists.length > 0 ? (
-          filteredArtists.map(entry => {
-            return (
+        {filteredArtists.length > 0
+          ? filteredArtists.map(entry => (
               <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
                 <td
                   className="artists-cell-favorite"
@@ -59,13 +76,8 @@ const ArtistsTable = ({
                   {entry.memberList.join(', ')} ({entry.memberList.length})
                 </td>
               </tr>
-            );
-          })
-        ) : (
-          <tr>
-            <td colSpan="5">{emptyTableMessage}</td>
-          </tr>
-        )}
+            ))
+          : rowFallback()}
       </tbody>
     </table>
   );
@@ -74,12 +86,14 @@ const ArtistsTable = ({
 ArtistsTable.propTypes = {
   artists: PropTypes.array.isRequired,
   favoriteAction: PropTypes.func.isRequired,
+  pending: PropTypes.bool,
   rowAction: PropTypes.func.isRequired,
   searchQuery: PropTypes.string,
   user: PropTypes.object.isRequired,
 };
 
 ArtistsTable.defaultProps = {
+  pending: false,
   searchQuery: '',
 };
 

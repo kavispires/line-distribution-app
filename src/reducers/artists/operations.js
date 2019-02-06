@@ -9,47 +9,14 @@ import utils from '../../utils';
 
 import { appOperations } from '../app';
 
-const loadArtists = () => async dispatch => {
-  dispatch(appOperations.setLoading(true, 'artists'));
+const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
 
-  try {
-    const response = await API.get('/artists');
-    const artistList = utils.parseResponse(response);
-
-    const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
-    dispatch(actions.setArtistList(sortedArtistList));
-  } catch (error) {
-    console.log(error);
-    toastr.error('Unable to load artists database', error);
-  } finally {
-    dispatch(appOperations.setLoading(false, 'artists'));
-  }
-
-  // Also, load latest artists, and favorite units
-  // dispatch(loadUserArtists());
-};
+const loadArtist = (artistId, queryParams) => dispatch =>
+  dispatch({ type: 'REQUEST_ARTIST', artistId, queryParams });
 
 const loadUserArtists = () => async (dispatch, getState) => {};
 
-const loadArtist = (artistId, queryParams) => async (dispatch, getState) => {
-  let selectedArtist = {};
-
-  try {
-    dispatch(appOperations.setLoading(true, 'artist'));
-
-    const response = await API.get(`/artists/${artistId}`);
-    selectedArtist = utils.parseResponse(response);
-    console.log(selectedArtist);
-    // Get units
-  } catch (error) {
-    console.log(error);
-    toastr.error(`Unable to load artist ${artistId} database`, error);
-  } finally {
-    dispatch(appOperations.setLoading(false, 'artist'));
-  }
-
-  dispatch(actions.setSelectedArtist(selectedArtist));
-};
+const findUnitIndex = (units, unitId) => units.findIndex(u => u.id === unitId);
 
 const updateSearchQuery = value => dispatch => {
   if (value === '' || value.length > 2) {
@@ -65,7 +32,33 @@ const showFavoriteArtistsOnlyToggle = () => (dispatch, getState) => {
 
 const updateLatestUnits = id => async (dispatch, getState) => {};
 
-const switchUnitsTab = e => async dispatch => {};
+const switchArtistPageTab = event => async (dispatch, getState) => {
+  let { id } = event.target;
+
+  // When clicking on the tab icon, the id is lost
+  if (!id) {
+    id = event.target.parentNode.parentNode.id; // eslint-disable-line
+  }
+  if (!id) return null;
+
+  dispatch(actions.setArtistPageTab(id));
+
+  const selectedArtist = { ...getState().artists.selectedArtist };
+  const unitIndex = findUnitIndex(selectedArtist.units, id);
+  const currentUnit = selectedArtist.units[unitIndex];
+
+  // If unit has the complete flag, use it, else request a new complete one
+  if (currentUnit.complete) {
+    dispatch(actions.setSelectedUnit(currentUnit));
+  } else {
+    await dispatch({
+      type: 'REQUEST_UNIT',
+      unitId: id,
+      selectedArtist,
+      unitIndex,
+    });
+  }
+};
 
 export default {
   loadArtists,
@@ -74,5 +67,5 @@ export default {
   updateSearchQuery,
   updateLatestUnits,
   showFavoriteArtistsOnlyToggle,
-  switchUnitsTab,
+  switchArtistPageTab,
 };

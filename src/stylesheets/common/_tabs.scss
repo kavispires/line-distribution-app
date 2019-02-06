@@ -1,10 +1,28 @@
+.tabs-container {
+  width: 100%;
+}
+
+.tabs-content {
+  padding: $unit;
+  border-left: $color-gray-1 1px solid;
+  border-bottom: $color-gray-1 1px solid;
+  border-right: $color-gray-1 1px solid;
+  margin-bottom: -12px;
+
+  &--empty {
+    padding: $unit;
+    border: $color-gray-1 1px solid;
+    margin-bottom: -12px;
+  }
+}
+
 .tabs {
   width: 100%;
   list-style: none;
   display: flex;
   border-bottom: $color-gray-1 1px solid;
   padding: 0;
-  margin-bottom: 0;
+  margin: 0;
 
   &__tab {
     background: $color-gray-1;

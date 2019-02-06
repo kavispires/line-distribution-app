@@ -1,0 +1,23 @@
+.loading-icon {
+  max-width: 100%;
+  height: 96px;
+  display: flex;
+  justify-content: center;
+  padding: $unit;
+
+  &--tiny {
+    height: 24px;
+  }
+
+  &--small {
+    height: 48px;
+  }
+
+  &--medium {
+    height: 96px;
+  }
+
+  &--large {
+    height: 144px;
+  }
+}

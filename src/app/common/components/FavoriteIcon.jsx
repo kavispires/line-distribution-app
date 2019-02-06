@@ -6,7 +6,7 @@ import { Icon } from '../../common';
 
 const FavoriteIcon = ({ action, className, id, size, state }) => (
   <button
-    className={`btn btn-transparent test ${className}`}
+    className={`btn btn-transparent ${className}`}
     onClick={() => action(id)}
   >
     {state ? (

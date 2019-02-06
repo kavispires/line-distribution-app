@@ -2,6 +2,36 @@
   margin: $unit 0;
 }
 
+.artist-page {
+  &__name {
+    font-size: 48px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+
+    &--fav-icon {
+      transform: translateY(-12px);
+    }
+  }
+
+  &__genre {
+    margin: 0;
+    font-style: italic;
+  }
+
+  &__members-list {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &__member-pill {
+    background: $color-gray-2;
+    padding: $unit-p4 $unit-p2;
+    border-radius: $unit-p4;
+    margin-right: $unit-p2;
+  }
+}
+
 .unit-section {
   &__top {
     display: flex;
@@ -12,12 +42,11 @@
   }
 
   &__actions {
-    width: 50%;
+    width: 100%;
 
     .btn {
-      display: block;
-      float: right;
-      clear: both;
+      display: inline-block;
+      margin-right: $unit-p2;
       min-width: 120px;
       min-width: 120px;
       margin-bottom: $unit-p2;
