@@ -57,7 +57,7 @@ function* initializer(action) {
 }
 
 function* requestArtists(action) {
-  yield put({ type: 'PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
   try {
@@ -76,7 +76,7 @@ function* requestArtists(action) {
 
   // TO-DO: Load latest artists, and favorite units
 
-  yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 function* requestArtist(action) {
@@ -261,7 +261,7 @@ function* runLogout(action) {
 }
 
 function* updateUserFavoriteArtists(action) {
-  yield put({ type: 'PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
   try {
@@ -276,7 +276,7 @@ function* updateUserFavoriteArtists(action) {
       actionType: action.type,
     });
   }
-  yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 function* updateUserFavoriteMembers(action) {

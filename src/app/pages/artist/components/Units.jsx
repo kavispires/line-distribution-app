@@ -11,7 +11,7 @@ const Units = ({ props }) => {
   const { artistPageTab, selectedArtist, selectedUnit } = artists;
 
   // If Artist has no unit
-  if (!app.pending && !Object.keys(selectedUnit).length) {
+  if (!app.loading && !Object.keys(selectedUnit).length) {
     return (
       <section className="artist__section">
         <div className="tabs-container">
@@ -23,7 +23,7 @@ const Units = ({ props }) => {
     );
   }
 
-  const isUnitPending = app.pending && app.pendingInline;
+  const isUnitPending = app.pending.REQUEST_UNIT;
 
   return (
     <section className="artist__section">
