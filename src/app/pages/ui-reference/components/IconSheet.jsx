@@ -2,7 +2,7 @@ import React from 'react';
 
 // Import common components
 import { Icon } from '../../../common';
-// Inport utility functions
+// Import utility functions
 import ICONS from '../../../../utils/icons';
 
 const IconSheet = () => (

@@ -930,6 +930,42 @@ input:checked + .slider:before {
   margin-bottom: 12px;
 }
 
+.component-list {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  flex-wrap: wrap;
+}
+.component-list__item {
+  width: 100%;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ebebf2;
+  border-radius: 3px;
+}
+.component-list__name {
+  margin-bottom: 12px;
+}
+.component-list__example {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.component-list__example > * {
+  margin-right: 12px;
+}
+.component-list__description {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 12px;
+  background: #ebebf2;
+  border-radius: 3px;
+}
+
 .background-color-1 {
   background-color: #d01f3c !important;
 }
