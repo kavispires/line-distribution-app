@@ -892,6 +892,67 @@ input:checked + .slider:before {
   background: rgba(255, 255, 255, 0.5);
 }
 
+.manage-group {
+  width: 100%;
+  display: flex;
+  min-height: 500px;
+}
+
+.manage-section__artist {
+  background: #b5b5ba;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  border-right: 1px solid #ebebf2;
+  border-radius: 6px 0 0 6px;
+}
+
+.manage-section__unit {
+  background: #b5b5ba;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  border-right: 1px solid #ebebf2;
+}
+
+.manage-section__members {
+  background: #b5b5ba;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  border-radius: 0 6px 6px 0;
+}
+
+.manage-section__button-add {
+  width: 100px;
+  height: 100px;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.manage-section__button-add:hover {
+  transform: scale(1.05);
+}
+
+.manage-section__button-add-image {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.manage-section__button-typeahead {
+  padding: 3px 12px;
+  border: 1px solid #7e7e82;
+  border-radius: 3px;
+  background: #ebebf2;
+}
+
 .color-palette {
   width: 100%;
   display: flex;
