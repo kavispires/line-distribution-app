@@ -8,7 +8,7 @@ import utils from '../utils';
 
 // Delay helper to make API look more realistic
 const delay = ms => new Promise(res => setTimeout(res, ms));
-const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 1000 : 0;
+const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 500 : 0;
 
 // API Workers
 
@@ -57,7 +57,7 @@ function* initializer(action) {
 }
 
 function* requestArtists(action) {
-  yield put({ type: 'PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
   try {
@@ -76,7 +76,7 @@ function* requestArtists(action) {
 
   // TO-DO: Load latest artists, and favorite units
 
-  yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 function* requestArtist(action) {
@@ -260,8 +260,26 @@ function* runLogout(action) {
   }
 }
 
+function* updateUserBiases(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    yield API.put(`/users/${action.userId}/biases`, action.biases);
+    yield put({ type: types.SET_BIASES, payload: action.biases });
+    yield put({ type: types.SET_BIAS, payload: action.bias });
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: error.toString(),
+      actionType: action.type,
+    });
+  }
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 function* updateUserFavoriteArtists(action) {
-  yield put({ type: 'PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
   try {
@@ -276,7 +294,7 @@ function* updateUserFavoriteArtists(action) {
       actionType: action.type,
     });
   }
-  yield put({ type: 'CLEAR_PENDING_INLINE', actionType: action.type });
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 function* updateUserFavoriteMembers(action) {
@@ -311,6 +329,7 @@ function* apiSaga() {
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
   yield takeLatest('UPDATE_USER_FAVORITE_MEMBERS', updateUserFavoriteMembers);
 

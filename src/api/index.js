@@ -423,7 +423,6 @@ class API {
         break;
       // API/users/<id>
       case 'users':
-        console.log(route);
         if (route.subPath === 'biases') {
           result = await putFunctions.updateUserBiases(route.referenceId, body);
         } else if (route.subPath === 'favorite-artists') {
@@ -941,7 +940,7 @@ const putFunctions = {
   },
   updateUserBiases: async (id, body) => {
     const key = id;
-    await dbRef.ref(`/users/${key}/biases`).update(body, error => {
+    await dbRef.ref(`/users/${key}/biases`).set(body, error => {
       if (error) {
         const message = `Failed to update User's Biases ${key}: ${JSON.stringify(
           body

@@ -4,6 +4,8 @@ const setArtistList = payload => dispatch =>
   dispatch({ type: types.SET_ARTIST_LIST, payload });
 const setArtistPageTab = payload => dispatch =>
   dispatch({ type: types.SET_ARTIST_PAGE_TAB, payload });
+const setBias = payload => dispatch =>
+  dispatch({ type: types.SET_BIAS, payload });
 const setSearchQuery = payload => dispatch =>
   dispatch({ type: types.SET_SEARCH_QUERY, payload });
 const setSelectedArtist = payload => dispatch =>
@@ -16,6 +18,7 @@ const setShowFavoriteArtistsOnly = payload => dispatch =>
 export default {
   setArtistList,
   setArtistPageTab,
+  setBias,
   setSearchQuery,
   setSelectedArtist,
   setSelectedUnit,

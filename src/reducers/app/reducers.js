@@ -5,9 +5,8 @@ const initialState = {
   error: false,
   errorInline: false,
   errorMessage: '',
-  pending: false,
-  pendingInline: false,
-  isLoading: false,
+  pending: {},
+  loading: false,
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -34,16 +33,12 @@ export default function reducer(prevState = initialState, action) {
       newState.pending = action.payload;
       break;
 
-    case types.SET_PENDING_INLINE:
-      newState.pendingInline = action.payload;
-      break;
-
     case types.SET_SUCCESS:
       newState.success = action.payload;
       break;
 
-    case types.SET_IS_LOADING:
-      newState.isLoading = action.payload;
+    case types.SET_LOADING:
+      newState.loading = action.payload;
       break;
 
     default:

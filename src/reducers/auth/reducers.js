@@ -18,6 +18,10 @@ export default function reducer(prevState = initialState, action) {
       newState.isAuthenticated = action.payload;
       break;
 
+    case types.SET_BIASES:
+      newState.user.biases = action.payload;
+      break;
+
     case types.SET_USER:
       newState.user = action.payload;
       break;

@@ -37,8 +37,72 @@
     display: flex;
   }
 
+  &__ruler {
+    border: 0.5px solid $color-gray-1;
+  }
+
+  &__info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__summary {
-    width: 50%;
+    // width: 50%;
+  }
+
+  &__bias {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: $unit-p2;
+    min-width: 110px;
+  }
+
+  &__bias-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border-radius: $unit-p2;
+    min-width: 110px;
+  }
+
+  &__bias-placeholder {
+    display: block;
+    width: 105px;
+    height: 105px;
+    background: $color-gray-1;
+    margin-bottom: $unit;
+    border-radius: $unit-p2;
+  }
+
+  &__bias-picture {
+    display: block;
+    width: 105px;
+    height: 105px;
+    background: $color-gray-1;
+    margin-bottom: $unit;
+    border-radius: $unit-p2;
+  }
+
+  &__bias-no-picture {
+    width: 105px;
+    height: 105px;
+    background: $color-yellow;
+    margin-bottom: $unit;
+    border-radius: $unit-p2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0;
+      bottom: -1.5em;
+      color: #000;
+      font-size: 1.5em;
+    }
   }
 
   &__actions {

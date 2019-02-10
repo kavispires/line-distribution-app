@@ -53,7 +53,7 @@ class RequirementWrapper extends Component {
 
     // Verify Authentication
     if (
-      !this.props.app.pending &&
+      !this.props.app.loading &&
       this.state.authentication &&
       !this.props.auth.isAuthenticated
     ) {
@@ -72,7 +72,7 @@ class RequirementWrapper extends Component {
 
     // Verify Admin
     if (
-      !this.props.app.pending &&
+      !this.props.app.loading &&
       this.state.admin &&
       !this.props.auth.isAdmin
     ) {
@@ -90,12 +90,12 @@ class RequirementWrapper extends Component {
 
     // Verify Selected Artist
     if (
-      !this.props.app.pending &&
+      !this.props.app.loading &&
       this.state.selectedArtist &&
       (!this.props.artists.selectedArtist ||
         !this.props.artists.selectedArtist.id)
     ) {
-      if (this.props.app.isLoading) {
+      if (this.props.app.loading) {
         return <Loading message="Fecthing artist..." />;
       }
       return (
@@ -111,7 +111,7 @@ class RequirementWrapper extends Component {
 
     // Verify Active Artist
     if (
-      !this.props.app.pending &&
+      !this.props.app.loading &&
       this.state.activeArtist &&
       this.props.artists.activeArtist &&
       this.props.artists.activeArtist.id

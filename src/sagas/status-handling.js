@@ -3,11 +3,8 @@ import { toastr } from 'react-redux-toastr';
 
 import { types } from '../reducers';
 
-// Loading Bar Action Type Cache
-const pendingCache = {};
-const pendingInlineCache = {};
-
 // PENDING WORKERS
+const localPendingCache = {};
 
 /**
  * Removes action type from pendingCache and updates pending if pendingCache is empty
@@ -17,33 +14,14 @@ function* clearPending(actionType) {
   if (typeof actionType === 'object') {
     actionType = actionType.actionType; // eslint-disable-line
   }
-  if (pendingCache[actionType]) {
-    delete pendingCache[actionType];
+  if (localPendingCache[actionType]) {
+    delete localPendingCache[actionType];
   }
 
-  if (Object.keys(pendingCache).length === 0) {
-    yield put({ type: types.SET_PENDING, payload: false });
+  if (Object.keys(localPendingCache).length === 0) {
+    yield put({ type: types.SET_PENDING, payload: localPendingCache });
+    yield put({ type: types.SET_LOADING, payload: false });
   }
-}
-
-/**
- * Removes action type from pendingCache and updates pending if pendingCache is empty
- * @param {string} actionType
- */
-function* clearPendingInline(actionType) {
-  if (typeof actionType === 'object') {
-    actionType = actionType.actionType; // eslint-disable-line
-  }
-
-  if (pendingInlineCache[actionType]) {
-    delete pendingInlineCache[actionType];
-  }
-
-  if (Object.keys(pendingInlineCache).length === 0) {
-    yield put({ type: types.SET_PENDING_INLINE, payload: false });
-  }
-
-  yield call(clearPending, actionType);
 }
 
 /**
@@ -51,33 +29,17 @@ function* clearPendingInline(actionType) {
  * @param {string} actionType
  */
 function* pending({ actionType }) {
-  if (pendingCache[actionType] === undefined) {
-    pendingCache[actionType] = true;
+  if (localPendingCache[actionType] === undefined) {
+    localPendingCache[actionType] = true;
   }
 
-  if (Object.keys(pendingCache).length > 0) {
-    yield put({ type: types.SET_PENDING, payload: true });
+  if (Object.keys(localPendingCache).length > 0) {
+    yield put({ type: types.SET_PENDING, payload: localPendingCache });
+    yield put({ type: types.SET_LOADING, payload: true });
   } else {
-    yield put({ type: types.SET_PENDING, payload: false });
+    yield put({ type: types.SET_PENDING, payload: localPendingCache });
+    yield put({ type: types.SET_LOADING, payload: false });
   }
-}
-
-/**
- * Adds action type to pendingInlineCache and updates pending based on pendingInlineCache values
- * @param {string} actionType
- */
-function* pendingInline({ actionType }) {
-  if (pendingInlineCache[actionType] === undefined) {
-    pendingInlineCache[actionType] = true;
-  }
-
-  if (Object.keys(pendingInlineCache).length > 0) {
-    yield put({ type: types.SET_PENDING_INLINE, payload: true });
-  } else {
-    yield put({ type: types.SET_PENDING_INLINE, payload: false });
-  }
-
-  yield call(pending, { actionType });
 }
 
 // ERROR WORKERS
@@ -177,12 +139,10 @@ function* test(action) {
 
 function* statusHandlingSaga() {
   yield takeEvery('CLEAR_PENDING', clearPending);
-  yield takeEvery('CLEAR_PENDING_INLINE', clearPendingInline);
   yield takeEvery('ERROR', error);
   yield takeEvery('ERROR_INLINE', errorInline);
   yield takeEvery('ERROR_TOAST', errorToast);
   yield takeEvery('PENDING', pending);
-  yield takeEvery('PENDING_INLINE', pendingInline);
   yield takeEvery('SUCCESS_INLINE', successInline);
   yield takeEvery('SUCCESS_TOAST', successToast);
   yield takeEvery('WARNING_TOAST', warningToast);

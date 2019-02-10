@@ -21,7 +21,7 @@ class Artist extends Component {
     const { app, artists, auth } = this.props;
     const { selectedArtist } = artists;
 
-    const isArtistPending = app.pending && !Object.keys(selectedArtist).length;
+    const isArtistPending = app.pending.REQUEST_ARTIST;
 
     return (
       <RequirementWrapper requirements={['selectedArtist']}>
