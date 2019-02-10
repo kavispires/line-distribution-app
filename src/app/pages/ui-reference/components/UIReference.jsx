@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // Import components
 import ColorSheet from './ColorSheet';
+import IconSheet from './IconSheet';
 // Import common components
 import { RequirementWrapper, Tabs, LoadingIcon } from '../../../common';
 
@@ -23,7 +24,8 @@ class UIReference extends Component {
         tabContent = <div>Content comes here {uiReferenceTab}</div>;
         break;
       case 'Icons':
-        tabContent = <div>Content comes here {uiReferenceTab}</div>;
+        console.log('sheeeeeeeeet');
+        tabContent = <IconSheet />;
         break;
       default:
         tabContent = <ColorSheet colors={colors} />;
