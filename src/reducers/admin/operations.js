@@ -1,6 +1,10 @@
 import actions from './actions';
 
+const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
+
 const loadColors = () => dispatch => dispatch({ type: 'REQUEST_COLORS' });
+
+const loadMembers = () => dispatch => dispatch({ type: 'REQUEST_MEMBERS' });
 
 const switchUIReferenceTab = event => async dispatch => {
   const { id } = event.target;
@@ -11,6 +15,8 @@ const switchUIReferenceTab = event => async dispatch => {
 };
 
 export default {
+  loadArtists,
   loadColors,
+  loadMembers,
   switchUIReferenceTab,
 };

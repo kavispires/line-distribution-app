@@ -1,6 +1,7 @@
 import actions from './actions';
 
-const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
+const loadArtists = () => dispatch =>
+  dispatch({ type: 'REQUEST_ARTISTS_LIST' });
 
 const loadArtist = (artistId, queryParams) => dispatch =>
   dispatch({ type: 'REQUEST_ARTIST', artistId, queryParams });

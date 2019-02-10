@@ -56,7 +56,7 @@ class Artists extends Component {
                 artists={filteredArtists}
                 rowAction={handleTableClick}
                 favoriteAction={this.props.updateFavoriteArtists}
-                pending={app.pending.REQUEST_ARTISTS}
+                pending={app.pending.REQUEST_ARTISTS_LIST}
                 user={user}
               />
             </section>
@@ -78,7 +78,7 @@ class Artists extends Component {
             <ArtistsTable
               artists={filteredArtists}
               searchQuery={searchQuery}
-              pending={app.pending.REQUEST_ARTISTS}
+              pending={app.pending.REQUEST_ARTISTS_LIST}
               rowAction={handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
               user={user}

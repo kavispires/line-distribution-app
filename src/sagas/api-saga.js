@@ -63,7 +63,26 @@ function* requestArtists(action) {
   try {
     const response = yield API.get('/artists');
     const artistList = utils.parseResponse(response);
+    const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
+    yield put({ type: types.SET_ARTISTS, payload: sortedArtistList });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: ['Unable to load artists database', error.toString()],
+      actionType: action.type,
+    });
+  }
 
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* requestArtistsList(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    const response = yield API.get('/artists');
+    const artistList = utils.parseResponse(response);
     const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
     yield put({ type: types.SET_ARTIST_LIST, payload: sortedArtistList });
   } catch (error) {
@@ -161,7 +180,27 @@ function* requestColors(action) {
     });
   }
 
-  // TO-DO: Load latest artists, and favorite units
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* requestMembers(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    const response = yield API.get('/members');
+    const membersList = utils.parseResponse(response);
+    const sortedMembersList = _.sortBy(membersList, [
+      m => m.name.toLowerCase(),
+    ]);
+    yield put({ type: types.SET_MEMBERS, payload: sortedMembersList });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: ['Unable to load members database', error.toString()],
+      actionType: action.type,
+    });
+  }
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
@@ -346,8 +385,10 @@ function* test(action) {
 function* apiSaga() {
   yield takeLatest('INITIALIZER', initializer);
   yield takeLatest('REQUEST_ARTISTS', requestArtists);
+  yield takeLatest('REQUEST_ARTISTS_LIST', requestArtistsList);
   yield takeLatest('REQUEST_ARTIST', requestArtist);
   yield takeLatest('REQUEST_COLORS', requestColors);
+  yield takeLatest('REQUEST_MEMBERS', requestMembers);
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);

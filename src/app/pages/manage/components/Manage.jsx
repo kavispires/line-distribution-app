@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 // Import components
 
 // Import common components
-import { RequirementWrapper, Tabs, LoadingIcon } from '../../../common';
+import { RequirementWrapper } from '../../../common';
 // Import images
 import managePlus from '../../../../images/manage-plus.svg';
 
 class UIReference extends Component {
   componentDidMount() {
-    // this.props.loadArtists();
+    this.props.loadArtists();
     this.props.loadColors();
-    // this.props.loadMembers();
+    this.props.loadMembers();
   }
 
   render() {
