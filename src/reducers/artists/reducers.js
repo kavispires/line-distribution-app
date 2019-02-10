@@ -3,6 +3,7 @@ import types from './types';
 const initialState = {
   artistList: [],
   artistPageTab: '',
+  bias: {},
   searchQuery: '',
   selectedArtist: {},
   selectedUnit: {},
@@ -21,6 +22,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_ARTIST_PAGE_TAB:
       newState.artistPageTab = action.payload;
+      break;
+
+    case types.SET_BIAS:
+      newState.bias = action.payload;
       break;
 
     case types.SET_SEARCH_QUERY:

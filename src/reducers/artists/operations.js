@@ -1,9 +1,5 @@
 import actions from './actions';
 
-import API from '../../api';
-
-import utils from '../../utils';
-
 const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
 
 const loadArtist = (artistId, queryParams) => dispatch =>
@@ -54,7 +50,28 @@ const switchArtistPageTab = event => async (dispatch, getState) => {
   }
 };
 
+const getBias = () => (dispatch, getState) => {
+  const { biases } = getState().auth.user;
+  const { selectedUnit } = getState().artists;
+  const { id, members } = selectedUnit;
+  let bias = null;
+  if (id && Object.keys(members).length) {
+    Object.keys(members).forEach(key => {
+      if (biases[`${id}:${key}`]) {
+        bias = { ...selectedUnit.members[key] };
+      }
+    });
+  }
+
+  if (bias) {
+    dispatch(actions.setBias(bias));
+  } else {
+    dispatch(actions.setBias({}));
+  }
+};
+
 export default {
+  getBias,
   loadArtists,
   loadUserArtists,
   loadArtist,
