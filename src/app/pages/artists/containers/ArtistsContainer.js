@@ -7,10 +7,10 @@ import { artistsOperations } from '../../../../reducers/artists';
 import { authOperations } from '../../../../reducers/auth';
 
 const mapStateToProps = state => ({
+  admin: state.admin,
   app: state.app,
   artists: state.artists,
   auth: state.auth,
-  db: state.db,
 });
 
 const mapDispatchToProps = {

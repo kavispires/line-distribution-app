@@ -145,6 +145,27 @@ function* requestArtist(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+function* requestColors(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    const response = yield API.get('/colors');
+    const colorsList = utils.parseResponseToObject(response);
+    yield put({ type: types.SET_COLORS, payload: colorsList });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: ['Unable to load colors database', error.toString()],
+      actionType: action.type,
+    });
+  }
+
+  // TO-DO: Load latest artists, and favorite units
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   const actionType = 'REQUEST_UNIT';
   yield put({ type: 'PENDING', actionType });
@@ -326,6 +347,7 @@ function* apiSaga() {
   yield takeLatest('INITIALIZER', initializer);
   yield takeLatest('REQUEST_ARTISTS', requestArtists);
   yield takeLatest('REQUEST_ARTIST', requestArtist);
+  yield takeLatest('REQUEST_COLORS', requestColors);
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);

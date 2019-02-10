@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+// Import constants
 import { PROFILE_PICTURE_URL } from '../../../../utils/constants';
-
 // Import images
 import biasPlaceholder from '../../../../images/bias-placeholder.svg';
 

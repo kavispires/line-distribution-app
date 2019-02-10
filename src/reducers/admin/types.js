@@ -1,0 +1,7 @@
+const SET_COLORS = 'SET_COLORS';
+const SET_UI_REFERENCE_TAB = 'SET_UI_REFERENCE_TAB';
+
+export default {
+  SET_COLORS,
+  SET_UI_REFERENCE_TAB,
+};

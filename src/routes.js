@@ -5,10 +5,9 @@ import Header from './app/pages/header';
 import Home from './app/pages/home';
 import Artists from './app/pages/artists';
 import Artist from './app/pages/artist';
+import UIReference from './app/pages/ui-reference';
 
-import ColorSheetContainer from './containers/ColorSheetContainer';
 import DistributeContainer from './containers/DistributeContainer';
-import IconSheetContainer from './containers/IconSheetContainer';
 import LabContainer from './containers/LabContainer';
 import LearnMoreContainer from './containers/LearnMoreContainer';
 import ManageContainer from './containers/ManageContainer';
@@ -35,11 +34,10 @@ const routes = (
       <Route path="/members" component={MembersContainer} />
       <Route path="/songs" component={SongsContainer} />
 
-      <Route path="/admin/color-sheet" component={ColorSheetContainer} />
-      <Route path="/admin/icon-sheet" component={IconSheetContainer} />
       <Route path="/admin/manage" component={ManageContainer} />
       <Route path="/admin/sync" component={SyncContainer} />
       <Route path="/admin/temp" component={TempContainer} />
+      <Route path="/admin/ui-reference" component={UIReference} />
 
       <Route path="/user/my-artists" component={MyArtistsContainer} />
       <Route
