@@ -1,9 +1,9 @@
 {
-  "main.css": "/line-distribution-app/static/css/main.8a8fce11.chunk.css",
-  "main.js": "/line-distribution-app/static/js/main.d2332eb3.chunk.js",
-  "main.js.map": "/line-distribution-app/static/js/main.d2332eb3.chunk.js.map",
-  "static/js/1.d86d3587.chunk.js": "/line-distribution-app/static/js/1.d86d3587.chunk.js",
-  "static/js/1.d86d3587.chunk.js.map": "/line-distribution-app/static/js/1.d86d3587.chunk.js.map",
+  "main.css": "/line-distribution-app/static/css/main.95651880.chunk.css",
+  "main.js": "/line-distribution-app/static/js/main.dd5f3ddd.chunk.js",
+  "main.js.map": "/line-distribution-app/static/js/main.dd5f3ddd.chunk.js.map",
+  "static/js/1.8926a9c8.chunk.js": "/line-distribution-app/static/js/1.8926a9c8.chunk.js",
+  "static/js/1.8926a9c8.chunk.js.map": "/line-distribution-app/static/js/1.8926a9c8.chunk.js.map",
   "runtime~main.js": "/line-distribution-app/static/js/runtime~main.e2f055bc.js",
   "runtime~main.js.map": "/line-distribution-app/static/js/runtime~main.e2f055bc.js.map",
   "static/media/icon-rapper.svg": "/line-distribution-app/static/media/icon-rapper.cb032f09.svg",
@@ -11,6 +11,7 @@
   "static/media/logo.svg": "/line-distribution-app/static/media/logo.d7f95990.svg",
   "static/media/user-placeholder.svg": "/line-distribution-app/static/media/user-placeholder.94d4fc32.svg",
   "static/media/logo-alt.svg": "/line-distribution-app/static/media/logo-alt.6de76e88.svg",
+  "static/media/bias-placeholder.svg": "/line-distribution-app/static/media/bias-placeholder.61f71a68.svg",
   "static/media/icon-leader.svg": "/line-distribution-app/static/media/icon-leader.6a295198.svg",
   "static/media/icon-main-vocalist.svg": "/line-distribution-app/static/media/icon-main-vocalist.a995fa3a.svg",
   "static/media/icon-main-rapper.svg": "/line-distribution-app/static/media/icon-main-rapper.269fbdb9.svg",
@@ -24,8 +25,8 @@
   "static/media/icon-center.svg": "/line-distribution-app/static/media/icon-center.83737fe1.svg",
   "static/media/icon-visual.svg": "/line-distribution-app/static/media/icon-visual.187fc8b9.svg",
   "static/media/icon-maknae.svg": "/line-distribution-app/static/media/icon-maknae.afb2e497.svg",
-  "static/css/main.8a8fce11.chunk.css.map": "/line-distribution-app/static/css/main.8a8fce11.chunk.css.map",
+  "static/css/main.95651880.chunk.css.map": "/line-distribution-app/static/css/main.95651880.chunk.css.map",
   "index.html": "/line-distribution-app/index.html",
-  "precache-manifest.7c96752e53302eb5da6acf5d36773582.js": "/line-distribution-app/precache-manifest.7c96752e53302eb5da6acf5d36773582.js",
+  "precache-manifest.81a9c2f1a9244f792b6daa3902798520.js": "/line-distribution-app/precache-manifest.81a9c2f1a9244f792b6daa3902798520.js",
   "service-worker.js": "/line-distribution-app/service-worker.js"
 }
