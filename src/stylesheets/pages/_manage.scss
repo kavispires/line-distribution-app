@@ -4,6 +4,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: $unit-x2;
+}
+
+@mixin section-edit {
+  background: $color-negative;
+  border: 2px solid $color-gray-2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: center;
+  padding: $unit-x2;
 }
 
 .manage-group {
@@ -15,6 +26,13 @@
 .manage-section {
   &__artist {
     @include section;
+    width: 25%;
+    border-right: 1px solid $color-gray-1;
+    border-radius: $unit-p2 0 0 $unit-p2;
+  }
+
+  &__artist-edit {
+    @include section-edit;
     width: 25%;
     border-right: 1px solid $color-gray-1;
     border-radius: $unit-p2 0 0 $unit-p2;
@@ -60,5 +78,38 @@
     border: 1px solid $color-gray-3;
     border-radius: $unit-p4;
     background: $color-gray-1;
+  }
+
+  &__valid {
+    border: 2px solid $color-green;
+    background: $color-negative;
+    padding: $unit-p2;
+    border-radius: $unit-p2;
+    color: $color-green;
+  }
+}
+
+.manage-form {
+  &__label {
+    display: block;
+    margin-bottom: $unit;
+  }
+
+  &__input {
+    width: 100%;
+    border: 1px solid $color-gray-1;
+  }
+
+  &__navigation {
+    display: flex;
+    width: 100%;
+
+    & > * {
+      margin-right: $unit;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }

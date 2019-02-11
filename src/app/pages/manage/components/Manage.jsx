@@ -4,22 +4,75 @@ import PropTypes from 'prop-types';
 // Import components
 
 // Import common components
-import { RequirementWrapper, Typeahead } from '../../../common';
+import { RequirementWrapper, Typeahead, Icon } from '../../../common';
 // Import images
 import managePlus from '../../../../images/manage-plus.svg';
+import EditArtist from './EditArtist';
+import OpenArtist from './OpenArtist';
 
 class UIReference extends Component {
+  constructor() {
+    super();
+    this.state = {
+      artistId: null,
+      validArtist: false,
+    };
+  }
+
   componentDidMount() {
     this.props.loadArtists();
     this.props.loadColors();
     this.props.loadMembers();
   }
 
+  validateArtist(event) {
+    const { value } = event.target;
+    const dict = this.props.admin.artistsTypeaheadDict;
+    if (dict[value]) {
+      this.setState({ artistId: dict[value], validArtist: true });
+    } else {
+      this.setState({ artistId: null, validArtist: false });
+    }
+  }
+
   render() {
     const {
-      admin: { artistsTypeahead, membersTypeahead },
+      admin: {
+        artistsTypeahead,
+        artistsTypeaheadDict,
+        editingArtist,
+        membersTypeahead,
+      },
       app,
+      handleEditArtist,
+      updateEditArtistForm,
     } = this.props;
+
+    let artistComponent = null;
+    switch (editingArtist.state) {
+      case 'edit':
+        artistComponent = (
+          <EditArtist
+            artist={editingArtist}
+            back={() => console.log('BACK')}
+            next={() => console.log('NEXT')}
+            updateEditArtistForm={updateEditArtistForm}
+          />
+        );
+        break;
+      default:
+        artistComponent = (
+          <OpenArtist
+            handleEditArtist={handleEditArtist}
+            artistsTypeahead={artistsTypeahead}
+            artistsTypeaheadDict={artistsTypeaheadDict}
+          />
+        );
+    }
+
+    let unitComponent = null;
+
+    let membersComponent = null;
 
     return (
       <RequirementWrapper requirements={['manage']}>
@@ -30,22 +83,7 @@ class UIReference extends Component {
             at least TWO members (no solo artists)
           </p>
           <div className="manage-group">
-            <section className="manage-section__artist">
-              <h3 className="manage-section__button-title">Artist</h3>
-              <button className="manage-section__button-add">
-                <img
-                  className="manage-section__button-add-image"
-                  src={managePlus}
-                  alt="Add Artist"
-                />
-              </button>
-              <Typeahead
-                action={e => console.log(e.target.value)}
-                name="artists"
-                placeholder="Search existing artist..."
-                suggestions={artistsTypeahead}
-              />
-            </section>
+            {artistComponent}
             <section className="manage-section__unit">
               <h3 className="manage-section__button-title">Unit</h3>
               <button className="manage-section__button-add">

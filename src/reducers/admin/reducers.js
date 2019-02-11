@@ -4,6 +4,9 @@ const initialState = {
   artists: [],
   artistsTypeahead: [],
   colors: {},
+  editingArtist: {},
+  editingMembers: [],
+  editingUnit: {},
   members: [],
   membersTypeahead: [],
   uiReferenceTab: null,
@@ -27,6 +30,18 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_COLORS:
       newState.colors = action.payload;
+      break;
+
+    case types.SET_EDITING_ARTIST:
+      newState.editingArtist = action.payload;
+      break;
+
+    case types.SET_EDITING_MEMBERS:
+      newState.editingMembers = action.payload;
+      break;
+
+    case types.SET_EDITING_UNIT:
+      newState.editingUnit = action.payload;
       break;
 
     case types.SET_MEMBERS:

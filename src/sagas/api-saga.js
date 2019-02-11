@@ -93,7 +93,7 @@ function* requestArtist(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { artistId } = action;
+  const { artistId, state } = action;
   let { queryParams } = action;
 
   let selectedArtist = {};
@@ -141,16 +141,22 @@ function* requestArtist(action) {
     });
   }
 
-  // Fetch complete unit for default unit
-  const selectedUnit = yield call(requestUnit, {
-    unitId: selectedUnitId,
-  });
+  // Just send artist if dealing with Manage Artist
+  if (state === 'edit') {
+    selectedArtist.state = 'edit';
+    yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
+  } else {
+    // Fetch complete unit for default unit
+    const selectedUnit = yield call(requestUnit, {
+      unitId: selectedUnitId,
+    });
 
-  selectedArtist.units[unitIndex] = selectedUnit;
+    selectedArtist.units[unitIndex] = selectedUnit;
 
-  yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
-  yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
-  yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
+    yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
+    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
+    yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
+  }
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
