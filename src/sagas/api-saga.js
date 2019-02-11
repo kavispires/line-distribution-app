@@ -65,6 +65,19 @@ function* requestArtists(action) {
     const artistList = utils.parseResponse(response);
     const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
     yield put({ type: types.SET_ARTISTS, payload: sortedArtistList });
+
+    const artistsTypeahead = [];
+    const artistsTypeaheadDict = {};
+
+    sortedArtistList.forEach(artist => {
+      artistsTypeahead.push(artist.name);
+      artistsTypeaheadDict[artist.name] = artist.id;
+    });
+    yield put({ type: types.SET_ARTISTS_TYPEAHEAD, payload: artistsTypeahead });
+    yield put({
+      type: types.SET_ARTISTS_TYPEAHEAD_DICT,
+      payload: artistsTypeaheadDict,
+    });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -194,6 +207,20 @@ function* requestMembers(action) {
       m => m.name.toLowerCase(),
     ]);
     yield put({ type: types.SET_MEMBERS, payload: sortedMembersList });
+
+    const membersTypeahead = [];
+    const membersTypeaheadDict = {};
+
+    sortedMembersList.forEach(member => {
+      const key = `${member.name} (${member.referenceArtist})`;
+      membersTypeahead.push(key);
+      membersTypeaheadDict[key] = member.id;
+    });
+    yield put({ type: types.SET_MEMBERS_TYPEAHEAD, payload: membersTypeahead });
+    yield put({
+      type: types.SET_MEMBERS_TYPEAHEAD_DICT,
+      payload: membersTypeaheadDict,
+    });
   } catch (error) {
     yield put({
       type: 'ERROR',

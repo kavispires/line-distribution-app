@@ -16,7 +16,10 @@ class UIReference extends Component {
   }
 
   render() {
-    const { admin, app } = this.props;
+    const {
+      admin: { artistsTypeahead, membersTypeahead },
+      app,
+    } = this.props;
 
     return (
       <RequirementWrapper requirements={['manage']}>
@@ -40,18 +43,7 @@ class UIReference extends Component {
                 action={e => console.log(e.target.value)}
                 name="artists"
                 placeholder="Search existing artist..."
-                suggestions={[
-                  'Alligator',
-                  'Bask',
-                  'Crocodilian',
-                  'Death Roll',
-                  'Eggs',
-                  'Jaws',
-                  'Reptile',
-                  'Solitary',
-                  'Tail',
-                  'Wetlands',
-                ]}
+                suggestions={artistsTypeahead}
               />
             </section>
             <section className="manage-section__unit">
@@ -78,18 +70,7 @@ class UIReference extends Component {
                 action={e => console.log(e.target.value)}
                 name="members"
                 placeholder="Search existing member..."
-                suggestions={[
-                  'Alligator',
-                  'Bask',
-                  'Crocodilian',
-                  'Death Roll',
-                  'Eggs',
-                  'Jaws',
-                  'Reptile',
-                  'Solitary',
-                  'Tail',
-                  'Wetlands',
-                ]}
+                suggestions={membersTypeahead}
               />
             </section>
           </div>
