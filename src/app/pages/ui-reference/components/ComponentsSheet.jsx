@@ -1,7 +1,14 @@
 import React from 'react';
 
 // Import common components
-import { FavoriteIcon, Icon, LoadingIcon, Switch, Tabs } from '../../../common';
+import {
+  FavoriteIcon,
+  Icon,
+  LoadingIcon,
+  Switch,
+  Tabs,
+  Typeahead,
+} from '../../../common';
 
 const NOOP = () => {};
 
@@ -113,7 +120,7 @@ const ComponentSheet = () => (
         </div>
 
         <div className="component-list__description">
-          <p>Heart shaped favorite icon</p>
+          <p>Wrapper component with selectable tabs</p>
           <b>Requires:</b>
           <ul className="component-list__arguments">
             <li className="component-list__argument">?</li>
@@ -128,6 +135,41 @@ const ComponentSheet = () => (
             </li>
             <li className="component-list__argument">
               icon: icon component to be displayed
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li className="component-list__item">
+        <h3>Typeahead</h3>
+        <div className="component-list__example">
+          <Typeahead
+            action={NOOP}
+            name="example"
+            suggestions={['Avocado', 'Banana', 'Cranberry']}
+          />
+        </div>
+        <div className="component-list__description">
+          <p>Input field with autocomplete datalist option</p>
+          <b>Requires:</b>
+          <ul className="component-list__arguments">
+            <li className="component-list__argument">
+              action: function trigged when input is selected
+            </li>
+            <li className="component-list__argument">
+              name: name of the datalist/input
+            </li>
+          </ul>
+          <b>Accepts:</b>
+          <ul className="component-list__arguments">
+            <li className="component-list__argument">
+              className: additional classes (default: &#39;&#39;)
+            </li>
+            <li className="component-list__argument">
+              placeholder: input field placeholder (default: Searching...)
+            </li>
+            <li className="component-list__argument">
+              suggestions: list of suggestions to autocomplete in the datalist
+              (default: [])
             </li>
           </ul>
         </div>

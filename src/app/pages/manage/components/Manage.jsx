@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import components
 
 // Import common components
-import { RequirementWrapper } from '../../../common';
+import { RequirementWrapper, Typeahead } from '../../../common';
 // Import images
 import managePlus from '../../../../images/manage-plus.svg';
 
@@ -17,7 +17,6 @@ class UIReference extends Component {
 
   render() {
     const { admin, app } = this.props;
-    const { colors, uiReferenceTab } = admin;
 
     return (
       <RequirementWrapper requirements={['manage']}>
@@ -37,7 +36,23 @@ class UIReference extends Component {
                   alt="Add Artist"
                 />
               </button>
-              <div className="manage-section__button-typeahead">Typeahead</div>
+              <Typeahead
+                action={e => console.log(e.target.value)}
+                name="artists"
+                placeholder="Search existing artist..."
+                suggestions={[
+                  'Alligator',
+                  'Bask',
+                  'Crocodilian',
+                  'Death Roll',
+                  'Eggs',
+                  'Jaws',
+                  'Reptile',
+                  'Solitary',
+                  'Tail',
+                  'Wetlands',
+                ]}
+              />
             </section>
             <section className="manage-section__unit">
               <h3 className="manage-section__button-title">Unit</h3>
@@ -59,7 +74,23 @@ class UIReference extends Component {
                   alt="Add Artist"
                 />
               </button>
-              <div className="manage-section__button-typeahead">Typeahead</div>
+              <Typeahead
+                action={e => console.log(e.target.value)}
+                name="members"
+                placeholder="Search existing member..."
+                suggestions={[
+                  'Alligator',
+                  'Bask',
+                  'Crocodilian',
+                  'Death Roll',
+                  'Eggs',
+                  'Jaws',
+                  'Reptile',
+                  'Solitary',
+                  'Tail',
+                  'Wetlands',
+                ]}
+              />
             </section>
           </div>
         </main>
@@ -71,8 +102,9 @@ class UIReference extends Component {
 UIReference.propTypes = {
   admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
+  loadArtists: PropTypes.func.isRequired,
   loadColors: PropTypes.func.isRequired,
-  switchUIReferenceTab: PropTypes.func.isRequired,
+  loadMembers: PropTypes.func.isRequired,
 };
 
 UIReference.defaultProps = {};

@@ -118,6 +118,21 @@ p {
   background: #ffffff;
 }
 
+.typeahead {
+  display: inline-block;
+  max-width: 300px;
+  position: relative;
+}
+
+.typeahead-input {
+  border: 1px solid #7e7e82;
+  padding: 3px 12px;
+  border-radius: 3px;
+  width: 100%;
+  max-width: 150px;
+  max-height: 24px;
+}
+
 .dropdown,
 .header-admin__dropdown,
 .header-user__dropdown {

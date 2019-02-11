@@ -40,7 +40,11 @@ class UIReference extends Component {
             action={this.props.switchUIReferenceTab}
             active={uiReferenceTab}
           >
-            {app.isPending ? <LoadingIcon size="medium" /> : tabContent}
+            {app.pending.REQUEST_COLORS ? (
+              <LoadingIcon size="medium" />
+            ) : (
+              tabContent
+            )}
           </Tabs>
         </main>
       </RequirementWrapper>
