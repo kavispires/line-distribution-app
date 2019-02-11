@@ -14,14 +14,10 @@ class Artists extends Component {
     this.props.updateSearchQuery('');
   }
   render() {
-    const { app, artists, auth } = this.props;
-    const {
-      artistList,
-      searchQuery,
-      showFavoriteArtistsOnly,
-      userLatestArtists,
-    } = artists;
+    const { admin, app, artists, auth } = this.props;
+    const { searchQuery, showFavoriteArtistsOnly, userLatestArtists } = artists;
     const { user } = auth;
+    const artistList = admin.artists;
 
     let filteredArtists = artistList;
     if (showFavoriteArtistsOnly) {
@@ -56,7 +52,7 @@ class Artists extends Component {
                 artists={filteredArtists}
                 rowAction={handleTableClick}
                 favoriteAction={this.props.updateFavoriteArtists}
-                pending={app.pending.REQUEST_ARTISTS_LIST}
+                pending={app.pending.REQUEST_ARTISTS}
                 user={user}
               />
             </section>
@@ -78,7 +74,7 @@ class Artists extends Component {
             <ArtistsTable
               artists={filteredArtists}
               searchQuery={searchQuery}
-              pending={app.pending.REQUEST_ARTISTS_LIST}
+              pending={app.pending.REQUEST_ARTISTS}
               rowAction={handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
               user={user}
@@ -91,6 +87,7 @@ class Artists extends Component {
 }
 
 Artists.propTypes = {
+  admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,

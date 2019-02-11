@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Artists from '../components/Artists';
 
+import { adminOperations } from '../../../../reducers/admin';
 import { artistsOperations } from '../../../../reducers/artists';
 import { authOperations } from '../../../../reducers/auth';
 
@@ -14,6 +15,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  ...adminOperations,
   ...artistsOperations,
   ...authOperations,
 };
