@@ -14,8 +14,10 @@ class UIReference extends Component {
   }
 
   render() {
-    const { admin, app } = this.props;
-    const { colors, uiReferenceTab } = admin;
+    const {
+      admin: { colors, uiReferenceTab },
+      app,
+    } = this.props;
 
     const TABS = ['Colors', 'Components', 'Icons'];
 

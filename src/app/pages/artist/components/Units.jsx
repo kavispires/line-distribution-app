@@ -22,9 +22,16 @@ class Units extends Component {
   }
 
   render() {
-    const { props } = this.props;
-    const { app, artists, auth } = props;
-    const { artistPageTab, bias, selectedArtist, selectedUnit } = artists;
+    const {
+      props: {
+        app,
+        artists: { artistPageTab, bias, selectedArtist, selectedUnit },
+        auth,
+        switchArtistPageTab,
+        updateBias,
+        updateFavoriteMembers,
+      },
+    } = this.props;
 
     // If Artist has no unit
     if (!app.loading && !Object.keys(selectedUnit).length) {
@@ -45,7 +52,7 @@ class Units extends Component {
       <section className="artist__section">
         <Tabs
           tabs={selectedArtist.units || []}
-          action={props.switchArtistPageTab}
+          action={switchArtistPageTab}
           active={artistPageTab}
           icon={<Icon type="check" color="blue" />}
           iconCondition="official"
@@ -98,7 +105,7 @@ class Units extends Component {
                   ) : (
                     <div className="unit-section__bias-wrapper">
                       <BiasPicture bias={bias} />
-                      <select className="select" onChange={props.updateBias}>
+                      <select className="select" onChange={updateBias}>
                         <option value="">Select your bias...</option>
                         {Object.values(selectedUnit.members).map(member => (
                           <option
@@ -127,7 +134,7 @@ class Units extends Component {
                         auth.user.favoriteMembers &&
                         auth.user.favoriteMembers[member.id]
                       }
-                      updateFavoriteMembers={props.updateFavoriteMembers}
+                      updateFavoriteMembers={updateFavoriteMembers}
                     />
                   ))}
                 </div>

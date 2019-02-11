@@ -14,9 +14,13 @@ class Artists extends Component {
     this.props.updateSearchQuery('');
   }
   render() {
-    const { admin, app, artists, auth } = this.props;
-    const { searchQuery, showFavoriteArtistsOnly, userLatestArtists } = artists;
-    const { user } = auth;
+    const {
+      admin,
+      app,
+      artists: { searchQuery, showFavoriteArtistsOnly, userLatestArtists },
+      auth: { user },
+    } = this.props;
+
     const artistList = admin.artists;
 
     let filteredArtists = artistList;

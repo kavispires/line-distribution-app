@@ -16,8 +16,9 @@ class BiasPicture extends Component {
   }
 
   render() {
+    const { bias } = this.props;
     // If no bias, display placeholder
-    if (!Object.keys(this.props.bias).length) {
+    if (!Object.keys(bias).length) {
       return (
         <img
           className="unit-section__bias-placeholder"
@@ -28,14 +29,18 @@ class BiasPicture extends Component {
     }
 
     const pictureUrl = `${process.env.PUBLIC_URL}${PROFILE_PICTURE_URL}${
-      this.props.bias.name
-    }${this.props.bias.id}.jpg`;
+      bias.name
+    }${bias.id}.jpg`;
 
     // If picture is not found
     if (this.state.failed) {
       return (
-        <div className="unit-section__bias-no-picture">
-          <span>{this.props.bias.name}</span>
+        <div
+          className={`unit-section__bias-no-picture background-color-${
+            bias.color.number
+          }`}
+        >
+          <span>{bias.name}</span>
         </div>
       );
     }
