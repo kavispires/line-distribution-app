@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+// Import components
 import Menu from './Menu';
 import LoadingBar from './LoadingBar';
 

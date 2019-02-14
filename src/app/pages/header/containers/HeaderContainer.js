@@ -5,7 +5,6 @@ import Header from '../components/Header';
 
 import { appOperations } from '../../../../reducers/app';
 import { authOperations } from '../../../../reducers/auth';
-import { dbOperations } from '../../../../reducers/db';
 
 const mapStateToProps = state => ({
   app: state.app,
@@ -15,7 +14,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   ...appOperations,
   ...authOperations,
-  ...dbOperations,
 };
 
 export default withRouter(

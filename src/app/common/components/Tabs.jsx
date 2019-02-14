@@ -8,8 +8,8 @@ const Tabs = ({ tabs, active, action, iconCondition, icon, ...props }) => {
   // Check for names and ids
   tabs = tabs.map((tab, index) => {
     const tabObj = {
-      name: tab.name || '',
-      id: tab.id || '',
+      name: tab.name || tab,
+      id: tab.id || tab,
     };
     if (tab.id !== undefined && tab.name === undefined) {
       tabObj.name = utils.capitalizeWord(tab.id);
@@ -19,7 +19,7 @@ const Tabs = ({ tabs, active, action, iconCondition, icon, ...props }) => {
     }
 
     tabObj.key = `${tab.id}-${index}`;
-    tabObj.isActive = active === tab.id ? 'selected' : '';
+    tabObj.isActive = active === tab.id || active === tab ? 'selected' : '';
     tabObj.showIcon = tab[iconCondition] || false;
     return tabObj;
   });

@@ -21,7 +21,7 @@ FavoriteIcon.propTypes = {
   action: PropTypes.func.isRequired,
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
-  size: PropTypes.string,
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   state: PropTypes.bool,
 };
 

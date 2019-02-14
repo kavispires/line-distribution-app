@@ -31,13 +31,14 @@ const Icon = ({ type, size, color, inline }) => {
 };
 
 Icon.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   inline: PropTypes.bool,
 };
 
 Icon.defaultProps = {
+  type: 'default',
   size: 12,
   color: 'default',
   inline: false,

@@ -1,22 +1,23 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import Home from '../components/Home';
+import UIReference from '../components/UIReference';
 
-import { authOperations } from '../../../../reducers/auth';
+import { adminOperations } from '../../../../reducers/admin';
 
 const mapStateToProps = state => ({
+  admin: state.admin,
   app: state.app,
   auth: state.auth,
 });
 
 const mapDispatchToProps = {
-  login: authOperations.login,
+  ...adminOperations,
 };
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Home)
+  )(UIReference)
 );

@@ -14,14 +14,14 @@ class Artists extends Component {
     this.props.updateSearchQuery('');
   }
   render() {
-    const { app, artists, auth } = this.props;
     const {
-      artistList,
-      searchQuery,
-      showFavoriteArtistsOnly,
-      userLatestArtists,
-    } = artists;
-    const { user } = auth;
+      admin,
+      app,
+      artists: { searchQuery, showFavoriteArtistsOnly, userLatestArtists },
+      auth: { user },
+    } = this.props;
+
+    const artistList = admin.artists;
 
     let filteredArtists = artistList;
     if (showFavoriteArtistsOnly) {
@@ -91,6 +91,7 @@ class Artists extends Component {
 }
 
 Artists.propTypes = {
+  admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,

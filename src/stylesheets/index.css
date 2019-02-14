@@ -118,6 +118,21 @@ p {
   background: #ffffff;
 }
 
+.typeahead {
+  display: inline-block;
+  max-width: 300px;
+  position: relative;
+}
+
+.typeahead-input {
+  border: 1px solid #7e7e82;
+  padding: 3px 12px;
+  border-radius: 3px;
+  width: 100%;
+  max-width: 150px;
+  max-height: 24px;
+}
+
 .dropdown,
 .header-admin__dropdown,
 .header-user__dropdown {
@@ -837,21 +852,6 @@ input:checked + .slider:before {
   background: rgba(209, 73, 73, 0.2);
 }
 
-.color-palette {
-  width: 100%;
-  display: flex;
-  list-style: none;
-  padding-left: 0;
-  flex-wrap: wrap;
-}
-
-.palette {
-  width: 150px;
-  height: 150px;
-  margin: 10px;
-  padding: 10px;
-}
-
 .home__video {
   position: absolute;
   width: 100%;
@@ -907,19 +907,183 @@ input:checked + .slider:before {
   background: rgba(255, 255, 255, 0.5);
 }
 
-.textareas {
+.manage-group {
+  width: 100%;
   display: flex;
-  width: 100%;
-  margin-bottom: 10px;
-}
-.textareas textarea {
-  width: 100%;
-  height: 300px;
-  resize: vertical;
+  min-height: 500px;
 }
 
-.buttons button {
-  margin-right: 10px;
+.manage-section__artist {
+  background: #b5b5ba;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  width: 25%;
+  border-right: 1px solid #ebebf2;
+  border-radius: 6px 0 0 6px;
+}
+
+.manage-section__artist-edit {
+  background: #ffffff;
+  border: 2px solid #b5b5ba;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  width: 25%;
+  border-right: 1px solid #ebebf2;
+  border-radius: 6px 0 0 6px;
+}
+
+.manage-section__unit {
+  background: #b5b5ba;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  width: 25%;
+  border-right: 1px solid #ebebf2;
+}
+
+.manage-section__members {
+  background: #b5b5ba;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  width: 50%;
+  border-radius: 0 6px 6px 0;
+}
+
+.manage-section__button-add {
+  width: 100px;
+  height: 100px;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.manage-section__button-add:hover {
+  transform: scale(1.05);
+}
+
+.manage-section__button-add-image {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.manage-section__button-typeahead {
+  padding: 3px 12px;
+  border: 1px solid #7e7e82;
+  border-radius: 3px;
+  background: #ebebf2;
+}
+
+.manage-section__valid {
+  border: 2px solid #49d156;
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 6px;
+  color: #49d156;
+}
+
+.manage-form__label {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.manage-form__input {
+  width: 100%;
+  border: 1px solid #ebebf2;
+}
+
+.manage-form__navigation {
+  display: flex;
+  width: 100%;
+}
+.manage-form__navigation > * {
+  margin-right: 12px;
+}
+.manage-form__navigation > *:last-child {
+  margin-right: 0;
+}
+
+.color-palette {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  flex-wrap: wrap;
+}
+
+.palette {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.icon-list {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  flex-wrap: wrap;
+}
+.icon-list__item {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ebebf2;
+  border-radius: 3px;
+}
+.icon-list__name {
+  margin-bottom: 12px;
+}
+
+.component-list {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  flex-wrap: wrap;
+}
+.component-list__item {
+  width: 100%;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ebebf2;
+  border-radius: 3px;
+}
+.component-list__name {
+  margin-bottom: 12px;
+}
+.component-list__example {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.component-list__example > * {
+  margin-right: 12px;
+}
+.component-list__description {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 12px;
+  background: #ebebf2;
+  border-radius: 3px;
 }
 
 .background-color-1 {

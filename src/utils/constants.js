@@ -29,3 +29,28 @@ export const NATIONALITY_FLAG_URL = '/images/flags/';
 export const PROFILE_PICTURE_URL = '/images/profiles/';
 
 export const YOUTUBE_URLS = ['cudssvDuOpc'];
+
+export const GENDERS = {
+  FEMALE: 'Female',
+  MALE: 'Male',
+  UNKOWN: 'Unknown',
+};
+
+export const GENRES = {
+  CPOP: 'C-Pop',
+  JPOP: 'J-Pop',
+  KPOP: 'K-Pop',
+  OTHER: 'Other',
+  POP: 'Pop',
+};
+
+export const NATIONALITIES = {
+  AMERICAN: 'American',
+  BRAZILIAN: 'Brazilian',
+  BRITISH: 'British',
+  CHINESE: 'Chinese',
+  JAPANESE: 'Japanese',
+  KOREAN: 'Korean',
+  OTHER: 'Other',
+  THAI: 'Thai',
+};

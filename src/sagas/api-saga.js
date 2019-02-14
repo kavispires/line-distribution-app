@@ -63,9 +63,21 @@ function* requestArtists(action) {
   try {
     const response = yield API.get('/artists');
     const artistList = utils.parseResponse(response);
-
     const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
-    yield put({ type: types.SET_ARTIST_LIST, payload: sortedArtistList });
+    yield put({ type: types.SET_ARTISTS, payload: sortedArtistList });
+
+    const artistsTypeahead = [];
+    const artistsTypeaheadDict = {};
+
+    sortedArtistList.forEach(artist => {
+      artistsTypeahead.push(artist.name);
+      artistsTypeaheadDict[artist.name] = artist.id;
+    });
+    yield put({ type: types.SET_ARTISTS_TYPEAHEAD, payload: artistsTypeahead });
+    yield put({
+      type: types.SET_ARTISTS_TYPEAHEAD_DICT,
+      payload: artistsTypeaheadDict,
+    });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -74,8 +86,6 @@ function* requestArtists(action) {
     });
   }
 
-  // TO-DO: Load latest artists, and favorite units
-
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
@@ -83,7 +93,7 @@ function* requestArtist(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { artistId } = action;
+  const { artistId, state } = action;
   let { queryParams } = action;
 
   let selectedArtist = {};
@@ -131,16 +141,77 @@ function* requestArtist(action) {
     });
   }
 
-  // Fetch complete unit for default unit
-  const selectedUnit = yield call(requestUnit, {
-    unitId: selectedUnitId,
-  });
+  // Just send artist if dealing with Manage Artist
+  if (state === 'edit') {
+    selectedArtist.state = 'edit';
+    yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
+  } else {
+    // Fetch complete unit for default unit
+    const selectedUnit = yield call(requestUnit, {
+      unitId: selectedUnitId,
+    });
 
-  selectedArtist.units[unitIndex] = selectedUnit;
+    selectedArtist.units[unitIndex] = selectedUnit;
 
-  yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
-  yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
-  yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
+    yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
+    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
+    yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
+  }
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* requestColors(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    const response = yield API.get('/colors');
+    const colorsList = utils.parseResponseToObject(response);
+    yield put({ type: types.SET_COLORS, payload: colorsList });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: ['Unable to load colors database', error.toString()],
+      actionType: action.type,
+    });
+  }
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* requestMembers(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    const response = yield API.get('/members');
+    const membersList = utils.parseResponse(response);
+    const sortedMembersList = _.sortBy(membersList, [
+      m => m.name.toLowerCase(),
+    ]);
+    yield put({ type: types.SET_MEMBERS, payload: sortedMembersList });
+
+    const membersTypeahead = [];
+    const membersTypeaheadDict = {};
+
+    sortedMembersList.forEach(member => {
+      const key = `${member.name} (${member.referenceArtist})`;
+      membersTypeahead.push(key);
+      membersTypeaheadDict[key] = member.id;
+    });
+    yield put({ type: types.SET_MEMBERS_TYPEAHEAD, payload: membersTypeahead });
+    yield put({
+      type: types.SET_MEMBERS_TYPEAHEAD_DICT,
+      payload: membersTypeaheadDict,
+    });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: ['Unable to load members database', error.toString()],
+      actionType: action.type,
+    });
+  }
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
@@ -326,6 +397,8 @@ function* apiSaga() {
   yield takeLatest('INITIALIZER', initializer);
   yield takeLatest('REQUEST_ARTISTS', requestArtists);
   yield takeLatest('REQUEST_ARTIST', requestArtist);
+  yield takeLatest('REQUEST_COLORS', requestColors);
+  yield takeLatest('REQUEST_MEMBERS', requestMembers);
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);

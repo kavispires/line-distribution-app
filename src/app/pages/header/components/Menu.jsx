@@ -68,11 +68,10 @@ const Menu = ({ auth, history, location, login, logout }) => {
               Admin Tools
             </button>
             <div className="header-admin__dropdown">
-              <Link to="/admin/color-sheet">Color Sheet</Link>
-              <Link to="/admin/icon-sheet">Icon Sheet</Link>
               <Link to="/admin/manage">Manage</Link>
               <Link to="/admin/sync">Sync</Link>
               <Link to="/admin/temp">Test/Temp</Link>
+              <Link to="/admin/ui-reference">UI Reference</Link>
             </div>
           </div>
         </nav>

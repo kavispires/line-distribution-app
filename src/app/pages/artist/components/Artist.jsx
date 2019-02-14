@@ -18,8 +18,11 @@ class Artist extends Component {
   }
 
   render() {
-    const { app, artists, auth } = this.props;
-    const { selectedArtist } = artists;
+    const {
+      app,
+      artists: { selectedArtist },
+      auth,
+    } = this.props;
 
     const isArtistPending = app.pending.REQUEST_ARTIST;
 

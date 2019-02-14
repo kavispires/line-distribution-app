@@ -6,3 +6,18 @@
   border-radius: 4px;
   background: $color-negative;
 }
+
+.typeahead {
+  display: inline-block;
+  max-width: 300px;
+  position: relative;
+}
+
+.typeahead-input {
+  border: 1px solid $color-gray-3;
+  padding: $unit-p4 $unit;
+  border-radius: $unit-p4;
+  width: 100%;
+  max-width: 150px;
+  max-height: $unit-x2;
+}
