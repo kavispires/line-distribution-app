@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import components
 
 // Import common components
-import { RequirementWrapper, Typeahead, Icon } from '../../../common';
+import { RequirementWrapper, Typeahead } from '../../../common';
 // Import images
 import managePlus from '../../../../images/manage-plus.svg';
 import EditArtist from './EditArtist';

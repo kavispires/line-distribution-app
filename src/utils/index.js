@@ -245,7 +245,7 @@ const humanize = (string, option = 'Sentence') => {
   string = string.toLowerCase();
 
   // Remove _ or -
-  string = string.replace(/([\-|\_])/g, ' ');
+  string = string.replace(/([\-|\_])/g, ' '); // eslint-disable-line
 
   function captalizeFirstLetter(word) {
     return word[0].toUpperCase() + word.substring(1);
@@ -272,7 +272,7 @@ const camelCase = string => {
   string = string.toLowerCase();
 
   // Remove _ or -
-  string = string.replace(/([\-|\_])/g, ' ');
+  string = string.replace(/([\-|\_])/g, ' '); // eslint-disable-line
 
   return string
     .split(' ')
