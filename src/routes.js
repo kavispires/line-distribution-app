@@ -22,7 +22,7 @@ import TempContainer from './containers/TempContainer';
 import './stylesheets/index.css';
 
 const routes = (
-  <Router>
+  <Router className="bola">
     <div className="app">
       <Header />
       <Route path="/artists/:artistId" component={Artist} />
