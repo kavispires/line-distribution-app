@@ -14,12 +14,16 @@ const switchUIReferenceTab = event => async dispatch => {
   return dispatch(actions.setUIReferenceTab(id));
 };
 
-const handleEditArtist = artistId => dispatch => {
-  // Fetch artist
+const handleEditArtist = artistId => (dispatch, getState) => {
+  const panels = { ...getState().admin.panels };
+
+  panels.artist = 'edit';
+
   if (artistId) {
-    dispatch({ type: 'REQUEST_ARTIST', artistId, state: 'edit' });
+    dispatch({ type: 'REQUEST_ARTIST', artistId, panels, state: 'edit' });
   } else {
-    dispatch(actions.setEditingArtist({ state: 'edit', new: true }));
+    dispatch(actions.setEditingArtist({ new: true }));
+    dispatch(actions.setPanels(panels));
   }
 };
 
@@ -27,13 +31,36 @@ const handleEditUnit = value => (dispatch, getState) => {
   console.log(value);
 };
 
-const updateEditArtistForm = formObj => dispatch => {
+const updateManageForm = formObj => dispatch => {
+  console.log(formObj);
   if (formObj.dirty) {
-    console.log('DIRTY');
-    console.log(formObj);
+    // console.log('DIRTY');
+    // console.log(formObj);
   } else {
-    console.log('CLEAN');
+    // console.log('CLEAN');
   }
+};
+
+const unlockUnit = formState => (dispatch, getState) => {
+  const panels = { ...getState().admin.panels };
+  panels.unit = 'open';
+
+  const editingArtistState = getState().admin.editingArtist;
+  const editingArtist = {
+    genre: formState.values.genre,
+    name: formState.values.name,
+    otherNames: formState.values.otherNames || '',
+    private: formState.values.private || false,
+    new: editingArtistState.new || false,
+    state: 'edit',
+  };
+
+  dispatch(actions.setEditingArtist(editingArtist));
+  dispatch(actions.setPanels(panels));
+};
+
+const unlockMembers = e => dispatch => {
+  console.log(e);
 };
 
 export default {
@@ -43,5 +70,7 @@ export default {
   loadColors,
   loadMembers,
   switchUIReferenceTab,
-  updateEditArtistForm,
+  updateManageForm,
+  unlockUnit,
+  unlockMembers,
 };

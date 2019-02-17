@@ -5,10 +5,19 @@ const initialState = {
   artistsTypeahead: [],
   colors: {},
   editingArtist: {},
-  editingMembers: [],
-  editingUnit: {},
+  editingMembers: {
+    state: 'locked',
+  },
+  editingUnit: {
+    state: 'locked',
+  },
   members: [],
   membersTypeahead: [],
+  panels: {
+    artist: 'open',
+    unit: 'locked',
+    members: 'locked',
+  },
   uiReferenceTab: null,
 };
 
@@ -54,6 +63,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_MEMBERS_TYPEAHEAD_DICT:
       newState.membersTypeaheadDict = action.payload;
+      break;
+
+    case types.SET_PANELS:
+      newState.panels = action.payload;
       break;
 
     case types.SET_UI_REFERENCE_TAB:

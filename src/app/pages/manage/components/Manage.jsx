@@ -1,22 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Form } from 'informed';
 
 // Import components
-
+import ManageArtist from './ManageArtist';
+import ManageUnit from './ManageUnit';
+import ManageMembers from './ManageMembers';
 // Import common components
-import { RequirementWrapper, Typeahead } from '../../../common';
-// Import images
-import managePlus from '../../../../images/manage-plus.svg';
-import EditArtist from './EditArtist';
-import OpenArtist from './OpenArtist';
+import { RequirementWrapper } from '../../../common';
 
-class UIReference extends Component {
+class Manage extends Component {
   constructor() {
     super();
     this.state = {
       artistId: null,
       validArtist: false,
     };
+
+    this.validateArtist = this.validateArtist.bind(this);
+    this.validateMembers = this.validateMembers.bind(this);
   }
 
   componentDidMount() {
@@ -35,44 +37,48 @@ class UIReference extends Component {
     }
   }
 
+  validateMembers(event) {
+    const { value } = event.target;
+    const dict = this.props.admin.membersTypeaheadDict;
+    if (dict[value]) {
+      this.setState({ memberId: dict[value], validMember: true });
+    } else {
+      this.setState({ memberId: null, validMember: false });
+    }
+  }
+
   render() {
     const {
-      admin: {
-        artistsTypeahead,
-        artistsTypeaheadDict,
-        editingArtist,
-        membersTypeahead,
-      },
-      app,
-      handleEditArtist,
-      updateEditArtistForm,
+      admin: { editingArtist },
+      updateManageForm,
+      unlockUnit,
     } = this.props;
 
-    let artistComponent = null;
-    switch (editingArtist.state) {
-      case 'edit':
-        artistComponent = (
-          <EditArtist
-            artist={editingArtist}
-            back={() => console.log('BACK')}
-            next={() => console.log('NEXT')}
-            updateEditArtistForm={updateEditArtistForm}
-          />
-        );
-        break;
-      default:
-        artistComponent = (
-          <OpenArtist
-            handleEditArtist={handleEditArtist}
-            artistsTypeahead={artistsTypeahead}
-            artistsTypeaheadDict={artistsTypeaheadDict}
-          />
-        );
+    // Build default values for form
+    const defaultValues = {
+      artist: {
+        name: undefined,
+        otherNames: undefined,
+        genre: undefined,
+        private: undefined,
+      },
+      unit: undefined,
+      members: undefined,
+    };
+
+    if (editingArtist && editingArtist.id) {
+      defaultValues.artist = {
+        name: editingArtist.name,
+        otherNames: editingArtist.otherNames,
+        genre: editingArtist.genre,
+        private: editingArtist.private,
+      };
     }
 
-    let unitComponent = null;
-
-    let membersComponent = null;
+    // ?
+    const resetArtist = () => {
+      console.log('RESET_ARTIST');
+    };
 
     return (
       <RequirementWrapper requirements={['manage']}>
@@ -82,50 +88,36 @@ class UIReference extends Component {
             A complete group is required to save with ONE Artist, ONE Unit, and
             at least TWO members (no solo artists)
           </p>
-          <div className="manage-group">
-            {artistComponent}
-            <section className="manage-section__unit">
-              <h3 className="manage-section__button-title">Unit</h3>
-              <button className="manage-section__button-add">
-                <img
-                  className="manage-section__button-add-image"
-                  src={managePlus}
-                  alt="Add Artist"
+          <Form
+            onChange={formState => updateManageForm(formState)}
+            className="manage-section"
+            autoComplete="off"
+          >
+            {({ formState }) => (
+              <Fragment>
+                <ManageArtist
+                  formState={formState}
+                  props={this.props}
+                  validateTypeahead={this.validateArtist}
+                  isValid={this.state.validArtist}
+                  artistId={this.state.artistId}
+                  defaultValues={defaultValues.artist}
+                  next={unlockUnit}
+                  back={resetArtist}
                 />
-              </button>
-              <div className="manage-section__button-typeahead">Typeahead</div>
-            </section>
-            <section className="manage-section__members">
-              <h3 className="manage-section__button-title">Members</h3>
-              <button className="manage-section__button-add">
-                <img
-                  className="manage-section__button-add-image"
-                  src={managePlus}
-                  alt="Add Artist"
-                />
-              </button>
-              <Typeahead
-                action={e => console.log(e.target.value)}
-                name="members"
-                placeholder="Search existing member..."
-                suggestions={membersTypeahead}
-              />
-            </section>
-          </div>
+                <ManageUnit formState={formState} props={this.props} />
+                <ManageMembers formState={formState} props={this.props} />
+              </Fragment>
+            )}
+          </Form>
         </main>
       </RequirementWrapper>
     );
   }
 }
 
-UIReference.propTypes = {
-  admin: PropTypes.object.isRequired,
-  app: PropTypes.object.isRequired,
-  loadArtists: PropTypes.func.isRequired,
-  loadColors: PropTypes.func.isRequired,
-  loadMembers: PropTypes.func.isRequired,
-};
+Manage.propTypes = {};
 
-UIReference.defaultProps = {};
+Manage.defaultProps = {};
 
-export default UIReference;
+export default Manage;

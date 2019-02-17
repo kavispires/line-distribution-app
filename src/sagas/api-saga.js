@@ -93,7 +93,7 @@ function* requestArtist(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { artistId, state } = action;
+  const { artistId, panels, state } = action;
   let { queryParams } = action;
 
   let selectedArtist = {};
@@ -145,6 +145,7 @@ function* requestArtist(action) {
   if (state === 'edit') {
     selectedArtist.state = 'edit';
     yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
+    yield put({ type: types.SET_PANELS, payload: panels });
   } else {
     // Fetch complete unit for default unit
     const selectedUnit = yield call(requestUnit, {

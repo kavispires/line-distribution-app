@@ -1,3 +1,7 @@
+$artist-panel-width: 20%;
+$unit-panel-width: 20%;
+$members-panel-width: 60%;
+
 @mixin section {
   background: $color-gray-2;
   display: flex;
@@ -17,41 +21,52 @@
   padding: $unit-x2;
 }
 
-.manage-group {
+.manage-section {
   width: 100%;
   display: flex;
   min-height: 500px;
-}
 
-.manage-section {
   &__artist {
     @include section;
-    width: 25%;
+    width: $artist-panel-width;
     border-right: 1px solid $color-gray-1;
     border-radius: $unit-p2 0 0 $unit-p2;
   }
 
   &__artist-edit {
     @include section-edit;
-    width: 25%;
+    width: $artist-panel-width;
     border-right: 1px solid $color-gray-1;
     border-radius: $unit-p2 0 0 $unit-p2;
+    align-items: flex-start;
   }
 
   &__unit {
     @include section;
-    width: 25%;
+    width: $unit-panel-width;
     border-right: 1px solid $color-gray-1;
   }
 
   &__members {
     @include section;
-    width: 50%;
+    width: $members-panel-width;
     border-radius: 0 $unit-p2 $unit-p2 0;
   }
 
   &__button-title {
     // background: red;
+  }
+
+  &__button-locked {
+    width: 100px;
+    height: 100px;
+    background: none;
+    border: 0;
+    border-radius: 50%;
+  }
+
+  &__button-lock-image {
+    border-radius: $unit;
   }
 
   &__button-add {
@@ -65,7 +80,6 @@
     &:hover {
       transform: scale(1.05);
     }
-    // background: green;
   }
 
   &__button-add-image {
