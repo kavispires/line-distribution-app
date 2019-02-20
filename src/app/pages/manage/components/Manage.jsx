@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Form } from 'informed';
 
 // Import components
+import ColorReferenceBar from './ColorReferenceBar';
 import ManageArtist from './ManageArtist';
 import ManageUnit from './ManageUnit';
 import ManageMembers from './ManageMembers';
 // Import common components
-import { RequirementWrapper } from '../../../common';
+import { RequirementWrapper, Loading } from '../../../common';
 import utils from '../../../../utils';
 
 class Manage extends Component {
@@ -63,7 +64,8 @@ class Manage extends Component {
 
   render() {
     const {
-      admin: { editingArtist, editingMembers, editingUnit },
+      app: { pending },
+      admin: { colors, editingArtist, editingMembers, editingUnit },
       updateManageForm,
       unlockUnit,
       unlockMembers,
@@ -85,6 +87,8 @@ class Manage extends Component {
       },
       members: [],
     };
+
+    console.log(colors);
 
     if (editingArtist && editingArtist.id) {
       defaultValues.artist = {
@@ -122,6 +126,14 @@ class Manage extends Component {
       });
     }
 
+    if (
+      pending.REQUEST_ARTISTS ||
+      pending.REQUEST_COLORS ||
+      pending.REQUEST_MEMBERS
+    ) {
+      return <Loading message="Preparing manage..." />;
+    }
+
     return (
       <RequirementWrapper requirements={['manage']}>
         <main className="container container--manage">
@@ -130,7 +142,7 @@ class Manage extends Component {
             A complete group is required to save with ONE Artist, ONE Unit, and
             at least TWO members (no solo artists)
           </p>
-
+          <ColorReferenceBar colors={colors} />
           <Form
             onChange={formState => updateManageForm(formState)}
             autoComplete="off"

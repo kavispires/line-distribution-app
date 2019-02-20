@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import common components
-import { Icon } from '..';
+import { Icon, Loading } from '..';
 // Import images
 import logo from '../../../images/logo-neg.svg';
-import loading from '../../../images/loading.svg';
 import ErrorPage from '../../pages/error';
 
 class RequirementWrapper extends Component {
@@ -132,19 +131,6 @@ class RequirementWrapper extends Component {
   }
 }
 
-const Loading = ({ message = '' }) => (
-  <main className="container container--flex container--center container--requirement-wrapper">
-    <div className="requirement-wrapper__container">
-      <img
-        className="requirement-wrapper__loading-icon"
-        src={loading}
-        alt="Loading Icon"
-      />
-      <p>{message}</p>
-    </div>
-  </main>
-);
-
 RequirementWrapper.propTypes = {
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
@@ -156,14 +142,6 @@ RequirementWrapper.propTypes = {
 
 RequirementWrapper.defaultProps = {
   requirements: [],
-};
-
-Loading.propTypes = {
-  message: PropTypes.string,
-};
-
-Loading.defaultProps = {
-  message: '',
 };
 
 export default RequirementWrapper;
