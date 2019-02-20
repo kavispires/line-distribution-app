@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import actions from './actions';
 
 const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
@@ -27,12 +29,108 @@ const handleEditArtist = artistId => (dispatch, getState) => {
   }
 };
 
-const handleEditUnit = value => (dispatch, getState) => {
-  console.log(value);
+const handleEditUnit = unitId => (dispatch, getState) => {
+  const panels = { ...getState().admin.panels };
+
+  panels.unit = 'edit';
+
+  if (unitId) {
+    const units = [...getState().admin.editingArtist.units];
+    const unitIndex = _.findIndex(units, u => u.id === unitId);
+    const currentUnit = units[unitIndex];
+
+    dispatch(actions.setEditingUnit(currentUnit));
+  } else {
+    dispatch(actions.setEditingUnit({ new: true }));
+  }
+
+  dispatch(actions.setPanels(panels));
+};
+
+const handleEditMember = memberId => (dispatch, getState) => {
+  const editingMembers = [...getState().admin.editingMembers];
+  if (memberId) {
+    const members = getState().admin.members;
+    const memberIndex = _.findIndex(members, m => m.id === memberId);
+    const addedMember = { ...members[memberIndex] };
+    editingMembers.push(addedMember);
+    dispatch(actions.setEditingMembers(editingMembers));
+  } else {
+    editingMembers.push({
+      new: true,
+      positions: [],
+    });
+    dispatch(actions.setEditingMembers(editingMembers));
+  }
+};
+
+const updateMemberColor = (value, index) => (dispatch, getState) => {
+  const editingMembers = [...getState().admin.editingMembers];
+  editingMembers[index].colorId = value;
+  dispatch(actions.setEditingMembers(editingMembers));
+};
+
+const updateMemberPositions = (value, position, index) => (
+  dispatch,
+  getState
+) => {
+  const editingMembers = [...getState().admin.editingMembers];
+
+  const positionsObj = {};
+  editingMembers[index].positions.forEach(pos => (positionsObj[pos] = true));
+  if (value === false) {
+    delete positionsObj[position];
+  } else {
+    positionsObj[position] = true;
+    switch (position) {
+      case 'MAIN_VOCALIST':
+        delete positionsObj.LEAD_VOCALIST;
+        delete positionsObj.VOCALIST;
+        break;
+      case 'LEAD_VOCALIST':
+        delete positionsObj.MAIN_VOCALIST;
+        delete positionsObj.VOCALIST;
+        break;
+      case 'VOCALIST':
+        delete positionsObj.MAIN_VOCALIST;
+        delete positionsObj.LEAD_VOCALIST;
+        break;
+      case 'MAIN_DANCER':
+        delete positionsObj.LEAD_DANCER;
+        delete positionsObj.DANCER;
+        break;
+      case 'LEAD_DANCER':
+        delete positionsObj.MAIN_DANCER;
+        delete positionsObj.DANCER;
+        break;
+      case 'DANCER':
+        delete positionsObj.MAIN_DANCER;
+        delete positionsObj.LEAD_DANCER;
+        break;
+      case 'MAIN_RAPPER':
+        delete positionsObj.LEAD_RAPPER;
+        delete positionsObj.RAPPER;
+        break;
+      case 'LEAD_RAPPER':
+        delete positionsObj.MAIN_RAPPER;
+        delete positionsObj.RAPPER;
+        break;
+      case 'RAPPER':
+        delete positionsObj.MAIN_RAPPER;
+        delete positionsObj.LEAD_RAPPER;
+        break;
+      default:
+      // do nothing
+    }
+  }
+
+  editingMembers[index].positions = Object.keys(positionsObj);
+
+  dispatch(actions.setEditingMembers(editingMembers));
 };
 
 const updateManageForm = formObj => dispatch => {
-  console.log(formObj);
+  // console.log(formObj);
   if (formObj.dirty) {
     // console.log('DIRTY');
     // console.log(formObj);
@@ -42,35 +140,71 @@ const updateManageForm = formObj => dispatch => {
 };
 
 const unlockUnit = formState => (dispatch, getState) => {
+  const artistState = formState.values.artist;
+
+  // Only unlock if required fields are filled.
+  if (!artistState || !artistState.name || !artistState.genre) return;
+
   const panels = { ...getState().admin.panels };
   panels.unit = 'open';
 
   const editingArtistState = getState().admin.editingArtist;
   const editingArtist = {
-    genre: formState.values.genre,
-    name: formState.values.name,
-    otherNames: formState.values.otherNames || '',
-    private: formState.values.private || false,
+    genre: artistState.genre,
+    name: artistState.name,
+    otherNames: artistState.otherNames || '',
+    private: artistState.private || false,
     new: editingArtistState.new || false,
-    state: 'edit',
+    memberIds: editingArtistState.memberIds || false,
+    memberList: editingArtistState.memberList || false,
+    units: editingArtistState.units || false,
   };
 
   dispatch(actions.setEditingArtist(editingArtist));
   dispatch(actions.setPanels(panels));
 };
 
-const unlockMembers = e => dispatch => {
-  console.log(e);
+const unlockMembers = formState => (dispatch, getState) => {
+  const unitState = formState.values.unit;
+
+  // Only unlock if required fields are filled.
+  if (!unitState || !unitState.name || !unitState.debutYear) return;
+
+  const panels = { ...getState().admin.panels };
+  panels.members = 'open';
+
+  const editingUnitState = getState().admin.editingUnit;
+  const editingUnit = {
+    debutYear: unitState.debutYear,
+    name: unitState.name,
+    official: unitState.official,
+    private: unitState.private || false,
+    new: editingUnitState.new || false,
+    averages: editingUnitState.averages || false,
+    distributions: editingUnitState.distributions || false,
+    distributions_legacy: editingUnitState.distributions_legacy || false,
+    members: editingUnitState.members || false,
+  };
+
+  dispatch(actions.setEditingUnit(editingUnit));
+  dispatch({
+    type: 'REQUEST_UNIT_MEMBERS',
+    unitId: editingUnitState.id,
+    panels,
+  });
 };
 
 export default {
   handleEditArtist,
+  handleEditMember,
   handleEditUnit,
   loadArtists,
   loadColors,
   loadMembers,
   switchUIReferenceTab,
   updateManageForm,
+  updateMemberColor,
+  updateMemberPositions,
   unlockUnit,
   unlockMembers,
 };

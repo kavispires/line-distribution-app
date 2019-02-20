@@ -7,7 +7,7 @@ const setEditingArtist = payload => dispatch =>
 const setEditingMembers = payload => dispatch =>
   dispatch({ type: types.SET_EDITING_MEMBERS, payload });
 const setEditingUnit = payload => dispatch =>
-  dispatch({ type: types.SET_PANELS, payload });
+  dispatch({ type: types.SET_EDITING_UNIT, payload });
 const setPanels = payload => dispatch =>
   dispatch({ type: types.SET_PANELS, payload });
 const setUIReferenceTab = payload => dispatch =>

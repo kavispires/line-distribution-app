@@ -3,14 +3,11 @@ import types from './types';
 const initialState = {
   artists: [],
   artistsTypeahead: [],
+  artistsTypeaheadDict: {},
   colors: {},
   editingArtist: {},
-  editingMembers: {
-    state: 'locked',
-  },
-  editingUnit: {
-    state: 'locked',
-  },
+  editingMembers: [],
+  editingUnit: {},
   members: [],
   membersTypeahead: [],
   panels: {
@@ -19,6 +16,8 @@ const initialState = {
     members: 'locked',
   },
   uiReferenceTab: null,
+  unitsTypeahead: [],
+  unitsTypeaheadDict: {},
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -71,6 +70,14 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_UI_REFERENCE_TAB:
       newState.uiReferenceTab = action.payload;
+      break;
+
+    case types.SET_UNITS_TYPEAHEAD:
+      newState.unitsTypeahead = action.payload;
+      break;
+
+    case types.SET_UNITS_TYPEAHEAD_DICT:
+      newState.unitsTypeaheadDict = action.payload;
       break;
 
     default:

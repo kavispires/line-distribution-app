@@ -8,6 +8,7 @@ import ManageUnit from './ManageUnit';
 import ManageMembers from './ManageMembers';
 // Import common components
 import { RequirementWrapper } from '../../../common';
+import utils from '../../../../utils';
 
 class Manage extends Component {
   constructor() {
@@ -15,9 +16,12 @@ class Manage extends Component {
     this.state = {
       artistId: null,
       validArtist: false,
+      unittId: null,
+      validUnit: false,
     };
 
     this.validateArtist = this.validateArtist.bind(this);
+    this.validateUnit = this.validateUnit.bind(this);
     this.validateMembers = this.validateMembers.bind(this);
   }
 
@@ -37,6 +41,16 @@ class Manage extends Component {
     }
   }
 
+  validateUnit(event) {
+    const { value } = event.target;
+    const dict = this.props.admin.unitsTypeaheadDict;
+    if (dict[value]) {
+      this.setState({ unitId: dict[value], validUnit: true });
+    } else {
+      this.setState({ unitId: null, validUnit: false });
+    }
+  }
+
   validateMembers(event) {
     const { value } = event.target;
     const dict = this.props.admin.membersTypeaheadDict;
@@ -49,9 +63,10 @@ class Manage extends Component {
 
   render() {
     const {
-      admin: { editingArtist },
+      admin: { editingArtist, editingMembers, editingUnit },
       updateManageForm,
       unlockUnit,
+      unlockMembers,
     } = this.props;
 
     // Build default values for form
@@ -62,8 +77,13 @@ class Manage extends Component {
         genre: undefined,
         private: undefined,
       },
-      unit: undefined,
-      members: undefined,
+      unit: {
+        debutYear: undefined,
+        name: undefined,
+        official: undefined,
+        private: undefined,
+      },
+      members: [],
     };
 
     if (editingArtist && editingArtist.id) {
@@ -75,38 +95,91 @@ class Manage extends Component {
       };
     }
 
-    // ?
-    const resetArtist = () => {
-      console.log('RESET_ARTIST');
-    };
+    if (editingUnit && editingUnit.id) {
+      defaultValues.unit = {
+        debutYear: editingUnit.debutYear,
+        name: editingUnit.name,
+        official: editingUnit.official,
+        private: editingUnit.private,
+      };
+    }
+
+    if (editingMembers.length) {
+      editingMembers.forEach(member => {
+        defaultValues.members.push({
+          colorId: member.colorId || undefined,
+          gender: member.gender || undefined,
+          initials: member.initials || undefined,
+          name: member.name || undefined,
+          nationality: member.nationality || undefined,
+          private: member.private || undefined,
+          referenceArtist: member.referenceArtist || undefined,
+          birthdate: member.birthdate
+            ? utils.spiralBirthdate(member.birthdate)
+            : undefined,
+          ...utils.makePositionsEditable(member.positions || []),
+        });
+      });
+    }
 
     return (
       <RequirementWrapper requirements={['manage']}>
-        <main className="container container--artists">
+        <main className="container container--manage">
           <h1>Manage</h1>
           <p>
             A complete group is required to save with ONE Artist, ONE Unit, and
             at least TWO members (no solo artists)
           </p>
+
           <Form
             onChange={formState => updateManageForm(formState)}
-            className="manage-section"
             autoComplete="off"
+            className="manage-section"
           >
             {({ formState }) => (
               <Fragment>
-                <ManageArtist
-                  formState={formState}
-                  props={this.props}
-                  validateTypeahead={this.validateArtist}
-                  isValid={this.state.validArtist}
-                  artistId={this.state.artistId}
-                  defaultValues={defaultValues.artist}
-                  next={unlockUnit}
-                  back={resetArtist}
-                />
-                <ManageUnit formState={formState} props={this.props} />
-                <ManageMembers formState={formState} props={this.props} />
+                <div className="manage-form">
+                  <ManageArtist
+                    formState={formState}
+                    props={this.props}
+                    validateTypeahead={this.validateArtist}
+                    isValid={this.state.validArtist}
+                    artistId={this.state.artistId}
+                    defaultValues={defaultValues.artist}
+                    next={unlockUnit}
+                  />
+                  <ManageUnit
+                    formState={formState}
+                    props={this.props}
+                    validateTypeahead={this.validateUnit}
+                    isValid={this.state.validUnit}
+                    unitId={this.state.unitId}
+                    defaultValues={defaultValues.unit}
+                    next={unlockMembers}
+                  />
+                  <ManageMembers
+                    formState={formState}
+                    props={this.props}
+                    defaultValues={defaultValues.members}
+                    validateTypeahead={this.validateMembers}
+                    isValid={this.state.validMember}
+                    memberId={this.state.memberId}
+                  />
+                </div>
+                <div className="manage-form-nav">
+                  <button
+                    className="btn"
+                    onClick={() => console.log(formState)}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => console.log(formState)}
+                  >
+                    Save
+                  </button>
+                </div>
               </Fragment>
             )}
           </Form>

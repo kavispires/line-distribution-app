@@ -1,3 +1,36 @@
+export const COLORS = {
+  col000001: 'red',
+  col000002: 'blood',
+  col000003: 'coral',
+  col000004: 'peach',
+  col000005: 'brown',
+  col000006: 'orange',
+  col000007: 'gold',
+  col000008: 'yellow',
+  col000009: 'olive',
+  col000010: 'lemon',
+  col000011: 'lime',
+  col000012: 'green',
+  col000013: 'basil',
+  col000014: 'forest',
+  col000015: 'jade',
+  col000016: 'teal',
+  col000017: 'cyan',
+  col000018: 'turquoise',
+  col000019: 'navy',
+  col000020: 'blue',
+  col000021: 'sky',
+  col000022: 'purple',
+  col000023: 'violet',
+  col000024: 'rose',
+  col000025: 'mauve',
+  col000026: 'magenta',
+  col000027: 'jam',
+  col000028: 'pink',
+  col000029: 'burgundy',
+  col000030: 'salmon',
+};
+
 export const DEFAULT_COLORS = {
   default: '#000000',
   black: '#000000',
@@ -24,12 +57,6 @@ export const FLAGS_LIST = {
   thai: 'thailand',
 };
 
-export const NATIONALITY_FLAG_URL = '/images/flags/';
-
-export const PROFILE_PICTURE_URL = '/images/profiles/';
-
-export const YOUTUBE_URLS = ['cudssvDuOpc'];
-
 export const GENDERS = {
   FEMALE: 'Female',
   MALE: 'Male',
@@ -44,6 +71,36 @@ export const GENRES = {
   POP: 'Pop',
 };
 
+export const POSITIONS_LIST = [
+  'MAIN_VOCALIST',
+  'MAIN_RAPPER',
+  'MAIN_DANCER',
+  'LEAD_VOCALIST',
+  'LEAD_RAPPER',
+  'LEAD_DANCER',
+  'VOCALIST',
+  'RAPPER',
+  'DANCER',
+  'LEADER',
+  'CENTER',
+  'VISUAL',
+];
+
+// export const MANAGE_POSITIONS = {
+//   MAIN_VOCALIST: 'Main Vocalist',
+//   MAIN_RAPPER: 'Main Rapper',
+//   MAIN_DANCER: 'Main Dancer',
+//   LEAD_VOCALIST: 'Lead Vocalist',
+//   LEAD_RAPPER: 'Lead Rapper',
+//   LEAD_DANCER: 'Lead Dancer',
+//   VOCALIST: 'Vocalist',
+//   RAPPER: 'Rapper',
+//   DANCER: 'Dancer',
+//   LEADER: 'Leader',
+//   CENTER: 'Center',
+//   VISUAL: 'VISUAL'
+// };
+
 export const NATIONALITIES = {
   AMERICAN: 'American',
   BRAZILIAN: 'Brazilian',
@@ -54,3 +111,9 @@ export const NATIONALITIES = {
   OTHER: 'Other',
   THAI: 'Thai',
 };
+
+export const NATIONALITY_FLAG_URL = '/images/flags/';
+
+export const PROFILE_PICTURE_URL = '/images/profiles/';
+
+export const YOUTUBE_URLS = ['cudssvDuOpc'];

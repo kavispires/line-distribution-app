@@ -18,7 +18,6 @@ const ManageArtist = ({
   artistId,
   defaultValues,
   next,
-  back,
 }) => {
   const {
     admin: { artistsTypeahead, panels },
@@ -30,11 +29,11 @@ const ManageArtist = ({
   // Locked Panel
   if (panels.artist === 'locked') {
     return (
-      <section className="manage-section__artist">
-        <h3 className="manage-section__button-title">Artist</h3>
-        <div className="manage-section__button-locked">
+      <section className="manage-form__artist">
+        <h3 className="manage-form__button-title">Artist</h3>
+        <div className="manage-form__button-locked">
           <img
-            className="manage-section__button-lock-image"
+            className="manage-form__button-lock-image"
             src={manageLock}
             alt="Lock Artist"
           />
@@ -46,14 +45,14 @@ const ManageArtist = ({
   // Open Panel
   if (panels.artist === 'open') {
     return (
-      <section className="manage-section__artist">
-        <h3 className="manage-section__button-title">Artist</h3>
+      <section className="manage-form__artist">
+        <h3 className="manage-form__button-title">Artist</h3>
         <button
-          className="manage-section__button-add"
+          className="manage-form__button-add"
           onClick={() => handleEditArtist(artistId)}
         >
           <img
-            className="manage-section__button-add-image"
+            className="manage-form__button-add-image"
             src={managePlus}
             alt="Add Artist"
           />
@@ -65,7 +64,7 @@ const ManageArtist = ({
           suggestions={artistsTypeahead}
         />
         {isValid ? (
-          <p className="manage-section__valid">
+          <p className="manage-form__valid">
             <Icon type="check" color="green" inline />
             Selected Artist is valid. Click on the plus button to add it.
           </p>
@@ -76,57 +75,55 @@ const ManageArtist = ({
 
   // Edit Panel
   return (
-    <section className="manage-section__artist manage-section__artist-edit">
-      <Scope scope="artist">
-        <h3>Edit Artist</h3>
-        <label className="manage-form__label">
-          Name*<Text
-            className="manage-form__input"
-            field="name"
-            validate={isRequired}
-            required
-            initialValue={defaultValues.name}
-          />
-        </label>
-        <label className="manage-form__label">
-          Other Names<Text
-            className="manage-form__input"
-            field="otherNames"
-            initialValue={defaultValues.otherNames}
-          />
-        </label>
-        <label className="manage-form__label">
-          Genre*
-          <Select
-            className="manage-form__input"
-            field="genre"
-            validate={isRequired}
-            initialValue={defaultValues.genre}
-          >
-            <Option value="" disabled>
-              Select One...
-            </Option>
-            {Object.entries(GENRES).map(genre => (
-              <Option key={genre[0]} value={genre[0]}>
-                {genre[1]}
+    <section className="manage-form__artist manage-form__artist-edit">
+      <div className="manage-form__form-group">
+        <Scope scope="artist">
+          <h3>Artist</h3>
+          <label className="manage-form__label">
+            Name*<Text
+              className="manage-form__input"
+              field="name"
+              validate={isRequired}
+              required
+              initialValue={defaultValues.name}
+            />
+          </label>
+          <label className="manage-form__label">
+            Other Names<Text
+              className="manage-form__input"
+              field="otherNames"
+              initialValue={defaultValues.otherNames}
+            />
+          </label>
+          <label className="manage-form__label">
+            Genre*
+            <Select
+              className="manage-form__input"
+              field="genre"
+              validate={isRequired}
+              initialValue={defaultValues.genre}
+            >
+              <Option value="" disabled>
+                Select One...
               </Option>
-            ))}
-          </Select>
-        </label>
-
-        <label className="manage-form__label">
-          Private{' '}
-          <Checkbox field="private" initialValue={defaultValues.private} />
-        </label>
-        <div className="manage-form__navigation">
-          <button className="btn" type="reset" onClick={back}>
-            Back
-          </button>
-          <button className="btn" onClick={() => next(formState)}>
-            Next
-          </button>
-        </div>
-      </Scope>
+              {Object.entries(GENRES).map(genre => (
+                <Option key={genre[0]} value={genre[0]}>
+                  {genre[1]}
+                </Option>
+              ))}
+            </Select>
+          </label>
+          <label className="manage-form__label">
+            Private{' '}
+            <Checkbox field="private" initialValue={defaultValues.private} />
+          </label>
+        </Scope>
+      </div>
+      <div className="manage-form__navigation">
+        <button className="btn" onClick={() => next(formState)}>
+          Unlock Unit
+        </button>
+      </div>
     </section>
   );
 };

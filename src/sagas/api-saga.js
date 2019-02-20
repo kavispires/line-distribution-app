@@ -144,6 +144,20 @@ function* requestArtist(action) {
   // Just send artist if dealing with Manage Artist
   if (state === 'edit') {
     selectedArtist.state = 'edit';
+
+    const unitsTypeahead = [];
+    const unitsTypeaheadDict = {};
+
+    selectedArtist.units.forEach(unit => {
+      unitsTypeahead.push(unit.name);
+      unitsTypeaheadDict[unit.name] = unit.id;
+    });
+    yield put({ type: types.SET_UNITS_TYPEAHEAD, payload: unitsTypeahead });
+    yield put({
+      type: types.SET_UNITS_TYPEAHEAD_DICT,
+      payload: unitsTypeaheadDict,
+    });
+
     yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
     yield put({ type: types.SET_PANELS, payload: panels });
   } else {
@@ -276,6 +290,34 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   return unit;
 }
 
+function* requestUnitMembers({ type, unitId, panels }) {
+  yield put({ type: 'PENDING', actionType: type });
+  yield delay(DELAY_DURATION);
+
+  let members = [];
+  if (unitId) {
+    try {
+      const response = yield API.get(`/units/${unitId}/members`);
+      members = response.data;
+    } catch (error) {
+      yield put({
+        type: 'ERROR',
+        message: [
+          `Unable to load members from unit ${unitId} from database`,
+          error.toString(),
+        ],
+        actionType: type,
+      });
+    }
+  }
+
+  yield put({ type: types.SET_EDITING_MEMBERS, payload: members });
+  yield put({ type: types.SET_PANELS, payload: panels });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: type });
+  return members;
+}
+
 function* runLogin(action) {
   yield put({ type: 'PENDING', actionType: action.type });
 
@@ -401,6 +443,7 @@ function* apiSaga() {
   yield takeLatest('REQUEST_COLORS', requestColors);
   yield takeLatest('REQUEST_MEMBERS', requestMembers);
   yield takeLatest('REQUEST_UNIT', requestUnit);
+  yield takeLatest('REQUEST_UNIT_MEMBERS', requestUnitMembers);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
