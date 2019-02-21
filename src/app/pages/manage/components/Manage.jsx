@@ -8,7 +8,7 @@ import ManageArtist from './ManageArtist';
 import ManageUnit from './ManageUnit';
 import ManageMembers from './ManageMembers';
 // Import common components
-import { RequirementWrapper, Loading } from '../../../common';
+import { RequirementWrapper, Loading, Icon } from '../../../common';
 import utils from '../../../../utils';
 
 class Manage extends Component {
@@ -19,6 +19,8 @@ class Manage extends Component {
       validArtist: false,
       unittId: null,
       validUnit: false,
+      memberId: null,
+      validMember: false,
     };
 
     this.validateArtist = this.validateArtist.bind(this);
@@ -62,14 +64,38 @@ class Manage extends Component {
     }
   }
 
+  resetAll() {
+    this.setState({
+      artistId: null,
+      validArtist: false,
+      unittId: null,
+      validUnit: false,
+      memberId: null,
+      validMember: false,
+    });
+    this.props.resetManage();
+  }
+
   render() {
     const {
       app: { pending },
-      admin: { colors, editingArtist, editingMembers, editingUnit },
+      admin: {
+        colors,
+        editingArtist,
+        editingMembers,
+        editingUnit,
+        manageResult,
+      },
+      saveManage,
       updateManageForm,
       unlockUnit,
       unlockMembers,
     } = this.props;
+
+    const isSaveable =
+      Object.keys(editingArtist).length &&
+      Object.keys(editingUnit).length &&
+      editingMembers.length;
 
     // Build default values for form
     const defaultValues = {
@@ -87,8 +113,6 @@ class Manage extends Component {
       },
       members: [],
     };
-
-    console.log(colors);
 
     if (editingArtist && editingArtist.id) {
       defaultValues.artist = {
@@ -110,28 +134,54 @@ class Manage extends Component {
 
     if (editingMembers.length) {
       editingMembers.forEach(member => {
-        defaultValues.members.push({
-          colorId: member.colorId || undefined,
-          gender: member.gender || undefined,
-          initials: member.initials || undefined,
-          name: member.name || undefined,
-          nationality: member.nationality || undefined,
-          private: member.private || undefined,
-          referenceArtist: member.referenceArtist || undefined,
-          birthdate: member.birthdate
-            ? utils.spiralBirthdate(member.birthdate)
-            : undefined,
-          ...utils.makePositionsEditable(member.positions || []),
-        });
+        if (member) {
+          defaultValues.members.push({
+            colorId: member.colorId || undefined,
+            gender: member.gender || undefined,
+            initials: member.initials || undefined,
+            name: member.name || undefined,
+            nationality: member.nationality || undefined,
+            private: member.private || undefined,
+            referenceArtist: member.referenceArtist || undefined,
+            birthdate: member.birthdate
+              ? utils.spiralBirthdate(member.birthdate)
+              : undefined,
+            ...utils.makePositionsEditable(member.positions || []),
+          });
+        } else {
+          defaultValues.members.push(null);
+        }
       });
     }
 
+    // If database is still loading
     if (
       pending.REQUEST_ARTISTS ||
       pending.REQUEST_COLORS ||
       pending.REQUEST_MEMBERS
     ) {
       return <Loading message="Preparing manage..." />;
+    }
+
+    // If save is in progress
+    if (pending.UPDATE_COMPLETE_ARTIST) {
+      return <Loading message="Saving..." />;
+    }
+
+    // If save is in progress
+    if (manageResult === 'SUCCESS') {
+      return (
+        <main className="container container--manage">
+          <h1>Manage</h1>
+          <div className="manage-section--manage-success">
+            <Icon type="check" color="green" size={96} />
+            <p>Complete Artists Successfully Created/Updated</p>
+            <button className="btn" onClick={this.resetAll}>
+              Create New Artist
+            </button>
+          </div>
+        </main>
+      );
     }
 
     return (
@@ -179,15 +229,13 @@ class Manage extends Component {
                   />
                 </div>
                 <div className="manage-form-nav">
-                  <button
-                    className="btn"
-                    onClick={() => console.log(formState)}
-                  >
+                  <button className="btn" onClick={() => this.resetAll()}>
                     Reset
                   </button>
                   <button
                     className="btn"
-                    onClick={() => console.log(formState)}
+                    onClick={() => saveManage(formState)}
+                    disabled={!isSaveable}
                   >
                     Save
                   </button>

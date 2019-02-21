@@ -1,5 +1,7 @@
 import _ from 'lodash';
 
+import { POSITIONS_LIST, POSITIONS_LIST_OBJ } from '../../utils/constants';
+
 import actions from './actions';
 
 const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
@@ -158,6 +160,8 @@ const unlockUnit = formState => (dispatch, getState) => {
     memberIds: editingArtistState.memberIds || false,
     memberList: editingArtistState.memberList || false,
     units: editingArtistState.units || false,
+    id: editingArtistState.id,
+    createdBy: editingArtistState.createdBy,
   };
 
   dispatch(actions.setEditingArtist(editingArtist));
@@ -184,6 +188,8 @@ const unlockMembers = formState => (dispatch, getState) => {
     distributions: editingUnitState.distributions || false,
     distributions_legacy: editingUnitState.distributions_legacy || false,
     members: editingUnitState.members || false,
+    id: editingUnitState.id,
+    createdBy: editingUnitState.createdBy,
   };
 
   dispatch(actions.setEditingUnit(editingUnit));
@@ -194,6 +200,132 @@ const unlockMembers = formState => (dispatch, getState) => {
   });
 };
 
+const removeMember = index => (dispatch, getState) => {
+  const editingMembers = [...getState().admin.editingMembers];
+  // editingMembers.splice(index, 1);
+  editingMembers[index] = null;
+  dispatch(actions.setEditingMembers(editingMembers));
+};
+
+const resetManage = () => dispatch => {
+  dispatch(actions.setEditingArtist({}));
+  dispatch(actions.setEditingMembers([]));
+  dispatch(actions.setEditingUnit({}));
+  dispatch(actions.setUnitsTypeahead([]));
+  dispatch(actions.setUnitsTypeaheadDict({}));
+  dispatch(actions.setManageResult(null));
+  dispatch(
+    actions.setPanels({
+      artist: 'open',
+      unit: 'locked',
+      members: 'locked',
+    })
+  );
+};
+
+const saveManage = formState => async (dispatch, getState) => {
+  const artistState = formState.values.artist;
+  const unitState = formState.values.unit;
+  const membersState = formState.values.members;
+
+  // Check artist required fields
+  if (!artistState || !artistState.name || !artistState.genre) return;
+
+  // Check unit required fields
+  if (!unitState || !unitState.name || !unitState.debutYear) return;
+
+  if (!membersState || membersState.length < 2) return;
+
+  // Check members required fields
+  let missingField = false;
+  membersState.forEach(member => {
+    if (
+      !member.name ||
+      !member.birthdate ||
+      !member.colorId ||
+      !member.gender ||
+      !member.nationality
+    ) {
+      missingField = true;
+    }
+    const hasPositions = Object.keys(member).some(m => POSITIONS_LIST_OBJ[m]);
+    if (!hasPositions) missingField = true;
+  });
+  if (missingField) return;
+
+  // Prepare Artist
+  const editingArtistState = getState().admin.editingArtist;
+  const editingArtist = {
+    genre: artistState.genre,
+    name: artistState.name,
+    otherNames: artistState.otherNames || '',
+    private: artistState.private || false,
+    new: editingArtistState.new || false,
+    memberIds: editingArtistState.memberIds || [],
+    memberList: editingArtistState.memberList || [],
+    units: editingArtistState.units
+      ? editingArtistState.units.map(unit => unit.id)
+      : [],
+    id: editingArtistState.id || null,
+    createdBy: editingArtistState.createdBy || null,
+  };
+
+  // Prepare Unit
+  const editingUnitState = getState().admin.editingUnit;
+  const editingUnit = {
+    debutYear: unitState.debutYear,
+    name: unitState.name,
+    official: unitState.official,
+    private: unitState.private || false,
+    new: editingUnitState.new || false,
+    averages: editingUnitState.averages || false,
+    distributions: editingUnitState.distributions || false,
+    distributions_legacy: editingUnitState.distributions_legacy || false,
+    artistId: editingUnitState.id || null,
+    createdBy: editingUnitState.createdBy || null,
+  };
+
+  // Prepare Members
+  const editingMembersState = getState().admin.editingMembers;
+  const editingMembers = [];
+  membersState.forEach((memberState, index) => {
+    if (memberState) {
+      const newMember = {
+        birthdate: +memberState.birthdate.replace(/(-)/g, ''),
+        colorId: memberState.colorId,
+        gender: memberState.gender,
+        initials: memberState.initials || '',
+        name: memberState.name,
+        nationality: memberState.nationality,
+        private: memberState.private || false,
+      };
+      // Handle existing database member
+      if (editingMembersState[index].id) {
+        newMember.altColorId = editingMembersState[index].altColorId || null;
+        newMember.createdBy = editingMembersState[index].createdBy || null;
+        newMember.id = editingMembersState[index].id || null;
+        newMember.referenceArtist =
+          editingMembersState[index].referenceArtist || null;
+      }
+      // Handle positions
+      const positions = [];
+      Object.keys(memberState).forEach(key => {
+        if (POSITIONS_LIST.includes(key)) positions.push(key);
+      });
+      newMember.positions = positions;
+
+      editingMembers.push(newMember);
+    }
+  });
+
+  dispatch({
+    type: 'UPDATE_COMPLETE_ARTIST',
+    artist: editingArtist,
+    unit: editingUnit,
+    members: editingMembers,
+  });
+};
+
 export default {
   handleEditArtist,
   handleEditMember,
@@ -201,6 +333,9 @@ export default {
   loadArtists,
   loadColors,
   loadMembers,
+  removeMember,
+  resetManage,
+  saveManage,
   switchUIReferenceTab,
   updateManageForm,
   updateMemberColor,

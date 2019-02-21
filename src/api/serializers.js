@@ -7,6 +7,7 @@ import {
   getNumberFromColorId,
   buildSongQuery,
 } from './utils';
+import { GENRES } from './enums';
 
 const UNKNOWN = 'UNKNOWN';
 
@@ -18,7 +19,7 @@ export const serialize = {
       type: 'artist',
       attributes: {
         createdBy: data.createdBy || null,
-        genre: data.genre || UNKNOWN,
+        genre: GENRES[data.genre] || UNKNOWN,
         memberIds: data.memberIds || [],
         memberList: data.memberList || [],
         modifiedBy: data.modifiedBy || null,

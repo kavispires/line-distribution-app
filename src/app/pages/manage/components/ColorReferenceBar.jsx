@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 const ColorReferenceBar = ({ colors }) => (
   <ul className="color-reference-bar">
     {Object.values(colors).map(color => (
-      <li className={`color-reference-item background-color-${color.number}`}>
+      <li
+        className={`color-reference-item background-color-${color.number}`}
+        key={color.id}
+      >
         {color.name}
         <br />
         {color.count}

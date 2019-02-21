@@ -305,7 +305,7 @@ class API {
   }
 
   async post(path, body) {
-    console.warn('Writting data...');
+    console.warn('Writting data...', path);
     /*
      * List of possible post calls:
      * /artists
@@ -358,7 +358,7 @@ class API {
   }
 
   async put(path, body) {
-    console.warn('Updating data...');
+    console.warn('Updating data...', path);
     /*
      * List of possible put calls:
      * /artists/<id>
@@ -455,7 +455,7 @@ class API {
   }
 
   async delete(path) {
-    console.warn('Deleting data...');
+    console.warn('Deleting data...', path);
     /*
      * List of possible delete calls:
      * /users/<id>
@@ -868,7 +868,6 @@ const putFunctions = {
   updateDistribution: async (id, body, uid) => {},
   // Updates single member
   updateMember: async (id, body, uid) => {
-    console.log(id, body, uid);
     const key = id;
     const data = deserialize.put.member(body, key, uid);
     await dbRef.ref(`/members/${key}`).update(data, error => {

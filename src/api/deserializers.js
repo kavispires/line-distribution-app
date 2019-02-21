@@ -107,7 +107,7 @@ export const deserialize = {
         distributions_legacy: data.distributions_legacy || [],
         modifiedBy: uid,
         name: data.name,
-        members: data.members || [],
+        members: data.members || {},
         official: data.official || false,
         private: data.private || false,
       };

@@ -8,6 +8,7 @@ const initialState = {
   editingArtist: {},
   editingMembers: [],
   editingUnit: {},
+  manageResult: null,
   members: [],
   membersTypeahead: [],
   panels: {
@@ -50,6 +51,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_EDITING_UNIT:
       newState.editingUnit = action.payload;
+      break;
+
+    case types.SET_MANAGE_RESULT:
+      newState.manageResult = action.payload;
       break;
 
     case types.SET_MEMBERS:

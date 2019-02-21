@@ -86,20 +86,20 @@ export const POSITIONS_LIST = [
   'VISUAL',
 ];
 
-// export const MANAGE_POSITIONS = {
-//   MAIN_VOCALIST: 'Main Vocalist',
-//   MAIN_RAPPER: 'Main Rapper',
-//   MAIN_DANCER: 'Main Dancer',
-//   LEAD_VOCALIST: 'Lead Vocalist',
-//   LEAD_RAPPER: 'Lead Rapper',
-//   LEAD_DANCER: 'Lead Dancer',
-//   VOCALIST: 'Vocalist',
-//   RAPPER: 'Rapper',
-//   DANCER: 'Dancer',
-//   LEADER: 'Leader',
-//   CENTER: 'Center',
-//   VISUAL: 'VISUAL'
-// };
+export const POSITIONS_LIST_OBJ = {
+  MAIN_VOCALIST: 'Main Vocalist',
+  LEAD_VOCALIST: 'Lead Vocalist',
+  VOCALIST: 'Vocalist',
+  MAIN_RAPPER: 'Main Rapper',
+  LEAD_RAPPER: 'Lead Rapper',
+  RAPPER: 'Rapper',
+  MAIN_DANCER: 'Main Dancer',
+  LEAD_DANCER: 'Lead Dancer',
+  DANCER: 'Dancer',
+  LEADER: 'Leader',
+  CENTER: 'Center',
+  VISUAL: 'Visual',
+};
 
 export const NATIONALITIES = {
   AMERICAN: 'American',

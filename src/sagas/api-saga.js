@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
 
 import API from '../api';
@@ -374,6 +374,122 @@ function* runLogout(action) {
   }
 }
 
+function* updateCompleteArtist(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const { artist, members, unit } = action;
+
+  // Save Members
+  const receivedMembers = yield all(
+    members.map((member, index) =>
+      call(updateMember, {
+        type: `UPDATE_MEMBER_${index}`,
+        member,
+        referenceArtist: artist.name,
+      })
+    )
+  );
+
+  // Prepare Unit Members Data
+  let unitMembers = {};
+  receivedMembers.forEach(member => {
+    unitMembers = {
+      ...unitMembers,
+      ...member.positions,
+    };
+  });
+
+  yield delay(DELAY_DURATION);
+
+  // Save Artist
+  let receivedArtist;
+  try {
+    if (artist.id) {
+      // Update member if it has an id
+      receivedArtist = yield API.put(`/artists/${artist.id}`, artist);
+    } else {
+      // Create member if it does not have an id
+      receivedArtist = yield API.post('/artists', artist);
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing artist ${
+        artist.id ? artist.id : artist.name
+      } ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+
+  yield delay(DELAY_DURATION);
+
+  // Save unit
+  unit.members = unitMembers;
+  unit.artistId = receivedArtist.data.id;
+  let receivedUnit;
+  try {
+    if (unit.id) {
+      // Update member if it has an id
+      receivedUnit = yield API.put(`/units/${unit.id}`, artist);
+    } else {
+      // Create member if it does not have an id
+      receivedUnit = yield API.post('/units', unit);
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing unit ${
+        unit.id ? unit.id : artist.name
+      } ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+
+  yield delay(DELAY_DURATION);
+
+  yield put({ type: 'SET_MANAGE_RESULT', payload: 'SUCCESS' });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* updateMember(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const { member, referenceArtist } = action;
+
+  let response;
+  try {
+    if (member.id) {
+      // Update member if it has an id
+      response = yield API.put(`/members/${member.id}`, member);
+    } else {
+      // Create member if it does not have an id
+      response = yield API.post('/members', {
+        ...member,
+        referenceArtist,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing member ${
+        member.id ? member.id : member.name
+      } ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+
+  response.data.positions = {};
+  member.positions.forEach(pos => {
+    response.data.positions[`${response.data.id}:${member.name}:${pos}`] = true;
+  });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+  return response.data;
+}
+
 function* updateUserBiases(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -446,6 +562,7 @@ function* apiSaga() {
   yield takeLatest('REQUEST_UNIT_MEMBERS', requestUnitMembers);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
   yield takeLatest('UPDATE_USER_FAVORITE_MEMBERS', updateUserFavoriteMembers);

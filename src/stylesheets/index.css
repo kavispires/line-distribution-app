@@ -915,6 +915,9 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
 }
+.manage-section--manage-success {
+  text-align: center;
+}
 
 .manage-form {
   display: flex;
@@ -984,6 +987,8 @@ input:checked + .slider:before {
   border-radius: 0 6px 6px 0;
   align-items: flex-start;
   flex-direction: row;
+  height: 420px;
+  overflow-y: auto;
 }
 .manage-form__button-locked {
   width: 100px;
@@ -1184,7 +1189,7 @@ input:checked + .slider:before {
   padding: 0;
   list-style: none;
   display: flex;
-  border-radius: 3px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -1192,6 +1197,20 @@ input:checked + .slider:before {
   width: 3.33334%;
   text-align: center;
   padding: 3px;
+}
+
+.btn-remove-user {
+  background: none;
+  border: none;
+  float: right;
+  font-weight: bolder;
+  cursor: pointer;
+}
+.btn-remove-user:hover {
+  transform: scale(1.5);
+}
+.btn-remove-user:focus {
+  outline: none;
 }
 
 .color-palette {

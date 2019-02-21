@@ -24,6 +24,10 @@ $members-panel-width: 60%;
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  &--manage-success {
+    text-align: center;
+  }
 }
 
 .manage-form {
@@ -69,6 +73,8 @@ $members-panel-width: 60%;
     border-radius: 0 $unit-p2 $unit-p2 0;
     align-items: flex-start;
     flex-direction: row;
+    height: 420px;
+    overflow-y: auto;
   }
 
   &__button-title {
@@ -306,7 +312,7 @@ $checkbox-size: 30px;
   padding: 0;
   list-style: none;
   display: flex;
-  border-radius: $unit-p4;
+  border-radius: $unit-p2;
   overflow: hidden;
 }
 
@@ -314,4 +320,19 @@ $checkbox-size: 30px;
   width: 3.33334%;
   text-align: center;
   padding: $unit-p4;
+}
+
+.btn-remove-user {
+  background: none;
+  border: none;
+  float: right;
+  font-weight: bolder;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.5);
+  }
+  &:focus {
+    outline: none;
+  }
 }
