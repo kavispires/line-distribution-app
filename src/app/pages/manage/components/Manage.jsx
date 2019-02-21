@@ -17,12 +17,13 @@ class Manage extends Component {
     this.state = {
       artistId: null,
       validArtist: false,
-      unittId: null,
+      unitId: null,
       validUnit: false,
       memberId: null,
       validMember: false,
     };
 
+    this.resetAll = this.resetAll.bind(this);
     this.validateArtist = this.validateArtist.bind(this);
     this.validateUnit = this.validateUnit.bind(this);
     this.validateMembers = this.validateMembers.bind(this);
@@ -68,7 +69,7 @@ class Manage extends Component {
     this.setState({
       artistId: null,
       validArtist: false,
-      unittId: null,
+      unitId: null,
       validUnit: false,
       memberId: null,
       validMember: false,
