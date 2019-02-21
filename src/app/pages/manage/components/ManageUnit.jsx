@@ -117,8 +117,22 @@ const ManageUnit = ({
   );
 };
 
-ManageUnit.propTypes = {};
+ManageUnit.propTypes = {
+  admin: PropTypes.object,
+  defaultValues: PropTypes.object.isRequired,
+  formState: PropTypes.object.isRequired,
+  handleEditUnit: PropTypes.func,
+  isValid: PropTypes.bool.isRequired,
+  next: PropTypes.func.isRequired,
+  props: PropTypes.object.isRequired,
+  validateTypeahead: PropTypes.func.isRequired,
+  unitId: PropTypes.string,
+};
 
-ManageUnit.defaultProps = {};
+ManageUnit.defaultProps = {
+  admin: {},
+  handleEditUnit: () => {},
+  unitId: null,
+};
 
 export default ManageUnit;

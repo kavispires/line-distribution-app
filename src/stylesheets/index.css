@@ -1080,6 +1080,9 @@ input:checked + .slider:before {
   text-align: right;
   margin: 12px;
 }
+.manage-form-nav .btn {
+  margin-left: 6px;
+}
 
 .manage-member {
   padding: 6px;

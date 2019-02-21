@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Text, Checkbox, Select, Option, Scope } from 'informed';
 
 // Import common components
@@ -17,7 +18,6 @@ import {
 } from '../../../../utils/constants';
 
 const ManageMembers = ({
-  formState,
   props,
   defaultValues,
   isValid,
@@ -55,9 +55,10 @@ const ManageMembers = ({
     <section className="manage-form__members manage-form__members-edit">
       <div className="manage-form__form-group-member">
         {defaultValues.map((member, index) => {
+          const key = index;
           if (member) {
             return (
-              <Scope scope={`members[${index}]`} key={`member-${index}`}>
+              <Scope scope={`members[${index}]`} key={`member-${key}`}>
                 <div className="manage-form__form-member manage-member">
                   <span
                     className={`manage-member__title background-color-${utils.getColorNumber(
@@ -116,7 +117,7 @@ const ManageMembers = ({
                         </Option>
                         {Object.entries(COLORS).map(color => (
                           <Option
-                            key={`${index}-${color[0]}`}
+                            key={`${key}-${color[0]}`}
                             value={color[0]}
                             className="option-swatch"
                           >
@@ -140,10 +141,7 @@ const ManageMembers = ({
                           Select One...
                         </Option>
                         {Object.entries(GENDERS).map(gender => (
-                          <Option
-                            key={`${index}-${gender[0]}`}
-                            value={gender[0]}
-                          >
+                          <Option key={`${key}-${gender[0]}`} value={gender[0]}>
                             {gender[1]}
                           </Option>
                         ))}
@@ -163,7 +161,7 @@ const ManageMembers = ({
                         </Option>
                         {Object.entries(NATIONALITIES).map(nationality => (
                           <Option
-                            key={`${index}-${nationality[0]}`}
+                            key={`${key}-${nationality[0]}`}
                             value={nationality[0]}
                           >
                             {nationality[1]}
@@ -176,7 +174,7 @@ const ManageMembers = ({
                   <div className="position-buttons">
                     {POSITIONS_LIST.map(position => (
                       <Checkbox
-                        key={`${index}-${position}`}
+                        key={`${key}-${position}`}
                         field={position}
                         initialValue={member[utils.spiralCase(position)]}
                         className={`position-checkbox position-checkbox-${utils.spiralCase(
@@ -200,6 +198,7 @@ const ManageMembers = ({
               </Scope>
             );
           }
+          return null;
         })}
         <div className="manage-form__form-member manage-member-new">
           <h3 className="manage-form__button-title">Add new member</h3>
@@ -231,8 +230,26 @@ const ManageMembers = ({
   );
 };
 
-ManageMembers.propTypes = {};
+ManageMembers.propTypes = {
+  admin: PropTypes.object,
+  defaultValues: PropTypes.array.isRequired,
+  handleEditMember: PropTypes.func,
+  isValid: PropTypes.bool.isRequired,
+  memberId: PropTypes.string,
+  props: PropTypes.object.isRequired,
+  removeMember: PropTypes.func,
+  updateMemberColor: PropTypes.func,
+  updateMemberPositions: PropTypes.func,
+  validateTypeahead: PropTypes.func.isRequired,
+};
 
-ManageMembers.defaultProps = {};
+ManageMembers.defaultProps = {
+  admin: {},
+  handleEditMember: () => {},
+  memberId: null,
+  removeMember: () => {},
+  updateMemberColor: () => {},
+  updateMemberPositions: () => {},
+};
 
 export default ManageMembers;

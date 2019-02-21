@@ -451,6 +451,7 @@ function* updateCompleteArtist(action) {
   yield put({ type: 'SET_MANAGE_RESULT', payload: 'SUCCESS' });
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+  return receivedUnit;
 }
 
 function* updateMember(action) {

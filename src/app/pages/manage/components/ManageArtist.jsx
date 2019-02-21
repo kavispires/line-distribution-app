@@ -129,19 +129,21 @@ const ManageArtist = ({
 };
 
 ManageArtist.propTypes = {
-  // artist: PropTypes.object,
-  // back: PropTypes.func.isRequired,
-  // next: PropTypes.func.isRequired,
-  // updateEditArtistForm: PropTypes.func.isRequired,
+  admin: PropTypes.object,
+  artistId: PropTypes.string,
+  defaultValues: PropTypes.object.isRequired,
+  formState: PropTypes.object.isRequired,
+  handleEditArtist: PropTypes.func,
+  isValid: PropTypes.bool.isRequired,
+  next: PropTypes.func.isRequired,
+  props: PropTypes.object.isRequired,
+  validateTypeahead: PropTypes.func.isRequired,
 };
 
 ManageArtist.defaultProps = {
-  // artist: {
-  //   name: null,
-  //   otherNames: null,
-  //   genre: null,
-  //   private: null,
-  // },
+  admin: {},
+  artistId: null,
+  handleEditArtist: () => {},
 };
 
 export default ManageArtist;

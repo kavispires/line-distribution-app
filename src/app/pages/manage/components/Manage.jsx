@@ -250,7 +250,18 @@ class Manage extends Component {
   }
 }
 
-Manage.propTypes = {};
+Manage.propTypes = {
+  admin: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired,
+  loadArtists: PropTypes.func.isRequired,
+  loadColors: PropTypes.func.isRequired,
+  loadMembers: PropTypes.func.isRequired,
+  resetManage: PropTypes.func.isRequired,
+  saveManage: PropTypes.func.isRequired,
+  updateManageForm: PropTypes.func.isRequired,
+  unlockMembers: PropTypes.func.isRequired,
+  unlockUnit: PropTypes.func.isRequired,
+};
 
 Manage.defaultProps = {};
 

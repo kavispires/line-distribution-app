@@ -197,6 +197,10 @@ $members-panel-width: 60%;
 .manage-form-nav {
   text-align: right;
   margin: $unit;
+
+  .btn {
+    margin-left: $unit-p2;
+  }
 }
 
 .manage-member {
