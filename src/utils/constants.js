@@ -71,6 +71,14 @@ const GENRES = {
   POP: 'Pop',
 };
 
+const GENRES_DB = {
+  'C-Pop': 'CPOP',
+  'J-Pop': 'JPOP',
+  'K-Pop': 'KPOP',
+  Other: 'OTHER',
+  Pop: 'POP',
+};
+
 const POSITIONS_LIST = [
   'MAIN_VOCALIST',
   'MAIN_RAPPER',
@@ -125,6 +133,7 @@ export default {
   FLAGS_LIST,
   GENDERS,
   GENRES,
+  GENRES_DB,
   POSITIONS_LIST,
   POSITIONS_LIST_OBJ,
   NATIONALITIES,

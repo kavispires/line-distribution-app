@@ -5,6 +5,7 @@ import API from '../api';
 
 import { types } from '../reducers';
 import utils from '../utils';
+import constants from '../utils/constants';
 
 // Delay helper to make API look more realistic
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -157,6 +158,8 @@ function* requestArtist(action) {
       type: types.SET_UNITS_TYPEAHEAD_DICT,
       payload: unitsTypeaheadDict,
     });
+
+    selectedArtist.genre = constants.GENRES_DB[selectedArtist.genre];
 
     yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
     yield put({ type: types.SET_PANELS, payload: panels });
