@@ -180,13 +180,13 @@ const ManageMembers = ({
                         className={`position-checkbox position-checkbox-${utils.spiralCase(
                           position
                         )}`}
-                        onChange={e =>
-                          updateMemberPositions(
-                            e.target.checked,
-                            position,
-                            index
-                          )
-                        }
+                        // onChange={e =>
+                        //   updateMemberPositions(
+                        //     e.target.checked,
+                        //     position,
+                        //     index
+                        //   )
+                        // }
                       />
                     ))}
                   </div>
