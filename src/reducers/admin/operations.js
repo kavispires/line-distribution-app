@@ -76,69 +76,66 @@ const updateMemberPositions = (value, position, index) => (
   dispatch,
   getState
 ) => {
-  const editingMembers = [...getState().admin.editingMembers];
-
-  const positionsObj = {};
-  editingMembers[index].positions.forEach(pos => (positionsObj[pos] = true));
-  if (value === false) {
-    delete positionsObj[position];
-  } else {
-    positionsObj[position] = true;
-    switch (position) {
-      case 'MAIN_VOCALIST':
-        delete positionsObj.LEAD_VOCALIST;
-        delete positionsObj.VOCALIST;
-        break;
-      case 'LEAD_VOCALIST':
-        delete positionsObj.MAIN_VOCALIST;
-        delete positionsObj.VOCALIST;
-        break;
-      case 'VOCALIST':
-        delete positionsObj.MAIN_VOCALIST;
-        delete positionsObj.LEAD_VOCALIST;
-        break;
-      case 'MAIN_DANCER':
-        delete positionsObj.LEAD_DANCER;
-        delete positionsObj.DANCER;
-        break;
-      case 'LEAD_DANCER':
-        delete positionsObj.MAIN_DANCER;
-        delete positionsObj.DANCER;
-        break;
-      case 'DANCER':
-        delete positionsObj.MAIN_DANCER;
-        delete positionsObj.LEAD_DANCER;
-        break;
-      case 'MAIN_RAPPER':
-        delete positionsObj.LEAD_RAPPER;
-        delete positionsObj.RAPPER;
-        break;
-      case 'LEAD_RAPPER':
-        delete positionsObj.MAIN_RAPPER;
-        delete positionsObj.RAPPER;
-        break;
-      case 'RAPPER':
-        delete positionsObj.MAIN_RAPPER;
-        delete positionsObj.LEAD_RAPPER;
-        break;
-      default:
-      // do nothing
-    }
-  }
-
-  editingMembers[index].positions = Object.keys(positionsObj);
-
-  dispatch(actions.setEditingMembers(editingMembers));
+  // // const editingMembers = [...getState().admin.editingMembers];
+  // // const positionsObj = {};
+  // // editingMembers[index].positions.forEach(pos => (positionsObj[pos] = true));
+  // // if (value === false) {
+  // //   delete positionsObj[position];
+  // // } else {
+  // //   positionsObj[position] = true;
+  // //   switch (position) {
+  // //     case 'MAIN_VOCALIST':
+  // //       delete positionsObj.LEAD_VOCALIST;
+  // //       delete positionsObj.VOCALIST;
+  // //       break;
+  // //     case 'LEAD_VOCALIST':
+  // //       delete positionsObj.MAIN_VOCALIST;
+  // //       delete positionsObj.VOCALIST;
+  // //       break;
+  // //     case 'VOCALIST':
+  // //       delete positionsObj.MAIN_VOCALIST;
+  // //       delete positionsObj.LEAD_VOCALIST;
+  // //       break;
+  // //     case 'MAIN_DANCER':
+  // //       delete positionsObj.LEAD_DANCER;
+  // //       delete positionsObj.DANCER;
+  // //       break;
+  // //     case 'LEAD_DANCER':
+  // //       delete positionsObj.MAIN_DANCER;
+  // //       delete positionsObj.DANCER;
+  // //       break;
+  // //     case 'DANCER':
+  // //       delete positionsObj.MAIN_DANCER;
+  // //       delete positionsObj.LEAD_DANCER;
+  // //       break;
+  // //     case 'MAIN_RAPPER':
+  // //       delete positionsObj.LEAD_RAPPER;
+  // //       delete positionsObj.RAPPER;
+  // //       break;
+  // //     case 'LEAD_RAPPER':
+  // //       delete positionsObj.MAIN_RAPPER;
+  // //       delete positionsObj.RAPPER;
+  // //       break;
+  // //     case 'RAPPER':
+  // //       delete positionsObj.MAIN_RAPPER;
+  // //       delete positionsObj.LEAD_RAPPER;
+  // //       break;
+  // //     default:
+  // //     // do nothing
+  // //   }
+  // }
+  // editingMembers[index].positions = Object.keys(positionsObj);
+  // dispatch(actions.setEditingMembers(editingMembers));
 };
 
-const updateManageForm = formObj => dispatch => {
-  // console.log(formObj);
-  if (formObj.dirty) {
-    // console.log('DIRTY');
-    // console.log(formObj);
-  } else {
-    // console.log('CLEAN');
-  }
+const updateManageForm = () => () => {
+  // // console.log(formObj);
+  // if (formObj.dirty) {
+  //   // console.log('DIRTY');
+  //   // console.log(formObj);
+  // } else {
+  //   // console.log('CLEAN');
+  // }
 };
 
 const unlockUnit = formState => (dispatch, getState) => {
