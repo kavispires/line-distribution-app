@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Import constants
-import { PROFILE_PICTURE_URL } from '../../../../utils/constants';
+import constants from '../../../../utils/constants';
 // Import images
 import biasPlaceholder from '../../../../images/bias-placeholder.svg';
 
@@ -28,9 +28,9 @@ class BiasPicture extends Component {
       );
     }
 
-    const pictureUrl = `${process.env.PUBLIC_URL}${PROFILE_PICTURE_URL}${
-      bias.name
-    }${bias.id}.jpg`;
+    const pictureUrl = `${process.env.PUBLIC_URL}${
+      constants.PROFILE_PICTURE_URL
+    }${bias.name}${bias.id}.jpg`;
 
     // If picture is not found
     if (this.state.failed) {

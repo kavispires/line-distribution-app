@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { POSITIONS_LIST, POSITIONS_LIST_OBJ } from '../../utils/constants';
+import constants from '../../utils/constants';
 
 import actions from './actions';
 
@@ -247,7 +247,9 @@ const saveManage = formState => async (dispatch, getState) => {
     ) {
       missingField = true;
     }
-    const hasPositions = Object.keys(member).some(m => POSITIONS_LIST_OBJ[m]);
+    const hasPositions = Object.keys(member).some(
+      m => constants.POSITIONS_LIST_OBJ[m]
+    );
     if (!hasPositions) missingField = true;
   });
   if (missingField) return;
@@ -309,7 +311,7 @@ const saveManage = formState => async (dispatch, getState) => {
       // Handle positions
       const positions = [];
       Object.keys(memberState).forEach(key => {
-        if (POSITIONS_LIST.includes(key)) positions.push(key);
+        if (constants.POSITIONS_LIST.includes(key)) positions.push(key);
       });
       newMember.positions = positions;
 

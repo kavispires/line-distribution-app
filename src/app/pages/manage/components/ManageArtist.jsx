@@ -8,7 +8,7 @@ import { Typeahead, Icon } from '../../../common';
 import manageLock from '../../../../images/manage-lock.svg';
 import managePlus from '../../../../images/manage-plus.svg';
 // Import constants
-import { GENRES } from '../../../../utils/constants';
+import constants from '../../../../utils/constants';
 
 const ManageArtist = ({
   formState,
@@ -106,7 +106,7 @@ const ManageArtist = ({
               <Option value="" disabled>
                 Select One...
               </Option>
-              {Object.entries(GENRES).map(genre => (
+              {Object.entries(constants.GENRES).map(genre => (
                 <Option key={genre[0]} value={genre[0]}>
                   {genre[1]}
                 </Option>

@@ -10,12 +10,7 @@ import managePlus from '../../../../images/manage-plus.svg';
 // Import utils
 import utils from '../../../../utils';
 // Import constants
-import {
-  COLORS,
-  GENDERS,
-  NATIONALITIES,
-  POSITIONS_LIST,
-} from '../../../../utils/constants';
+import constants from '../../../../utils/constants';
 
 const ManageMembers = ({
   props,
@@ -115,7 +110,7 @@ const ManageMembers = ({
                         <Option value="" disabled>
                           Select One...
                         </Option>
-                        {Object.entries(COLORS).map(color => (
+                        {Object.entries(constants.COLORS).map(color => (
                           <Option
                             key={`${key}-${color[0]}`}
                             value={color[0]}
@@ -140,7 +135,7 @@ const ManageMembers = ({
                         <Option value="" disabled>
                           Select One...
                         </Option>
-                        {Object.entries(GENDERS).map(gender => (
+                        {Object.entries(constants.GENDERS).map(gender => (
                           <Option key={`${key}-${gender[0]}`} value={gender[0]}>
                             {gender[1]}
                           </Option>
@@ -159,20 +154,22 @@ const ManageMembers = ({
                         <Option value="" disabled>
                           Select One...
                         </Option>
-                        {Object.entries(NATIONALITIES).map(nationality => (
-                          <Option
-                            key={`${key}-${nationality[0]}`}
-                            value={nationality[0]}
-                          >
-                            {nationality[1]}
-                          </Option>
-                        ))}
+                        {Object.entries(constants.NATIONALITIES).map(
+                          nationality => (
+                            <Option
+                              key={`${key}-${nationality[0]}`}
+                              value={nationality[0]}
+                            >
+                              {nationality[1]}
+                            </Option>
+                          )
+                        )}
                       </Select>
                     </label>
                   </div>
                   <label className="manage-form__label">Positions* </label>
                   <div className="position-buttons">
-                    {POSITIONS_LIST.map(position => (
+                    {constants.POSITIONS_LIST.map(position => (
                       <Checkbox
                         key={`${key}-${position}`}
                         field={position}
