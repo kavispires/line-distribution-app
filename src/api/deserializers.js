@@ -2,6 +2,7 @@
 
 import {
   buildMemberInitials,
+  ensureGenreEnum,
   getAlternativeColor,
   verifyRequirements,
 } from './utils';
@@ -13,7 +14,7 @@ export const deserialize = {
       return {
         id,
         createdBy: uid,
-        genre: data.genre || null,
+        genre: ensureGenreEnum(data.genre) || 'OTHER',
         modifiedBy: uid,
         name: data.name,
         otherNames: data.otherNames || null,
@@ -133,7 +134,7 @@ export const deserialize = {
       verifyRequirements(data, id, uid, ['id', 'uid']);
       const res = {};
       if (uid) res.modifiedBy = uid;
-      if (data.genre) res.genre = data.genre;
+      if (data.genre) res.genre = ensureGenreEnum(data.genre);
       if (data.memberList) res.memberList = data.memberList;
       if (data.name) res.name = data.name;
       if (data.otherNames) res.otherNames = data.otherNames;

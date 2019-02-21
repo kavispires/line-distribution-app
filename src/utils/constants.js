@@ -110,6 +110,7 @@ export const NATIONALITIES = {
   KOREAN: 'Korean',
   OTHER: 'Other',
   THAI: 'Thai',
+  VIETNAMISE: 'Vietnamise',
 };
 
 export const NATIONALITY_FLAG_URL = '/images/flags/';

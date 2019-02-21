@@ -185,3 +185,18 @@ export const mergeMembers = (unitMembersArr, membersArr) => {
     positions: positionsDict[member.id],
   }));
 };
+
+export const ensureGenreEnum = genre => {
+  const GENRES_TRANSFORM = {
+    CPOP: 'CPOP',
+    JPOP: 'JPOP',
+    KPOP: 'KPOP',
+    OTHER: 'OTHER',
+    POP: 'POP',
+    'C-POP': 'CPOP',
+    'J-POP': 'JPOP',
+    'K-POP': 'KPOP',
+  };
+
+  return GENRES_TRANSFORM[genre.toUpperCase()];
+};
