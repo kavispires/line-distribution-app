@@ -82,6 +82,7 @@ class Manage extends Component {
       app: { pending },
       admin: {
         colors,
+        colorsInUse,
         editingArtist,
         editingMembers,
         editingUnit,
@@ -193,7 +194,7 @@ class Manage extends Component {
             A complete group is required to save with ONE Artist, ONE Unit, and
             at least TWO members (no solo artists)
           </p>
-          <ColorReferenceBar colors={colors} />
+          <ColorReferenceBar colors={colors} colorsInUse={colorsInUse} />
           <Form
             onChange={formState => updateManageForm(formState)}
             autoComplete="off"
@@ -227,6 +228,7 @@ class Manage extends Component {
                     validateTypeahead={this.validateMembers}
                     isValid={this.state.validMember}
                     memberId={this.state.memberId}
+                    colorsInUse={colorsInUse}
                   />
                 </div>
                 <div className="manage-form-nav">

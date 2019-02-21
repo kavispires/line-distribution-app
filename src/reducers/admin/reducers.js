@@ -5,6 +5,7 @@ const initialState = {
   artistsTypeahead: [],
   artistsTypeaheadDict: {},
   colors: {},
+  colorsInUse: {},
   editingArtist: {},
   editingMembers: [],
   editingUnit: {},
@@ -39,6 +40,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_COLORS:
       newState.colors = action.payload;
+      break;
+
+    case types.SET_COLORS_IN_USE:
+      newState.colorsInUse = action.payload;
       break;
 
     case types.SET_EDITING_ARTIST:

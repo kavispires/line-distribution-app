@@ -14,6 +14,7 @@ import constants from '../../../../utils/constants';
 
 const ManageMembers = ({
   props,
+  colorsInUse,
   defaultValues,
   isValid,
   memberId,
@@ -100,7 +101,9 @@ const ManageMembers = ({
                     <label className="manage-form__label manage-form__label--30">
                       Color*
                       <Select
-                        className="manage-form__input"
+                        className={`manage-form__input background-color-${utils.getColorNumber(
+                          member.colorId
+                        )}`}
                         field="colorId"
                         validate={isRequired}
                         initialValue={member.colorId}
@@ -114,7 +117,7 @@ const ManageMembers = ({
                           <Option
                             key={`${key}-${color[0]}`}
                             value={color[0]}
-                            className="option-swatch"
+                            disabled={colorsInUse[color[0]]}
                           >
                             {color[1]}
                           </Option>

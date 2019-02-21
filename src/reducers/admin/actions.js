@@ -2,6 +2,8 @@ import types from './types';
 
 const setColors = payload => dispatch =>
   dispatch({ type: types.SET_COLORS, payload });
+const setColorsInUse = payload => dispatch =>
+  dispatch({ type: types.SET_COLORS_IN_USE, payload });
 const setEditingArtist = payload => dispatch =>
   dispatch({ type: types.SET_EDITING_ARTIST, payload });
 const setEditingMembers = payload => dispatch =>
@@ -21,6 +23,7 @@ const setUnitsTypeaheadDict = payload => dispatch =>
 
 export default {
   setColors,
+  setColorsInUse,
   setEditingArtist,
   setEditingMembers,
   setEditingUnit,

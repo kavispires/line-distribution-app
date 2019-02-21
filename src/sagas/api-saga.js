@@ -314,6 +314,11 @@ function* requestUnitMembers({ type, unitId, panels }) {
     }
   }
 
+  // Make colors in use dict
+  const colorsInUse = {};
+  members.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
+
+  yield put({ type: types.SET_COLORS_IN_USE, payload: colorsInUse });
   yield put({ type: types.SET_EDITING_MEMBERS, payload: members });
   yield put({ type: types.SET_PANELS, payload: panels });
 

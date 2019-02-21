@@ -324,6 +324,12 @@ $checkbox-size: 30px;
   width: 3.33334%;
   text-align: center;
   padding: $unit-p4;
+  box-sizing: border-box;
+
+  &--in-use {
+    border: 2px solid $color-primary;
+    color: $color-negative;
+  }
 }
 
 .btn-remove-user {

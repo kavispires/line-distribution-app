@@ -1200,6 +1200,11 @@ input:checked + .slider:before {
   width: 3.33334%;
   text-align: center;
   padding: 3px;
+  box-sizing: border-box;
+}
+.color-reference-item--in-use {
+  border: 2px solid #111111;
+  color: #ffffff;
 }
 
 .btn-remove-user {

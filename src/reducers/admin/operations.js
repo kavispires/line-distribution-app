@@ -70,6 +70,11 @@ const updateMemberColor = (value, index) => (dispatch, getState) => {
   const editingMembers = [...getState().admin.editingMembers];
   editingMembers[index].colorId = value;
   dispatch(actions.setEditingMembers(editingMembers));
+
+  // Also update colors in use
+  const colorsInUse = {};
+  editingMembers.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
+  dispatch(actions.setColorsInUse(colorsInUse));
 };
 
 const updateMemberPositions = () => {};
