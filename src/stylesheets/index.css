@@ -65,6 +65,9 @@ p {
   justify-content: center;
   align-items: center;
 }
+.container--manage {
+  position: relative;
+}
 
 .btn {
   padding: 6px 12px;
@@ -1219,6 +1222,12 @@ input:checked + .slider:before {
 }
 .btn-remove-user:focus {
   outline: none;
+}
+
+.btn-resync-db {
+  position: absolute;
+  right: 24px;
+  top: 24px;
 }
 
 .color-palette {

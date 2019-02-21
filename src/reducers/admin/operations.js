@@ -18,6 +18,8 @@ const switchUIReferenceTab = event => async dispatch => {
   return dispatch(actions.setUIReferenceTab(id));
 };
 
+const handleResyncDB = () => dispatch => dispatch({ type: 'RESYNC_DATABASE' });
+
 const handleEditArtist = artistId => (dispatch, getState) => {
   const panels = { ...getState().admin.panels };
 
@@ -336,6 +338,7 @@ export default {
   handleEditArtist,
   handleEditMember,
   handleEditUnit,
+  handleResyncDB,
   loadArtists,
   loadColors,
   loadMembers,

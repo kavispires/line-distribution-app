@@ -326,6 +326,28 @@ function* requestUnitMembers({ type, unitId, panels }) {
   return members;
 }
 
+function* resyncDatabase(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    yield API.resyncDatabase();
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [`Unable to resync database`, error.toString()],
+      actionType: action.type,
+    });
+  }
+
+  // When done, re-request artists, colors, and members
+  yield put({ type: 'REQUEST_ARTISTS' });
+  yield put({ type: 'REQUEST_COLORS' });
+  yield put({ type: 'REQUEST_MEMBERS' });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 function* runLogin(action) {
   yield put({ type: 'PENDING', actionType: action.type });
 
@@ -569,6 +591,7 @@ function* apiSaga() {
   yield takeLatest('REQUEST_MEMBERS', requestMembers);
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('REQUEST_UNIT_MEMBERS', requestUnitMembers);
+  yield takeLatest('RESYNC_DATABASE', resyncDatabase);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
   yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);

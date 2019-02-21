@@ -1,4 +1,5 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_authenticated", "_admin", _loaded, _loggedInThisSession, _uid, _tries] }] */
+/* eslint class-methods-use-this: 0 */
 
 import firebase from 'firebase';
 import HttpStatus from 'http-status-codes';
@@ -56,7 +57,7 @@ class API {
    * @returns {Object}
    */
   dbInfo() {
-    console.warn('Fetching DB info...');
+    console.warn('Fetching DB info...'); // eslint-disable-line
     const response = new NewResponse();
 
     response.status(HttpStatus.OK);
@@ -75,7 +76,7 @@ class API {
    * @returns {Boolean}
    */
   async init() {
-    console.warn('Running init...');
+    console.warn('Running init...'); // eslint-disable-line
     const response = new NewResponse();
 
     dbRef = await fb.database();
@@ -102,7 +103,7 @@ class API {
    * @returns {Object} user
    */
   async auth() {
-    console.warn('Running auth...');
+    console.warn('Running auth...'); // eslint-disable-line
     const response = new NewResponse();
 
     if (!this._loaded) {
@@ -136,7 +137,7 @@ class API {
   }
 
   async login() {
-    console.warn('Running login...');
+    console.warn('Running login...'); // eslint-disable-line
     const response = new NewResponse();
 
     let result;
@@ -176,7 +177,7 @@ class API {
   }
 
   async logoff() {
-    console.warn('Running logout...');
+    console.warn('Running logout...'); // eslint-disable-line
     const response = new NewResponse();
 
     try {
@@ -192,8 +193,65 @@ class API {
     return response.resolve();
   }
 
+  async resyncDatabase() {
+    console.warn('Resyncing database...'); // eslint-disable-line
+
+    // Reset fullyLodaded
+    fullyLoaded.artists = false;
+    fullyLoaded.colors = false;
+    fullyLoaded.distributions = false;
+    fullyLoaded.members = false;
+    fullyLoaded.songs = false;
+    fullyLoaded.units = false;
+
+    const syncDB = {
+      artists: {},
+      positions: {},
+      colors: {},
+      members: {},
+      units: {},
+    };
+
+    // Request DB tables
+    await dbRef.ref(`/artists`).once('value', snapshot => {
+      syncDB.artists = snapshot.val();
+    });
+    await dbRef.ref(`/colors`).once('value', snapshot => {
+      syncDB.colors = snapshot.val();
+    });
+    await dbRef.ref(`/members`).once('value', snapshot => {
+      syncDB.members = snapshot.val();
+    });
+    await dbRef.ref(`/units`).once('value', snapshot => {
+      syncDB.units = snapshot.val();
+    });
+    // TO-DO: Add distributions resync
+
+    // Resync
+    resyncFunctions.parse(syncDB);
+
+    // Post new DB tables
+    await dbRef.ref(`/artists`).set(syncDB.artists, error => {
+      if (error) throw new Error(error);
+    });
+    await dbRef.ref(`/colors`).set(syncDB.colors, error => {
+      if (error) throw new Error(error);
+    });
+    await dbRef.ref(`/members`).set(syncDB.members, error => {
+      if (error) throw new Error(error);
+    });
+    await dbRef.ref(`/positions`).set(syncDB.positions, error => {
+      if (error) throw new Error(error);
+    });
+    await dbRef.ref(`/units`).set(syncDB.units, error => {
+      if (error) throw new Error(error);
+    });
+
+    return true;
+  }
+
   async get(path) {
-    console.warn('Fetching data...', path);
+    console.warn('Fetching data...', path); // eslint-disable-line
     /*
      * List of possible get calls:
      * /artists
@@ -305,7 +363,7 @@ class API {
   }
 
   async post(path, body) {
-    console.warn('Writting data...', path);
+    console.warn('Writting data...', path); // eslint-disable-line
     /*
      * List of possible post calls:
      * /artists
@@ -358,7 +416,7 @@ class API {
   }
 
   async put(path, body) {
-    console.warn('Updating data...', path);
+    console.warn('Updating data...', path); // eslint-disable-line
     /*
      * List of possible put calls:
      * /artists/<id>
@@ -455,7 +513,7 @@ class API {
   }
 
   async delete(path) {
-    console.warn('Deleting data...', path);
+    console.warn('Deleting data...', path); // eslint-disable-line
     /*
      * List of possible delete calls:
      * /users/<id>
@@ -963,8 +1021,6 @@ const putFunctions = {
   },
   updateUserFavoriteMembers: async (id, body) => {
     const key = id;
-    console.log('key', key);
-    console.log('body', body);
     await dbRef.ref(`/users/${key}/favoriteMembers`).update(body, error => {
       if (error) {
         const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(
@@ -996,6 +1052,137 @@ const deleteFunctions = {
       await dbRef.ref(`/users/${uid}`).remove();
       return { [id]: true };
     }
+  },
+};
+
+const resyncFunctions = {
+  parse: database => {
+    // Run reseters
+    resyncFunctions.resetAristsUnits(database);
+    resyncFunctions.resetMemberPositions(database);
+    // Run parsers
+    resyncFunctions.parseUnits(database);
+    resyncFunctions.parseMembers(database);
+    resyncFunctions.parseArtists(database);
+    resyncFunctions.parseDistributions(database);
+  },
+  resetAristsUnits: database => {
+    Object.values(database.artists).forEach(artist => (artist.units = []));
+  },
+  resetMemberPositions: database => {
+    Object.values(database.members).forEach(member => (member.positions = []));
+  },
+  parseUnits: database => {
+    Object.keys(database.units).forEach(unitId => {
+      const unit = database.units[unitId];
+
+      // Add artistId to artist
+      const artist = database.artists[unit.artistId];
+      if (artist.units) {
+        artist.units.push(unitId);
+      } else {
+        artist.units = [unitId];
+      }
+
+      // Parse positions
+      const membersPositions = resyncFunctions.parsePositions(
+        database,
+        unit.members
+      );
+
+      // Add members to artist memberIds and memberList
+      const memberIds = [];
+      const memberList = [];
+      Object.values(membersPositions).forEach(value => {
+        memberIds.push(value.memberId);
+        memberList.push(value.name);
+        // Add positions to each member
+        database.members[value.memberId].positions = database.members[
+          value.memberId
+        ].positions.concat(value.positions);
+      });
+      if (artist.memberIds) {
+        artist.memberIds = artist.memberIds.concat(memberIds);
+        artist.memberList = artist.memberList.concat(memberList);
+      } else {
+        artist.memberIds = memberIds;
+        artist.memberList = memberList;
+      }
+    });
+  },
+  parseMembers: database => {
+    // Reset all color counts
+    Object.values(database.colors).forEach(color => {
+      color.count = 0;
+    });
+
+    Object.values(database.members).forEach(member => {
+      // Add member color to color count
+      const { colorId } = member;
+      database.colors[colorId].count++;
+
+      // Sort and make positions unique
+      member.positions = [...new Set(member.positions)].sort();
+    });
+  },
+  parseArtists: database => {
+    Object.values(database.artists).forEach(artist => {
+      // Order units by debutYear
+      const unitDict = {};
+      artist.units.forEach(unitId => {
+        const currentUnit = database.units[unitId];
+        let key = currentUnit.debutYear;
+        if (unitDict[key]) {
+          key = Number(`${key}1`);
+        }
+        unitDict[key] = unitId;
+      });
+      // Sort by year
+      artist.units = Object.keys(unitDict)
+        .sort()
+        .map(year => unitDict[year]);
+
+      // Sort memberList by name and make it unique, same with memberIds
+      const memberDict = {};
+      artist.memberList.forEach((name, index) => {
+        if (memberDict[name] === undefined) {
+          memberDict[name] = artist.memberIds[index];
+        }
+      });
+      // Make names unique
+      artist.memberList = [...new Set(artist.memberList)];
+      // Sort names
+      artist.memberList.sort();
+      // Parse ids
+      artist.memberIds = artist.memberList.map(name => memberDict[name]);
+    });
+  },
+  parseDistributions: () => {
+    //
+  },
+  parsePositions: (database, unitMembers) => {
+    const memberDict = {};
+
+    Object.keys(unitMembers).forEach(key => {
+      const [memberId, name, position] = key.split(':');
+      // Parse member dict to be returned
+      if (memberDict[memberId]) {
+        memberDict[memberId].positions.push(position);
+      } else {
+        memberDict[memberId] = {
+          memberId,
+          name,
+          positions: [position],
+        };
+      }
+      // Refactor positions (action parsePositions)
+      if (database.positions[position] === undefined) {
+        database.positions[position] = {};
+      }
+      database.positions[position][memberId] = true;
+    });
+
+    return memberDict;
   },
 };
 

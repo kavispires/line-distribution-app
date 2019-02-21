@@ -16,5 +16,6 @@ module.exports = {
     'no-plusplus': 'off',
     'no-param-reassign': 'off',
     'prettier/prettier': 'error',
+    'no-return-assign': 'off',
   },
 };

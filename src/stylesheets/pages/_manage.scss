@@ -346,3 +346,9 @@ $checkbox-size: 30px;
     outline: none;
   }
 }
+
+.btn-resync-db {
+  position: absolute;
+  right: $unit-x2;
+  top: $unit-x2;
+}

@@ -88,6 +88,7 @@ class Manage extends Component {
         editingUnit,
         manageResult,
       },
+      handleResyncDB,
       saveManage,
       updateManageForm,
       unlockUnit,
@@ -165,6 +166,11 @@ class Manage extends Component {
       return <Loading message="Preparing manage..." />;
     }
 
+    // If database is being resynced
+    if (pending.RESYNC_DATABASE) {
+      return <Loading message="Resyncing database..." />;
+    }
+
     // If save is in progress
     if (pending.UPDATE_COMPLETE_ARTIST) {
       return <Loading message="Saving..." />;
@@ -190,6 +196,9 @@ class Manage extends Component {
       <RequirementWrapper requirements={['manage']}>
         <main className="container container--manage">
           <h1>Manage</h1>
+          <button className="btn btn-resync-db" onClick={handleResyncDB}>
+            Resync Database
+          </button>
           <p>
             A complete group is required to save with ONE Artist, ONE Unit, and
             at least TWO members (no solo artists)
@@ -258,6 +267,7 @@ Manage.propTypes = {
   loadArtists: PropTypes.func.isRequired,
   loadColors: PropTypes.func.isRequired,
   loadMembers: PropTypes.func.isRequired,
+  handleResyncDB: PropTypes.func.isRequired,
   resetManage: PropTypes.func.isRequired,
   saveManage: PropTypes.func.isRequired,
   updateManageForm: PropTypes.func.isRequired,
