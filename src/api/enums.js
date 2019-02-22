@@ -16,10 +16,12 @@ export const NATIONALITIES = {
   AMERICAN: 'American',
   BRAZILIAN: 'Brazilian',
   BRITISH: 'British',
+  CANADIAN: 'Canadian',
   CHINESE: 'Chinese',
   JAPANESE: 'Japanese',
   KOREAN: 'Korean',
   OTHER: 'Other',
+  TAIWANESE: 'Taiwanese',
   THAI: 'Thai',
   VIETNAMISE: 'Vietnamise',
 };

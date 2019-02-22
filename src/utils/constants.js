@@ -47,14 +47,15 @@ const DEFAULT_COLORS = {
 };
 
 const FLAGS_LIST = {
-  american: 'usa',
-  brazilian: 'brazil',
-  canadian: 'canada',
-  chinese: 'china',
-  japanese: 'japan',
-  korean: 'korea',
-  taiwanese: 'taiwan',
-  thai: 'thailand',
+  AMERICAN: 'usa',
+  BRAZILIAN: 'brazil',
+  CANADIAN: 'canada',
+  CHINESE: 'china',
+  JAPANESE: 'japan',
+  KOREAN: 'korea',
+  TAIWANESE: 'taiwan',
+  THAI: 'thailand',
+  VIETNAMISE: 'vietnamise',
 };
 
 const GENDERS = {
@@ -113,10 +114,12 @@ const NATIONALITIES = {
   AMERICAN: 'American',
   BRAZILIAN: 'Brazilian',
   BRITISH: 'British',
+  CANADIAN: 'Canada',
   CHINESE: 'Chinese',
   JAPANESE: 'Japanese',
   KOREAN: 'Korean',
   OTHER: 'Other',
+  TAIWANESE: 'Taiwanese',
   THAI: 'Thai',
   VIETNAMISE: 'Vietnamise',
 };
