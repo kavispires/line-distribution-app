@@ -59,6 +59,11 @@ const handleEditMember = memberId => (dispatch, getState) => {
     const addedMember = { ...members[memberIndex] };
     editingMembers.push(addedMember);
     dispatch(actions.setEditingMembers(editingMembers));
+
+    // Also update colors in use
+    const colorsInUse = {};
+    editingMembers.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
+    dispatch(actions.setColorsInUse(colorsInUse));
   } else {
     editingMembers.push({
       new: true,
@@ -220,6 +225,7 @@ const resetManage = () => dispatch => {
   dispatch(actions.setUnitsTypeahead([]));
   dispatch(actions.setUnitsTypeaheadDict({}));
   dispatch(actions.setManageResult(null));
+  dispatch(actions.setColorsInUse({}));
   dispatch(
     actions.setPanels({
       artist: 'open',
@@ -290,6 +296,7 @@ const saveManage = formState => async (dispatch, getState) => {
     distributions: editingUnitState.distributions || false,
     distributions_legacy: editingUnitState.distributions_legacy || false,
     artistId: editingUnitState.id || null,
+    id: editingArtistState.id || null,
     createdBy: editingUnitState.createdBy || null,
   };
 

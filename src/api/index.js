@@ -1075,7 +1075,6 @@ const resyncFunctions = {
   parseUnits: database => {
     Object.keys(database.units).forEach(unitId => {
       const unit = database.units[unitId];
-
       // Add artistId to artist
       const artist = database.artists[unit.artistId];
       if (artist.units) {

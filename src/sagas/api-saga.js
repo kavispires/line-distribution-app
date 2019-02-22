@@ -458,10 +458,11 @@ function* updateCompleteArtist(action) {
   unit.members = unitMembers;
   unit.artistId = receivedArtist.data.id;
   let receivedUnit;
+
   try {
     if (unit.id) {
       // Update member if it has an id
-      receivedUnit = yield API.put(`/units/${unit.id}`, artist);
+      receivedUnit = yield API.put(`/units/${unit.id}`, unit);
     } else {
       // Create member if it does not have an id
       receivedUnit = yield API.post('/units', unit);

@@ -25,7 +25,7 @@ const ManageMembers = ({
     handleEditMember,
     removeMember,
     updateMemberColor,
-    updateMemberPositions,
+    // updateMemberPositions,
   } = props;
 
   const isRequired = value => (!value ? 'This field is required' : undefined);
@@ -239,7 +239,7 @@ ManageMembers.propTypes = {
   props: PropTypes.object.isRequired,
   removeMember: PropTypes.func,
   updateMemberColor: PropTypes.func,
-  updateMemberPositions: PropTypes.func,
+  // updateMemberPositions: PropTypes.func,
   validateTypeahead: PropTypes.func.isRequired,
 };
 
@@ -249,7 +249,7 @@ ManageMembers.defaultProps = {
   memberId: null,
   removeMember: () => {},
   updateMemberColor: () => {},
-  updateMemberPositions: () => {},
+  // updateMemberPositions: () => {},
 };
 
 export default ManageMembers;
