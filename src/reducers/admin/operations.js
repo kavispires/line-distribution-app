@@ -307,7 +307,7 @@ const saveManage = formState => async (dispatch, getState) => {
     distributions: editingUnitState.distributions || false,
     distributions_legacy: editingUnitState.distributions_legacy || false,
     artistId: editingUnitState.id || null,
-    id: editingArtistState.id || null,
+    id: editingUnitState.id || null,
     createdBy: editingUnitState.createdBy || null,
   };
 
