@@ -24,8 +24,6 @@ const ManageArtist = ({
     handleEditArtist,
   } = props;
 
-  const isRequired = value => (!value ? 'This field is required' : undefined);
-
   // Locked Panel
   if (panels.artist === 'locked') {
     return (
@@ -73,6 +71,14 @@ const ManageArtist = ({
     );
   }
 
+  // Validation classes
+  const isRequired = value => (!value ? 'This field is required' : undefined);
+
+  const isValidName =
+    formState.errors.artist && formState.errors.artist.name
+      ? 'manage-form__input--invalid'
+      : '';
+
   // Edit Panel
   return (
     <section className="manage-form__artist manage-form__artist-edit">
@@ -81,8 +87,9 @@ const ManageArtist = ({
           <h3>Artist</h3>
           <label className="manage-form__label">
             Name*<Text
-              className="manage-form__input"
+              className={`manage-form__input ${isValidName}`}
               field="name"
+              validateOnBlur
               validate={isRequired}
               required
               initialValue={defaultValues.name}
@@ -102,6 +109,7 @@ const ManageArtist = ({
               field="genre"
               validate={isRequired}
               initialValue={defaultValues.genre}
+              required
             >
               <Option value="" disabled>
                 Select One...

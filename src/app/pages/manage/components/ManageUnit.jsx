@@ -22,8 +22,6 @@ const ManageUnit = ({
     handleEditUnit,
   } = props;
 
-  const isRequired = value => (!value ? 'This field is required' : undefined);
-
   // Locked Panel
   if (panels.unit === 'locked') {
     return (
@@ -73,6 +71,23 @@ const ManageUnit = ({
     );
   }
 
+  // Validation classes
+  const isRequired = value => (!value ? 'This field is required' : undefined);
+  const isYear = value =>
+    value < 1900 || value > new Date().getFullYear()
+      ? 'Value must be a four digit year'
+      : undefined;
+
+  const isValidName =
+    formState.errors.unit && formState.errors.unit.name
+      ? 'manage-form__input--invalid'
+      : '';
+
+  const isValidDebutYear =
+    formState.errors.unit && formState.errors.unit.debutYear
+      ? 'manage-form__input--invalid'
+      : '';
+
   // Edit Panel
   return (
     <section className="manage-form__unit manage-form__unit-edit">
@@ -81,8 +96,9 @@ const ManageUnit = ({
           <h3>Unit</h3>
           <label className="manage-form__label">
             Unit Name* (e.g. OT4)<Text
-              className="manage-form__input"
+              className={`manage-form__input ${isValidName}`}
               field="name"
+              validateOnBlur
               validate={isRequired}
               required
               initialValue={defaultValues.name}
@@ -90,9 +106,10 @@ const ManageUnit = ({
           </label>
           <label className="manage-form__label">
             Debut Year*<Text
-              className="manage-form__input"
+              className={`manage-form__input ${isValidDebutYear}`}
               field="debutYear"
-              validate={isRequired}
+              validateOnBlur
+              validate={isYear}
               required
               initialValue={defaultValues.debutYear}
               type="number"

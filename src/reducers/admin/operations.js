@@ -248,6 +248,9 @@ const saveManage = formState => async (dispatch, getState) => {
   const unitState = formState.values.unit;
   const membersState = formState.values.members;
 
+  // Check formState
+  if (Object.keys(formState.errors).length) return;
+
   // Check artist required fields
   if (!artistState || !artistState.name || !artistState.genre) return;
 

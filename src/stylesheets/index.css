@@ -1057,6 +1057,9 @@ input:checked + .slider:before {
   width: 100%;
   border: 1px solid #ebebf2;
 }
+.manage-form__input--invalid {
+  border: 1px solid #d14949;
+}
 .manage-form__navigation {
   display: flex;
   width: 100%;
@@ -1137,9 +1140,10 @@ input:checked + .slider:before {
   position: relative;
   margin: 0;
   margin-right: 3px;
+  cursor: pointer;
 }
 .position-checkbox:checked {
-  border: 2px solid #ffd700;
+  border: 2px solid #fea245;
 }
 
 .position-checkbox-main-vocalist {

@@ -29,8 +29,6 @@ const ManageMembers = ({
     // updateMemberPositions,
   } = props;
 
-  const isRequired = value => (!value ? 'This field is required' : undefined);
-
   // Locked Panel
   if (panels.members === 'locked') {
     return (
@@ -53,6 +51,29 @@ const ManageMembers = ({
       <div className="manage-form__form-group-member">
         {defaultValues.map((member, index) => {
           const key = index;
+
+          // Validation classes
+          const isRequired = value =>
+            !value ? 'This field is required' : undefined;
+          const isName = value => {
+            // isRequired
+            if (!value) return 'This field is required';
+            // Cannot have spaces
+            if (value.match(/(\.|:| |,|;|\?)/g))
+              return 'Name cannot contain spaces, commas, ., :, ;, or ?';
+            // Max 12 characters
+            if (value.length > 12)
+              return 'Name cannot be longer than 12 characters';
+            return undefined;
+          };
+
+          const isValidName =
+            formState.errors.members &&
+            formState.errors.members[index] &&
+            formState.errors.members[index].name
+              ? 'manage-form__input--invalid'
+              : '';
+
           if (member) {
             return (
               <Scope scope={`members[${index}]`} key={`member-${key}`}>
@@ -71,11 +92,15 @@ const ManageMembers = ({
                     </button>
                   </span>
                   <div className="manage-form__inline">
-                    <label className="manage-form__label">
+                    <label
+                      className="manage-form__label"
+                      title="Member names must be less than 12 characters without spaces, commas, colors, semicolons, questions marks or periods"
+                    >
                       Name*<Text
-                        className="manage-form__input"
+                        className={`manage-form__input ${isValidName}`}
                         field="name"
-                        validate={isRequired}
+                        validateOnBlur
+                        validate={isName}
                         required
                         initialValue={member.name}
                       />
@@ -85,6 +110,7 @@ const ManageMembers = ({
                         className="manage-form__input"
                         field="initials"
                         initialValue={member.initials}
+                        maxLength="2"
                       />
                     </label>
                   </div>
@@ -181,6 +207,7 @@ const ManageMembers = ({
                         className={`position-checkbox position-checkbox-${utils.spiralCase(
                           position
                         )}`}
+                        title={position}
                         // onChange={e =>
                         //   updateMemberPositions(
                         //     e.target.checked,
