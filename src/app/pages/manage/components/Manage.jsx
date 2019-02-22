@@ -23,6 +23,7 @@ class Manage extends Component {
       validMember: false,
     };
 
+    this.handleEditMemberAndState = this.handleEditMemberAndState.bind(this);
     this.resetAll = this.resetAll.bind(this);
     this.validateArtist = this.validateArtist.bind(this);
     this.validateUnit = this.validateUnit.bind(this);
@@ -63,6 +64,13 @@ class Manage extends Component {
     } else {
       this.setState({ memberId: null, validMember: false });
     }
+  }
+
+  handleEditMemberAndState(memberId, formState) {
+    if (memberId) {
+      this.setState({ memberId: null, validMember: false });
+    }
+    this.props.handleEditMember(memberId, formState);
   }
 
   resetAll() {
@@ -238,6 +246,7 @@ class Manage extends Component {
                     isValid={this.state.validMember}
                     memberId={this.state.memberId}
                     colorsInUse={colorsInUse}
+                    handleEditMember={this.handleEditMemberAndState}
                   />
                 </div>
                 <div className="manage-form-nav">
@@ -267,6 +276,7 @@ Manage.propTypes = {
   loadArtists: PropTypes.func.isRequired,
   loadColors: PropTypes.func.isRequired,
   loadMembers: PropTypes.func.isRequired,
+  handleEditMember: PropTypes.func.isRequired,
   handleResyncDB: PropTypes.func.isRequired,
   resetManage: PropTypes.func.isRequired,
   saveManage: PropTypes.func.isRequired,

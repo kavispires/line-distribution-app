@@ -13,16 +13,17 @@ import utils from '../../../../utils';
 import constants from '../../../../utils/constants';
 
 const ManageMembers = ({
+  formState,
   props,
   colorsInUse,
   defaultValues,
+  handleEditMember,
   isValid,
   memberId,
   validateTypeahead,
 }) => {
   const {
     admin: { membersTypeahead, panels },
-    handleEditMember,
     removeMember,
     updateMemberColor,
     // updateMemberPositions,
@@ -204,7 +205,7 @@ const ManageMembers = ({
           <h3 className="manage-form__button-title">Add new member</h3>
           <button
             className="manage-form__button-add"
-            onClick={() => handleEditMember(memberId)}
+            onClick={() => handleEditMember(memberId, formState)}
           >
             <img
               className="manage-form__button-add-image"
@@ -232,7 +233,9 @@ const ManageMembers = ({
 
 ManageMembers.propTypes = {
   admin: PropTypes.object,
+  colorsInUse: PropTypes.object,
   defaultValues: PropTypes.array.isRequired,
+  formState: PropTypes.object.isRequired,
   handleEditMember: PropTypes.func,
   isValid: PropTypes.bool.isRequired,
   memberId: PropTypes.string,
@@ -245,6 +248,7 @@ ManageMembers.propTypes = {
 
 ManageMembers.defaultProps = {
   admin: {},
+  colorsInUse: {},
   handleEditMember: () => {},
   memberId: null,
   removeMember: () => {},

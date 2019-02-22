@@ -51,7 +51,7 @@ const handleEditUnit = unitId => (dispatch, getState) => {
   dispatch(actions.setPanels(panels));
 };
 
-const handleEditMember = memberId => (dispatch, getState) => {
+const handleEditMember = (memberId, formState) => (dispatch, getState) => {
   const editingMembers = [...getState().admin.editingMembers];
   if (memberId) {
     const { members } = getState().admin;
@@ -65,9 +65,17 @@ const handleEditMember = memberId => (dispatch, getState) => {
     editingMembers.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
     dispatch(actions.setColorsInUse(colorsInUse));
   } else {
+    let lastMember = editingMembers[editingMembers.length - 1] || false;
+    if (lastMember && formState.values.members) {
+      lastMember =
+        formState.values.members[formState.values.members.length - 1];
+    }
+
     editingMembers.push({
       new: true,
       positions: [],
+      gender: lastMember.gender || undefined,
+      nationality: lastMember.nationality || undefined,
     });
     dispatch(actions.setEditingMembers(editingMembers));
   }
