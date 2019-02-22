@@ -741,9 +741,11 @@ input:checked + .slider:before {
 }
 
 .artist-page__members-list {
+  width: 100%;
   display: flex;
   list-style: none;
   padding-left: 0;
+  flex-wrap: wrap;
 }
 
 .artist-page__member-pill {
@@ -751,6 +753,7 @@ input:checked + .slider:before {
   padding: 3px 6px;
   border-radius: 3px;
   margin-right: 6px;
+  margin-bottom: 3px;
 }
 
 .unit-section__top {

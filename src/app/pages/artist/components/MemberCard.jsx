@@ -22,12 +22,12 @@ const MemberCard = ({ favoriteState, member, updateFavoriteMembers }) => {
       <span className="card__color-bar">
         <span
           className={`card__color-bar--main background-color-${utils.getColorNumber(
-            member.colorId.number
+            member.colorId
           )}`}
         />
         <span
           className={`card__color-bar--alt background-color-${utils.getColorNumber(
-            member.altColorId.number
+            member.altColorId
           )}`}
         />
       </span>

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import constants from '../../../../utils/constants';
 // Import images
 import biasPlaceholder from '../../../../images/bias-placeholder.svg';
+// Import utility functions
+import utils from '../../../../utils';
 
 class BiasPicture extends Component {
   constructor() {
@@ -36,9 +38,9 @@ class BiasPicture extends Component {
     if (this.state.failed) {
       return (
         <div
-          className={`unit-section__bias-no-picture background-color-${
-            bias.color.number
-          }`}
+          className={`unit-section__bias-no-picture background-color-${utils.getColorNumber(
+            bias.colorId
+          )}`}
         >
           <span>{bias.name}</span>
         </div>
