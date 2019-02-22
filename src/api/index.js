@@ -1058,7 +1058,7 @@ const deleteFunctions = {
 const resyncFunctions = {
   parse: database => {
     // Run reseters
-    resyncFunctions.resetAristsUnits(database);
+    resyncFunctions.resetAristsArrays(database);
     resyncFunctions.resetMemberPositions(database);
     // Run parsers
     resyncFunctions.parseUnits(database);
@@ -1066,8 +1066,12 @@ const resyncFunctions = {
     resyncFunctions.parseArtists(database);
     resyncFunctions.parseDistributions(database);
   },
-  resetAristsUnits: database => {
-    Object.values(database.artists).forEach(artist => (artist.units = []));
+  resetAristsArrays: database => {
+    Object.values(database.artists).forEach(artist => {
+      artist.units = [];
+      artist.memberIds = [];
+      artist.memberList = [];
+    });
   },
   resetMemberPositions: database => {
     Object.values(database.members).forEach(member => (member.positions = []));
