@@ -19,9 +19,11 @@
   }
 
   &__members-list {
+    width: 100%;
     display: flex;
     list-style: none;
     padding-left: 0;
+    flex-wrap: wrap;
   }
 
   &__member-pill {
@@ -29,6 +31,7 @@
     padding: $unit-p4 $unit-p2;
     border-radius: $unit-p4;
     margin-right: $unit-p2;
+    margin-bottom: $unit-p4;
   }
 }
 

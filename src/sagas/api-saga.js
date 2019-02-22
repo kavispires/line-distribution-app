@@ -1,10 +1,11 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
 
 import API from '../api';
 
 import { types } from '../reducers';
 import utils from '../utils';
+import constants from '../utils/constants';
 
 // Delay helper to make API look more realistic
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -93,7 +94,7 @@ function* requestArtist(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { artistId, state } = action;
+  const { artistId, panels, state } = action;
   let { queryParams } = action;
 
   let selectedArtist = {};
@@ -144,7 +145,24 @@ function* requestArtist(action) {
   // Just send artist if dealing with Manage Artist
   if (state === 'edit') {
     selectedArtist.state = 'edit';
+
+    const unitsTypeahead = [];
+    const unitsTypeaheadDict = {};
+
+    selectedArtist.units.forEach(unit => {
+      unitsTypeahead.push(unit.name);
+      unitsTypeaheadDict[unit.name] = unit.id;
+    });
+    yield put({ type: types.SET_UNITS_TYPEAHEAD, payload: unitsTypeahead });
+    yield put({
+      type: types.SET_UNITS_TYPEAHEAD_DICT,
+      payload: unitsTypeaheadDict,
+    });
+
+    selectedArtist.genre = constants.GENRES_DB[selectedArtist.genre];
+
     yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
+    yield put({ type: types.SET_PANELS, payload: panels });
   } else {
     // Fetch complete unit for default unit
     const selectedUnit = yield call(requestUnit, {
@@ -275,6 +293,61 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   return unit;
 }
 
+function* requestUnitMembers({ type, unitId, panels }) {
+  yield put({ type: 'PENDING', actionType: type });
+  yield delay(DELAY_DURATION);
+
+  let members = [];
+  if (unitId) {
+    try {
+      const response = yield API.get(`/units/${unitId}/members`);
+      members = response.data;
+    } catch (error) {
+      yield put({
+        type: 'ERROR',
+        message: [
+          `Unable to load members from unit ${unitId} from database`,
+          error.toString(),
+        ],
+        actionType: type,
+      });
+    }
+  }
+
+  // Make colors in use dict
+  const colorsInUse = {};
+  members.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
+
+  yield put({ type: types.SET_COLORS_IN_USE, payload: colorsInUse });
+  yield put({ type: types.SET_EDITING_MEMBERS, payload: members });
+  yield put({ type: types.SET_PANELS, payload: panels });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: type });
+  return members;
+}
+
+function* resyncDatabase(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    yield API.resyncDatabase();
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [`Unable to resync database`, error.toString()],
+      actionType: action.type,
+    });
+  }
+
+  // When done, re-request artists, colors, and members
+  yield put({ type: 'REQUEST_ARTISTS' });
+  yield put({ type: 'REQUEST_COLORS' });
+  yield put({ type: 'REQUEST_MEMBERS' });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 function* runLogin(action) {
   yield put({ type: 'PENDING', actionType: action.type });
 
@@ -329,6 +402,124 @@ function* runLogout(action) {
       actionType: action.type,
     });
   }
+}
+
+function* updateCompleteArtist(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const { artist, members, unit } = action;
+
+  // Save Members
+  const receivedMembers = yield all(
+    members.map((member, index) =>
+      call(updateMember, {
+        type: `UPDATE_MEMBER_${index}`,
+        member,
+        referenceArtist: artist.name,
+      })
+    )
+  );
+
+  // Prepare Unit Members Data
+  let unitMembers = {};
+  receivedMembers.forEach(member => {
+    unitMembers = {
+      ...unitMembers,
+      ...member.positions,
+    };
+  });
+
+  yield delay(DELAY_DURATION);
+
+  // Save Artist
+  let receivedArtist;
+  try {
+    if (artist.id) {
+      // Update member if it has an id
+      receivedArtist = yield API.put(`/artists/${artist.id}`, artist);
+    } else {
+      // Create member if it does not have an id
+      receivedArtist = yield API.post('/artists', artist);
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing artist ${
+        artist.id ? artist.id : artist.name
+      } ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+
+  yield delay(DELAY_DURATION);
+
+  // Save unit
+  unit.members = unitMembers;
+  unit.artistId = receivedArtist.data.id;
+  let receivedUnit;
+
+  try {
+    if (unit.id) {
+      // Update member if it has an id
+      receivedUnit = yield API.put(`/units/${unit.id}`, unit);
+    } else {
+      // Create member if it does not have an id
+      receivedUnit = yield API.post('/units', unit);
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing unit ${
+        unit.id ? unit.id : artist.name
+      } ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+
+  yield delay(DELAY_DURATION);
+
+  yield put({ type: 'SET_MANAGE_RESULT', payload: 'SUCCESS' });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+  return receivedUnit;
+}
+
+function* updateMember(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const { member, referenceArtist } = action;
+
+  let response;
+  try {
+    if (member.id) {
+      // Update member if it has an id
+      response = yield API.put(`/members/${member.id}`, member);
+    } else {
+      // Create member if it does not have an id
+      response = yield API.post('/members', {
+        ...member,
+        referenceArtist,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing member ${
+        member.id ? member.id : member.name
+      } ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+
+  response.data.positions = {};
+  member.positions.forEach(pos => {
+    response.data.positions[`${response.data.id}:${member.name}:${pos}`] = true;
+  });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+  return response.data;
 }
 
 function* updateUserBiases(action) {
@@ -400,8 +591,11 @@ function* apiSaga() {
   yield takeLatest('REQUEST_COLORS', requestColors);
   yield takeLatest('REQUEST_MEMBERS', requestMembers);
   yield takeLatest('REQUEST_UNIT', requestUnit);
+  yield takeLatest('REQUEST_UNIT_MEMBERS', requestUnitMembers);
+  yield takeLatest('RESYNC_DATABASE', resyncDatabase);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
   yield takeLatest('UPDATE_USER_FAVORITE_MEMBERS', updateUserFavoriteMembers);

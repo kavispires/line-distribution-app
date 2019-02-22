@@ -1,4 +1,5 @@
-$header_height: 36px;
+$header_height: 48px;
+$header_height_logo: 36px;
 
 .dropdown {
   display: none;
@@ -38,6 +39,7 @@ $header_height: 36px;
   padding: $padding;
   background-color: $color-primary;
   background: linear-gradient(to right, #000000, #000d71);
+  height: $header_height;
 }
 
 .header-nav {
@@ -46,7 +48,7 @@ $header_height: 36px;
   align-items: center;
 
   &__logo {
-    height: $header_height;
+    height: $header_height_logo;
     margin-right: $unit;
     cursor: pointer;
   }

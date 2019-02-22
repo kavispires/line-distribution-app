@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Import components
@@ -12,7 +12,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <Menu
           auth={this.props.auth}
           history={this.props.history}
@@ -21,7 +21,7 @@ class App extends Component {
           logout={this.props.logout}
         />
         {this.props.app.loading ? <LoadingBar /> : null}
-      </div>
+      </Fragment>
     );
   }
 }

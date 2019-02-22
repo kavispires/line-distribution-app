@@ -245,7 +245,7 @@ const humanize = (string, option = 'Sentence') => {
   string = string.toLowerCase();
 
   // Remove _ or -
-  string = string.replace(/([\-|\_])/g, ' ');
+  string = string.replace(/([\-|\_])/g, ' '); // eslint-disable-line
 
   function captalizeFirstLetter(word) {
     return word[0].toUpperCase() + word.substring(1);
@@ -272,7 +272,7 @@ const camelCase = string => {
   string = string.toLowerCase();
 
   // Remove _ or -
-  string = string.replace(/([\-|\_])/g, ' ');
+  string = string.replace(/([\-|\_])/g, ' '); // eslint-disable-line
 
   return string
     .split(' ')
@@ -283,16 +283,50 @@ const camelCase = string => {
     .join('');
 };
 
+const spiralCase = string => {
+  if (typeof string !== 'string') {
+    throw new Error('String used in humanize is not a string');
+  }
+
+  string = string.toLowerCase();
+
+  // Remove _ or ' ' or :
+  return string.replace(/([\-\_\ \:])/g, '-'); // eslint-disable-line
+};
+
+const getColorNumber = (colorId = 'col000000') => Number(colorId.substring(7));
+
+const spiralBirthdate = date => {
+  const dateStr = date.toString();
+  return `${dateStr.substring(0, 4)}-${dateStr.substring(
+    4,
+    6
+  )}-${dateStr.substring(6)}`;
+};
+
+const makePositionsEditable = positions => {
+  const result = {};
+  positions.forEach(position => {
+    const pos = spiralCase(position);
+    result[pos] = pos;
+  });
+  return result;
+};
+
 export default {
   bem,
   camelCase,
   capitalizeWord,
   ensureColorUniqueness,
+  getColorNumber,
   humanize,
+  makePositionsEditable,
   parseBirthDate,
   parseQueryParams,
   parseArrayToObject,
   parseResponse,
   parseResponseToObject,
+  spiralBirthdate,
+  spiralCase,
   spinalCaseWord,
 };

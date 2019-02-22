@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import logo from '../../../../images/logo-alt.svg';
 
-import { YOUTUBE_URLS } from '../../../../utils/constants';
+import constants from '../../../../utils/constants';
 
 // Import common components
 import { Icon } from '../../../common';
@@ -11,7 +11,9 @@ import { Icon } from '../../../common';
 const Home = props => {
   // Randomly choose one video in the playlist
   const youtubeUrl =
-    YOUTUBE_URLS[Math.floor(Math.random() * YOUTUBE_URLS.length)];
+    constants.YOUTUBE_URLS[
+      Math.floor(Math.random() * constants.YOUTUBE_URLS.length)
+    ];
 
   const handleLearnMoreClick = () => {
     props.history.push('/learn-more');

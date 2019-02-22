@@ -3,6 +3,13 @@ $colorCodes: #d01f3c, #ce311b, #ff6347, #ffa07a, #9a5827, #ff8e2a, #e2b631,
   #15aa98, #83eeea, #39badd, #285986, #406fff, #7391ff, #7b68ee, #a177ef,
   #f7d0ff, #9e35ae, #fc6be9, #9c1465, #e62e8a, #983c4b, #ffabb9;
 
+$colorNames: 'col000001', 'col000002', 'col000003', 'col000004', 'col000005',
+  'col000006', 'col000007', 'col000008', 'col000009', 'col000010', 'col000011',
+  'col000012', 'col000013', 'col000014', 'col000015', 'col000016', 'col000017',
+  'col000018', 'col000019', 'col000020', 'col000021', 'col000022', 'col000023',
+  'col000024', 'col000025', 'col000026', 'col000027', 'col000028', 'col000029',
+  'col000030';
+
 @for $i from 1 through length($colorCodes) {
   .background-color-#{$i} {
     background-color: #{nth($colorCodes, $i)} !important;

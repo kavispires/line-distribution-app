@@ -3,13 +3,23 @@ import types from './types';
 const initialState = {
   artists: [],
   artistsTypeahead: [],
+  artistsTypeaheadDict: {},
   colors: {},
+  colorsInUse: {},
   editingArtist: {},
   editingMembers: [],
   editingUnit: {},
+  manageResult: null,
   members: [],
   membersTypeahead: [],
+  panels: {
+    artist: 'open',
+    unit: 'locked',
+    members: 'locked',
+  },
   uiReferenceTab: null,
+  unitsTypeahead: [],
+  unitsTypeaheadDict: {},
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -32,6 +42,10 @@ export default function reducer(prevState = initialState, action) {
       newState.colors = action.payload;
       break;
 
+    case types.SET_COLORS_IN_USE:
+      newState.colorsInUse = action.payload;
+      break;
+
     case types.SET_EDITING_ARTIST:
       newState.editingArtist = action.payload;
       break;
@@ -42,6 +56,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_EDITING_UNIT:
       newState.editingUnit = action.payload;
+      break;
+
+    case types.SET_MANAGE_RESULT:
+      newState.manageResult = action.payload;
       break;
 
     case types.SET_MEMBERS:
@@ -56,8 +74,20 @@ export default function reducer(prevState = initialState, action) {
       newState.membersTypeaheadDict = action.payload;
       break;
 
+    case types.SET_PANELS:
+      newState.panels = action.payload;
+      break;
+
     case types.SET_UI_REFERENCE_TAB:
       newState.uiReferenceTab = action.payload;
+      break;
+
+    case types.SET_UNITS_TYPEAHEAD:
+      newState.unitsTypeahead = action.payload;
+      break;
+
+    case types.SET_UNITS_TYPEAHEAD_DICT:
+      newState.unitsTypeaheadDict = action.payload;
       break;
 
     default:

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { PROFILE_PICTURE_URL } from '../../../../utils/constants';
+import constants from '../../../../utils/constants';
 
 class MemberPicture extends Component {
   constructor() {
@@ -12,16 +12,15 @@ class MemberPicture extends Component {
   }
 
   render() {
-    const pictureUrl = `${process.env.PUBLIC_URL}${PROFILE_PICTURE_URL}${
-      this.props.name
-    }${this.props.memberId}.jpg`;
+    const pictureUrl = `${process.env.PUBLIC_URL}${
+      constants.PROFILE_PICTURE_URL
+    }${this.props.name}${this.props.memberId}.jpg`;
 
     const gender = this.props.gender === 'female' ? 'f' : 'm';
 
-    const pictureFallback = `${
-      process.env.PUBLIC_URL
-    }${PROFILE_PICTURE_URL}-profile-${gender}-${Math.floor(Math.random() * 5) +
-      1}.jpg`;
+    const pictureFallback = `${process.env.PUBLIC_URL}${
+      constants.PROFILE_PICTURE_URL
+    }-profile-${gender}-${Math.floor(Math.random() * 5) + 1}.jpg`;
 
     if (this.state.failed) {
       return (

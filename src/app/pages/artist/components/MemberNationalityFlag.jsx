@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FLAGS_LIST, NATIONALITY_FLAG_URL } from '../../../../utils/constants';
+import constants from '../../../../utils/constants';
 
 const MemberNationaltyFlag = ({ nationality }) => {
-  const flag = FLAGS_LIST[nationality];
+  const flag = constants.FLAGS_LIST[nationality];
 
-  let flagUrl = `${process.env.PUBLIC_URL}${NATIONALITY_FLAG_URL}unknown.jpg`;
+  let flagUrl = `${process.env.PUBLIC_URL}${
+    constants.NATIONALITY_FLAG_URL
+  }unknown.jpg`;
 
   if (flag) {
-    flagUrl = `${process.env.PUBLIC_URL}${NATIONALITY_FLAG_URL}${flag}.jpg`;
+    flagUrl = `${process.env.PUBLIC_URL}${
+      constants.NATIONALITY_FLAG_URL
+    }${flag}.jpg`;
   }
 
   return <img className="card__flag" src={flagUrl} alt={nationality} />;

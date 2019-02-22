@@ -90,7 +90,7 @@ const Menu = ({ auth, history, location, login, logout }) => {
             <Link to="/user/my-artists">My Artists</Link>
             <Link to="/user/my-distributions">My Distributions</Link>
             <hr />
-            <a href="#" onClick={logout}>
+            <a href="/" onClick={logout}>
               Sign out <Icon type="logout" inline />
             </a>
           </div>

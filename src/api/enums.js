@@ -21,6 +21,7 @@ export const NATIONALITIES = {
   KOREAN: 'Korean',
   OTHER: 'Other',
   THAI: 'Thai',
+  VIETNAMISE: 'Vietnamise',
 };
 
 export const POSITIONS = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT_COLORS } from '../../../utils/constants';
+import constants from '../../../utils/constants';
 import ICONS from '../../../utils/icons';
 
 const Icon = ({ type, size, color, inline }) => {
@@ -14,7 +14,7 @@ const Icon = ({ type, size, color, inline }) => {
       margin,
     },
     path: {
-      fill: DEFAULT_COLORS[color],
+      fill: constants.DEFAULT_COLORS[color],
     },
   };
 
