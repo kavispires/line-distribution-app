@@ -202,7 +202,7 @@ class Manage extends Component {
     }
 
     return (
-      <RequirementWrapper requirements={['manage']}>
+      <RequirementWrapper>
         <main className="container container--manage">
           <h1>Manage</h1>
           <button className="btn btn-resync-db" onClick={handleResyncDB}>
