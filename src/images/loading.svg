@@ -1,124 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-   viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-<style type="text/css">
-  .st0{fill:#2776FA;}
-  .st1{fill:#8EC11F;}
-  .st2{fill:#1DAC9B;}
-  .st3{fill:#8B77F0;}
-  .st4{fill:#D6183D;}
-  .st5{fill:#FB79EC;}
-  .st6{fill:#273032;}
-  .st7{fill:#FEE702;}
-  .st8{fill:#FE9931;}
-</style>
-<path class="st0" d="M29.8,18.5c0,2.7-0.1,5.5,0,8.2c0.1,2.3-0.9,3.5-3.2,3.5c-5.7,0-11.4,0.1-17.1,0c-2,0-3.2-1.1-3.2-3.1
-  c0-5.7,0-11.4,0-17.1c0-2.3,1.2-3.3,3.4-3.3c5.6,0,11.2,0,16.7,0c2.2,0,3.4,1,3.3,3.3C29.8,12.8,29.8,15.6,29.8,18.5z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="5s"
-      repeatCount="indefinite"
-      begin="0s"
-    />
-</path>
-<path class="st1" d="M70.2,18.1c0-2.7,0-5.5,0-8.2c-0.1-2.3,1.1-3.4,3.3-3.4c5.6,0,11.2,0,16.7,0c2.4,0,3.5,1.2,3.5,3.6
-  c-0.1,5.5,0,10.9,0,16.4c0,2.5-1.2,3.6-3.6,3.6c-5.5,0-10.9,0-16.4,0c-2.6,0-3.7-1.3-3.6-3.9C70.3,23.6,70.2,20.8,70.2,18.1z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.1s"
-    />
-</path>
-<path class="st2" d="M6.4,81.6c0-2.7,0-5.5,0-8.2c0-2.5,1.2-3.6,3.5-3.6c5.5,0,10.9,0,16.4,0c2.6,0,3.7,1.3,3.6,3.9
-  c-0.1,5.3-0.1,10.6,0,16c0,2.7-1.1,3.8-3.7,3.8c-5.3,0-10.6-0.1-16,0c-2.8,0-4-1.3-3.9-4.1C6.4,86.8,6.4,84.2,6.4,81.6z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.2s"
-    />
-</path>
-<path class="st3" d="M70.2,81.3c0-2.6,0.1-5.2,0-7.8c-0.1-2.7,1.2-3.8,3.7-3.8c5.2,0,10.4,0,15.6,0c2.8,0,4.3,1.2,4.2,4.3
-  c-0.1,5.2-0.1,10.4,0,15.6c0,2.8-1.3,4-4,4c-5.2-0.1-10.4,0-15.6,0c-2.8,0-4-1.2-3.9-4C70.3,86.8,70.2,84.1,70.2,81.3z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.7s"
-    />
-</path>
-<path class="st4" d="M61.7,18.5c0,2.6-0.1,5.2,0,7.8c0.1,2.6-1,3.9-3.6,3.9c-5.5,0-10.9,0-16.4,0c-2.3,0-3.6-1-3.5-3.5
-  c0.1-5.4,0.1-10.9,0-16.4c-0.1-2.7,1.3-3.7,3.8-3.7c5.3,0,10.6,0,16,0c2.6,0,3.9,1,3.7,3.7C61.6,13,61.7,15.7,61.7,18.5z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.8s"
-    />
-</path>
-<path class="st5" d="M61.7,81.6c0,2.7,0,5.4,0,8.2c0,2.6-1.2,3.8-3.8,3.8c-5.3,0-10.6,0-16,0c-2.6,0-3.8-1.3-3.7-3.9
-  c0.1-5.3,0.1-10.6,0-16c-0.1-2.9,1.5-4,4-4.1c5.2-0.1,10.4-0.1,15.6,0c2.6,0,4.1,1.2,3.9,4.1C61.6,76.4,61.7,79,61.7,81.6z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.3s"
-    />
-</path>
-<path class="st6" d="M61.7,50.2c0,2.6-0.1,5.2,0,7.8c0.1,2.6-0.9,3.8-3.6,3.8c-5.4-0.1-10.9-0.1-16.4,0c-2.5,0-3.5-1.1-3.5-3.5
-  c0.1-5.5,0.1-10.9,0-16.4c0-2.4,0.9-3.6,3.4-3.6c5.5,0.1,10.9,0.1,16.4,0c2.7,0,3.8,1.1,3.7,3.7C61.6,44.7,61.7,47.5,61.7,50.2z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.6s"
-    />
-</path>
-<path class="st7" d="M29.8,50.1c0,2.7,0,5.5,0,8.2c0,2.2-0.8,3.4-3.2,3.4c-5.6,0-11.2,0-16.8,0c-2.2,0-3.4-1-3.4-3.3
-  c0-5.6,0-11.2,0-16.8c0-2.2,1-3.4,3.3-3.4c5.6,0,11.2,0,16.8,0c2.3,0,3.4,1,3.3,3.3C29.8,44.4,29.8,47.3,29.8,50.1z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.5s"
-    />
-</path>
-<path class="st8" d="M70.2,49.7c0-2.6,0.1-5.2,0-7.8c-0.1-2.4,0.8-3.7,3.4-3.6c5.5,0.1,10.9,0.1,16.4,0c2.4,0,3.7,1,3.7,3.4
-  c0,5.5,0,10.9,0,16.4c0,2.7-1.3,3.7-3.9,3.6c-5.3-0.1-10.7-0.1-16,0c-2.4,0-3.6-0.9-3.6-3.5C70.3,55.4,70.2,52.6,70.2,49.7z">
-    <animate
-      attributeName="opacity"
-      attributeType="css"
-      from="0"
-      to="1"
-      dur="3s"
-      repeatCount="indefinite"
-      begin="0.4s"
-    />
-</path>
+  <!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+  <style type="text/css">
+    .blue {
+      fill:#2776FA;
+      animation: blue-animation 1.5s ease-in-out infinite;
+    }
+    .red {
+      fill:#D6183D;
+      animation: red-animation 1.5s ease-in-out infinite;
+    }
+    .green {
+      fill:#8EC11F;
+      animation: green-animation 1.5s ease-in-out infinite;
+    }
+    .orange {
+      fill:#FE9931;
+      animation: orange-animation 1.5s ease-in-out infinite;
+    }
+    .purple {
+      fill:#8B77F0;
+      animation: purple-animation 1.5s ease-in-out infinite;
+    }
+    .pink {
+      fill:#FB79EC;
+      animation: pink-animation 1.5s ease-in-out infinite;
+    }
+    .teal {
+      fill:#1DAC9B;
+      animation: teal-animation 1.5s ease-in-out infinite;
+    }
+    .yellow {
+      fill:#FEE702;
+      animation: yellow-animation 1.5s ease-in-out infinite;
+    }
+    .black {
+      fill:#273032;
+      animation: black-animation 1.5s ease-in-out infinite;
+    }
+
+
+    @keyframes blue-animation {
+      0% { opacity: 0; }
+      0% { opacity: 0; }
+      7% { opacity: 1; }
+      50% { opacity: 1; }
+      57% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes red-animation {
+      0% { opacity: 0; }
+      7% { opacity: 0; }
+      14% { opacity: 1; }
+      57% { opacity: 1; }
+      64% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes green-animation {
+      0% { opacity: 0; }
+      14% { opacity: 0; }
+      21% { opacity: 1; }
+      64% { opacity: 1; }
+      71% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes orange-animation {
+      0% { opacity: 0; }
+      21% { opacity: 0; }
+      28% { opacity: 1; }
+      71% { opacity: 1; }
+      78% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes purple-animation {
+      0% { opacity: 0; }
+      28% { opacity: 0; }
+      35% { opacity: 1; }
+      78% { opacity: 1; }
+      85% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes pink-animation {
+      0% { opacity: 0; }
+      35% { opacity: 0; }
+      42% { opacity: 1; }
+      85% { opacity: 1; }
+      92% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes teal-animation {
+      0% { opacity: 0; }
+      42% { opacity: 0; }
+      49% { opacity: 1; }
+      92% { opacity: 1; }
+      99% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes yellow-animation {
+      0% { opacity: .86; }
+      6% { opacity: 0; }
+      49% { opacity: 0; }
+      56% { opacity: 1; }
+      99% { opacity: 1; }
+      100% { opacity: .86; }
+
+    }
+    @keyframes black-animation {
+      6% { opacity: 1; }
+      13% { opacity: 0; }
+      56% { opacity: 0; }
+      63% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+  </style>
+   <path class="blue" d="M29.8,18.5c0,2.7-0.1,5.5,0,8.2c0.1,2.3-0.9,3.5-3.2,3.5c-5.7,0-11.4,0.1-17.1,0c-2,0-3.2-1.1-3.2-3.1
+    c0-5.7,0-11.4,0-17.1c0-2.3,1.2-3.3,3.4-3.3c5.6,0,11.2,0,16.7,0c2.2,0,3.4,1,3.3,3.3C29.8,12.8,29.8,15.6,29.8,18.5z">
+  </path>
+    <path class="red" d="M61.7,18.5c0,2.6-0.1,5.2,0,7.8c0.1,2.6-1,3.9-3.6,3.9c-5.5,0-10.9,0-16.4,0c-2.3,0-3.6-1-3.5-3.5
+    c0.1-5.4,0.1-10.9,0-16.4c-0.1-2.7,1.3-3.7,3.8-3.7c5.3,0,10.6,0,16,0c2.6,0,3.9,1,3.7,3.7C61.6,13,61.7,15.7,61.7,18.5z">
+  </path>
+  <path class="green" d="M70.2,18.1c0-2.7,0-5.5,0-8.2c-0.1-2.3,1.1-3.4,3.3-3.4c5.6,0,11.2,0,16.7,0c2.4,0,3.5,1.2,3.5,3.6
+    c-0.1,5.5,0,10.9,0,16.4c0,2.5-1.2,3.6-3.6,3.6c-5.5,0-10.9,0-16.4,0c-2.6,0-3.7-1.3-3.6-3.9C70.3,23.6,70.2,20.8,70.2,18.1z">
+  </path>
+  <path class="orange" d="M70.2,49.7c0-2.6,0.1-5.2,0-7.8c-0.1-2.4,0.8-3.7,3.4-3.6c5.5,0.1,10.9,0.1,16.4,0c2.4,0,3.7,1,3.7,3.4
+    c0,5.5,0,10.9,0,16.4c0,2.7-1.3,3.7-3.9,3.6c-5.3-0.1-10.7-0.1-16,0c-2.4,0-3.6-0.9-3.6-3.5C70.3,55.4,70.2,52.6,70.2,49.7z">
+  </path>
+  <path class="purple" d="M70.2,81.3c0-2.6,0.1-5.2,0-7.8c-0.1-2.7,1.2-3.8,3.7-3.8c5.2,0,10.4,0,15.6,0c2.8,0,4.3,1.2,4.2,4.3
+    c-0.1,5.2-0.1,10.4,0,15.6c0,2.8-1.3,4-4,4c-5.2-0.1-10.4,0-15.6,0c-2.8,0-4-1.2-3.9-4C70.3,86.8,70.2,84.1,70.2,81.3z">
+  </path>
+  <path class="pink" d="M61.7,81.6c0,2.7,0,5.4,0,8.2c0,2.6-1.2,3.8-3.8,3.8c-5.3,0-10.6,0-16,0c-2.6,0-3.8-1.3-3.7-3.9
+    c0.1-5.3,0.1-10.6,0-16c-0.1-2.9,1.5-4,4-4.1c5.2-0.1,10.4-0.1,15.6,0c2.6,0,4.1,1.2,3.9,4.1C61.6,76.4,61.7,79,61.7,81.6z">
+  </path>
+  <path class="teal" d="M6.4,81.6c0-2.7,0-5.5,0-8.2c0-2.5,1.2-3.6,3.5-3.6c5.5,0,10.9,0,16.4,0c2.6,0,3.7,1.3,3.6,3.9
+    c-0.1,5.3-0.1,10.6,0,16c0,2.7-1.1,3.8-3.7,3.8c-5.3,0-10.6-0.1-16,0c-2.8,0-4-1.3-3.9-4.1C6.4,86.8,6.4,84.2,6.4,81.6z">
+  </path>
+  <path class="yellow" d="M29.8,50.1c0,2.7,0,5.5,0,8.2c0,2.2-0.8,3.4-3.2,3.4c-5.6,0-11.2,0-16.8,0c-2.2,0-3.4-1-3.4-3.3
+    c0-5.6,0-11.2,0-16.8c0-2.2,1-3.4,3.3-3.4c5.6,0,11.2,0,16.8,0c2.3,0,3.4,1,3.3,3.3C29.8,44.4,29.8,47.3,29.8,50.1z">
+  </path>
+  <path class="black" d="M61.7,50.2c0,2.6-0.1,5.2,0,7.8c0.1,2.6-0.9,3.8-3.6,3.8c-5.4-0.1-10.9-0.1-16.4,0c-2.5,0-3.5-1.1-3.5-3.5
+    c0.1-5.5,0.1-10.9,0-16.4c0-2.4,0.9-3.6,3.4-3.6c5.5,0.1,10.9,0.1,16.4,0c2.7,0,3.8,1.1,3.7,3.7C61.6,44.7,61.7,47.5,61.7,50.2z">
+  </path>
 </svg>
