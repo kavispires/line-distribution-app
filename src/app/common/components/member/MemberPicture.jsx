@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import constants from '../../../../utils/constants';
+import utils from '../../../../utils';
 
 class MemberPicture extends Component {
   constructor() {
@@ -16,16 +17,19 @@ class MemberPicture extends Component {
       constants.PROFILE_PICTURE_URL
     }${this.props.name}${this.props.memberId}.jpg`;
 
-    const gender = this.props.gender === 'female' ? 'f' : 'm';
+    const gender = this.props.gender === 'FEMALE' ? 'f' : 'm';
+
+    const colorNumber = utils.getColorNumber(this.props.colorId);
+    const profilePlaceholderCode = (colorNumber % 5) + 1;
 
     const pictureFallback = `${process.env.PUBLIC_URL}${
       constants.PROFILE_PICTURE_URL
-    }-profile-${gender}-${Math.floor(Math.random() * 5) + 1}.jpg`;
+    }profile-${gender}-${profilePlaceholderCode}.png`;
 
     if (this.state.failed) {
       return (
         <img
-          className={this.props.className}
+          className={`${this.props.className} background-color-${colorNumber}`}
           src={pictureFallback}
           alt="Member"
         />
@@ -44,15 +48,15 @@ class MemberPicture extends Component {
 
 MemberPicture.propTypes = {
   className: PropTypes.string,
-  gender: PropTypes.string,
+  colorId: PropTypes.string.isRequired,
+  gender: PropTypes.string.isRequired,
   memberId: PropTypes.string.isRequired,
   name: PropTypes.string,
 };
 
 MemberPicture.defaultProps = {
   className: 'card__profile-image',
-  gender: 'female',
-  name: '',
+  name: 'Unkown',
 };
 
 export default MemberPicture;

@@ -82,8 +82,11 @@ describe('API/Serializers', () => {
         id: '1',
         type: 'member',
         attributes: {
+          age: 0,
+          altColor: null,
           altColorId: null,
           birthdate: 0,
+          color: null,
           colorId: '2',
           createdBy: null,
           gender: 'UNKNOWN',

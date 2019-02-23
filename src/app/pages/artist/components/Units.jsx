@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 // Import components
 import BiasPicture from './BiasPicture';
-import MemberCard from './MemberCard';
 // Import common components
-import { Tabs, Icon, LoadingIcon } from '../../../common';
+import { Tabs, Icon, LoadingIcon, MemberCard } from '../../../common';
 
 class Units extends Component {
   componentDidMount() {
@@ -128,8 +127,9 @@ class Units extends Component {
                 <div className="unit-section__members">
                   {Object.values(selectedUnit.members).map(member => (
                     <MemberCard
-                      member={member}
+                      averages={{}}
                       key={member.id}
+                      member={member}
                       favoriteState={
                         auth.user.favoriteMembers &&
                         auth.user.favoriteMembers[member.id]

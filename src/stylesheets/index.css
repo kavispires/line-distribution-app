@@ -588,6 +588,14 @@ p {
   object-fit: fill;
   height: auto;
 }
+.card__profile-full-image {
+  display: block;
+  width: 100%;
+  -o-object-fit: fill;
+  object-fit: fill;
+  height: auto;
+  transition: height 0.3s ease-in-out;
+}
 .card__color-bar {
   width: 100%;
   display: flex;
@@ -914,6 +922,28 @@ input:checked + .slider:before {
 }
 .home__buttons .btn-home:hover {
   background: rgba(255, 255, 255, 0.5);
+}
+
+.idols__filter-group {
+  background: #ebebf2;
+  width: 100%;
+  padding: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.idols__filter-name {
+  margin-right: 6px;
+}
+
+.idols__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.idols__filter-label {
+  margin-left: 3px;
 }
 
 .manage-section {

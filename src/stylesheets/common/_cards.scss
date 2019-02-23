@@ -22,6 +22,14 @@
       height: auto;
     }
   }
+  &__profile-full-image {
+    display: block;
+    width: 100%;
+    -o-object-fit: fill;
+    object-fit: fill;
+    height: auto;
+    transition: height 0.3s ease-in-out;
+  }
 
   &__color-bar {
     width: 100%;
