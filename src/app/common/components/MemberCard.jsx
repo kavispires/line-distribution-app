@@ -14,11 +14,13 @@ const MemberCard = ({
   member,
   updateFavoriteMembers,
   averages,
-  displayId,
+  showId,
+  showReferenceArtist,
 }) => (
   <div className="card">
-    {displayId ? <p className="member-id">{}</p> : null}
+    {showId ? <p className="member-id">{member.id}</p> : null}
     <MemberPicture
+      className="card__profile-full-image"
       colorId={member.colorId}
       gender={member.gender}
       memberId={member.id}
@@ -45,37 +47,45 @@ const MemberCard = ({
         state={favoriteState}
       />
     </h3>
+    {showReferenceArtist ? (
+      <p>
+        <b>From </b> {member.referenceArtist}
+      </p>
+    ) : null}
+
     <p>
-      <b>Date of Birth:</b> {utils.parseBirthDate(member.birthdate)}
+      <b>Date of Birth:</b> {utils.parseBirthDate(member.birthdate)} ({
+        member.age
+      }yo)
     </p>
     <p>
-      <b>Nationality:</b>{' '}
+      <b>Nationality: </b>
       <MemberNationaltyFlag nationality={member.nationality} />
     </p>
     {averages ? (
       <Fragment>
         <p>
-          <b>Avg Official Songs:</b> 0%
+          <b>Avg Official Songs: </b>0%
         </p>
         <p>
-          <b>Avg Custom Songs:</b> 0%
+          <b>Avg Custom Songs: </b>0%
         </p>
         <p>
-          <b>Avg All Songs:</b> 0%
-        </p>
-        <p>
-          <b>Positions:</b>
+          <b>Avg All Songs: </b>0%
         </p>
       </Fragment>
     ) : null}
-
+    <p>
+      <b>Positions:</b>
+    </p>
     <MemberPositions memberID={member.memberId} positions={member.positions} />
   </div>
 );
 
 MemberCard.propTypes = {
   averages: PropTypes.oneOfType(PropTypes.object, null),
-  displayId: PropTypes.bool,
+  showId: PropTypes.bool,
+  showReferenceArtist: PropTypes.bool,
   favoriteState: PropTypes.bool,
   member: PropTypes.object.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
@@ -83,7 +93,8 @@ MemberCard.propTypes = {
 
 MemberCard.defaultProps = {
   averages: null,
-  displayId: false,
+  showId: false,
+  showReferenceArtist: false,
   favoriteState: false,
 };
 

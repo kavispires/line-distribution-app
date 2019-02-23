@@ -200,3 +200,19 @@ export const ensureGenreEnum = genre => {
 
   return GENRES_TRANSFORM[genre.toUpperCase()];
 };
+
+const TODAY = Date.now();
+const ageDict = {};
+export const calculateAge = birthday => {
+  if (ageDict[birthday]) return ageDict[birthday];
+
+  const birthdateString = birthday.toString();
+  const birthDate = new Date(
+    +birthdateString.substring(0, 4),
+    +birthdateString.substring(4, 6),
+    +birthdateString.substring(6)
+  );
+  const ageDate = new Date(TODAY - birthDate.getTime());
+  ageDict[birthday] = Math.abs(ageDate.getUTCFullYear() - 1970);
+  return ageDict[birthday];
+};

@@ -5,14 +5,13 @@ import Header from './app/pages/header';
 import Home from './app/pages/home';
 import Artists from './app/pages/artists';
 import Artist from './app/pages/artist';
+import IdolsContainer from './app/pages/idols/';
 import UIReference from './app/pages/ui-reference';
 import Manage from './app/pages/manage';
 
 import DistributeContainer from './containers/DistributeContainer';
 import LabContainer from './containers/LabContainer';
 import LearnMoreContainer from './containers/LearnMoreContainer';
-import MemberContainer from './containers/MemberContainer';
-import MembersContainer from './containers/MembersContainer';
 import MyArtistsContainer from './containers/MyArtistsContainer';
 import MyDistributionsContainer from './containers/MyDistributionsContainer';
 import SongsContainer from './containers/SongsContainer';
@@ -30,8 +29,7 @@ const routes = (
       <Route path="/distribute" component={DistributeContainer} />
       <Route path="/lab" component={LabContainer} />
       <Route path="/learn-more" component={LearnMoreContainer} />
-      <Route path="/member/:memberId" component={MemberContainer} />
-      <Route path="/members" component={MembersContainer} />
+      <Route path="/idols" component={IdolsContainer} />
       <Route path="/songs" component={SongsContainer} />
 
       <Route path="/admin/manage" component={Manage} />

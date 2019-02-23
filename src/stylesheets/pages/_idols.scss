@@ -1,0 +1,23 @@
+.idols {
+  &__filter-group {
+    background: $color-gray-1;
+    width: 100%;
+    padding: $unit-p4;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__filter-name {
+    margin-right: $unit-p2;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__filter-label {
+    margin-left: $unit-p4;
+  }
+}

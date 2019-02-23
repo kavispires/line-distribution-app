@@ -4,6 +4,7 @@ import _ from 'lodash';
 import {
   buildArtistQuery,
   buildMemberInitials,
+  calculateAge,
   getNumberFromColorId,
   buildSongQuery,
 } from './utils';
@@ -68,6 +69,7 @@ export const serialize = {
       id: data.id || id,
       type: 'member',
       attributes: {
+        age: data.birthdate ? calculateAge(data.birthdate) : 0,
         altColorId: data.altColorId || null,
         altColor: data.altColor || null,
         birthdate: data.birthdate || 0,

@@ -48,10 +48,7 @@ const Menu = ({ auth, history, location, login, logout }) => {
           <Link to="/songs" className={pathname === '/songs' ? 'active' : ''}>
             Songs
           </Link>
-          <Link
-            to="/members"
-            className={pathname === '/members' ? 'active' : ''}
-          >
+          <Link to="/idols" className={pathname === '/idols' ? 'active' : ''}>
             Idols
           </Link>
           <Link to="/lab" className={pathname === '/lab' ? 'active' : ''}>

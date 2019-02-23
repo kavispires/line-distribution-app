@@ -114,7 +114,7 @@ const NATIONALITIES = {
   AMERICAN: 'American',
   BRAZILIAN: 'Brazilian',
   BRITISH: 'British',
-  CANADIAN: 'Canada',
+  CANADIAN: 'Canadian',
   CHINESE: 'Chinese',
   JAPANESE: 'Japanese',
   KOREAN: 'Korean',

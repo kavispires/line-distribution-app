@@ -9,6 +9,7 @@ import ManageUnit from './ManageUnit';
 import ManageMembers from './ManageMembers';
 // Import common components
 import { RequirementWrapper, Loading, Icon } from '../../../common';
+// Import utility functions
 import utils from '../../../../utils';
 
 class Manage extends Component {
