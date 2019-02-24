@@ -7,7 +7,7 @@ import MemberPicture from './member/MemberPicture';
 import MemberPositions from './member/MemberPositions';
 // Import utility functions
 import utils from '../../../utils';
-import { FavoriteIcon } from '..';
+import { FavoriteIcon, Icon } from '..';
 
 const MemberCard = ({
   favoriteState,
@@ -18,7 +18,12 @@ const MemberCard = ({
   showReferenceArtist,
 }) => (
   <div className="card">
-    {showId ? <p className="member-id">{member.id}</p> : null}
+    {showId ? (
+      <p className="member-id">
+        {member.name.toLowerCase()}
+        {member.id}
+      </p>
+    ) : null}
     <MemberPicture
       className={
         showReferenceArtist ? 'card__profile-full-image' : 'card__profile-image'
@@ -51,6 +56,9 @@ const MemberCard = ({
     </h3>
     {showReferenceArtist ? (
       <p>
+        {member.private ? (
+          <Icon type="private" color="red" inline title="private" size="18" />
+        ) : null}
         <b>From </b> {member.referenceArtist}
       </p>
     ) : null}

@@ -68,6 +68,7 @@ const MemberPositions = ({ memberId, positions }) => {
               className="card__position-icon"
               src={iconBank[position]}
               alt={`Position: ${positionName}`}
+              title={position}
             />
             {positionName}
           </li>

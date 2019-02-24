@@ -15,7 +15,14 @@ const MemberNationaltyFlag = ({ nationality }) => {
     }${flag}.jpg`;
   }
 
-  return <img className="card__flag" src={flagUrl} alt={nationality} />;
+  return (
+    <img
+      className="card__flag"
+      src={flagUrl}
+      alt={nationality}
+      title={nationality}
+    />
+  );
 };
 
 MemberNationaltyFlag.propTypes = {
