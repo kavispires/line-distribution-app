@@ -946,6 +946,69 @@ input:checked + .slider:before {
   margin-left: 3px;
 }
 
+.container--lyrics {
+  display: flex;
+  flex-direction: column;
+}
+
+.lyrics__group {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow-y: auto;
+}
+
+.lyrics__input {
+  width: 50%;
+  border: 1px solid #ebebf2;
+  font-size: 11px;
+  height: 100%;
+  width: 50%;
+  resize: none;
+}
+
+.lyrics__output {
+  width: 50%;
+  border: 1px solid #ebebf2;
+  font-size: 11px;
+  height: 100%;
+  padding-left: 6px;
+  overflow-y: auto;
+}
+
+.lyrics__verse {
+  margin-top: 2px;
+  margin-bottom: 14.5px;
+  padding: 0;
+}
+
+.lyrics__part {
+  display: inline;
+}
+
+.lyrics__bit-normal {
+  padding: 0 2px;
+}
+
+.lyrics__bit-sub {
+  padding: 0 2px;
+}
+
+.lyrics__bit-grey {
+  padding: 0 2px;
+  font-style: italic;
+}
+
+.lyrics__bit-all {
+  padding: 0 2px;
+  font-style: italic;
+}
+
+.lyrics__bit-choir {
+  padding: 0 2px;
+  font-style: italic;
+}
+
 .manage-section {
   width: 100%;
   display: flex;
