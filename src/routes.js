@@ -5,7 +5,8 @@ import Header from './app/pages/header';
 import Home from './app/pages/home';
 import Artists from './app/pages/artists';
 import Artist from './app/pages/artist';
-import IdolsContainer from './app/pages/idols/';
+import Idols from './app/pages/idols';
+import Lyrics from './app/pages/lyrics';
 import UIReference from './app/pages/ui-reference';
 import Manage from './app/pages/manage';
 
@@ -27,9 +28,10 @@ const routes = (
       <Route path="/artists/:artistId" component={Artist} />
       <Route exact path="/artists" component={Artists} />
       <Route path="/distribute" component={DistributeContainer} />
+      <Route path="/idols" component={Idols} />
       <Route path="/lab" component={LabContainer} />
       <Route path="/learn-more" component={LearnMoreContainer} />
-      <Route path="/idols" component={IdolsContainer} />
+      <Route path="/lyrics" component={Lyrics} />
       <Route path="/songs" component={SongsContainer} />
 
       <Route path="/admin/manage" component={Manage} />

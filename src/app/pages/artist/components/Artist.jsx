@@ -5,8 +5,17 @@ import PropTypes from 'prop-types';
 import Units from './Units';
 // Import common components
 import { FavoriteIcon, LoadingIcon, RequirementWrapper } from '../../../common';
+// Import utility functions
+import utils from '../../../../utils';
 
 class Artist extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      memberColors: {},
+    };
+  }
+
   componentDidMount() {
     const { artistId } = this.props.match.params;
     if (
@@ -15,6 +24,22 @@ class Artist extends Component {
     ) {
       this.props.loadArtist(artistId, this.props.location.search);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.artists.selectedUnit.id !== this.props.artists.selectedUnit.id
+    ) {
+      this.getMemberColors();
+    }
+  }
+
+  getMemberColors() {
+    const memberColors = { ...this.state.memberColors };
+    Object.values(this.props.artists.selectedUnit.members).forEach(member => {
+      memberColors[member.id] = utils.getColorNumber(member.colorId);
+    });
+    this.setState({ memberColors });
   }
 
   render() {
@@ -52,9 +77,11 @@ class Artist extends Component {
               <p className="artist-page__genre">{selectedArtist.genre}</p>
               <ul className="artist-page__members-list">
                 {selectedArtist.memberList &&
-                  selectedArtist.memberList.map(memberName => (
+                  selectedArtist.memberList.map((memberName, index) => (
                     <li
-                      className="artist-page__member-pill"
+                      className={`artist-page__member-pill background-color-${
+                        this.state.memberColors[selectedArtist.memberIds[index]]
+                      }`}
                       key={`mp-${memberName}`}
                     >
                       {memberName}

@@ -1,6 +1,7 @@
 import types from './types';
 
 const initialState = {
+  activeUnit: {},
   artistList: [],
   artistPageTab: '',
   bias: {},
@@ -16,6 +17,10 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+    case types.SET_ACTIVE_UNIT:
+      newState.activeUnit = action.payload;
+      break;
+
     case types.SET_ARTIST_LIST:
       newState.artistList = action.payload;
       break;

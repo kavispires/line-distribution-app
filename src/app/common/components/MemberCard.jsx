@@ -20,7 +20,9 @@ const MemberCard = ({
   <div className="card">
     {showId ? <p className="member-id">{member.id}</p> : null}
     <MemberPicture
-      className="card__profile-full-image"
+      className={
+        showReferenceArtist ? 'card__profile-full-image' : 'card__profile-image'
+      }
       colorId={member.colorId}
       gender={member.gender}
       memberId={member.id}

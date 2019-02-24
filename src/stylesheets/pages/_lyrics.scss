@@ -1,0 +1,155 @@
+.container--lyrics {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin lyrics-parser {
+  width: 50%;
+  border: 1px solid $color-gray-1;
+  font-size: 11px;
+  height: 100%;
+}
+
+.lyrics {
+  &__group {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  &__members-list {
+    width: 100%;
+    background: $color-gray-1;
+    padding: $unit-p2;
+    margin-bottom: $unit;
+  }
+
+  &__members-list--empty {
+    background: $color-gray-1;
+    padding: $unit-p2;
+    margin-bottom: $unit;
+  }
+
+  &__input {
+    @include lyrics-parser;
+    width: 50%;
+    resize: none;
+    padding-bottom: 14px;
+  }
+
+  &__output {
+    @include lyrics-parser;
+    padding-left: $unit-p2;
+    overflow-y: auto;
+    // line-height: 24px;
+  }
+
+  &__verse {
+    margin-top: 2px;
+    margin-bottom: 14.5px;
+    padding: 0;
+  }
+
+  &__line {
+    // display: block;
+  }
+
+  &__part {
+    display: inline;
+  }
+
+  &__bracket {
+    // &:before {
+    //   content: ' [';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: '] ';
+    // }
+  }
+
+  &__parenthesis {
+    // &:before {
+    //   content: ' (';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: ')';
+    // }
+  }
+
+  &__braces {
+    // &:before {
+    //   content: ' (';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: ')';
+    // }
+  }
+
+  &__bit-normal {
+    padding: 0 2px;
+    // &:before {
+    //   content: ' ';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: ' ';
+    //   white-space: pre;
+    // }
+  }
+
+  &__bit-sub {
+    padding: 0 2px;
+    // &:before {
+    //   content: ' (';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: ') ';
+    //   white-space: pre;
+    // }
+  }
+
+  &__bit-grey {
+    padding: 0 2px;
+    font-style: italic;
+    // color:
+    // &:before {
+    //   content: ' (';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: ') ';
+    //   white-space: pre;
+    // }
+  }
+
+  &__bit-all {
+    padding: 0 2px;
+    font-style: italic;
+    // &:before {
+    //   content: ' ';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: ' ';
+    //   white-space: pre;
+    // }
+  }
+
+  &__bit-choir {
+    padding: 0 2px;
+    font-style: italic;
+    // &:before {
+    //   content: ' (';
+    //   white-space: pre;
+    // }
+    // &:after {
+    //   content: ') ';
+    //   white-space: pre;
+    // }
+  }
+}
