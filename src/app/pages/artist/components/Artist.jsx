@@ -24,7 +24,6 @@ class Artist extends Component {
     ) {
       this.props.loadArtist(artistId, this.props.location.search);
     }
-    console.log('COMPONENT_DID_MOUNT');
   }
 
   componentDidUpdate(prevProps) {

@@ -20,6 +20,12 @@ class Units extends Component {
     }
   }
 
+  artistRedirect(page) {
+    this.props.props.activateUnit();
+
+    this.props.props.history.push(`/${page}`);
+  }
+
   render() {
     const {
       props: {
@@ -86,7 +92,10 @@ class Units extends Component {
                       <button className="btn" disabled>
                         Distribute
                       </button>
-                      <button className="btn" disabled>
+                      <button
+                        className="btn"
+                        onClick={() => this.artistRedirect('lyrics')}
+                      >
                         Play with Lyrics <span className="restriction">*</span>
                       </button>
                       <button className="btn" disabled>

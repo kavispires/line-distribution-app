@@ -109,9 +109,8 @@ class Lyrics extends Component {
   render() {
     const {
       app: { pending },
-      auth: { user },
+      artists: { activeUnit },
       admin: { colors },
-      updateFavoriteMembers,
     } = this.props;
 
     if (pending.REQUEST_COLORS) {
@@ -120,17 +119,14 @@ class Lyrics extends Component {
 
     const handleLyricsInput = event => {
       const { value } = event.target;
-      const obj = {
-        sample: value,
-      };
 
       this.setState({
-        lyrics: parseLyrics(value, MEMBERS, '1'),
+        lyrics: parseLyrics(value, activeUnit.members, activeUnit.id),
       });
     };
 
     return (
-      <RequirementWrapper>
+      <RequirementWrapper requirements={['activeUnit']}>
         <main className="container container--lyrics">
           <h1>Lyrics</h1>
           <section className="lyrics__group">
