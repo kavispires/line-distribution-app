@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "b38316e16e5e05b5c62f1bb3f33a0382",
-    "url": "/line-distribution-app/static/media/icon-lead-dancer.b38316e1.svg"
+    "revision": "131d4b70b5dfd7f9962543418656194c",
+    "url": "/line-distribution-app/static/media/icon-vocalist.131d4b70.svg"
   },
   {
-    "revision": "773973e3aed1299c7ada",
-    "url": "/line-distribution-app/static/css/main.e3fe5fd7.chunk.css"
+    "revision": "cf55b47db488ac7e2c85",
+    "url": "/line-distribution-app/static/css/main.2fcd2c67.chunk.css"
   },
   {
     "revision": "414189457db9054120a2",
@@ -28,12 +28,12 @@ self.__precacheManifest = [
     "url": "/line-distribution-app/static/media/loading.d6605f0f.svg"
   },
   {
-    "revision": "a995fa3a0b47259c02effb615639ac82",
-    "url": "/line-distribution-app/static/media/icon-main-vocalist.a995fa3a.svg"
-  },
-  {
     "revision": "269fbdb966a04ffa6b71b640f3dcc468",
     "url": "/line-distribution-app/static/media/icon-main-rapper.269fbdb9.svg"
+  },
+  {
+    "revision": "a995fa3a0b47259c02effb615639ac82",
+    "url": "/line-distribution-app/static/media/icon-main-vocalist.a995fa3a.svg"
   },
   {
     "revision": "581fc18e0b75f9569b4d329c8e5f248b",
@@ -48,12 +48,12 @@ self.__precacheManifest = [
     "url": "/line-distribution-app/static/media/icon-lead-rapper.0735854b.svg"
   },
   {
-    "revision": "131d4b70b5dfd7f9962543418656194c",
-    "url": "/line-distribution-app/static/media/icon-vocalist.131d4b70.svg"
+    "revision": "b38316e16e5e05b5c62f1bb3f33a0382",
+    "url": "/line-distribution-app/static/media/icon-lead-dancer.b38316e1.svg"
   },
   {
-    "revision": "773973e3aed1299c7ada",
-    "url": "/line-distribution-app/static/js/main.773973e3.chunk.js"
+    "revision": "cf55b47db488ac7e2c85",
+    "url": "/line-distribution-app/static/js/main.cf55b47d.chunk.js"
   },
   {
     "revision": "cb032f0934dacbff69d18a378ee59687",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "/line-distribution-app/static/media/bias-placeholder.61f71a68.svg"
   },
   {
-    "revision": "8ad22887b10483f0f9347aae47edbe98",
+    "revision": "38656923bceb6455cc4b5bd8fe09a700",
     "url": "/line-distribution-app/index.html"
   }
 ];
