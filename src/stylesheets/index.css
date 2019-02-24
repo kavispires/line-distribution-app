@@ -939,7 +939,7 @@ input:checked + .slider:before {
 .idols__list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .idols__filter-label {

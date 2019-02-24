@@ -15,7 +15,7 @@ class MemberPicture extends Component {
   render() {
     const pictureUrl = `${process.env.PUBLIC_URL}${
       constants.PROFILE_PICTURE_URL
-    }${this.props.name}${this.props.memberId}.jpg`;
+    }${this.props.name.toLowerCase()}${this.props.memberId}.jpg`;
 
     const gender = this.props.gender === 'FEMALE' ? 'f' : 'm';
 

@@ -47,7 +47,7 @@ class Idols extends Component {
   render() {
     const {
       app: { pending },
-      auth: { user },
+      auth: { isAdmin, user },
       admin: { members },
       updateFavoriteMembers,
     } = this.props;
@@ -221,7 +221,7 @@ class Idols extends Component {
               <MemberCard
                 key={member.id}
                 member={member}
-                showId
+                showId={isAdmin}
                 showReferenceArtist
                 favoriteState={
                   user.favoriteMembers && user.favoriteMembers[member.id]
