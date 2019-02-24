@@ -18,10 +18,24 @@
     overflow-y: auto;
   }
 
+  &__members-list {
+    width: 100%;
+    background: $color-gray-1;
+    padding: $unit-p2;
+    margin-bottom: $unit;
+  }
+
+  &__members-list--empty {
+    background: $color-gray-1;
+    padding: $unit-p2;
+    margin-bottom: $unit;
+  }
+
   &__input {
     @include lyrics-parser;
     width: 50%;
     resize: none;
+    padding-bottom: 14px;
   }
 
   &__output {

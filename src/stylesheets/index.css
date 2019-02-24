@@ -958,6 +958,19 @@ input:checked + .slider:before {
   overflow-y: auto;
 }
 
+.lyrics__members-list {
+  width: 100%;
+  background: #ebebf2;
+  padding: 6px;
+  margin-bottom: 12px;
+}
+
+.lyrics__members-list--empty {
+  background: #ebebf2;
+  padding: 6px;
+  margin-bottom: 12px;
+}
+
 .lyrics__input {
   width: 50%;
   border: 1px solid #ebebf2;
@@ -965,6 +978,7 @@ input:checked + .slider:before {
   height: 100%;
   width: 50%;
   resize: none;
+  padding-bottom: 14px;
 }
 
 .lyrics__output {

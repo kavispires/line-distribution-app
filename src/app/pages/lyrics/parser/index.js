@@ -15,6 +15,24 @@ let wasLastLineEmpty = false;
 let lastLineHadSubSingers = false;
 let lastLineHadChoirSings = false;
 
+let uses = {};
+
+const updateUses = entry => {
+  function addEntry(name) {
+    if (uses[name]) {
+      uses[name]++;
+    } else {
+      uses[name] = 1;
+    }
+  }
+
+  if (typeof entry === 'string') {
+    addEntry(entry.trim().toUpperCase());
+  } else if (Array.isArray(entry)) {
+    entry.forEach(n => addEntry(n.trim().toUpperCase()));
+  }
+};
+
 class Part {
   constructor() {
     this.singers = null; // type: array
@@ -45,6 +63,7 @@ const cleanUpPart = part => {
     if (!part.singers && wasLastLineEmpty) {
       part.adlib = part.adlib.map(() => 3);
     } else if (!part.singers) {
+      updateUses(lastSingers);
       part.singers = [...lastSingers];
       part.colors = [...lastColors];
       part.omit = true;
@@ -56,6 +75,7 @@ const cleanUpPart = part => {
     if (!part.subSingers && (wasLastLineEmpty || !lastLineHadSubSingers)) {
       part.adlib = part.adlib.map(a => (a === 1 ? 2 : a));
     } else if (!part.subSingers) {
+      updateUses(lastSubsingers);
       part.subSingers = [...lastSubsingers];
       part.subColors = [...lastSubColors];
       part.omitSub = true;
@@ -72,6 +92,7 @@ const cleanUpPart = part => {
     if (!part.choirSingers && (wasLastLineEmpty || !lastLineHadChoirSings)) {
       part.adlib = part.adlib.map(a => (a === 4 ? 2 : a));
     } else if (!part.choirSingers && lastChoirSingers.length) {
+      updateUses(lastChoirSingers);
       part.choirSingers = [...lastChoirSingers];
       part.choirColors = [...lastChoirColors];
       part.omitChoir = true;
@@ -182,6 +203,7 @@ const parseLine = line => {
           const entry = currentString.trim().toUpperCase();
           names.push(entry);
           colors.push(COLOR_BANK[entry] || 'col000000');
+          updateUses(names);
           currentPart.singers = names;
           currentPart.colors = colors;
           names = [];
@@ -203,6 +225,7 @@ const parseLine = line => {
             names.push(entry);
             colors.push(COLOR_BANK[entry] || 'col000000');
             currentString = '';
+            updateUses(names);
             currentPart.singers = names;
             currentPart.colors = colors;
             names = [];
@@ -228,6 +251,7 @@ const parseLine = line => {
             names.push(entry);
             colors.push(COLOR_BANK[entry] || 'col000000');
             currentString = '';
+            updateUses(names);
             currentPart.subSingers = names;
             currentPart.subColors = colors;
             names = [];
@@ -253,6 +277,7 @@ const parseLine = line => {
             names.push(entry);
             colors.push(COLOR_BANK[entry] || 'col000000');
             currentString = '';
+            updateUses(names);
             currentPart.singers = names;
             currentPart.colors = colors;
             names = [];
@@ -278,6 +303,7 @@ const parseLine = line => {
             names.push(entry);
             colors.push(COLOR_BANK[entry] || 'col000000');
             currentString = '';
+            updateUses(names);
             currentPart.choirSingers = names;
             currentPart.choirColors = colors;
             names = [];
@@ -333,7 +359,7 @@ const parseLyrics = (input, members, unitId) => {
   }
 
   // Split in linebreaks
-  const lines = input.split('\n');
+  const lines = input.split('\n').map(l => l.trim());
   // Keep track of previous information
 
   // Iterate through lines
@@ -366,14 +392,16 @@ const parseLyrics = (input, members, unitId) => {
 
   const response = {
     result: paragraphedResult,
+    uses: { ...uses },
   };
 
   // Add any errors
   if (errors.length) {
-    response.errors = errors;
+    response.errors = [...errors];
   }
 
   errors = [];
+  uses = [];
 
   return response;
 };

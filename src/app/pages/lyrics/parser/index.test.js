@@ -48,6 +48,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1 },
         });
       });
 
@@ -74,6 +75,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1 },
         });
       });
 
@@ -106,6 +108,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -145,6 +148,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1, IRA: 1 },
         });
       });
 
@@ -190,6 +194,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1, IRA: 1, SETH: 1 },
         });
       });
     });
@@ -212,6 +217,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1 },
         });
       });
 
@@ -232,6 +238,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -252,6 +259,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, IRA: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -278,6 +286,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, IRA: 1, KYLE: 1, SETH: 1, VIKTOR: 1 },
         });
       });
     });
@@ -302,6 +311,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1 },
         });
       });
 
@@ -324,6 +334,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1 },
         });
       });
 
@@ -352,6 +363,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -384,6 +396,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 2, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -415,6 +428,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, IRA: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -446,6 +460,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, IRA: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
     });
@@ -470,6 +485,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -492,6 +508,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -514,6 +531,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1, IRA: 1 },
         });
       });
     });
@@ -536,6 +554,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1 },
         });
       });
     });
@@ -558,6 +577,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1 },
         });
       });
     });
@@ -580,6 +600,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ALL: 1 },
         });
       });
 
@@ -600,6 +621,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ALL: 1, KYLE: 1 },
         });
       });
 
@@ -622,6 +644,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ALL: 1, KYLE: 1 },
         });
       });
     });
@@ -655,6 +678,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 2 },
         });
       });
 
@@ -689,6 +713,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 2, KYLE: 2 },
         });
       });
 
@@ -723,6 +748,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 2, KYLE: 2 },
         });
       });
     });
@@ -753,6 +779,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1 },
         });
       });
 
@@ -782,6 +809,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1 },
         });
       });
 
@@ -811,6 +839,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1 },
         });
       });
     });
@@ -845,6 +874,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 2, KYLE: 1 },
         });
       });
 
@@ -874,6 +904,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 2 },
         });
       });
     });
@@ -898,6 +929,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1 },
         });
       });
 
@@ -918,6 +950,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1 },
         });
       });
 
@@ -938,6 +971,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1 },
         });
       });
 
@@ -960,6 +994,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1 },
         });
       });
 
@@ -990,11 +1025,12 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1 },
         });
       });
 
       it('it parses 1 line with 1 main singer, 1 sub singer and 1 choir singer', () => {
-        const sample = '[KYLE (ANTHONY) {IRA}] I sing (I dance) {yeah}';
+        const sample = '[KYLE (ANTHONY) {VIKTOR}] I sing (I dance) {yeah}';
         const result = parser(sample, MEMBERS, 1);
 
         expect(result).toEqual({
@@ -1006,14 +1042,15 @@ describe('Lyrics/Parser', () => {
                   colors: ['col000020'],
                   subSingers: ['ANTHONY'],
                   subColors: ['col000002'],
-                  choirSingers: ['IRA'],
-                  choirColors: ['col000023'],
+                  choirSingers: ['VIKTOR'],
+                  choirColors: ['col000008'],
                   line: ['I sing', 'I dance', 'yeah'],
                   adlib: [0, 1, 4],
                 },
               ],
             ],
           ],
+          uses: { ANTHONY: 1, KYLE: 1, VIKTOR: 1 },
         });
       });
 
@@ -1043,6 +1080,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 2 },
         });
       });
 
@@ -1078,6 +1116,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 2, KYLE: 2 },
         });
       });
 
@@ -1108,11 +1147,12 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { ANTHONY: 2, KYLE: 1 },
         });
       });
 
       it('it parses multiple lines with 1 main singer and 1 choir singer (variable lines)', () => {
-        const sample = '[KYLE {IRA}] I sing {yeah}\nI dance {yeah}';
+        const sample = '[KYLE {VIKTOR}] I sing {yeah}\nI dance {yeah}';
         const result = parser(sample, MEMBERS, 1);
 
         expect(result).toEqual({
@@ -1122,8 +1162,8 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   colors: ['col000020'],
-                  choirSingers: ['IRA'],
-                  choirColors: ['col000023'],
+                  choirSingers: ['VIKTOR'],
+                  choirColors: ['col000008'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 4],
                 },
@@ -1132,8 +1172,8 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   colors: ['col000020'],
-                  choirSingers: ['IRA'],
-                  choirColors: ['col000023'],
+                  choirSingers: ['VIKTOR'],
+                  choirColors: ['col000008'],
                   line: ['I dance', 'yeah'],
                   adlib: [0, 4],
                   omit: true,
@@ -1142,6 +1182,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 2, VIKTOR: 2 },
         });
       });
 
@@ -1178,6 +1219,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 1, ANTHONY: 2, IRA: 2 },
         });
       });
 
@@ -1227,6 +1269,7 @@ describe('Lyrics/Parser', () => {
               ],
             ],
           ],
+          uses: { KYLE: 2, ANTHONY: 3, IRA: 2 },
         });
       });
     });
@@ -1245,6 +1288,7 @@ describe('Lyrics/Parser', () => {
         result: [
           [[{ adlib: [0], line: ['IRA'], omit: true }, { empty: true }]],
         ],
+        uses: {},
       });
     });
 
@@ -1268,6 +1312,7 @@ describe('Lyrics/Parser', () => {
             ],
           ],
         ],
+        uses: { IRA: 1 },
       });
     });
 
@@ -1280,6 +1325,7 @@ describe('Lyrics/Parser', () => {
           'You should not place a opening parenthesis inside another parenthesis',
         ],
         result: [[[{ colors: ['col000023'], singers: ['IRA'] }]]],
+        uses: { IRA: 1 },
       });
     });
 
@@ -1292,6 +1338,7 @@ describe('Lyrics/Parser', () => {
           'You should not place a closing parenthesis inside another parenthesis',
         ],
         result: [[[{ subColors: ['col000023'], subSingers: ['IRA'] }]]],
+        uses: { IRA: 1 },
       });
     });
 
@@ -1304,6 +1351,7 @@ describe('Lyrics/Parser', () => {
           'You should not place a opening curly braces inside another curly braces',
         ],
         result: [[[{ colors: ['col000023'], singers: ['IRA'] }]]],
+        uses: { IRA: 1 },
       });
     });
 
@@ -1327,6 +1375,7 @@ describe('Lyrics/Parser', () => {
             ],
           ],
         ],
+        uses: { IRA: 2 },
       });
     });
   });

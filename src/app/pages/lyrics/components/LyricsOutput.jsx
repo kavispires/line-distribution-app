@@ -50,7 +50,7 @@ const Line = ({ line }) => (
   <span className="lyrics__line">
     {line.map(part => {
       keyNumber++;
-      if (!part.line || !part.adlib) return null;
+      if (!part.line || !part.line[0] || !part.adlib) return null;
 
       return (
         <Fragment key={`part-${keyNumber}`}>

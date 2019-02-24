@@ -15,6 +15,7 @@ class Lyrics extends Component {
     this.state = {
       lyrics: {
         result: [],
+        uses: {},
       },
     };
   }
@@ -36,6 +37,7 @@ class Lyrics extends Component {
 
     const handleLyricsInput = event => {
       const { value } = event.target;
+
       this.setState({
         lyrics: parseLyrics(value, activeUnit.members || [], activeUnit.id),
       });
@@ -45,6 +47,26 @@ class Lyrics extends Component {
       <RequirementWrapper requirements={['activeUnit']}>
         <main className="container container--lyrics">
           <h1>Lyrics</h1>
+          {activeUnit.members ? (
+            <ul className="lyrics__members-list">
+              {Object.values(activeUnit.members).map(member => (
+                <li
+                  className={`pill background-color-${member.color.number ||
+                    0}`}
+                  key={member.id}
+                >
+                  {member.name.toUpperCase()}{' '}
+                  {this.state.lyrics.uses[member.name.toUpperCase()]
+                    ? `(${this.state.lyrics.uses[member.name.toUpperCase()]})`
+                    : null}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <section className="lyrics__members-list--empty">
+              There is no Active Unit Selected.
+            </section>
+          )}
           <ScrollSync>
             <section className="lyrics__group">
               <ScrollSyncPane>
