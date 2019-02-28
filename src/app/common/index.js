@@ -1,3 +1,4 @@
+import ActiveUnit from './containers/ActiveUnitWidgetContainer';
 import FavoriteIcon from './components/FavoriteIcon';
 import Icon from './components/Icon';
 import Loading from './components/Loading';
@@ -9,6 +10,7 @@ import Tabs from './components/Tabs';
 import Typeahead from './components/Typeahead';
 
 export {
+  ActiveUnit,
   FavoriteIcon,
   Icon,
   Loading,

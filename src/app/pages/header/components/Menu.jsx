@@ -10,7 +10,7 @@ import { Icon } from '../../../common';
 import logo from '../../../../images/logo.svg';
 import userPlaceholder from '../../../../images/user-placeholder.svg';
 
-const Menu = ({ auth, history, location, login, logout }) => {
+const Menu = ({ activeUnit, auth, history, location, login, logout }) => {
   const handleLogoClick = () => {
     history.push('/');
   };
@@ -22,6 +22,9 @@ const Menu = ({ auth, history, location, login, logout }) => {
 
   // Hide parts of the menu if user is not an administrator
   const adminHideClass = auth.isAdmin ? '' : 'hidden';
+
+  // Hide parts of the menu if user hasn't selected an active unit
+  const activeUnitHideClass = activeUnit.id ? '' : 'hidden';
 
   return (
     <header className="header">
@@ -41,11 +44,26 @@ const Menu = ({ auth, history, location, login, logout }) => {
           </Link>
           <Link
             to="/distribute"
-            className={pathname === '/distribute' ? 'active' : ''}
+            className={`${activeUnitHideClass} ${
+              pathname === '/distribute' ? 'active' : ''
+            }`}
           >
             Distribute
           </Link>
-          <Link to="/songs" className={pathname === '/songs' ? 'active' : ''}>
+          <Link
+            to="/lyrics"
+            className={`${activeUnitHideClass} ${
+              pathname === '/lyrics' ? 'active' : ''
+            }`}
+          >
+            Lyrics
+          </Link>
+          <Link
+            to="/songs"
+            className={`${activeUnitHideClass} ${
+              pathname === '/songs' ? 'active' : ''
+            }`}
+          >
             Songs
           </Link>
           <Link to="/idols" className={pathname === '/idols' ? 'active' : ''}>
@@ -104,6 +122,7 @@ const Menu = ({ auth, history, location, login, logout }) => {
 };
 
 Menu.propTypes = {
+  activeUnit: PropTypes.object,
   auth: PropTypes.object,
   history: PropTypes.object,
   location: PropTypes.object,
@@ -112,6 +131,7 @@ Menu.propTypes = {
 };
 
 Menu.defaultProps = {
+  activeUnit: {},
   auth: {},
   history: {},
   location: {},

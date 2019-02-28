@@ -14,6 +14,7 @@ class App extends Component {
     return (
       <Fragment>
         <Menu
+          activeUnit={this.props.artists.activeUnit}
           auth={this.props.auth}
           history={this.props.history}
           location={this.props.location}
@@ -28,12 +29,17 @@ class App extends Component {
 
 App.propTypes = {
   app: PropTypes.object.isRequired,
-  init: PropTypes.func.isRequired,
+  artists: PropTypes.object,
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  init: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  artists: { activeUnit: {} },
 };
 
 export default App;

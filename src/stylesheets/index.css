@@ -467,7 +467,7 @@ p {
 
 .pill {
   display: inline-block;
-  margin-left: 6px;
+  margin-right: 6px;
   margin-bottom: 6px;
   padding: 3px 6px;
   border-radius: 3px;
@@ -697,6 +697,49 @@ input:checked + .slider:before {
   margin-left: 12px;
 }
 
+.active-unit-widget {
+  background: #ebebf2;
+  padding: 6px 12px;
+  margin: 3px 0;
+  border-bottom-left-radius: 6px;
+  border-top-right-radius: 6px;
+  box-shadow: 1px 1px 1px #b5b5ba;
+  display: inline-block;
+  max-width: 49%;
+}
+.active-unit-widget.inline {
+  display: block;
+  width: 100%;
+  max-width: none;
+}
+.active-unit-widget h3 {
+  font-size: 1em;
+  color: #484849;
+  margin: 0;
+}
+.active-unit-widget h1 {
+  font-size: 1.25em;
+  margin: 0;
+}
+.active-unit-widget__unit {
+  font-size: 0.75em;
+  font-weight: normal;
+}
+.active-unit-widget__genre {
+  font-size: 0.6em;
+  font-weight: normal;
+  font-style: italic;
+  margin-left: 3px;
+  color: #484849;
+}
+.active-unit-widget__members {
+  margin: 6px 0 0 0;
+  padding: 0;
+}
+.active-unit-widget__members .pill {
+  background: #ffffff;
+}
+
 .container--requirement-wrapper {
   background: linear-gradient(#ffffff, #ebebf2);
 }
@@ -850,7 +893,7 @@ input:checked + .slider:before {
 .artists__section {
   width: 100%;
   overflow: auto;
-  margin: 24px 0;
+  margin: 6px 0 24px 0;
 }
 
 .artists__search-bar {

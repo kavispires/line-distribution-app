@@ -60,3 +60,55 @@ input:checked + .slider:before {
   color: $color-gray-4;
   margin-left: $unit;
 }
+
+.active-unit-widget {
+  background: $color-gray-1;
+  padding: $unit-p2 $unit;
+  margin: $unit-p4 0;
+  border-bottom-left-radius: $unit-p2;
+  border-top-right-radius: $unit-p2;
+  box-shadow: 1px 1px 1px $color-gray-2;
+  display: inline-block;
+  max-width: 49%;
+
+  &.inline {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+
+  h3 {
+    font-size: 1em;
+    color: $color-gray-4;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 1.25em;
+    margin: 0;
+  }
+
+  &__content {
+  }
+  &__unit {
+    font-size: 0.75em;
+    font-weight: normal;
+  }
+  &__genre {
+    font-size: 0.6em;
+    font-weight: normal;
+    font-style: italic;
+    margin-left: $unit-p4;
+    color: $color-gray-4;
+  }
+  &__members {
+    margin: $unit-p2 0 0 0;
+    padding: 0;
+
+    .pill {
+      background: $color-negative;
+    }
+  }
+  &__members-count {
+  }
+}

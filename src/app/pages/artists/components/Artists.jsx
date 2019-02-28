@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-// Import components
-// import CurrentArtist from './CurrentArtist';
 // Import common components
-import { Icon, Switch, RequirementWrapper } from '../../../common';
+import { ActiveUnit, Icon, Switch, RequirementWrapper } from '../../../common';
 import ArtistsTable from './ArtistsTable';
 
 class Artists extends Component {
@@ -17,7 +15,12 @@ class Artists extends Component {
     const {
       admin,
       app,
-      artists: { searchQuery, showFavoriteArtistsOnly, userLatestArtists },
+      artists: {
+        activeUnit,
+        searchQuery,
+        showFavoriteArtistsOnly,
+        userLatestArtists,
+      },
       auth: { user },
     } = this.props;
 
@@ -43,7 +46,7 @@ class Artists extends Component {
         <main className="container container--artists">
           <h1>Artists</h1>
 
-          {/* <CurrentArtist props={this.props} /> */}
+          <ActiveUnit activeUnit={activeUnit} showMembers />
 
           {userLatestArtists.length > 0 ? (
             <section className="artists__section">
