@@ -1387,6 +1387,28 @@ input:checked + .slider:before {
   top: 24px;
 }
 
+.sync__container {
+  background: beige;
+  max-height: 100%;
+  display: flex;
+}
+
+.sync__group {
+  width: 50%;
+  background: pink;
+}
+.sync__group--left {
+  margin-right: 3px;
+}
+.sync__group--right {
+  margin-left: 3px;
+}
+
+.sync__video {
+  width: 100%;
+  background: greenyellow;
+}
+
 .color-palette {
   width: 100%;
   display: flex;

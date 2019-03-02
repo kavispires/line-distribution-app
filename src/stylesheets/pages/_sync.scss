@@ -1,0 +1,25 @@
+.sync {
+  &__container {
+    background: beige;
+    max-height: 100%;
+    display: flex;
+  }
+
+  &__group {
+    width: 50%;
+    background: pink;
+
+    &--left {
+      margin-right: $unit-p4;
+    }
+
+    &--right {
+      margin-left: $unit-p4;
+    }
+  }
+
+  &__video {
+    width: 100%;
+    background: greenyellow;
+  }
+}

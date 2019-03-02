@@ -1,14 +1,15 @@
 import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 
-import Header from './app/pages/header';
-import Home from './app/pages/home';
 import Artists from './app/pages/artists';
 import Artist from './app/pages/artist';
+import Header from './app/pages/header';
+import Home from './app/pages/home';
 import Idols from './app/pages/idols';
 import Lyrics from './app/pages/lyrics';
-import UIReference from './app/pages/ui-reference';
 import Manage from './app/pages/manage';
+import Sync from './app/pages/sync';
+import UIReference from './app/pages/ui-reference';
 
 import DistributeContainer from './containers/DistributeContainer';
 import LabContainer from './containers/LabContainer';
@@ -16,7 +17,6 @@ import LearnMoreContainer from './containers/LearnMoreContainer';
 import MyArtistsContainer from './containers/MyArtistsContainer';
 import MyDistributionsContainer from './containers/MyDistributionsContainer';
 import SongsContainer from './containers/SongsContainer';
-import SyncContainer from './containers/SyncContainer';
 import TempContainer from './containers/TempContainer';
 
 import './stylesheets/index.css';
@@ -35,7 +35,7 @@ const routes = (
       <Route path="/songs" component={SongsContainer} />
 
       <Route path="/admin/manage" component={Manage} />
-      <Route path="/admin/sync" component={SyncContainer} />
+      <Route path="/admin/sync" component={Sync} />
       <Route path="/admin/temp" component={TempContainer} />
       <Route path="/admin/ui-reference" component={UIReference} />
 
