@@ -1,4 +1,5 @@
 import ActiveUnit from './containers/ActiveUnitWidgetContainer';
+import Collapsible from './components/Collapsible';
 import FavoriteIcon from './components/FavoriteIcon';
 import Icon from './components/Icon';
 import Loading from './components/Loading';
@@ -11,6 +12,7 @@ import Typeahead from './components/Typeahead';
 
 export {
   ActiveUnit,
+  Collapsible,
   FavoriteIcon,
   Icon,
   Loading,

@@ -1,0 +1,38 @@
+.collapsible {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid $color-gray-2;
+    background: $color-gray-1;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.locked {
+      cursor: default;
+    }
+  }
+
+  &__content {
+    width: 100%;
+    background: $color-negative;
+    border: 1px solid $color-gray-2;
+
+    &.expanded {
+      padding: $unit-p2;
+      flex: 1;
+    }
+
+    &.collapsed {
+      flex: 0;
+    }
+  }
+}
