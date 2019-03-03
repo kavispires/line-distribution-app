@@ -118,9 +118,11 @@
       padding: $unit-p4 $unit-p2;
       border-radius: $unit-p2;
       margin: $unit-p4;
+      border: 2px solid $color-gray-1;
 
       &--active {
-        border: 2px solid $color-orange;
+        border: 2px solid $color-primary;
+        color: $color-negative;
       }
     }
   }
@@ -134,6 +136,8 @@
       border: 1px solid $color-gray-1;
       padding: $unit-p4;
       margin: $unit-p4;
+      max-height: 500px;
+      overflow: auto;
     }
 
     &__line {

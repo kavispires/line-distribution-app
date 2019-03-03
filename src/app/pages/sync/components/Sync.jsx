@@ -106,6 +106,7 @@ class Sync extends Component {
         pills,
         steps,
         timestamps,
+        videoId,
       },
       connectSyncLine,
       connectSyncPill,
@@ -194,6 +195,7 @@ class Sync extends Component {
                 <SyncStep1VideoId
                   handleVideoId={handleVideoId}
                   loadYoutubeVideo={this.loadYoutubeVideo}
+                  videoId={videoId}
                 />
               </Collapsible>
               <Collapsible
@@ -278,6 +280,7 @@ Sync.propTypes = {
   lockLyrics: PropTypes.func.isRequired,
   prepareLines: PropTypes.func.isRequired,
   resetPillLinks: PropTypes.func.isRequired,
+  saveSync: PropTypes.func.isRequired,
   sync: PropTypes.object.isRequired,
   unlockNextStep: PropTypes.func.isRequired,
   unlockSpecificStep: PropTypes.func.isRequired,

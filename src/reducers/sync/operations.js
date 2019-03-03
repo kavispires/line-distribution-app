@@ -92,10 +92,16 @@ const unlockSpecificStep = num => (dispatch, getState) => {
 };
 
 // Adds []s in the beginning of every line and remove diplicated spaces
-const prepareLines = () => (dispatch, getState) => {
+const prepareLines = (clearBrackets = false) => (dispatch, getState) => {
   const { lyrics } = getState().sync;
 
-  const preparedLyrics = lyrics
+  let preparedLyrics = lyrics;
+
+  if (clearBrackets) {
+    preparedLyrics = preparedLyrics.replace(/\[(.*?)\]/g, '[]');
+  }
+
+  preparedLyrics = preparedLyrics
     .split('\n')
     .map(line => {
       if (line.length > 0 && !line.startsWith('[')) {
@@ -192,7 +198,7 @@ const parseLyricsToObject = lyrics => dispatch => {
       }
     }
     content = content[0] === ' ' ? content.substring(1) : content;
-    parsedLine.push({ id, content, link: null });
+    parsedLine.push({ id, content, link: null, color: null });
 
     return parsedLine;
   });
@@ -216,7 +222,9 @@ const handleSyncKeyup = (event, player) => dispatch => {
   const { key } = event;
   if (constants.SYNC_KEY_LIST[key]) {
     const timestamp = player.getCurrentTime();
-    dispatch(dequeueCapture(key, timestamp));
+    dispatch(
+      dequeueCapture(key, timestamp, constants.SYNC_KEY_COLOR_LIST[key])
+    );
   }
 };
 
@@ -228,10 +236,10 @@ const handleSyncBoxMouseDown = (key, player) => dispatch => {
   }
 };
 
-const handleSyncBoxMouseUp = (key, player) => dispatch => {
+const handleSyncBoxMouseUp = (key, player, color) => dispatch => {
   if (constants.SYNC_KEY_LIST[key]) {
     const timestamp = player.getCurrentTime();
-    dispatch(dequeueCapture(key, timestamp));
+    dispatch(dequeueCapture(key, timestamp, color));
   }
 };
 
@@ -245,7 +253,7 @@ const enqueueCapture = (id, timestamp) => (dispatch, getState) => {
 
 let newPillId = 0;
 
-const dequeueCapture = (id, timestamp) => (dispatch, getState) => {
+const dequeueCapture = (id, timestamp, color) => (dispatch, getState) => {
   const queue = Object.assign({}, getState().sync.queue);
   const pills = Object.assign({}, getState().sync.pills);
   if (queue[id]) {
@@ -260,6 +268,7 @@ const dequeueCapture = (id, timestamp) => (dispatch, getState) => {
       duration,
       link: null,
       key: id,
+      color,
     };
 
     dispatch(actions.setQueue(queue));
@@ -300,7 +309,6 @@ const connectSyncPill = id => (dispatch, getState) => {
 };
 
 const linksBackUp = {};
-
 const connect = (lineId, pillId) => (dispatch, getState) => {
   let lines = [...getState().sync.distributionLines];
   let pills = Object.assign({}, getState().sync.pills);
@@ -310,11 +318,12 @@ const connect = (lineId, pillId) => (dispatch, getState) => {
   // Nullify any pill with lineId as a link
   pills = nullifyPill(pills, lineId);
   // Link each other
-  function modifyPart(collection, searchId, id, key, newValue) {
+  function modifyPart(collection, searchId, id, key, newValue, color) {
     return collection.map(l =>
       l.map(part => {
         if (+part[searchId] === +id) {
           part[key] = newValue;
+          part.color = color;
         }
         return part;
       })
@@ -322,13 +331,16 @@ const connect = (lineId, pillId) => (dispatch, getState) => {
   }
 
   pills[pillId].link = lineId;
-  modifyPart(lines, 'id', lineId, 'link', pillId);
+  modifyPart(lines, 'id', lineId, 'link', pillId, pills[pillId].color);
 
   // Add to the linksBackUp for when user needs to edit lyrics
   linksBackUp[lineId] = pillId;
 
   dispatch(actions.setActiveLine(null));
   dispatch(actions.setActivePill(null));
+
+  dispatch(actions.setPills(pills));
+  dispatch(actions.setDistributionLines(lines));
 
   // Check if distribution is complete
   function isDistributionComplete(collection) {
@@ -353,24 +365,30 @@ const deleteSyncPill = () => (dispatch, getState) => {
     let lines = [...getState().sync.distributionLines];
 
     // Nullify any line with activePill as a link
-    lines = nullifyPill(lines, activePill);
+    lines = nullifyLine(lines, activePill);
 
     delete pills[activePill];
 
     dispatch(actions.setActivePill(null));
     dispatch(actions.setPills(pills));
     dispatch(actions.setDistributionLines(lines));
+    dispatch(actions.setLinkSequenceMode(false));
   }
 };
 
 const nullifyLine = (collection, item, partId = '') => {
   collection.forEach(l =>
     l.forEach(part => {
-      if (+part.link === +item) part.link = null;
+      if (+part.link === +item) {
+        part.link = null;
+        part.color = null;
+      }
     })
   );
   // Also remove from backup
-  delete linksBackUp[partId];
+  if (partId) {
+    delete linksBackUp[partId];
+  }
 
   return collection;
 };

@@ -48,7 +48,11 @@ class SyncStep4Buttons extends Component {
                 this.props.handleSyncBoxMouseDown(box.boxId, this.props.player)
               }
               onMouseUp={() =>
-                this.props.handleSyncBoxMouseUp(box.boxId, this.props.player)
+                this.props.handleSyncBoxMouseUp(
+                  box.boxId,
+                  this.props.player,
+                  box.color
+                )
               }
             >
               <span className="key">{index + 1}</span>
@@ -128,7 +132,7 @@ class SyncStep4Buttons extends Component {
 }
 
 SyncStep4Buttons.propTypes = {
-  activePill: PropTypes.string,
+  activePill: PropTypes.number,
   connectSyncPill: PropTypes.func.isRequired,
   deleteSyncPill: PropTypes.func.isRequired,
   handleSyncBoxMouseDown: PropTypes.func.isRequired,

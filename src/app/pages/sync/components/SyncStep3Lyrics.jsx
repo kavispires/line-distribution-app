@@ -19,7 +19,7 @@ const SyncStep3Lyrics = ({
   return (
     <div className="sync__step sync__step--1">
       <div className="sync__lyrics__controls">
-        <button className="btn btn-50" onClick={prepareLines}>
+        <button className="btn btn-50" onClick={() => prepareLines(true)}>
           Prepare Lines
         </button>{' '}
         <button className="btn btn-50" onClick={insertBrackers}>

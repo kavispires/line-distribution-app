@@ -1550,9 +1550,11 @@ input:checked + .slider:before {
   padding: 3px 6px;
   border-radius: 6px;
   margin: 3px;
+  border: 2px solid #ebebf2;
 }
 .sync__log__pill--active {
-  border: 2px solid #fea245;
+  border: 2px solid #111111;
+  color: #ffffff;
 }
 
 .sync__sequence--true {
@@ -1563,6 +1565,8 @@ input:checked + .slider:before {
   border: 1px solid #ebebf2;
   padding: 3px;
   margin: 3px;
+  max-height: 500px;
+  overflow: auto;
 }
 
 .sync__distribution__line {

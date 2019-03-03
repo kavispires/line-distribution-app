@@ -4,6 +4,14 @@ import PropTypes from 'prop-types';
 // Import common components
 import { Icon } from '../../../common';
 
+const ICON_COLOR_CODE_HASH = {
+  '1': 'red',
+  '8': 'yellow',
+  '12': 'green',
+  '20': 'blue',
+  '26': 'pink',
+};
+
 const SyncStep4Distributions = ({
   activeLine,
   connectSyncLine,
@@ -40,7 +48,9 @@ const SyncStep4Distributions = ({
                     <Icon
                       type={part.link ? 'plug-connected' : 'plug-available'}
                       size="12"
-                      color={part.link ? 'green' : 'gray'}
+                      color={
+                        part.color ? ICON_COLOR_CODE_HASH[part.color] : 'gray'
+                      }
                     />
                   </span>
                   <span className="sync__distribution__line--content">

@@ -12,8 +12,6 @@ const ActiveUnitWidget = ({ activeUnit, showMembers, inline }) => {
 
   const inlineClass = inline ? 'inline' : '';
 
-  console.log(activeUnit);
-
   return (
     <section className={`active-unit-widget ${inlineClass}`}>
       <h3>Active Unit:</h3>
