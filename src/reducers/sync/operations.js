@@ -167,7 +167,8 @@ const handleLyricsEdit = e => dispatch => {
   dispatch(actions.setAreLyricsLocked(false));
 };
 
-const parseLyricsToObject = lyrics => dispatch => {
+const parseLyricsToObject = lyrics => (dispatch, getState) => {
+  let lineCount = 0;
   const lines = lyrics.split('\n').map(line => {
     if (line.length < 2) {
       return [];
@@ -188,6 +189,7 @@ const parseLyricsToObject = lyrics => dispatch => {
         insideBracket = true;
         id = '';
         content = content.trim();
+        lineCount++;
       } else if (char === ']') {
         insideBracket = false;
         content = '';
@@ -203,6 +205,11 @@ const parseLyricsToObject = lyrics => dispatch => {
     return parsedLine;
   });
   dispatch(actions.setDistributionLines(lines));
+
+  const stats = { ...getState().sync.stats };
+  stats.lines = lineCount;
+
+  dispatch(actions.setSyncStats(stats));
 
   setTimeout(() => {
     dispatch(unlockNextStep());
@@ -255,8 +262,9 @@ let newPillId = 0;
 
 const dequeueCapture = (id, timestamp, color) => (dispatch, getState) => {
   const queue = Object.assign({}, getState().sync.queue);
-  const pills = Object.assign({}, getState().sync.pills);
+
   if (queue[id]) {
+    const pills = Object.assign({}, getState().sync.pills);
     const startTime = queue[id];
     const duration = timestamp - startTime;
     delete queue[id];
@@ -273,6 +281,10 @@ const dequeueCapture = (id, timestamp, color) => (dispatch, getState) => {
 
     dispatch(actions.setQueue(queue));
     dispatch(actions.setPills(pills));
+
+    const stats = { ...getState().sync.stats };
+    stats.pills = Object.keys(pills).length;
+    dispatch(actions.setSyncStats(stats));
   }
 };
 
@@ -354,6 +366,10 @@ const connect = (lineId, pillId) => (dispatch, getState) => {
     return isComplete;
   }
 
+  const stats = { ...getState().sync.stats };
+  stats.linked = Object.keys(linksBackUp).length;
+  dispatch(actions.setSyncStats(stats));
+
   dispatch(actions.setIsDistributionComplete(isDistributionComplete(lines)));
 };
 
@@ -373,19 +389,27 @@ const deleteSyncPill = () => (dispatch, getState) => {
     dispatch(actions.setPills(pills));
     dispatch(actions.setDistributionLines(lines));
     dispatch(actions.setLinkSequenceMode(false));
+
+    const stats = { ...getState().sync.stats };
+    stats.linked = Object.keys(linksBackUp).length;
+    dispatch(actions.setSyncStats(stats));
   }
 };
 
-const nullifyLine = (collection, item, partId = '') => {
+const nullifyLine = (collection, item, partId = null) => {
   collection.forEach(l =>
     l.forEach(part => {
       if (+part.link === +item) {
         part.link = null;
         part.color = null;
       }
+      if (+linksBackUp[part.id] === +item) {
+        delete linksBackUp[part.id];
+      }
     })
   );
-  // Also remove from backup
+
+  // Also remove from backup if part was provided
   if (partId) {
     delete linksBackUp[partId];
   }

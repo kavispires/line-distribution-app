@@ -36,6 +36,11 @@ const initialState = {
       expanded: false,
     },
   },
+  stats: {
+    lines: 0,
+    pills: 0,
+    linked: 0,
+  },
   timestamps: {},
   videoId: '',
 };
@@ -102,6 +107,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_STEPS:
       newState.steps = action.payload;
+      break;
+
+    case types.SET_SYNC_STATS:
+      newState.stats = action.payload;
       break;
 
     case types.SET_TIMESTAMPS:

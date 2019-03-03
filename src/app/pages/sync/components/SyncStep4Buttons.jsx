@@ -121,9 +121,15 @@ class SyncStep4Buttons extends Component {
               Link in Sequence
             </button>
           </div>
-          <p>
-            Linked Lines/Log Pills: ? / {Object.keys(this.props.pills).length}{' '}
-            {/* TO-DO: Linked Lines count */}
+          <p className="sync__log__stats">
+            <span>Pills: {this.props.stats.pills} </span>
+            <span>Lines: {this.props.stats.lines} </span>
+            <span>
+              Linked:{' '}
+              {Math.round(
+                (100 * this.props.stats.linked) / this.props.stats.lines
+              )}%{' '}
+            </span>
           </p>
         </div>
       </div>
@@ -132,7 +138,7 @@ class SyncStep4Buttons extends Component {
 }
 
 SyncStep4Buttons.propTypes = {
-  activePill: PropTypes.number,
+  activePill: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   connectSyncPill: PropTypes.func.isRequired,
   deleteSyncPill: PropTypes.func.isRequired,
   handleSyncBoxMouseDown: PropTypes.func.isRequired,
@@ -145,6 +151,7 @@ SyncStep4Buttons.propTypes = {
   pills: PropTypes.object.isRequired,
   player: PropTypes.any,
   resetPillLinks: PropTypes.func.isRequired,
+  stats: PropTypes.object.isRequired,
 };
 
 SyncStep4Buttons.defaultProps = {

@@ -125,6 +125,11 @@
         color: $color-negative;
       }
     }
+
+    &__stats span {
+      display: inline-block;
+      padding-right: $unit;
+    }
   }
 
   &__sequence--true {

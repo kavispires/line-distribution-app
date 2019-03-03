@@ -105,6 +105,7 @@ class Sync extends Component {
         lyrics,
         pills,
         steps,
+        stats,
         timestamps,
         videoId,
       },
@@ -155,19 +156,20 @@ class Sync extends Component {
                 synced
               >
                 <SyncStep4Buttons
-                  location={location}
-                  player={player}
-                  pills={pills}
                   activePill={activePill}
-                  linkSequenceMode={linkSequenceMode}
+                  connectSyncPill={connectSyncPill}
+                  deleteSyncPill={deleteSyncPill}
                   handleSyncBoxMouseDown={handleSyncBoxMouseDown}
                   handleSyncBoxMouseUp={handleSyncBoxMouseUp}
                   handleSyncKeydown={handleSyncKeydown}
                   handleSyncKeyup={handleSyncKeyup}
-                  deleteSyncPill={deleteSyncPill}
-                  resetPillLinks={resetPillLinks}
                   linkPillsSequence={linkPillsSequence}
-                  connectSyncPill={connectSyncPill}
+                  linkSequenceMode={linkSequenceMode}
+                  location={location}
+                  pills={pills}
+                  player={player}
+                  resetPillLinks={resetPillLinks}
+                  stats={stats}
                 />
               </Collapsible>
               <Collapsible

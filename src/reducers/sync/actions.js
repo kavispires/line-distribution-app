@@ -30,6 +30,8 @@ const setStep = payload => dispatch =>
   dispatch({ type: types.SET_STEP, payload });
 const setSteps = payload => dispatch =>
   dispatch({ type: types.SET_STEPS, payload });
+const setSyncStats = payload => dispatch =>
+  dispatch({ type: types.SET_SYNC_STATS, payload });
 const setTimestamps = payload => dispatch =>
   dispatch({ type: types.SET_TIMESTAMPS, payload });
 const setVideoId = payload => dispatch =>
@@ -51,6 +53,7 @@ export default {
   setQueue,
   setStep,
   setSteps,
+  setSyncStats,
   setTimestamps,
   setVideoId,
 };
