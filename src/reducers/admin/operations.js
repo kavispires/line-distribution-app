@@ -354,6 +354,12 @@ const saveManage = formState => async (dispatch, getState) => {
   });
 };
 
+const resetSongSearchQuery = () => dispatch =>
+  dispatch(actions.setSongSearchQuery(''));
+
+const updateSongSearchQuery = value => dispatch =>
+  dispatch(actions.setSongSearchQuery(value));
+
 export default {
   handleEditArtist,
   handleEditMember,
@@ -365,11 +371,13 @@ export default {
   loadSongs,
   removeMember,
   resetManage,
+  resetSongSearchQuery,
   saveManage,
   switchUIReferenceTab,
+  unlockUnit,
+  unlockMembers,
   updateManageForm,
   updateMemberColor,
   updateMemberPositions,
-  unlockUnit,
-  unlockMembers,
+  updateSongSearchQuery,
 };

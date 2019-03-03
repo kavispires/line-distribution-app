@@ -1,34 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
+// Import components
+import SongsTable from './SongsTable';
 // Import common components
-import { ActiveUnit, Loading, RequirementWrapper } from '../../../common';
-// Import constants
-import constants from '../../../../utils/constants';
-// Import utility functions
-import utils from '../../../../utils';
+import { ActiveUnit, RequirementWrapper } from '../../../common';
 
 class Songs extends Component {
   componentDidMount() {
     this.props.loadSongs();
+    this.props.resetSongSearchQuery();
   }
 
   render() {
     const {
       app: { pending },
-      auth: { isAdmin, user },
-      admin: { songs },
+      admin: { songs, songSearchQuery },
+      artists: { activeUnit },
     } = this.props;
 
-    if (pending.REQUEST_SONGS) {
-      return <Loading message="Fecthing Songs..." />;
-    }
+    // Row click should send user to the selected artist page
+    const handleTableClick = e => {
+      const { id } = e.target.parentNode;
+      if (id) {
+        const songId = id.substring(2);
+        this.props.loadSong(songId);
+        this.props.history.push(`/distribution`);
+      }
+    };
 
     return (
-      <RequirementWrapper>
+      <RequirementWrapper requirements={['activeUnit']}>
         <main className="container container--songs">
           <h1>Songs</h1>
+          <ActiveUnit activeUnit={activeUnit} showMembers />
+          <p>
+            By clicking on a table row, the selected song will be loaded in the
+            distribution page.
+          </p>
+          <input
+            className="artists__search-bar"
+            type="text"
+            placeholder="Filter songs..."
+            onChange={e => this.props.updateSongSearchQuery(e.target.value)}
+          />
+          <SongsTable
+            songs={songs}
+            songSearchQuery={songSearchQuery}
+            pending={pending.REQUEST_SONGS}
+            rowAction={handleTableClick}
+          />
         </main>
       </RequirementWrapper>
     );
@@ -38,9 +59,12 @@ class Songs extends Component {
 Songs.propTypes = {
   admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
+  artists: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  loadSong: PropTypes.func.isRequired,
   loadSongs: PropTypes.func.isRequired,
-  updateFavoriteMembers: PropTypes.func.isRequired,
+  resetSongSearchQuery: PropTypes.func.isRequired,
+  updateSongSearchQuery: PropTypes.func.isRequired,
 };
 
 export default Songs;

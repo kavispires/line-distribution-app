@@ -16,6 +16,8 @@ const setPanels = payload => dispatch =>
   dispatch({ type: types.SET_PANELS, payload });
 const setSongs = payload => dispatch =>
   dispatch({ type: types.SET_SONGS, payload });
+const setSongSearchQuery = payload => dispatch =>
+  dispatch({ type: types.SET_SONG_SEARCH_QUERY, payload });
 const setUIReferenceTab = payload => dispatch =>
   dispatch({ type: types.SET_UI_REFERENCE_TAB, payload });
 const setUnitsTypeahead = payload => dispatch =>
@@ -32,6 +34,7 @@ export default {
   setManageResult,
   setPanels,
   setSongs,
+  setSongSearchQuery,
   setUIReferenceTab,
   setUnitsTypeahead,
   setUnitsTypeaheadDict,
