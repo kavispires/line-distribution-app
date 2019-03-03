@@ -1,6 +1,11 @@
+import _ from 'lodash';
+
 import actions from './actions';
 
-const activateSong = () => (dispatch, getState) => {};
+const activateSong = id => (dispatch, getState) => {
+  const activeSong = _.find(getState().admin.songs, { id });
+  dispatch(actions.setActiveSong(activeSong));
+};
 
 const activateUnit = () => (dispatch, getState) => {
   const selectedArtist = { ...getState().artists.selectedArtist };
