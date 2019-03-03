@@ -16,7 +16,7 @@ class Songs extends Component {
     const {
       app: { pending },
       admin: { songs, songSearchQuery },
-      artists: { activeUnit },
+      distribute: { activeUnit },
     } = this.props;
 
     // Row click should send user to the selected artist page
@@ -24,7 +24,7 @@ class Songs extends Component {
       const { id } = e.target.parentNode;
       if (id) {
         const songId = id.substring(2);
-        this.props.loadSong(songId);
+        this.props.activateSong(songId);
         this.props.history.push(`/distribution`);
       }
     };
@@ -55,11 +55,11 @@ class Songs extends Component {
 }
 
 Songs.propTypes = {
+  activateSong: PropTypes.func.isRequired,
   admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
-  artists: PropTypes.object.isRequired,
+  distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  loadSong: PropTypes.func.isRequired,
   loadSongs: PropTypes.func.isRequired,
   resetSongSearchQuery: PropTypes.func.isRequired,
   updateSongSearchQuery: PropTypes.func.isRequired,

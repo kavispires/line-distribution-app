@@ -15,13 +15,9 @@ class Artists extends Component {
     const {
       admin,
       app: { pending },
-      artists: {
-        activeUnit,
-        searchQuery,
-        showFavoriteArtistsOnly,
-        userLatestArtists,
-      },
+      artists: { searchQuery, showFavoriteArtistsOnly, userLatestArtists },
       auth: { user },
+      distribute: { activeUnit },
     } = this.props;
 
     const artistList = admin.artists;
@@ -98,6 +94,7 @@ Artists.propTypes = {
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
   showFavoriteArtistsOnlyToggle: PropTypes.func.isRequired,

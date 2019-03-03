@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   app: state.app,
   artists: state.artists,
   auth: state.auth,
+  distribute: state.distribute,
 });
 
 const mapDispatchToProps = {
