@@ -12,11 +12,26 @@ class Collapsible extends Component {
     };
 
     this.collapse = this.collapse.bind(this);
+    this.enforceProperties = this.enforceProperties.bind(this);
     this.expand = this.expand.bind(this);
     this.togglePanel = this.togglePanel.bind(this);
   }
 
   componentDidMount() {
+    this.enforceProperties();
+  }
+
+  componentDidUpdate(nextProps) {
+    if (
+      this.props.synced &&
+      (nextProps.expanded !== this.props.expanded ||
+        nextProps.collapsed !== this.props.collapsed)
+    ) {
+      this.enforceProperties();
+    }
+  }
+
+  enforceProperties() {
     if (this.props.expanded) {
       this.expand();
     }
@@ -84,6 +99,7 @@ Collapsible.propTypes = {
   collapsed: PropTypes.bool,
   expanded: PropTypes.bool,
   locked: PropTypes.bool,
+  synced: PropTypes.bool,
   title: PropTypes.string.isRequired,
 };
 
@@ -91,6 +107,7 @@ Collapsible.defaultProps = {
   collapsed: false,
   expanded: false,
   locked: false,
+  synced: false,
 };
 
 export default Collapsible;

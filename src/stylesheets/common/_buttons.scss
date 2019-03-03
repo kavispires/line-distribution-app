@@ -3,6 +3,29 @@
   border-width: 1px;
   border-style: solid;
   border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-gray-4;
+    background: linear-gradient($color-negative, $color-gray-1);
+  }
+
+  &:disabled {
+    border-color: $color-gray-1;
+    font-style: italic;
+    cursor: default;
+
+    &:hover {
+      color: $color-gray-2;
+      background: $color-negative;
+    }
+  }
+}
+
+.btn-block {
+  width: 100%;
+  display: block;
+  margin: $unit-p4 0;
 }
 
 .btn-hollow {
@@ -28,6 +51,10 @@
   &:hover {
     background: rgba(0, 0, 0, 0.1);
   }
+}
+
+.btn-50 {
+  width: 50%;
 }
 
 .btn-transparent {

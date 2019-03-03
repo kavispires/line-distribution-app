@@ -1,32 +1,130 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
-import { Checkbox, Form, Option, Select, Text } from 'informed';
-
+// Import components
+import SyncStep1VideoId from './SyncStep1VideoId';
+import SyncStep2Info from './SyncStep2Info';
+import SyncStep3Lyrics from './SyncStep3Lyrics';
+import SyncStep4Buttons from './SyncStep4Buttons';
+import SyncStep4Distributions from './SyncStep4Distribution';
+import SyncStep5Verify from './SyncStep5Verify';
+import SyncStep5Save from './SyncStep5Save';
 // Import common components
-import { Loading, RequirementWrapper } from '../../../common';
-// Import constants
-import constants from '../../../../utils/constants';
-// Import utility functions
-import utils from '../../../../utils';
+import {
+  Collapsible,
+  Loading,
+  RequirementWrapper,
+  Icon,
+} from '../../../common';
+
+let loadYT;
+let player;
+let animationInterval;
 
 class Sync extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      height: 0,
+      currentTime: 0,
+    };
+
+    this.loadYoutubeVideo = this.loadYoutubeVideo.bind(this);
+    this.onPlayerStateChange = this.onPlayerStateChange.bind(this);
+    this.setHeight = this.setHeight.bind(this);
   }
 
   componentDidMount() {
-    this.props.loadArtists();
+    if (this.props.admin.artists.length < 10) {
+      this.props.loadArtists();
+    }
+  }
+
+  componentDidUpdate() {
+    // Determine player height
+    if (!this.state.height && document.getElementById('video-container')) {
+      this.setHeight();
+    }
+  }
+
+  onPlayerStateChange(e) {
+    // If video is playing
+    if (e.data === 1 && this.props.sync.step === 5) {
+      // Lyric Review Animation Interval
+      animationInterval = setInterval(() => {
+        const currentTime = Math.round(player.getCurrentTime());
+        this.setState(() => ({ currentTime }));
+      }, 500);
+    } else {
+      // Kill interval
+      clearInterval(animationInterval);
+    }
+  }
+
+  setHeight() {
+    const width = document.getElementById('video-container').clientWidth;
+    const height = (9 * width) / 16;
+    this.setState(() => ({ width, height }));
+  }
+
+  loadYoutubeVideo() {
+    if (!loadYT && this.props.sync.videoId) {
+      loadYT = new Promise(resolve => {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+      });
+
+      loadYT.then(YT => {
+        player = new YT.Player(this.youtubePlayerAnchor, {
+          height: this.state.height || 390,
+          width: this.state.width || 640,
+          videoId: this.props.sync.videoId,
+          events: {
+            onStateChange: e => this.onPlayerStateChange(e),
+          },
+        });
+        this.props.unlockNextStep();
+      });
+    }
   }
 
   render() {
     const {
       app: { pending },
-      auth: { isAdmin, user },
-      admin: { members },
-      updateFavoriteMembers,
+      admin: { artistsTypeahead },
+      sync: {
+        activeLine,
+        activePill,
+        distributionLines,
+        info,
+        isDistributionComplete,
+        linkSequenceMode,
+        lyrics,
+        pills,
+        steps,
+        timestamps,
+      },
+      connectSyncLine,
+      connectSyncPill,
+      deleteSyncPill,
+      handleFormInfo,
+      handleLyricsEdit,
+      handleSyncBoxMouseDown,
+      handleSyncBoxMouseUp,
+      handleSyncKeydown,
+      handleSyncKeyup,
+      handleVideoId,
+      linkPillsSequence,
+      location,
+      lockLyrics,
+      prepareLines,
+      resetPillLinks,
+      saveSync,
+      unlockNextStep,
+      unlockSpecificStep,
     } = this.props;
 
     if (pending.REQUEST_ARTISTS) {
@@ -39,29 +137,120 @@ class Sync extends Component {
           <h1>Sync</h1>
           <section className="sync__container">
             <div className="sync__group sync__group--left">
-              <div className="sync__video">
-                <h3>Video Here</h3>
-              </div>
-              <div className="sync__step sync__step-4b">
-                <h3>4. Distribution Controls</h3>
-              </div>
+              <section
+                className="sync__video"
+                id="video-container"
+                ref={r => {
+                  this.youtubePlayerAnchor = r;
+                }}
+              >
+                <Icon type="youtube" color="white" size="72" />
+              </section>
+              <Collapsible
+                title="4. Distribution Buttons"
+                locked={steps[4].locked}
+                expanded={steps[4].expanded}
+                collapsed={!steps[4].expanded}
+                synced
+              >
+                <SyncStep4Buttons
+                  location={location}
+                  player={player}
+                  pills={pills}
+                  activePill={activePill}
+                  linkSequenceMode={linkSequenceMode}
+                  handleSyncBoxMouseDown={handleSyncBoxMouseDown}
+                  handleSyncBoxMouseUp={handleSyncBoxMouseUp}
+                  handleSyncKeydown={handleSyncKeydown}
+                  handleSyncKeyup={handleSyncKeyup}
+                  deleteSyncPill={deleteSyncPill}
+                  resetPillLinks={resetPillLinks}
+                  linkPillsSequence={linkPillsSequence}
+                  connectSyncPill={connectSyncPill}
+                />
+              </Collapsible>
+              <Collapsible
+                title="5. Confirm &amp; Save"
+                locked={steps[5].locked}
+                expanded={steps[5].expanded}
+                collapsed={!steps[5].expanded}
+                synced
+              >
+                <SyncStep5Save
+                  info={info}
+                  saveSync={saveSync}
+                  unlockSpecificStep={unlockSpecificStep}
+                />
+              </Collapsible>
             </div>
             <div className="sync__group sync__group--right">
-              <div className="sync__step sync__step-1">
-                <h3>1. Video</h3>
-              </div>
-              <div className="sync__step sync__step-2">
-                <h3>2. Info</h3>
-              </div>
-              <div className="sync__step sync__step-3">
-                <h3>3. Lyrics</h3>
-              </div>
-              <div className="sync__step sync__step-4">
-                <h3>4. Distribution</h3>
-              </div>
-              <div className="sync__step sync__step-5">
-                <h3>5. Verify and Save</h3>
-              </div>
+              <Collapsible
+                title="1. Video Id"
+                locked={steps[1].locked}
+                expanded={steps[1].expanded}
+                collapsed={!steps[1].expanded}
+                synced
+              >
+                <SyncStep1VideoId
+                  handleVideoId={handleVideoId}
+                  loadYoutubeVideo={this.loadYoutubeVideo}
+                />
+              </Collapsible>
+              <Collapsible
+                title="2. Info"
+                locked={steps[2].locked}
+                expanded={steps[2].expanded}
+                collapsed={!steps[2].expanded}
+                synced
+              >
+                <SyncStep2Info
+                  artistsTypeahead={artistsTypeahead}
+                  handleFormInfo={handleFormInfo}
+                />
+              </Collapsible>
+              <Collapsible
+                title="3. Lyrics"
+                locked={steps[3].locked}
+                expanded={steps[3].expanded}
+                collapsed={!steps[3].expanded}
+                synced
+              >
+                <SyncStep3Lyrics
+                  handleLyricsEdit={handleLyricsEdit}
+                  lockLyrics={lockLyrics}
+                  lyrics={lyrics}
+                  prepareLines={prepareLines}
+                />
+              </Collapsible>
+              <Collapsible
+                title="4. Distribution"
+                locked={steps[4].locked}
+                expanded={steps[4].expanded}
+                collapsed={!steps[4].expanded}
+                synced
+              >
+                <SyncStep4Distributions
+                  activeLine={activeLine}
+                  connectSyncLine={connectSyncLine}
+                  distributionLines={distributionLines}
+                  isDistributionComplete={isDistributionComplete}
+                  unlockSpecificStep={unlockSpecificStep}
+                  unlockNextStep={unlockNextStep}
+                />
+              </Collapsible>
+              <Collapsible
+                title="5. Verify"
+                locked={steps[5].locked}
+                expanded={steps[5].expanded}
+                collapsed={!steps[5].expanded}
+                synced
+              >
+                <SyncStep5Verify
+                  currentTime={this.state.currentTime}
+                  distributionLines={distributionLines}
+                  timestamps={timestamps}
+                />
+              </Collapsible>
             </div>
           </section>
         </main>
@@ -73,9 +262,25 @@ class Sync extends Component {
 Sync.propTypes = {
   admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  loadMembers: PropTypes.func.isRequired,
-  updateFavoriteMembers: PropTypes.func.isRequired,
+  connectSyncLine: PropTypes.func.isRequired,
+  connectSyncPill: PropTypes.func.isRequired,
+  deleteSyncPill: PropTypes.func.isRequired,
+  handleFormInfo: PropTypes.func.isRequired,
+  handleLyricsEdit: PropTypes.func.isRequired,
+  handleSyncBoxMouseDown: PropTypes.func.isRequired,
+  handleSyncBoxMouseUp: PropTypes.func.isRequired,
+  handleSyncKeydown: PropTypes.func.isRequired,
+  handleSyncKeyup: PropTypes.func.isRequired,
+  handleVideoId: PropTypes.func.isRequired,
+  linkPillsSequence: PropTypes.func.isRequired,
+  loadArtists: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  lockLyrics: PropTypes.func.isRequired,
+  prepareLines: PropTypes.func.isRequired,
+  resetPillLinks: PropTypes.func.isRequired,
+  sync: PropTypes.object.isRequired,
+  unlockNextStep: PropTypes.func.isRequired,
+  unlockSpecificStep: PropTypes.func.isRequired,
 };
 
 export default Sync;

@@ -74,6 +74,26 @@ p {
   border-width: 1px;
   border-style: solid;
   border-radius: 4px;
+  cursor: pointer;
+}
+.btn:hover {
+  color: #484849;
+  background: linear-gradient(#ffffff, #ebebf2);
+}
+.btn:disabled {
+  border-color: #ebebf2;
+  font-style: italic;
+  cursor: default;
+}
+.btn:disabled:hover {
+  color: #b5b5ba;
+  background: #ffffff;
+}
+
+.btn-block {
+  width: 100%;
+  display: block;
+  margin: 3px 0;
 }
 
 .btn-hollow {
@@ -97,6 +117,10 @@ p {
 }
 .btn-simple:hover {
   background: rgba(0, 0, 0, 0.1);
+}
+
+.btn-50 {
+  width: 50%;
 }
 
 .btn-transparent {
@@ -1421,14 +1445,12 @@ input:checked + .slider:before {
 }
 
 .sync__container {
-  background: beige;
   max-height: 100%;
   display: flex;
 }
 
 .sync__group {
   width: 50%;
-  background: pink;
 }
 .sync__group--left {
   margin-right: 3px;
@@ -1439,7 +1461,119 @@ input:checked + .slider:before {
 
 .sync__video {
   width: 100%;
-  background: greenyellow;
+  background: #ebebf2;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sync__step--1 {
+  text-align: center;
+  margin: 0 auto;
+}
+.sync__step--1 select {
+  margin-bottom: 12px;
+}
+
+.sync__form__label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.sync__form__input {
+  margin-left: 6px;
+}
+
+.sync__lyrics__controls {
+  display: flex;
+}
+.sync__lyrics__controls .btn:first-child {
+  margin-right: 3px;
+}
+
+.sync__lyrics__textarea {
+  margin-top: 6px;
+  width: 100%;
+  height: 400px;
+  resize: none;
+}
+
+.sync__distribution__buttons {
+  width: 100%;
+  background: #ebebf2;
+  display: flex;
+  border-radius: 3px;
+  margin-bottom: 12px;
+}
+.sync__distribution__buttons .box {
+  width: 25%;
+  padding: 12px 6px;
+  border-radius: 3px;
+  border: none;
+  margin: 3px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.sync__distribution__buttons .box:hover {
+  background: #ffffff;
+}
+.sync__distribution__buttons .box .key {
+  font-size: 120%;
+  border: 1px solid #ffffff;
+  padding: 0 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.25);
+  margin-bottom: 6px;
+}
+.sync__distribution__buttons .box .member-name {
+  text-transform: uppercase;
+}
+
+.sync__log-trash {
+  float: right;
+}
+
+.sync__log {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background: #ebebf2;
+  border-radius: 3px;
+  margin-bottom: 12px;
+}
+.sync__log__pill {
+  padding: 3px 6px;
+  border-radius: 6px;
+  margin: 3px;
+}
+.sync__log__pill--active {
+  border: 2px solid #fea245;
+}
+
+.sync__sequence--true {
+  background: #fea245;
+}
+
+.sync__distribution__lyrics {
+  border: 1px solid #ebebf2;
+  padding: 3px;
+  margin: 3px;
+}
+
+.sync__distribution__line {
+  margin: 3px 0;
+}
+.sync__distribution__line--icon {
+  margin-right: 3px;
+  cursor: pointer;
+}
+.sync__distribution__line--part-active {
+  background: #fea245;
 }
 
 .color-palette {

@@ -404,6 +404,25 @@ function* runLogout(action) {
   }
 }
 
+function* sendSong(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  // Save song
+  let receivedSong;
+  try {
+    receivedSong = yield API.post('/songs', action.body);
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing song ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+  return receivedSong;
+}
+
 function* updateCompleteArtist(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -595,6 +614,7 @@ function* apiSaga() {
   yield takeLatest('RESYNC_DATABASE', resyncDatabase);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('SEND_SONG', sendSong);
   yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
