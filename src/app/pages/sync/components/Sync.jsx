@@ -104,6 +104,7 @@ class Sync extends Component {
         linkSequenceMode,
         lyrics,
         pills,
+        step,
         steps,
         stats,
         timestamps,
@@ -118,6 +119,7 @@ class Sync extends Component {
       handleSyncBoxMouseUp,
       handleSyncKeydown,
       handleSyncKeyup,
+      handleResetSync,
       handleVideoId,
       linkPillsSequence,
       location,
@@ -131,6 +133,22 @@ class Sync extends Component {
 
     if (pending.REQUEST_ARTISTS) {
       return <Loading message="Preparing Sync..." />;
+    }
+
+    // If save is in progress
+    if (step === 6) {
+      return (
+        <main className="container container--sync">
+          <h1>Manage</h1>
+          <div className="manage-section--manage-success">
+            <Icon type="check" color="green" size={96} />
+            <p>Song Successfully Created</p>
+            <button className="btn" onClick={handleResetSync}>
+              Create New Song Distribution
+            </button>
+          </div>
+        </main>
+      );
     }
 
     return (
@@ -181,6 +199,7 @@ class Sync extends Component {
               >
                 <SyncStep5Save
                   info={info}
+                  pending={pending.SEND_SONG}
                   saveSync={saveSync}
                   unlockSpecificStep={unlockSpecificStep}
                 />
@@ -275,6 +294,7 @@ Sync.propTypes = {
   handleSyncBoxMouseUp: PropTypes.func.isRequired,
   handleSyncKeydown: PropTypes.func.isRequired,
   handleSyncKeyup: PropTypes.func.isRequired,
+  handleResetSync: PropTypes.func.isRequired,
   handleVideoId: PropTypes.func.isRequired,
   linkPillsSequence: PropTypes.func.isRequired,
   loadArtists: PropTypes.func.isRequired,

@@ -20,7 +20,7 @@ const SyncStep3Lyrics = ({
     <div className="sync__step sync__step--1">
       <div className="sync__lyrics__controls">
         <button className="btn btn-50" onClick={() => prepareLines(true)}>
-          Prepare Lines
+          Prepare Lines *
         </button>{' '}
         <button className="btn btn-50" onClick={insertBrackers}>
           Add []
@@ -33,6 +33,13 @@ const SyncStep3Lyrics = ({
         placeholder="Add Lyrics here and press Prepare Lines"
         value={lyrics || ''}
       />
+      <p>
+        <small>
+          * Prepare Lines adds square brackets before each line erasing any
+          numbered id previously created. If you are editing, this will erase
+          any previously linked pill.
+        </small>
+      </p>
       <button className="btn btn-block" onClick={() => lockLyrics()}>
         Lock Lyrics &amp; Next Step
       </button>

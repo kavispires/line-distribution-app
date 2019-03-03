@@ -1545,6 +1545,8 @@ input:checked + .slider:before {
   background: #ebebf2;
   border-radius: 3px;
   margin-bottom: 12px;
+  max-height: 400px;
+  overflow: auto;
 }
 .sync__log__pill {
   padding: 3px 6px;

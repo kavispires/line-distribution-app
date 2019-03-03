@@ -439,6 +439,9 @@ function* sendSong(action) {
       actionType: action.type,
     });
   }
+
+  yield delay(DELAY_DURATION);
+
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
   return receivedSong;
 }

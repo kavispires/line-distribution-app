@@ -113,6 +113,8 @@
     background: $color-gray-1;
     border-radius: $unit-p4;
     margin-bottom: $unit;
+    max-height: 400px;
+    overflow: auto;
 
     &__pill {
       padding: $unit-p4 $unit-p2;

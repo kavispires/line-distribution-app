@@ -320,7 +320,7 @@ const connectSyncPill = id => (dispatch, getState) => {
   }
 };
 
-const linksBackUp = {};
+let linksBackUp = {};
 const connect = (lineId, pillId) => (dispatch, getState) => {
   let lines = [...getState().sync.distributionLines];
   let pills = Object.assign({}, getState().sync.pills);
@@ -517,11 +517,11 @@ const linkPillsSequence = () => async (dispatch, getState) => {
         dispatch(actions.setLinkSequenceMode(false));
         dispatch(actions.setActivePill(null));
       }
-    }, 500);
+    }, 250);
   }
 };
 
-const saveSync = () => (dispatch, getState) => {
+const saveSync = () => async (dispatch, getState) => {
   const { info, finalLyrics } = getState().sync;
   const body = {
     album: info.album || null,
@@ -535,7 +535,15 @@ const saveSync = () => (dispatch, getState) => {
     videoId: info.videoId,
   };
 
-  dispatch({ type: 'SEND_SONG', body });
+  await dispatch({ type: 'SEND_SONG', body });
+
+  dispatch(actions.setStep(6));
+};
+
+const handleResetSync = () => dispatch => {
+  newPillId = 0;
+  linksBackUp = {};
+  dispatch(actions.resetSync());
 };
 
 export default {
@@ -544,6 +552,7 @@ export default {
   deleteSyncPill,
   handleFormInfo,
   handleLyricsEdit,
+  handleResetSync,
   handleSyncBoxMouseDown,
   handleSyncBoxMouseUp,
   handleSyncKeydown,
