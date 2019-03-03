@@ -14,7 +14,7 @@ class Artists extends Component {
   render() {
     const {
       admin,
-      app,
+      app: { pending },
       artists: {
         activeUnit,
         searchQuery,
@@ -59,7 +59,7 @@ class Artists extends Component {
                 artists={filteredArtists}
                 rowAction={handleTableClick}
                 favoriteAction={this.props.updateFavoriteArtists}
-                pending={app.pending.REQUEST_ARTISTS}
+                pending={pending.REQUEST_ARTISTS}
                 user={user}
               />
             </section>
@@ -81,7 +81,7 @@ class Artists extends Component {
             <ArtistsTable
               artists={filteredArtists}
               searchQuery={searchQuery}
-              pending={app.pending.REQUEST_ARTISTS}
+              pending={pending.REQUEST_ARTISTS}
               rowAction={handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
               user={user}

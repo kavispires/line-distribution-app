@@ -128,6 +128,14 @@ const NATIONALITY_FLAG_URL = '/images/flags/';
 
 const PROFILE_PICTURE_URL = '/images/profiles/';
 
+const SYNC_KEY_LIST = {
+  1: true,
+  2: true,
+  3: true,
+  4: true,
+  5: true,
+};
+
 const YOUTUBE_URLS = ['cudssvDuOpc'];
 
 export default {
@@ -142,5 +150,6 @@ export default {
   NATIONALITIES,
   NATIONALITY_FLAG_URL,
   PROFILE_PICTURE_URL,
+  SYNC_KEY_LIST,
   YOUTUBE_URLS,
 };

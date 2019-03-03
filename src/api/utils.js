@@ -122,7 +122,7 @@ export const buildArtistQuery = data => {
 export const buildSongQuery = data => {
   const { title } = data;
   const originalArtist = data.originalArtist || '';
-  const album = data.album || [];
+  const album = data.album || '';
   return `${title} ${originalArtist} ${album}`.toLowerCase();
 };
 

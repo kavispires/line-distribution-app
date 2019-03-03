@@ -313,6 +313,21 @@ const makePositionsEditable = positions => {
   return result;
 };
 
+const insertAtCursor = (field, valueToInsert) => {
+  if (
+    (field.selectionStart || field.selectionStart === 0) &&
+    field.selectionStart === field.selectionEnd
+  ) {
+    const startPos = field.selectionStart;
+    const endPos = field.selectionEnd;
+    field.value =
+      field.value.substring(0, startPos) +
+      valueToInsert +
+      field.value.substring(endPos, field.value.length);
+  }
+  return field.value;
+};
+
 export default {
   bem,
   camelCase,
@@ -320,6 +335,7 @@ export default {
   ensureColorUniqueness,
   getColorNumber,
   humanize,
+  insertAtCursor,
   makePositionsEditable,
   parseBirthDate,
   parseQueryParams,

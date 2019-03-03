@@ -8,6 +8,7 @@ import {
   Switch,
   Tabs,
   Typeahead,
+  Collapsible,
 } from '../../../common';
 
 const NOOP = () => {};
@@ -170,6 +171,45 @@ const ComponentSheet = () => (
             <li className="component-list__argument">
               suggestions: list of suggestions to autocomplete in the datalist
               (default: [])
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li className="component-list__item">
+        <h3>Collapsible</h3>
+        <div className="component-list__example">
+          <Collapsible title="Locked Collapsible" locked>
+            Content
+          </Collapsible>
+          <Collapsible title="Locked Expanded Collapsible" locked expanded>
+            Content
+          </Collapsible>
+          <Collapsible title="Collapsed Collapsible">Content</Collapsible>
+          <Collapsible title="Expanded Collapsible" expanded>
+            Content
+          </Collapsible>
+        </div>
+        <div className="component-list__description">
+          <p>Collapsible panel with children content</p>
+          <b>Requires:</b>
+          <ul className="component-list__arguments">
+            <li className="component-list__argument">
+              title: the header of the panel
+            </li>
+            <li className="component-list__argument">
+              children elements to be rendered when expanded
+            </li>
+          </ul>
+          <b>Accepts:</b>
+          <ul className="component-list__arguments">
+            <li className="component-list__argument">
+              collapsed: makes panel collapse (default)
+            </li>
+            <li className="component-list__argument">
+              expanded: makes panel expand
+            </li>
+            <li className="component-list__argument">
+              locked: locks panel action keeping it expanded or collapsed
             </li>
           </ul>
         </div>

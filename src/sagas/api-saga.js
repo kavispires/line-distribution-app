@@ -234,6 +234,26 @@ function* requestMembers(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+function* requestSongs(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  try {
+    const response = yield API.get('/songs');
+    const songsList = utils.parseResponse(response);
+    const sortedSongsList = _.sortBy(songsList, [s => s.title.toLowerCase()]);
+    yield put({ type: types.SET_SONGS, payload: sortedSongsList });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: ['Unable to load songs database', error.toString()],
+      actionType: action.type,
+    });
+  }
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   const actionType = 'REQUEST_UNIT';
   yield put({ type: 'PENDING', actionType });
@@ -402,6 +422,25 @@ function* runLogout(action) {
       actionType: action.type,
     });
   }
+}
+
+function* sendSong(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  // Save song
+  let receivedSong;
+  try {
+    receivedSong = yield API.post('/songs', action.body);
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing song ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+  return receivedSong;
 }
 
 function* updateCompleteArtist(action) {
@@ -590,11 +629,13 @@ function* apiSaga() {
   yield takeLatest('REQUEST_ARTIST', requestArtist);
   yield takeLatest('REQUEST_COLORS', requestColors);
   yield takeLatest('REQUEST_MEMBERS', requestMembers);
+  yield takeLatest('REQUEST_SONGS', requestSongs);
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('REQUEST_UNIT_MEMBERS', requestUnitMembers);
   yield takeLatest('RESYNC_DATABASE', resyncDatabase);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('SEND_SONG', sendSong);
   yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);

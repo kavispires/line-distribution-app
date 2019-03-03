@@ -17,6 +17,8 @@ const initialState = {
     unit: 'locked',
     members: 'locked',
   },
+  songs: [],
+  songSearchQuery: '',
   uiReferenceTab: null,
   unitsTypeahead: [],
   unitsTypeaheadDict: {},
@@ -76,6 +78,14 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_PANELS:
       newState.panels = action.payload;
+      break;
+
+    case types.SET_SONGS:
+      newState.songs = action.payload;
+      break;
+
+    case types.SET_SONG_SEARCH_QUERY:
+      newState.songSearchQuery = action.payload;
       break;
 
     case types.SET_UI_REFERENCE_TAB:

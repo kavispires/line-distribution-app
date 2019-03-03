@@ -1,0 +1,152 @@
+.sync {
+  &__container {
+    max-height: 100%;
+    display: flex;
+  }
+
+  &__group {
+    width: 50%;
+
+    &--left {
+      margin-right: $unit-p4;
+    }
+
+    &--right {
+      margin-left: $unit-p4;
+    }
+  }
+
+  &__video {
+    width: 100%;
+    background: $color-gray-1;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__step {
+    &--1 {
+      text-align: center;
+      margin: 0 auto;
+
+      select {
+        margin-bottom: $unit;
+      }
+    }
+  }
+
+  &__form {
+    &__label {
+      display: block;
+      margin-bottom: $unit-p2;
+    }
+
+    &__input {
+      margin-left: $unit-p2;
+    }
+  }
+
+  &__lyrics {
+    &__controls {
+      display: flex;
+      & .btn:first-child {
+        margin-right: $unit-p4;
+      }
+    }
+
+    &__textarea {
+      margin-top: $unit-p2;
+      width: 100%;
+      height: 400px;
+      resize: none;
+    }
+  }
+
+  &__distribution__buttons {
+    width: 100%;
+    background: $color-gray-1;
+    display: flex;
+    border-radius: $unit-p4;
+    margin-bottom: $unit;
+
+    .box {
+      width: 25%;
+      padding: $unit $unit-p2;
+      border-radius: $unit-p4;
+      border: none;
+      margin: $unit-p4;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background: $color-negative;
+      }
+
+      .key {
+        font-size: 120%;
+        border: 1px solid $color-negative;
+        padding: 0 $unit-p2;
+        border-radius: $unit-p4;
+        background: rgba(255, 255, 255, 0.25);
+        margin-bottom: $unit-p2;
+      }
+
+      .member-name {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  &__log-trash {
+    float: right;
+  }
+
+  &__log {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background: $color-gray-1;
+    border-radius: $unit-p4;
+    margin-bottom: $unit;
+
+    &__pill {
+      padding: $unit-p4 $unit-p2;
+      border-radius: $unit-p2;
+      margin: $unit-p4;
+
+      &--active {
+        border: 2px solid $color-orange;
+      }
+    }
+  }
+
+  &__sequence--true {
+    background: $color-orange;
+  }
+
+  &__distribution {
+    &__lyrics {
+      border: 1px solid $color-gray-1;
+      padding: $unit-p4;
+      margin: $unit-p4;
+    }
+
+    &__line {
+      margin: $unit-p4 0;
+
+      &--icon {
+        margin-right: $unit-p4;
+        cursor: pointer;
+      }
+
+      &--part-active {
+        background: $color-orange;
+      }
+    }
+  }
+}

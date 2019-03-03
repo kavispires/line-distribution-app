@@ -73,22 +73,24 @@ export const deserialize = {
         'id',
         'uid',
         'distribution',
+        'groupSize',
         'originalArtist',
         'title',
+        'videoId',
       ]);
       return {
         id,
         createdBy: uid,
         album: data.album || null,
         distribution: data.distribution,
-        groupSize: data.groupSize || 0,
+        groupSize: data.groupSize,
         modifiedBy: uid,
         originalArtist: data.originalArtist || '',
         originalArtistId: data.originalArtistId || null,
         private: data.private || false,
         single: data.single || false,
         title: data.title,
-        videoId: data.videoId || null,
+        videoId: data.videoId,
       };
     },
     unit: (data, id, uid) => {
