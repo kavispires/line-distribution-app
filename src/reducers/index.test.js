@@ -1,6 +1,7 @@
 import { appOperations, appTypes } from './app';
 import { adminOperations, adminTypes } from './admin';
 import { artistsOperations, artistsTypes } from './artists';
+import { distributeOperations, distributeTypes } from './distribute';
 import { authOperations, authTypes } from './auth';
 import { syncOperations, syncTypes } from './sync';
 import { tempOperations, tempTypes } from './temp';
@@ -15,6 +16,7 @@ describe('Reducers', () => {
       adminTypes,
       artistsTypes,
       authTypes,
+      distributeTypes,
       syncTypes,
       tempTypes,
     ];
@@ -41,6 +43,7 @@ describe('Reducers', () => {
       adminOperations,
       artistsOperations,
       authOperations,
+      distributeOperations,
       syncOperations,
       tempOperations,
     ];
