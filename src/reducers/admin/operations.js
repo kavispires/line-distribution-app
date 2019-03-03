@@ -10,6 +10,8 @@ const loadColors = () => dispatch => dispatch({ type: 'REQUEST_COLORS' });
 
 const loadMembers = () => dispatch => dispatch({ type: 'REQUEST_MEMBERS' });
 
+const loadSongs = () => dispatch => dispatch({ type: 'REQUEST_SONGS' });
+
 const switchUIReferenceTab = event => async dispatch => {
   const { id } = event.target;
 
@@ -360,6 +362,7 @@ export default {
   loadArtists,
   loadColors,
   loadMembers,
+  loadSongs,
   removeMember,
   resetManage,
   saveManage,
