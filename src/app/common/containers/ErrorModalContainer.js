@@ -1,17 +1,21 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import Error from '../components/Error';
+import ErrorModal from '../components/ErrorModal';
+
+import { appOperations } from '../../../reducers/app';
 
 const mapStateToProps = state => ({
   app: state.app,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  ...appOperations,
+};
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Error)
+  )(ErrorModal)
 );

@@ -12,6 +12,8 @@ import Songs from './app/pages/songs';
 import Sync from './app/pages/sync';
 import UIReference from './app/pages/ui-reference';
 
+import { ErrorModal } from './app/common/index';
+
 import DistributeContainer from './containers/DistributeContainer';
 import LabContainer from './containers/LabContainer';
 import LearnMoreContainer from './containers/LearnMoreContainer';
@@ -25,6 +27,7 @@ const routes = (
   <Router className="bola">
     <div className="app">
       <Header />
+      <ErrorModal />
       <Route path="/artists/:artistId" component={Artist} />
       <Route exact path="/artists" component={Artists} />
       <Route path="/distribute" component={DistributeContainer} />

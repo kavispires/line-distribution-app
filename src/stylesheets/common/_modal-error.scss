@@ -1,0 +1,36 @@
+.modal-error {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.9);
+
+  &__content {
+    position: relative;
+    background: $color-negative;
+    text-align: center;
+    padding: $unit-x4;
+    border-radius: $unit-p4;
+  }
+
+  .close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    border: none;
+    outline: none;
+    font-size: 150%;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-red;
+      transform: scale(1.5);
+    }
+  }
+
+  &__error-message {
+    color: $color-red;
+  }
+}
