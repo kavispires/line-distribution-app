@@ -89,7 +89,10 @@ class Units extends Component {
                     <LoadingIcon size="small" />
                   ) : (
                     <div className="unit-section__actions">
-                      <button className="btn" disabled>
+                      <button
+                        className="btn"
+                        onClick={() => this.artistRedirect('songs')}
+                      >
                         Distribute
                       </button>
                       <button

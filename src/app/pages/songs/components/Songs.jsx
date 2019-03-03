@@ -34,10 +34,8 @@ class Songs extends Component {
         <main className="container container--songs">
           <h1>Songs</h1>
           <ActiveUnit activeUnit={activeUnit} showMembers />
-          <p>
-            By clicking on a table row, the selected song will be loaded in the
-            distribution page.
-          </p>
+          <h2>All Songs</h2>
+          <p>To start a distribution, select a song by clicking on its row.</p>
           <input
             className="artists__search-bar"
             type="text"
