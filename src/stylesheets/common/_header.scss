@@ -40,6 +40,7 @@ $header_height_logo: 36px;
   background-color: $color-primary;
   background: linear-gradient(to right, #000000, #000d71);
   height: $header_height;
+  min-height: $header_height_logo;
 }
 
 .header-nav {

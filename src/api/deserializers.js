@@ -41,6 +41,14 @@ export const deserialize = {
         modifiedBy: uid,
       };
     },
+    log: (data, id, uid) => {
+      verifyRequirements(data, id, uid, ['id', 'timestamp', 'content']);
+      return {
+        reportedBy: uid || 'ANONYMOUS',
+        timestamp: data.timestamp,
+        content: data.content,
+      };
+    },
     member: (data, id, uid) => {
       verifyRequirements(data, id, uid, [
         'id',

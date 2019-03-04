@@ -1,0 +1,122 @@
+.distribute {
+  &__container {
+    margin-top: $unit;
+  }
+
+  &__section {
+    &--connect {
+      display: flex;
+    }
+  }
+
+  &__section-left {
+    width: 50%;
+    margin-right: $unit-p4;
+    border: 1px solid $color-gray-1;
+    padding: $unit-p2;
+  }
+
+  &__section-right {
+    width: 50%;
+    margin-left: $unit-p4;
+  }
+
+  &__content {
+    &--lyrics {
+      max-height: 700px;
+      overflow: auto;
+      padding: $unit-p2;
+      border: 1px solid $color-gray-1;
+    }
+  }
+
+  &__members {
+    background: $color-gray-1;
+    padding: $unit-p4;
+    padding-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__member-pill {
+    cursor: pointer;
+    border: 2px solid $color-gray-1;
+
+    &:hover {
+      border: 2px solid $color-primary;
+    }
+
+    &.active {
+      color: $color-negative;
+      border: 2px dashed $color-negative;
+    }
+  }
+
+  &__rates {
+    background: $color-gray-1;
+    padding: $unit-p4;
+    padding-bottom: 0;
+    display: flex;
+
+    &__members {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__percentages {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__percentage {
+      margin-right: 0;
+    }
+
+    &__percentage-pill {
+      height: 25px;
+    }
+
+    &__percentage-bar-group {
+      position: relative;
+      width: 100%;
+      height: 25px;
+      background: $color-negative;
+    }
+
+    &__percentage-value {
+      // color: red;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      z-index: 10;
+    }
+
+    &__percentage-bar {
+      // color: red;
+      height: 25px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 9;
+    }
+  }
+}
+
+.distribution {
+  &__lyrics {
+    &__line {
+      margin: $unit-p4 0;
+
+      &--icon {
+        margin-right: $unit-p4;
+        cursor: pointer;
+      }
+
+      &--part-active {
+        background: $color-orange;
+      }
+    }
+  }
+}

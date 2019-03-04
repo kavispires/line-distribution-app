@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // Import common components
-import { ActiveUnit, Icon, Switch, RequirementWrapper } from '../../../common';
+import {
+  ActiveUnit,
+  Icon,
+  Switch,
+  RequirementWrapper,
+  ActiveSong,
+} from '../../../common';
 import ArtistsTable from './ArtistsTable';
 
 class Artists extends Component {
@@ -15,13 +21,9 @@ class Artists extends Component {
     const {
       admin,
       app: { pending },
-      artists: {
-        activeUnit,
-        searchQuery,
-        showFavoriteArtistsOnly,
-        userLatestArtists,
-      },
+      artists: { searchQuery, showFavoriteArtistsOnly, userLatestArtists },
       auth: { user },
+      distribute: { activeSong, activeUnit },
     } = this.props;
 
     const artistList = admin.artists;
@@ -46,7 +48,10 @@ class Artists extends Component {
         <main className="container container--artists">
           <h1>Artists</h1>
 
-          <ActiveUnit activeUnit={activeUnit} showMembers />
+          <section className="active-widget__group">
+            <ActiveUnit activeUnit={activeUnit} showMembers />
+            <ActiveSong activeSong={activeSong} />
+          </section>
 
           {userLatestArtists.length > 0 ? (
             <section className="artists__section">
@@ -98,6 +103,7 @@ Artists.propTypes = {
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
   showFavoriteArtistsOnlyToggle: PropTypes.func.isRequired,

@@ -36,6 +36,11 @@ const initialState = {
       expanded: false,
     },
   },
+  stats: {
+    lines: 0,
+    pills: 0,
+    linked: 0,
+  },
   timestamps: {},
   videoId: '',
 };
@@ -58,10 +63,6 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_ARE_LYRICS_LOCKED:
       newState.areLyricsLocked = action.payload;
-      break;
-
-    case types.SET_DISTRIBUTION_LINES:
-      newState.distributionLines = action.payload;
       break;
 
     case types.SET_FINAL_LYRICS:
@@ -102,6 +103,14 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_STEPS:
       newState.steps = action.payload;
+      break;
+
+    case types.SET_SYNC_DISTRIBUTION_LINES:
+      newState.distributionLines = action.payload;
+      break;
+
+    case types.SET_SYNC_STATS:
+      newState.stats = action.payload;
       break;
 
     case types.SET_TIMESTAMPS:

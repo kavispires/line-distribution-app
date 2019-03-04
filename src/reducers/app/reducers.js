@@ -13,6 +13,12 @@ export default function reducer(prevState = initialState, action) {
   const newState = Object.assign({}, prevState);
 
   switch (action.type) {
+    case types.RESET_ERROR:
+      newState.error = false;
+      newState.errorInline = false;
+      newState.errorMessage = '';
+      break;
+
     case types.SET_DATABASE_READY:
       newState.databaseReady = action.payload;
       break;

@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Icon, Loading } from '..';
 // Import images
 import logo from '../../../images/logo-neg.svg';
-import ErrorPage from '../../pages/error';
 
 class RequirementWrapper extends Component {
   constructor(props) {
@@ -34,13 +33,6 @@ class RequirementWrapper extends Component {
   }
 
   render() {
-    // If error is active
-    if (this.props.app.error) {
-      console.log('AN ERROR HAS HAPPENED!');
-      // this.props.history.push('error');
-      return <ErrorPage />;
-    }
-
     if (!this.state.ready) {
       return <Loading message="Loading..." />;
     }
@@ -113,7 +105,7 @@ class RequirementWrapper extends Component {
       !this.props.app.loading &&
       this.state.activeArtist &&
       this.props.artists.activeArtist &&
-      this.props.artists.activeArtist.id
+      !this.props.artists.activeArtist.id
     ) {
       return (
         <main className="container container--artist">
@@ -122,6 +114,42 @@ class RequirementWrapper extends Component {
             No artist has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group and then
             a unit.
+          </p>
+        </main>
+      );
+    }
+
+    // Verify Active Active
+    if (
+      !this.props.app.loading &&
+      this.state.activeUnit &&
+      this.props.distribute.activeUnit &&
+      !this.props.distribute.activeUnit.id
+    ) {
+      return (
+        <main className="container container--artist">
+          <h1>Active Unit Required</h1>
+          <p>
+            No unit has been selected. Go to the{' '}
+            <Link to="/artists">Artists Page</Link> and select a group and then
+            a unit.
+          </p>
+        </main>
+      );
+    }
+
+    if (
+      !this.props.app.loading &&
+      this.state.activeSong &&
+      this.props.distribute.activeSong &&
+      !this.props.distribute.activeSong.id
+    ) {
+      return (
+        <main className="container container--artist">
+          <h1>Active Song Required</h1>
+          <p>
+            No song has been selected. Go to the{' '}
+            <Link to="/songs">Songs Page</Link> and select a song.
           </p>
         </main>
       );
@@ -136,6 +164,7 @@ RequirementWrapper.propTypes = {
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired,
+  distribute: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   requirements: PropTypes.array,
 };

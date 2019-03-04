@@ -390,6 +390,14 @@ class API {
       case 'distributions':
         result = await postFunctions.createDistribution(body, this._uid);
         break;
+      // API/log/<id>
+      case 'log':
+        result = await postFunctions.createLogEntry(
+          body,
+          this._uid,
+          route.referenceId
+        );
+        break;
       // API/members/<id>
       case 'members':
         result = await postFunctions.createMember(body, this._uid);
@@ -834,6 +842,21 @@ const postFunctions = {
   },
   // Creates single distribution
   createDistribution: async body => {},
+  // Creates single log entry
+  createLogEntry: async (body, uid, subRoute) => {
+    const key = await dbRef.ref(`/log/${subRoute}`).push().key;
+    const data = deserialize.post.log(body, key, uid);
+    let response = {};
+    await dbRef.ref(`/log/${subRoute}/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to log entry ${key}: ${data.content}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    return response;
+  },
   // Creates single member
   createMember: async (body, uid) => {
     const key = await dbRef.ref(`/members`).push().key;

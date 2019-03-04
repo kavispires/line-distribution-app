@@ -8,8 +8,6 @@ const setActivePill = payload => dispatch =>
   dispatch({ type: types.SET_ACTIVE_PILL, payload });
 const setAreLyricsLocked = payload => dispatch =>
   dispatch({ type: types.SET_ARE_LYRICS_LOCKED, payload });
-const setDistributionLines = payload => dispatch =>
-  dispatch({ type: types.SET_DISTRIBUTION_LINES, payload });
 const setFinalLyrics = payload => dispatch =>
   dispatch({ type: types.SET_FINAL_LYRICS, payload });
 const setInfo = payload => dispatch =>
@@ -30,6 +28,10 @@ const setStep = payload => dispatch =>
   dispatch({ type: types.SET_STEP, payload });
 const setSteps = payload => dispatch =>
   dispatch({ type: types.SET_STEPS, payload });
+const setSyncDistributionLines = payload => dispatch =>
+  dispatch({ type: types.SET_SYNC_DISTRIBUTION_LINES, payload });
+const setSyncStats = payload => dispatch =>
+  dispatch({ type: types.SET_SYNC_STATS, payload });
 const setTimestamps = payload => dispatch =>
   dispatch({ type: types.SET_TIMESTAMPS, payload });
 const setVideoId = payload => dispatch =>
@@ -40,7 +42,6 @@ export default {
   setActiveLine,
   setActivePill,
   setAreLyricsLocked,
-  setDistributionLines,
   setFinalLyrics,
   setInfo,
   setIsDistributionComplete,
@@ -51,6 +52,8 @@ export default {
   setQueue,
   setStep,
   setSteps,
+  setSyncDistributionLines,
+  setSyncStats,
   setTimestamps,
   setVideoId,
 };

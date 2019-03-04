@@ -1,7 +1,5 @@
 import types from './types';
 
-const setActiveUnit = payload => dispatch =>
-  dispatch({ type: types.SET_ACTIVE_UNIT, payload });
 const setArtistList = payload => dispatch =>
   dispatch({ type: types.SET_ARTIST_LIST, payload });
 const setArtistPageTab = payload => dispatch =>
@@ -18,7 +16,6 @@ const setShowFavoriteArtistsOnly = payload => dispatch =>
   dispatch({ type: types.SET_SHOW_FAVORITE_ARTISTS_ONLY, payload });
 
 export default {
-  setActiveUnit,
   setArtistList,
   setArtistPageTab,
   setBias,

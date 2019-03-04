@@ -136,6 +136,14 @@ const SYNC_KEY_LIST = {
   5: true,
 };
 
+const SYNC_KEY_COLOR_LIST = {
+  1: '1',
+  2: '8',
+  3: '12',
+  4: '20',
+  5: '26',
+};
+
 const YOUTUBE_URLS = ['cudssvDuOpc'];
 
 export default {
@@ -151,5 +159,6 @@ export default {
   NATIONALITY_FLAG_URL,
   PROFILE_PICTURE_URL,
   SYNC_KEY_LIST,
+  SYNC_KEY_COLOR_LIST,
   YOUTUBE_URLS,
 };

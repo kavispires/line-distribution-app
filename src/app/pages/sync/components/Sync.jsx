@@ -104,8 +104,11 @@ class Sync extends Component {
         linkSequenceMode,
         lyrics,
         pills,
+        step,
         steps,
+        stats,
         timestamps,
+        videoId,
       },
       connectSyncLine,
       connectSyncPill,
@@ -116,6 +119,7 @@ class Sync extends Component {
       handleSyncBoxMouseUp,
       handleSyncKeydown,
       handleSyncKeyup,
+      handleResetSync,
       handleVideoId,
       linkPillsSequence,
       location,
@@ -129,6 +133,22 @@ class Sync extends Component {
 
     if (pending.REQUEST_ARTISTS) {
       return <Loading message="Preparing Sync..." />;
+    }
+
+    // If save is in progress
+    if (step === 6) {
+      return (
+        <main className="container container--sync">
+          <h1>Manage</h1>
+          <div className="manage-section--manage-success">
+            <Icon type="check" color="green" size={96} />
+            <p>Song Successfully Created</p>
+            <button className="btn" onClick={handleResetSync}>
+              Create New Song Distribution
+            </button>
+          </div>
+        </main>
+      );
     }
 
     return (
@@ -154,19 +174,20 @@ class Sync extends Component {
                 synced
               >
                 <SyncStep4Buttons
-                  location={location}
-                  player={player}
-                  pills={pills}
                   activePill={activePill}
-                  linkSequenceMode={linkSequenceMode}
+                  connectSyncPill={connectSyncPill}
+                  deleteSyncPill={deleteSyncPill}
                   handleSyncBoxMouseDown={handleSyncBoxMouseDown}
                   handleSyncBoxMouseUp={handleSyncBoxMouseUp}
                   handleSyncKeydown={handleSyncKeydown}
                   handleSyncKeyup={handleSyncKeyup}
-                  deleteSyncPill={deleteSyncPill}
-                  resetPillLinks={resetPillLinks}
                   linkPillsSequence={linkPillsSequence}
-                  connectSyncPill={connectSyncPill}
+                  linkSequenceMode={linkSequenceMode}
+                  location={location}
+                  pills={pills}
+                  player={player}
+                  resetPillLinks={resetPillLinks}
+                  stats={stats}
                 />
               </Collapsible>
               <Collapsible
@@ -178,6 +199,7 @@ class Sync extends Component {
               >
                 <SyncStep5Save
                   info={info}
+                  pending={pending.SEND_SONG}
                   saveSync={saveSync}
                   unlockSpecificStep={unlockSpecificStep}
                 />
@@ -194,6 +216,7 @@ class Sync extends Component {
                 <SyncStep1VideoId
                   handleVideoId={handleVideoId}
                   loadYoutubeVideo={this.loadYoutubeVideo}
+                  videoId={videoId}
                 />
               </Collapsible>
               <Collapsible
@@ -271,6 +294,7 @@ Sync.propTypes = {
   handleSyncBoxMouseUp: PropTypes.func.isRequired,
   handleSyncKeydown: PropTypes.func.isRequired,
   handleSyncKeyup: PropTypes.func.isRequired,
+  handleResetSync: PropTypes.func.isRequired,
   handleVideoId: PropTypes.func.isRequired,
   linkPillsSequence: PropTypes.func.isRequired,
   loadArtists: PropTypes.func.isRequired,
@@ -278,6 +302,7 @@ Sync.propTypes = {
   lockLyrics: PropTypes.func.isRequired,
   prepareLines: PropTypes.func.isRequired,
   resetPillLinks: PropTypes.func.isRequired,
+  saveSync: PropTypes.func.isRequired,
   sync: PropTypes.object.isRequired,
   unlockNextStep: PropTypes.func.isRequired,
   unlockSpecificStep: PropTypes.func.isRequired,

@@ -424,6 +424,24 @@ function* runLogout(action) {
   }
 }
 
+function* sendLog(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const logType = action.body.type === 'error' ? 'errors' : 'general';
+
+  // Save song
+  try {
+    yield API.post(`/log/${logType}`, action.body);
+  } catch (e) {
+    // do nothing
+  }
+
+  yield delay(DELAY_DURATION);
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 function* sendSong(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -435,10 +453,13 @@ function* sendSong(action) {
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',
-      message: `Failed writing song ${error.toString()}`,
+      message: `Failed writing song: ${error.toString()}`,
       actionType: action.type,
     });
   }
+
+  yield delay(DELAY_DURATION);
+
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
   return receivedSong;
 }
@@ -635,6 +656,7 @@ function* apiSaga() {
   yield takeLatest('RESYNC_DATABASE', resyncDatabase);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('SEND_LOG', sendLog);
   yield takeLatest('SEND_SONG', sendSong);
   yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);

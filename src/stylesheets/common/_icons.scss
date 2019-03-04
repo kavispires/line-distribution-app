@@ -3,3 +3,12 @@
     fill: $color-red !important;
   }
 }
+
+.position-icon-container {
+  &--inline {
+    width: 16px;
+    display: inline-block;
+    transform: translateY(2px);
+    line-height: 1px;
+  }
+}

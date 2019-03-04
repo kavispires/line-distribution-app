@@ -3,6 +3,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Artists from './app/pages/artists';
 import Artist from './app/pages/artist';
+import Distribute from './app/pages/distribute';
 import Header from './app/pages/header';
 import Home from './app/pages/home';
 import Idols from './app/pages/idols';
@@ -12,7 +13,8 @@ import Songs from './app/pages/songs';
 import Sync from './app/pages/sync';
 import UIReference from './app/pages/ui-reference';
 
-import DistributeContainer from './containers/DistributeContainer';
+import { ErrorModal } from './app/common/index';
+
 import LabContainer from './containers/LabContainer';
 import LearnMoreContainer from './containers/LearnMoreContainer';
 import MyArtistsContainer from './containers/MyArtistsContainer';
@@ -25,9 +27,10 @@ const routes = (
   <Router className="bola">
     <div className="app">
       <Header />
+      <ErrorModal />
       <Route path="/artists/:artistId" component={Artist} />
       <Route exact path="/artists" component={Artists} />
-      <Route path="/distribute" component={DistributeContainer} />
+      <Route path="/distribute" component={Distribute} />
       <Route path="/idols" component={Idols} />
       <Route path="/lab" component={LabContainer} />
       <Route path="/learn-more" component={LearnMoreContainer} />

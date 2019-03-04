@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import common components
-import { Icon } from '../../../common';
+import { Icon, LoadingIcon } from '../../../common';
 
-const SyncStep5Save = ({ info, saveSync, unlockSpecificStep }) => (
+const SyncStep5Save = ({ info, pending, saveSync, unlockSpecificStep }) => (
   <div className="sync__step sync__step--5">
     <h3>Info</h3>
     <ul className="sync__verify__info">
@@ -41,15 +41,25 @@ const SyncStep5Save = ({ info, saveSync, unlockSpecificStep }) => (
     </p>
 
     <button className="btn btn-block" onClick={() => saveSync()}>
-      <Icon type="save" color="red" inline /> Save
+      {pending ? (
+        <LoadingIcon size="tiny" />
+      ) : (
+        <Icon type="save" color="red" inline />
+      )}{' '}
+      Save
     </button>
   </div>
 );
 
 SyncStep5Save.propTypes = {
   info: PropTypes.object.isRequired,
-  unlockSpecificStep: PropTypes.func.isRequired,
+  pending: PropTypes.bool,
   saveSync: PropTypes.func.isRequired,
+  unlockSpecificStep: PropTypes.func.isRequired,
+};
+
+SyncStep5Save.defaultProps = {
+  pending: false,
 };
 
 export default SyncStep5Save;

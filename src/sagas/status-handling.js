@@ -50,7 +50,7 @@ function* pending({ actionType }) {
  * @param {string} actionType
  */
 function* error({ message, actionType }) {
-  const errorMessage = typeof err === 'string' ? message : message.toString();
+  const errorMessage = typeof err === 'string' ? message : message.join(': ');
   yield put({ type: types.SET_ERROR_MESSAGE, payload: errorMessage });
   yield put({ type: types.SET_ERROR, payload: true });
   console.error(errorMessage); // eslint-disable-line

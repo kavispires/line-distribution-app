@@ -59,7 +59,17 @@ const SongsTable = ({ songs, pending, rowAction, songSearchQuery }) => {
                   )}
                 </td>
                 <td>{entry.title}</td>
-                <td>{entry.originalArtist}</td>
+                <td>
+                  {entry.originalArtist}{' '}
+                  {entry.originalArtistId ? (
+                    <Icon
+                      type="check"
+                      color="yellow"
+                      title="Artist in LD"
+                      inline
+                    />
+                  ) : null}
+                </td>
                 <td>
                   {entry.album !== 'UNKNOWN' ? (
                     entry.album
