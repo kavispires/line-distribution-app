@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import ActiveUnitWidget from '../components/ActiveUnitWidget';
+import ActiveSongWidget from '../components/ActiveSongWidget';
 
 import { authOperations } from '../../../reducers/auth';
 
@@ -20,5 +20,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(ActiveUnitWidget)
+  )(ActiveSongWidget)
 );

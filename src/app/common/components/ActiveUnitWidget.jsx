@@ -13,19 +13,19 @@ const ActiveUnitWidget = ({ activeUnit, showMembers, inline }) => {
   const inlineClass = inline ? 'inline' : '';
 
   return (
-    <section className={`active-unit-widget ${inlineClass}`}>
+    <section className={`active-widget ${inlineClass}`}>
       <h3>Active Unit:</h3>
-      <div className="active-unit-widget__content">
+      <div className="active-widget__content">
         <h1>
           {activeUnit.artistName.toUpperCase()}{' '}
-          <span className="active-unit-widget__unit">({activeUnit.name})</span>
-          <span className="active-unit-widget__genre">
+          <span className="active-widget__unit">({activeUnit.name})</span>
+          <span className="active-widget__genre">
             {activeUnit.genre} - {Object.values(activeUnit.members).length}{' '}
             members
           </span>
         </h1>
         {showMembers ? (
-          <ul className="active-unit-widget__members">
+          <ul className="active-widget__members">
             {Object.values(activeUnit.members).map(member => (
               <li
                 key={member.id}
@@ -38,7 +38,7 @@ const ActiveUnitWidget = ({ activeUnit, showMembers, inline }) => {
             ))}
           </ul>
         ) : (
-          <p className="active-unit-widget__members-count">3</p>
+          <p className="active-widget__members-count">3</p>
         )}
       </div>
     </section>

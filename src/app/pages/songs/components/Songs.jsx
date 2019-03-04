@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import components
 import SongsTable from './SongsTable';
 // Import common components
-import { ActiveUnit, RequirementWrapper } from '../../../common';
+import { ActiveSong, ActiveUnit, RequirementWrapper } from '../../../common';
 
 class Songs extends Component {
   componentDidMount() {
@@ -16,7 +16,7 @@ class Songs extends Component {
     const {
       app: { pending },
       admin: { songs, songSearchQuery },
-      distribute: { activeUnit },
+      distribute: { activeSong, activeUnit },
     } = this.props;
 
     // Row click should send user to the selected artist page
@@ -33,7 +33,10 @@ class Songs extends Component {
       <RequirementWrapper requirements={['activeUnit']}>
         <main className="container container--songs">
           <h1>Songs</h1>
-          <ActiveUnit activeUnit={activeUnit} showMembers />
+          <section className="active-widget__group">
+            <ActiveUnit activeUnit={activeUnit} showMembers />
+            <ActiveSong activeSong={activeSong} />
+          </section>
           <h2>All Songs</h2>
           <p>To start a distribution, select a song by clicking on its row.</p>
           <input

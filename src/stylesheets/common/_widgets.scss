@@ -61,15 +61,19 @@ input:checked + .slider:before {
   margin-left: $unit;
 }
 
-.active-unit-widget {
+.active-widget {
   background: $color-gray-1;
   padding: $unit-p2 $unit;
-  margin: $unit-p4 0;
+  margin: $unit-p4 $unit $unit-p4 0;
   border-bottom-left-radius: $unit-p2;
   border-top-right-radius: $unit-p2;
   box-shadow: 1px 1px 1px $color-gray-2;
   display: inline-block;
   max-width: 49%;
+
+  &__group {
+    display: flex;
+  }
 
   &.inline {
     display: block;
@@ -88,8 +92,6 @@ input:checked + .slider:before {
     margin: 0;
   }
 
-  &__content {
-  }
   &__unit {
     font-size: 0.75em;
     font-weight: normal;
@@ -108,7 +110,5 @@ input:checked + .slider:before {
     .pill {
       background: $color-negative;
     }
-  }
-  &__members-count {
   }
 }

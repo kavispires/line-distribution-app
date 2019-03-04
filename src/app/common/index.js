@@ -1,3 +1,4 @@
+import ActiveSong from './containers/ActiveSongWidgetContainer';
 import ActiveUnit from './containers/ActiveUnitWidgetContainer';
 import Collapsible from './components/Collapsible';
 import ErrorModal from './containers/ErrorModalContainer';
@@ -12,6 +13,7 @@ import Tabs from './components/Tabs';
 import Typeahead from './components/Typeahead';
 
 export {
+  ActiveSong,
   ActiveUnit,
   Collapsible,
   ErrorModal,
