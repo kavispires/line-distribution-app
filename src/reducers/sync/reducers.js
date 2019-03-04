@@ -65,10 +65,6 @@ export default function reducer(prevState = initialState, action) {
       newState.areLyricsLocked = action.payload;
       break;
 
-    case types.SET_DISTRIBUTION_LINES:
-      newState.distributionLines = action.payload;
-      break;
-
     case types.SET_FINAL_LYRICS:
       newState.finalLyrics = action.payload;
       break;
@@ -107,6 +103,10 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_STEPS:
       newState.steps = action.payload;
+      break;
+
+    case types.SET_SYNC_DISTRIBUTION_LINES:
+      newState.distributionLines = action.payload;
       break;
 
     case types.SET_SYNC_STATS:

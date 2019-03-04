@@ -137,6 +137,13 @@ p {
   fill: #d14949 !important;
 }
 
+.position-icon-container--inline {
+  width: 16px;
+  display: inline-block;
+  transform: translateY(2px);
+  line-height: 1px;
+}
+
 .select {
   appearance: none;
   padding: 6px 12px;
@@ -1005,6 +1012,106 @@ input:checked + .slider:before {
 
 .artists-cell-favorite:hover {
   background: rgba(209, 73, 73, 0.2);
+}
+
+.distribute__container {
+  margin-top: 12px;
+}
+
+.distribute__section--connect {
+  display: flex;
+}
+
+.distribute__section-left {
+  width: 50%;
+  margin-right: 3px;
+  border: 1px solid #ebebf2;
+  padding: 6px;
+}
+
+.distribute__section-right {
+  width: 50%;
+  margin-left: 3px;
+}
+
+.distribute__content--lyrics {
+  max-height: 700px;
+  overflow: auto;
+  padding: 6px;
+  border: 1px solid #ebebf2;
+}
+
+.distribute__members {
+  background: #ebebf2;
+  padding: 3px;
+  padding-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.distribute__member-pill {
+  cursor: pointer;
+  border: 2px solid #ebebf2;
+}
+.distribute__member-pill:hover {
+  border: 2px solid #111111;
+}
+.distribute__member-pill.active {
+  color: #ffffff;
+  border: 2px dashed #ffffff;
+}
+
+.distribute__rates {
+  background: #ebebf2;
+  padding: 3px;
+  padding-bottom: 0;
+  display: flex;
+}
+.distribute__rates__members {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.distribute__rates__percentages {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.distribute__rates__percentage {
+  margin-right: 0;
+}
+.distribute__rates__percentage-pill {
+  height: 25px;
+}
+.distribute__rates__percentage-bar-group {
+  position: relative;
+  width: 100%;
+  height: 25px;
+  background: #ffffff;
+}
+.distribute__rates__percentage-value {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 10;
+}
+.distribute__rates__percentage-bar {
+  height: 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+.distribution__lyrics__line {
+  margin: 3px 0;
+}
+.distribution__lyrics__line--icon {
+  margin-right: 3px;
+  cursor: pointer;
+}
+.distribution__lyrics__line--part-active {
+  background: #fea245;
 }
 
 .home__video {
@@ -1936,6 +2043,14 @@ input:checked + .slider:before {
 
 .foreground-color-30 {
   color: #ffabb9 !important;
+}
+
+.background-color-0 {
+  background-color: #b5b5ba !important;
+}
+
+.foreground-color-0 {
+  color: #b5b5ba !important;
 }
 
 .animated {

@@ -328,12 +328,36 @@ const insertAtCursor = (field, valueToInsert) => {
   return field.value;
 };
 
+const getMostImportantPosition = positions => {
+  const POSITIONS_IMPORTANT_ORDER = [
+    'ALL',
+    'MAIN_VOCALIST',
+    'MAIN_RAPPER',
+    'MAIN_DANCER',
+    'LEAD_VOCALIST',
+    'LEAD_RAPPER',
+    'LEAD_DANCER',
+    'VOCALIST',
+    'RAPPER',
+    'DANCER',
+  ];
+
+  for (let i = 0; i < POSITIONS_IMPORTANT_ORDER.length; i++) {
+    if (positions.includes(POSITIONS_IMPORTANT_ORDER[i])) {
+      return POSITIONS_IMPORTANT_ORDER[i];
+    }
+  }
+
+  return 'VOCALIST';
+};
+
 export default {
   bem,
   camelCase,
   capitalizeWord,
   ensureColorUniqueness,
   getColorNumber,
+  getMostImportantPosition,
   humanize,
   insertAtCursor,
   makePositionsEditable,

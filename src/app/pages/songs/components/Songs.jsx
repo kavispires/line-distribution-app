@@ -25,7 +25,7 @@ class Songs extends Component {
       if (id) {
         const songId = id.substring(2);
         this.props.activateSong(songId);
-        this.props.history.push(`/distribution`);
+        this.props.history.push(`/distribute`);
       }
     };
 

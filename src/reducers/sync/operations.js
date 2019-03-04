@@ -204,7 +204,7 @@ const parseLyricsToObject = lyrics => (dispatch, getState) => {
 
     return parsedLine;
   });
-  dispatch(actions.setDistributionLines(lines));
+  dispatch(actions.setSyncDistributionLines(lines));
 
   const stats = { ...getState().sync.stats };
   stats.lines = lineCount;
@@ -352,7 +352,7 @@ const connect = (lineId, pillId) => (dispatch, getState) => {
   dispatch(actions.setActivePill(null));
 
   dispatch(actions.setPills(pills));
-  dispatch(actions.setDistributionLines(lines));
+  dispatch(actions.setSyncDistributionLines(lines));
 
   // Check if distribution is complete
   function isDistributionComplete(collection) {
@@ -387,7 +387,7 @@ const deleteSyncPill = () => (dispatch, getState) => {
 
     dispatch(actions.setActivePill(null));
     dispatch(actions.setPills(pills));
-    dispatch(actions.setDistributionLines(lines));
+    dispatch(actions.setSyncDistributionLines(lines));
     dispatch(actions.setLinkSequenceMode(false));
 
     const stats = { ...getState().sync.stats };
