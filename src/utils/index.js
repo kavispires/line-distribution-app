@@ -331,6 +331,7 @@ const insertAtCursor = (field, valueToInsert) => {
 const getMostImportantPosition = positions => {
   const POSITIONS_IMPORTANT_ORDER = [
     'ALL',
+    'NONE',
     'MAIN_VOCALIST',
     'MAIN_RAPPER',
     'MAIN_DANCER',

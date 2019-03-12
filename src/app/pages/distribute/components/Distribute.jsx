@@ -37,6 +37,13 @@ class Distribute extends Component {
         color: { number: 0, hex: '#b5b5ba' },
         positions: ['ALL'],
       };
+      members.NONE = {
+        id: 'NONE',
+        name: 'NONE',
+        colorId: 'col000031',
+        color: { number: 0, hex: '#ebebf2' },
+        positions: ['NONE'],
+      };
       return members;
     };
 

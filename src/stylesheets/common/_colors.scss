@@ -17,12 +17,32 @@ $colorNames: 'col000001', 'col000002', 'col000003', 'col000004', 'col000005',
   .foreground-color-#{$i} {
     color: #{nth($colorCodes, $i)} !important;
   }
+  .border-color-#{$i} {
+    border-color: #{nth($colorCodes, $i)} !important;
+  }
 }
 
+// For color 0
 .background-color-0 {
   background-color: $color-gray-2 !important;
 }
-
 .foreground-color-0 {
   color: $color-gray-2 !important;
+}
+.border-color-0 {
+  border-color: $color-gray-2 !important;
+}
+
+// For color 31 (used as None in Distribution)
+$gray-31: #e3e3e8;
+.background-color-31 {
+  background-color: $gray-31;
+  color: $color-gray-3 !important;
+}
+.foreground-color-31 {
+  color: $gray-31 !important;
+  background-color: $color-gray-3;
+}
+.border-color-31 {
+  border-color: $gray-31 !important;
 }

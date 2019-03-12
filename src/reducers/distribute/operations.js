@@ -100,7 +100,17 @@ const linkMemberToPart = id => (dispatch, getState) => {
         // If it already has the member, remove it
         if (part.memberId.includes(activeMemberPill)) {
           part.memberId = part.memberId.filter(m => m !== activeMemberPill);
-        } else {
+        }
+        // If the active pill is NONE, replace it by NONE
+        else if (activeMemberPill === 'NONE') {
+          part.memberId = ['NONE'];
+        }
+        // If there was already a none, only add the new member
+        else if (part.memberId[0] === 'NONE') {
+          part.memberId = [activeMemberPill];
+        }
+        // Any other case, just push the member
+        else {
           part.memberId.push(activeMemberPill);
         }
 
