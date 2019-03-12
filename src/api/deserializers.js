@@ -34,11 +34,20 @@ export const deserialize = {
       };
     },
     distribution: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['id', 'uid', 'songId']);
+      verifyRequirements(data, id, uid, [
+        'uid',
+        'songId',
+        'relationships',
+        'rates',
+      ]);
       return {
-        songId: data.songId,
+        id,
         createdBy: uid,
+        features: data.features || null,
         modifiedBy: uid,
+        rates: data.rates,
+        relationships: data.relationships,
+        songId: data.songId,
       };
     },
     log: (data, id, uid) => {
@@ -154,11 +163,20 @@ export const deserialize = {
       return res;
     },
     distribution: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['uid']);
-      return {
-        songId: data.songId,
-        createdBy: uid,
-      };
+      verifyRequirements(data, id, uid, [
+        'uid',
+        'songId',
+        'relationships',
+        'rates',
+      ]);
+      const res = {};
+      if (uid) res.modifiedBy = uid;
+      if (data.songId) res.songId = data.songId;
+      if (data.relationships) res.relationships = data.relationships;
+      if (data.rates) res.rates = data.rates;
+      if (data.features) res.features = data.features;
+
+      return res;
     },
     member: (data, id, uid) => {
       verifyRequirements(data, id, uid, ['id', 'uid']);

@@ -16,6 +16,7 @@ import iconCenter from '../../../images/icon-center.svg';
 import iconVisual from '../../../images/icon-visual.svg';
 import iconMaknae from '../../../images/icon-maknae.svg';
 import iconAll from '../../../images/icon-all.svg';
+import iconNone from '../../../images/icon-none.svg';
 
 const PositionIcon = ({ className, position }) => {
   const iconBank = {
@@ -33,6 +34,7 @@ const PositionIcon = ({ className, position }) => {
     VISUAL: iconVisual,
     MAKNAE: iconMaknae,
     ALL: iconAll,
+    NONE: iconNone,
   };
 
   return (

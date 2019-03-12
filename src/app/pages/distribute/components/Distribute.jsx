@@ -25,6 +25,7 @@ class Distribute extends Component {
         rates,
       },
       activateMemberPill,
+      handleSaveDistribution,
       linkMemberToPart,
     } = this.props;
 
@@ -36,6 +37,13 @@ class Distribute extends Component {
         colorId: 'col000000',
         color: { number: 0, hex: '#b5b5ba' },
         positions: ['ALL'],
+      };
+      members.NONE = {
+        id: 'NONE',
+        name: 'NONE',
+        colorId: 'col000031',
+        color: { number: 0, hex: '#ebebf2' },
+        positions: ['NONE'],
       };
       return members;
     };
@@ -69,8 +77,11 @@ class Distribute extends Component {
             <Collapsible title="3. Results" locked>
               Results Visualization
             </Collapsible>
-            <Collapsible title="4. Save" locked>
+            <Collapsible title="4. Save" expanded>
               Save distriution
+              <button className="btn" onClick={handleSaveDistribution}>
+                Save
+              </button>
             </Collapsible>
           </div>
         </main>
@@ -82,6 +93,7 @@ class Distribute extends Component {
 Distribute.propTypes = {
   activateMemberPill: PropTypes.func.isRequired,
   distribute: PropTypes.object.isRequired,
+  handleSaveDistribution: PropTypes.func.isRequired,
   linkMemberToPart: PropTypes.func.isRequired,
   prepareSong: PropTypes.func.isRequired,
 };

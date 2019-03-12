@@ -25,56 +25,38 @@ const DistributeConnect = ({
         </p>
       </div>
       <div className="distribute__content">
-        <h3>Members</h3>
+        <h3>Members &amp; Live Distribution Rates</h3>
         <p>
           Click on the member pill then in a lyric connection icon on the right.
         </p>
-        <ul className="distribute__members">
-          {Object.values(members).map(member => (
-            <li
-              key={member.id}
-              className={`pill distribute__member-pill background-color-${utils.getColorNumber(
-                member.colorId
-              )} ${activeMemberPill === member.id ? 'active' : ''}`}
-              onClick={() => activateMemberPill(member.id)}
-            >
-              <PositionIcon
-                position={utils.getMostImportantPosition(member.positions)}
-              />{' '}
-              {member.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="distribute__content">
-        <h3>Live Distribution Rates</h3>
-        <div className="distribute__rates">
-          <div className="distribute__rates__members">
-            {Object.values(members).map(member => (
-              <li
-                key={member.id}
-                className={`pill distribute__rates__percentage-pill background-color-${utils.getColorNumber(
-                  member.colorId
-                )}`}
-              >
-                {member.name}
-              </li>
-            ))}
-          </div>
-          <div className="distribute__rates__percentages">
-            {Object.values(members).map(member => {
-              const percentage = rates[member.id]
-                ? Math.round((100 * rates[member.id]) / rates.total)
-                : 0;
-              const spanWidth = {
-                width: `${percentage}%`,
-              };
+        <ul className="distribute__rates">
+          {Object.values(members).map(member => {
+            const colorNumber = utils.getColorNumber(member.colorId);
+            const activeClass = activeMemberPill === member.id ? 'active' : '';
+            const percentage = rates[member.id]
+              ? Math.round((100 * rates[member.id]) / rates.total)
+              : 0;
+            const percentageWidth = rates[member.id]
+              ? Math.round((100 * rates[member.id]) / rates.max)
+              : 0;
+            const spanWidth = {
+              width: `${percentageWidth}%`,
+            };
 
-              return (
-                <li
-                  key={member.id}
-                  className="pill distribute__rates__percentage-bar-group"
+            return (
+              <li className="distribute__pill-group" key={member.id}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className={`pill distribute__member-pill background-color-${colorNumber} border-color-${colorNumber} ${activeClass}`}
+                  onClick={() => activateMemberPill(member.id)}
                 >
+                  <PositionIcon
+                    position={utils.getMostImportantPosition(member.positions)}
+                  />{' '}
+                  {member.name}
+                </div>
+                <div className="pill distribute__rates__percentage-bar-group">
                   <span className="distribute__rates__percentage-value">
                     {percentage}%
                   </span>
@@ -84,11 +66,12 @@ const DistributeConnect = ({
                       member.colorId
                     )}`}
                   />
-                </li>
-              );
-            })}
-          </div>
-        </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+
         <p>
           Remaining:{' '}
           {rates.remaining === 0 && rates.total === 0 ? '100%' : null}
@@ -115,6 +98,10 @@ const DistributeConnect = ({
                 const lineColors = {};
                 if (colors.length === 1) {
                   [lineColors.background] = colors;
+                  if (colors[0] === '#ebebf2') {
+                    lineColors.fontStyle = 'italic';
+                    lineColors.color = '#7e7e82';
+                  }
                 } else if (colors.length > 1) {
                   lineColors.background = `linear-gradient(${colors.join(
                     ', '

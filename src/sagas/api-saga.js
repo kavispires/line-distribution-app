@@ -424,6 +424,28 @@ function* runLogout(action) {
   }
 }
 
+function* sendDistribution(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  // Save song
+  let receivedSong;
+  try {
+    receivedSong = yield API.post('/distributions', action.body);
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TOAST',
+      message: `Failed writing distribution: ${error.toString()}`,
+      actionType: action.type,
+    });
+  }
+
+  yield delay(DELAY_DURATION);
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+  return receivedSong;
+}
+
 function* sendLog(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -656,6 +678,7 @@ function* apiSaga() {
   yield takeLatest('RESYNC_DATABASE', resyncDatabase);
   yield takeLatest('RUN_LOGIN', runLogin);
   yield takeLatest('RUN_LOGOUT', runLogout);
+  yield takeLatest('SEND_DISTRIBUTION', sendDistribution);
   yield takeLatest('SEND_LOG', sendLog);
   yield takeLatest('SEND_SONG', sendSong);
   yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);

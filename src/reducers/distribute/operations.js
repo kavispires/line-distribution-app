@@ -100,7 +100,17 @@ const linkMemberToPart = id => (dispatch, getState) => {
         // If it already has the member, remove it
         if (part.memberId.includes(activeMemberPill)) {
           part.memberId = part.memberId.filter(m => m !== activeMemberPill);
-        } else {
+        }
+        // If the active pill is NONE, replace it by NONE
+        else if (activeMemberPill === 'NONE') {
+          part.memberId = ['NONE'];
+        }
+        // If there was already a none, only add the new member
+        else if (part.memberId[0] === 'NONE') {
+          part.memberId = [activeMemberPill];
+        }
+        // Any other case, just push the member
+        else {
           part.memberId.push(activeMemberPill);
         }
 
@@ -118,6 +128,7 @@ const calculateRates = distributionLines => dispatch => {
   const rates = {
     total: 0,
     remaining: 0,
+    max: 0,
   };
 
   for (let l = 0; l < distributionLines.length; l++) {
@@ -132,6 +143,8 @@ const calculateRates = distributionLines => dispatch => {
             rates[mId] = 0;
           }
           rates[mId] += part.duration;
+          // Add max if greater than previous max
+          if (rates[mId] > rates.max) rates.max = rates[mId];
         }
       } else {
         rates.remaining += part.duration;
@@ -142,10 +155,36 @@ const calculateRates = distributionLines => dispatch => {
   dispatch(actions.setRates(rates));
 };
 
+const handleSaveDistribution = () => async (dispatch, getState) => {
+  const body = {
+    songId: getState().distribute.activeSong.id,
+    rates: getState().distribute.rates,
+    relationships: '',
+    features: [],
+  };
+
+  // Build relationships
+  const relationships = {};
+  getState().distribute.distributionLines.forEach(line =>
+    line.forEach(part => {
+      relationships[part.id] = part.memberId;
+    })
+  );
+
+  body.relationships = JSON.stringify(relationships);
+
+  // TO-DO: add featuring artists
+
+  console.log(body);
+
+  await dispatch({ type: 'SEND_DISTRIBUTION', body });
+};
+
 export default {
   activateMemberPill,
   activateSong,
   activateUnit,
+  handleSaveDistribution,
   linkMemberToPart,
   prepareSong,
 };

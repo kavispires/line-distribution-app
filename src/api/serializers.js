@@ -57,9 +57,11 @@ export const serialize = {
       type: 'distribution',
       attributes: {
         createdBy: data.createdBy || null,
+        features: data.features || [],
         modifiedBy: data.modifiedBy || null,
+        rates: data.rates,
+        relationships: data.relationships,
         songId: data.songId,
-        // TO-DO: Complete distribution serializer
       },
     };
   },
