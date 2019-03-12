@@ -155,10 +155,36 @@ const calculateRates = distributionLines => dispatch => {
   dispatch(actions.setRates(rates));
 };
 
+const handleSaveDistribution = () => async (dispatch, getState) => {
+  const body = {
+    songId: getState().distribute.activeSong.id,
+    rates: getState().distribute.rates,
+    relationships: '',
+    features: [],
+  };
+
+  // Build relationships
+  const relationships = {};
+  getState().distribute.distributionLines.forEach(line =>
+    line.forEach(part => {
+      relationships[part.id] = part.memberId;
+    })
+  );
+
+  body.relationships = JSON.stringify(relationships);
+
+  // TO-DO: add featuring artists
+
+  console.log(body);
+
+  await dispatch({ type: 'SEND_DISTRIBUTION', body });
+};
+
 export default {
   activateMemberPill,
   activateSong,
   activateUnit,
+  handleSaveDistribution,
   linkMemberToPart,
   prepareSong,
 };

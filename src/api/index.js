@@ -854,7 +854,7 @@ const postFunctions = {
       }
     });
     db.distributions[key] = response;
-    return serialize.distributions(db.distributions[key]);
+    return serialize.distribution(db.distributions[key]);
   },
   // Creates single log entry
   createLogEntry: async (body, uid, subRoute) => {
