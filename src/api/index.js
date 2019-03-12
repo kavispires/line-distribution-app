@@ -841,7 +841,21 @@ const postFunctions = {
     return serialize.color(db.colors[key]);
   },
   // Creates single distribution
-  createDistribution: async body => {},
+  createDistribution: async (body, uid) => {
+    const key = await dbRef.ref(`/distributions`).push().key;
+    const data = deserialize.post.distribution(body, key, uid);
+    let response = {};
+    await dbRef.ref(`/distributions/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to create distribution ${key}: ${data.name}`;
+        throw new Error(`${message}: ${error}`);
+      } else {
+        response = { ...data };
+      }
+    });
+    db.distributions[key] = response;
+    return serialize.distributions(db.distributions[key]);
+  },
   // Creates single log entry
   createLogEntry: async (body, uid, subRoute) => {
     const key = await dbRef.ref(`/log/${subRoute}`).push().key;
@@ -946,7 +960,22 @@ const putFunctions = {
     return serialize.artist(db.artists[key]);
   },
   // Updates single distribution
-  updateDistribution: async (id, body, uid) => {},
+  updateDistribution: async (id, body, uid) => {
+    const key = id;
+    const data = deserialize.put.distribution(body, key, uid);
+    await dbRef.ref(`/distributions/${key}`).update(data, error => {
+      if (error) {
+        const message = `Failed to update distribution ${key}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    let response = {};
+    await dbRef.ref(`/distributions/${key}`).once('value', snapshot => {
+      response = snapshot.val();
+    });
+    db.distributions[key] = response;
+    return serialize.distribution(db.distributions[key]);
+  },
   // Updates single member
   updateMember: async (id, body, uid) => {
     const key = id;
