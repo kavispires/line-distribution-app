@@ -128,6 +128,7 @@ const calculateRates = distributionLines => dispatch => {
   const rates = {
     total: 0,
     remaining: 0,
+    max: 0,
   };
 
   for (let l = 0; l < distributionLines.length; l++) {
@@ -142,6 +143,8 @@ const calculateRates = distributionLines => dispatch => {
             rates[mId] = 0;
           }
           rates[mId] += part.duration;
+          // Add max if greater than previous max
+          if (rates[mId] > rates.max) rates.max = rates[mId];
         }
       } else {
         rates.remaining += part.duration;

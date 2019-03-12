@@ -36,8 +36,11 @@ const DistributeConnect = ({
             const percentage = rates[member.id]
               ? Math.round((100 * rates[member.id]) / rates.total)
               : 0;
+            const percentageWidth = rates[member.id]
+              ? Math.round((100 * rates[member.id]) / rates.max)
+              : 0;
             const spanWidth = {
-              width: `${percentage}%`,
+              width: `${percentageWidth}%`,
             };
 
             return (
