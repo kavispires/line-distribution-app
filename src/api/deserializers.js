@@ -36,6 +36,7 @@ export const deserialize = {
     distribution: (data, id, uid) => {
       verifyRequirements(data, id, uid, [
         'uid',
+        'category',
         'rates',
         'relationships',
         'songId',
@@ -43,6 +44,7 @@ export const deserialize = {
       ]);
       return {
         id,
+        category: data.category,
         createdBy: uid,
         features: data.features || null,
         modifiedBy: uid,
@@ -167,6 +169,7 @@ export const deserialize = {
     distribution: (data, id, uid) => {
       verifyRequirements(data, id, uid, [
         'uid',
+        'category',
         'rates',
         'relationships',
         'songId',
@@ -174,6 +177,7 @@ export const deserialize = {
       ]);
       const res = {};
       if (uid) res.modifiedBy = uid;
+      if (data.category) res.category = data.category;
       if (data.features) res.features = data.features;
       if (data.rates) res.rates = data.rates;
       if (data.relationships) res.relationships = data.relationships;
@@ -240,7 +244,6 @@ export const deserialize = {
       if (data.name) res.name = data.name;
       if (data.official) res.official = data.official;
       if (data.private) res.private = data.private;
-      if (data.artistId) res.artistId = data.artistId;
 
       return res;
     },

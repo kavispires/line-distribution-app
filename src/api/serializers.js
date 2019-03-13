@@ -57,6 +57,7 @@ export const serialize = {
       type: 'distribution',
       attributes: {
         createdBy: data.createdBy || null,
+        category: data.category,
         features: data.features || [],
         modifiedBy: data.modifiedBy || null,
         rates: data.rates,

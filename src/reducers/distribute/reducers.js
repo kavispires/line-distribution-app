@@ -260,8 +260,10 @@ const initialState = {
   //   artistName: '(G)I-DLE',
   //   genre: 'K-Pop',
   // },
+  category: 'OFFICIAL',
   distributionLines: [],
   rates: {},
+  remainder: 100,
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -280,8 +282,16 @@ export default function reducer(prevState = initialState, action) {
       newState.activeUnit = action.payload;
       break;
 
+    case types.SET_DISTRIBUTION_CATEGORY:
+      newState.category = action.payload;
+      break;
+
     case types.SET_DISTRIBUTION_LINES:
       newState.distributionLines = action.payload;
+      break;
+
+    case types.SET_DISTRIBUTION_REMAINDER:
+      newState.remainder = action.payload;
       break;
 
     case types.SET_RATES:
