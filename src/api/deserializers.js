@@ -36,9 +36,10 @@ export const deserialize = {
     distribution: (data, id, uid) => {
       verifyRequirements(data, id, uid, [
         'uid',
-        'songId',
-        'relationships',
         'rates',
+        'relationships',
+        'songId',
+        'unitId',
       ]);
       return {
         id,
@@ -48,6 +49,7 @@ export const deserialize = {
         rates: data.rates,
         relationships: data.relationships,
         songId: data.songId,
+        unitId: data.unitId,
       };
     },
     log: (data, id, uid) => {
@@ -165,16 +167,18 @@ export const deserialize = {
     distribution: (data, id, uid) => {
       verifyRequirements(data, id, uid, [
         'uid',
-        'songId',
-        'relationships',
         'rates',
+        'relationships',
+        'songId',
+        'unitId',
       ]);
       const res = {};
       if (uid) res.modifiedBy = uid;
-      if (data.songId) res.songId = data.songId;
-      if (data.relationships) res.relationships = data.relationships;
-      if (data.rates) res.rates = data.rates;
       if (data.features) res.features = data.features;
+      if (data.rates) res.rates = data.rates;
+      if (data.relationships) res.relationships = data.relationships;
+      if (data.songId) res.songId = data.songId;
+      if (data.unitId) res.unitId = data.unitId;
 
       return res;
     },

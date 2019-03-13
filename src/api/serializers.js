@@ -62,6 +62,7 @@ export const serialize = {
         rates: data.rates,
         relationships: data.relationships,
         songId: data.songId,
+        unitId: data.unitId,
       },
     };
   },
