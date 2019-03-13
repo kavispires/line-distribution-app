@@ -153,14 +153,37 @@ const calculateRates = distributionLines => dispatch => {
   }
 
   dispatch(actions.setRates(rates));
+  dispatch(calculateRemainder(rates));
+};
+
+const calculateRemainder = rates => dispatch => {
+  let remainder = 0;
+
+  if (rates.remaining === 0 && rates.total === 0) {
+    remainder = 100;
+  } else if (rates.remaining > 0 && rates.total > 0) {
+    remainder = Math.round(
+      (100 * rates.remaining) / (rates.total + rates.remaining)
+    );
+  } else if (rates.remaining === 0 && rates.total > 0) {
+    remainder = 0;
+  }
+  dispatch(actions.setDistributionRemainder(remainder));
+};
+
+const handleDistributionCategory = event => async dispatch => {
+  const { value } = event.target;
+  dispatch(actions.setDistributionCategory(value));
 };
 
 const handleSaveDistribution = () => async (dispatch, getState) => {
   const body = {
+    category: getState().distribute.category,
     songId: getState().distribute.activeSong.id,
     rates: getState().distribute.rates,
     relationships: '',
     features: [],
+    unitId: getState().distribute.activeUnit.id,
   };
 
   // Build relationships
@@ -175,8 +198,6 @@ const handleSaveDistribution = () => async (dispatch, getState) => {
 
   // TO-DO: add featuring artists
 
-  console.log(body);
-
   await dispatch({ type: 'SEND_DISTRIBUTION', body });
 };
 
@@ -184,6 +205,7 @@ export default {
   activateMemberPill,
   activateSong,
   activateUnit,
+  handleDistributionCategory,
   handleSaveDistribution,
   linkMemberToPart,
   prepareSong,

@@ -23,8 +23,10 @@ class Distribute extends Component {
         activeUnit,
         distributionLines,
         rates,
+        remainder,
       },
       activateMemberPill,
+      handleDistributionCategory,
       handleSaveDistribution,
       linkMemberToPart,
     } = this.props;
@@ -69,6 +71,7 @@ class Distribute extends Component {
                 activeMemberPill={activeMemberPill}
                 linkMemberToPart={linkMemberToPart}
                 rates={rates}
+                remainder={remainder}
               />
             </Collapsible>
             <Collapsible title="2. Play" locked>
@@ -78,10 +81,25 @@ class Distribute extends Component {
               Results Visualization
             </Collapsible>
             <Collapsible title="4. Save" expanded>
-              Save distriution
-              <button className="btn" onClick={handleSaveDistribution}>
-                Save
-              </button>
+              <p>
+                <label className="distribute__distribution-category">
+                  Category*
+                  <select onChange={handleDistributionCategory}>
+                    <option value="OFFICIAL">Official</option>
+                    <option value="WOULD">How they would sing</option>
+                    <option value="SHOULD">How they should sing</option>
+                  </select>
+                </label>
+              </p>
+              <p>
+                <button
+                  className="btn"
+                  onClick={handleSaveDistribution}
+                  disabled={remainder}
+                >
+                  Save
+                </button>
+              </p>
             </Collapsible>
           </div>
         </main>
@@ -93,6 +111,7 @@ class Distribute extends Component {
 Distribute.propTypes = {
   activateMemberPill: PropTypes.func.isRequired,
   distribute: PropTypes.object.isRequired,
+  handleDistributionCategory: PropTypes.func.isRequired,
   handleSaveDistribution: PropTypes.func.isRequired,
   linkMemberToPart: PropTypes.func.isRequired,
   prepareSong: PropTypes.func.isRequired,

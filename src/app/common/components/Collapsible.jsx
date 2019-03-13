@@ -95,7 +95,7 @@ class Collapsible extends Component {
 }
 
 Collapsible.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired,
   collapsed: PropTypes.bool,
   expanded: PropTypes.bool,
   locked: PropTypes.bool,

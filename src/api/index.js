@@ -853,6 +853,17 @@ const postFunctions = {
         response = { ...data };
       }
     });
+
+    // Add distribution id to unit
+    const unit = await getFunctions.fetchUnit(data.unitId);
+    const unitDistributions = [...unit.attributes.distributions];
+    unitDistributions.push(key);
+    await putFunctions.updateUnit(
+      data.unitId,
+      { distributions: unitDistributions },
+      uid
+    );
+
     db.distributions[key] = response;
     return serialize.distribution(db.distributions[key]);
   },

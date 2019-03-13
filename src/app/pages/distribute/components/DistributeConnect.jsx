@@ -13,6 +13,7 @@ const DistributeConnect = ({
   linkMemberToPart,
   members,
   rates,
+  remainder,
 }) => (
   <section className="distribute__section distribute__section--connect">
     <div className="distribute__section-left">
@@ -72,16 +73,7 @@ const DistributeConnect = ({
           })}
         </ul>
 
-        <p>
-          Remaining:{' '}
-          {rates.remaining === 0 && rates.total === 0 ? '100%' : null}
-          {rates.remaining > 0 && rates.total > 0
-            ? `${Math.round(
-                (100 * rates.remaining) / (rates.total + rates.remaining)
-              )}%`
-            : null}
-          {rates.remaining === 0 && rates.total > 0 ? '0%' : null}
-        </p>
+        <p>Remaining: {remainder}%</p>
       </div>
     </div>
     <div className="distribute__section-right">
@@ -156,10 +148,12 @@ DistributeConnect.propTypes = {
   linkMemberToPart: PropTypes.func.isRequired,
   members: PropTypes.object.isRequired,
   rates: PropTypes.object.isRequired,
+  remainder: PropTypes.number,
 };
 
 DistributeConnect.defaultProps = {
   activeMemberPill: '',
+  remainder: 0,
 };
 
 export default DistributeConnect;

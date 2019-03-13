@@ -41,6 +41,7 @@ const handleFormInfo = (formState, originalArtist) => (dispatch, getState) => {
     info.groupSize = formState.values.groupSize;
     info.single = formState.values.single || false;
     info.title = formState.values.title;
+    info.private = formState.values.private;
   }
 
   info.videoId = getState().sync.videoId;
