@@ -9,7 +9,7 @@ export const deserialize = {
       return {
         id,
         createdBy: uid,
-        genre: utils.ensureGenreEnum(data.genre) || 'OTHER',
+        genre: data.genre ? utils.ensureGenreEnum(data.genre) : 'OTHER',
         modifiedBy: uid,
         name: data.name,
         otherNames: data.otherNames || null,
@@ -37,6 +37,7 @@ export const deserialize = {
     },
     distribution: (data, id, uid) => {
       utils.verifyRequirements(data, id, uid, [
+        'id',
         'uid',
         'category',
         'rates',
@@ -51,7 +52,10 @@ export const deserialize = {
         features: data.features || null,
         modifiedBy: uid,
         rates: data.rates,
-        relationships: data.relationships,
+        relationships:
+          typeof data.relationships === 'string'
+            ? data.relationships
+            : JSON.stringify(data.relationships),
         songId: data.songId,
         unitId: data.unitId,
       };
@@ -170,6 +174,7 @@ export const deserialize = {
     },
     distribution: (data, id, uid) => {
       utils.verifyRequirements(data, id, uid, [
+        'id',
         'uid',
         'category',
         'rates',

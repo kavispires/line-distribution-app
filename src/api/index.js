@@ -40,7 +40,6 @@ export let dbRef = null; // eslint-disable-line
 
 class API {
   constructor() {
-    // const db = {};
     this._authenticated = false;
     this._admin = false;
     this._loaded = false;
@@ -59,7 +58,7 @@ class API {
    * @returns {Object}
    */
   dbInfo() {
-    console.warn('Fetching DB info...'); // eslint-disable-line
+    this.print('Fetching DB info...');
     const response = new NewResponse();
 
     response.status(HttpStatus.OK);
@@ -78,7 +77,7 @@ class API {
    * @returns {Boolean}
    */
   async init() {
-    console.warn('Running init...'); // eslint-disable-line
+    this.print('Running init...');
     const response = new NewResponse();
 
     dbRef = await fb.database();
@@ -105,7 +104,7 @@ class API {
    * @returns {Object} user
    */
   async auth() {
-    console.warn('Running auth...'); // eslint-disable-line
+    this.print('Running auth...');
     const response = new NewResponse();
 
     if (!this._loaded) {
@@ -139,7 +138,7 @@ class API {
   }
 
   async login() {
-    console.warn('Running login...'); // eslint-disable-line
+    this.print('Running login...');
     const response = new NewResponse();
 
     let result;
@@ -179,7 +178,7 @@ class API {
   }
 
   async logoff() {
-    console.warn('Running logout...'); // eslint-disable-line
+    this.print('Running logout...');
     const response = new NewResponse();
 
     try {
@@ -195,10 +194,14 @@ class API {
     return response.resolve();
   }
 
-  async resyncDatabase() {
-    console.warn('Resyncing database...'); // eslint-disable-line
+  print(message, path = '') {
+    if (process.env.NODE_ENV !== 'test') console.warn(message, path); // eslint-disable-line
+  }
 
-    // Reset fullyLodaded
+  async resyncDatabase() {
+    this.print('Resyncing database...');
+
+    // Reset fullyLoaded
     fullyLoaded.artists = false;
     fullyLoaded.colors = false;
     fullyLoaded.distributions = false;
@@ -253,7 +256,7 @@ class API {
   }
 
   async get(path) {
-    console.warn('Fetching data...', path); // eslint-disable-line
+    this.print('Fetching data...', path);
     /*
      * List of possible get calls:
      * /artists
@@ -365,7 +368,7 @@ class API {
   }
 
   async post(path, body) {
-    console.warn('Writting data...', path); // eslint-disable-line
+    this.print('Writting data...', path);
     /*
      * List of possible post calls:
      * /artists
@@ -426,7 +429,7 @@ class API {
   }
 
   async put(path, body) {
-    console.warn('Updating data...', path); // eslint-disable-line
+    this.print('Updating data...', path);
     /*
      * List of possible put calls:
      * /artists/<id>
@@ -523,7 +526,7 @@ class API {
   }
 
   async delete(path) {
-    console.warn('Deleting data...', path); // eslint-disable-line
+    this.print('Deleting data...', path);
     /*
      * List of possible delete calls:
      * /users/<id>
