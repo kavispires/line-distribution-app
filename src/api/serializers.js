@@ -61,7 +61,7 @@ export const serialize = {
         features: data.features || [],
         modifiedBy: data.modifiedBy || null,
         rates: data.rates,
-        relationships: data.relationships,
+        relationships: JSON.parse(data.relationships),
         songId: data.songId,
         unitId: data.unitId,
       },

@@ -58,14 +58,23 @@ describe('API/Serializers', () => {
       const data = {
         id: '1',
         songId: '1',
+        unitId: 'u',
+        category: 'OFFICIAL',
+        rates: {},
+        relationships: '{"1":["1","2"]}',
       };
       expect(serialize.distribution(data)).toEqual({
         id: '1',
         type: 'distribution',
         attributes: {
           songId: '1',
+          unitId: 'u',
           modifiedBy: null,
           createdBy: null,
+          category: 'OFFICIAL',
+          features: [],
+          rates: {},
+          relationships: { 1: ['1', '2'] },
         },
       });
     });
