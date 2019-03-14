@@ -3,15 +3,17 @@
 
 import firebase from 'firebase';
 import HttpStatus from 'http-status-codes';
-import { NewResponse, breadcrumble, wait, mergeMembers } from './utils';
+import utils, { wait } from './utils';
+
+import NewResponse from './response';
 
 import { serialize, serializeCollection } from './serializers';
 import { deserialize } from './deserializers';
 
 import { fb, googleProvider, userSession } from './firebase';
 
-const WAIT_DB_TIME = 3500;
 const WAIT_AUTH_TIME = 2000;
+const WAIT_DB_TIME = 3500;
 
 export const db = {
   artists: {},
@@ -278,7 +280,7 @@ class API {
       }
     }
 
-    const route = breadcrumble(path);
+    const route = utils.breadcrumble(path);
     let result;
 
     switch (route.root) {
@@ -378,7 +380,7 @@ class API {
       return this.throwDBError('POST');
     }
 
-    const route = breadcrumble(path);
+    const route = utils.breadcrumble(path);
     let result;
 
     switch (route.root) {
@@ -439,7 +441,7 @@ class API {
       return this.throwDBError('PUT');
     }
 
-    const route = breadcrumble(path);
+    const route = utils.breadcrumble(path);
     let result;
 
     if (!route.referenceId) {
@@ -535,7 +537,7 @@ class API {
       return this.throwPathError('DELETE', 'path');
     }
 
-    const route = breadcrumble(path);
+    const route = utils.breadcrumble(path);
     let result;
 
     if (!route.referenceId) {
@@ -789,7 +791,7 @@ const getFunctions = {
       member.attributes.positions = unit.attributes.members[index].positions;
       return member;
     });
-    return mergeMembers(unit.attributes.members, response);
+    return utils.mergeMembers(unit.attributes.members, response);
   },
   // Fetches single user
   fetchUser: async id => {

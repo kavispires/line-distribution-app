@@ -86,15 +86,16 @@ describe('API/Serializers', () => {
         id: '1',
         name: 'Zachary',
         colorId: '2',
+        birthdate: 19931010,
       };
       expect(serialize.member(data)).toEqual({
         id: '1',
         type: 'member',
         attributes: {
-          age: 0,
+          age: 25,
           altColor: null,
           altColorId: null,
-          birthdate: 0,
+          birthdate: 19931010,
           color: null,
           colorId: '2',
           createdBy: null,

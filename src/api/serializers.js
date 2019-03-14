@@ -1,13 +1,8 @@
 /* eslint arrow-body-style: 0 */
 import _ from 'lodash';
 
-import {
-  buildArtistQuery,
-  buildMemberInitials,
-  calculateAge,
-  getNumberFromColorId,
-  buildSongQuery,
-} from './utils';
+import utils from './utils';
+
 import { GENRES } from './enums';
 
 const UNKNOWN = 'UNKNOWN';
@@ -27,7 +22,7 @@ export const serialize = {
         name: data.name,
         otherNames: data.otherNames || '',
         private: data.private || false,
-        query: data.query || buildArtistQuery(data),
+        query: data.query || utils.buildArtistQuery(data),
         units: data.units || [],
       },
     };
@@ -44,8 +39,8 @@ export const serialize = {
         hex: data.hex,
         name: data.name,
         number: data.id
-          ? getNumberFromColorId(data.id)
-          : getNumberFromColorId(id),
+          ? utils.getNumberFromColorId(data.id)
+          : utils.getNumberFromColorId(id),
         r: data.r,
       },
     };
@@ -73,7 +68,7 @@ export const serialize = {
       id: data.id || id,
       type: 'member',
       attributes: {
-        age: data.birthdate ? calculateAge(data.birthdate) : 0,
+        age: data.birthdate ? utils.calculateAge(data.birthdate) : 0,
         altColorId: data.altColorId || null,
         altColor: data.altColor || null,
         birthdate: data.birthdate || 0,
@@ -81,7 +76,7 @@ export const serialize = {
         color: data.color || null,
         createdBy: data.createdBy || null,
         gender: data.gender || UNKNOWN,
-        initials: data.initials || buildMemberInitials(data.name),
+        initials: data.initials || utils.buildMemberInitials(data.name),
         name: data.name,
         modifiedBy: data.modifiedBy || null,
         nationality: data.nationality || UNKNOWN,
@@ -105,7 +100,7 @@ export const serialize = {
         originalArtist: data.originalArtist || '',
         originalArtistId: data.originalArtistId || null,
         private: data.private || false,
-        query: data.query || buildSongQuery(data),
+        query: data.query || utils.buildSongQuery(data),
         single: data.single || false,
         title: data.title,
         videoId: data.videoId || null,
@@ -124,7 +119,7 @@ export const serialize = {
         debutYear: data.debutYear,
         distributions: data.distributions || [],
         distributions_legacy: data.distributions_legacy || [],
-        members: data.members ? parseUnitMembers(data.members) : [],
+        members: data.members ? utils.parseUnitMembers(data.members) : [],
         modifiedBy: data.modifiedBy || null,
         name: data.name,
         official: data.official || false,
@@ -154,35 +149,3 @@ export const serialize = {
 
 export const serializeCollection = (object, type) =>
   Object.keys(object).map(key => serialize[type](object[key], key));
-
-// Utils
-
-const parseUnitMembers = membersObj => {
-  const dict = {};
-  Object.keys(membersObj).forEach(key => {
-    const entrySplit = key.split(':');
-    const memberId = entrySplit[0];
-    const memberName = entrySplit[1];
-    const memberPosition = entrySplit[2];
-
-    if (dict[memberId] === undefined) {
-      dict[memberId] = {
-        positions: {},
-      };
-    }
-
-    dict[memberId].memberId = memberId;
-    dict[memberId].name = memberName;
-
-    dict[memberId].positions[memberPosition] = true;
-  });
-
-  return Object.keys(dict).map(entry => {
-    const result = {
-      memberId: dict[entry].memberId,
-      name: dict[entry].name,
-      positions: Object.keys(dict[entry].positions),
-    };
-    return result;
-  });
-};
