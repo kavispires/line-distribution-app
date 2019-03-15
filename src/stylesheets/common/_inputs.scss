@@ -1,10 +1,64 @@
-.select {
+@mixin select-override {
   appearance: none;
-  padding: $unit-p2 $unit;
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid $color-gray-2;
   border-radius: 4px;
   background: $color-negative;
+  min-width: 100px;
+  overflow: hidden;
+  // float: left;
+
+  &:hover {
+    color: $color-gray-4;
+    background: linear-gradient($color-negative, $color-gray-1);
+  }
+
+  select {
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+
+    &:after {
+      content: '<>';
+      font: 17px monospace;
+      color: #333;
+      transform: rotate(90deg);
+      right: 11px;
+
+      top: 18px;
+      padding: 0 0 2px;
+      border-bottom: 1px solid #999;
+
+      position: absolute;
+      pointer-events: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.ld-select {
+  @include select-override;
+
+  select {
+    padding: $unit-p2 $unit;
+  }
+}
+
+.ld-select-slim {
+  @include select-override;
+
+  select {
+    padding: $unit-p4 $unit-p2;
+  }
+}
+
+.ld-select__label {
+  color: $color-gray-4;
 }
 
 .typeahead {
