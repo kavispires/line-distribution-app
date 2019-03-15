@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import components
 import BiasPicture from './BiasPicture';
 // Import common components
-import { Tabs, Icon, LoadingIcon, MemberCard } from '../../../common';
+import { Tabs, Icon, LoadingIcon, MemberCard, Select } from '../../../common';
 
 class Units extends Component {
   componentDidMount() {
@@ -116,17 +116,14 @@ class Units extends Component {
                   ) : (
                     <div className="unit-section__bias-wrapper">
                       <BiasPicture bias={bias} />
-                      <select className="select" onChange={updateBias}>
-                        <option value="">Select your bias...</option>
-                        {Object.values(selectedUnit.members).map(member => (
-                          <option
-                            key={`bias-option-${member.id}`}
-                            value={member.id}
-                          >
-                            Bias: {member.name}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                        action={updateBias}
+                        options={selectedUnit.members}
+                        optionValue="id"
+                        optionName="name"
+                        optionPrefix="Bias: "
+                        placeholder="Select your bias..."
+                      />
                     </div>
                   )}
                 </div>

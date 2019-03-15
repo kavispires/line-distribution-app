@@ -9,6 +9,7 @@ import LoadingIcon from './components/LoadingIcon';
 import MemberCard from './components/MemberCard';
 import PositionIcon from './components/PositionIcon';
 import RequirementWrapper from './containers/RequirementWrapperContainer';
+import Select from './components/Select';
 import Switch from './components/Switch';
 import Tabs from './components/Tabs';
 import Typeahead from './components/Typeahead';
@@ -25,6 +26,7 @@ export {
   MemberCard,
   PositionIcon,
   RequirementWrapper,
+  Select,
   Switch,
   Tabs,
   Typeahead,
