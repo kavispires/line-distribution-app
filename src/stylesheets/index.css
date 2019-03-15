@@ -1245,12 +1245,51 @@ input:checked + .slider:before {
   background: rgba(255, 255, 255, 0.5);
 }
 
-.idols__filter-group {
+.idols__filters-form {
   background: #ebebf2;
   width: 100%;
   padding: 3px;
   display: flex;
-  justify-content: space-between;
+}
+
+.idols__filters-group {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  min-width: 15%;
+}
+.idols__filters-group:not(:first-child) {
+  border-left: 2px solid #ffffff;
+  padding-left: 12px;
+}
+
+.idols__filter-title {
+  display: block;
+  color: #484849;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.idols__filter-select-group {
+  display: inline-block;
+  margin-right: 12px;
+  margin-bottom: 3px;
+}
+
+.idols__filter-label {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.idols__filter-select {
+  border: 1px solid #b5b5ba;
+  border-radius: 4px;
+  background: #ffffff;
+  min-width: 80px;
+}
+.idols__filter-select:hover {
+  color: #484849;
+  background: linear-gradient(#ffffff, #ebebf2);
 }
 
 .idols__filter-name {
