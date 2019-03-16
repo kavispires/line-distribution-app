@@ -19,14 +19,14 @@ class Artists extends Component {
   }
   render() {
     const {
-      admin,
       app: { pending },
       artists: { searchQuery, showFavoriteArtistsOnly, userLatestArtists },
       auth: { user },
+      db,
       distribute: { activeSong, activeUnit },
     } = this.props;
 
-    const artistList = admin.artists;
+    const artistList = db.artists;
 
     let filteredArtists = artistList;
     if (showFavoriteArtistsOnly) {
@@ -99,10 +99,10 @@ class Artists extends Component {
 }
 
 Artists.propTypes = {
-  admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,

@@ -6,6 +6,7 @@ import app, { appTypes } from './app';
 import admin, { adminTypes } from './admin';
 import artists, { artistsTypes } from './artists';
 import auth, { authTypes } from './auth';
+import db, { dbTypes } from './db';
 import distribute, { distributeTypes } from './distribute';
 import sync, { syncTypes } from './sync';
 import temp, { tempTypes } from './temp';
@@ -13,8 +14,9 @@ import temp, { tempTypes } from './temp';
 const rootReducer = combineReducers({
   app,
   admin,
-  auth,
   artists,
+  auth,
+  db,
   distribute,
   sync,
   temp,
@@ -26,6 +28,7 @@ export const types = {
   ...adminTypes,
   ...artistsTypes,
   ...authTypes,
+  ...dbTypes,
   ...distributeTypes,
   ...syncTypes,
   ...tempTypes,

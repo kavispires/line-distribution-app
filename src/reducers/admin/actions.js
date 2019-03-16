@@ -1,7 +1,5 @@
 import types from './types';
 
-const setColors = payload => dispatch =>
-  dispatch({ type: types.SET_COLORS, payload });
 const setColorsInUse = payload => dispatch =>
   dispatch({ type: types.SET_COLORS_IN_USE, payload });
 const setEditingArtist = payload => dispatch =>
@@ -14,8 +12,6 @@ const setManageResult = payload => dispatch =>
   dispatch({ type: types.SET_MANAGE_RESULT, payload });
 const setPanels = payload => dispatch =>
   dispatch({ type: types.SET_PANELS, payload });
-const setSongs = payload => dispatch =>
-  dispatch({ type: types.SET_SONGS, payload });
 const setSongSearchQuery = payload => dispatch =>
   dispatch({ type: types.SET_SONG_SEARCH_QUERY, payload });
 const setUIReferenceTab = payload => dispatch =>
@@ -26,14 +22,12 @@ const setUnitsTypeaheadDict = payload => dispatch =>
   dispatch({ type: types.SET_UNITS_TYPEAHEAD_DICT, payload });
 
 export default {
-  setColors,
   setColorsInUse,
   setEditingArtist,
   setEditingMembers,
   setEditingUnit,
   setManageResult,
   setPanels,
-  setSongs,
   setSongSearchQuery,
   setUIReferenceTab,
   setUnitsTypeahead,

@@ -23,7 +23,8 @@ const ManageMembers = ({
   validateTypeahead,
 }) => {
   const {
-    admin: { membersTypeahead, panels },
+    admin: { panels },
+    db: { membersTypeahead },
     removeMember,
     updateMemberColor,
     // updateMemberPositions,
@@ -261,6 +262,7 @@ const ManageMembers = ({
 ManageMembers.propTypes = {
   admin: PropTypes.object,
   colorsInUse: PropTypes.object,
+  db: PropTypes.object,
   defaultValues: PropTypes.array.isRequired,
   formState: PropTypes.object.isRequired,
   handleEditMember: PropTypes.func,
@@ -275,6 +277,7 @@ ManageMembers.propTypes = {
 
 ManageMembers.defaultProps = {
   admin: {},
+  db: {},
   colorsInUse: {},
   handleEditMember: () => {},
   memberId: null,

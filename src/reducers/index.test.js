@@ -1,8 +1,9 @@
-import { appOperations, appTypes } from './app';
 import { adminOperations, adminTypes } from './admin';
+import { appOperations, appTypes } from './app';
 import { artistsOperations, artistsTypes } from './artists';
-import { distributeOperations, distributeTypes } from './distribute';
 import { authOperations, authTypes } from './auth';
+import { distributeOperations, distributeTypes } from './distribute';
+import { dbOperations, dbTypes } from './db';
 import { syncOperations, syncTypes } from './sync';
 import { tempOperations, tempTypes } from './temp';
 
@@ -12,10 +13,11 @@ describe('Reducers', () => {
     const typeDict = {};
 
     const allTypes = [
-      appTypes,
       adminTypes,
+      appTypes,
       artistsTypes,
       authTypes,
+      dbTypes,
       distributeTypes,
       syncTypes,
       tempTypes,
@@ -26,6 +28,7 @@ describe('Reducers', () => {
         if (typeDict[type] === undefined) {
           typeDict[type] = true;
         } else {
+          console.log(type); //eslint-disable-line
           hasOverlapping = true;
         }
       })
@@ -39,10 +42,11 @@ describe('Reducers', () => {
     const operationsDict = {};
 
     const allOperations = [
-      appOperations,
       adminOperations,
+      appOperations,
       artistsOperations,
       authOperations,
+      dbOperations,
       distributeOperations,
       syncOperations,
       tempOperations,
@@ -53,6 +57,7 @@ describe('Reducers', () => {
         if (operationsDict[operation] === undefined) {
           operationsDict[operation] = true;
         } else {
+          console.log(operation); //eslint-disable-line
           hasOverlapping = true;
         }
       })

@@ -30,7 +30,7 @@ const handleFormInfo = (formState, originalArtist) => (dispatch, getState) => {
 
   const info = {};
 
-  const { artistsTypeaheadDict } = getState().admin;
+  const { artistsTypeaheadDict } = getState().db;
   if (artistsTypeaheadDict[originalArtist]) {
     info.artistId = artistsTypeaheadDict[originalArtist];
     info.originalArtist = originalArtist;

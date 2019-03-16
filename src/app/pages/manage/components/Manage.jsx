@@ -32,6 +32,7 @@ class Manage extends Component {
   }
 
   componentDidMount() {
+    console.log('HERE');
     this.props.loadArtists();
     this.props.loadColors();
     this.props.loadMembers();
@@ -39,7 +40,7 @@ class Manage extends Component {
 
   validateArtist(event) {
     const { value } = event.target;
-    const dict = this.props.admin.artistsTypeaheadDict;
+    const dict = this.props.db.artistsTypeaheadDict;
     if (dict[value]) {
       this.setState({ artistId: dict[value], validArtist: true });
     } else {
@@ -49,7 +50,7 @@ class Manage extends Component {
 
   validateUnit(event) {
     const { value } = event.target;
-    const dict = this.props.admin.unitsTypeaheadDict;
+    const dict = this.props.db.unitsTypeaheadDict;
     if (dict[value]) {
       this.setState({ unitId: dict[value], validUnit: true });
     } else {
@@ -59,7 +60,7 @@ class Manage extends Component {
 
   validateMembers(event) {
     const { value } = event.target;
-    const dict = this.props.admin.membersTypeaheadDict;
+    const dict = this.props.db.membersTypeaheadDict;
     if (dict[value]) {
       this.setState({ memberId: dict[value], validMember: true });
     } else {
@@ -90,13 +91,13 @@ class Manage extends Component {
     const {
       app: { pending },
       admin: {
-        colors,
         colorsInUse,
         editingArtist,
         editingMembers,
         editingUnit,
         manageResult,
       },
+      db: { colors },
       handleResyncDB,
       saveManage,
       updateManageForm,
@@ -274,6 +275,7 @@ class Manage extends Component {
 Manage.propTypes = {
   admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
   loadColors: PropTypes.func.isRequired,
   loadMembers: PropTypes.func.isRequired,

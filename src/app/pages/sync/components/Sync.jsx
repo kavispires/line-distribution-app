@@ -35,7 +35,7 @@ class Sync extends Component {
   }
 
   componentDidMount() {
-    if (this.props.admin.artists.length < 10) {
+    if (this.props.db.artists.length < 10) {
       this.props.loadArtists();
     }
   }
@@ -94,7 +94,7 @@ class Sync extends Component {
   render() {
     const {
       app: { pending },
-      admin: { artistsTypeahead },
+      db: { artistsTypeahead },
       sync: {
         activeLine,
         activePill,
@@ -283,7 +283,7 @@ class Sync extends Component {
 }
 
 Sync.propTypes = {
-  admin: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
   connectSyncLine: PropTypes.func.isRequired,
   connectSyncPill: PropTypes.func.isRequired,

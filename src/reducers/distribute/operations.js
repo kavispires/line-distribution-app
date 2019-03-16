@@ -3,7 +3,7 @@ import _ from 'lodash';
 import actions from './actions';
 
 const activateSong = id => (dispatch, getState) => {
-  const activeSong = _.find(getState().admin.songs, { id });
+  const activeSong = _.find(getState().db.songs, { id });
   dispatch(actions.setActiveSong(activeSong));
 };
 

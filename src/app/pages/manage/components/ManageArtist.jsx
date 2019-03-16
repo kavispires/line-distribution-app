@@ -20,7 +20,8 @@ const ManageArtist = ({
   next,
 }) => {
   const {
-    admin: { artistsTypeahead, panels },
+    admin: { panels },
+    db: { artistsTypeahead },
     handleEditArtist,
   } = props;
 
@@ -139,6 +140,7 @@ const ManageArtist = ({
 ManageArtist.propTypes = {
   admin: PropTypes.object,
   artistId: PropTypes.string,
+  db: PropTypes.object,
   defaultValues: PropTypes.object.isRequired,
   formState: PropTypes.object.isRequired,
   handleEditArtist: PropTypes.func,
@@ -150,6 +152,7 @@ ManageArtist.propTypes = {
 
 ManageArtist.defaultProps = {
   admin: {},
+  db: {},
   artistId: null,
   handleEditArtist: () => {},
 };

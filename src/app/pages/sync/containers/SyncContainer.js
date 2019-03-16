@@ -3,20 +3,20 @@ import { withRouter } from 'react-router-dom';
 
 import Sync from '../components/Sync';
 
-import { adminOperations } from '../../../../reducers/admin';
 import { artistsOperations } from '../../../../reducers/artists';
+import { dbOperations } from '../../../../reducers/db';
 import { syncOperations } from '../../../../reducers/sync';
 
 const mapStateToProps = state => ({
-  admin: state.admin,
   app: state.app,
   artists: state.artists,
+  db: state.db,
   sync: state.sync,
 });
 
 const mapDispatchToProps = {
-  ...adminOperations,
   ...artistsOperations,
+  ...dbOperations,
   ...syncOperations,
 };
 
