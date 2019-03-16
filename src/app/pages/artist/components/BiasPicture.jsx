@@ -32,7 +32,7 @@ class BiasPicture extends Component {
 
     const pictureUrl = `${process.env.PUBLIC_URL}${
       constants.PROFILE_PICTURE_URL
-    }${bias.name}${bias.id}.jpg`;
+    }${bias.name.toLowerCase()}${bias.id}.jpg`;
 
     // If picture is not found
     if (this.state.failed) {
