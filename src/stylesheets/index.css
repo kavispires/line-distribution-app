@@ -923,6 +923,7 @@ input:checked + .slider:before {
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.9);
+  z-index: 3000;
 }
 .modal-error__content {
   position: relative;
