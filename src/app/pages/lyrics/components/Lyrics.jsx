@@ -27,7 +27,7 @@ class Lyrics extends Component {
   render() {
     const {
       app: { pending },
-      admin: { colors },
+      db: { colors },
       distribute: { activeUnit },
     } = this.props;
 
@@ -94,8 +94,8 @@ class Lyrics extends Component {
 }
 
 Lyrics.propTypes = {
-  admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   distribute: PropTypes.object.isRequired,
   loadColors: PropTypes.func.isRequired,
 };

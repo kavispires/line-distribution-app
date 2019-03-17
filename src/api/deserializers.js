@@ -1,20 +1,15 @@
 /* eslint arrow-body-style: 0 */
 
-import {
-  buildMemberInitials,
-  ensureGenreEnum,
-  getAlternativeColor,
-  verifyRequirements,
-} from './utils';
+import utils from './utils';
 
 export const deserialize = {
   post: {
     artist: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['id', 'uid', 'name']);
+      utils.verifyRequirements(data, id, uid, ['id', 'uid', 'name']);
       return {
         id,
         createdBy: uid,
-        genre: ensureGenreEnum(data.genre) || 'OTHER',
+        genre: data.genre ? utils.ensureGenreEnum(data.genre) : 'OTHER',
         modifiedBy: uid,
         name: data.name,
         otherNames: data.otherNames || null,
@@ -23,7 +18,14 @@ export const deserialize = {
       };
     },
     color: (data, id) => {
-      verifyRequirements(data, id, null, ['id', 'name', 'hex', 'r', 'g', 'b']);
+      utils.verifyRequirements(data, id, null, [
+        'id',
+        'name',
+        'hex',
+        'r',
+        'g',
+        'b',
+      ]);
       return {
         id,
         b: data.b,
@@ -34,7 +36,8 @@ export const deserialize = {
       };
     },
     distribution: (data, id, uid) => {
-      verifyRequirements(data, id, uid, [
+      utils.verifyRequirements(data, id, uid, [
+        'id',
         'uid',
         'category',
         'rates',
@@ -49,13 +52,16 @@ export const deserialize = {
         features: data.features || null,
         modifiedBy: uid,
         rates: data.rates,
-        relationships: data.relationships,
+        relationships:
+          typeof data.relationships === 'string'
+            ? data.relationships
+            : JSON.stringify(data.relationships),
         songId: data.songId,
         unitId: data.unitId,
       };
     },
     log: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['id', 'timestamp', 'content']);
+      utils.verifyRequirements(data, id, uid, ['id', 'timestamp', 'content']);
       return {
         reportedBy: uid || 'ANONYMOUS',
         timestamp: data.timestamp,
@@ -63,7 +69,7 @@ export const deserialize = {
       };
     },
     member: (data, id, uid) => {
-      verifyRequirements(data, id, uid, [
+      utils.verifyRequirements(data, id, uid, [
         'id',
         'uid',
         'name',
@@ -77,11 +83,11 @@ export const deserialize = {
         id,
         createdBy: uid,
         altColorId:
-          data.altColorId || `col${getAlternativeColor(data.colorId)}`,
+          data.altColorId || `col${utils.getAlternativeColor(data.colorId)}`,
         birthdate: data.birthdate,
         colorId: data.colorId,
         gender: data.gender,
-        initials: data.initials || buildMemberInitials(data.name),
+        initials: data.initials || utils.buildMemberInitials(data.name),
         modifiedBy: uid,
         name: data.name,
         nationality: data.nationality,
@@ -90,7 +96,7 @@ export const deserialize = {
       };
     },
     song: (data, id, uid) => {
-      verifyRequirements(data, id, uid, [
+      utils.verifyRequirements(data, id, uid, [
         'id',
         'uid',
         'distribution',
@@ -115,7 +121,7 @@ export const deserialize = {
       };
     },
     unit: (data, id, uid) => {
-      verifyRequirements(data, id, uid, [
+      utils.verifyRequirements(data, id, uid, [
         'id',
         'uid',
         'artistId',
@@ -137,7 +143,7 @@ export const deserialize = {
       };
     },
     user: (data, id) => {
-      verifyRequirements(data, id, null, ['id', 'email']);
+      utils.verifyRequirements(data, id, null, ['id', 'email']);
       return {
         uid: id,
         email: data.email,
@@ -154,10 +160,10 @@ export const deserialize = {
   },
   put: {
     artist: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['id', 'uid']);
+      utils.verifyRequirements(data, id, uid, ['id', 'uid']);
       const res = {};
       if (uid) res.modifiedBy = uid;
-      if (data.genre) res.genre = ensureGenreEnum(data.genre);
+      if (data.genre) res.genre = utils.ensureGenreEnum(data.genre);
       if (data.memberList) res.memberList = data.memberList;
       if (data.name) res.name = data.name;
       if (data.otherNames) res.otherNames = data.otherNames;
@@ -167,7 +173,8 @@ export const deserialize = {
       return res;
     },
     distribution: (data, id, uid) => {
-      verifyRequirements(data, id, uid, [
+      utils.verifyRequirements(data, id, uid, [
+        'id',
         'uid',
         'category',
         'rates',
@@ -187,13 +194,13 @@ export const deserialize = {
       return res;
     },
     member: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['id', 'uid']);
+      utils.verifyRequirements(data, id, uid, ['id', 'uid']);
       const res = {};
 
       if (uid) res.modifiedBy = uid;
       if (data.colorId) {
         res.colorId = data.colorId;
-        res.altColorId = `col${getAlternativeColor(data.colorId)}`;
+        res.altColorId = `col${utils.getAlternativeColor(data.colorId)}`;
       }
       if (data.altColorId) res.altColorId = data.altColorId;
 
@@ -202,7 +209,7 @@ export const deserialize = {
 
       if (data.name) {
         res.name = data.name;
-        res.initials = buildMemberInitials(data.name);
+        res.initials = utils.buildMemberInitials(data.name);
       }
       if (data.initials) res.initials = data.initials;
 
@@ -215,7 +222,7 @@ export const deserialize = {
       return res;
     },
     song: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['id', 'uid']);
+      utils.verifyRequirements(data, id, uid, ['id', 'uid']);
       const res = {};
 
       if (uid) res.modifiedBy = uid;
@@ -232,7 +239,7 @@ export const deserialize = {
       return res;
     },
     unit: (data, id, uid) => {
-      verifyRequirements(data, id, uid, ['id', 'uid']);
+      utils.verifyRequirements(data, id, uid, ['id', 'uid']);
       const res = {};
 
       if (uid) res.modifiedBy = uid;
@@ -248,7 +255,7 @@ export const deserialize = {
       return res;
     },
     user: (data, id) => {
-      verifyRequirements(data, id, null, ['id']);
+      utils.verifyRequirements(data, id, null, ['id']);
       const res = {};
 
       if (data.email) res.email = data.email;

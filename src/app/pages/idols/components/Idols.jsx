@@ -51,7 +51,7 @@ class Idols extends Component {
     const {
       app: { pending },
       auth: { isAdmin, user },
-      admin: { members },
+      db: { members },
       updateFavoriteMembers,
     } = this.props;
 
@@ -288,9 +288,9 @@ class Idols extends Component {
 }
 
 Idols.propTypes = {
-  admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   loadMembers: PropTypes.func.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
 };

@@ -30,7 +30,7 @@ const handleFormInfo = (formState, originalArtist) => (dispatch, getState) => {
 
   const info = {};
 
-  const { artistsTypeaheadDict } = getState().admin;
+  const { artistsTypeaheadDict } = getState().db;
   if (artistsTypeaheadDict[originalArtist]) {
     info.artistId = artistsTypeaheadDict[originalArtist];
     info.originalArtist = originalArtist;
@@ -381,6 +381,9 @@ const deleteSyncPill = () => (dispatch, getState) => {
     const pills = Object.assign({}, getState().sync.pills);
     let lines = [...getState().sync.distributionLines];
 
+    // Stop linkSequencer
+    clearInterval(intervalId);
+
     // Nullify any line with activePill as a link
     lines = nullifyLine(lines, activePill);
 
@@ -474,6 +477,9 @@ const finalizeLyrics = () => (dispatch, getState) => {
 const resetPillLinks = () => (dispatch, getState) => {
   const pills = { ...getState().sync.pills };
   const distributionLines = [...getState().sync.distributionLines];
+
+  // Stop linkSequencer
+  clearInterval(intervalId);
 
   Object.keys(pills).forEach(k => {
     const pill = pills[k];

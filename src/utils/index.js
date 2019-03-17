@@ -144,12 +144,12 @@ const parseBirthDate = d => {
 };
 
 const parseResponse = response => {
-  const responseParser = obj => {
+  function responseParser(obj) {
     return {
       id: obj.id,
       ...obj.attributes,
     };
-  };
+  }
 
   // Response has a single object instance without the "data" object
   if (response && response.id && response.attributes) {

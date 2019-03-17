@@ -15,7 +15,7 @@ class Songs extends Component {
   render() {
     const {
       app: { pending },
-      admin: { songs, songSearchQuery },
+      db: { songs, songSearchQuery },
       distribute: { activeSong, activeUnit },
     } = this.props;
 
@@ -59,8 +59,8 @@ class Songs extends Component {
 
 Songs.propTypes = {
   activateSong: PropTypes.func.isRequired,
-  admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadSongs: PropTypes.func.isRequired,

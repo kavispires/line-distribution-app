@@ -58,14 +58,23 @@ describe('API/Serializers', () => {
       const data = {
         id: '1',
         songId: '1',
+        unitId: 'u',
+        category: 'OFFICIAL',
+        rates: {},
+        relationships: '{"1":["1","2"]}',
       };
       expect(serialize.distribution(data)).toEqual({
         id: '1',
         type: 'distribution',
         attributes: {
           songId: '1',
+          unitId: 'u',
           modifiedBy: null,
           createdBy: null,
+          category: 'OFFICIAL',
+          features: [],
+          rates: {},
+          relationships: { 1: ['1', '2'] },
         },
       });
     });
@@ -77,15 +86,16 @@ describe('API/Serializers', () => {
         id: '1',
         name: 'Zachary',
         colorId: '2',
+        birthdate: 19931010,
       };
       expect(serialize.member(data)).toEqual({
         id: '1',
         type: 'member',
         attributes: {
-          age: 0,
+          age: 25,
           altColor: null,
           altColorId: null,
-          birthdate: 0,
+          birthdate: 19931010,
           color: null,
           colorId: '2',
           createdBy: null,

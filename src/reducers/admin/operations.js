@@ -4,14 +4,6 @@ import constants from '../../utils/constants';
 
 import actions from './actions';
 
-const loadArtists = () => dispatch => dispatch({ type: 'REQUEST_ARTISTS' });
-
-const loadColors = () => dispatch => dispatch({ type: 'REQUEST_COLORS' });
-
-const loadMembers = () => dispatch => dispatch({ type: 'REQUEST_MEMBERS' });
-
-const loadSongs = () => dispatch => dispatch({ type: 'REQUEST_SONGS' });
-
 const switchUIReferenceTab = event => async dispatch => {
   const { id } = event.target;
 
@@ -354,24 +346,13 @@ const saveManage = formState => async (dispatch, getState) => {
   });
 };
 
-const resetSongSearchQuery = () => dispatch =>
-  dispatch(actions.setSongSearchQuery(''));
-
-const updateSongSearchQuery = value => dispatch =>
-  dispatch(actions.setSongSearchQuery(value));
-
 export default {
   handleEditArtist,
   handleEditMember,
   handleEditUnit,
   handleResyncDB,
-  loadArtists,
-  loadColors,
-  loadMembers,
-  loadSongs,
   removeMember,
   resetManage,
-  resetSongSearchQuery,
   saveManage,
   switchUIReferenceTab,
   unlockUnit,
@@ -379,5 +360,4 @@ export default {
   updateManageForm,
   updateMemberColor,
   updateMemberPositions,
-  updateSongSearchQuery,
 };

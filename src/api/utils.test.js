@@ -1,139 +1,10 @@
-import {
-  NewResponse,
-  breadcrumble,
-  buildArtistQuery,
-  buildMemberInitials,
-  getNumberFromColorId,
-  getAlternativeColor,
-  buildSongQuery,
-  makeSixDigit,
-} from './utils';
-
-let response;
+import utils from './utils';
 
 describe('API/Utils', () => {
-  describe('NewResponse class', () => {
-    beforeEach(() => {
-      response = new NewResponse();
-    });
-
-    it('its properties are nullified at build', () => {
-      expect(response instanceof NewResponse);
-      expect(response.statusCode).toEqual(null);
-      expect(response.dataResponse).toEqual(null);
-      expect(response.errorResponse).toEqual(null);
-    });
-
-    it('its status method sets a status code', () => {
-      response.status(200);
-      expect(response.statusCode).toEqual(200);
-    });
-
-    it('its ok method sets a status code to 200', () => {
-      response.ok();
-      expect(response.statusCode).toEqual(200);
-    });
-
-    it('its data method sets a data response', () => {
-      response.data({ id: 'bola' }, 201);
-      expect(response.statusCode).toEqual(201);
-      expect(response.dataResponse).toStrictEqual({ id: 'bola' });
-    });
-
-    it('its data method has an optional status code argument', () => {
-      response.data({ id: 'bola' });
-      expect(response.statusCode).toEqual(200);
-      expect(response.dataResponse).toStrictEqual({ id: 'bola' });
-    });
-
-    it('its data method sets a json response when id, type, and attributes are provided', () => {
-      response.data({ id: 'bola', type: 'bola', attributes: { name: 'bola' } });
-      expect(response.statusCode).toEqual(200);
-      expect(response.dataResponse).toStrictEqual({
-        id: 'bola',
-        type: 'bola',
-        attributes: { name: 'bola' },
-      });
-    });
-
-    it('its error method sets an error response', () => {
-      response.error(404, 'Not found');
-      expect(response.statusCode).toEqual(404);
-      expect(response.errorResponse).toStrictEqual({
-        code: 404,
-        message: 'Not found',
-      });
-    });
-
-    it('its error method has an optional status code argument', () => {
-      response.error(undefined, 'It did not work');
-      expect(response.statusCode).toEqual(500);
-      expect(response.errorResponse).toStrictEqual({
-        code: 500,
-        message: 'It did not work',
-      });
-    });
-
-    it('its error method has an optional message argument', () => {
-      response.error(404);
-      expect(response.statusCode).toEqual(404);
-      expect(response.errorResponse).toStrictEqual({
-        code: 404,
-        message: 'Unknown Error',
-      });
-    });
-
-    it('its throwError method returns the error response', () => {
-      response.error();
-      function catcher() {
-        response.throwError();
-      }
-
-      expect(catcher).toThrowError('500: Unknown Error');
-    });
-
-    it('its resolve method returns the data properly', () => {
-      response.data({ id: 'bola', type: 'bola', attributes: { name: 'bola' } });
-      expect(response.resolve()).toStrictEqual({
-        data: {
-          id: 'bola',
-          type: 'bola',
-          attributes: { name: 'bola' },
-        },
-      });
-    });
-
-    it('its resolve method returns an error if there is an error response', () => {
-      response.error();
-      function catcher() {
-        response.resolve();
-      }
-
-      expect(catcher).toThrowError('500: Unknown Error');
-    });
-
-    it('its resolve method returns an error if there is an status code', () => {
-      function catcher() {
-        response.resolve();
-      }
-
-      expect(catcher).toThrowError('500: No status provided by the api');
-    });
-
-    it('its resolve method returns an error if there is no data response', () => {
-      response.status(300);
-      function catcher() {
-        response.resolve();
-      }
-
-      expect(catcher).toThrowError('500: No data provided by the api');
-    });
-  });
-
   describe('Breadcrumble', () => {
     it('it throws an error if no path is provided', () => {
       function catcher() {
-        breadcrumble();
+        utils.breadcrumble();
       }
 
       expect(catcher).toThrowError(
@@ -143,7 +14,7 @@ describe('API/Utils', () => {
 
     it('it throws an error if no path is not a string', () => {
       function catcher() {
-        breadcrumble(123);
+        utils.breadcrumble(123);
       }
 
       expect(catcher).toThrowError(
@@ -152,7 +23,7 @@ describe('API/Utils', () => {
     });
 
     it('it returns the expected breadcrumble object', () => {
-      const result = breadcrumble('/artists');
+      const result = utils.breadcrumble('/artists');
 
       expect(result).toStrictEqual({
         length: 1,
@@ -164,7 +35,7 @@ describe('API/Utils', () => {
     });
 
     it('it treats the second part of the path as a reference id', () => {
-      const result = breadcrumble('/artists/123');
+      const result = utils.breadcrumble('/artists/123');
 
       expect(result).toStrictEqual({
         length: 2,
@@ -176,7 +47,7 @@ describe('API/Utils', () => {
     });
 
     it('it treats the third part of the path as a subpath', () => {
-      const result = breadcrumble('/artists/123/units');
+      const result = utils.breadcrumble('/artists/123/units');
 
       expect(result).toStrictEqual({
         length: 3,
@@ -188,7 +59,7 @@ describe('API/Utils', () => {
     });
 
     it('it accepts query params', () => {
-      const result = breadcrumble('/artists/123/units?units=123,456');
+      const result = utils.breadcrumble('/artists/123/units?units=123,456');
 
       expect(result).toStrictEqual({
         length: 3,
@@ -200,7 +71,7 @@ describe('API/Utils', () => {
     });
 
     it('it accepts more than one query param', () => {
-      const result = breadcrumble(
+      const result = utils.breadcrumble(
         '/artists/123/units?units=123,456,789&user=1'
       );
 
@@ -221,7 +92,7 @@ describe('API/Utils', () => {
         otherNames: 'testie',
         memberList: ['testing', 'tested'],
       };
-      const res = buildArtistQuery(data);
+      const res = utils.buildArtistQuery(data);
 
       expect(res).toEqual('test testie testing tested');
     });
@@ -231,7 +102,7 @@ describe('API/Utils', () => {
         name: 'test',
         memberList: ['testing', 'tested'],
       };
-      const res = buildArtistQuery(data);
+      const res = utils.buildArtistQuery(data);
 
       expect(res).toEqual('test  testing tested');
     });
@@ -241,9 +112,19 @@ describe('API/Utils', () => {
         name: 'test',
         otherNames: 'testie',
       };
-      const res = buildArtistQuery(data);
+      const res = utils.buildArtistQuery(data);
 
       expect(res).toEqual('test testie ');
+    });
+  });
+
+  describe('buildMemberInitials', () => {
+    it('it builds member initials correctly', () => {
+      expect(utils.buildMemberInitials('test')).toEqual('TS');
+      expect(utils.buildMemberInitials('christopher')).toEqual('CT');
+      expect(utils.buildMemberInitials('melody')).toEqual('MO');
+      expect(utils.buildMemberInitials('hyoyeon')).toEqual('HY');
+      expect(utils.buildMemberInitials('bob')).toEqual('BO');
     });
   });
 
@@ -254,7 +135,7 @@ describe('API/Utils', () => {
         originalArtist: 'testie',
         album: 'testing',
       };
-      const res = buildSongQuery(data);
+      const res = utils.buildSongQuery(data);
 
       expect(res).toEqual('test testie testing');
     });
@@ -264,7 +145,7 @@ describe('API/Utils', () => {
         title: 'test',
         album: 'testing',
       };
-      const res = buildSongQuery(data);
+      const res = utils.buildSongQuery(data);
 
       expect(res).toEqual('test  testing');
     });
@@ -274,41 +155,59 @@ describe('API/Utils', () => {
         title: 'test',
         originalArtist: 'testie',
       };
-      const res = buildSongQuery(data);
+      const res = utils.buildSongQuery(data);
 
       expect(res).toEqual('test testie ');
     });
   });
 
-  describe('buildMemberInitials', () => {
-    it('it builds member initials correctly', () => {
-      expect(buildMemberInitials('test')).toEqual('TS');
-      expect(buildMemberInitials('christopher')).toEqual('CT');
-      expect(buildMemberInitials('melody')).toEqual('MO');
-      expect(buildMemberInitials('hyoyeon')).toEqual('HY');
-      expect(buildMemberInitials('bob')).toEqual('BO');
+  describe('calculateAge', () => {
+    it('it returns the today age of given birthdate', () => {
+      expect(utils.calculateAge(19840117)).toEqual(34);
+      expect(utils.calculateAge(19941010)).toEqual(24);
+      expect(utils.calculateAge(20040229)).toEqual(14);
+      expect(utils.calculateAge(20140615)).toEqual(4);
+    });
+  });
+
+  describe('ensureGenreEnum', () => {
+    it('it returns a number from a color id', () => {
+      expect(utils.ensureGenreEnum('CPOP')).toEqual('CPOP');
+      expect(utils.ensureGenreEnum('JPOP')).toEqual('JPOP');
+      expect(utils.ensureGenreEnum('KPOP')).toEqual('KPOP');
+      expect(utils.ensureGenreEnum('OTHER')).toEqual('OTHER');
+      expect(utils.ensureGenreEnum('POP')).toEqual('POP');
+      expect(utils.ensureGenreEnum('c-pop')).toEqual('CPOP');
+      expect(utils.ensureGenreEnum('J-pop')).toEqual('JPOP');
+      expect(utils.ensureGenreEnum('K-Pop')).toEqual('KPOP');
     });
   });
 
   describe('getNumberFromColorId', () => {
     it('it returns a number from a color id', () => {
-      expect(getNumberFromColorId('col000012')).toEqual(12);
-      expect(getNumberFromColorId('col000001')).toEqual(1);
-      expect(getNumberFromColorId('col000025')).toEqual(25);
+      expect(utils.getNumberFromColorId('col000012')).toEqual(12);
+      expect(utils.getNumberFromColorId('col000001')).toEqual(1);
+      expect(utils.getNumberFromColorId('col000025')).toEqual(25);
     });
   });
 
   describe('getAlternativeColor', () => {
     it('it returns a valid alternative color id', () => {
-      let result = getNumberFromColorId(getAlternativeColor('col000012'));
+      let result = utils.getNumberFromColorId(
+        utils.getAlternativeColor('col000012')
+      );
       expect(result).toBeGreaterThanOrEqual(25);
       expect(result).toBeLessThanOrEqual(29);
 
-      result = getNumberFromColorId(getAlternativeColor('col000025'));
+      result = utils.getNumberFromColorId(
+        utils.getAlternativeColor('col000025')
+      );
       expect(result).toBeGreaterThanOrEqual(8);
       expect(result).toBeLessThanOrEqual(12);
 
-      result = getNumberFromColorId(getAlternativeColor('col000016'));
+      result = utils.getNumberFromColorId(
+        utils.getAlternativeColor('col000016')
+      );
       if (result < 4) {
         expect(result).toBeLessThanOrEqual(3);
         expect(result).toBeGreaterThanOrEqual(1);
@@ -321,22 +220,189 @@ describe('API/Utils', () => {
 
   describe('makeSixDigit', () => {
     it('it returns correct number', () => {
-      expect(makeSixDigit(1)).toEqual('000001');
-      expect(makeSixDigit(123)).toEqual('000123');
-      expect(makeSixDigit(444444)).toEqual('444444');
+      expect(utils.makeSixDigit(1)).toEqual('000001');
+      expect(utils.makeSixDigit(123)).toEqual('000123');
+      expect(utils.makeSixDigit(444444)).toEqual('444444');
     });
 
     it('it accepts stringified numbers', () => {
-      expect(makeSixDigit('1')).toEqual('000001');
-      expect(makeSixDigit('123')).toEqual('000123');
-      expect(makeSixDigit('444444')).toEqual('444444');
+      expect(utils.makeSixDigit('1')).toEqual('000001');
+      expect(utils.makeSixDigit('123')).toEqual('000123');
+      expect(utils.makeSixDigit('444444')).toEqual('444444');
     });
 
     it('it returns the placeholder when parameter is not a number', () => {
-      expect(makeSixDigit('abc')).toEqual('000000');
-      expect(makeSixDigit([])).toEqual('000000');
-      expect(makeSixDigit({})).toEqual('000000');
-      expect(makeSixDigit(true)).toEqual('000000');
+      expect(utils.makeSixDigit('abc')).toEqual('000000');
+      expect(utils.makeSixDigit([])).toEqual('000000');
+      expect(utils.makeSixDigit({})).toEqual('000000');
+      expect(utils.makeSixDigit(true)).toEqual('000000');
+    });
+  });
+
+  describe('mergeMembers', () => {
+    it('it returns a merged member array', () => {
+      const unitMembers = [
+        {
+          memberId: '1',
+          name: 'Bob',
+          positions: ['VOCALIST', 'LEADER'],
+        },
+      ];
+      const members = [
+        {
+          id: '1',
+          type: 'member',
+          attributes: {
+            age: 20,
+            altColorId: 'col000004',
+            altColor: {
+              b: 122,
+              count: 6,
+              g: 160,
+              hex: '#FFA07A',
+              name: 'peach',
+              number: 4,
+              r: 255,
+              id: 'col000004',
+            },
+            birthdate: 19980826,
+            colorId: 'col000018',
+            color: {
+              b: 221,
+              count: 8,
+              g: 186,
+              hex: '#39BADD',
+              name: 'turquoise',
+              number: 18,
+              r: 57,
+              id: 'col000018',
+            },
+            createdBy: '1',
+            gender: 'MALE',
+            initials: 'SY',
+            name: 'Bob',
+            modifiedBy: '1',
+            nationality: 'UNKNOWN',
+            positions: ['CENTER', 'LEADER'],
+            private: false,
+            referenceArtist: 'Test Band',
+            id: '1',
+          },
+        },
+      ];
+
+      const expected = [
+        {
+          age: 20,
+          altColor: {
+            b: 122,
+            count: 6,
+            g: 160,
+            hex: '#FFA07A',
+            id: 'col000004',
+            name: 'peach',
+            number: 4,
+            r: 255,
+          },
+          altColorId: 'col000004',
+          birthdate: 19980826,
+          color: {
+            b: 221,
+            count: 8,
+            g: 186,
+            hex: '#39BADD',
+            id: 'col000018',
+            name: 'turquoise',
+            number: 18,
+            r: 57,
+          },
+          colorId: 'col000018',
+          createdBy: '1',
+          gender: 'MALE',
+          id: '1',
+          initials: 'SY',
+          modifiedBy: '1',
+          name: 'Bob',
+          nationality: 'UNKNOWN',
+          positions: ['VOCALIST', 'LEADER'],
+          private: false,
+          referenceArtist: 'Test Band',
+        },
+      ];
+
+      expect(utils.mergeMembers(unitMembers, members)).toEqual(expected);
+    });
+  });
+
+  describe('parseUnitMembers', () => {
+    it('it returns the parsed array', () => {
+      const data = {
+        '1:Adam:DANCER': true,
+        '2:Bob:VOCALIST': true,
+        '2:Bob:LEADER': true,
+        '3:Carl:VOCALIST': true,
+        '3:Carl:RAPPER': true,
+        '3:Carl:DANCER': true,
+      };
+
+      const expected = [
+        { memberId: '1', name: 'Adam', positions: ['DANCER'] },
+        { memberId: '2', name: 'Bob', positions: ['VOCALIST', 'LEADER'] },
+        {
+          memberId: '3',
+          name: 'Carl',
+          positions: ['VOCALIST', 'RAPPER', 'DANCER'],
+        },
+      ];
+      expect(utils.parseUnitMembers(data)).toEqual(expected);
+    });
+  });
+
+  describe('verifyRequirements', () => {
+    it('it throws an error if id is required but missing', () => {
+      function catcher() {
+        utils.verifyRequirements({}, undefined, '1', ['id']);
+      }
+
+      expect(catcher).toThrowError(
+        '400: Can NOT perform post request for null, missing the following data: id'
+      );
+    });
+
+    it('it throws an error if uid is required but missing', () => {
+      function catcher() {
+        utils.verifyRequirements({}, undefined, undefined, ['uid']);
+      }
+
+      expect(catcher).toThrowError(
+        '400: Can NOT perform post request for null, missing the following data: user uid'
+      );
+    });
+
+    it('it throws an error if any field is required but missing', () => {
+      function catcher() {
+        utils.verifyRequirements({ name: 'Bob', age: 20 }, '1', '1', [
+          'id',
+          'uid',
+          'age',
+          'gender',
+        ]);
+      }
+
+      expect(catcher).toThrowError(
+        '400: Can NOT perform post request for 1, missing the following data: gender'
+      );
+    });
+
+    it('it returns true when all requirements are met', () => {
+      const result = utils.verifyRequirements(
+        { name: 'Bob', age: 20 },
+        '1',
+        '1',
+        ['id', 'uid', 'age', 'name']
+      );
+
+      expect(result).toEqual(true);
     });
   });
 });

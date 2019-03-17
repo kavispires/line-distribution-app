@@ -15,8 +15,9 @@ class UIReference extends Component {
 
   render() {
     const {
-      admin: { colors, uiReferenceTab },
+      admin: { uiReferenceTab },
       app,
+      db: { colors },
     } = this.props;
 
     const TABS = ['Colors', 'Components', 'Icons'];
@@ -57,6 +58,7 @@ class UIReference extends Component {
 UIReference.propTypes = {
   admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   loadColors: PropTypes.func.isRequired,
   switchUIReferenceTab: PropTypes.func.isRequired,
 };
