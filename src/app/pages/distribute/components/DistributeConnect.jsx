@@ -34,12 +34,9 @@ const DistributeConnect = ({
           {Object.values(members).map(member => {
             const colorNumber = utils.getColorNumber(member.colorId);
             const activeClass = activeMemberPill === member.id ? 'active' : '';
-            const percentage = rates[member.id]
-              ? Math.round((100 * rates[member.id]) / rates.total)
-              : 0;
-            const percentageWidth = rates[member.id]
-              ? Math.round((100 * rates[member.id]) / rates.max)
-              : 0;
+            const percentage = rates[member.id] ? rates[member.id][1] : 0;
+            const percentageWidth = rates[member.id] ? rates[member.id][2] : 0;
+
             const spanWidth = {
               width: `${percentageWidth}%`,
             };
