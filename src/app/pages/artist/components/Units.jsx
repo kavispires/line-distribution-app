@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Import components
@@ -53,6 +53,13 @@ class Units extends Component {
 
     const isUnitPending = app.pending.REQUEST_UNIT;
 
+    const hasDistributions =
+      selectedUnit.distributions && selectedUnit.distributions.length;
+
+    const hasLegacyDistributions =
+      selectedUnit.distributions_legacy &&
+      selectedUnit.distributions_legacy.length;
+
     return (
       <section className="artist__section">
         <Tabs
@@ -66,48 +73,49 @@ class Units extends Component {
             <div className="unit-section">
               <div className="unit-section__info">
                 <div className="unit-section__summary">
-                  <p>
-                    <b>Debut Year:</b> {selectedUnit.debutYear || '?'}
-                  </p>
-                  <p>
-                    <b>Official Distributions:</b>{' '}
-                    {selectedUnit.distributions.length || 0}
-                  </p>
-                  <p>
-                    <b>Custom Distributions:</b>{' '}
-                    {selectedUnit.distributions.length || 0}
-                  </p>
-                  {selectedUnit.distributions_legacy &&
-                  selectedUnit.distributions_legacy.length ? (
-                    <p>
-                      <b>Legacy Distributions:</b>{' '}
-                      {selectedUnit.distributions_legacy.length || 0}
-                    </p>
-                  ) : null}
-
                   {isUnitPending ? (
                     <LoadingIcon size="small" />
                   ) : (
-                    <div className="unit-section__actions">
-                      <button
-                        className="btn"
-                        onClick={() => this.artistRedirect('songs')}
-                      >
-                        Distribute
-                      </button>
-                      <button
-                        className="btn"
-                        onClick={() => this.artistRedirect('lyrics')}
-                      >
-                        Play with Lyrics <span className="restriction">*</span>
-                      </button>
-                      <button className="btn" disabled>
-                        Random Song
-                      </button>
+                    <Fragment>
                       <p>
-                        <small>* You won&apos;t be able to save this.</small>
+                        <b>Debut Year:</b> {selectedUnit.debutYear || '?'}
                       </p>
-                    </div>
+                      <p>
+                        <b>Official Distributions:</b>{' '}
+                        {selectedUnit.distributions.length || 0}
+                      </p>
+                      <p>
+                        <b>Custom Distributions:</b>{' '}
+                        {selectedUnit.distributions.length || 0}
+                      </p>
+                      {hasLegacyDistributions ? (
+                        <p>
+                          <b>Legacy Distributions:</b>{' '}
+                          {selectedUnit.distributions_legacy.length || 0}
+                        </p>
+                      ) : null}
+                      <div className="unit-section__actions">
+                        <button
+                          className="btn"
+                          onClick={() => this.artistRedirect('songs')}
+                        >
+                          Distribute
+                        </button>
+                        <button
+                          className="btn"
+                          onClick={() => this.artistRedirect('lyrics')}
+                        >
+                          Play with Lyrics{' '}
+                          <span className="restriction">*</span>
+                        </button>
+                        <button className="btn" disabled>
+                          Random Song
+                        </button>
+                        <p>
+                          <small>* You won&apos;t be able to save this.</small>
+                        </p>
+                      </div>
+                    </Fragment>
                   )}
                 </div>
                 <div className="unit-section__bias">
@@ -149,9 +157,20 @@ class Units extends Component {
                 </div>
               )}
               <hr />
-              <h2>Distributions for the unit go here</h2>
-              <hr />
-              <h2>Legacy Distributions for the unit go here</h2>
+              <h2>Distributions</h2>
+              {hasDistributions ? (
+                <p>List</p>
+              ) : (
+                <p>This group has no distributions yet.</p>
+              )}
+
+              {hasLegacyDistributions ? (
+                <Fragment>
+                  <hr />
+                  <h2>Legacy Distributions</h2>{' '}
+                  <p>List of Legacy Distributions</p>
+                </Fragment>
+              ) : null}
             </div>
           ) : (
             <p>The selected Artist has no units.</p>
