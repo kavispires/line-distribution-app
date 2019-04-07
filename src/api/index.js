@@ -717,19 +717,12 @@ const getFunctions = {
         response = snapshot.val();
       });
 
-      const { altColorId = 'default', colorId = 'default' } = response;
+      const { colorId = 'default' } = response;
       if (colorId) {
         const color = await getFunctions.fetchColor(colorId);
         response.color = {
           ...color.attributes,
           id: color.id,
-        };
-      }
-      if (altColorId) {
-        const altColor = await getFunctions.fetchColor(altColorId);
-        response.altColor = {
-          ...altColor.attributes,
-          id: altColor.id,
         };
       }
 

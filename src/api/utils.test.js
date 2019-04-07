@@ -254,17 +254,6 @@ describe('API/Utils', () => {
           type: 'member',
           attributes: {
             age: 20,
-            altColorId: 'col000004',
-            altColor: {
-              b: 122,
-              count: 6,
-              g: 160,
-              hex: '#FFA07A',
-              name: 'peach',
-              number: 4,
-              r: 255,
-              id: 'col000004',
-            },
             birthdate: 19980826,
             colorId: 'col000018',
             color: {
@@ -294,17 +283,6 @@ describe('API/Utils', () => {
       const expected = [
         {
           age: 20,
-          altColor: {
-            b: 122,
-            count: 6,
-            g: 160,
-            hex: '#FFA07A',
-            id: 'col000004',
-            name: 'peach',
-            number: 4,
-            r: 255,
-          },
-          altColorId: 'col000004',
           birthdate: 19980826,
           color: {
             b: 221,

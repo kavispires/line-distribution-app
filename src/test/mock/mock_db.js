@@ -35,21 +35,18 @@ const mockDB = {
   },
   members: {
     '-m000000000000000101': {
-      altColorId: 'col000101',
       birthdate: 20180101,
       colorId: 'col000102',
       name: 'Adam',
       positions: ['pos000101', 'pos000102'],
     },
     '-m000000000000000102': {
-      altColorId: 'col000102',
       birthdate: 20180102,
       colorId: 'col000103',
       name: 'Bob',
       positions: ['pos000102'],
     },
     '-m000000000000000103': {
-      altColorId: 'col000103',
       birthdate: 20180103,
       colorId: 'col000101',
       name: 'Carl',

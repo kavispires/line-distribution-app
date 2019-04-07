@@ -33,18 +33,11 @@ const MemberCard = ({
       memberId={member.id}
       name={member.name}
     />
-    <span className="card__color-bar">
-      <span
-        className={`card__color-bar--main background-color-${utils.getColorNumber(
-          member.colorId
-        )}`}
-      />
-      <span
-        className={`card__color-bar--alt background-color-${utils.getColorNumber(
-          member.altColorId
-        )}`}
-      />
-    </span>
+    <span
+      className={`card__color-bar background-color-${utils.getColorNumber(
+        member.colorId
+      )}`}
+    />
     <h3 className="card__name">
       {member.name}
       <FavoriteIcon

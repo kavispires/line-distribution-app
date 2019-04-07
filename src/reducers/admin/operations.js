@@ -321,7 +321,6 @@ const saveManage = formState => async (dispatch, getState) => {
       };
       // Handle existing database member
       if (editingMembersState[index].id) {
-        newMember.altColorId = editingMembersState[index].altColorId || null;
         newMember.createdBy = editingMembersState[index].createdBy || null;
         newMember.id = editingMembersState[index].id || null;
         newMember.referenceArtist =

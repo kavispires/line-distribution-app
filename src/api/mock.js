@@ -83,7 +83,6 @@ const mockDatabase = {
   members: {
     '1': {
       id: '1',
-      altColorId: '4',
       birthdate: 1543617465471,
       colorId: '1',
       createdBy: '1',
@@ -97,7 +96,6 @@ const mockDatabase = {
     },
     '2': {
       id: '2',
-      altColorId: '5',
       birthdate: 1543617465472,
       colorId: '1',
       createdBy: '1',
@@ -111,7 +109,6 @@ const mockDatabase = {
     },
     '3': {
       id: '3',
-      altColorId: '6',
       birthdate: 1543617465473,
       colorId: '3',
       createdBy: '1',
@@ -125,7 +122,6 @@ const mockDatabase = {
     },
     '4': {
       id: '4',
-      altColorId: '1',
       birthdate: 1543617465474,
       colorId: '4',
       createdBy: '2',
@@ -139,7 +135,6 @@ const mockDatabase = {
     },
     '5': {
       id: '5',
-      altColorId: '2',
       birthdate: 15436174654705,
       colorId: '5',
       createdBy: '2',
@@ -153,7 +148,6 @@ const mockDatabase = {
     },
     '6': {
       id: '6',
-      altColorId: '3',
       birthdate: 1543617465476,
       colorId: '6',
       createdBy: '2',

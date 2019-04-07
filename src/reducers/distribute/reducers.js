@@ -31,17 +31,6 @@ const initialState = {
   //   members: {
   //     '-LZJ7AGyuXFDjXz1ECb2': {
   //       age: 20,
-  //       altColorId: 'col000004',
-  //       altColor: {
-  //         b: 122,
-  //         count: 6,
-  //         g: 160,
-  //         hex: '#FFA07A',
-  //         name: 'peach',
-  //         number: 4,
-  //         r: 255,
-  //         id: 'col000004',
-  //       },
   //       birthdate: 19980826,
   //       colorId: 'col000018',
   //       color: {
@@ -73,17 +62,6 @@ const initialState = {
   //     },
   //     '-LZJ7AH22seM59PQ977M': {
   //       age: 22,
-  //       altColorId: 'col000010',
-  //       altColor: {
-  //         b: 82,
-  //         count: 4,
-  //         g: 255,
-  //         hex: '#FFFF52',
-  //         name: 'lemon',
-  //         number: 10,
-  //         r: 225,
-  //         id: 'col000010',
-  //       },
   //       birthdate: 19970131,
   //       colorId: 'col000023',
   //       color: {
@@ -109,17 +87,6 @@ const initialState = {
   //     },
   //     '-LZJ7AH7krbGtR-yZyhT': {
   //       age: 21,
-  //       altColorId: 'col000019',
-  //       altColor: {
-  //         b: 134,
-  //         count: 6,
-  //         g: 89,
-  //         hex: '#285986',
-  //         name: 'navy',
-  //         number: 19,
-  //         r: 40,
-  //         id: 'col000019',
-  //       },
   //       birthdate: 19971023,
   //       colorId: 'col000002',
   //       color: {
@@ -145,17 +112,6 @@ const initialState = {
   //     },
   //     '-LZJ7AHDQIEw5VM1mI3C': {
   //       age: 20,
-  //       altColorId: 'col000023',
-  //       altColor: {
-  //         b: 239,
-  //         count: 10,
-  //         g: 119,
-  //         hex: '#A177EF',
-  //         name: 'violet',
-  //         number: 23,
-  //         r: 161,
-  //         id: 'col000023',
-  //       },
   //       birthdate: 19980309,
   //       colorId: 'col000006',
   //       color: {
@@ -181,17 +137,6 @@ const initialState = {
   //     },
   //     '-LZJ7AHM3LgaoxdPJphc': {
   //       age: 19,
-  //       altColorId: 'col000027',
-  //       altColor: {
-  //         b: 101,
-  //         count: 5,
-  //         g: 20,
-  //         hex: '#9C1465',
-  //         name: 'jam',
-  //         number: 27,
-  //         r: 156,
-  //         id: 'col000027',
-  //       },
   //       birthdate: 19990923,
   //       colorId: 'col000014',
   //       color: {
@@ -217,17 +162,6 @@ const initialState = {
   //     },
   //     '-LZJ7AHNENioOO_v3cE5': {
   //       age: 19,
-  //       altColorId: 'col000024',
-  //       altColor: {
-  //         b: 255,
-  //         count: 2,
-  //         g: 208,
-  //         hex: '#F7D0FF',
-  //         name: 'rose',
-  //         number: 24,
-  //         r: 247,
-  //         id: 'col000024',
-  //       },
   //       birthdate: 20000106,
   //       colorId: 'col000008',
   //       color: {
