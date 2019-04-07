@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 // Import components
 import BiasPicture from './BiasPicture';
 // Import common components
-import { Tabs, Icon, LoadingIcon, MemberCard, Select } from '../../../common';
+import {
+  Tabs,
+  Icon,
+  LoadingWrapper,
+  MemberCard,
+  Select,
+} from '../../../common';
 
 class Units extends Component {
   componentDidMount() {
@@ -73,9 +79,7 @@ class Units extends Component {
             <div className="unit-section">
               <div className="unit-section__info">
                 <div className="unit-section__summary">
-                  {isUnitPending ? (
-                    <LoadingIcon size="small" />
-                  ) : (
+                  <LoadingWrapper pending={isUnitPending}>
                     <Fragment>
                       <p>
                         <b>Debut Year:</b> {selectedUnit.debutYear || '?'}
@@ -116,12 +120,10 @@ class Units extends Component {
                         </p>
                       </div>
                     </Fragment>
-                  )}
+                  </LoadingWrapper>
                 </div>
                 <div className="unit-section__bias">
-                  {isUnitPending ? (
-                    <LoadingIcon size="medium" />
-                  ) : (
+                  <LoadingWrapper pending={isUnitPending}>
                     <div className="unit-section__bias-wrapper">
                       <BiasPicture bias={bias} />
                       <Select
@@ -133,14 +135,12 @@ class Units extends Component {
                         placeholder="Select your bias..."
                       />
                     </div>
-                  )}
+                  </LoadingWrapper>
                 </div>
               </div>
               <hr className="unit-section__ruler" />
               <h2>Members:</h2>
-              {isUnitPending ? (
-                <LoadingIcon />
-              ) : (
+              <LoadingWrapper pending={isUnitPending}>
                 <div className="unit-section__members">
                   {Object.values(selectedUnit.members).map(member => (
                     <MemberCard
@@ -155,7 +155,7 @@ class Units extends Component {
                     />
                   ))}
                 </div>
-              )}
+              </LoadingWrapper>
               <hr />
               <h2>Distributions</h2>
               {hasDistributions ? (

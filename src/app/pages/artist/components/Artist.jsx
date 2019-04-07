@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 // Import components
 import Units from './Units';
 // Import common components
-import { FavoriteIcon, LoadingIcon, RequirementWrapper } from '../../../common';
+import {
+  FavoriteIcon,
+  LoadingWrapper,
+  RequirementWrapper,
+} from '../../../common';
 // Import utility functions
 import utils from '../../../../utils';
 
@@ -55,9 +59,7 @@ class Artist extends Component {
       <RequirementWrapper requirements={['selectedArtist']}>
         <main className="container container--artist">
           <h1>Artist Page</h1>
-          {isArtistPending ? (
-            <LoadingIcon />
-          ) : (
+          <LoadingWrapper pending={isArtistPending}>
             <section className="artist__section">
               <h2 className="artist-page__name">
                 {selectedArtist.name}
@@ -90,7 +92,7 @@ class Artist extends Component {
               </ul>
               <Units props={this.props} />
             </section>
-          )}
+          </LoadingWrapper>
         </main>
       </RequirementWrapper>
     );
