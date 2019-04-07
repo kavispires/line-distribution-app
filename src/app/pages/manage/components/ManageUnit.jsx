@@ -120,6 +120,10 @@ const ManageUnit = ({
             <Checkbox field="official" initialValue={defaultValues.official} />
           </label>
           <label className="manage-form__label">
+            Sub-unit{' '}
+            <Checkbox field="subUnit" initialValue={defaultValues.subUnit} />
+          </label>
+          <label className="manage-form__label">
             Private{' '}
             <Checkbox field="private" initialValue={defaultValues.private} />
           </label>

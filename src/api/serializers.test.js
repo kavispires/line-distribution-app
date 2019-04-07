@@ -161,6 +161,7 @@ describe('API/Serializers', () => {
           modifiedBy: null,
           official: false,
           private: false,
+          subUnit: false,
         },
       });
     });

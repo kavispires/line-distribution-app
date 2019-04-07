@@ -145,6 +145,7 @@ function* requestArtist(action) {
   // Just send artist if dealing with Manage Artist
   if (state === 'edit') {
     selectedArtist.state = 'edit';
+    panels.artist = state;
 
     const unitsTypeahead = [];
     const unitsTypeaheadDict = {};
@@ -153,6 +154,7 @@ function* requestArtist(action) {
       unitsTypeahead.push(unit.name);
       unitsTypeaheadDict[unit.name] = unit.id;
     });
+
     yield put({ type: types.SET_UNITS_TYPEAHEAD, payload: unitsTypeahead });
     yield put({
       type: types.SET_UNITS_TYPEAHEAD_DICT,

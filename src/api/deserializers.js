@@ -138,6 +138,7 @@ export const deserialize = {
         members: data.members || {},
         official: data.official || false,
         private: data.private || false,
+        subUnit: data.subUnit || false,
       };
     },
     user: (data, id) => {
@@ -247,6 +248,7 @@ export const deserialize = {
       if (data.name) res.name = data.name;
       if (data.official) res.official = data.official;
       if (data.private) res.private = data.private;
+      if (data.subUnit) res.subUnit = data.subUnit;
 
       return res;
     },

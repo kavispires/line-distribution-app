@@ -122,6 +122,7 @@ export const serialize = {
         name: data.name,
         official: data.official || false,
         private: data.private || false,
+        subUnit: data.subUnit || false,
       },
     };
   },

@@ -221,6 +221,7 @@ describe('API/deserializers', () => {
             name: 'OT1',
             official: false,
             private: false,
+            subUnit: false,
           });
         });
       });
