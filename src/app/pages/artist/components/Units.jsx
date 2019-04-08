@@ -73,8 +73,8 @@ class Units extends Component {
           action={switchArtistPageTab}
           active={artistPageTab}
           icons={[
-            <Icon type="check" color="blue" inline />,
-            <Icon type="sub-unit" color="orange" />,
+            <Icon type="check" color="blue" inline key="official" />,
+            <Icon type="sub-unit" color="orange" key="subUnit" />,
           ]}
           iconConditions={['official', 'subUnit']}
         >
