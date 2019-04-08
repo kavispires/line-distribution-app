@@ -145,6 +145,7 @@ function* requestArtist(action) {
   // Just send artist if dealing with Manage Artist
   if (state === 'edit') {
     selectedArtist.state = 'edit';
+    panels.artist = state;
 
     const unitsTypeahead = [];
     const unitsTypeaheadDict = {};
@@ -153,6 +154,7 @@ function* requestArtist(action) {
       unitsTypeahead.push(unit.name);
       unitsTypeaheadDict[unit.name] = unit.id;
     });
+
     yield put({ type: types.SET_UNITS_TYPEAHEAD, payload: unitsTypeahead });
     yield put({
       type: types.SET_UNITS_TYPEAHEAD_DICT,
@@ -292,6 +294,27 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   unit.members = members;
 
   // Fetch distributions and merge
+  let distributions = {};
+  try {
+    const response = yield API.get(`/units/${unitId}/distributions`);
+    distributions = utils.parseResponse(response);
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load distributions from unit ${unitId} from database`,
+        error.toString(),
+      ],
+      actionType,
+    });
+  }
+
+  unit.distributions = distributions || [];
+
+  unit.songsDict = distributions.reduce((dict, distribution) => {
+    dict[distribution.songId] = true;
+    return dict;
+  }, {});
 
   // Fetch legacy distributions and merge
 

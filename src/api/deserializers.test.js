@@ -153,13 +153,11 @@ describe('API/deserializers', () => {
           name: 'Bob',
           birthdate: 20000101,
           colorId: 'col000001',
-          altColorId: 'col000002',
           gender: 'MALE',
           nationality: 'OTHER',
           referenceArtist: ARTIST_ID,
         };
         expect(deserialize.post.member(data, ID, UID)).toEqual({
-          altColorId: 'col000002',
           birthdate: 20000101,
           colorId: 'col000001',
           createdBy: UID,
@@ -223,6 +221,7 @@ describe('API/deserializers', () => {
             name: 'OT1',
             official: false,
             private: false,
+            subUnit: false,
           });
         });
       });
@@ -293,7 +292,6 @@ describe('API/deserializers', () => {
           id: ID,
           uid: UID,
           name: 'Bob',
-          altColorId: 'col000002',
           birthdate: 20000101,
           colorId: 'col000001',
           gender: 'MALE',
@@ -301,7 +299,6 @@ describe('API/deserializers', () => {
           referenceArtist: ARTIST_ID,
         };
         expect(deserialize.put.member(data, ID, UID)).toEqual({
-          altColorId: 'col000002',
           birthdate: 20000101,
           colorId: 'col000001',
           gender: 'MALE',

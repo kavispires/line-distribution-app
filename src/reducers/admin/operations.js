@@ -196,6 +196,7 @@ const unlockMembers = formState => (dispatch, getState) => {
     name: unitState.name,
     official: unitState.official,
     private: unitState.private || false,
+    subUnit: unitState.subUnit || null,
     new: editingUnitState.new || false,
     averages: editingUnitState.averages || false,
     distributions: editingUnitState.distributions || false,
@@ -296,6 +297,7 @@ const saveManage = formState => async (dispatch, getState) => {
     name: unitState.name,
     official: unitState.official,
     private: unitState.private || false,
+    subUnit: unitState.subUnit || null,
     new: editingUnitState.new || false,
     averages: editingUnitState.averages || false,
     distributions: editingUnitState.distributions || false,
@@ -321,7 +323,6 @@ const saveManage = formState => async (dispatch, getState) => {
       };
       // Handle existing database member
       if (editingMembersState[index].id) {
-        newMember.altColorId = editingMembersState[index].altColorId || null;
         newMember.createdBy = editingMembersState[index].createdBy || null;
         newMember.id = editingMembersState[index].id || null;
         newMember.referenceArtist =

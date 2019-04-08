@@ -6,6 +6,7 @@ import FavoriteIcon from './components/FavoriteIcon';
 import Icon from './components/Icon';
 import Loading from './components/Loading';
 import LoadingIcon from './components/LoadingIcon';
+import LoadingWrapper from './components/LoadingWrapper';
 import MemberCard from './components/MemberCard';
 import PositionIcon from './components/PositionIcon';
 import RequirementWrapper from './containers/RequirementWrapperContainer';
@@ -23,6 +24,7 @@ export {
   Icon,
   Loading,
   LoadingIcon,
+  LoadingWrapper,
   MemberCard,
   PositionIcon,
   RequirementWrapper,

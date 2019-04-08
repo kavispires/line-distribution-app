@@ -3,11 +3,17 @@ import _ from 'lodash';
 import actions from './actions';
 
 const activateSong = id => (dispatch, getState) => {
+  // Reset everything but Unit
+  dispatch(actions.resetDistributeSong({}));
+
   const activeSong = _.find(getState().db.songs, { id });
   dispatch(actions.setActiveSong(activeSong));
 };
 
 const activateUnit = () => (dispatch, getState) => {
+  // Reset everything
+  dispatch(actions.resetDistribute({}));
+
   const selectedArtist = { ...getState().artists.selectedArtist };
   const activeUnit = { ...getState().artists.selectedUnit };
 
@@ -89,7 +95,6 @@ const linkMemberToPart = id => (dispatch, getState) => {
 
   const distributionLines = [...getState().distribute.distributionLines];
 
-  // console.log(distributionLines);
   for (let l = 0; l < distributionLines.length; l++) {
     const line = distributionLines[l];
     let found = false;
@@ -140,17 +145,28 @@ const calculateRates = distributionLines => dispatch => {
           rates.total += part.duration;
           const mId = part.memberId[m];
           if (rates[mId] === undefined) {
-            rates[mId] = 0;
+            // [duration, absolute percentage, relative percentage]
+            rates[mId] = [0, 0, 0];
           }
-          rates[mId] += part.duration;
-          // Add max if greater than previous max
-          if (rates[mId] > rates.max) rates.max = rates[mId];
+          rates[mId][0] += part.duration;
+          // Replace max if greater than previous max
+          if (rates[mId][0] > rates.max) [rates.max] = rates[mId];
         }
       } else {
         rates.remaining += part.duration;
       }
     }
   }
+
+  // Calculate percentages
+  Object.keys(rates).forEach(key => {
+    if (key === 'max' || key === 'remaining' || key === 'total') return;
+    const rate = rates[key];
+    // Add absolute percentage
+    rate[1] = Number(((100 * rate[0]) / rates.total).toFixed(1));
+    // Add relative percentage (bar width)
+    rate[2] = Math.round((100 * rate[0]) / rates.max);
+  });
 
   dispatch(actions.setRates(rates));
   dispatch(calculateRemainder(rates));
@@ -177,10 +193,20 @@ const handleDistributionCategory = event => async dispatch => {
 };
 
 const handleSaveDistribution = () => async (dispatch, getState) => {
+  const { rates } = getState().distribute;
+  const ratesToSave = {};
+  Object.entries(rates).forEach(entry => {
+    if (Array.isArray(entry[1])) {
+      ratesToSave[entry[0]] = entry[1][0]; // eslint-disable-line
+    } else {
+      ratesToSave[entry[0]] = entry[1]; // eslint-disable-line
+    }
+  });
+
   const body = {
     category: getState().distribute.category,
     songId: getState().distribute.activeSong.id,
-    rates: getState().distribute.rates,
+    rates: ratesToSave,
     relationships: '',
     features: [],
     unitId: getState().distribute.activeUnit.id,

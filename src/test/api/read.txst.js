@@ -128,12 +128,6 @@ describe('Read API', () => {
       expect(response.id).toEqual('-m000000000000000101');
       expect(response.name).toEqual('Adam');
 
-      expect(typeof response.altColor).toEqual('object');
-      expect(response.altColor.class).toEqual('color-101');
-      expect(response.altColor.hex).toEqual('#FF0000');
-      expect(response.altColor.id).toEqual('col000101');
-      expect(response.altColor.name).toEqual('red');
-
       expect(typeof response.color).toEqual('object');
       expect(response.color.class).toEqual('color-102');
       expect(response.color.hex).toEqual('#00FF00');

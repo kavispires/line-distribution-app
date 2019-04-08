@@ -717,19 +717,12 @@ const getFunctions = {
         response = snapshot.val();
       });
 
-      const { altColorId = 'default', colorId = 'default' } = response;
+      const { colorId = 'default' } = response;
       if (colorId) {
         const color = await getFunctions.fetchColor(colorId);
         response.color = {
           ...color.attributes,
           id: color.id,
-        };
-      }
-      if (altColorId) {
-        const altColor = await getFunctions.fetchColor(altColorId);
-        response.altColor = {
-          ...altColor.attributes,
-          id: altColor.id,
         };
       }
 
@@ -775,10 +768,29 @@ const getFunctions = {
   // Fetches units from a single artist
   fetchUnitDistributions: async id => {
     const unit = await getFunctions.fetchUnit(id);
-    const response = await unit.attributes.distributions.map(distributionId =>
-      getFunctions.fetchDistribution(distributionId)
+    const unitDistributionsPromises = await unit.attributes.distributions.map(
+      distributionId => getFunctions.fetchDistribution(distributionId)
     );
-    return Promise.all(response);
+    const unitDistributions = await Promise.all(unitDistributionsPromises);
+
+    const unitSongsPromises = await unitDistributions.map(distributionObject =>
+      getFunctions.fetchSong(distributionObject.attributes.songId)
+    );
+
+    const unitSongs = await Promise.all(unitSongsPromises);
+
+    unitDistributions.forEach((distributionObject, index) => {
+      unitDistributions[index].attributes.distribution =
+        unitSongs[index].attributes.distribution;
+      unitDistributions[index].attributes.originalArtist =
+        unitSongs[index].attributes.originalArtist;
+      unitDistributions[index].attributes.title =
+        unitSongs[index].attributes.title;
+      unitDistributions[index].attributes.videoId =
+        unitSongs[index].attributes.videoId;
+    });
+
+    return unitDistributions;
   },
   // Fetches units from a single artist
   fetchUnitMembers: async id => {
@@ -1198,20 +1210,38 @@ const resyncFunctions = {
   },
   parseArtists: database => {
     Object.values(database.artists).forEach(artist => {
-      // Order units by debutYear
+      // Order units by descending debutYear
       const unitDict = {};
+      const subUnitDict = {};
+      let unitSameYear = 1;
       artist.units.forEach(unitId => {
         const currentUnit = database.units[unitId];
         let key = currentUnit.debutYear;
-        if (unitDict[key]) {
-          key = Number(`${key}1`);
+        if (currentUnit.subUnit) {
+          if (subUnitDict[key]) {
+            key = Number(`${key}${unitSameYear}`);
+            unitSameYear++;
+          }
+          subUnitDict[key] = unitId;
+        } else {
+          if (unitDict[key]) {
+            key = Number(`${key}${unitSameYear}`);
+            unitSameYear++;
+          }
+          unitDict[key] = unitId;
         }
-        unitDict[key] = unitId;
       });
       // Sort by year
-      artist.units = Object.keys(unitDict)
+      const units = Object.keys(unitDict)
         .sort()
+        .reverse()
         .map(year => unitDict[year]);
+
+      const subUnits = Object.keys(subUnitDict)
+        .sort()
+        .map(year => subUnitDict[year]);
+
+      artist.units = [...units, ...subUnits];
 
       // Sort memberList by name and make it unique, same with memberIds
       const memberDict = {};

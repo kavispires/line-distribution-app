@@ -6,7 +6,7 @@ import ColorSheet from './ColorSheet';
 import ComponentSheet from './ComponentsSheet';
 import IconSheet from './IconSheet';
 // Import common components
-import { RequirementWrapper, Tabs, LoadingIcon } from '../../../common';
+import { RequirementWrapper, Tabs, LoadingWrapper } from '../../../common';
 
 class UIReference extends Component {
   componentDidMount() {
@@ -43,11 +43,9 @@ class UIReference extends Component {
             action={this.props.switchUIReferenceTab}
             active={uiReferenceTab}
           >
-            {app.pending.REQUEST_COLORS ? (
-              <LoadingIcon size="medium" />
-            ) : (
-              tabContent
-            )}
+            <LoadingWrapper pending={app.pending.REQUEST_COLORS}>
+              {tabContent}
+            </LoadingWrapper>
           </Tabs>
         </main>
       </RequirementWrapper>

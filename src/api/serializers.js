@@ -69,8 +69,6 @@ export const serialize = {
       type: 'member',
       attributes: {
         age: data.birthdate ? utils.calculateAge(data.birthdate) : 0,
-        altColorId: data.altColorId || null,
-        altColor: data.altColor || null,
         birthdate: data.birthdate || 0,
         colorId: data.colorId,
         color: data.color || null,
@@ -124,6 +122,7 @@ export const serialize = {
         name: data.name,
         official: data.official || false,
         private: data.private || false,
+        subUnit: data.subUnit || false,
       },
     };
   },

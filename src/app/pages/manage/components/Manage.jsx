@@ -32,7 +32,6 @@ class Manage extends Component {
   }
 
   componentDidMount() {
-    console.log('HERE');
     this.props.loadArtists();
     this.props.loadColors();
     this.props.loadMembers();
@@ -50,7 +49,7 @@ class Manage extends Component {
 
   validateUnit(event) {
     const { value } = event.target;
-    const dict = this.props.db.unitsTypeaheadDict;
+    const dict = this.props.admin.unitsTypeaheadDict;
     if (dict[value]) {
       this.setState({ unitId: dict[value], validUnit: true });
     } else {
@@ -123,6 +122,7 @@ class Manage extends Component {
         name: undefined,
         official: undefined,
         private: undefined,
+        subUnit: undefined,
       },
       members: [],
     };
@@ -142,6 +142,7 @@ class Manage extends Component {
         name: editingUnit.name,
         official: editingUnit.official,
         private: editingUnit.private,
+        subUnit: editingUnit.subUnit,
       };
     }
 

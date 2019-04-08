@@ -40,6 +40,10 @@ export default function reducer(prevState = initialState, action) {
       newState.manageResult = action.payload;
       break;
 
+    case types.SET_PANELS:
+      newState.panels = action.payload;
+      break;
+
     case types.SET_SONGS:
       newState.songs = action.payload;
       break;

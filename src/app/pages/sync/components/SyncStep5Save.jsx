@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import common components
-import { Icon, LoadingIcon } from '../../../common';
+import { Icon, LoadingWrapper } from '../../../common';
 
 const SyncStep5Save = ({ info, pending, saveSync, unlockSpecificStep }) => (
   <div className="sync__step sync__step--5">
@@ -41,12 +41,9 @@ const SyncStep5Save = ({ info, pending, saveSync, unlockSpecificStep }) => (
     </p>
 
     <button className="btn btn-block" onClick={() => saveSync()}>
-      {pending ? (
-        <LoadingIcon size="tiny" />
-      ) : (
-        <Icon type="save" color="red" inline />
-      )}{' '}
-      Save
+      <LoadingWrapper pending={pending} size="tiny">
+        <Icon type="save" color="red" inline /> Save
+      </LoadingWrapper>
     </button>
   </div>
 );

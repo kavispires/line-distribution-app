@@ -82,8 +82,6 @@ export const deserialize = {
       return {
         id,
         createdBy: uid,
-        altColorId:
-          data.altColorId || `col${utils.getAlternativeColor(data.colorId)}`,
         birthdate: data.birthdate,
         colorId: data.colorId,
         gender: data.gender,
@@ -140,6 +138,7 @@ export const deserialize = {
         members: data.members || {},
         official: data.official || false,
         private: data.private || false,
+        subUnit: data.subUnit || false,
       };
     },
     user: (data, id) => {
@@ -200,9 +199,7 @@ export const deserialize = {
       if (uid) res.modifiedBy = uid;
       if (data.colorId) {
         res.colorId = data.colorId;
-        res.altColorId = `col${utils.getAlternativeColor(data.colorId)}`;
       }
-      if (data.altColorId) res.altColorId = data.altColorId;
 
       if (data.birthdate) res.birthdate = data.birthdate;
       if (data.gender) res.gender = data.gender;
@@ -251,6 +248,7 @@ export const deserialize = {
       if (data.name) res.name = data.name;
       if (data.official) res.official = data.official;
       if (data.private) res.private = data.private;
+      if (data.subUnit) res.subUnit = data.subUnit;
 
       return res;
     },

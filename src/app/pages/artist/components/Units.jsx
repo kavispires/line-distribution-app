@@ -1,10 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Import components
 import BiasPicture from './BiasPicture';
 // Import common components
-import { Tabs, Icon, LoadingIcon, MemberCard, Select } from '../../../common';
+import {
+  Tabs,
+  Icon,
+  LoadingWrapper,
+  MemberCard,
+  Select,
+} from '../../../common';
+import DistributedSongsTable from './DistributedSongsTable';
 
 class Units extends Component {
   componentDidMount() {
@@ -53,67 +60,74 @@ class Units extends Component {
 
     const isUnitPending = app.pending.REQUEST_UNIT;
 
+    const hasLegacyDistributions =
+      selectedUnit.distributions_legacy &&
+      selectedUnit.distributions_legacy.length;
+
     return (
       <section className="artist__section">
         <Tabs
           tabs={selectedArtist.units || []}
           action={switchArtistPageTab}
           active={artistPageTab}
-          icon={<Icon type="check" color="blue" />}
-          iconCondition="official"
+          icons={[
+            <Icon type="check" color="blue" inline key="official" />,
+            <Icon type="sub-unit" color="orange" key="subUnit" />,
+          ]}
+          iconConditions={['official', 'subUnit']}
         >
           {selectedUnit.id ? (
             <div className="unit-section">
               <div className="unit-section__info">
                 <div className="unit-section__summary">
-                  <p>
-                    <b>Debut Year:</b> {selectedUnit.debutYear || '?'}
-                  </p>
-                  <p>
-                    <b>Official Distributions:</b>{' '}
-                    {selectedUnit.distributions.length || 0}
-                  </p>
-                  <p>
-                    <b>Custom Distributions:</b>{' '}
-                    {selectedUnit.distributions.length || 0}
-                  </p>
-                  {selectedUnit.distributions_legacy &&
-                  selectedUnit.distributions_legacy.length ? (
-                    <p>
-                      <b>Legacy Distributions:</b>{' '}
-                      {selectedUnit.distributions_legacy.length || 0}
-                    </p>
-                  ) : null}
-
-                  {isUnitPending ? (
-                    <LoadingIcon size="small" />
-                  ) : (
-                    <div className="unit-section__actions">
-                      <button
-                        className="btn"
-                        onClick={() => this.artistRedirect('songs')}
-                      >
-                        Distribute
-                      </button>
-                      <button
-                        className="btn"
-                        onClick={() => this.artistRedirect('lyrics')}
-                      >
-                        Play with Lyrics <span className="restriction">*</span>
-                      </button>
-                      <button className="btn" disabled>
-                        Random Song
-                      </button>
+                  <LoadingWrapper pending={isUnitPending}>
+                    <Fragment>
                       <p>
-                        <small>* You won&apos;t be able to save this.</small>
+                        <b>
+                          {selectedUnit.subUnit ? 'Sub-unit' : ''} Debut Year:
+                        </b>{' '}
+                        {selectedUnit.debutYear || '?'}
                       </p>
-                    </div>
-                  )}
+                      <p>
+                        <b>Official Distributions:</b>{' '}
+                        {selectedUnit.distributions.length || 0}
+                      </p>
+                      <p>
+                        <b>Custom Distributions:</b>{' '}
+                        {selectedUnit.distributions.length || 0}
+                      </p>
+                      {hasLegacyDistributions ? (
+                        <p>
+                          <b>Legacy Distributions:</b>{' '}
+                          {selectedUnit.distributions_legacy.length || 0}
+                        </p>
+                      ) : null}
+                      <div className="unit-section__actions">
+                        <button
+                          className="btn"
+                          onClick={() => this.artistRedirect('songs')}
+                        >
+                          Distribute
+                        </button>
+                        <button
+                          className="btn"
+                          onClick={() => this.artistRedirect('lyrics')}
+                        >
+                          Play with Lyrics{' '}
+                          <span className="restriction">*</span>
+                        </button>
+                        <button className="btn" disabled>
+                          Random Song
+                        </button>
+                        <p>
+                          <small>* You won&apos;t be able to save this.</small>
+                        </p>
+                      </div>
+                    </Fragment>
+                  </LoadingWrapper>
                 </div>
                 <div className="unit-section__bias">
-                  {isUnitPending ? (
-                    <LoadingIcon size="medium" />
-                  ) : (
+                  <LoadingWrapper pending={isUnitPending}>
                     <div className="unit-section__bias-wrapper">
                       <BiasPicture bias={bias} />
                       <Select
@@ -125,14 +139,12 @@ class Units extends Component {
                         placeholder="Select your bias..."
                       />
                     </div>
-                  )}
+                  </LoadingWrapper>
                 </div>
               </div>
               <hr className="unit-section__ruler" />
               <h2>Members:</h2>
-              {isUnitPending ? (
-                <LoadingIcon />
-              ) : (
+              <LoadingWrapper pending={isUnitPending}>
                 <div className="unit-section__members">
                   {Object.values(selectedUnit.members).map(member => (
                     <MemberCard
@@ -147,11 +159,23 @@ class Units extends Component {
                     />
                   ))}
                 </div>
-              )}
-              <hr />
-              <h2>Distributions for the unit go here</h2>
-              <hr />
-              <h2>Legacy Distributions for the unit go here</h2>
+              </LoadingWrapper>
+              <hr className="unit-section__ruler" />
+              <h2>Distributions</h2>
+              <LoadingWrapper pending={isUnitPending}>
+                <DistributedSongsTable
+                  distributions={selectedUnit.distributions}
+                  members={selectedUnit.members}
+                />
+              </LoadingWrapper>
+
+              {hasLegacyDistributions ? (
+                <Fragment>
+                  <hr />
+                  <h2>Legacy Distributions</h2>{' '}
+                  <p>List of Legacy Distributions</p>
+                </Fragment>
+              ) : null}
             </div>
           ) : (
             <p>The selected Artist has no units.</p>

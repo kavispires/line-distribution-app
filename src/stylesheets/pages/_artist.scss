@@ -125,3 +125,16 @@
     flex-wrap: wrap;
   }
 }
+
+.distribution-rates-preview {
+  &__container {
+    width: 100%;
+    display: flex;
+  }
+
+  &__bar {
+    font-size: 80%;
+    padding: 2px;
+    overflow-x: hidden;
+  }
+}

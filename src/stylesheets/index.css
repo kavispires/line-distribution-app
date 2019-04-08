@@ -1066,6 +1066,17 @@ input:checked + .slider:before {
   flex-wrap: wrap;
 }
 
+.distribution-rates-preview__container {
+  width: 100%;
+  display: flex;
+}
+
+.distribution-rates-preview__bar {
+  font-size: 80%;
+  padding: 2px;
+  overflow-x: hidden;
+}
+
 .artists__section {
   width: 100%;
   overflow: auto;
@@ -1703,6 +1714,10 @@ input:checked + .slider:before {
   position: absolute;
   right: 24px;
   top: 24px;
+}
+
+.previously-distributed-row {
+  background: #ecffee;
 }
 
 .sync__container {

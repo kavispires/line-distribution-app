@@ -93,8 +93,6 @@ describe('API/Serializers', () => {
         type: 'member',
         attributes: {
           age: 25,
-          altColor: null,
-          altColorId: null,
           birthdate: 19931010,
           color: null,
           colorId: '2',
@@ -163,6 +161,7 @@ describe('API/Serializers', () => {
           modifiedBy: null,
           official: false,
           private: false,
+          subUnit: false,
         },
       });
     });
