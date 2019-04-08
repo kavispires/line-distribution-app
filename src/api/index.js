@@ -1191,20 +1191,38 @@ const resyncFunctions = {
   },
   parseArtists: database => {
     Object.values(database.artists).forEach(artist => {
-      // Order units by debutYear
+      // Order units by descending debutYear
       const unitDict = {};
+      const subUnitDict = {};
+      let unitSameYear = 1;
       artist.units.forEach(unitId => {
         const currentUnit = database.units[unitId];
         let key = currentUnit.debutYear;
-        if (unitDict[key]) {
-          key = Number(`${key}1`);
+        if (currentUnit.subUnit) {
+          if (subUnitDict[key]) {
+            key = Number(`${key}${unitSameYear}`);
+            unitSameYear++;
+          }
+          subUnitDict[key] = unitId;
+        } else {
+          if (unitDict[key]) {
+            key = Number(`${key}${unitSameYear}`);
+            unitSameYear++;
+          }
+          unitDict[key] = unitId;
         }
-        unitDict[key] = unitId;
       });
       // Sort by year
-      artist.units = Object.keys(unitDict)
+      const units = Object.keys(unitDict)
         .sort()
+        .reverse()
         .map(year => unitDict[year]);
+
+      const subUnits = Object.keys(subUnitDict)
+        .sort()
+        .map(year => subUnitDict[year]);
+
+      artist.units = [...units, ...subUnits];
 
       // Sort memberList by name and make it unique, same with memberIds
       const memberDict = {};
