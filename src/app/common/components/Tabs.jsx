@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Import utility functions
 import utils from '../../../utils';
 
-const Tabs = ({ tabs, active, action, iconCondition, icon, ...props }) => {
+const Tabs = ({ tabs, active, action, icons, iconConditions, ...props }) => {
   // Check for names and ids
   tabs = tabs.map((tab, index) => {
     const tabObj = {
@@ -20,15 +20,9 @@ const Tabs = ({ tabs, active, action, iconCondition, icon, ...props }) => {
 
     tabObj.key = `${tab.id}-${index}`;
     tabObj.isActive = active === tab.id || active === tab ? 'selected' : '';
-    tabObj.showIcon = tab[iconCondition] || false;
+    tabObj.showIcons = iconConditions.map(condition => tab[condition] || false);
     return tabObj;
   });
-
-  // Build icon component
-  let iconComponent;
-  if (iconCondition) {
-    iconComponent = icon;
-  }
 
   // Activate first tab if action paramenter is not available
   if (!active) {
@@ -44,7 +38,15 @@ const Tabs = ({ tabs, active, action, iconCondition, icon, ...props }) => {
             className={utils.bem('tabs', tab.isActive, 'tab')}
             id={tab.id}
           >
-            {tab.name} {tab.showIcon ? iconComponent : null}
+            {tab.name}{' '}
+            <Fragment>
+              {tab.showIcons.map((show, index) => {
+                if (show) {
+                  return icons[index];
+                }
+                return null;
+              })}
+            </Fragment>
           </li>
         ))}
       </ul>
@@ -57,15 +59,15 @@ Tabs.propTypes = {
   action: PropTypes.func.isRequired,
   active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.any.isRequired,
-  iconCondition: PropTypes.string,
-  icon: PropTypes.object,
+  iconConditions: PropTypes.array,
+  icons: PropTypes.array,
   tabs: PropTypes.array.isRequired,
 };
 
 Tabs.defaultProps = {
   active: 0,
-  iconCondition: '',
-  icon: null,
+  iconConditions: [],
+  icons: [],
 };
 
 export default Tabs;

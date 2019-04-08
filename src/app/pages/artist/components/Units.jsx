@@ -72,8 +72,11 @@ class Units extends Component {
           tabs={selectedArtist.units || []}
           action={switchArtistPageTab}
           active={artistPageTab}
-          icon={<Icon type="check" color="blue" />}
-          iconCondition="official"
+          icons={[
+            <Icon type="check" color="blue" inline />,
+            <Icon type="sub-unit" color="orange" />,
+          ]}
+          iconConditions={['official', 'subUnit']}
         >
           {selectedUnit.id ? (
             <div className="unit-section">
@@ -82,7 +85,10 @@ class Units extends Component {
                   <LoadingWrapper pending={isUnitPending}>
                     <Fragment>
                       <p>
-                        <b>Debut Year:</b> {selectedUnit.debutYear || '?'}
+                        <b>
+                          {selectedUnit.subUnit ? 'Sub-unit' : ''} Debut Year:
+                        </b>{' '}
+                        {selectedUnit.debutYear || '?'}
                       </p>
                       <p>
                         <b>Official Distributions:</b>{' '}

@@ -14,6 +14,7 @@ const Icon = ({ type, size, color, inline, title }) => {
       display: 'inline-block',
       verticalAlign: 'middle',
       margin,
+      transform: 'translateY(-1px)',
     },
     path: {
       fill: constants.DEFAULT_COLORS[color],
