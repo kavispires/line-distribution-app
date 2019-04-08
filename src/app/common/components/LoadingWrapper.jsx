@@ -14,12 +14,13 @@ const LoadingWrapper = ({ pending, children, size }) =>
   );
 
 LoadingWrapper.propTypes = {
-  children: PropTypes.bool.isRequired,
-  pending: PropTypes.bool.isRequired,
+  children: PropTypes.object.isRequired,
+  pending: PropTypes.bool,
   size: PropTypes.string,
 };
 
 LoadingWrapper.defaultProps = {
+  pending: false,
   size: 'medium',
 };
 
