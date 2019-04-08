@@ -34,6 +34,8 @@ const handleFormInfo = (formState, originalArtist) => (dispatch, getState) => {
   if (artistsTypeaheadDict[originalArtist]) {
     info.artistId = artistsTypeaheadDict[originalArtist];
     info.originalArtist = originalArtist;
+  } else {
+    info.originalArtist = originalArtist;
   }
 
   if (Object.values(formState.values)) {
@@ -45,7 +47,6 @@ const handleFormInfo = (formState, originalArtist) => (dispatch, getState) => {
   }
 
   info.videoId = getState().sync.videoId;
-
   dispatch(actions.setInfo(info));
   dispatch(unlockNextStep());
 };
