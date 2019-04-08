@@ -81,7 +81,7 @@ const MemberCard = ({
     <p>
       <b>Positions:</b>
     </p>
-    <MemberPositions memberID={member.memberId} positions={member.positions} />
+    <MemberPositions memberId={member.id} positions={member.positions} />
   </div>
 );
 
