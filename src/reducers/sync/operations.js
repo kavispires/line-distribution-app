@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import actions from './actions';
 
 import constants from '../../utils/constants';
@@ -53,7 +55,7 @@ const handleFormInfo = (formState, originalArtist) => (dispatch, getState) => {
 
 const unlockNextStep = () => (dispatch, getState) => {
   let { step } = getState().sync;
-  const steps = { ...getState().sync.steps };
+  const steps = _.cloneDeep(getState().sync.steps);
 
   steps[step].locked = true;
   steps[step].expanded = false;
@@ -73,7 +75,7 @@ const unlockSpecificStep = num => (dispatch, getState) => {
   if (!num) return;
 
   let { step } = getState().sync;
-  const steps = { ...getState().sync.steps };
+  const steps = _.cloneDeep(getState().sync.steps);
 
   Object.values(steps).forEach(st => {
     st.locked = true;
@@ -551,7 +553,7 @@ const saveSync = () => async (dispatch, getState) => {
 const handleResetSync = () => dispatch => {
   newPillId = 0;
   linksBackUp = {};
-  dispatch(actions.resetSync());
+  dispatch(actions.resetSync({}));
 };
 
 export default {
