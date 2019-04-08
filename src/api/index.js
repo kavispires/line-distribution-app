@@ -768,10 +768,29 @@ const getFunctions = {
   // Fetches units from a single artist
   fetchUnitDistributions: async id => {
     const unit = await getFunctions.fetchUnit(id);
-    const response = await unit.attributes.distributions.map(distributionId =>
-      getFunctions.fetchDistribution(distributionId)
+    const unitDistributionsPromises = await unit.attributes.distributions.map(
+      distributionId => getFunctions.fetchDistribution(distributionId)
     );
-    return Promise.all(response);
+    const unitDistributions = await Promise.all(unitDistributionsPromises);
+
+    const unitSongsPromises = await unitDistributions.map(distributionObject =>
+      getFunctions.fetchSong(distributionObject.attributes.songId)
+    );
+
+    const unitSongs = await Promise.all(unitSongsPromises);
+
+    unitDistributions.forEach((distributionObject, index) => {
+      unitDistributions[index].attributes.distribution =
+        unitSongs[index].attributes.distribution;
+      unitDistributions[index].attributes.originalArtist =
+        unitSongs[index].attributes.originalArtist;
+      unitDistributions[index].attributes.title =
+        unitSongs[index].attributes.title;
+      unitDistributions[index].attributes.videoId =
+        unitSongs[index].attributes.videoId;
+    });
+
+    return unitDistributions;
   },
   // Fetches units from a single artist
   fetchUnitMembers: async id => {

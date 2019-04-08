@@ -294,6 +294,27 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   unit.members = members;
 
   // Fetch distributions and merge
+  let distributions = {};
+  try {
+    const response = yield API.get(`/units/${unitId}/distributions`);
+    distributions = utils.parseResponse(response);
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load distributions from unit ${unitId} from database`,
+        error.toString(),
+      ],
+      actionType,
+    });
+  }
+
+  unit.distributions = distributions || [];
+
+  unit.songsDict = distributions.reduce((dict, distribution) => {
+    dict[distribution.songId] = true;
+    return dict;
+  }, {});
 
   // Fetch legacy distributions and merge
 

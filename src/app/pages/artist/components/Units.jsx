@@ -11,6 +11,7 @@ import {
   MemberCard,
   Select,
 } from '../../../common';
+import DistributedSongsTable from './DistributedSongsTable';
 
 class Units extends Component {
   componentDidMount() {
@@ -58,9 +59,6 @@ class Units extends Component {
     }
 
     const isUnitPending = app.pending.REQUEST_UNIT;
-
-    const hasDistributions =
-      selectedUnit.distributions && selectedUnit.distributions.length;
 
     const hasLegacyDistributions =
       selectedUnit.distributions_legacy &&
@@ -162,13 +160,14 @@ class Units extends Component {
                   ))}
                 </div>
               </LoadingWrapper>
-              <hr />
+              <hr className="unit-section__ruler" />
               <h2>Distributions</h2>
-              {hasDistributions ? (
-                <p>List</p>
-              ) : (
-                <p>This group has no distributions yet.</p>
-              )}
+              <LoadingWrapper pending={isUnitPending}>
+                <DistributedSongsTable
+                  distributions={selectedUnit.distributions}
+                  members={selectedUnit.members}
+                />
+              </LoadingWrapper>
 
               {hasLegacyDistributions ? (
                 <Fragment>
