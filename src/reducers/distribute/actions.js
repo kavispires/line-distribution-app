@@ -1,5 +1,9 @@
 import types from './types';
 
+const resetDistribute = payload => dispatch =>
+  dispatch({ type: types.RESET_DISTRIBUTE, payload });
+const resetDistributeSong = payload => dispatch =>
+  dispatch({ type: types.RESET_DISTRIBUTE_SONG, payload });
 const setActiveMemberPill = payload => dispatch =>
   dispatch({ type: types.SET_ACTIVE_MEMBER_PILL, payload });
 const setActiveSong = payload => dispatch =>
@@ -16,6 +20,8 @@ const setRates = payload => dispatch =>
   dispatch({ type: types.SET_RATES, payload });
 
 export default {
+  resetDistribute,
+  resetDistributeSong,
   setActiveMemberPill,
   setActiveSong,
   setActiveUnit,

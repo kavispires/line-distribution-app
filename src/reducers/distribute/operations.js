@@ -3,11 +3,17 @@ import _ from 'lodash';
 import actions from './actions';
 
 const activateSong = id => (dispatch, getState) => {
+  // Reset everything but Unit
+  dispatch(actions.resetDistributeSong({}));
+
   const activeSong = _.find(getState().db.songs, { id });
   dispatch(actions.setActiveSong(activeSong));
 };
 
 const activateUnit = () => (dispatch, getState) => {
+  // Reset everything
+  dispatch(actions.resetDistribute({}));
+
   const selectedArtist = { ...getState().artists.selectedArtist };
   const activeUnit = { ...getState().artists.selectedUnit };
 

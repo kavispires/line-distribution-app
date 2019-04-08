@@ -201,9 +201,18 @@ const initialState = {
 };
 
 export default function reducer(prevState = initialState, action) {
-  const newState = Object.assign({}, prevState);
+  let newState = Object.assign({}, prevState);
 
   switch (action.type) {
+    case types.RESET_DISTRIBUTE:
+      newState = Object.assign({}, initialState);
+      break;
+
+    case types.RESET_DISTRIBUTE_SONG:
+      newState = Object.assign({}, initialState);
+      newState.activeUnit = Object.assign({}, prevState.activeUnit);
+      break;
+
     case types.SET_ACTIVE_MEMBER_PILL:
       newState.activeMemberPill = action.payload;
       break;
