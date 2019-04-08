@@ -1716,6 +1716,10 @@ input:checked + .slider:before {
   top: 24px;
 }
 
+.previously-distributed-row {
+  background: #ecffee;
+}
+
 .sync__container {
   max-height: 100%;
   display: flex;

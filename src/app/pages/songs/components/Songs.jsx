@@ -50,6 +50,7 @@ class Songs extends Component {
             songSearchQuery={songSearchQuery}
             pending={pending.REQUEST_SONGS}
             rowAction={handleTableClick}
+            previouslyDistributedSongsDict={activeUnit.songsDict}
           />
         </main>
       </RequirementWrapper>
