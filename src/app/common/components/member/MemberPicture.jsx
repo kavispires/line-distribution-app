@@ -13,23 +13,26 @@ class MemberPicture extends Component {
   }
 
   render() {
+    const { className, colorId, gender, memberId, name } = this.props;
+
     const pictureUrl = `${process.env.PUBLIC_URL}${
       constants.PROFILE_PICTURE_URL
-    }${this.props.name.toLowerCase()}${this.props.memberId}.jpg`;
+    }${name.toLowerCase()}${memberId}.jpg`;
 
-    const gender = this.props.gender === 'FEMALE' ? 'f' : 'm';
+    const GENDER_ENUM = gender === 'FEMALE' ? 'f' : 'm';
 
-    const colorNumber = utils.getColorNumber(this.props.colorId);
+    const colorNumber = utils.getColorNumber(colorId);
     const profilePlaceholderCode = (colorNumber % 5) + 1;
 
     const pictureFallback = `${process.env.PUBLIC_URL}${
       constants.PROFILE_PICTURE_URL
-    }profile-${gender}-${profilePlaceholderCode}.png`;
+    }profile-${GENDER_ENUM}-${profilePlaceholderCode}.png`;
 
     if (this.state.failed) {
+      console.log(`Missing Member Picture: ${name}${memberId}`); // eslint-disable-line
       return (
         <img
-          className={`${this.props.className} background-color-${colorNumber}`}
+          className={`${className} background-color-${colorNumber}`}
           src={pictureFallback}
           alt="Member"
         />
@@ -37,7 +40,7 @@ class MemberPicture extends Component {
     }
     return (
       <img
-        className={this.props.className}
+        className={className}
         src={pictureUrl}
         onError={this.fallback}
         alt="Member"
