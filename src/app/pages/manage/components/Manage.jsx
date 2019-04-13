@@ -206,15 +206,19 @@ class Manage extends Component {
     return (
       <RequirementWrapper>
         <main className="container container--manage">
-          <h1>Manage</h1>
-          <button className="btn btn-resync-db" onClick={handleResyncDB}>
-            Resync Database
-          </button>
-          <p>
-            A complete group is required to save with ONE Artist, ONE Unit, and
-            at least TWO members (no solo artists)
-          </p>
+          <div className="manage-header">
+            <h1>Manage</h1>
+            <button className="btn btn-resync-db" onClick={handleResyncDB}>
+              Resync Database
+            </button>
+            <p>
+              A complete group is required to save with ONE Artist, ONE Unit,
+              and at least TWO members (no solo artists)
+            </p>
+          </div>
+
           <ColorReferenceBar colors={colors} colorsInUse={colorsInUse} />
+
           <Form
             onChange={formState => updateManageForm(formState)}
             autoComplete="off"

@@ -292,7 +292,7 @@ const saveManage = formState => async (dispatch, getState) => {
       'A members has missing fields',
       'Check the console for details'
     );
-    console.log(memberState); // eslint-disable-line
+    console.log(membersState); // eslint-disable-line
     return;
   }
 
