@@ -107,7 +107,7 @@ class Manage extends Component {
     const isSaveable =
       Object.keys(editingArtist).length &&
       Object.keys(editingUnit).length &&
-      editingMembers.length;
+      editingMembers.length > 1;
 
     // Build default values for form
     const defaultValues = {

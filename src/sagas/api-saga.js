@@ -1,5 +1,6 @@
 import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
+import { toastr } from 'react-redux-toastr';
 
 import API from '../api';
 
@@ -585,6 +586,8 @@ function* updateCompleteArtist(action) {
   yield delay(DELAY_DURATION);
 
   yield put({ type: 'SET_MANAGE_RESULT', payload: 'SUCCESS' });
+
+  toastr.success('Complete Artist saved successfully');
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
   return receivedUnit;
