@@ -29,7 +29,7 @@ class MemberPicture extends Component {
     }profile-${GENDER_ENUM}-${profilePlaceholderCode}.png`;
 
     if (this.state.failed) {
-      console.log(`Missing Member Picture: ${name}${memberId}`); // eslint-disable-line
+      console.log(`Missing Member Picture: ${name.toLowerCase()}${memberId}`); // eslint-disable-line
       return (
         <img
           className={`${className} background-color-${colorNumber}`}
