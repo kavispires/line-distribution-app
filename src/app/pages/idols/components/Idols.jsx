@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { Form, Option, Select, Text } from 'informed';
+import { Checkbox, Form, Option, Select, Text } from 'informed';
 
 // Import common components
 import { Loading, MemberCard, RequirementWrapper } from '../../../common';
@@ -25,6 +25,7 @@ class Idols extends Component {
       privacy: '',
       sort: 'name',
       order: 'asc',
+      showIds: false,
     };
   }
 
@@ -44,6 +45,7 @@ class Idols extends Component {
       privacy: formState.values.privacy,
       sort: formState.values.sort || 'name',
       order: formState.values.order || 'asc',
+      showIds: formState.values.showIds || false,
     });
   }
 
@@ -231,6 +233,12 @@ class Idols extends Component {
                     <Option value="public">Public</Option>
                   </Select>
                 </div>
+                {isAdmin ? (
+                  <div className="idols__filter-select-group">
+                    <label className="idols__filter-label">Show Ids</label>
+                    <Checkbox field="showIds" initialValue={isAdmin} />
+                  </div>
+                ) : null}
               </div>
             </div>
             <div className="idols__filters-group">
@@ -272,7 +280,7 @@ class Idols extends Component {
               <MemberCard
                 key={member.id}
                 member={member}
-                showId={isAdmin}
+                showId={this.state.showIds}
                 showReferenceArtist
                 favoriteState={
                   user.favoriteMembers && user.favoriteMembers[member.id]

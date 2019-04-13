@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { toastr } from 'react-redux-toastr';
 
 import constants from '../../utils/constants';
 
@@ -244,15 +245,30 @@ const saveManage = formState => async (dispatch, getState) => {
   const membersState = formState.values.members;
 
   // Check formState
-  if (Object.keys(formState.errors).length) return;
+  if (Object.keys(formState.errors).length) {
+    toastr.warning('The form has errors', formState.errors.toString());
+    return;
+  }
 
   // Check artist required fields
-  if (!artistState || !artistState.name || !artistState.genre) return;
+  if (!artistState || !artistState.name || !artistState.genre) {
+    toastr.warning('Artist is incomplete', 'Missing name and/or genre');
+    return;
+  }
 
   // Check unit required fields
-  if (!unitState || !unitState.name || !unitState.debutYear) return;
+  if (!unitState || !unitState.name || !unitState.debutYear) {
+    toastr.warning('Unit is incomplete', 'Missing name and/or debut year');
+    return;
+  }
 
-  if (!membersState || membersState.length < 2) return;
+  if (!membersState || membersState.length < 2) {
+    toastr.warning(
+      'Minimum of 2 members are required',
+      `You have ${membersState.length} members so far`
+    );
+    return;
+  }
 
   // Check members required fields
   let missingField = false;
@@ -271,7 +287,14 @@ const saveManage = formState => async (dispatch, getState) => {
     );
     if (!hasPositions) missingField = true;
   });
-  if (missingField) return;
+  if (missingField) {
+    toastr.warning(
+      'A members has missing fields',
+      'Check the console for details'
+    );
+    console.log(membersState); // eslint-disable-line
+    return;
+  }
 
   // Prepare Artist
   const editingArtistState = getState().admin.editingArtist;
