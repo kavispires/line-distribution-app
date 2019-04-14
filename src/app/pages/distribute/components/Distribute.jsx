@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Import page components
@@ -51,20 +51,6 @@ class Distribute extends Component {
     };
 
     const members = getMembers();
-
-    console.log({
-      activateMemberPill,
-      activeMemberPill,
-      activeSong,
-      activeUnit,
-      distributionLines,
-      handleDistributionCategory,
-      handleSaveDistribution,
-      linkMemberToPart,
-      members,
-      rates,
-      remainder,
-    });
 
     return (
       <RequirementWrapper requirements={['activeUnit', 'activeSong']}>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import page components
 import DistributeConnect from './DistributeConnect';
 // Import shared components
-import { ActiveSong, ActiveUnit } from '../../../common';
+import { ActiveSong, ActiveUnit, ActiveVideoWidget } from '../../../common';
 
 const DistributeEdit = ({
   activateMemberPill,
@@ -23,6 +23,7 @@ const DistributeEdit = ({
     <section className="active-widget__group">
       <ActiveUnit activeUnit={activeUnit} showMembers />
       <ActiveSong activeSong={activeSong} />
+      <ActiveVideoWidget videoId={activeSong.videoId} />
     </section>
 
     <div className="distribute__content-container">

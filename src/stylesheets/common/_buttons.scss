@@ -40,6 +40,12 @@
   }
 }
 
+.btn-invisbible {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .btn-simple {
   margin: $unit-p2;
   color: $color-primary;

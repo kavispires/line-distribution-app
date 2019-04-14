@@ -110,6 +110,12 @@ p {
   background: rgba(255, 255, 255, 0.5);
 }
 
+.btn-invisbible {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .btn-simple {
   margin: 6px;
   color: #111111;
@@ -815,8 +821,18 @@ input:checked + .slider:before {
   display: inline-block;
   width: 50%;
 }
+.active-widget:last-child {
+  margin-right: 0;
+}
 .active-widget--quarter {
   width: 25%;
+}
+.active-widget--video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #d14949;
+  padding: 0;
 }
 .active-widget__group {
   display: flex;

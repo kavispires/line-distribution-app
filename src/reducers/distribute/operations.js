@@ -9,7 +9,7 @@ const activateSong = id => (dispatch, getState) => {
   const activeSong = _.find(getState().db.songs, { id });
 
   // Determine if it's a view or edit
-  const { songsDict } = getState().distribute.activeUnit;
+  const { songsDict } = getState().distribute.activeUnit || {};
   const distributeView = songsDict[activeSong.id] ? 'view' : 'edit';
   dispatch(actions.setDistributeView(distributeView));
 

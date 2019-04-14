@@ -1,5 +1,6 @@
 import ActiveSong from './containers/ActiveSongWidgetContainer';
 import ActiveUnit from './containers/ActiveUnitWidgetContainer';
+import ActiveVideoWidget from './components/ActiveVideoWidget';
 import Collapsible from './components/Collapsible';
 import ErrorModal from './containers/ErrorModalContainer';
 import FavoriteIcon from './components/FavoriteIcon';
@@ -19,6 +20,7 @@ import Typeahead from './components/Typeahead';
 export {
   ActiveSong,
   ActiveUnit,
+  ActiveVideoWidget,
   Collapsible,
   ErrorModal,
   FavoriteIcon,

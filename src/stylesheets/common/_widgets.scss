@@ -71,8 +71,20 @@ input:checked + .slider:before {
   display: inline-block;
   width: 50%;
 
+  &:last-child {
+    margin-right: 0;
+  }
+
   &--quarter {
     width: 25%;
+  }
+
+  &--video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $color-red;
+    padding: 0;
   }
 
   &__group {
