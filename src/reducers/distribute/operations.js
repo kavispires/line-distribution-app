@@ -7,6 +7,12 @@ const activateSong = id => (dispatch, getState) => {
   dispatch(actions.resetDistributeSong({}));
 
   const activeSong = _.find(getState().db.songs, { id });
+
+  // Determine if it's a view or edit
+  const { songsDict } = getState().distribute.activeUnit;
+  const distributeView = songsDict[activeSong.id] ? 'view' : 'edit';
+  dispatch(actions.setDistributeView(distributeView));
+
   dispatch(actions.setActiveSong(activeSong));
 };
 
@@ -74,7 +80,7 @@ const prepareSong = () => (dispatch, getState) => {
       return parsedLine;
     });
 
-    dispatch(actions.setDistibutionLines(distributionLines));
+    dispatch(actions.setDistributionLines(distributionLines));
   }
 };
 
@@ -125,7 +131,7 @@ const linkMemberToPart = id => (dispatch, getState) => {
     }
     if (found) break;
   }
-  dispatch(actions.setDistibutionLines(distributionLines));
+  dispatch(actions.setDistributionLines(distributionLines));
   dispatch(calculateRates(distributionLines));
 };
 
@@ -227,10 +233,17 @@ const handleSaveDistribution = () => async (dispatch, getState) => {
   await dispatch({ type: 'SEND_DISTRIBUTION', body });
 };
 
+const handleDistributeView = label => (dispatch, getState) => {
+  if (label !== getState().distribute.distributeView) {
+    dispatch(actions.setDistributeView(label));
+  }
+};
+
 export default {
   activateMemberPill,
   activateSong,
   activateUnit,
+  handleDistributeView,
   handleDistributionCategory,
   handleSaveDistribution,
   linkMemberToPart,

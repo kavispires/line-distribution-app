@@ -10,9 +10,11 @@ const setActiveSong = payload => dispatch =>
   dispatch({ type: types.SET_ACTIVE_SONG, payload });
 const setActiveUnit = payload => dispatch =>
   dispatch({ type: types.SET_ACTIVE_UNIT, payload });
+const setDistributeView = payload => dispatch =>
+  dispatch({ type: types.SET_DISTRIBUTE_VIEW, payload });
 const setDistributionCategory = payload => dispatch =>
   dispatch({ type: types.SET_DISTRIBUTION_CATEGORY, payload });
-const setDistibutionLines = payload => dispatch =>
+const setDistributionLines = payload => dispatch =>
   dispatch({ type: types.SET_DISTRIBUTION_LINES, payload });
 const setDistributionRemainder = payload => dispatch =>
   dispatch({ type: types.SET_DISTRIBUTION_REMAINDER, payload });
@@ -25,8 +27,9 @@ export default {
   setActiveMemberPill,
   setActiveSong,
   setActiveUnit,
+  setDistributeView,
   setDistributionCategory,
-  setDistibutionLines,
+  setDistributionLines,
   setDistributionRemainder,
   setRates,
 };

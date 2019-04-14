@@ -1,6 +1,18 @@
 .distribute {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &__content-container {
     margin-top: $unit;
+  }
+
+  &__save-section {
+    margin-top: $unit;
+    border: 1px solid $color-gray-1;
+    padding: $unit-p2;
   }
 
   &__section {
@@ -14,16 +26,21 @@
     margin-right: $unit-p4;
     border: 1px solid $color-gray-1;
     padding: $unit-p2;
+    flex: 1;
   }
 
   &__section-right {
     width: 50%;
     margin-left: $unit-p4;
+    flex: 1;
+    display: flex;
   }
 
   &__content {
     &--lyrics {
-      max-height: 700px;
+      width: 100%;
+      max-height: 500px;
+      height: 100%;
       overflow: auto;
       padding: $unit-p2;
       border: 1px solid $color-gray-1;
@@ -114,6 +131,10 @@
       z-index: 9;
       border-radius: $unit-p4;
     }
+  }
+
+  &__distribution-category select {
+    display: block;
   }
 }
 

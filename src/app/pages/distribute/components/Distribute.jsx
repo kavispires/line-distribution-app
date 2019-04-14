@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+// Import page components
+import DistributeEdit from './DistributeEdit';
+
 // Import common components
-import {
-  ActiveSong,
-  ActiveUnit,
-  Collapsible,
-  ModeWidget,
-  RequirementWrapper,
-} from '../../../common';
-import DistributeConnect from './DistributeConnect';
+import { ModeWidget, RequirementWrapper } from '../../../common';
+import DistributeView from './DistributeView';
 
 class Distribute extends Component {
   componentDidMount() {
@@ -22,11 +19,13 @@ class Distribute extends Component {
         activeMemberPill,
         activeSong,
         activeUnit,
+        distributeView,
         distributionLines,
         rates,
         remainder,
       },
       activateMemberPill,
+      handleDistributeView,
       handleDistributionCategory,
       handleSaveDistribution,
       linkMemberToPart,
@@ -53,59 +52,49 @@ class Distribute extends Component {
 
     const members = getMembers();
 
+    console.log({
+      activateMemberPill,
+      activeMemberPill,
+      activeSong,
+      activeUnit,
+      distributionLines,
+      handleDistributionCategory,
+      handleSaveDistribution,
+      linkMemberToPart,
+      members,
+      rates,
+      remainder,
+    });
+
     return (
       <RequirementWrapper requirements={['activeUnit', 'activeSong']}>
         <main className="container container--distribute">
           <div className="distribute__header">
             <h1>Distribute</h1>
-            <ModeWidget />
+            <ModeWidget
+              labels={['view', 'edit']}
+              active={distributeView}
+              action={handleDistributeView}
+            />
           </div>
 
-          <section className="active-widget__group">
-            <ActiveUnit activeUnit={activeUnit} showMembers />
-            <ActiveSong activeSong={activeSong} />
-          </section>
-
-          <div className="distribute__container">
-            <Collapsible title="1. Connect Lines" expanded>
-              <DistributeConnect
-                distributionLines={distributionLines}
-                members={members}
-                activateMemberPill={activateMemberPill}
-                activeMemberPill={activeMemberPill}
-                linkMemberToPart={linkMemberToPart}
-                rates={rates}
-                remainder={remainder}
-              />
-            </Collapsible>
-            <Collapsible title="2. Play" locked>
-              Play distribution with youtube video
-            </Collapsible>
-            <Collapsible title="3. Results" locked>
-              Results Visualization
-            </Collapsible>
-            <Collapsible title="4. Save" expanded>
-              <p>
-                <label className="distribute__distribution-category">
-                  Category*
-                  <select onChange={handleDistributionCategory}>
-                    <option value="OFFICIAL">Official</option>
-                    <option value="WOULD">How they would sing</option>
-                    <option value="SHOULD">How they should sing</option>
-                  </select>
-                </label>
-              </p>
-              <p>
-                <button
-                  className="btn"
-                  onClick={handleSaveDistribution}
-                  disabled={remainder}
-                >
-                  Save
-                </button>
-              </p>
-            </Collapsible>
-          </div>
+          {distributeView === 'view' ? (
+            <DistributeView />
+          ) : (
+            <DistributeEdit
+              activateMemberPill={activateMemberPill}
+              activeMemberPill={activeMemberPill}
+              activeSong={activeSong}
+              activeUnit={activeUnit}
+              distributionLines={distributionLines}
+              handleDistributionCategory={handleDistributionCategory}
+              handleSaveDistribution={handleSaveDistribution}
+              linkMemberToPart={linkMemberToPart}
+              members={members}
+              rates={rates}
+              remainder={remainder}
+            />
+          )}
         </main>
       </RequirementWrapper>
     );
@@ -115,6 +104,7 @@ class Distribute extends Component {
 Distribute.propTypes = {
   activateMemberPill: PropTypes.func.isRequired,
   distribute: PropTypes.object.isRequired,
+  handleDistributeView: PropTypes.func.isRequired,
   handleDistributionCategory: PropTypes.func.isRequired,
   handleSaveDistribution: PropTypes.func.isRequired,
   linkMemberToPart: PropTypes.func.isRequired,
