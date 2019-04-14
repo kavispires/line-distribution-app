@@ -6,6 +6,7 @@ import {
   ActiveSong,
   ActiveUnit,
   Collapsible,
+  ModeWidget,
   RequirementWrapper,
 } from '../../../common';
 import DistributeConnect from './DistributeConnect';
@@ -55,7 +56,10 @@ class Distribute extends Component {
     return (
       <RequirementWrapper requirements={['activeUnit', 'activeSong']}>
         <main className="container container--distribute">
-          <h1>Distribute</h1>
+          <div className="distribute__header">
+            <h1>Distribute</h1>
+            <ModeWidget />
+          </div>
 
           <section className="active-widget__group">
             <ActiveUnit activeUnit={activeUnit} showMembers />

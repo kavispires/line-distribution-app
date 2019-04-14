@@ -8,6 +8,7 @@ import Loading from './components/Loading';
 import LoadingIcon from './components/LoadingIcon';
 import LoadingWrapper from './components/LoadingWrapper';
 import MemberCard from './components/MemberCard';
+import ModeWidget from './components/ModeWidget';
 import PositionIcon from './components/PositionIcon';
 import RequirementWrapper from './containers/RequirementWrapperContainer';
 import Select from './components/Select';
@@ -26,6 +27,7 @@ export {
   LoadingIcon,
   LoadingWrapper,
   MemberCard,
+  ModeWidget,
   PositionIcon,
   RequirementWrapper,
   Select,

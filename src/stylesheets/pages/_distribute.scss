@@ -1,5 +1,5 @@
 .distribute {
-  &__container {
+  &__content-container {
     margin-top: $unit;
   }
 
@@ -44,6 +44,7 @@
     white-space: nowrap;
     width: 25%;
     box-shadow: 1px 1px 5px $color-gray-2;
+    overflow: hidden;
 
     &:hover {
       border: 2px solid $color-primary;
@@ -58,6 +59,14 @@
   &__pill-group {
     width: 100%;
     display: flex;
+
+    .distribute__rates--half & {
+      width: 49%;
+
+      &:nth-child(even) {
+        margin-left: 2%;
+      }
+    }
   }
 
   &__rates {
@@ -68,6 +77,11 @@
     list-style: none;
     width: 100%;
     flex-direction: column;
+
+    &--half {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
 
     &__percentage {
       margin-right: 0;

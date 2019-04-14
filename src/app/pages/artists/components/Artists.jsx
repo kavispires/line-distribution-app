@@ -9,6 +9,7 @@ import {
   Switch,
   RequirementWrapper,
   ActiveSong,
+  ModeWidget,
 } from '../../../common';
 import ArtistsTable from './ArtistsTable';
 
