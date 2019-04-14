@@ -827,15 +827,18 @@ input:checked + .slider:before {
 .active-widget--quarter {
   width: 25%;
 }
-.active-widget--video {
+.active-widget__group {
+  display: flex;
+}
+.active-widget__video {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #d14949;
+  background: #111111;
   padding: 0;
 }
-.active-widget__group {
-  display: flex;
+.active-widget__video--placeholder {
+  background: #d14949;
 }
 .active-widget.inline {
   display: block;

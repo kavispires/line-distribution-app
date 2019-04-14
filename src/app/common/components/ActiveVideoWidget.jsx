@@ -1,53 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import YouTube from 'react-youtube';
 
-// Import shared components
+// Import common components
 import { Icon } from '../../common';
-
-let loadYT;
-let player;
-let animationInterval;
-let videoIdCache;
 
 class ActiveVideoWidget extends Component {
   constructor(props) {
     super(props);
     this.state = {
       height: 0,
-      currentTime: 0,
-      loaded: false,
     };
 
-    this.loadYoutubeVideo = this.loadYoutubeVideo.bind(this);
-    this.onPlayerStateChange = this.onPlayerStateChange.bind(this);
     this.setDimentions = this.setDimentions.bind(this);
-    this.resetYT = this.resetYT.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.props.videoId !== videoIdCache) {
-      this.resetYT();
-    }
   }
 
   componentDidUpdate() {
     // Determine player height
     if (!this.state.height && document.getElementById('video-container')) {
       this.setDimentions();
-    }
-  }
-
-  onPlayerStateChange(e) {
-    // If video is playing
-    if (e.data === 1) {
-      // Lyric Review Animation Interval
-      animationInterval = setInterval(() => {
-        const currentTime = Math.round(player.getCurrentTime());
-        this.setState(() => ({ currentTime }));
-      }, 500);
-    } else {
-      // Kill interval
-      clearInterval(animationInterval);
     }
   }
 
@@ -63,53 +34,26 @@ class ActiveVideoWidget extends Component {
     this.setState(() => ({ width, height }));
   }
 
-  resetYT() {
-    loadYT = null;
-    player = null;
-    clearInterval(animationInterval);
-    this.setState(() => ({ loaded: false }));
-  }
-
-  loadYoutubeVideo() {
-    videoIdCache = this.props.videoId;
-    if (!loadYT && this.props.videoId) {
-      loadYT = new Promise(resolve => {
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        window.onYouTubeIframeAPIReady = () => resolve(window.YT);
-      });
-
-      loadYT.then(YT => {
-        player = new YT.Player(this.youtubePlayerAnchor, {
-          height: this.state.height || 390,
-          width: this.state.width || 640,
-          videoId: this.props.videoId,
-          events: {
-            onStateChange: e => this.onPlayerStateChange(e),
-          },
-        });
-        this.setState(() => ({ loaded: true }));
-      });
-    }
-  }
-
   render() {
+    const opts = {
+      height: this.state.height,
+      width: this.state.width,
+    };
+
+    const hasVideoClass = this.props.videoId
+      ? ''
+      : 'active-widget__video--placeholder';
+
     return (
       <section
-        className="active-widget active-widget--quarter active-widget--video"
+        className={`active-widget active-widget--quarter active-widget__video ${hasVideoClass}`}
         id="video-container"
-        ref={r => {
-          this.youtubePlayerAnchor = r;
-        }}
       >
-        <button
-          className="btn-invisbible"
-          onClick={() => this.loadYoutubeVideo()}
-        >
+        {this.props.videoId ? (
+          <YouTube videoId={this.props.videoId} opts={opts} />
+        ) : (
           <Icon type="youtube" color="white" size="72" />
-        </button>
+        )}
       </section>
     );
   }

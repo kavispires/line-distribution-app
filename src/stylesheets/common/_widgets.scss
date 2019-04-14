@@ -79,16 +79,20 @@ input:checked + .slider:before {
     width: 25%;
   }
 
-  &--video {
+  &__group {
+    display: flex;
+  }
+
+  &__video {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $color-red;
+    background: $color-primary;
     padding: 0;
   }
 
-  &__group {
-    display: flex;
+  &__video--placeholder {
+    background: $color-red;
   }
 
   &.inline {
