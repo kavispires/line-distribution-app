@@ -313,6 +313,13 @@ class API {
           result = await getFunctions.fetchColors();
         }
         break;
+      // API/colors
+      case 'distributions':
+        // API/distributions/<id>
+        if (route.referenceId) {
+          result = await getFunctions.fetchDistribution(route.referenceId);
+        }
+        break;
       case 'members':
         // API/members/<id>
         if (route.referenceId) {

@@ -13,16 +13,27 @@ class Distribute extends Component {
     this.props.prepareSong();
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.distribute.activeDistribution !==
+      this.props.distribute.activeDistribution
+    ) {
+      this.props.mergeActiveDistribution();
+    }
+  }
+
   render() {
     const {
       distribute: {
         activeMemberPill,
+        activeDistribution,
         activeSong,
         activeUnit,
         distributeView,
         distributionLines,
         rates,
         remainder,
+        timestampsDict,
       },
       activateMemberPill,
       handleDistributeView,
@@ -65,9 +76,17 @@ class Distribute extends Component {
           </div>
 
           {distributeView === 'view' ? (
-            <DistributeView />
+            <DistributeView
+              activeSong={activeSong}
+              activeUnit={activeUnit}
+              members={members}
+              distributionLines={distributionLines}
+              timestampsDict={timestampsDict}
+              rates={activeDistribution.rates}
+            />
           ) : (
             <DistributeEdit
+              activeDistribution={activeDistribution}
               activateMemberPill={activateMemberPill}
               activeMemberPill={activeMemberPill}
               activeSong={activeSong}
@@ -88,15 +107,19 @@ class Distribute extends Component {
 }
 
 Distribute.propTypes = {
+  activeDistribution: PropTypes.object,
   activateMemberPill: PropTypes.func.isRequired,
   distribute: PropTypes.object.isRequired,
   handleDistributeView: PropTypes.func.isRequired,
   handleDistributionCategory: PropTypes.func.isRequired,
   handleSaveDistribution: PropTypes.func.isRequired,
   linkMemberToPart: PropTypes.func.isRequired,
+  mergeActiveDistribution: PropTypes.func.isRequired,
   prepareSong: PropTypes.func.isRequired,
 };
 
-Distribute.defaultProps = {};
+Distribute.defaultProps = {
+  activeDistribution: {},
+};
 
 export default Distribute;

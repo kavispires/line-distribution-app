@@ -201,6 +201,39 @@ function* requestColors(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+function* requestDistribution(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const { distributionId } = action;
+
+  let selectedDistribution = {};
+
+  // Fetch Distribution
+  try {
+    const response = yield API.get(`/distributions/${distributionId}`);
+    selectedDistribution = utils.parseResponse(response);
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load distribution ${distributionId} from database`,
+        error.toString(),
+      ],
+      actionType: action.type,
+    });
+  }
+
+  yield put({
+    type: types.SET_ACTIVE_DISTRIBUTION,
+    payload: selectedDistribution,
+  });
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+
+  return selectedDistribution;
+}
+
 function* requestMembers(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -313,7 +346,7 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   unit.distributions = distributions || [];
 
   unit.songsDict = distributions.reduce((dict, distribution) => {
-    dict[distribution.songId] = true;
+    dict[distribution.songId] = distribution.id;
     return dict;
   }, {});
 
@@ -452,16 +485,34 @@ function* sendDistribution(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  // Save song
   let receivedSong;
-  try {
-    receivedSong = yield API.post('/distributions', action.body);
-  } catch (error) {
-    yield put({
-      type: 'ERROR_TOAST',
-      message: `Failed writing distribution: ${error.toString()}`,
-      actionType: action.type,
-    });
+  if (action.body.distributionId) {
+    // Update song
+    try {
+      receivedSong = yield API.pyt(
+        `/distributions/${action.body.distributionId}`,
+        action.body
+      );
+    } catch (error) {
+      yield put({
+        type: 'ERROR_TOAST',
+        message: `Failed updating distribution ${
+          action.body.distributionId
+        }: ${error.toString()}`,
+        actionType: action.type,
+      });
+    }
+  } else {
+    // Save song
+    try {
+      receivedSong = yield API.post('/distributions', action.body);
+    } catch (error) {
+      yield put({
+        type: 'ERROR_TOAST',
+        message: `Failed writing distribution: ${error.toString()}`,
+        actionType: action.type,
+      });
+    }
   }
 
   yield delay(DELAY_DURATION);
@@ -697,6 +748,7 @@ function* apiSaga() {
   yield takeLatest('REQUEST_ARTISTS', requestArtists);
   yield takeLatest('REQUEST_ARTIST', requestArtist);
   yield takeLatest('REQUEST_COLORS', requestColors);
+  yield takeLatest('REQUEST_DISTRIBUTION', requestDistribution);
   yield takeLatest('REQUEST_MEMBERS', requestMembers);
   yield takeLatest('REQUEST_SONGS', requestSongs);
   yield takeLatest('REQUEST_UNIT', requestUnit);

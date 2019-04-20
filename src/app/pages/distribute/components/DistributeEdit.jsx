@@ -7,6 +7,7 @@ import DistributeConnect from './DistributeConnect';
 import { ActiveSong, ActiveUnit, ActiveVideoWidget } from '../../../common';
 
 const DistributeEdit = ({
+  activeDistribution,
   activateMemberPill,
   activeMemberPill,
   activeSong,
@@ -44,9 +45,24 @@ const DistributeEdit = ({
               <option value="" disabled>
                 Select a type...
               </option>
-              <option value="OFFICIAL">Official</option>
-              <option value="WOULD">How they would sing</option>
-              <option value="SHOULD">How they should sing</option>
+              <option
+                value="OFFICIAL"
+                selected={activeDistribution.category === 'OFFICIAL'}
+              >
+                Official
+              </option>
+              <option
+                value="WOULD"
+                selected={activeDistribution.category === 'WOULD'}
+              >
+                How they would sing
+              </option>
+              <option
+                value="SHOULD"
+                selected={activeDistribution.category === 'SHOULD'}
+              >
+                How they should sing
+              </option>
             </select>
           </label>
         </p>
@@ -56,7 +72,7 @@ const DistributeEdit = ({
             onClick={handleSaveDistribution}
             disabled={remainder}
           >
-            Save
+            {activeDistribution.id ? 'Update' : 'Save'}
           </button>
         </p>
       </div>
@@ -65,6 +81,7 @@ const DistributeEdit = ({
 );
 
 DistributeEdit.propTypes = {
+  activeDistribution: PropTypes.object,
   activateMemberPill: PropTypes.func.isRequired,
   activeMemberPill: PropTypes.string,
   activeSong: PropTypes.object,
@@ -79,6 +96,7 @@ DistributeEdit.propTypes = {
 };
 
 DistributeEdit.defaultProps = {
+  activeDistribution: {},
   activeMemberPill: '',
   activeSong: {},
   activeUnit: {},

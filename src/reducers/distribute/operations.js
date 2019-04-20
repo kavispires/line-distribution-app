@@ -7,13 +7,20 @@ const activateSong = id => (dispatch, getState) => {
   dispatch(actions.resetDistributeSong({}));
 
   const activeSong = _.find(getState().db.songs, { id });
+  dispatch(actions.setActiveSong(activeSong));
 
   // Determine if it's a view or edit
   const { songsDict } = getState().distribute.activeUnit || {};
   const distributeView = songsDict[activeSong.id] ? 'view' : 'edit';
   dispatch(actions.setDistributeView(distributeView));
 
-  dispatch(actions.setActiveSong(activeSong));
+  // If distribution has been previously done, make connections
+  if (distributeView === 'view') {
+    dispatch({
+      type: 'REQUEST_DISTRIBUTION',
+      distributionId: songsDict[activeSong.id],
+    });
+  }
 };
 
 const activateUnit = () => (dispatch, getState) => {
@@ -216,6 +223,7 @@ const handleSaveDistribution = () => async (dispatch, getState) => {
     relationships: '',
     features: [],
     unitId: getState().distribute.activeUnit.id,
+    distributionId: getState().distribute.activeDistribution.id || null,
   };
 
   // Build relationships
@@ -236,7 +244,78 @@ const handleSaveDistribution = () => async (dispatch, getState) => {
 const handleDistributeView = label => (dispatch, getState) => {
   if (label !== getState().distribute.distributeView) {
     dispatch(actions.setDistributeView(label));
+
+    if (label === 'view') {
+      // parse timestamps
+      dispatch(parseTimestamps());
+    }
   }
+};
+
+const mergeActiveDistribution = () => (dispatch, getState) => {
+  const distributionRelationships = getState().distribute.activeDistribution
+    .relationships;
+  const distributionLines = _.cloneDeep(
+    getState().distribute.distributionLines
+  );
+
+  distributionLines.forEach(distributionLine => {
+    distributionLine.forEach(distributionPart => {
+      distributionPart.memberId = [
+        ...distributionRelationships[distributionPart.id],
+      ];
+    });
+  });
+
+  dispatch(actions.setDistributionLines(distributionLines));
+
+  dispatch(calculateRates(distributionLines));
+
+  dispatch(parseTimestamps(distributionLines));
+};
+
+const parseTimestamps = dLines => (dispatch, getState) => {
+  const distributionLines = dLines || getState().distribute.distributionLines;
+
+  const membersDict = {};
+  const timestampDict = {};
+
+  distributionLines.forEach(distributionLine => {
+    distributionLine.forEach(distributionPart => {
+      const startTime = Math.floor(distributionPart.startTime);
+      const endTime = Math.ceil(distributionPart.endTime);
+
+      // Define start objects if they don't exist
+      if (timestampDict[startTime] === undefined) {
+        timestampDict[startTime] = { start: {} };
+      } else if (timestampDict[startTime].start === undefined) {
+        timestampDict[startTime].start = {};
+      }
+
+      // Add members to start
+      distributionPart.memberId.forEach(memberId => {
+        timestampDict[startTime].start[memberId] = true;
+      });
+
+      // Define stop objects if they don't exist
+      if (timestampDict[endTime] === undefined) {
+        timestampDict[endTime] = { stop: {} };
+      } else if (timestampDict[endTime].stop === undefined) {
+        timestampDict[endTime].stop = {};
+      }
+
+      // Add members to stop
+      distributionPart.memberId.forEach(memberId => {
+        if (membersDict[memberId] === undefined) {
+          membersDict[memberId] = 0;
+        }
+        membersDict[memberId] += distributionPart.duration;
+        timestampDict[endTime].stop[memberId] = membersDict[memberId];
+      });
+    });
+  });
+
+  dispatch(actions.setTimestampsDict(timestampDict));
 };
 
 export default {
@@ -247,5 +326,6 @@ export default {
   handleDistributionCategory,
   handleSaveDistribution,
   linkMemberToPart,
+  mergeActiveDistribution,
   prepareSong,
 };

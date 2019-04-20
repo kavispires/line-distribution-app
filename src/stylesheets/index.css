@@ -1277,6 +1277,91 @@ input:checked + .slider:before {
   display: block;
 }
 
+.distribute-view__video {
+  margin-top: 12px;
+  background: #111111;
+  display: flex;
+  justify-content: center;
+  min-height: 500px;
+  position: relative;
+}
+
+.distribute-view__video-float {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: black;
+  background: linear-gradient(
+    0deg,
+    black 0%,
+    rgba(0, 0, 0, 0.8) 90%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.distribute-view__video-float__inner {
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 24px;
+}
+.distribute-view__video-float__inner__member {
+  width: 100%;
+  padding: 6px;
+}
+
+.distribute-progress-bar {
+  width: 100%;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+}
+.distribute-progress-bar__name {
+  display: inline-block;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 80px;
+  text-align: right;
+  margin-right: 24px;
+}
+.distribute-progress-bar__progress {
+  display: inline-block;
+  width: 70%;
+  background: #484849;
+  border-radius: 12px;
+  height: 10px;
+  position: relative;
+}
+.distribute-progress-bar__bar {
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 12px;
+}
+.distribute-progress-bar__active-icon--on {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  margin: 0 12px;
+}
+.distribute-progress-bar__active-icon--off {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #484849;
+  border-radius: 50%;
+  margin: 0 12px;
+}
+.distribute-progress-bar__duration {
+  color: #ffffff;
+}
+
 .distribution__lyrics__line {
   margin: 3px 0;
 }
