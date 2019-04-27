@@ -30,7 +30,11 @@ const DistributeConnect = ({
         <p>
           Click on the member pill then in a lyric connection icon on the right.
         </p>
-        <ul className="distribute__rates">
+        <ul
+          className={`distribute__rates ${
+            Object.values(members).length > 10 ? 'distribute__rates--half' : ''
+          }`}
+        >
           {Object.values(members).map(member => {
             const colorNumber = utils.getColorNumber(member.colorId);
             const activeClass = activeMemberPill === member.id ? 'active' : '';

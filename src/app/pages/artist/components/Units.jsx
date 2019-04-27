@@ -62,7 +62,7 @@ class Units extends Component {
 
     const hasLegacyDistributions =
       selectedUnit.distributions_legacy &&
-      selectedUnit.distributions_legacy.length;
+      selectedUnit.distributions_legacy.length > 0;
 
     return (
       <section className="artist__section">
@@ -96,12 +96,12 @@ class Units extends Component {
                         <b>Custom Distributions:</b>{' '}
                         {selectedUnit.distributions.length || 0}
                       </p>
-                      {hasLegacyDistributions ? (
+                      {hasLegacyDistributions && (
                         <p>
                           <b>Legacy Distributions:</b>{' '}
                           {selectedUnit.distributions_legacy.length || 0}
                         </p>
-                      ) : null}
+                      )}
                       <div className="unit-section__actions">
                         <button
                           className="btn"
@@ -169,13 +169,13 @@ class Units extends Component {
                 />
               </LoadingWrapper>
 
-              {hasLegacyDistributions ? (
+              {hasLegacyDistributions && (
                 <Fragment>
                   <hr />
                   <h2>Legacy Distributions</h2>{' '}
                   <p>List of Legacy Distributions</p>
                 </Fragment>
-              ) : null}
+              )}
             </div>
           ) : (
             <p>The selected Artist has no units.</p>

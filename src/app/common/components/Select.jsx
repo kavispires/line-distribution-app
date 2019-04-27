@@ -38,11 +38,11 @@ const Select = ({
       {label ? <label className="ld-select__label">{label}</label> : null}
       <div className={`ld-select${classNameModifier}`}>
         <select onChange={action}>
-          {placeholder ? (
+          {placeholder && (
             <option value="" disabled={disablePlaceholder}>
               {placeholder}
             </option>
-          ) : null}
+          )}
           {options.map(option => {
             const key = `select-${selectKey++}`;
             return (

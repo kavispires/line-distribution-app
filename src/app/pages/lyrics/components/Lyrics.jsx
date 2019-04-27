@@ -56,9 +56,8 @@ class Lyrics extends Component {
                   key={member.id}
                 >
                   {member.name.toUpperCase()}{' '}
-                  {this.state.lyrics.uses[member.name.toUpperCase()]
-                    ? `(${this.state.lyrics.uses[member.name.toUpperCase()]})`
-                    : null}
+                  {this.state.lyrics.uses[member.name.toUpperCase()] &&
+                    `(${this.state.lyrics.uses[member.name.toUpperCase()]})`}
                 </li>
               ))}
             </ul>

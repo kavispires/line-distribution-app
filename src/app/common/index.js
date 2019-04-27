@@ -1,5 +1,6 @@
 import ActiveSong from './containers/ActiveSongWidgetContainer';
 import ActiveUnit from './containers/ActiveUnitWidgetContainer';
+import ActiveVideoWidget from './components/ActiveVideoWidget';
 import Collapsible from './components/Collapsible';
 import ErrorModal from './containers/ErrorModalContainer';
 import FavoriteIcon from './components/FavoriteIcon';
@@ -8,6 +9,7 @@ import Loading from './components/Loading';
 import LoadingIcon from './components/LoadingIcon';
 import LoadingWrapper from './components/LoadingWrapper';
 import MemberCard from './components/MemberCard';
+import ModeWidget from './components/ModeWidget';
 import PositionIcon from './components/PositionIcon';
 import RequirementWrapper from './containers/RequirementWrapperContainer';
 import Select from './components/Select';
@@ -18,6 +20,7 @@ import Typeahead from './components/Typeahead';
 export {
   ActiveSong,
   ActiveUnit,
+  ActiveVideoWidget,
   Collapsible,
   ErrorModal,
   FavoriteIcon,
@@ -26,6 +29,7 @@ export {
   LoadingIcon,
   LoadingWrapper,
   MemberCard,
+  ModeWidget,
   PositionIcon,
   RequirementWrapper,
   Select,

@@ -53,20 +53,20 @@ const ManageUnit = ({
             alt="Add Unit"
           />
         </button>
-        {unitsTypeahead.length ? (
+        {unitsTypeahead.length && (
           <Typeahead
             action={e => validateTypeahead(e)}
             name="units"
             placeholder="Search existing unit..."
             suggestions={unitsTypeahead}
           />
-        ) : null}
-        {isValid ? (
+        )}
+        {isValid && (
           <p className="manage-form__valid">
             <Icon type="check" color="green" inline />
             Selected Unit is valid. Click on the plus button to add it.
           </p>
-        ) : null}
+        )}
       </section>
     );
   }

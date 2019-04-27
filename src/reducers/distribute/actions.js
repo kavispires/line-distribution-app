@@ -4,29 +4,38 @@ const resetDistribute = payload => dispatch =>
   dispatch({ type: types.RESET_DISTRIBUTE, payload });
 const resetDistributeSong = payload => dispatch =>
   dispatch({ type: types.RESET_DISTRIBUTE_SONG, payload });
+const setActiveDistribution = payload => dispatch =>
+  dispatch({ type: types.SET_ACTIVE_DISTRIBUTION, payload });
 const setActiveMemberPill = payload => dispatch =>
   dispatch({ type: types.SET_ACTIVE_MEMBER_PILL, payload });
 const setActiveSong = payload => dispatch =>
   dispatch({ type: types.SET_ACTIVE_SONG, payload });
 const setActiveUnit = payload => dispatch =>
   dispatch({ type: types.SET_ACTIVE_UNIT, payload });
+const setDistributeView = payload => dispatch =>
+  dispatch({ type: types.SET_DISTRIBUTE_VIEW, payload });
 const setDistributionCategory = payload => dispatch =>
   dispatch({ type: types.SET_DISTRIBUTION_CATEGORY, payload });
-const setDistibutionLines = payload => dispatch =>
+const setDistributionLines = payload => dispatch =>
   dispatch({ type: types.SET_DISTRIBUTION_LINES, payload });
 const setDistributionRemainder = payload => dispatch =>
   dispatch({ type: types.SET_DISTRIBUTION_REMAINDER, payload });
 const setRates = payload => dispatch =>
   dispatch({ type: types.SET_RATES, payload });
+const setTimestampsDict = payload => dispatch =>
+  dispatch({ type: types.SET_TIMESTAMPS_DICT, payload });
 
 export default {
   resetDistribute,
   resetDistributeSong,
+  setActiveDistribution,
   setActiveMemberPill,
   setActiveSong,
   setActiveUnit,
+  setDistributeView,
   setDistributionCategory,
-  setDistibutionLines,
+  setDistributionLines,
   setDistributionRemainder,
   setRates,
+  setTimestampsDict,
 };

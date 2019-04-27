@@ -62,12 +62,12 @@ const ManageArtist = ({
           placeholder="Search existing artist..."
           suggestions={artistsTypeahead}
         />
-        {isValid ? (
+        {isValid && (
           <p className="manage-form__valid">
             <Icon type="check" color="green" inline />
             Selected Artist is valid. Click on the plus button to add it.
           </p>
-        ) : null}
+        )}
       </section>
     );
   }

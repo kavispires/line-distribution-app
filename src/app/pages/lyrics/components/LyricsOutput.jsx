@@ -157,21 +157,21 @@ const Bracket = ({ part }) => {
   return (
     <span className="lyrics__bracket">
       {' ['}
-      {hasSingers ? part.singers.join('/') : null}
-      {hasSubSingers ? (
+      {hasSingers && part.singers.join('/')}
+      {hasSubSingers && (
         <span className="lyrics__parenthesis">
           {' ('}
           {part.subSingers.join('/')}
           {')'}
         </span>
-      ) : null}
-      {hasChoirSingers ? (
+      )}
+      {hasChoirSingers && (
         <span className="lyrics__braces">
           {' {'}
           {part.choirSingers.join('/')}
           {'}'}
         </span>
-      ) : null}
+      )}
       {'] '}
     </span>
   );

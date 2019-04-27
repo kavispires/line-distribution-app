@@ -10,7 +10,7 @@ const ActiveSongWidget = ({ activeSong, inline }) => {
   const inlineClass = inline ? 'inline' : '';
 
   return (
-    <section className={`active-widget ${inlineClass}`}>
+    <section className={`active-widget active-widget--quarter ${inlineClass}`}>
       <h3>Active Song:</h3>
       <div className="active-widget__content">
         <h1>
