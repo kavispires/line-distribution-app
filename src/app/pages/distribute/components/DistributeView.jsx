@@ -30,6 +30,7 @@ class DistributeView extends Component {
 
     this.setDimentions = this.setDimentions.bind(this);
     this.onStateChange = this.onStateChange.bind(this);
+    this.onReady = this.onReady.bind(this);
     this.onPlay = this.onPlay.bind(this);
     this.onPause = this.onPause.bind(this);
     this.onEnd = this.onEnd.bind(this);
