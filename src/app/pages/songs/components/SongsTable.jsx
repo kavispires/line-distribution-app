@@ -83,14 +83,14 @@ const SongsTable = ({
                   <td>{entry.title}</td>
                   <td>
                     {entry.originalArtist}{' '}
-                    {entry.originalArtistId ? (
+                    {entry.originalArtistId && (
                       <Icon
                         type="check"
                         color="yellow"
                         title="Artist in LD"
                         inline
                       />
-                    ) : null}
+                    )}
                   </td>
                   <td>
                     {entry.album !== 'UNKNOWN' ? (

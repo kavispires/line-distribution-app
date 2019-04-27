@@ -53,7 +53,7 @@ class Artists extends Component {
             <ActiveSong activeSong={activeSong} />
           </section>
 
-          {userLatestArtists.length > 0 ? (
+          {userLatestArtists.length > 0 && (
             <section className="artists__section">
               <h2>
                 <Icon type="clock" size="20" color="blue" /> Your Recently Used
@@ -68,7 +68,7 @@ class Artists extends Component {
                 user={user}
               />
             </section>
-          ) : null}
+          )}
 
           <section className="artists__section">
             <h2>All Artists</h2>

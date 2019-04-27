@@ -18,12 +18,12 @@ const MemberCard = ({
   showReferenceArtist,
 }) => (
   <div className="card">
-    {showId ? (
+    {showId && (
       <p className="member-id">
         {member.name.toLowerCase()}
         {member.id}
       </p>
-    ) : null}
+    )}
     <MemberPicture
       className={
         showReferenceArtist ? 'card__profile-full-image' : 'card__profile-image'
@@ -47,14 +47,14 @@ const MemberCard = ({
         state={favoriteState}
       />
     </h3>
-    {showReferenceArtist ? (
+    {showReferenceArtist && (
       <p>
-        {member.private ? (
+        {member.private && (
           <Icon type="private" color="red" inline title="private" size="18" />
-        ) : null}
+        )}
         <b>From </b> {member.referenceArtist}
       </p>
-    ) : null}
+    )}
 
     <p>
       <b>Date of Birth:</b> {utils.parseBirthDate(member.birthdate)} ({
@@ -65,7 +65,7 @@ const MemberCard = ({
       <b>Nationality: </b>
       <MemberNationaltyFlag nationality={member.nationality} />
     </p>
-    {averages ? (
+    {averages && (
       <Fragment>
         <p>
           <b>Avg Official Songs: </b>0%
@@ -77,7 +77,7 @@ const MemberCard = ({
           <b>Avg All Songs: </b>0%
         </p>
       </Fragment>
-    ) : null}
+    )}
     <p>
       <b>Positions:</b>
     </p>

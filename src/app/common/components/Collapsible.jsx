@@ -87,7 +87,7 @@ class Collapsible extends Component {
             this.state.expanded ? 'expanded' : 'collapsed'
           }`}
         >
-          {this.state.expanded ? this.props.children : null}
+          {this.state.expanded && this.props.children}
         </div>
       </section>
     );

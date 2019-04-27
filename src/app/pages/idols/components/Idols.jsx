@@ -233,12 +233,12 @@ class Idols extends Component {
                     <Option value="public">Public</Option>
                   </Select>
                 </div>
-                {isAdmin ? (
+                {isAdmin && (
                   <div className="idols__filter-select-group">
                     <label className="idols__filter-label">Show Ids</label>
                     <Checkbox field="showIds" initialValue={isAdmin} />
                   </div>
-                ) : null}
+                )}
               </div>
             </div>
             <div className="idols__filters-group">

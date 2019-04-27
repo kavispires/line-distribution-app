@@ -247,12 +247,12 @@ const ManageMembers = ({
             placeholder="Search existing members..."
             suggestions={membersTypeahead}
           />
-          {isValid ? (
+          {isValid && (
             <p className="manage-form__valid">
               <Icon type="check" color="green" inline />
               Selected Member is valid. Click on the plus button to add it.
             </p>
-          ) : null}
+          )}
         </div>
       </div>
     </section>

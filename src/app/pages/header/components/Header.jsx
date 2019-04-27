@@ -21,7 +21,7 @@ class App extends Component {
           login={this.props.login}
           logout={this.props.logout}
         />
-        {this.props.app.loading ? <LoadingBar /> : null}
+        {this.props.app.loading && <LoadingBar />}
       </Fragment>
     );
   }
