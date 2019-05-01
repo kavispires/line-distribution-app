@@ -86,7 +86,7 @@ const MemberCard = ({
 );
 
 MemberCard.propTypes = {
-  averages: PropTypes.oneOfType([PropTypes.object, null]),
+  averages: PropTypes.oneOfType([PropTypes.object]),
   showId: PropTypes.bool,
   showReferenceArtist: PropTypes.bool,
   favoriteState: PropTypes.bool,

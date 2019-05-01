@@ -41,7 +41,7 @@ Icon.propTypes = {
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   inline: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, null]),
+  title: PropTypes.string,
 };
 
 Icon.defaultProps = {
