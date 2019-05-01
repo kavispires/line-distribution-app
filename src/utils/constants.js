@@ -49,6 +49,7 @@ const DEFAULT_COLORS = {
 const FLAGS_LIST = {
   AMERICAN: 'usa',
   BRAZILIAN: 'brazil',
+  BRITISH: 'uk',
   CANADIAN: 'canada',
   CHINESE: 'china',
   JAPANESE: 'japan',
