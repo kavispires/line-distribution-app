@@ -55,7 +55,7 @@ export const serialize = {
         category: data.category,
         features: data.features || [],
         modifiedBy: data.modifiedBy || null,
-        rates: data.rates,
+        rates: utils.parseRates(data.rates),
         relationships: JSON.parse(data.relationships),
         songId: data.songId,
         unitId: data.unitId,
