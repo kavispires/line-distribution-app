@@ -98,6 +98,7 @@ export const deserialize = {
         'id',
         'uid',
         'distribution',
+        'gender',
         'groupSize',
         'originalArtist',
         'title',
@@ -108,6 +109,7 @@ export const deserialize = {
         createdBy: uid,
         album: data.album || null,
         distribution: data.distribution,
+        gender: data.gender,
         groupSize: data.groupSize,
         modifiedBy: uid,
         originalArtist: data.originalArtist || '',
@@ -224,6 +226,7 @@ export const deserialize = {
       if (uid) res.modifiedBy = uid;
       if (data.album) res.album = data.album;
       if (data.distribution) res.distribution = data.distribution;
+      if (data.gender) res.gender = data.gender;
       if (data.groupSize) res.groupSize = data.groupSize;
       if (data.originalArtist) res.originalArtist = data.originalArtist;
       if (data.originalArtistId) res.originalArtistId = data.originalArtistId;

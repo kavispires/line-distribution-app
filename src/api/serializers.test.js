@@ -60,7 +60,7 @@ describe('API/Serializers', () => {
         songId: '1',
         unitId: 'u',
         category: 'OFFICIAL',
-        rates: {},
+        rates: { ALL: 0, NONE: 0 },
         relationships: '{"1":["1","2"]}',
       };
       expect(serialize.distribution(data)).toEqual({
@@ -73,7 +73,7 @@ describe('API/Serializers', () => {
           createdBy: null,
           category: 'OFFICIAL',
           features: [],
-          rates: {},
+          rates: { ALL: 0, NONE: 0 },
           relationships: { 1: ['1', '2'] },
         },
       });
@@ -124,6 +124,7 @@ describe('API/Serializers', () => {
           album: 'UNKNOWN',
           createdBy: null,
           distribution: '[1:6.69:0.58]  TWICE!\n',
+          gender: 'UNKNOWN',
           groupSize: 0,
           modifiedBy: null,
           originalArtist: '',

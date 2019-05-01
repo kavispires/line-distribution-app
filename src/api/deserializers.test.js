@@ -179,6 +179,7 @@ describe('API/deserializers', () => {
           id: ID,
           uid: UID,
           distribution: 'lyrics',
+          gender: 'FEMALE',
           groupSize: 5,
           originalArtist: 'Band',
           title: 'Title',
@@ -188,6 +189,7 @@ describe('API/deserializers', () => {
           album: null,
           createdBy: UID,
           distribution: 'lyrics',
+          gender: 'FEMALE',
           groupSize: 5,
           id: ID,
           modifiedBy: UID,
@@ -316,6 +318,7 @@ describe('API/deserializers', () => {
           id: ID,
           uid: UID,
           distribution: 'lyrics',
+          gender: 'FEMALE',
           groupSize: 5,
           originalArtist: 'Band',
           title: 'Title',
@@ -323,6 +326,7 @@ describe('API/deserializers', () => {
         };
         expect(deserialize.put.song(data, ID, UID)).toEqual({
           distribution: 'lyrics',
+          gender: 'FEMALE',
           groupSize: 5,
           modifiedBy: UID,
           originalArtist: 'Band',

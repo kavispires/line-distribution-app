@@ -93,6 +93,7 @@ export const serialize = {
         album: data.album || UNKNOWN,
         createdBy: data.createdBy || null,
         distribution: data.distribution,
+        gender: data.gender || UNKNOWN,
         groupSize: data.groupSize || 0,
         modifiedBy: data.modifiedBy || null,
         originalArtist: data.originalArtist || '',
