@@ -80,6 +80,7 @@ export const serialize = {
         nationality: data.nationality || UNKNOWN,
         positions: data.positions || [],
         private: data.private || false,
+        primaryGenre: data.primaryGenre || UNKNOWN,
         referenceArtist: data.referenceArtist || UNKNOWN,
       },
     };

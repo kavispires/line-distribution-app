@@ -579,6 +579,7 @@ function* updateCompleteArtist(action) {
         type: `UPDATE_MEMBER_${index}`,
         member,
         referenceArtist: artist.name,
+        artistGenre: artist.genre,
       })
     )
   );
@@ -653,7 +654,7 @@ function* updateMember(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { member, referenceArtist } = action;
+  const { member, referenceArtist, artistGenre } = action;
 
   let response;
   try {
@@ -665,6 +666,7 @@ function* updateMember(action) {
       response = yield API.post('/members', {
         ...member,
         referenceArtist,
+        primaryGenre: artistGenre,
       });
     }
   } catch (error) {

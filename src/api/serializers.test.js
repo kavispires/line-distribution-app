@@ -104,6 +104,7 @@ describe('API/Serializers', () => {
           nationality: 'UNKNOWN',
           positions: [],
           private: false,
+          primaryGenre: 'UNKNOWN',
           referenceArtist: 'UNKNOWN',
         },
       });

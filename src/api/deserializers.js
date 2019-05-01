@@ -90,6 +90,7 @@ export const deserialize = {
         name: data.name,
         nationality: data.nationality,
         private: data.private || false,
+        primaryGenre: data.primaryGenre || 'UNKOWN',
         referenceArtist: data.referenceArtist,
       };
     },
@@ -215,6 +216,7 @@ export const deserialize = {
       if (data.positions) res.positions = data.positions;
 
       if (data.private) res.private = data.private;
+      if (data.primaryGenre) res.primaryGenre = data.primaryGenre;
       if (data.referenceArtist) res.referenceArtist = data.referenceArtist;
 
       return res;

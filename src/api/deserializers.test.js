@@ -168,6 +168,7 @@ describe('API/deserializers', () => {
           name: 'Bob',
           nationality: 'OTHER',
           private: false,
+          primaryGenre: 'UNKOWN',
           referenceArtist: ARTIST_ID,
         });
       });
