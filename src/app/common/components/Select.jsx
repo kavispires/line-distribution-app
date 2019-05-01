@@ -67,7 +67,7 @@ Select.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   disablePlaceholder: PropTypes.bool,
-  type: PropTypes.oneOf(['slim', undefined]),
+  type: PropTypes.string,
 };
 
 Select.defaultProps = {

@@ -132,7 +132,6 @@ export const deserialize = {
         artistId: data.artistId,
         debutYear: data.debutYear,
         distributions: data.distributions || [],
-        distributions_legacy: data.distributions_legacy || [],
         modifiedBy: uid,
         name: data.name,
         members: data.members || {},
@@ -242,8 +241,6 @@ export const deserialize = {
       if (uid) res.modifiedBy = uid;
       if (data.artistId) res.artistId = data.artistId;
       if (data.distributions) res.distributions = data.distributions;
-      if (data.distributions_legacy)
-        res.distributions_legacy = data.distributions_legacy;
       if (data.members) res.members = data.members;
       if (data.name) res.name = data.name;
       if (data.official) res.official = data.official;

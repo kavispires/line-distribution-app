@@ -155,7 +155,6 @@ describe('API/Serializers', () => {
           createdBy: null,
           debutYear: 2018,
           distributions: [],
-          distributions_legacy: [],
           name: 'OT1',
           members: [],
           modifiedBy: null,

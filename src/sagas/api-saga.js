@@ -350,8 +350,6 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
     return dict;
   }, {});
 
-  // Fetch legacy distributions and merge
-
   // Calculate averages
 
   // Flag unit as complete

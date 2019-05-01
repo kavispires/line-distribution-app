@@ -116,7 +116,6 @@ export const serialize = {
         createdBy: data.createdBy || null,
         debutYear: data.debutYear,
         distributions: data.distributions || [],
-        distributions_legacy: data.distributions_legacy || [],
         members: data.members ? utils.parseUnitMembers(data.members) : [],
         modifiedBy: data.modifiedBy || null,
         name: data.name,

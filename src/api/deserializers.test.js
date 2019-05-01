@@ -214,7 +214,6 @@ describe('API/deserializers', () => {
             createdBy: UID,
             debutYear: 2019,
             distributions: [],
-            distributions_legacy: [],
             id: ID,
             members: {},
             modifiedBy: UID,
