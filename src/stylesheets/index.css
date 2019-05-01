@@ -1894,6 +1894,19 @@ input:checked + .slider:before {
   background: #ecffee;
 }
 
+.songs-filters-group {
+  background: #ebebf2;
+  display: flex;
+  border: 1px solid #ebebf2;
+  padding: 6px;
+}
+
+.songs-filter-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 48px;
+}
+
 .sync__container {
   max-height: 100%;
   display: flex;

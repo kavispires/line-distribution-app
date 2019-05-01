@@ -41,28 +41,16 @@ const DistributeEdit = ({
         <p>
           <label className="distribute__distribution-category">
             Category*
-            <select onChange={handleDistributionCategory}>
+            <select
+              onChange={handleDistributionCategory}
+              defaultValue={activeDistribution.category}
+            >
               <option value="" disabled>
                 Select a type...
               </option>
-              <option
-                value="OFFICIAL"
-                selected={activeDistribution.category === 'OFFICIAL'}
-              >
-                Official
-              </option>
-              <option
-                value="WOULD"
-                selected={activeDistribution.category === 'WOULD'}
-              >
-                How they would sing
-              </option>
-              <option
-                value="SHOULD"
-                selected={activeDistribution.category === 'SHOULD'}
-              >
-                How they should sing
-              </option>
+              <option value="OFFICIAL">Official</option>
+              <option value="WOULD">How they would sing</option>
+              <option value="SHOULD">How they should sing</option>
             </select>
           </label>
         </p>

@@ -327,6 +327,13 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   }
   unit.members = members;
 
+  const membersArray = Object.values(members);
+
+  unit.gender = membersArray.reduce((res, member) => {
+    if (member.gender !== res) return 'MIXED';
+    return res;
+  }, membersArray[0].gender);
+
   // Fetch distributions and merge
   let distributions = {};
   try {

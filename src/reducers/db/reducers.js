@@ -9,7 +9,6 @@ const initialState = {
   membersTypeahead: [],
   membersTypeaheadDict: {},
   songs: [],
-  songSearchQuery: '',
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -46,10 +45,6 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_SONGS:
       newState.songs = action.payload;
-      break;
-
-    case types.SET_SONG_SEARCH_QUERY:
-      newState.songSearchQuery = action.payload;
       break;
 
     default:

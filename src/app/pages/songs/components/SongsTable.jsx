@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 // Import shared components
 import { LoadingIcon, Icon } from '../../../common';
@@ -14,8 +13,8 @@ const MEANT_FOR_TEXT = {
 
 const MEANT_FOR_ICON = {
   FEMALE: 'gender-female',
-  MALE: 'gender-female',
-  MIXED: 'gender-female',
+  MALE: 'gender-male',
+  MIXED: 'gender-mixed',
   UNKNOWN: 'question-mark',
 };
 
@@ -27,28 +26,22 @@ const MEANT_FOR_COLOR = {
 };
 
 const SongsTable = ({
-  songs,
+  filteredSongs,
+  hasActiveFilters,
   pending,
   rowAction,
-  songSearchQuery,
   previouslyDistributedSongsDict,
 }) => {
-  // Filter table rows based on searchQuery
-  let filteredSongs = songs;
-  if (songSearchQuery && filteredSongs[0]) {
-    filteredSongs = _.filter(songs, o => o.query.includes(songSearchQuery));
-  }
   // Message to be display when table has no rows
-  const emptyTableMessage =
-    songSearchQuery.length > 0
-      ? 'No songs available within your search'
-      : 'No songs available';
+  const emptyTableMessage = hasActiveFilters
+    ? 'No songs available within your search'
+    : 'No songs available';
 
   const rowFallback = () => {
     if (pending) {
       return (
         <tr>
-          <td colSpan="7">
+          <td colSpan="9">
             <LoadingIcon />
           </td>
         </tr>
@@ -56,7 +49,7 @@ const SongsTable = ({
     }
     return (
       <tr>
-        <td colSpan="7">{emptyTableMessage}</td>
+        <td colSpan="9">{emptyTableMessage}</td>
       </tr>
     );
   };
@@ -184,16 +177,16 @@ const SongsTable = ({
 };
 
 SongsTable.propTypes = {
+  filteredSongs: PropTypes.array.isRequired,
+  hasActiveFilters: PropTypes.bool,
   pending: PropTypes.bool,
-  rowAction: PropTypes.func.isRequired,
-  songs: PropTypes.array.isRequired,
-  songSearchQuery: PropTypes.string,
   previouslyDistributedSongsDict: PropTypes.object,
+  rowAction: PropTypes.func.isRequired,
 };
 
 SongsTable.defaultProps = {
+  hasActiveFilters: false,
   pending: false,
-  songSearchQuery: '',
   previouslyDistributedSongsDict: {},
 };
 
