@@ -5,6 +5,27 @@ import _ from 'lodash';
 // Import shared components
 import { LoadingIcon, Icon } from '../../../common';
 
+const MEANT_FOR_TEXT = {
+  FEMALE: 'Girl Groups',
+  MALE: 'Boy Groups',
+  MIXED: 'Any Group',
+  UNKNOWN: 'Unknown',
+};
+
+const MEANT_FOR_ICON = {
+  FEMALE: 'gender-female',
+  MALE: 'gender-female',
+  MIXED: 'gender-female',
+  UNKNOWN: 'question-mark',
+};
+
+const MEANT_FOR_COLOR = {
+  FEMALE: 'pink',
+  MALE: 'blue',
+  MIXED: 'orange',
+  UNKNOWN: 'grey',
+};
+
 const SongsTable = ({
   songs,
   pending,
@@ -48,6 +69,7 @@ const SongsTable = ({
           <th>Title</th>
           <th>Artist</th>
           <th>Album</th>
+          <th>Meant For</th>
           <th>Group Size</th>
           <th>Video</th>
           <th>Title Song</th>
@@ -62,6 +84,7 @@ const SongsTable = ({
               ]
                 ? 'previously-distributed-row'
                 : '';
+
               return (
                 <tr
                   key={`all-artists-${entry.id}`}
@@ -103,6 +126,15 @@ const SongsTable = ({
                         inline
                       />
                     )}
+                  </td>
+                  <td>
+                    <Icon
+                      type={MEANT_FOR_ICON[entry.gender]}
+                      color={MEANT_FOR_COLOR[entry.gender]}
+                      title={MEANT_FOR_TEXT[entry.gender]}
+                      inline
+                    />{' '}
+                    {MEANT_FOR_TEXT[entry.gender]}
                   </td>
                   <td>{entry.groupSize}</td>
                   <td>
