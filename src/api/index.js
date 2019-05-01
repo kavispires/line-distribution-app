@@ -57,8 +57,8 @@ class API {
    * @category Getter
    * @returns {Object}
    */
-  dbInfo() {
-    this.print('Fetching DB info...');
+  dbState() {
+    this.print('Fetching DB state...');
     const response = new NewResponse();
 
     response.status(HttpStatus.OK);
@@ -85,7 +85,7 @@ class API {
     if (dbRef) {
       this._loaded = true;
       response.status(HttpStatus.OK);
-      response.data(this.dbInfo().data);
+      response.data(this.dbState().data);
       this._loaded = true;
     } else {
       response.error(

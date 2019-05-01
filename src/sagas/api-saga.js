@@ -24,10 +24,10 @@ function* initializer(action) {
 
   try {
     const dbStart = yield API.init();
-    const status = dbStart.dbInfo();
+    const status = dbStart.dbState();
     yield put({ type: types.SET_DATABASE_READY, payload: status.data.loaded });
 
-    yield delay(DELAY_DURATION);
+    yield delay(DELAY_DURATION + 1000);
 
     let loggedUser = yield API.auth();
     loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
