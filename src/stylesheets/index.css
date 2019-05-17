@@ -1939,13 +1939,41 @@ input:checked + .slider:before {
   margin-bottom: 12px;
 }
 
+.sync__step--2__container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sync__step--2__group {
+  width: calc(50% - 12px);
+  margin-right: 12px;
+}
+
 .sync__form__label {
   display: block;
   margin-bottom: 6px;
 }
 
-.sync__form__input {
+.sync__form__input-text {
+  display: block;
+  margin-bottom: 6px;
+  width: 100%;
+  max-width: none;
+}
+
+.sync__form__typeahead {
+  display: block;
+  margin-bottom: 6px;
+  width: 100%;
+  max-width: none;
+}
+.sync__form__typeahead .typeahead-input {
+  max-width: none;
+}
+
+.sync__form__input-number {
   margin-left: 6px;
+  min-width: 30px;
 }
 
 .sync__lyrics__controls {

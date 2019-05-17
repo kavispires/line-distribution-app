@@ -34,6 +34,18 @@
         margin-bottom: $unit;
       }
     }
+
+    &--2 {
+      &__container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      &__group {
+        width: calc(50% - #{$unit});
+        margin-right: $unit;
+      }
+    }
   }
 
   &__form {
@@ -42,8 +54,27 @@
       margin-bottom: $unit-p2;
     }
 
-    &__input {
+    &__input-text {
+      display: block;
+      margin-bottom: $unit-p2;
+      width: 100%;
+      max-width: none;
+    }
+
+    &__typeahead {
+      display: block;
+      margin-bottom: $unit-p2;
+      width: 100%;
+      max-width: none;
+
+      .typeahead-input {
+        max-width: none;
+      }
+    }
+
+    &__input-number {
       margin-left: $unit-p2;
+      min-width: 30px;
     }
   }
 

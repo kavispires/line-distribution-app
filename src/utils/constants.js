@@ -1,3 +1,9 @@
+const ARTISTS_GENDERS = {
+  FEMALE: 'Female',
+  MALE: 'Male',
+  MIXED: 'Mixed',
+};
+
 const COLORS = {
   col000001: 'red',
   col000002: 'blood',
@@ -148,6 +154,7 @@ const SYNC_KEY_COLOR_LIST = {
 const YOUTUBE_URLS = ['cudssvDuOpc'];
 
 export default {
+  ARTISTS_GENDERS,
   COLORS,
   DEFAULT_COLORS,
   FLAGS_LIST,
