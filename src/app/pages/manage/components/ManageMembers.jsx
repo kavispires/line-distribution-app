@@ -39,7 +39,7 @@ const ManageMembers = ({
           <img
             className="manage-form__button-lock-image"
             src={manageLock}
-            alt="Locked Unit"
+            alt="Locked Members"
           />
         </div>
       </section>

@@ -53,7 +53,7 @@ const ManageUnit = ({
             alt="Add Unit"
           />
         </button>
-        {unitsTypeahead.length && (
+        {unitsTypeahead.length > 0 && (
           <Typeahead
             action={e => validateTypeahead(e)}
             name="units"
@@ -113,6 +113,8 @@ const ManageUnit = ({
               required
               initialValue={defaultValues.debutYear}
               type="number"
+              max="9999"
+              min="1950"
             />
           </label>
           <label className="manage-form__label">

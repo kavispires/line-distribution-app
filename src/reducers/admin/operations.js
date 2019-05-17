@@ -49,7 +49,7 @@ const handleEditUnit = unitId => (dispatch, getState) => {
 const handleEditMember = (memberId, formState) => (dispatch, getState) => {
   const editingMembers = [...getState().admin.editingMembers];
   if (memberId) {
-    const { members } = getState().admin;
+    const { members } = getState().db;
     const memberIndex = _.findIndex(members, m => m.id === memberId);
     const addedMember = { ...members[memberIndex] };
     editingMembers.push(addedMember);

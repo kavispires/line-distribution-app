@@ -60,6 +60,7 @@ class Manage extends Component {
   validateMembers(event) {
     const { value } = event.target;
     const dict = this.props.db.membersTypeaheadDict;
+    console.log(dict[value]);
     if (dict[value]) {
       this.setState({ memberId: dict[value], validMember: true });
     } else {
