@@ -13,6 +13,7 @@ import ModeWidget from './components/ModeWidget';
 import PositionIcon from './components/PositionIcon';
 import RequirementWrapper from './containers/RequirementWrapperContainer';
 import Select from './components/Select';
+import SortingButton from './components/SortingButton';
 import Switch from './components/Switch';
 import Tabs from './components/Tabs';
 import Typeahead from './components/Typeahead';
@@ -33,6 +34,7 @@ export {
   PositionIcon,
   RequirementWrapper,
   Select,
+  SortingButton,
   Switch,
   Tabs,
   Typeahead,

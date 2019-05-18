@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import shared components
-import { LoadingIcon, Icon } from '../../../common';
+import { LoadingIcon, Icon, SortingButton } from '../../../common';
 
 const MEANT_FOR_TEXT = {
   FEMALE: 'Girl Groups',
@@ -31,6 +31,8 @@ const SongsTable = ({
   pending,
   rowAction,
   previouslyDistributedSongsDict,
+  sortBy,
+  sortedBy,
 }) => {
   // Message to be display when table has no rows
   const emptyTableMessage = hasActiveFilters
@@ -59,9 +61,27 @@ const SongsTable = ({
       <thead>
         <tr>
           <th>Distributed</th>
-          <th>Title</th>
-          <th>Artist</th>
-          <th>Album</th>
+          <th>
+            Title{' '}
+            <SortingButton
+              active={sortedBy === 'title'}
+              action={() => sortBy('title')}
+            />
+          </th>
+          <th>
+            Artist{' '}
+            <SortingButton
+              active={sortedBy === 'originalArtist'}
+              action={() => sortBy('originalArtist')}
+            />
+          </th>
+          <th>
+            Album{' '}
+            <SortingButton
+              active={sortedBy === 'album'}
+              action={() => sortBy('album')}
+            />
+          </th>
           <th>Meant For</th>
           <th>Group Size</th>
           <th>Video</th>
@@ -182,6 +202,8 @@ SongsTable.propTypes = {
   pending: PropTypes.bool,
   previouslyDistributedSongsDict: PropTypes.object,
   rowAction: PropTypes.func.isRequired,
+  sortBy: PropTypes.func.isRequired,
+  sortedBy: PropTypes.string.isRequired,
 };
 
 SongsTable.defaultProps = {

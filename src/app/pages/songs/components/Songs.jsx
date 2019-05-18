@@ -15,14 +15,30 @@ class Songs extends Component {
       query: '',
       undone: true,
       matchGender: false,
+      sortedBy: 'title',
+      order: 'asc',
     };
 
-    this.filterSongs = this.filterSongs.bind(this);
     this.handleTableClick = this.handleTableClick.bind(this);
+    this.filterSongs = this.filterSongs.bind(this);
+    this.setSort = this.setSort.bind(this);
+    this.sortSongs = this.sortSongs.bind(this);
   }
 
   componentDidMount() {
     this.props.loadSongs();
+  }
+
+  setSort(type) {
+    let order = 'asc';
+    if (this.state.sortedBy === type) {
+      order = this.state.order === 'asc' ? 'desc' : 'asc';
+    }
+
+    this.setState({
+      order,
+      sortedBy: type,
+    });
   }
 
   updateFilters(formState) {
@@ -79,6 +95,11 @@ class Songs extends Component {
     });
   }
 
+  sortSongs(songs) {
+    const { sortedBy, order } = this.state;
+    return _.orderBy(songs, [sortedBy], [order]);
+  }
+
   render() {
     const {
       app: { pending },
@@ -86,7 +107,7 @@ class Songs extends Component {
       distribute: { activeSong, activeUnit },
     } = this.props;
 
-    const filteredSongs = this.filterSongs(songs);
+    const filteredSongs = this.sortSongs(this.filterSongs(songs));
 
     return (
       <RequirementWrapper requirements={['activeUnit']}>
@@ -136,6 +157,8 @@ class Songs extends Component {
             pending={pending.REQUEST_SONGS}
             rowAction={this.handleTableClick}
             previouslyDistributedSongsDict={activeUnit.songsDict}
+            sortBy={this.setSort}
+            sortedBy={this.state.sortedBy}
           />
         </main>
       </RequirementWrapper>
