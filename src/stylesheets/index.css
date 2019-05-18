@@ -567,7 +567,7 @@ p {
   padding: 12px;
 }
 .loading-icon--tiny {
-  height: 24px;
+  height: 32px;
 }
 .loading-icon--small {
   height: 48px;
@@ -1001,6 +1001,41 @@ input:checked + .slider:before {
 }
 .modal-error__error-message {
   color: #d14949;
+}
+
+.actions-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.actions-item {
+  width: 30%;
+  min-width: 300px;
+  margin: 0 12px 12px 0;
+  padding: 12px;
+  flex: 1;
+  border: 1px solid #ebebf2;
+  border-radius: 3px;
+  text-align: center;
+}
+.actions-item .description-list {
+  text-align: left;
+}
+
+.actions-code {
+  padding: 6px 12px;
+  border: 1px solid #b5b5ba;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 120%;
+  display: inline-block;
+}
+
+.actions-code-input {
+  display: block;
+  margin: 12px auto;
+  padding: 6px 12px;
 }
 
 .artist__section {

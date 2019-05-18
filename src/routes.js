@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 
+import AdminActions from './app/pages/admin-actions';
 import Artists from './app/pages/artists';
 import Artist from './app/pages/artist';
 import Distribute from './app/pages/distribute';
@@ -37,6 +38,7 @@ const routes = (
       <Route path="/lyrics" component={Lyrics} />
       <Route path="/songs" component={Songs} />
 
+      <Route path="/admin/actions" component={AdminActions} />
       <Route path="/admin/manage" component={Manage} />
       <Route path="/admin/sync" component={Sync} />
       <Route path="/admin/temp" component={TempContainer} />

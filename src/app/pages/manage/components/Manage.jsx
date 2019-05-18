@@ -205,7 +205,7 @@ class Manage extends Component {
     }
 
     return (
-      <RequirementWrapper>
+      <RequirementWrapper requirements={['admin']}>
         <main className="container container--manage">
           <div className="manage-header">
             <h1>Manage</h1>

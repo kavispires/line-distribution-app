@@ -152,7 +152,7 @@ class Sync extends Component {
     }
 
     return (
-      <RequirementWrapper>
+      <RequirementWrapper requirements={['admin']}>
         <main className="container container--sync">
           <h1>Sync</h1>
           <section className="sync__container">

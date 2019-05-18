@@ -294,6 +294,15 @@ const spiralCase = string => {
   return string.replace(/([\-\_\ \:])/g, '-'); // eslint-disable-line
 };
 
+const generateAdminCode = (numDigits = 4) => {
+  const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let code = '';
+  for (let i = 0; i < numDigits; i++) {
+    code += CHARACTERS.charAt(Math.floor(Math.random() * CHARACTERS.length));
+  }
+  return code;
+};
+
 const getColorNumber = (colorId = 'col000000') => Number(colorId.substring(7));
 
 const spiralBirthdate = date => {
@@ -357,6 +366,7 @@ export default {
   camelCase,
   capitalizeWord,
   ensureColorUniqueness,
+  generateAdminCode,
   getColorNumber,
   getMostImportantPosition,
   humanize,

@@ -1,0 +1,36 @@
+.actions-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: $unit-x2;
+}
+
+.actions-item {
+  width: 30%;
+  min-width: 300px;
+  margin: 0 $unit $unit 0;
+  padding: $unit;
+  flex: 1;
+  border: 1px solid $color-gray-1;
+  border-radius: $unit-p4;
+
+  text-align: center;
+
+  .description-list {
+    text-align: left;
+  }
+}
+
+.actions-code {
+  padding: $unit-p2 $unit;
+  border: 1px solid $color-gray-2;
+  border-radius: $unit-p4;
+  font-weight: bold;
+  font-size: 120%;
+  display: inline-block;
+}
+
+.actions-code-input {
+  display: block;
+  margin: $unit auto;
+  padding: $unit-p2 $unit;
+}
