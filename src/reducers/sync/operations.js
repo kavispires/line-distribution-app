@@ -42,6 +42,7 @@ const handleFormInfo = (formState, originalArtist) => (dispatch, getState) => {
 
   if (Object.values(formState.values)) {
     info.album = formState.values.album;
+    info.gender = formState.values.gender || 'MIXED';
     info.groupSize = formState.values.groupSize;
     info.single = formState.values.single || false;
     info.title = formState.values.title;
@@ -536,6 +537,7 @@ const saveSync = () => async (dispatch, getState) => {
   const body = {
     album: info.album || null,
     distribution: finalLyrics,
+    gender: info.gender,
     groupSize: info.groupSize,
     originalArtist: info.originalArtist,
     originalArtistId: info.artistId || null,

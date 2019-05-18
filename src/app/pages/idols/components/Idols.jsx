@@ -27,6 +27,9 @@ class Idols extends Component {
       order: 'asc',
       showIds: false,
     };
+
+    this.filterIdols = this.filterIdols.bind(this);
+    this.sortIdols = this.sortIdols.bind(this);
   }
 
   componentDidMount() {
@@ -49,19 +52,8 @@ class Idols extends Component {
     });
   }
 
-  render() {
-    const {
-      app: { pending },
-      auth: { isAdmin, user },
-      db: { members },
-      updateFavoriteMembers,
-    } = this.props;
-
-    if (pending.REQUEST_MEMBERS) {
-      return <Loading message="Fecthing Idols..." />;
-    }
-
-    const filteredMembers = _.filter(members, member => {
+  filterIdols(members, user) {
+    return _.filter(members, member => {
       const evaluation = [];
 
       if (this.state.favorite) {
@@ -101,15 +93,29 @@ class Idols extends Component {
           evaluation.push(member.age > 28);
         }
       }
-      const res = evaluation.every(e => e);
-      return res;
+      return evaluation.every(e => e);
     });
+  }
 
-    const sortedMembers = _.orderBy(
-      filteredMembers,
-      [this.state.sort],
-      [this.state.order]
-    );
+  sortIdols(filteredMembers) {
+    return _.orderBy(filteredMembers, [this.state.sort], [this.state.order]);
+  }
+
+  render() {
+    const {
+      app: { pending },
+      auth: { isAdmin, user },
+      db: { members },
+      updateFavoriteMembers,
+    } = this.props;
+
+    if (pending.REQUEST_MEMBERS) {
+      return <Loading message="Fecthing Idols..." />;
+    }
+
+    const filteredMembers = this.filterIdols(members, user);
+
+    const sortedMembers = this.sortIdols(filteredMembers);
 
     return (
       <RequirementWrapper>

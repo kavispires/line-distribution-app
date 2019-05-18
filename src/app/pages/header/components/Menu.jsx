@@ -83,6 +83,7 @@ const Menu = ({ activeUnit, auth, history, location, login, logout }) => {
               Admin Tools
             </button>
             <div className="header-admin__dropdown">
+              <Link to="/admin/actions">Actions</Link>
               <Link to="/admin/manage">Manage</Link>
               <Link to="/admin/sync">Sync</Link>
               <Link to="/admin/temp">Test/Temp</Link>

@@ -49,7 +49,7 @@ const handleEditUnit = unitId => (dispatch, getState) => {
 const handleEditMember = (memberId, formState) => (dispatch, getState) => {
   const editingMembers = [...getState().admin.editingMembers];
   if (memberId) {
-    const { members } = getState().admin;
+    const { members } = getState().db;
     const memberIndex = _.findIndex(members, m => m.id === memberId);
     const addedMember = { ...members[memberIndex] };
     editingMembers.push(addedMember);
@@ -201,7 +201,6 @@ const unlockMembers = formState => (dispatch, getState) => {
     new: editingUnitState.new || false,
     averages: editingUnitState.averages || false,
     distributions: editingUnitState.distributions || false,
-    distributions_legacy: editingUnitState.distributions_legacy || false,
     members: editingUnitState.members || false,
     id: editingUnitState.id,
     createdBy: editingUnitState.createdBy,
@@ -324,7 +323,6 @@ const saveManage = formState => async (dispatch, getState) => {
     new: editingUnitState.new || false,
     averages: editingUnitState.averages || false,
     distributions: editingUnitState.distributions || false,
-    distributions_legacy: editingUnitState.distributions_legacy || false,
     artistId: editingUnitState.id || null,
     id: editingUnitState.id || null,
     createdBy: editingUnitState.createdBy || null,

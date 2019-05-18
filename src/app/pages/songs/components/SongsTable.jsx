@@ -1,33 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 // Import shared components
-import { LoadingIcon, Icon } from '../../../common';
+import { LoadingIcon, Icon, SortingButton } from '../../../common';
+
+const MEANT_FOR_TEXT = {
+  FEMALE: 'Girl Groups',
+  MALE: 'Boy Groups',
+  MIXED: 'Any Group',
+  UNKNOWN: 'Unknown',
+};
+
+const MEANT_FOR_ICON = {
+  FEMALE: 'gender-female',
+  MALE: 'gender-male',
+  MIXED: 'gender-mixed',
+  UNKNOWN: 'question-mark',
+};
+
+const MEANT_FOR_COLOR = {
+  FEMALE: 'pink',
+  MALE: 'blue',
+  MIXED: 'orange',
+  UNKNOWN: 'grey',
+};
 
 const SongsTable = ({
-  songs,
+  filteredSongs,
+  hasActiveFilters,
   pending,
   rowAction,
-  songSearchQuery,
   previouslyDistributedSongsDict,
+  sortBy,
+  sortedBy,
 }) => {
-  // Filter table rows based on searchQuery
-  let filteredSongs = songs;
-  if (songSearchQuery && filteredSongs[0]) {
-    filteredSongs = _.filter(songs, o => o.query.includes(songSearchQuery));
-  }
   // Message to be display when table has no rows
-  const emptyTableMessage =
-    songSearchQuery.length > 0
-      ? 'No songs available within your search'
-      : 'No songs available';
+  const emptyTableMessage = hasActiveFilters
+    ? 'No songs available within your search'
+    : 'No songs available';
 
   const rowFallback = () => {
     if (pending) {
       return (
         <tr>
-          <td colSpan="7">
+          <td colSpan="9">
             <LoadingIcon />
           </td>
         </tr>
@@ -35,7 +51,7 @@ const SongsTable = ({
     }
     return (
       <tr>
-        <td colSpan="7">{emptyTableMessage}</td>
+        <td colSpan="9">{emptyTableMessage}</td>
       </tr>
     );
   };
@@ -45,9 +61,28 @@ const SongsTable = ({
       <thead>
         <tr>
           <th>Distributed</th>
-          <th>Title</th>
-          <th>Artist</th>
-          <th>Album</th>
+          <th>
+            Title{' '}
+            <SortingButton
+              active={sortedBy === 'title'}
+              action={() => sortBy('title')}
+            />
+          </th>
+          <th>
+            Artist{' '}
+            <SortingButton
+              active={sortedBy === 'originalArtist'}
+              action={() => sortBy('originalArtist')}
+            />
+          </th>
+          <th>
+            Album{' '}
+            <SortingButton
+              active={sortedBy === 'album'}
+              action={() => sortBy('album')}
+            />
+          </th>
+          <th>Meant For</th>
           <th>Group Size</th>
           <th>Video</th>
           <th>Title Song</th>
@@ -62,6 +97,7 @@ const SongsTable = ({
               ]
                 ? 'previously-distributed-row'
                 : '';
+
               return (
                 <tr
                   key={`all-artists-${entry.id}`}
@@ -103,6 +139,15 @@ const SongsTable = ({
                         inline
                       />
                     )}
+                  </td>
+                  <td>
+                    <Icon
+                      type={MEANT_FOR_ICON[entry.gender]}
+                      color={MEANT_FOR_COLOR[entry.gender]}
+                      title={MEANT_FOR_TEXT[entry.gender]}
+                      inline
+                    />{' '}
+                    {MEANT_FOR_TEXT[entry.gender]}
                   </td>
                   <td>{entry.groupSize}</td>
                   <td>
@@ -152,16 +197,18 @@ const SongsTable = ({
 };
 
 SongsTable.propTypes = {
+  filteredSongs: PropTypes.array.isRequired,
+  hasActiveFilters: PropTypes.bool,
   pending: PropTypes.bool,
-  rowAction: PropTypes.func.isRequired,
-  songs: PropTypes.array.isRequired,
-  songSearchQuery: PropTypes.string,
   previouslyDistributedSongsDict: PropTypes.object,
+  rowAction: PropTypes.func.isRequired,
+  sortBy: PropTypes.func.isRequired,
+  sortedBy: PropTypes.string.isRequired,
 };
 
 SongsTable.defaultProps = {
+  hasActiveFilters: false,
   pending: false,
-  songSearchQuery: '',
   previouslyDistributedSongsDict: {},
 };
 

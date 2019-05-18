@@ -240,6 +240,22 @@ const verifyRequirements = (data, id, uid, fields) => {
 };
 
 /**
+ * Adds ALL and NONE key to rates when any of them is undefined
+ * @param {object} rates
+ * @returns {object} rates with ALL and NONE keys
+ */
+const parseRates = rates => {
+  const parsedRates = { ...rates };
+  if (rates.ALL === undefined) {
+    parsedRates.ALL = 0;
+  }
+  if (rates.NONE === undefined) {
+    parsedRates.NONE = 0;
+  }
+  return parsedRates;
+};
+
+/**
  * Asyncronous function that delays code when using with async/await
  * @param {number} ms
  * @returns {Promise}
@@ -257,6 +273,7 @@ export default {
   getNumberFromColorId,
   mergeMembers,
   makeSixDigit,
+  parseRates,
   parseUnitMembers,
   verifyRequirements,
 };

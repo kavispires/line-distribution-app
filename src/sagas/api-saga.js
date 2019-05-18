@@ -24,10 +24,10 @@ function* initializer(action) {
 
   try {
     const dbStart = yield API.init();
-    const status = dbStart.dbInfo();
+    const status = dbStart.dbState();
     yield put({ type: types.SET_DATABASE_READY, payload: status.data.loaded });
 
-    yield delay(DELAY_DURATION);
+    yield delay(DELAY_DURATION + 1000);
 
     let loggedUser = yield API.auth();
     loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
@@ -327,6 +327,13 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   }
   unit.members = members;
 
+  const membersArray = Object.values(members);
+
+  unit.gender = membersArray.reduce((res, member) => {
+    if (member.gender !== res) return 'MIXED';
+    return res;
+  }, membersArray[0].gender);
+
   // Fetch distributions and merge
   let distributions = {};
   try {
@@ -349,8 +356,6 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
     dict[distribution.songId] = distribution.id;
     return dict;
   }, {});
-
-  // Fetch legacy distributions and merge
 
   // Calculate averages
 
@@ -574,6 +579,7 @@ function* updateCompleteArtist(action) {
         type: `UPDATE_MEMBER_${index}`,
         member,
         referenceArtist: artist.name,
+        artistGenre: artist.genre,
       })
     )
   );
@@ -648,7 +654,7 @@ function* updateMember(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { member, referenceArtist } = action;
+  const { member, referenceArtist, artistGenre } = action;
 
   let response;
   try {
@@ -660,6 +666,7 @@ function* updateMember(action) {
       response = yield API.post('/members', {
         ...member,
         referenceArtist,
+        primaryGenre: artistGenre,
       });
     }
   } catch (error) {

@@ -27,9 +27,9 @@ describe('API', () => {
     gResult = null;
   });
 
-  describe('dbInfo', () => {
+  describe('dbState', () => {
     it('it returns a response object', () => {
-      const result = API.dbInfo();
+      const result = API.dbState();
       expect(result).toStrictEqual({
         data: { admin: false, authenticated: false, loaded: false },
       });
@@ -39,7 +39,7 @@ describe('API', () => {
   describe('init', () => {
     it('initializes the firebase database', async () => {
       await API.init();
-      const info = await API.dbInfo();
+      const info = await API.dbState();
 
       expect(info).toStrictEqual({
         data: {

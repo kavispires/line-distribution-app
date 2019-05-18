@@ -6,7 +6,6 @@ const DistributedSongPreview = ({ rates, members }) => (
     {Object.keys(members).map(memberId => {
       const percentage = (100 * rates[memberId]) / (rates.total - rates.ALL);
 
-      // const percentage = rates[memberId].toFixed(1);
       const spanWidth = {
         width: `${percentage}%`,
       };

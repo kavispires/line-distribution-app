@@ -215,7 +215,6 @@ const initialState = {
   //       videoId: 'pNfTK39k55U',
   //     },
   //   ],
-  //   distributions_legacy: [],
   //   members: {
   //     '-LZJFEse1Y9qr-Zvqs-1': {
   //       age: 37,

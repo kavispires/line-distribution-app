@@ -60,10 +60,6 @@ class Units extends Component {
 
     const isUnitPending = app.pending.REQUEST_UNIT;
 
-    const hasLegacyDistributions =
-      selectedUnit.distributions_legacy &&
-      selectedUnit.distributions_legacy.length > 0;
-
     return (
       <section className="artist__section">
         <Tabs
@@ -96,12 +92,6 @@ class Units extends Component {
                         <b>Custom Distributions:</b>{' '}
                         {selectedUnit.distributions.length || 0}
                       </p>
-                      {hasLegacyDistributions && (
-                        <p>
-                          <b>Legacy Distributions:</b>{' '}
-                          {selectedUnit.distributions_legacy.length || 0}
-                        </p>
-                      )}
                       <div className="unit-section__actions">
                         <button
                           className="btn"
@@ -168,14 +158,6 @@ class Units extends Component {
                   members={selectedUnit.members}
                 />
               </LoadingWrapper>
-
-              {hasLegacyDistributions && (
-                <Fragment>
-                  <hr />
-                  <h2>Legacy Distributions</h2>{' '}
-                  <p>List of Legacy Distributions</p>
-                </Fragment>
-              )}
             </div>
           ) : (
             <p>The selected Artist has no units.</p>

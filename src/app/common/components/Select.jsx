@@ -60,14 +60,14 @@ const Select = ({
 
 Select.propTypes = {
   action: PropTypes.func.isRequired,
-  options: PropTypes.oneOfType([PropTypes.array, PropTypes.object, undefined]),
+  options: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   optionValue: PropTypes.string,
   optionName: PropTypes.string,
   optionPrefix: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
   disablePlaceholder: PropTypes.bool,
-  type: PropTypes.oneOf(['slim', undefined]),
+  type: PropTypes.string,
 };
 
 Select.defaultProps = {
