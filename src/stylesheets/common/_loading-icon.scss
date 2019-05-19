@@ -7,17 +7,37 @@
 
   &--tiny {
     height: 32px;
+
+    &.inline {
+      height: 16px;
+      padding: 0;
+    }
   }
 
   &--small {
     height: 48px;
+
+    &.inline {
+      height: 24px;
+      padding: 0;
+    }
   }
 
   &--medium {
     height: 96px;
+
+    &.inline {
+      height: 48px;
+      padding: 0;
+    }
   }
 
   &--large {
     height: 144px;
+
+    &.inline {
+      height: 72px;
+      padding: 0;
+    }
   }
 }

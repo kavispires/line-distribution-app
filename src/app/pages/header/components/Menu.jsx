@@ -1,16 +1,24 @@
 /* eslint react/require-default-props: 0 */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import common components
-import { Icon } from '../../../common';
+import { Icon, LoadingIcon } from '../../../common';
 // Import images
 import logo from '../../../../images/logo.svg';
 import userPlaceholder from '../../../../images/user-placeholder.svg';
 
-const Menu = ({ activeUnit, auth, history, location, login, logout }) => {
+const Menu = ({
+  activeUnit,
+  auth,
+  history,
+  location,
+  login,
+  logout,
+  pending,
+}) => {
   const handleLogoClick = () => {
     history.push('/');
   };
@@ -25,6 +33,9 @@ const Menu = ({ activeUnit, auth, history, location, login, logout }) => {
 
   // Hide parts of the menu if user hasn't selected an active unit
   const activeUnitHideClass = activeUnit.id ? '' : 'hidden';
+
+  // Sign-in pending
+  const isPending = pending.RUN_LOGIN;
 
   return (
     <header className="header">
@@ -113,8 +124,18 @@ const Menu = ({ activeUnit, auth, history, location, login, logout }) => {
         </div>
       ) : (
         <div className="header-user">
-          <button className="btn btn-hollow header-user__btn" onClick={login}>
-            Sign-in<Icon type="login" color="white" inline />
+          <button
+            className="btn btn-hollow header-user__btn"
+            onClick={login}
+            disabled={isPending}
+          >
+            {isPending ? (
+              <LoadingIcon size="tiny" inline />
+            ) : (
+              <Fragment>
+                Sign-in <Icon type="logout" color="white" inline />
+              </Fragment>
+            )}
           </button>
         </div>
       )}
@@ -129,6 +150,7 @@ Menu.propTypes = {
   location: PropTypes.object,
   login: PropTypes.func,
   logout: PropTypes.func,
+  pending: PropTypes.object.isRequired,
 };
 
 Menu.defaultProps = {

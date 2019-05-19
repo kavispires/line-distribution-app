@@ -20,6 +20,7 @@ class App extends Component {
           location={this.props.location}
           login={this.props.login}
           logout={this.props.logout}
+          pending={this.props.app.pending}
         />
         {this.props.app.loading && <LoadingBar />}
       </Fragment>
