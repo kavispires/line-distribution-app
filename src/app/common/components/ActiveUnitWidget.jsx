@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Import common components
+import { Icon } from '..';
 // Import utility functions
 import utils from '../../../utils';
-import { Icon } from '..';
 
 const ActiveUnitWidget = ({ activeUnit, showMembers, inline, ...props }) => {
   // Return nothing if currentUnit is not available
