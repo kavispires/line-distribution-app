@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import MyArtists from '../components/MyArtists';
+import Lab from '../components/Lab';
 
-const mapStateToProps = state => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 
@@ -11,5 +11,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(MyArtists)
+  )(Lab)
 );

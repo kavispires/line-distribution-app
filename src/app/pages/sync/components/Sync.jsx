@@ -191,7 +191,7 @@ class Sync extends Component {
                 />
               </Collapsible>
               <Collapsible
-                title="5. Confirm &amp; Save"
+                title="5. Review &amp; Save"
                 locked={steps[5].locked}
                 expanded={steps[5].expanded}
                 collapsed={!steps[5].expanded}

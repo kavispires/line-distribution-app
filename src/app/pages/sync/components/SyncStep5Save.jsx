@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 // Import common components
 import { Icon, LoadingWrapper } from '../../../common';
+// Import constants
+import constants from '../../../../utils/constants';
 
 const SyncStep5Save = ({ info, pending, saveSync, unlockSpecificStep }) => (
   <div className="sync__step sync__step--5">
@@ -20,6 +22,9 @@ const SyncStep5Save = ({ info, pending, saveSync, unlockSpecificStep }) => (
         Single: {info.single ? 'Yes' : 'No'}
       </li>
       <li className="sync__verify__info-item">Group Size: {info.groupSize}</li>
+      <li className="sync__verify__info-item">
+        Group Gender: {constants.ARTISTS_GENDERS[info.gender]}
+      </li>
       <li className="sync__verify__info-item">Video Id: {info.videoId}</li>
       <li className="sync__verify__info-item">
         Private: {info.private ? 'Yes' : 'No'}

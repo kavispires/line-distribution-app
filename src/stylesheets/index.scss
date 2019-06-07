@@ -11,8 +11,6 @@
 @import './common/buttons.scss';
 @import './common/icons.scss';
 @import './common/inputs.scss';
-@import './common/header.scss';
-@import './common/loading-bar.scss';
 @import './common/loading-icon.scss';
 @import './common/pills.scss';
 @import './common/tables.scss';
@@ -21,7 +19,12 @@
 @import './common/widgets.scss';
 @import './common/collapsible.scss';
 @import './common/requirement-wrapper.scss';
-@import './common/modal-error.scss';
+
+// GLOBAL COMPONENTS
+@import './global/footer.scss';
+@import './global/header.scss';
+@import './global/loading-bar.scss';
+@import './global/modal-error.scss';
 
 // PAGES
 @import './pages/admin-actions';

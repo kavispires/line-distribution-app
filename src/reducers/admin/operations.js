@@ -56,8 +56,14 @@ const handleEditMember = (memberId, formState) => (dispatch, getState) => {
     dispatch(actions.setEditingMembers(editingMembers));
 
     // Also update colors in use
-    const colorsInUse = {};
-    editingMembers.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
+    // const colorsInUse = {};
+    // editingMembers.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
+    const colorsInUse = editingMembers.reduce((dict, member) => {
+      if (member && member.colorId) {
+        dict[member.colorId] = true;
+      }
+      return dict;
+    }, {});
     dispatch(actions.setColorsInUse(colorsInUse));
   } else {
     let lastMember = editingMembers[editingMembers.length - 1] || false;
@@ -82,8 +88,12 @@ const updateMemberColor = (value, index) => (dispatch, getState) => {
   dispatch(actions.setEditingMembers(editingMembers));
 
   // Also update colors in use
-  const colorsInUse = {};
-  editingMembers.forEach(member => (colorsInUse[member.colorId] = true)); //eslint-disable-line
+  const colorsInUse = editingMembers.reduce((dict, member) => {
+    if (member && member.colorId) {
+      dict[member.colorId] = true;
+    }
+    return dict;
+  }, {});
   dispatch(actions.setColorsInUse(colorsInUse));
 };
 

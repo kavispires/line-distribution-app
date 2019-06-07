@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import logo from '../../../../images/logo-alt.svg';
@@ -6,7 +6,7 @@ import logo from '../../../../images/logo-alt.svg';
 import constants from '../../../../utils/constants';
 
 // Import common components
-import { Icon } from '../../../common';
+import { Icon, LoadingIcon } from '../../../common';
 
 const Home = props => {
   // Randomly choose one video in the playlist
@@ -18,6 +18,8 @@ const Home = props => {
   const handleLearnMoreClick = () => {
     props.history.push('/learn-more');
   };
+
+  const isPending = props.app.pending.RUN_LOGIN;
 
   return (
     <main className="container container--no-padding">
@@ -34,8 +36,18 @@ const Home = props => {
         <img className="home__logo" src={logo} alt="Line Distribution" />
         <div className="home__buttons">
           {!props.auth.isAuthenticated && (
-            <button className="btn-home" onClick={props.login}>
-              Sign-in <Icon type="logout" color="white" inline />
+            <button
+              className="btn-home"
+              onClick={props.login}
+              disabled={isPending}
+            >
+              {isPending ? (
+                <LoadingIcon size="tiny" inline />
+              ) : (
+                <Fragment>
+                  Sign-in <Icon type="logout" color="white" inline />
+                </Fragment>
+              )}
             </button>
           )}
           <button className="btn-home" onClick={() => handleLearnMoreClick()}>
@@ -48,6 +60,7 @@ const Home = props => {
 };
 
 Home.propTypes = {
+  app: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,

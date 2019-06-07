@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import ErrorModal from '../components/ErrorModal';
 
-import { appOperations } from '../../../reducers/app';
+import { appOperations } from '../../../../reducers/app';
 
 const mapStateToProps = state => ({
   app: state.app,

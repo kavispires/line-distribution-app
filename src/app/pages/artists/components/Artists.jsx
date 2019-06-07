@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 // Import common components
 import {
   ActiveUnit,
-  Icon,
   Switch,
   RequirementWrapper,
   ActiveSong,
@@ -20,18 +18,11 @@ class Artists extends Component {
   render() {
     const {
       app: { pending },
-      artists: { searchQuery, showFavoriteArtistsOnly, userLatestArtists },
+      artists: { searchQuery, showFavoriteArtistsOnly },
       auth: { user },
       db,
       distribute: { activeSong, activeUnit },
     } = this.props;
-
-    const artistList = db.artists;
-
-    let filteredArtists = artistList;
-    if (showFavoriteArtistsOnly) {
-      filteredArtists = _.filter(artistList, o => user.favoriteArtists[o.id]);
-    }
 
     // Row click should send user to the selected artist page
     const handleTableClick = e => {
@@ -53,23 +44,6 @@ class Artists extends Component {
             <ActiveSong activeSong={activeSong} />
           </section>
 
-          {userLatestArtists.length > 0 && (
-            <section className="artists__section">
-              <h2>
-                <Icon type="clock" size="20" color="blue" /> Your Recently Used
-                Artists
-              </h2>
-
-              <ArtistsTable
-                artists={filteredArtists}
-                rowAction={handleTableClick}
-                favoriteAction={this.props.updateFavoriteArtists}
-                pending={pending.REQUEST_ARTISTS}
-                user={user}
-              />
-            </section>
-          )}
-
           <section className="artists__section">
             <h2>All Artists</h2>
             <input
@@ -84,11 +58,12 @@ class Artists extends Component {
               checked={showFavoriteArtistsOnly}
             />
             <ArtistsTable
-              artists={filteredArtists}
+              artists={db.artists}
               searchQuery={searchQuery}
               pending={pending.REQUEST_ARTISTS}
               rowAction={handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
+              showFavoriteArtistsOnly={showFavoriteArtistsOnly}
               user={user}
             />
           </section>

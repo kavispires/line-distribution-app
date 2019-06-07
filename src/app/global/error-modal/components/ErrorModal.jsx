@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import common components
-import { Icon } from '../index';
+import { Icon } from '../../../common/index';
 
 const ErrorModal = ({ app, handleCloseErrorModal, handleSendBugReport }) => {
   if (app.error) {
