@@ -70,6 +70,7 @@ input:checked + .slider:before {
   box-shadow: 1px 1px 1px $color-gray-2;
   display: inline-block;
   width: 50%;
+  position: relative;
 
   &:last-child {
     margin-right: 0;
@@ -81,6 +82,20 @@ input:checked + .slider:before {
 
   &__group {
     display: flex;
+  }
+
+  &__go-to-button {
+    position: absolute;
+    top: $unit;
+    right: $unit;
+    padding: 2px 4px;
+    background: none;
+    border-radius: $unit-p4;
+    cursor: pointer;
+
+    &:hover {
+      background: $color-negative;
+    }
   }
 
   &__video {

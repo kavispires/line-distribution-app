@@ -529,6 +529,7 @@ input:checked + .slider:before {
   box-shadow: 1px 1px 1px #b5b5ba;
   display: inline-block;
   width: 50%;
+  position: relative;
 }
 .active-widget:last-child {
   margin-right: 0;
@@ -538,6 +539,18 @@ input:checked + .slider:before {
 }
 .active-widget__group {
   display: flex;
+}
+.active-widget__go-to-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 2px 4px;
+  background: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.active-widget__go-to-button:hover {
+  background: #ffffff;
 }
 .active-widget__video {
   display: flex;
