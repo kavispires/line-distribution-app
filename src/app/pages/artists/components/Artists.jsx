@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 // Import common components
 import {
   ActiveUnit,
-  Icon,
   Switch,
   RequirementWrapper,
   ActiveSong,

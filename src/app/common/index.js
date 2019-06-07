@@ -2,7 +2,6 @@ import ActiveSong from './containers/ActiveSongWidgetContainer';
 import ActiveUnit from './containers/ActiveUnitWidgetContainer';
 import ActiveVideoWidget from './components/ActiveVideoWidget';
 import Collapsible from './components/Collapsible';
-import ErrorModal from './containers/ErrorModalContainer';
 import FavoriteIcon from './components/FavoriteIcon';
 import Icon from './components/Icon';
 import Loading from './components/Loading';
@@ -23,7 +22,6 @@ export {
   ActiveUnit,
   ActiveVideoWidget,
   Collapsible,
-  ErrorModal,
   FavoriteIcon,
   Icon,
   Loading,

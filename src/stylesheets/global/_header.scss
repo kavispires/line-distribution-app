@@ -36,7 +36,7 @@ $header_height_logo: 36px;
 .header {
   width: 100%;
   display: flex;
-  padding: $padding;
+  padding: $padding $unit-x2;
   background-color: $color-primary;
   background: linear-gradient(to right, #000000, #000d71);
   height: $header_height;
