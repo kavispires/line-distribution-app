@@ -7,7 +7,7 @@ $header_height_logo: 36px;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 11;
-  top: 42px;
+  top: 32px;
   border-top: 6px solid transparent;
 
   hr {
@@ -101,7 +101,6 @@ $header_height_logo: 36px;
 
   &__dropdown {
     @extend .dropdown;
-    top: 32px;
     border-top: 10px solid transparent;
   }
 

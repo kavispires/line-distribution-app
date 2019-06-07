@@ -13,17 +13,14 @@ import Artist from './app/pages/artist';
 import Distribute from './app/pages/distribute';
 import Home from './app/pages/home';
 import Idols from './app/pages/idols';
+import Lab from './app/pages/lab';
+import LearnMore from './app/pages/learn-more';
 import Lyrics from './app/pages/lyrics';
 import Manage from './app/pages/manage';
 import Songs from './app/pages/songs';
 import Sync from './app/pages/sync';
 import UIReference from './app/pages/ui-reference';
-
-import LabContainer from './containers/LabContainer';
-import LearnMoreContainer from './containers/LearnMoreContainer';
-import MyArtistsContainer from './containers/MyArtistsContainer';
-import MyDistributionsContainer from './containers/MyDistributionsContainer';
-import TempContainer from './containers/TempContainer';
+import User from './app/pages/user';
 
 // Styles Import
 import './stylesheets/index.css';
@@ -37,22 +34,17 @@ const routes = (
       <Route exact path="/artists" component={Artists} />
       <Route path="/distribute" component={Distribute} />
       <Route path="/idols" component={Idols} />
-      <Route path="/lab" component={LabContainer} />
-      <Route path="/learn-more" component={LearnMoreContainer} />
+      <Route path="/lab" component={Lab} />
+      <Route path="/learn-more" component={LearnMore} />
       <Route path="/lyrics" component={Lyrics} />
       <Route path="/songs" component={Songs} />
 
       <Route path="/admin/actions" component={AdminActions} />
       <Route path="/admin/manage" component={Manage} />
       <Route path="/admin/sync" component={Sync} />
-      <Route path="/admin/temp" component={TempContainer} />
       <Route path="/admin/ui-reference" component={UIReference} />
 
-      <Route path="/user/my-artists" component={MyArtistsContainer} />
-      <Route
-        path="/user/my-distributions"
-        component={MyDistributionsContainer}
-      />
+      <Route path="/user" component={User} />
 
       <Route exact path="/" component={Home} />
       <Footer />

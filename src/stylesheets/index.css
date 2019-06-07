@@ -714,7 +714,7 @@ input:checked + .slider:before {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 11;
-  top: 42px;
+  top: 32px;
   border-top: 6px solid transparent;
 }
 .dropdown hr,
@@ -806,7 +806,6 @@ input:checked + .slider:before {
   border-left-color: #7e7e82 !important;
 }
 .header-admin__dropdown {
-  top: 32px;
   border-top: 10px solid transparent;
 }
 .header-admin:hover .dropdown,

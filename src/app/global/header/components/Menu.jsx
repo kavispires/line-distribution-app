@@ -114,8 +114,8 @@ const Menu = ({
             {auth.user.displayName}
           </button>
           <div className="header-user__dropdown">
-            <Link to="/user/my-artists">My Artists</Link>
-            <Link to="/user/my-distributions">My Distributions</Link>
+            <Link to="/user?tab=1">My Artists</Link>
+            <Link to="/user?tab=2">My Distributions</Link>
             <hr />
             <a href="/" onClick={logout}>
               Sign out <Icon type="logout" inline />
