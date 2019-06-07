@@ -45,6 +45,10 @@ p {
   display: none;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .container {
   width: 100%;
   height: 100%;
