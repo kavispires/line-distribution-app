@@ -5,7 +5,7 @@ const initialState = {
   activeDistribution: {},
   activeSong: {},
   activeUnit: {},
-  category: '',
+  category: 'OFFICIAL',
   distributeView: 'view',
   distributionLines: [],
   rates: {},
