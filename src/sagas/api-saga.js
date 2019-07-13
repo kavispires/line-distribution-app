@@ -287,7 +287,7 @@ function* requestSong(action) {
     yield put({ type: types.SET_ACTIVE_SONG, payload: selectedSong });
 
     // Add selected song to previously fetched songs
-    const sortedSongsList = _.sortBy(
+    const sortedSongsList = _.orderBy(
       [selectedSong, ...previouslyLoadedSongs],
       [s => s.title.toLowerCase()]
     );
@@ -313,7 +313,7 @@ function* requestSongs(action) {
   try {
     const response = yield API.get('/songs');
     const songsList = utils.parseResponse(response);
-    const sortedSongsList = _.sortBy(songsList, [s => s.title.toLowerCase()]);
+    const sortedSongsList = _.orderBy(songsList, [s => s.title.toLowerCase()]);
     yield put({ type: types.SET_SONGS, payload: sortedSongsList });
   } catch (error) {
     yield put({
