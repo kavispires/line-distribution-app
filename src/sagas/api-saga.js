@@ -270,6 +270,42 @@ function* requestMembers(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+function* requestSong(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  yield delay(DELAY_DURATION);
+
+  const { songId, previouslyLoadedSongs } = action;
+
+  let selectedSong = {};
+
+  // Fetch Artist
+  try {
+    const response = yield API.get(`/songs/${songId}`);
+    selectedSong = utils.parseResponse(response);
+
+    // Activate Song
+    yield put({ type: types.SET_ACTIVE_SONG, payload: selectedSong });
+
+    // Add selected song to previously fetched songs
+    const sortedSongsList = _.sortBy(
+      [selectedSong, ...previouslyLoadedSongs],
+      [s => s.title.toLowerCase()]
+    );
+    yield put({ type: types.SET_SONGS, payload: sortedSongsList });
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: [
+        `Unable to load song ${songId} from database`,
+        error.toString(),
+      ],
+      actionType: action.type,
+    });
+  }
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
 function* requestSongs(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -335,7 +371,7 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   }, membersArray[0].gender);
 
   // Fetch distributions and merge
-  let distributions = {};
+  let distributions = [];
   try {
     const response = yield API.get(`/units/${unitId}/distributions`);
     distributions = utils.parseResponse(response);
@@ -350,12 +386,45 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
     });
   }
 
-  unit.distributions = distributions || [];
+  const songsDict = {};
 
-  unit.songsDict = distributions.reduce((dict, distribution) => {
-    dict[distribution.songId] = distribution.id;
-    return dict;
-  }, {});
+  // Separate distribution into official and custom ones
+  unit.distributions = distributions.reduce(
+    (obj, distribution) => {
+      if (
+        distribution.category === 'OFFICIAL' ||
+        distribution.category === ''
+      ) {
+        // TO-DO: Remove this when DB is fixed
+        distribution.category = 'OFFICIAL';
+        obj.official.push(distribution);
+      } else {
+        obj.custom.push(distribution);
+      }
+
+      // Set songs dictionary entry
+      songsDict[distribution.songId] = distribution.id;
+
+      return obj;
+    },
+    {
+      official: [],
+      custom: [],
+    }
+  );
+
+  // Sort songs
+  unit.distributions.official = _.sortBy(unit.distributions.official, [
+    'title',
+    'originalArtist',
+  ]);
+  unit.distributions.custom = _.sortBy(unit.distributions.custom, [
+    'title',
+    'originalArtist',
+  ]);
+
+  // Add songs dictionary to unit
+  unit.songsDict = songsDict;
 
   // Calculate averages
 
@@ -757,6 +826,7 @@ function* apiSaga() {
   yield takeLatest('REQUEST_COLORS', requestColors);
   yield takeLatest('REQUEST_DISTRIBUTION', requestDistribution);
   yield takeLatest('REQUEST_MEMBERS', requestMembers);
+  yield takeLatest('REQUEST_SONG', requestSong);
   yield takeLatest('REQUEST_SONGS', requestSongs);
   yield takeLatest('REQUEST_UNIT', requestUnit);
   yield takeLatest('REQUEST_UNIT_MEMBERS', requestUnitMembers);

@@ -15,9 +15,13 @@ class Distribute extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-      prevProps.distribute.activeDistribution !==
-      this.props.distribute.activeDistribution
+      (prevProps.distribute.activeDistribution !==
+        this.props.distribute.activeDistribution ||
+        prevProps.distribute.activeSong !== this.props.distribute.activeSong) &&
+      this.props.distribute.activeSong.id &&
+      this.props.distribute.activeDistribution.id
     ) {
+      this.props.prepareSong(this.props.distribute.activeSong);
       this.props.mergeActiveDistribution();
     }
   }
