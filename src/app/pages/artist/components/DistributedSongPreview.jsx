@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 const DistributedSongPreview = ({ rates, members }) => (
   <div className="distribution-rates-preview__container">
     {Object.keys(members).map(memberId => {
-      const percentage = (100 * rates[memberId]) / (rates.total - rates.ALL);
+      const percentage =
+        (100 * rates[memberId]) / (rates.total - rates.ALL - rates.NONE);
 
       const spanWidth = {
         width: `${percentage}%`,
