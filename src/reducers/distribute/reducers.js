@@ -5,7 +5,7 @@ const initialState = {
   activeDistribution: {},
   activeSong: {},
   activeUnit: {},
-  category: '',
+  category: 'OFFICIAL',
   distributeView: 'view',
   distributionLines: [],
   rates: {},
@@ -439,12 +439,12 @@ export default function reducer(prevState = initialState, action) {
       newState.distributionLines = action.payload;
       break;
 
-    case types.SET_DISTRIBUTION_REMAINDER:
-      newState.remainder = action.payload;
-      break;
-
     case types.SET_RATES:
       newState.rates = action.payload;
+      break;
+
+    case types.SET_DISTRIBUTION_REMAINDER:
+      newState.remainder = action.payload;
       break;
 
     case types.SET_TIMESTAMPS_DICT:

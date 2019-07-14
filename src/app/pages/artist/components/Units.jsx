@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // Import components
 import BiasPicture from './BiasPicture';
+import DistributedSongsTable from './DistributedSongsTable';
 // Import common components
 import {
   Tabs,
@@ -11,11 +12,11 @@ import {
   MemberCard,
   Select,
 } from '../../../common';
-import DistributedSongsTable from './DistributedSongsTable';
 
 class Units extends Component {
   componentDidMount() {
     this.props.props.getBias();
+    this.goToDistribution = this.goToDistribution.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -31,6 +32,13 @@ class Units extends Component {
     this.props.props.activateUnit();
 
     this.props.props.history.push(`/${page}`);
+  }
+
+  goToDistribution(distribution) {
+    if (distribution && distribution.id && distribution.songId) {
+      this.artistRedirect('distribute');
+      this.props.props.activateSongDistribution(distribution);
+    }
   }
 
   render() {
@@ -151,11 +159,20 @@ class Units extends Component {
                 </div>
               </LoadingWrapper>
               <hr className="unit-section__ruler" />
-              <h2>Distributions</h2>
+              <h2>Official Songs Distributions</h2>
               <LoadingWrapper pending={isUnitPending}>
                 <DistributedSongsTable
-                  distributions={selectedUnit.distributions}
+                  distributions={selectedUnit.distributions.official}
                   members={selectedUnit.members}
+                  rowAction={this.goToDistribution}
+                />
+              </LoadingWrapper>
+              <h2>Custom Distributions</h2>
+              <LoadingWrapper pending={isUnitPending}>
+                <DistributedSongsTable
+                  distributions={selectedUnit.distributions.custom}
+                  members={selectedUnit.members}
+                  rowAction={this.goToDistribution}
                 />
               </LoadingWrapper>
             </div>
@@ -170,7 +187,6 @@ class Units extends Component {
 
 Units.propTypes = {
   props: PropTypes.object.isRequired,
-  artists: PropTypes.object.isRequired,
 };
 
 export default Units;

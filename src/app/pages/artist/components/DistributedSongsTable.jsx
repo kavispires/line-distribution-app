@@ -51,12 +51,19 @@ const DistributedSongsTable = ({
       <tbody onClick={rowAction}>
         {distributions.length > 0
           ? distributions.map(entry => (
-              <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
-                <td>{entry.title}</td>
-                <td>
+              <tr
+                key={`artist-distributions-${entry.id}`}
+                id={`a-${entry.id}`}
+                className="artist-distributed-songs-row"
+                onClick={() => rowAction(entry)}
+              >
+                <td className="artist-distributed-songs-row__title">
+                  {entry.title}
+                </td>
+                <td className="artist-distributed-songs-row__original-artist">
                   {humanizeCategory(entry.category, entry.originalArtist)}
                 </td>
-                <td>
+                <td className="artist-distributed-songs-row__distribution-preview">
                   <DistributedSongPreview
                     rates={entry.rates}
                     members={members}

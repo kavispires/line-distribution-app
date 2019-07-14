@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // Import shared components
-import { FavoriteIcon, LoadingIcon } from '../../../common';
+import { FavoriteIcon, LoadingIcon, Icon } from '../../../common';
 
 const ArtistsTable = ({
   artists,
@@ -74,7 +74,7 @@ const ArtistsTable = ({
       <table className="table">
         <thead>
           <tr>
-            <th className="artists-table__favorite-col" />
+            <th className="artists-table__favorite-col">Favorite</th>
             <th>Name</th>
             <th>Genre</th>
             <th>Units</th>
@@ -98,7 +98,12 @@ const ArtistsTable = ({
                       }
                     />
                   </td>
-                  <td>{entry.name}</td>
+                  <td>
+                    {entry.name}{' '}
+                    {entry.private ? (
+                      <Icon type="private" color="red" title="Private" inline />
+                    ) : null}
+                  </td>
                   <td>{entry.genre}</td>
                   <td>{entry.units ? entry.units.length : 0}</td>
                   <td>

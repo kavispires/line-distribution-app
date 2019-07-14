@@ -3,6 +3,8 @@ import _ from 'lodash';
 import actions from './actions';
 
 const activateSong = id => (dispatch, getState) => {
+  dispatch(actions.setIsDistributionSongReady(false));
+
   // Reset everything but Unit
   dispatch(actions.resetDistributeSong({}));
 
@@ -20,6 +22,31 @@ const activateSong = id => (dispatch, getState) => {
       type: 'REQUEST_DISTRIBUTION',
       distributionId: songsDict[activeSong.id],
     });
+  } else {
+    dispatch(actions.setIsDistributionSongReady(true));
+  }
+};
+
+const activateSongDistribution = distribution => (dispatch, getState) => {
+  // Reset everything but Unit
+  dispatch(actions.resetDistributeSong({}));
+
+  // Set screen
+  dispatch(actions.setDistributeView('view'));
+
+  // Set active distribution
+  dispatch(actions.setActiveDistribution(distribution));
+
+  const { songId } = distribution;
+
+  const allSongs = [...getState().db.songs];
+  const activeSong = _.find(allSongs, { songId });
+  if (activeSong === undefined) {
+    dispatch({
+      type: 'REQUEST_SONG',
+      songId,
+      previouslyLoadedSongs: allSongs,
+    });
   }
 };
 
@@ -36,8 +63,10 @@ const activateUnit = () => (dispatch, getState) => {
   dispatch(actions.setActiveUnit(activeUnit));
 };
 
-const prepareSong = () => (dispatch, getState) => {
-  const { activeSong } = getState().distribute;
+const prepareSong = activeSongParam => (dispatch, getState) => {
+  // const { activeSong } = getState().distribute;
+  const activeSong = activeSongParam || getState().distribute.activeSong;
+
   if (activeSong.id) {
     const distributionString = activeSong.distribution;
 
@@ -321,6 +350,7 @@ const parseTimestamps = dLines => (dispatch, getState) => {
 export default {
   activateMemberPill,
   activateSong,
+  activateSongDistribution,
   activateUnit,
   handleDistributeView,
   handleDistributionCategory,

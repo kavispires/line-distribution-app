@@ -1201,6 +1201,17 @@ input:checked + .slider:before {
   flex-wrap: wrap;
 }
 
+.artist-distributed-songs-row {
+  width: 100%;
+}
+.artist-distributed-songs-row__title,
+.artist-distributed-songs-row__original-artist {
+  width: 25%;
+}
+.artist-distributed-songs-row__distribution-preview {
+  width: 50%;
+}
+
 .distribution-rates-preview__container {
   width: 100%;
   display: flex;

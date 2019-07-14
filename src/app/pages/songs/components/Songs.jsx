@@ -97,7 +97,8 @@ class Songs extends Component {
 
   sortSongs(songs) {
     const { sortedBy, order } = this.state;
-    return _.orderBy(songs, [sortedBy], [order]);
+    console.log(sortedBy);
+    return _.orderBy(songs, [song => song[sortedBy].toLowerCase()], [order]);
   }
 
   render() {
