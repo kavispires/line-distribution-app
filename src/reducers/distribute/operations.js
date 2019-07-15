@@ -3,8 +3,6 @@ import _ from 'lodash';
 import actions from './actions';
 
 const activateSong = id => (dispatch, getState) => {
-  dispatch(actions.setIsDistributionSongReady(false));
-
   // Reset everything but Unit
   dispatch(actions.resetDistributeSong({}));
 
@@ -22,8 +20,6 @@ const activateSong = id => (dispatch, getState) => {
       type: 'REQUEST_DISTRIBUTION',
       distributionId: songsDict[activeSong.id],
     });
-  } else {
-    dispatch(actions.setIsDistributionSongReady(true));
   }
 };
 

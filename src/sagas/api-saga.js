@@ -427,6 +427,63 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
   unit.songsDict = songsDict;
 
   // Calculate averages
+  const averages = {};
+  const totals = {
+    official: 0,
+    custom: 0,
+  };
+
+  unit.distributions.official.forEach(distribution => {
+    Object.entries(distribution.rates).forEach(([memberId, duration]) => {
+      if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
+        if (averages[memberId] === undefined) {
+          averages[memberId] = {
+            official: 0,
+            custom: 0,
+          };
+        }
+        averages[memberId].official += duration;
+        totals.official += duration;
+      }
+    });
+  });
+
+  unit.distributions.custom.forEach(distribution => {
+    Object.entries(distribution.rates).forEach(([memberId, duration]) => {
+      if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
+        if (averages[memberId] === undefined) {
+          averages[memberId] = {
+            official: 0,
+            custom: 0,
+          };
+        }
+        averages[memberId].custom += duration;
+        totals.custom += duration;
+      }
+    });
+  });
+
+  Object.entries(averages).forEach(([memberId, durations]) => {
+    averages[memberId].all = Number(
+      (
+        ((durations.official + durations.custom) * 100) /
+        (totals.official + totals.custom)
+      ).toFixed(1)
+    );
+    averages[memberId].official = Number(
+      ((durations.official * 100) / totals.official).toFixed(1)
+    );
+    averages[memberId].custom = Number(
+      ((durations.custom * 100) / totals.custom).toFixed(1)
+    );
+
+    averages[memberId].official =
+      averages[memberId].official > 1 ? averages[memberId].official : 0;
+    averages[memberId].custom =
+      averages[memberId].custom > 1 ? averages[memberId].custom : 0;
+  });
+
+  unit.averages = averages;
 
   // Flag unit as complete
   unit.complete = true;

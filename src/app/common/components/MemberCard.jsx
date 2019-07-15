@@ -57,9 +57,8 @@ const MemberCard = ({
     )}
 
     <p>
-      <b>Date of Birth:</b> {utils.parseBirthDate(member.birthdate)} ({
-        member.age
-      }yo)
+      <b>Date of Birth:</b> {utils.parseBirthDate(member.birthdate)} (
+      {member.age}yo)
     </p>
     <p>
       <b>Nationality: </b>
@@ -68,13 +67,16 @@ const MemberCard = ({
     {averages && (
       <Fragment>
         <p>
-          <b>Avg Official Songs: </b>0%
+          <b>Avg Official Songs: </b>
+          {averages.official}%
         </p>
         <p>
-          <b>Avg Custom Songs: </b>0%
+          <b>Avg Custom Songs: </b>
+          {averages.custom}%
         </p>
         <p>
-          <b>Avg All Songs: </b>0%
+          <b>Avg All Songs: </b>
+          {averages.all}%
         </p>
       </Fragment>
     )}

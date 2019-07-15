@@ -146,7 +146,7 @@ class Units extends Component {
                 <div className="unit-section__members">
                   {Object.values(selectedUnit.members).map(member => (
                     <MemberCard
-                      averages={{}}
+                      averages={selectedUnit.averages[member.id]}
                       key={member.id}
                       member={member}
                       favoriteState={
