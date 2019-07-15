@@ -1,24 +1,24 @@
 // import jest from 'jest'; // eslint-disable-line
 import API from './index';
 
-jest.setTimeout(5000);
-jest.mock('firebase', () => {
-  const firebasemock = require('firebase-mock');
+// jest.setTimeout(5000);
+// jest.mock('firebase', () => {
+//   const firebasemock = require('firebase-mock');
 
-  const mockdatabase = new firebasemock.MockFirebase();
-  const mockauth = new firebasemock.MockFirebase();
-  const mocksdk = new firebasemock.MockFirebaseSdk(
-    path => {
-      return path ? mockdatabase.child(path) : mockdatabase;
-    },
-    () => {
-      return mockauth;
-    }
-  );
+//   const mockdatabase = new firebasemock.MockFirebase();
+//   const mockauth = new firebasemock.MockFirebase();
+//   const mocksdk = new firebasemock.MockFirebaseSdk(
+//     path => {
+//       return path ? mockdatabase.child(path) : mockdatabase;
+//     },
+//     () => {
+//       return mockauth;
+//     }
+//   );
 
-  // return the mock to match your export api
-  return mocksdk;
-});
+//   // return the mock to match your export api
+//   return mocksdk;
+// });
 
 let gResult;
 
