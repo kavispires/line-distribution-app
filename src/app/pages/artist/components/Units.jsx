@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 // Import components
 import BiasPicture from './BiasPicture';
@@ -144,7 +145,10 @@ class Units extends Component {
               <h2>Members:</h2>
               <LoadingWrapper pending={isUnitPending}>
                 <div className="unit-section__members">
-                  {Object.values(selectedUnit.members).map(member => (
+                  {_.sortBy(
+                    Object.values(selectedUnit.members),
+                    'birthdate'
+                  ).map(member => (
                     <MemberCard
                       averages={selectedUnit.averages[member.id]}
                       key={member.id}
