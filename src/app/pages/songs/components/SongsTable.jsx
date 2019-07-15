@@ -85,7 +85,6 @@ const SongsTable = ({
           <th>Meant For</th>
           <th>Group Size</th>
           <th>Video</th>
-          <th>Title Song</th>
           <th />
         </tr>
       </thead>
@@ -116,7 +115,17 @@ const SongsTable = ({
                       ''
                     )}
                   </td>
-                  <td>{entry.title}</td>
+                  <td>
+                    {entry.title}{' '}
+                    {entry.single ? (
+                      <Icon
+                        type="title-song"
+                        color="orange"
+                        title="Title Song"
+                        inline
+                      />
+                    ) : null}
+                  </td>
                   <td>
                     {entry.originalArtist}{' '}
                     {entry.originalArtistId && (
@@ -161,23 +170,6 @@ const SongsTable = ({
                       />
                     ) : (
                       'Unavailable'
-                    )}
-                  </td>
-                  <td>
-                    {entry.single ? (
-                      <Icon
-                        type="check"
-                        color="green"
-                        title="Title Song"
-                        inline
-                      />
-                    ) : (
-                      <Icon
-                        type="no"
-                        color="red"
-                        title="Not a Title Song"
-                        inline
-                      />
                     )}
                   </td>
                   <td>
