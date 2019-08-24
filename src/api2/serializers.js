@@ -18,6 +18,7 @@ const serializers = {
       attributes: {
         agency: data.agency || UNKNOWN,
         createdBy: data.createdBy || null,
+        disbanded: data.disbanded || false,
         genre: getEnum(data.genre, 'GENRE'),
         members,
         name: data.name,
@@ -26,6 +27,32 @@ const serializers = {
         private: data.private || false,
         query,
         unitIds: data.unitIds,
+      },
+    };
+  },
+
+  member: (data, id) => {
+    data = _.cloneDeep(data);
+
+    return {
+      id: data.id || id,
+      type: 'member',
+      attributes: {
+        age: data.birthdate ? utils.calculateAge(data.birthdate) : 0,
+        birthdate: data.birthdate || 0,
+        color: data.color,
+        createdBy: data.createdBy || null,
+        gender: getEnum(data.gender, 'GENDER'),
+        hide: data.hide || false,
+        initials: data.initials || utils.buildMemberInitials(data.name),
+        modifiedBy: data.modifiedBy || null,
+        name: data.name,
+        nationality: getEnum(data.nationality, 'NATIONALITY'),
+        positions: data.positions || [],
+        private: data.private || false,
+        primaryGenre: getEnum(data.primaryGenre, 'GENRE'),
+        referenceArtists: data.referenceArtists || [],
+        tags: data.tags || [],
       },
     };
   },
@@ -88,14 +115,16 @@ export const serializeCollection = (
 ) => {
   const result = {};
 
-  let collectionList = Object.values(collection);
+  let collectionEntries = Object.entries(collection);
 
   if (sortBy) {
-    collectionList = _.sortBy(collectionList, [a => a[sortBy].toLowerCase()]);
+    collectionEntries = _.sortBy(collectionEntries, [
+      a => a[1][sortBy].toLowerCase(),
+    ]);
   }
 
-  const serializedCollectionResult = collectionList.map(value =>
-    serializers[type](value)
+  const serializedCollectionResult = collectionEntries.map(([id, value]) =>
+    serializers[type](value, id)
   );
 
   result.data = serializedCollectionResult;

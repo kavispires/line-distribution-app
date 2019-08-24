@@ -269,6 +269,10 @@ class API {
             result = await getFunctions.fetchArtists(this._db, this._reload);
           }
           break;
+        // API/members
+        case 'members':
+          result = await getFunctions.fetchMembers(this._db, this._reload);
+          break;
         // API/users
         case 'users':
           // API/users/<id>
@@ -280,7 +284,7 @@ class API {
           break;
         default:
           return reject(
-            Error('Unable to perform GET action, path ${} does not exist')
+            Error(`Unable to perform GET action, path ${path} does not exist`)
           );
       }
 
@@ -314,6 +318,18 @@ const getFunctions = {
       db.artists[id] = response;
     }
     return serialize(db.artists[id], id, 'artist');
+  },
+  // Fetches list of artists
+  fetchMembers: async (db, reload) => {
+    if (reload.members === true) {
+      let response = {};
+      await dbRef.ref(`/members`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.members = response;
+      reload.members = false;
+    }
+    return serializeCollection(db.members, 'member', true, 'name');
   },
   // Fetches a single user
   fetchUser: async (id, db, reload) => {

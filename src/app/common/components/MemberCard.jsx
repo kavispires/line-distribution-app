@@ -28,16 +28,12 @@ const MemberCard = ({
       className={
         showReferenceArtist ? 'card__profile-full-image' : 'card__profile-image'
       }
-      colorId={member.colorId}
+      color={member.color}
       gender={member.gender}
       memberId={member.id}
       name={member.name}
     />
-    <span
-      className={`card__color-bar background-color-${utils.getColorNumber(
-        member.colorId
-      )}`}
-    />
+    <span className={`card__color-bar background-color-${member.color}`} />
     <h3 className="card__name">
       {member.name}
       <FavoriteIcon
@@ -52,7 +48,7 @@ const MemberCard = ({
         {member.private && (
           <Icon type="private" color="red" inline title="private" size="18" />
         )}
-        <b>From </b> {member.referenceArtist}
+        <b>From </b> {member.referenceArtists.join(', ')}
       </p>
     )}
 

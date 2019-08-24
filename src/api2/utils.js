@@ -1,4 +1,5 @@
 import HttpStatus from 'http-status-codes';
+import { UNKNOWN } from './enums';
 
 /**
  * Parses the api path into an object
@@ -66,9 +67,40 @@ const breadcrumble = path => {
 const buildArtistQuery = (data, membersData) => {
   const { name } = data;
   const otherNames = data.otherNames || '';
+  const agency = data.agency !== UNKNOWN ? data.agency : '';
   const membersNames = membersData.map(m => m.name).join(' ');
 
-  return `${name} ${otherNames} ${membersNames}`.toLowerCase();
+  return `${name} ${otherNames} ${membersNames} ${agency}`.toLowerCase();
+};
+
+/**
+ * Build member initials based on their name
+ * @param {string} name
+ * @returns {string} a two-digit upper cased string
+ */
+const buildMemberInitials = name =>
+  `${name[0]}${name[Math.floor(name.length / 2)]}`.toUpperCase();
+
+/**
+ * Calculates the age of a member based on their birthday (YYYYMMDD) keeping a cache
+ * @param {number} birthday
+ * @returns {number} the age of the member
+ */
+const TODAY = process.env.NODE_ENV === 'test' ? 1550000000000 : Date.now();
+const ageDict = {};
+const calculateAge = birthday => {
+  if (ageDict[birthday]) return ageDict[birthday];
+
+  const birthdateString = birthday.toString();
+  const birthDate = new Date(
+    +birthdateString.substring(0, 4),
+    +birthdateString.substring(4, 6),
+    +birthdateString.substring(6)
+  );
+
+  const ageDate = new Date(TODAY - birthDate.getTime());
+  ageDict[birthday] = Math.abs(ageDate.getUTCFullYear() - 1970);
+  return ageDict[birthday];
 };
 
 /**
@@ -95,6 +127,8 @@ const wait = (ms = 1000) => new Promise((r, j) => setTimeout(r, ms)); // eslint-
 export default {
   breadcrumble,
   buildArtistQuery,
+  buildMemberInitials,
+  calculateAge,
   parseArtistMemberUrn,
   wait,
 };

@@ -33,7 +33,15 @@ class Idols extends Component {
   }
 
   componentDidMount() {
-    this.props.loadMembers();
+    if (this.props.auth.isAuthenticated) {
+      this.props.loadMembers();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
+      this.props.loadMembers();
+    }
   }
 
   updateFilters(formState) {
@@ -259,7 +267,7 @@ class Idols extends Component {
                     <Option value="age">Age</Option>
                     <Option value="colorId">Color</Option>
                     <Option value="gender">Gender</Option>
-                    <Option value="referenceArtist">Group</Option>
+                    <Option value="referenceArtists">Group</Option>
                     <Option value="name">Name</Option>
                     <Option value="nationality">Nationality</Option>
                   </Select>

@@ -1,47 +1,49 @@
 export const GENDERS = {
-  FEMALE: 'Female',
-  MALE: 'Male',
-  UNKOWN: 'Unknown',
+  FEMALE: 'FEMALE',
+  MALE: 'MALE',
+  UNKNOWN: 'UNKNOWN',
 };
 
 export const GENRES = {
-  CPOP: 'C-Pop',
-  JPOP: 'J-Pop',
-  KPOP: 'K-Pop',
-  OTHER: 'Other',
-  POP: 'Pop',
+  CPOP: 'C-POP',
+  JPOP: 'J-POP',
+  KPOP: 'K-POP',
+  OTHER: 'OTHER',
+  POP: 'POP',
 };
 
-export const ETHNICITIES = {
-  AMERICAN: 'American',
-  BRAZILIAN: 'Brazilian',
-  BRITISH: 'British',
-  CANADIAN: 'Canadian',
-  CHINESE: 'Chinese',
-  INDIAN: 'Indian',
-  JAPANESE: 'Japanese',
-  KOREAN: 'Korean',
-  OTHER: 'Other',
-  TAIWANESE: 'Taiwanese',
-  THAI: 'Thai',
-  VIETNAMISE: 'Vietnamise',
+export const NATIONALITIES = {
+  AMERICAN: 'AMERICAN',
+  BRAZILIAN: 'BRAZILIAN',
+  BRITISH: 'BrBRITISHitish',
+  CANADIAN: 'CANADIAN',
+  CHINESE: 'CHINESE',
+  INDIAN: 'INDIAN',
+  INDONESIAN: 'INDONESIAN',
+  FILIPINO: 'FILIPINO',
+  JAPANESE: 'JAPANESE',
+  KOREAN: 'KOREAN',
+  OTHER: 'OTHER',
+  TAIWANESE: 'TAIWANESE',
+  THAI: 'THAI',
+  VIETNAMISE: 'VIETNAMISE',
 };
 
 export const POSITIONS = {
-  LEADER: 'Leader',
-  MAIN_VOCALIST: 'Main Vocalist',
-  MAIN_RAPPER: 'Main Rapper',
-  MAIN_DANCER: 'Main Dancer',
-  LEAD_VOCALIST: 'Lead Vocalist',
-  LEAD_RAPPER: 'Lead Rapper',
-  LEAD_DANCER: 'Lead Dancer',
-  VOCALIST: 'Vocalist',
-  RAPPER: 'Rapper',
-  DANCER: 'Dancer',
-  CENTER: 'Center',
-  FACE: 'Face of the Group',
-  VISUAL: 'Visual',
-  MAKNAE: 'Maknae',
+  LEADER: 'LEADER',
+  MAIN_VOCALIST: 'MAIN_VOCALIST',
+  MAIN_RAPPER: 'MAIN_RAPPER',
+  MAIN_DANCER: 'MAIN_DANCER',
+  LEAD_VOCALIST: 'LEAD_VOCALIST',
+  LEAD_RAPPER: 'LEAD_RAPPER',
+  LEAD_DANCER: 'LEAD_DANCER',
+  VOCALIST: 'VOCALIST',
+  RAPPER: 'RAPPER',
+  DANCER: 'DANCER',
+  CENTER: 'CENTER',
+  FACE: 'FACE',
+  VISUAL: 'VISUAL',
+  MAKNAE: 'MAKNAE',
 };
 
 export const UNKNOWN = 'UNKNOWN';
@@ -58,8 +60,8 @@ const getEnum = (value = '', library = '') => {
     case 'GENRE':
       result = GENRES[value];
       break;
-    case 'ETHNICITY':
-      result = ETHNICITIES[value];
+    case 'NATIONALITY':
+      result = NATIONALITIES[value];
       break;
     case 'POSITIONS':
       result = POSITIONS[value];
