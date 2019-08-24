@@ -12,9 +12,18 @@ import ArtistsTable from './ArtistsTable';
 
 class Artists extends Component {
   componentDidMount() {
-    this.props.loadArtists();
-    this.props.updateSearchQuery('');
+    if (this.props.auth.isAuthenticated) {
+      this.props.loadArtists();
+      this.props.updateSearchQuery('');
+    }
   }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
+      this.props.loadArtists();
+    }
+  }
+
   render() {
     const {
       app: { pending },

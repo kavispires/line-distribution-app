@@ -64,9 +64,8 @@ const ArtistsTable = ({
         <p className="italic">Loading...</p>
       ) : (
         <p className="italic">
-          Displaying {filteredArtists.length} artists{hasActiveFilters
-            ? ' within search'
-            : ''}
+          Displaying {filteredArtists.length} artists
+          {hasActiveFilters ? ' within search' : ''}
           ...
         </p>
       )}
@@ -76,6 +75,7 @@ const ArtistsTable = ({
           <tr>
             <th className="artists-table__favorite-col">Favorite</th>
             <th>Name</th>
+            <th>Agency</th>
             <th>Genre</th>
             <th>Units</th>
             <th>Members</th>
@@ -104,10 +104,12 @@ const ArtistsTable = ({
                       <Icon type="private" color="red" title="Private" inline />
                     ) : null}
                   </td>
+                  <td>{entry.agency}</td>
                   <td>{entry.genre}</td>
-                  <td>{entry.units ? entry.units.length : 0}</td>
+                  <td>{entry.unitIds.length}</td>
                   <td>
-                    {entry.memberList.join(', ')} ({entry.memberList.length})
+                    {entry.members.map(member => member.name).join(', ')} (
+                    {entry.members.length})
                   </td>
                 </tr>
               ))

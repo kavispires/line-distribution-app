@@ -26,6 +26,10 @@ function* initializer(action) {
   try {
     const response = yield API.init();
 
+    if (response.loaded) {
+      yield put({ type: types.SET_DATABASE_READY, payload: response.loaded });
+    }
+
     if (response.user.data.id) {
       const user = utils.parseResponse(response.user);
 
@@ -58,22 +62,12 @@ function* requestArtists(action) {
 
   try {
     const response = yield API.get('/artists');
-    const artistList = utils.parseResponse(response);
-    const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
-    yield put({ type: types.SET_ARTISTS, payload: sortedArtistList });
 
-    const artistsTypeahead = [];
-    const artistsTypeaheadDict = {};
+    const parsedArtists = utils.parseResponse(response);
+    yield put({ type: types.SET_ARTISTS, payload: parsedArtists });
 
-    sortedArtistList.forEach(artist => {
-      artistsTypeahead.push(artist.name);
-      artistsTypeaheadDict[artist.name] = artist.id;
-    });
-    yield put({ type: types.SET_ARTISTS_TYPEAHEAD, payload: artistsTypeahead });
-    yield put({
-      type: types.SET_ARTISTS_TYPEAHEAD_DICT,
-      payload: artistsTypeaheadDict,
-    });
+    const { typeahead } = response.meta;
+    yield put({ type: types.SET_ARTISTS_TYPEAHEAD, payload: typeahead });
   } catch (error) {
     yield put({
       type: 'ERROR',

@@ -302,7 +302,7 @@ const getFunctions = {
       db.artists = response;
       reload.artists = false;
     }
-    return serializeCollection(db.artists, 'artist', true);
+    return serializeCollection(db.artists, 'artist', true, 'name');
   },
   // Fetches a single artist
   fetchArtist: async (id, db, reload) => {

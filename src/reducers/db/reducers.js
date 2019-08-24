@@ -9,6 +9,11 @@ const initialState = {
   membersTypeahead: [],
   membersTypeaheadDict: {},
   songs: [],
+  typeahead: {
+    artists: [],
+    members: [],
+    units: [],
+  },
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -20,11 +25,7 @@ export default function reducer(prevState = initialState, action) {
       break;
 
     case types.SET_ARTISTS_TYPEAHEAD:
-      newState.artistsTypeahead = action.payload;
-      break;
-
-    case types.SET_ARTISTS_TYPEAHEAD_DICT:
-      newState.artistsTypeaheadDict = action.payload;
+      newState.typeahead.artists = action.payload;
       break;
 
     case types.SET_COLORS:
@@ -36,15 +37,15 @@ export default function reducer(prevState = initialState, action) {
       break;
 
     case types.SET_MEMBERS_TYPEAHEAD:
-      newState.membersTypeahead = action.payload;
-      break;
-
-    case types.SET_MEMBERS_TYPEAHEAD_DICT:
-      newState.membersTypeaheadDict = action.payload;
+      newState.typeahead.members = action.payload;
       break;
 
     case types.SET_SONGS:
       newState.songs = action.payload;
+      break;
+
+    case types.SET_UNIT_TYPEAHEAD:
+      newState.typeahead.units = action.payload;
       break;
 
     default:

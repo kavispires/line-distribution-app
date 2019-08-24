@@ -30,10 +30,10 @@ const serializers = {
     };
   },
 
-  typeahead: (data, id) => {
+  typeahead: data => {
     return {
-      text: data.name,
-      value: data.id || id,
+      text: data.attributes.name,
+      value: data.id,
     };
   },
 
@@ -77,24 +77,32 @@ export const serialize = (entity, id, type) => {
  * @param {object} collection the data collection
  * @param {string} type the serializer type
  * @param {boolean} includeTypeahead
+ * @param {string} sortBy
  * @returns {object} a serialized collection of data
  */
 export const serializeCollection = (
   collection,
   type,
-  includeTypeahead = false
+  includeTypeahead = false,
+  sortBy = ''
 ) => {
   const result = {};
 
-  const serializedCollectionResult = Object.values(collection).map(value =>
+  let collectionList = Object.values(collection);
+
+  if (sortBy) {
+    collectionList = _.sortBy(collectionList, [a => a[sortBy].toLowerCase()]);
+  }
+
+  const serializedCollectionResult = collectionList.map(value =>
     serializers[type](value)
   );
 
   result.data = serializedCollectionResult;
 
   if (includeTypeahead) {
-    const serializedTypeahead = Object.entries(collection).map(([key, value]) =>
-      serializers.typeahead(value, key)
+    const serializedTypeahead = serializedCollectionResult.map(value =>
+      serializers.typeahead(value)
     );
 
     result.meta = {
