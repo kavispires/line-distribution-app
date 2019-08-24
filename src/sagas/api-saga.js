@@ -2,7 +2,8 @@ import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
 import { toastr } from 'react-redux-toastr';
 
-import API from '../api';
+// import API from '../api';
+import API from '../api2';
 
 import { types } from '../reducers';
 import utils from '../utils';
@@ -23,16 +24,10 @@ function* initializer(action) {
   yield delay(DELAY_DURATION);
 
   try {
-    const dbStart = yield API.init();
-    const status = dbStart.dbState();
-    yield put({ type: types.SET_DATABASE_READY, payload: status.data.loaded });
+    const response = yield API.init();
 
-    yield delay(DELAY_DURATION + 1000);
-
-    let loggedUser = yield API.auth();
-    loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
-    if (loggedUser) {
-      const user = utils.parseResponse(loggedUser);
+    if (response.user.data.id) {
+      const user = utils.parseResponse(response.user);
 
       yield put({ type: types.SET_USER, payload: user });
       yield put({ type: types.SET_AUTHENTICATED, payload: true });
@@ -40,7 +35,6 @@ function* initializer(action) {
       if (user.isAdmin) {
         yield put({ type: types.SET_ADMIN, payload: true });
       }
-
       yield put({
         type: 'SUCCESS_TOAST',
         message: ['Welcome back!', `You are logged in as ${user.displayName}`],
