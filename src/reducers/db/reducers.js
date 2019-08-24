@@ -2,13 +2,16 @@ import types from './types';
 
 const initialState = {
   artists: [],
-  artistsTypeahead: [],
-  artistsTypeaheadDict: {},
   colors: {},
   members: [],
-  membersTypeahead: [],
-  membersTypeaheadDict: {},
   songs: [],
+  // Indicates when bulk get requests should be performed
+  reload: {
+    artists: true,
+    colors: true,
+    members: true,
+    songs: true,
+  },
   typeahead: {
     artists: [],
     members: [],
@@ -22,6 +25,7 @@ export default function reducer(prevState = initialState, action) {
   switch (action.type) {
     case types.SET_ARTISTS:
       newState.artists = action.payload;
+      newState.reload.artists = false;
       break;
 
     case types.SET_ARTISTS_TYPEAHEAD:
@@ -30,10 +34,19 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_COLORS:
       newState.colors = action.payload;
+      newState.reload.colors = false;
+      break;
+
+    case types.SET_DB_RELOAD:
+      newState.reload = {
+        ...newState.reload,
+        ...action.payload,
+      };
       break;
 
     case types.SET_MEMBERS:
       newState.members = action.payload;
+      newState.reload.members = false;
       break;
 
     case types.SET_MEMBERS_TYPEAHEAD:
@@ -42,6 +55,7 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_SONGS:
       newState.songs = action.payload;
+      newState.reload.songs = false;
       break;
 
     case types.SET_UNIT_TYPEAHEAD:
@@ -51,6 +65,5 @@ export default function reducer(prevState = initialState, action) {
     default:
       return prevState;
   }
-
   return newState;
 }
