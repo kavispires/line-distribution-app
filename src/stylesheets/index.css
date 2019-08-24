@@ -2182,6 +2182,8 @@ input:checked + .slider:before {
   height: 150px;
   margin: 10px;
   padding: 10px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .icon-list {

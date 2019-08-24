@@ -269,6 +269,10 @@ class API {
             result = await getFunctions.fetchArtists(this._db, this._reload);
           }
           break;
+        // API/colors
+        case 'colors':
+          result = await getFunctions.fetchColors(this._db, this._reload);
+          break;
         // API/members
         case 'members':
           result = await getFunctions.fetchMembers(this._db, this._reload);
@@ -318,6 +322,18 @@ const getFunctions = {
       db.artists[id] = response;
     }
     return serialize(db.artists[id], id, 'artist');
+  },
+  // Fetches list of colors
+  fetchColors: async (db, reload) => {
+    if (reload.colors === true) {
+      let response = {};
+      await dbRef.ref(`/colors`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.colors = response;
+      reload.colors = false;
+    }
+    return serializeCollection(db.colors, 'color', true);
   },
   // Fetches list of artists
   fetchMembers: async (db, reload) => {

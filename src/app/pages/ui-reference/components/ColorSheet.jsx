@@ -13,7 +13,7 @@ const ColorSheet = ({ colors }) => {
           colors.map(colorObj => (
             <li
               key={colorObj.id}
-              className={`palette background-color-${colorObj.number}`}
+              className={`palette background-color-${colorObj.id}`}
             >
               {colorObj.id}
               <br />

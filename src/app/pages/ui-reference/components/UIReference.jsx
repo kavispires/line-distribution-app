@@ -10,7 +10,15 @@ import { RequirementWrapper, Tabs, LoadingWrapper } from '../../../common';
 
 class UIReference extends Component {
   componentDidMount() {
-    this.props.loadColors();
+    if (this.props.auth.isAuthenticated) {
+      this.props.loadColors();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
+      this.props.loadColors();
+    }
   }
 
   render() {
@@ -56,6 +64,7 @@ class UIReference extends Component {
 UIReference.propTypes = {
   admin: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
   loadColors: PropTypes.func.isRequired,
   switchUIReferenceTab: PropTypes.func.isRequired,

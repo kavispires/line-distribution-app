@@ -31,6 +31,23 @@ const serializers = {
     };
   },
 
+  color: (data, id) => {
+    data = _.cloneDeep(data);
+
+    const number = Number(id.substring(3));
+
+    return {
+      id: number,
+      type: 'color',
+      attributes: {
+        count: data.count || 0,
+        hex: data.hex,
+        name: data.name,
+        rgb: utils.parseColorRGB(data.rgb),
+      },
+    };
+  },
+
   member: (data, id) => {
     data = _.cloneDeep(data);
 

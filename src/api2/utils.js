@@ -118,6 +118,20 @@ const parseArtistMemberUrn = urn => {
 };
 
 /**
+ * Parses color rgb
+ * @param {string} rgb
+ * @returns {object} with r, g, b
+ */
+const parseColorRGB = rgb => {
+  const [r, g, b] = rgb.split(',');
+  return {
+    r,
+    g,
+    b,
+  };
+};
+
+/**
  * Asyncronous function that delays code when using with async/await
  * @param {number} ms time in miliseconds the fuction should wait
  * @returns {Promise}
@@ -130,5 +144,6 @@ export default {
   buildMemberInitials,
   calculateAge,
   parseArtistMemberUrn,
+  parseColorRGB,
   wait,
 };
