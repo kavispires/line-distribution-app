@@ -5,7 +5,7 @@ import { Checkbox, Form, Option, Select, Text } from 'informed';
 // Import common components
 import { Typeahead } from '../../../common';
 // Import contants
-import constants from '../../../../utils/constants';
+import enums from '../../../../utils/readable-enums';
 
 class SyncStep2Info extends Component {
   constructor(props) {
@@ -30,7 +30,8 @@ class SyncStep2Info extends Component {
             <div className="sync__step--2__container">
               <div className="sync__step--2__group">
                 <label className="sync__form__label">
-                  Song Title*<Text
+                  Song Title*
+                  <Text
                     className="sync__form__input-text"
                     field="title"
                     required
@@ -49,7 +50,8 @@ class SyncStep2Info extends Component {
                 </label>
 
                 <label className="sync__form__label">
-                  Album<Text className="sync__form__input-text" field="album" />
+                  Album{' '}
+                  <Text className="sync__form__input-text" field="album" />
                 </label>
               </div>
 
@@ -64,7 +66,7 @@ class SyncStep2Info extends Component {
                     <Option value="" disabled>
                       Select One...
                     </Option>
-                    {Object.entries(constants.ARTISTS_GENDERS).map(genre => (
+                    {Object.entries(enums.GEND).map(genre => (
                       <Option key={genre[0]} value={genre[0]}>
                         {genre[1]}
                       </Option>
@@ -73,7 +75,8 @@ class SyncStep2Info extends Component {
                 </label>
 
                 <label className="sync__form__label">
-                  Original Group Size*<Text
+                  Original Group Size*
+                  <Text
                     className="sync__form__input-number"
                     field="groupSize"
                     required

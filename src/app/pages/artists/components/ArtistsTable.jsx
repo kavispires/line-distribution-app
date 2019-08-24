@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 // Import shared components
 import { FavoriteIcon, LoadingIcon, Icon } from '../../../common';
+// Import utils
+import enums from '../../../../utils/readable-enums';
 
 const ArtistsTable = ({
   artists,
@@ -105,7 +107,7 @@ const ArtistsTable = ({
                     ) : null}
                   </td>
                   <td>{entry.agency}</td>
-                  <td>{entry.genre}</td>
+                  <td>{enums.GENRES[entry.genre]}</td>
                   <td>{entry.unitIds.length}</td>
                   <td>
                     {entry.members.map(member => member.name).join(', ')} (

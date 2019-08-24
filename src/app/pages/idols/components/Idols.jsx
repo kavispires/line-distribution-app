@@ -6,9 +6,9 @@ import { Checkbox, Form, Option, Select, Text } from 'informed';
 
 // Import common components
 import { Loading, MemberCard, RequirementWrapper } from '../../../common';
-// Import constants
+// Import utils
 import constants from '../../../../utils/constants';
-// Import utility functions
+import enums from '../../../../utils/readable-enums';
 import utils from '../../../../utils';
 
 class Idols extends Component {
@@ -156,7 +156,7 @@ class Idols extends Component {
                     initialValue={this.state.gender}
                   >
                     <Option value="">Any</Option>
-                    {Object.entries(constants.GENDERS).map(gender => (
+                    {Object.entries(enums.GENDERS).map(gender => (
                       <Option key={gender[0]} value={gender[0]}>
                         {gender[1]}
                       </Option>
@@ -171,10 +171,10 @@ class Idols extends Component {
                     initialValue={this.state.nationality}
                   >
                     <Option value="">Any</Option>
-                    {Object.entries(constants.NATIONALITIES).map(
-                      nationalitie => (
-                        <Option key={nationalitie[0]} value={nationalitie[0]}>
-                          {nationalitie[1]}
+                    {Object.entries(enums.NATIONALITIES).map(
+                      ([value, text]) => (
+                        <Option key={value} value={value}>
+                          {text}
                         </Option>
                       )
                     )}
@@ -201,9 +201,9 @@ class Idols extends Component {
                     initialValue={this.state.position}
                   >
                     <Option value="">Any</Option>
-                    {constants.POSITIONS_LIST.map(position => (
-                      <Option key={position} value={position}>
-                        {constants.POSITIONS_LIST_OBJ[position]}
+                    {Object.entries(enums.POSITIONS).map(([value, text]) => (
+                      <Option key={value} value={value}>
+                        {text}
                       </Option>
                     ))}
                   </Select>

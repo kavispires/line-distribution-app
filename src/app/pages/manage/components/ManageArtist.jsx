@@ -7,8 +7,8 @@ import { Typeahead, Icon } from '../../../common';
 // Import images
 import manageLock from '../../../../images/manage-lock.svg';
 import managePlus from '../../../../images/manage-plus.svg';
-// Import constants
-import constants from '../../../../utils/constants';
+// Import utils
+import enums from '../../../../utils/readable-enums';
 
 const ManageArtist = ({
   formState,
@@ -87,7 +87,8 @@ const ManageArtist = ({
         <Scope scope="artist">
           <h3>Artist</h3>
           <label className="manage-form__label">
-            Name*<Text
+            Name*
+            <Text
               className={`manage-form__input ${isValidName}`}
               field="name"
               validateOnBlur
@@ -97,7 +98,8 @@ const ManageArtist = ({
             />
           </label>
           <label className="manage-form__label">
-            Other Names<Text
+            Other Names
+            <Text
               className="manage-form__input"
               field="otherNames"
               initialValue={defaultValues.otherNames}
@@ -115,9 +117,9 @@ const ManageArtist = ({
               <Option value="" disabled>
                 Select One...
               </Option>
-              {Object.entries(constants.GENRES).map(genre => (
-                <Option key={genre[0]} value={genre[0]}>
-                  {genre[1]}
+              {Object.entries(enums.GENRES).map(([text, value]) => (
+                <Option key={value} value={value}>
+                  {text}
                 </Option>
               ))}
             </Select>

@@ -1,9 +1,3 @@
-const ARTISTS_GENDERS = {
-  FEMALE: 'Female',
-  MALE: 'Male',
-  MIXED: 'Mixed',
-};
-
 const COLORS = {
   col000001: 'red',
   col000002: 'blood',
@@ -65,20 +59,6 @@ const FLAGS_LIST = {
   VIETNAMISE: 'vietnamise',
 };
 
-const GENDERS = {
-  FEMALE: 'Female',
-  MALE: 'Male',
-  UNKOWN: 'Unknown',
-};
-
-const GENRES = {
-  CPOP: 'C-Pop',
-  JPOP: 'J-Pop',
-  KPOP: 'K-Pop',
-  OTHER: 'Other',
-  POP: 'Pop',
-};
-
 const GENRES_DB = {
   'C-Pop': 'CPOP',
   'J-Pop': 'JPOP',
@@ -101,35 +81,6 @@ const POSITIONS_LIST = [
   'CENTER',
   'VISUAL',
 ];
-
-const POSITIONS_LIST_OBJ = {
-  MAIN_VOCALIST: 'Main Vocalist',
-  LEAD_VOCALIST: 'Lead Vocalist',
-  VOCALIST: 'Vocalist',
-  MAIN_RAPPER: 'Main Rapper',
-  LEAD_RAPPER: 'Lead Rapper',
-  RAPPER: 'Rapper',
-  MAIN_DANCER: 'Main Dancer',
-  LEAD_DANCER: 'Lead Dancer',
-  DANCER: 'Dancer',
-  LEADER: 'Leader',
-  CENTER: 'Center',
-  VISUAL: 'Visual',
-};
-
-const NATIONALITIES = {
-  AMERICAN: 'American',
-  BRAZILIAN: 'Brazilian',
-  BRITISH: 'British',
-  CANADIAN: 'Canadian',
-  CHINESE: 'Chinese',
-  JAPANESE: 'Japanese',
-  KOREAN: 'Korean',
-  OTHER: 'Other',
-  TAIWANESE: 'Taiwanese',
-  THAI: 'Thai',
-  VIETNAMISE: 'Vietnamise',
-};
 
 const NATIONALITY_FLAG_URL = '/images/flags/';
 
@@ -154,16 +105,11 @@ const SYNC_KEY_COLOR_LIST = {
 const YOUTUBE_URLS = ['cudssvDuOpc'];
 
 export default {
-  ARTISTS_GENDERS,
   COLORS,
   DEFAULT_COLORS,
   FLAGS_LIST,
-  GENDERS,
-  GENRES,
   GENRES_DB,
   POSITIONS_LIST,
-  POSITIONS_LIST_OBJ,
-  NATIONALITIES,
   NATIONALITY_FLAG_URL,
   PROFILE_PICTURE_URL,
   SYNC_KEY_LIST,

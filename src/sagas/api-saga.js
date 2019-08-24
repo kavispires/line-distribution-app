@@ -46,6 +46,7 @@ function* initializer(action) {
       });
     }
   } catch (error) {
+    console.log(error);
     yield put({
       type: 'ERROR',
       message: error,
