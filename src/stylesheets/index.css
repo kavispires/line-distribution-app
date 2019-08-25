@@ -359,6 +359,7 @@ p {
   background: #ebebf2;
   padding: 6px 24px;
   cursor: pointer;
+  border-right: 1px solid #ffffff;
 }
 .tabs__tab:first-child {
   border-top-left-radius: 3px;
@@ -1084,13 +1085,14 @@ input:checked + .slider:before {
   padding: 6px 12px;
 }
 
-.artist-page {
+.artist-section {
   margin: 12px 0;
 }
 
 .artist-section-wrapper {
   display: flex;
   width: 100%;
+  margin-bottom: 12px;
 }
 
 .artist-page-profile {

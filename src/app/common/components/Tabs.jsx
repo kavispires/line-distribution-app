@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import utility functions
 import utils from '../../../utils';
 
-const Tabs = ({ tabs, active, action, icons, iconConditions, ...props }) => {
+const Tabs = ({ tabs, active, action, icons, ...props }) => {
   // Check for names and ids
   tabs = tabs.map((tab, index) => {
     const tabObj = {
@@ -20,14 +20,11 @@ const Tabs = ({ tabs, active, action, icons, iconConditions, ...props }) => {
 
     tabObj.key = `${tab.id}-${index}`;
     tabObj.isActive = active === tab.id || active === tab ? 'selected' : '';
-    tabObj.showIcons = iconConditions.map(condition => tab[condition] || false);
+    tabObj.icons = Object.entries(icons).map(([condition, icon]) =>
+      tab[condition] ? icon : null
+    );
     return tabObj;
   });
-
-  // Activate first tab if action paramenter is not available
-  if (!active) {
-    tabs[0].isActive = 'selected';
-  }
 
   return (
     <section className="tabs-container">
@@ -38,15 +35,7 @@ const Tabs = ({ tabs, active, action, icons, iconConditions, ...props }) => {
             className={utils.bem('tabs', tab.isActive, 'tab')}
             id={tab.id}
           >
-            {tab.name}{' '}
-            <Fragment>
-              {tab.showIcons.map((show, index) => {
-                if (show) {
-                  return icons[index];
-                }
-                return null;
-              })}
-            </Fragment>
+            {tab.name} {tab.icons.map(icon => icon)}
           </li>
         ))}
       </ul>
@@ -59,14 +48,12 @@ Tabs.propTypes = {
   action: PropTypes.func.isRequired,
   active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.any.isRequired,
-  iconConditions: PropTypes.array,
-  icons: PropTypes.array,
+  icons: PropTypes.objectOf(PropTypes.element),
   tabs: PropTypes.array.isRequired,
 };
 
 Tabs.defaultProps = {
-  active: 0,
-  iconConditions: [],
+  active: null,
   icons: [],
 };
 

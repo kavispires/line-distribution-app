@@ -1,12 +1,13 @@
 $TOP_HEIGHT: 140px;
 
-.artist-page {
+.artist-section {
   margin: $unit 0;
 }
 
 .artist-section-wrapper {
   display: flex;
   width: 100%;
+  margin-bottom: $unit;
 }
 
 .artist-page-profile {

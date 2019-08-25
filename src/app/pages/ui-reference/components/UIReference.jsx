@@ -49,7 +49,7 @@ class UIReference extends Component {
           <Tabs
             tabs={TABS}
             action={this.props.switchUIReferenceTab}
-            active={uiReferenceTab}
+            active={uiReferenceTab || 'Colors'}
           >
             <LoadingWrapper pending={app.pending.REQUEST_COLORS}>
               {tabContent}

@@ -28,6 +28,7 @@
     background: $color-gray-1;
     padding: $unit-p2 $unit-x2;
     cursor: pointer;
+    border-right: 1px solid $color-negative;
 
     &:first-child {
       border-top-left-radius: $unit-p4;

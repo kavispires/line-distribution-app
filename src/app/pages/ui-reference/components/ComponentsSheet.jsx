@@ -115,7 +115,7 @@ const ComponentSheet = () => (
       <li className="component-list__item">
         <h3>Tabs</h3>
         <div className="component-list__example">
-          <Tabs action={NOOP} tabs={['Tab 1', 'Tab 2']}>
+          <Tabs action={NOOP} tabs={['Tab 1', 'Tab 2', 'Tab 3']} active="Tab 1">
             Content goes here as a component child
           </Tabs>
         </div>
@@ -124,7 +124,15 @@ const ComponentSheet = () => (
           <p>Wrapper component with selectable tabs</p>
           <b>Requires:</b>
           <ul className="component-list__arguments">
-            <li className="component-list__argument">?</li>
+            <li className="component-list__argument">
+              tabs: array of tabs strings
+            </li>
+            <li className="component-list__argument">
+              action: the function triggered when a tab is clicked
+            </li>
+            <li className="component-list__argument">
+              children: the content to be displayed by the tab content div
+            </li>
           </ul>
           <b>Accepts:</b>
           <ul className="component-list__arguments">
@@ -132,10 +140,7 @@ const ComponentSheet = () => (
               active: what tab is active (default: the first tab)
             </li>
             <li className="component-list__argument">
-              iconCondition: boolean to display the icon
-            </li>
-            <li className="component-list__argument">
-              icon: icon component to be displayed
+              icons: object with a contition key and an icon component value
             </li>
           </ul>
         </div>
