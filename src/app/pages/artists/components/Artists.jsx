@@ -21,6 +21,7 @@ class Artists extends Component {
       artistSearchQuery: '',
     };
 
+    this.handleTableClick = this.handleTableClick.bind(this);
     this.updateSearchQuery = this.updateSearchQuery.bind(this);
     this.toggleShowFavoriteArtistsOnly = this.toggleShowFavoriteArtistsOnly.bind(
       this
@@ -65,6 +66,21 @@ class Artists extends Component {
     localStorage.set({ artistsFavoritesOnly: toggleValue });
   }
 
+  // Redirects user to the selected Artists page
+  handleTableClick(e) {
+    const { id } = e.target.parentNode;
+    const { className } = e.target;
+    if (id && className !== 'artists-cell-favorite') {
+      const [index, artistId] = id.split(':a:');
+
+      // If artist has units, add first one to route
+      const unitIds = this.props.db.artists[index].unitIds || [];
+      const unitSubRoute = unitIds.length > 0 ? `/${unitIds[0]}` : '';
+
+      this.props.history.push(`/artists/${artistId}${unitSubRoute}`);
+    }
+  }
+
   render() {
     const {
       app: { pending },
@@ -72,16 +88,6 @@ class Artists extends Component {
       db,
       distribute: { activeSong, activeUnit },
     } = this.props;
-
-    // Row click should send user to the selected artist page
-    const handleTableClick = e => {
-      const { id } = e.target.parentNode;
-      const { className } = e.target;
-      if (id && className !== 'artists-cell-favorite') {
-        const artistId = id.substring(2);
-        this.props.history.push(`/artists/${artistId}`);
-      }
-    };
 
     return (
       <RequirementWrapper>
@@ -110,7 +116,7 @@ class Artists extends Component {
               artists={db.artists}
               searchQuery={this.state.artistSearchQuery}
               pending={pending.REQUEST_ARTISTS}
-              rowAction={handleTableClick}
+              rowAction={this.handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
               showFavoriteArtistsOnly={this.state.artistsFavoritesOnly}
               user={user}

@@ -6,13 +6,13 @@ import utils from './utils';
 import getEnum, { UNKNOWN } from './enums';
 
 const serializers = {
-  artist: (data, id) => {
+  artist: (data, id, unitsData) => {
     data = _.cloneDeep(data);
 
     const members = data.members.map(m => utils.parseArtistMemberUrn(m));
     const query = utils.buildArtistQuery(data, members);
 
-    return {
+    const result = {
       id: data.id || id,
       type: 'artist',
       attributes: {
@@ -29,6 +29,23 @@ const serializers = {
         unitIds: data.unitIds,
       },
     };
+
+    // Add basic units info if unitsData was received
+    if (unitsData) {
+      result.attributes.units = unitsData.map(unitData => {
+        return {
+          id: unitData.id,
+          name: unitData.name,
+          debutYear: unitData.debutYear,
+          official: unitData.official || false,
+          subUnit: unitData.subUnit || false,
+        };
+      });
+
+      // TO-DO: sort units officials > unnoficial, unit > subunits, by year
+    }
+
+    return result;
   },
 
   color: (data, id) => {
@@ -109,9 +126,9 @@ const serializers = {
  * @param {string} type the serializer type
  * @returns {object} a serialized collection of data
  */
-export const serialize = (entity, id, type) => {
+export const serialize = (entity, id, type, additionalData) => {
   return {
-    data: serializers[type](entity, id),
+    data: serializers[type](entity, id, additionalData),
   };
 };
 

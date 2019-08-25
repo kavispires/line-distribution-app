@@ -85,8 +85,11 @@ const ArtistsTable = ({
         </thead>
         <tbody onClick={rowAction}>
           {filteredArtists.length > 0
-            ? filteredArtists.map(entry => (
-                <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
+            ? filteredArtists.map((entry, index) => (
+                <tr
+                  key={`all-artists-${entry.id}`}
+                  id={`${index}:a:${entry.id}`}
+                >
                   <td
                     className="artists-cell-favorite"
                     onClick={() => favoriteAction(entry.id)}

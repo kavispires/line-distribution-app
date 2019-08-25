@@ -1,8 +1,31 @@
-.artist__section {
+$TOP_HEIGHT: 140px;
+
+.artist-page {
   margin: $unit 0;
 }
 
-.artist-page {
+.artist-section-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.artist-page-profile {
+  height: $TOP_HEIGHT;
+  background: $color-gray-3;
+  width: 250px;
+  margin-right: $unit;
+}
+
+.artist-page-bias {
+  min-height: $TOP_HEIGHT;
+  width: $TOP_HEIGHT;
+  border-radius: 50%;
+  background: $color-gray-3;
+}
+
+.artist-page-info {
+  flex-grow: 2;
+
   &__name {
     font-size: 48px;
     text-transform: uppercase;
@@ -33,6 +56,15 @@
     margin-right: $unit-p2;
     margin-bottom: $unit-p4;
   }
+}
+
+.no-units-container {
+  display: flex;
+  min-height: 200px;
+  border: 1px solid $color-gray-1;
+  justify-content: center;
+  align-items: center;
+  color: $color-gray-3;
 }
 
 .unit-section {

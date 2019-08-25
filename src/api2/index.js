@@ -319,14 +319,21 @@ const getFunctions = {
   },
   // Fetches a single artist
   fetchArtist: async (id, db, reload) => {
+    let response = {};
     if (db.artists[id] === undefined || reload.artists === true) {
-      let response = {};
       await dbRef.ref(`/artists/${id}`).once('value', snapshot => {
         response = snapshot.val();
       });
       db.artists[id] = response;
     }
-    return serialize(db.artists[id], id, 'artist');
+
+    const unitIds = response.unitIds || [];
+    let units;
+    if (unitIds.length > 0) {
+      units = await getFunctions.fetchUnitsSet(unitIds, db, reload);
+    }
+
+    return serialize(db.artists[id], id, 'artist', units);
   },
   // Fetches list of colors
   fetchColors: async (db, reload) => {
@@ -340,7 +347,7 @@ const getFunctions = {
     }
     return serializeCollection(db.colors, 'color', true);
   },
-  // Fetches list of artists
+  // Fetches list of members
   fetchMembers: async (db, reload) => {
     if (reload.members === true) {
       let response = {};
@@ -351,6 +358,43 @@ const getFunctions = {
       reload.members = false;
     }
     return serializeCollection(db.members, 'member', true, 'name');
+  },
+  // Fetches set of units
+  fetchUnitsSet: async (ids, db, reload) => {
+    const responses = await ids.map(id => {
+      if (db.units[id] === undefined || reload.units === true) {
+        return new Promise(async (resolve, reject) => {
+          try {
+            await dbRef.ref(`/units/${id}`).once('value', snapshot => {
+              const response = snapshot.val();
+              db.units[id] = response;
+            });
+          } catch (error) {
+            return reject(error);
+          }
+          return resolve({ ...db.units[id], id });
+        });
+      }
+      return db.units[id];
+    });
+
+    return Promise.all(responses);
+  },
+  // Fetches a single unit
+  fetchUnit: async (id, db, reload, ignoreRelationships = true) => {
+    let response = {};
+    if (db.units[id] === undefined || reload.units === true) {
+      await dbRef.ref(`/units/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.units[id] = response;
+    }
+
+    if (!ignoreRelationships) {
+      // fetch distributions
+    }
+
+    return serialize(db.units[id], id, 'unit');
   },
   // Fetches a single user
   fetchUser: async (id, db, reload) => {

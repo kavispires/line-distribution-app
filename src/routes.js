@@ -30,7 +30,8 @@ const routes = (
     <div className="app">
       <Header />
       <ErrorModal />
-      <Route path="/artists/:artistId" component={Artist} />
+      <Route path="/artists/:artistId/:unitId" component={Artist} />
+      <Route exact path="/artists/:artistId" component={Artist} />
       <Route exact path="/artists" component={Artists} />
       <Route path="/distribute" component={Distribute} />
       <Route path="/idols" component={Idols} />

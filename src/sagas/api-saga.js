@@ -16,7 +16,7 @@ const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 500 : 0;
 // API Workers
 
 /**
- * Initializes database, check for existing auth session, and load colors
+ * Initializes database, check for existing auth session
  * @param {object} action
  */
 function* initializer(action) {
@@ -117,15 +117,11 @@ function* requestArtist(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { artistId, panels, state } = action;
-  let { queryParams } = action;
-
-  let selectedArtist = {};
-
-  // Fetch Artist
+  const { artistId } = action;
   try {
     const response = yield API.get(`/artists/${artistId}`);
-    selectedArtist = utils.parseResponse(response);
+    const selectedArtist = utils.parseResponse(response);
+    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -137,69 +133,89 @@ function* requestArtist(action) {
     });
   }
 
-  // Select default unit id
-  queryParams = utils.parseQueryParams(queryParams);
-  let selectedUnitId = selectedArtist.units[0];
-  let unitIndex = 0;
-  if (
-    queryParams &&
-    queryParams.unit &&
-    selectedArtist.units.includes(queryParams.unit)
-  ) {
-    selectedUnitId = queryParams.unit;
-    unitIndex = selectedArtist.units.indexOf(selectedUnitId);
-  }
+  // const { artistId, panels, state } = action;
+  // let { queryParams } = action;
 
-  // Fetch Artist's Units
-  try {
-    const response = yield API.get(`/artists/${artistId}/units`);
-    selectedArtist.units = utils.parseResponse(response);
-  } catch (error) {
-    yield put({
-      type: 'ERROR',
-      message: [
-        `Unable to load artist ${artistId}'s units from database`,
-        error.toString(),
-      ],
-      actionType: action.type,
-    });
-  }
+  // let selectedArtist = {};
 
-  // Just send artist if dealing with Manage Artist
-  if (state === 'edit') {
-    selectedArtist.state = 'edit';
-    panels.artist = state;
+  // Fetch Artist
+  // try {
+  //   const response = yield API.get(`/artists/${artistId}`);
+  //   selectedArtist = utils.parseResponse(response);
+  // } catch (error) {
+  //   yield put({
+  //     type: 'ERROR',
+  //     message: [
+  //       `Unable to load artist ${artistId} from database`,
+  //       error.toString(),
+  //     ],
+  //     actionType: action.type,
+  //   });
+  // }
 
-    const unitsTypeahead = [];
-    const unitsTypeaheadDict = {};
+  // // Select default unit id
+  // queryParams = utils.parseQueryParams(queryParams);
+  // let selectedUnitId = selectedArtist.units[0];
+  // let unitIndex = 0;
+  // if (
+  //   queryParams &&
+  //   queryParams.unit &&
+  //   selectedArtist.units.includes(queryParams.unit)
+  // ) {
+  //   selectedUnitId = queryParams.unit;
+  //   unitIndex = selectedArtist.units.indexOf(selectedUnitId);
+  // }
 
-    selectedArtist.units.forEach(unit => {
-      unitsTypeahead.push(unit.name);
-      unitsTypeaheadDict[unit.name] = unit.id;
-    });
+  // // Fetch Artist's Units
+  // try {
+  //   const response = yield API.get(`/artists/${artistId}/units`);
+  //   selectedArtist.units = utils.parseResponse(response);
+  // } catch (error) {
+  //   yield put({
+  //     type: 'ERROR',
+  //     message: [
+  //       `Unable to load artist ${artistId}'s units from database`,
+  //       error.toString(),
+  //     ],
+  //     actionType: action.type,
+  //   });
+  // }
 
-    yield put({ type: types.SET_UNITS_TYPEAHEAD, payload: unitsTypeahead });
-    yield put({
-      type: types.SET_UNITS_TYPEAHEAD_DICT,
-      payload: unitsTypeaheadDict,
-    });
+  // // Just send artist if dealing with Manage Artist
+  // if (state === 'edit') {
+  //   selectedArtist.state = 'edit';
+  //   panels.artist = state;
 
-    selectedArtist.genre = constants.GENRES_DB[selectedArtist.genre];
+  //   const unitsTypeahead = [];
+  //   const unitsTypeaheadDict = {};
 
-    yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
-    yield put({ type: types.SET_PANELS, payload: panels });
-  } else {
-    // Fetch complete unit for default unit
-    const selectedUnit = yield call(requestUnit, {
-      unitId: selectedUnitId,
-    });
+  //   selectedArtist.units.forEach(unit => {
+  //     unitsTypeahead.push(unit.name);
+  //     unitsTypeaheadDict[unit.name] = unit.id;
+  //   });
 
-    selectedArtist.units[unitIndex] = selectedUnit;
+  //   yield put({ type: types.SET_UNITS_TYPEAHEAD, payload: unitsTypeahead });
+  //   yield put({
+  //     type: types.SET_UNITS_TYPEAHEAD_DICT,
+  //     payload: unitsTypeaheadDict,
+  //   });
 
-    yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
-    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
-    yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
-  }
+  //   selectedArtist.genre = constants.GENRES_DB[selectedArtist.genre];
+
+  //   yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
+  //   yield put({ type: types.SET_PANELS, payload: panels });
+  // } else {
+  //   // Fetch complete unit for default unit
+  //   const selectedUnit = yield call(requestUnit, {
+  //     unitId: selectedUnitId,
+  //   });
+
+  //   selectedArtist.units[unitIndex] = selectedUnit;
+
+  //   yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
+  //   yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
+  //   yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
+  // }
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }

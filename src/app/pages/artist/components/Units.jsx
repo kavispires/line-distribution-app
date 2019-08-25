@@ -15,34 +15,35 @@ import {
 } from '../../../common';
 
 class Units extends Component {
-  componentDidMount() {
-    this.props.props.getBias();
-    this.goToDistribution = this.goToDistribution.bind(this);
-  }
+  // componentDidMount() {
+  //   this.props.props.getBias();
+  //   this.goToDistribution = this.goToDistribution.bind(this);
+  // }
 
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.props.artists.selectedUnit.id !==
-      this.props.props.artists.selectedUnit.id
-    ) {
-      this.props.props.getBias();
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (
+  //     prevProps.props.artists.selectedUnit.id !==
+  //     this.props.props.artists.selectedUnit.id
+  //   ) {
+  //     this.props.props.getBias();
+  //   }
+  // }
 
-  artistRedirect(page) {
-    this.props.props.activateUnit();
+  // artistRedirect(page) {
+  //   this.props.props.activateUnit();
 
-    this.props.props.history.push(`/${page}`);
-  }
+  //   this.props.props.history.push(`/${page}`);
+  // }
 
-  goToDistribution(distribution) {
-    if (distribution && distribution.id && distribution.songId) {
-      this.artistRedirect('distribute');
-      this.props.props.activateSongDistribution(distribution);
-    }
-  }
+  // goToDistribution(distribution) {
+  //   if (distribution && distribution.id && distribution.songId) {
+  //     this.artistRedirect('distribute');
+  //     this.props.props.activateSongDistribution(distribution);
+  //   }
+  // }
 
   render() {
+    console.log(this.props);
     const {
       props: {
         app,
