@@ -19,7 +19,10 @@ const Home = props => {
     props.history.push('/learn-more');
   };
 
-  const isPending = props.app.pending.RUN_LOGIN;
+  const isPending =
+    props.app.pending.INITIALIZER ||
+    props.app.pending.RUN_LOGIN ||
+    props.app.pending.RUN_AUTH;
 
   return (
     <main className="container container--no-padding">

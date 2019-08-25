@@ -35,7 +35,8 @@ const Menu = ({
   const activeUnitHideClass = activeUnit.id ? '' : 'hidden';
 
   // Sign-in pending
-  const isPending = pending.RUN_LOGIN;
+  const isPending =
+    pending.INITIALIZER || pending.RUN_LOGIN || pending.RUN_AUTH;
 
   return (
     <header className="header">

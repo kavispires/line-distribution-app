@@ -30,8 +30,42 @@ function* initializer(action) {
       yield put({ type: types.SET_DATABASE_READY, payload: response.loaded });
     }
 
-    if (response.user.data.id) {
+    if (response.user.data && response.user.data.id) {
       const user = utils.parseResponse(response.user);
+
+      yield put({ type: types.SET_USER, payload: user });
+      yield put({ type: types.SET_AUTHENTICATED, payload: true });
+
+      if (user.isAdmin) {
+        yield put({ type: types.SET_ADMIN, payload: true });
+      }
+      yield put({
+        type: 'SUCCESS_TOAST',
+        message: ['Welcome back!', `You are logged in as ${user.displayName}`],
+        actionType: action.type,
+      });
+    } else {
+      yield delay(2000 + DELAY_DURATION);
+      yield call(runAuth, { action: 'RUN_AUTH' });
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: error,
+      actionType: action.type,
+    });
+  }
+
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* runAuth(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
+  try {
+    const response = yield API.auth();
+
+    if (response.data && response.data.id) {
+      const user = utils.parseResponse(response);
 
       yield put({ type: types.SET_USER, payload: user });
       yield put({ type: types.SET_AUTHENTICATED, payload: true });
@@ -46,7 +80,6 @@ function* initializer(action) {
       });
     }
   } catch (error) {
-    console.log(error);
     yield put({
       type: 'ERROR',
       message: error,

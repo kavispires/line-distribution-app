@@ -167,18 +167,23 @@ class API {
   }
 
   async logoff() {
-    // this.print('Running logout...');
-    // const response = new NewResponse();
-    // try {
-    //   await fb.auth().signOut();
-    //   this._authenticated = false;
-    //   this._uid = null;
-    //   response.ok();
-    //   response.data(true);
-    // } catch (error) {
-    //   response.error(error.code, error.message);
-    // }
-    // return response.resolve();
+    this.print('Running logout...');
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        await fb.auth().signOut();
+        this._authenticated = false;
+        this._uid = null;
+        this._admin = false;
+        this._user = {};
+      } catch (error) {
+        const errorMessage = `Failed to logout: ${error.message}`;
+        this.printError(errorMessage);
+        return reject(Error(errorMessage));
+      }
+
+      return resolve();
+    });
   }
 
   /**
