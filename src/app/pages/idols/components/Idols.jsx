@@ -9,6 +9,7 @@ import { Loading, MemberCard, RequirementWrapper } from '../../../common';
 // Import utils
 import constants from '../../../../utils/constants';
 import enums from '../../../../utils/readable-enums';
+import localStorage from '../../../../utils/local-storage';
 import utils from '../../../../utils';
 
 class Idols extends Component {
@@ -36,12 +37,22 @@ class Idols extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.loadMembers();
     }
+
+    this.localStorage();
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
       this.props.loadMembers();
     }
+  }
+
+  localStorage() {
+    this.setState({
+      showIds: localStorage.get('idolsShowIds') || this.props.auth.isAdmin,
+      sort: localStorage.get('idolsSort') || 'name',
+      order: localStorage.get('idolsOrder') || 'asc',
+    });
   }
 
   updateFilters(formState) {
@@ -58,11 +69,17 @@ class Idols extends Component {
       order: formState.values.order || 'asc',
       showIds: formState.values.showIds || false,
     });
+
+    localStorage.set({
+      idolsShowIds: formState.values.showIds || this.state.showIds,
+      idolsSort: formState.values.sort || null,
+      idolsOrder: formState.values.order || null,
+    });
   }
 
   filterIdols(members, user) {
     return _.filter(members, member => {
-      const evaluation = [];
+      const evaluation = [!member.hide];
 
       if (this.state.favorite) {
         if (this.state.favorite === 'favorite') {
@@ -250,7 +267,10 @@ class Idols extends Component {
                 {isAdmin && (
                   <div className="idols__filter-select-group">
                     <label className="idols__filter-label">Show Ids</label>
-                    <Checkbox field="showIds" initialValue={isAdmin} />
+                    <Checkbox
+                      field="showIds"
+                      initialValue={this.state.showIds}
+                    />
                   </div>
                 )}
               </div>

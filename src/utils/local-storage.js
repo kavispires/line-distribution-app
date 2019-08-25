@@ -32,6 +32,8 @@ class LocalStorage {
     }
   }
 
+  // To Remove a property, you can use the set method, but passing an object with the key and value
+  // null, the property will be removed from local storage
   set(value) {
     if (this.notLoaded) {
       this.load();
@@ -49,6 +51,13 @@ class LocalStorage {
     if (typeof value === 'string') {
       this.store[value] = !this.store[value];
     } else {
+      // Remove any null or undefined property
+      Object.entries(value).forEach(([key, item]) => {
+        if (item === null || item === undefined) {
+          delete value[key];
+        }
+      });
+
       this.store = {
         ...this.store,
         ...value,
