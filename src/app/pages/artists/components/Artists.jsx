@@ -8,14 +8,31 @@ import {
   RequirementWrapper,
   ActiveSong,
 } from '../../../common';
+// Import components
 import ArtistsTable from './ArtistsTable';
+// Import utils
+import localStorage from '../../../../utils/local-storage';
 
 class Artists extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      artistsFavoritesOnly: false,
+      artistSearchQuery: '',
+    };
+
+    this.updateSearchQuery = this.updateSearchQuery.bind(this);
+    this.toggleShowFavoriteArtistsOnly = this.toggleShowFavoriteArtistsOnly.bind(
+      this
+    );
+  }
+
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.loadArtists();
-      this.props.updateSearchQuery('');
     }
+
+    this.localStorage();
   }
 
   componentDidUpdate(prevProps) {
@@ -24,10 +41,33 @@ class Artists extends Component {
     }
   }
 
+  localStorage() {
+    this.setState({
+      artistsFavoritesOnly: localStorage.get('artistsFavoritesOnly') || false,
+    });
+  }
+
+  updateSearchQuery(value) {
+    if (value === '' || value.length > 2) {
+      this.setState({
+        artistSearchQuery: value.toLowerCase(),
+      });
+    }
+  }
+
+  toggleShowFavoriteArtistsOnly() {
+    const toggleValue = !this.state.artistsFavoritesOnly;
+
+    this.setState({
+      artistsFavoritesOnly: toggleValue,
+    });
+
+    localStorage.set({ artistsFavoritesOnly: toggleValue });
+  }
+
   render() {
     const {
       app: { pending },
-      artists: { searchQuery, showFavoriteArtistsOnly },
       auth: { user },
       db,
       distribute: { activeSong, activeUnit },
@@ -59,20 +99,20 @@ class Artists extends Component {
               className="artists__search-bar"
               type="text"
               placeholder="Filter..."
-              onChange={e => this.props.updateSearchQuery(e.target.value)}
+              onChange={e => this.updateSearchQuery(e.target.value)}
             />{' '}
             Show Favorite Artists Only:{' '}
             <Switch
-              action={this.props.showFavoriteArtistsOnlyToggle}
-              checked={showFavoriteArtistsOnly}
+              action={this.toggleShowFavoriteArtistsOnly}
+              checked={this.state.artistsFavoritesOnly}
             />
             <ArtistsTable
               artists={db.artists}
-              searchQuery={searchQuery}
+              searchQuery={this.state.artistSearchQuery}
               pending={pending.REQUEST_ARTISTS}
               rowAction={handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
-              showFavoriteArtistsOnly={showFavoriteArtistsOnly}
+              showFavoriteArtistsOnly={this.state.artistsFavoritesOnly}
               user={user}
             />
           </section>
@@ -90,8 +130,6 @@ Artists.propTypes = {
   distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadArtists: PropTypes.func.isRequired,
-  showFavoriteArtistsOnlyToggle: PropTypes.func.isRequired,
-  updateSearchQuery: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };
 

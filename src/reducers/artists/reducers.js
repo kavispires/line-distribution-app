@@ -4,10 +4,8 @@ const initialState = {
   artistList: [],
   artistPageTab: '',
   bias: {},
-  searchQuery: '',
   selectedArtist: {},
   selectedUnit: {},
-  showFavoriteArtistsOnly: false,
   userFavoriteArtists: {},
   userLatestArtists: [],
 };
@@ -28,20 +26,12 @@ export default function reducer(prevState = initialState, action) {
       newState.bias = action.payload;
       break;
 
-    case types.SET_SEARCH_QUERY:
-      newState.searchQuery = action.payload;
-      break;
-
     case types.SET_SELECTED_ARTIST:
       newState.selectedArtist = action.payload;
       break;
 
     case types.SET_SELECTED_UNIT:
       newState.selectedUnit = action.payload;
-      break;
-
-    case types.SET_SHOW_FAVORITE_ARTISTS_ONLY:
-      newState.showFavoriteArtistsOnly = action.payload;
       break;
 
     default:

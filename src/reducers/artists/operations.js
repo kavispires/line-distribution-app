@@ -7,17 +7,6 @@ const loadUserArtists = () => async (dispatch, getState) => {};
 
 const findUnitIndex = (units, unitId) => units.findIndex(u => u.id === unitId);
 
-const updateSearchQuery = value => dispatch => {
-  if (value === '' || value.length > 2) {
-    dispatch(actions.setSearchQuery(value.toLowerCase()));
-  }
-};
-
-const showFavoriteArtistsOnlyToggle = () => (dispatch, getState) => {
-  const { showFavoriteArtistsOnly } = getState().artists;
-  dispatch(actions.setShowFavoriteArtistsOnly(!showFavoriteArtistsOnly));
-};
-
 const updateLatestUnits = id => async (dispatch, getState) => {};
 
 const switchArtistPageTab = event => async (dispatch, getState) => {
@@ -72,8 +61,6 @@ export default {
   getBias,
   loadUserArtists,
   loadArtist,
-  updateSearchQuery,
   updateLatestUnits,
-  showFavoriteArtistsOnlyToggle,
   switchArtistPageTab,
 };
