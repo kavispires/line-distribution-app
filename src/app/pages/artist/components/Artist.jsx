@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Import components
-import Units from './Units';
+import UnitsContainer from '../containers/UnitsContainer';
 // Import common components
 import {
   FavoriteIcon,
@@ -44,7 +44,7 @@ class Artist extends Component {
         <main className="container container--artist">
           <h1>Artist Page</h1>
           <LoadingWrapper pending={isArtistPending}>
-            <section className="artist-page">
+            <section className="artist-section">
               <div className="artist-section-wrapper">
                 <div className="artist-page-profile">
                   {/* { TO-DO Add artist photo compoenent } */}
@@ -61,7 +61,7 @@ class Artist extends Component {
                     />
                   </h2>
                   <p className="artist-page-info__genre">
-                    {selectedArtist.genre}
+                    {selectedArtist.agency} • {selectedArtist.genre}
                   </p>
                   <ul className="artist-page-info__members-list">
                     {selectedArtist.members &&
@@ -86,7 +86,7 @@ class Artist extends Component {
                 </div>
               ) : (
                 /* Artist has units */
-                <Units props={this.props} />
+                <UnitsContainer />
               )}
             </section>
           </LoadingWrapper>

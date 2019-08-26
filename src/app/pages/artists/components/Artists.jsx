@@ -71,11 +71,10 @@ class Artists extends Component {
     const { id } = e.target.parentNode;
     const { className } = e.target;
     if (id && className !== 'artists-cell-favorite') {
-      const [index, artistId] = id.split(':a:');
+      const [artistId, unitId] = id.split(':::');
 
       // If artist has units, add first one to route
-      const unitIds = this.props.db.artists[index].unitIds || [];
-      const unitSubRoute = unitIds.length > 0 ? `/${unitIds[0]}` : '';
+      const unitSubRoute = unitId.startsWith('-') ? `/${unitId}` : '';
 
       this.props.history.push(`/artists/${artistId}${unitSubRoute}`);
     }
@@ -88,6 +87,9 @@ class Artists extends Component {
       db,
       distribute: { activeSong, activeUnit },
     } = this.props;
+
+    const isArtistPending =
+      pending.REQUEST_ARTISTS || pending.INITIALIZER || pending.RUN_AUTH;
 
     return (
       <RequirementWrapper>
@@ -115,7 +117,7 @@ class Artists extends Component {
             <ArtistsTable
               artists={db.artists}
               searchQuery={this.state.artistSearchQuery}
-              pending={pending.REQUEST_ARTISTS}
+              pending={isArtistPending}
               rowAction={this.handleTableClick}
               favoriteAction={this.props.updateFavoriteArtists}
               showFavoriteArtistsOnly={this.state.artistsFavoritesOnly}

@@ -282,6 +282,15 @@ class API {
         case 'members':
           result = await getFunctions.fetchMembers(this._db, this._reload);
           break;
+        // API/units
+        case 'units':
+          // API/units/<id>
+          result = await getFunctions.fetchUnit(
+            route.referenceId,
+            this._db,
+            this._reload
+          );
+          break;
         // API/users
         case 'users':
           // API/users/<id>
@@ -327,7 +336,7 @@ const getFunctions = {
       db.artists[id] = response;
     }
 
-    const unitIds = response.unitIds || [];
+    const unitIds = response.unitIds || db.artists[id].unitIds || [];
     let units;
     if (unitIds.length > 0) {
       units = await getFunctions.fetchUnitsSet(unitIds, db, reload);
@@ -347,6 +356,27 @@ const getFunctions = {
     }
     return serializeCollection(db.colors, 'color', true);
   },
+  // Fetches set of distributions (used by /unit)
+  fetchDistributionsSet: async (ids, db, reload) => {
+    const responses = await ids.map(id => {
+      if (db.distributions[id] === undefined || reload.distributions === true) {
+        return new Promise(async (resolve, reject) => {
+          try {
+            await dbRef.ref(`/distributions/${id}`).once('value', snapshot => {
+              const response = snapshot.val();
+              db.distributions[id] = response;
+            });
+          } catch (error) {
+            return reject(error);
+          }
+          return resolve({ ...db.distributions[id], id });
+        });
+      }
+      return { ...db.distributions[id], id };
+    });
+
+    return Promise.all(responses);
+  },
   // Fetches list of members
   fetchMembers: async (db, reload) => {
     if (reload.members === true) {
@@ -359,7 +389,28 @@ const getFunctions = {
     }
     return serializeCollection(db.members, 'member', true, 'name');
   },
-  // Fetches set of units
+  // Fetches set of members (used by /unit)
+  fetchMembersSet: async (ids, db, reload) => {
+    const responses = await ids.map(id => {
+      if (db.members[id] === undefined || reload.members === true) {
+        return new Promise(async (resolve, reject) => {
+          try {
+            await dbRef.ref(`/members/${id}`).once('value', snapshot => {
+              const response = snapshot.val();
+              db.members[id] = response;
+            });
+          } catch (error) {
+            return reject(error);
+          }
+          return resolve({ ...db.members[id], id });
+        });
+      }
+      return { ...db.members[id], id };
+    });
+
+    return Promise.all(responses);
+  },
+  // Fetches set of units (used by /artist)
   fetchUnitsSet: async (ids, db, reload) => {
     const responses = await ids.map(id => {
       if (db.units[id] === undefined || reload.units === true) {
@@ -375,26 +426,61 @@ const getFunctions = {
           return resolve({ ...db.units[id], id });
         });
       }
-      return db.units[id];
+      return { ...db.units[id], id };
     });
 
     return Promise.all(responses);
   },
   // Fetches a single unit
-  fetchUnit: async (id, db, reload, ignoreRelationships = true) => {
-    let response = {};
+  fetchUnit: async (id, db, reload) => {
     if (db.units[id] === undefined || reload.units === true) {
+      let response;
       await dbRef.ref(`/units/${id}`).once('value', snapshot => {
         response = snapshot.val();
       });
       db.units[id] = response;
     }
 
-    if (!ignoreRelationships) {
-      // fetch distributions
+    const unit = db.units[id];
+
+    const additionalInformation = {};
+
+    const { artistId, members, distributionIds } = unit;
+
+    // Get artist name
+    if (artistId) {
+      let artistResponse;
+      if (db.artists[artistId] === undefined || reload.artists === true) {
+        await dbRef.ref(`/artists/${artistId}`).once('value', snapshot => {
+          artistResponse = snapshot.val();
+        });
+        db.artists[artistId] = artistResponse;
+      }
+      additionalInformation.artist = db.artists[artistId];
     }
 
-    return serialize(db.units[id], id, 'unit');
+    // Get members
+    if (members) {
+      const membersIds = utils.getMembersIdsFromUnit(members);
+      if (membersIds.length > 0) {
+        additionalInformation.members = await getFunctions.fetchMembersSet(
+          membersIds,
+          db,
+          reload
+        );
+      }
+    }
+
+    // Get distriutions
+    if (distributionIds && distributionIds.length > 0) {
+      additionalInformation.distributions = await getFunctions.fetchDistributionsSet(
+        distributionIds,
+        db,
+        reload
+      );
+    }
+
+    return serialize(db.units[id], id, 'unit', additionalInformation);
   },
   // Fetches a single user
   fetchUser: async (id, db, reload) => {

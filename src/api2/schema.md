@@ -25,10 +25,12 @@
 - createdBy: Uuid
 - features: Urn(id:name:colorId)
 - id: Uid
+- legend: Object({ relationshipMemberKey: memberId })
 - modifiedBy: Uuid
 - rates: Object({ memberId: Number })
 - relationships: StringifiedObject
 - songId: Reference(Song)
+- songInfo: Object(title, originalArtist)
 - unitId: Reference(Unit)
 
 # MEMBERS

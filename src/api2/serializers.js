@@ -18,13 +18,13 @@ const serializers = {
       attributes: {
         agency: data.agency || UNKNOWN,
         createdBy: data.createdBy || null,
-        disbanded: data.disbanded || false,
+        disbanded: Boolean(data.disbanded),
         genre: getEnum(data.genre, 'GENRE'),
         members,
         name: data.name,
         modifiedBy: data.modifiedBy || null,
         otherNames: data.otherNames || '',
-        private: data.private || false,
+        private: Boolean(data.private),
         query,
         unitIds: data.unitIds,
       },
@@ -37,8 +37,8 @@ const serializers = {
           id: unitData.id,
           name: unitData.name,
           debutYear: unitData.debutYear,
-          official: unitData.official || false,
-          subUnit: unitData.subUnit || false,
+          official: Boolean(unitData.official),
+          subUnit: Boolean(unitData.subUnit),
         };
       });
 
@@ -65,6 +65,23 @@ const serializers = {
     };
   },
 
+  distributionSummary: (data, id) => {
+    data = _.cloneDeep(data);
+
+    return {
+      id: data.id || id,
+      createdBy: data.createdBy || null,
+      modifiedBy: data.modifiedBy || null,
+      category: data.category,
+      rates: data.rates,
+      features: data.features || {},
+      private: Boolean(data.private),
+      sondId: data.songId,
+      songTitle: data.songInfo.title,
+      songArtist: data.songInfo.originalArtist,
+    };
+  },
+
   member: (data, id) => {
     data = _.cloneDeep(data);
 
@@ -77,13 +94,13 @@ const serializers = {
         color: data.color,
         createdBy: data.createdBy || null,
         gender: getEnum(data.gender, 'GENDER'),
-        hide: data.hide || false,
+        hide: Boolean(data.hide),
         initials: data.initials || utils.buildMemberInitials(data.name),
         modifiedBy: data.modifiedBy || null,
         name: data.name,
         nationality: getEnum(data.nationality, 'NATIONALITY'),
         positions: data.positions || [],
-        private: data.private || false,
+        private: Boolean(data.private),
         primaryGenre: getEnum(data.primaryGenre, 'GENRE'),
         referenceArtists: data.referenceArtists || [],
         tags: data.tags || [],
@@ -98,6 +115,75 @@ const serializers = {
     };
   },
 
+  unit: (data, id, additionalData) => {
+    data = _.cloneDeep(data);
+
+    const result = {
+      id: data.id || id,
+      type: 'unit',
+      attributes: {
+        artistId: data.artistId || null,
+        createdBy: data.createdBy || null,
+        debutYear: data.debutYear,
+        name: data.name,
+        official: Boolean(!data.unofficial),
+        subUnit: Boolean(data.subUnit),
+        private: Boolean(data.private),
+        modifiedBy: data.modifiedBy || null,
+      },
+    };
+
+    // Add artist name
+    if (additionalData.artist) {
+      result.attributes.artistName = additionalData.artist.name;
+    } else {
+      result.attributes.artistName = UNKNOWN;
+    }
+
+    // Parse and add members, then determine genre
+    if (additionalData.members) {
+      const serializedMembers = additionalData.members.map(m =>
+        serialize(m, m.id, 'member')
+      );
+      const parsedUnitMembers = utils.parseUnitMembersPositions(data.members);
+
+      result.attributes.members = utils.mergeUnitMembers(
+        serializedMembers,
+        parsedUnitMembers
+      );
+
+      result.attributes.gender = utils.determineUnitGenre(serializedMembers);
+    } else {
+      result.attributes.members = [];
+    }
+
+    // Add distributions
+    if (additionalData.distributions) {
+      // do stuff
+      const serializedDistributions = additionalData.distributions.map(d =>
+        serialize(d, d.id, 'distributionSummary')
+      );
+
+      result.attributes.distributions = utils.categorizeDistributions(
+        serializedDistributions
+      );
+    } else {
+      result.attributes.distributions = {
+        official: [],
+        custom: [],
+        rework: [],
+      };
+    }
+
+    // Calculate averages
+    result.attributes.members = utils.calculateUnitAverages(
+      result.attributes.members,
+      result.attributes.distributions
+    );
+
+    return result;
+  },
+
   user: (data, id) => {
     data = _.cloneDeep(data);
     return {
@@ -108,7 +194,7 @@ const serializers = {
         favoriteArtists: data.favoriteArtists || {}, // Oject(Reference(Artist):Boolean)
         favoriteMembers: data.favoriteMembers || {}, // Oject(Reference(Member):Boolean)
         biases: data.biases || {}, // Object(Reference(Artist):Reference(Member))
-        isAdmin: data.isAdmin || false,
+        isAdmin: Boolean(data.isAdmin),
         latestUnits: data.latesUnits || [],
         session: data.session || {},
         displayName: null, // merged from auth

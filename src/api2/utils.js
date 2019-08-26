@@ -1,4 +1,7 @@
 import HttpStatus from 'http-status-codes';
+
+import _ from 'lodash';
+
 import { UNKNOWN } from './enums';
 
 /**
@@ -104,6 +107,148 @@ const calculateAge = birthday => {
 };
 
 /**
+ * Calculates the averages for each member in the unit
+ * @param {array} members list of members
+ * @param {array} distributions list of distributions
+ * @returns {array} list of members with averages object
+ */
+const calculateUnitAverages = (members, distributions) => {
+  const averages = {};
+  const totals = {
+    official: 0,
+    custom: 0,
+    rework: 0,
+  };
+
+  function calculateAverage(distribution, type) {
+    Object.entries(distribution.rates).forEach(([memberId, duration]) => {
+      if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
+        if (averages[memberId] === undefined) {
+          averages[memberId] = {
+            official: 0,
+            custom: 0,
+            rework: 0,
+          };
+        }
+        averages[memberId][type] += duration;
+        totals[type] += duration;
+      }
+    });
+  }
+
+  Object.entries(distributions).forEach(([type, distributionsList]) => {
+    distributionsList.forEach(distribution => {
+      calculateAverage(distribution, type);
+    });
+  });
+
+  Object.entries(averages).forEach(([memberId, durations]) => {
+    averages[memberId].all = Number(
+      (
+        ((durations.official + durations.custom) * 100) /
+        (totals.official + totals.custom)
+      ).toFixed(1)
+    );
+    averages[memberId].official = Number(
+      ((durations.official * 100) / totals.official).toFixed(1)
+    );
+    averages[memberId].custom = Number(
+      ((durations.custom * 100) / totals.custom).toFixed(1)
+    );
+
+    averages[memberId].rework = Number(
+      ((durations.rework * 100) / totals.rework).toFixed(1)
+    );
+
+    averages[memberId].official =
+      averages[memberId].official > 1 ? averages[memberId].official : 0;
+    averages[memberId].custom =
+      averages[memberId].custom > 1 ? averages[memberId].custom : 0;
+    averages[memberId].rework =
+      averages[memberId].rework > 1 ? averages[memberId].rework : 0;
+  });
+
+  return members.map(member => {
+    member.averages = averages[member.id];
+    return member;
+  });
+};
+
+/**
+ * Builds object separating distributions by category
+ * @param {array} distributions collection of memberUnitUrns (memberId:memberName:memberPosition)
+ * @returns {object} distributions grouped by official, custom, redistribution
+ */
+const categorizeDistributions = distributions => {
+  const sortedDistributions = _.sortBy(distributions, [
+    d => d.data.songTitle.toLowerCase(),
+  ]);
+
+  return sortedDistributions.reduce(
+    (res, distribution) => {
+      switch (distribution.data.category) {
+        case 'OFFICIAL':
+          res.official.push(distribution.data);
+          break;
+        case 'SHOULD':
+          res.rework.push(distribution.data);
+          break;
+        default:
+          res.custom.push(distribution.data);
+      }
+
+      return res;
+    },
+    {
+      official: [],
+      custom: [],
+      rework: [],
+    }
+  );
+};
+
+/**
+ * Parses the object with members from a unit
+ * @param {array} members collection of memberUnitUrns (memberId:memberName:memberPosition)
+ * @returns {string} genre MALE, FEMALE, or MIXED
+ */
+const determineUnitGenre = members =>
+  members.reduce(
+    (res, member) => (member.data.attributes.gender !== res ? 'MIXED' : res),
+    members[0].data.attributes.gender
+  );
+
+/**
+ * Parses the object with members from a unit
+ * @param {object} membersObj collection of memberUnitUrns (memberId:memberName:memberPosition)
+ * @returns {array} list of member ids
+ */
+const getMembersIdsFromUnit = membersObj =>
+  Object.keys(membersObj).reduce((arr, memberUnitUrn) => {
+    const memberId = memberUnitUrn.split(':')[0];
+    if (!arr.includes(memberId)) {
+      arr.push(memberId);
+    }
+    return arr;
+  }, []);
+
+/**
+ * Merges serialized members from unit and parsed unit members positions
+ * @param {array} members
+ * @param {obect} positionsObj
+ * @returns {object} a collection of memberIds and their list of positions
+ */
+const mergeUnitMembers = (members, positionsObj) =>
+  members.map(member => {
+    const { id } = member.data;
+    return {
+      ...member.data.attributes,
+      id,
+      positions: positionsObj[id],
+    };
+  });
+
+/**
  * Parses artistMemberUrn
  * @param {string} urn
  * @returns {object} with id, name, color
@@ -132,6 +277,21 @@ const parseColorRGB = rgb => {
 };
 
 /**
+ * Parses unit members urns
+ * @param {obect} members
+ * @returns {object} a collection of memberIds and their list of positions
+ */
+const parseUnitMembersPositions = members =>
+  Object.keys(members).reduce((res, key) => {
+    const [id, , position] = key.split(':');
+    if (res[id] === undefined) {
+      res[id] = [];
+    }
+    res[id].push(position);
+    return res;
+  }, {});
+
+/**
  * Asyncronous function that delays code when using with async/await
  * @param {number} ms time in miliseconds the fuction should wait
  * @returns {Promise}
@@ -143,7 +303,13 @@ export default {
   buildArtistQuery,
   buildMemberInitials,
   calculateAge,
+  calculateUnitAverages,
+  categorizeDistributions,
+  determineUnitGenre,
+  getMembersIdsFromUnit,
+  mergeUnitMembers,
   parseArtistMemberUrn,
   parseColorRGB,
+  parseUnitMembersPositions,
   wait,
 };

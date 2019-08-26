@@ -1162,6 +1162,10 @@ input:checked + .slider:before {
   justify-content: space-between;
 }
 
+.unit-section__summary {
+  width: 100%;
+}
+
 .unit-section__bias {
   display: flex;
   flex-direction: column;

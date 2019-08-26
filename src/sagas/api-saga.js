@@ -133,6 +133,7 @@ function* requestArtist(action) {
     });
   }
 
+  // TO-DO: Verify this
   // const { artistId, panels, state } = action;
   // let { queryParams } = action;
 
@@ -364,15 +365,15 @@ function* requestSongs(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
-function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
-  const actionType = 'REQUEST_UNIT';
-  yield put({ type: 'PENDING', actionType });
+function* requestUnit(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  let unit = {};
+  const { unitId } = action;
   try {
     const response = yield API.get(`/units/${unitId}`);
-    unit = utils.parseResponse(response);
+    const selectedUnit = utils.parseResponse(response);
+    yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -380,163 +381,162 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
         `Unable to load unit ${unitId} from database`,
         error.toString(),
       ],
-      actionType,
+      actionType: action.type,
     });
   }
 
-  // Fetch members
-  let members = {};
-  try {
-    const response = yield API.get(`/units/${unitId}/members`);
-    members = utils.parseArrayToObject(response);
-  } catch (error) {
-    yield put({
-      type: 'ERROR',
-      message: [
-        `Unable to load members from unit ${unitId} from database`,
-        error.toString(),
-      ],
-      actionType,
-    });
-  }
-  unit.members = members;
+  // // Fetch members
+  // let members = {};
+  // try {
+  //   const response = yield API.get(`/units/${unitId}/members`);
+  //   members = utils.parseArrayToObject(response);
+  // } catch (error) {
+  //   yield put({
+  //     type: 'ERROR',
+  //     message: [
+  //       `Unable to load members from unit ${unitId} from database`,
+  //       error.toString(),
+  //     ],
+  //     actionType,
+  //   });
+  // }
+  // unit.members = members;
 
-  const membersArray = Object.values(members);
+  // const membersArray = Object.values(members);
 
-  unit.gender = membersArray.reduce((res, member) => {
-    if (member.gender !== res) return 'MIXED';
-    return res;
-  }, membersArray[0].gender);
+  // unit.gender = membersArray.reduce((res, member) => {
+  //   if (member.gender !== res) return 'MIXED';
+  //   return res;
+  // }, membersArray[0].gender);
 
-  // Fetch distributions and merge
-  let distributions = [];
-  try {
-    const response = yield API.get(`/units/${unitId}/distributions`);
-    distributions = utils.parseResponse(response);
-  } catch (error) {
-    yield put({
-      type: 'ERROR',
-      message: [
-        `Unable to load distributions from unit ${unitId} from database`,
-        error.toString(),
-      ],
-      actionType,
-    });
-  }
+  // // Fetch distributions and merge
+  // let distributions = [];
+  // try {
+  //   const response = yield API.get(`/units/${unitId}/distributions`);
+  //   distributions = utils.parseResponse(response);
+  // } catch (error) {
+  //   yield put({
+  //     type: 'ERROR',
+  //     message: [
+  //       `Unable to load distributions from unit ${unitId} from database`,
+  //       error.toString(),
+  //     ],
+  //     actionType,
+  //   });
+  // }
 
-  const songsDict = {};
+  // const songsDict = {};
 
-  // Separate distribution into official and custom ones
-  unit.distributions = distributions.reduce(
-    (obj, distribution) => {
-      if (
-        distribution.category === 'OFFICIAL' ||
-        distribution.category === ''
-      ) {
-        // TO-DO: Remove this when DB is fixed
-        distribution.category = 'OFFICIAL';
-        obj.official.push(distribution);
-      } else {
-        obj.custom.push(distribution);
-      }
+  // // Separate distribution into official and custom ones
+  // unit.distributions = distributions.reduce(
+  //   (obj, distribution) => {
+  //     if (
+  //       distribution.category === 'OFFICIAL' ||
+  //       distribution.category === ''
+  //     ) {
+  //       // TO-DO: Remove this when DB is fixed
+  //       distribution.category = 'OFFICIAL';
+  //       obj.official.push(distribution);
+  //     } else {
+  //       obj.custom.push(distribution);
+  //     }
 
-      // Set songs dictionary entry
-      songsDict[distribution.songId] = distribution.id;
+  //     // Set songs dictionary entry
+  //     songsDict[distribution.songId] = distribution.id;
 
-      return obj;
-    },
-    {
-      official: [],
-      custom: [],
-    }
-  );
+  //     return obj;
+  //   },
+  //   {
+  //     official: [],
+  //     custom: [],
+  //   }
+  // );
 
-  // Sort songs
-  unit.distributions.official = _.sortBy(unit.distributions.official, [
-    'title',
-    'originalArtist',
-  ]);
-  unit.distributions.custom = _.sortBy(unit.distributions.custom, [
-    'title',
-    'originalArtist',
-  ]);
+  // // Sort songs
+  // unit.distributions.official = _.sortBy(unit.distributions.official, [
+  //   'title',
+  //   'originalArtist',
+  // ]);
+  // unit.distributions.custom = _.sortBy(unit.distributions.custom, [
+  //   'title',
+  //   'originalArtist',
+  // ]);
 
-  // Add songs dictionary to unit
-  unit.songsDict = songsDict;
+  // // Add songs dictionary to unit
+  // unit.songsDict = songsDict;
 
-  // Calculate averages
-  const averages = {};
-  const totals = {
-    official: 0,
-    custom: 0,
-  };
+  // // Calculate averages
+  // const averages = {};
+  // const totals = {
+  //   official: 0,
+  //   custom: 0,
+  // };
 
-  unit.distributions.official.forEach(distribution => {
-    Object.entries(distribution.rates).forEach(([memberId, duration]) => {
-      if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
-        if (averages[memberId] === undefined) {
-          averages[memberId] = {
-            official: 0,
-            custom: 0,
-          };
-        }
-        averages[memberId].official += duration;
-        totals.official += duration;
-      }
-    });
-  });
+  // unit.distributions.official.forEach(distribution => {
+  //   Object.entries(distribution.rates).forEach(([memberId, duration]) => {
+  //     if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
+  //       if (averages[memberId] === undefined) {
+  //         averages[memberId] = {
+  //           official: 0,
+  //           custom: 0,
+  //         };
+  //       }
+  //       averages[memberId].official += duration;
+  //       totals.official += duration;
+  //     }
+  //   });
+  // });
 
-  unit.distributions.custom.forEach(distribution => {
-    Object.entries(distribution.rates).forEach(([memberId, duration]) => {
-      if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
-        if (averages[memberId] === undefined) {
-          averages[memberId] = {
-            official: 0,
-            custom: 0,
-          };
-        }
-        averages[memberId].custom += duration;
-        totals.custom += duration;
-      }
-    });
-  });
+  // unit.distributions.custom.forEach(distribution => {
+  //   Object.entries(distribution.rates).forEach(([memberId, duration]) => {
+  //     if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
+  //       if (averages[memberId] === undefined) {
+  //         averages[memberId] = {
+  //           official: 0,
+  //           custom: 0,
+  //         };
+  //       }
+  //       averages[memberId].custom += duration;
+  //       totals.custom += duration;
+  //     }
+  //   });
+  // });
 
-  Object.entries(averages).forEach(([memberId, durations]) => {
-    averages[memberId].all = Number(
-      (
-        ((durations.official + durations.custom) * 100) /
-        (totals.official + totals.custom)
-      ).toFixed(1)
-    );
-    averages[memberId].official = Number(
-      ((durations.official * 100) / totals.official).toFixed(1)
-    );
-    averages[memberId].custom = Number(
-      ((durations.custom * 100) / totals.custom).toFixed(1)
-    );
+  // Object.entries(averages).forEach(([memberId, durations]) => {
+  //   averages[memberId].all = Number(
+  //     (
+  //       ((durations.official + durations.custom) * 100) /
+  //       (totals.official + totals.custom)
+  //     ).toFixed(1)
+  //   );
+  //   averages[memberId].official = Number(
+  //     ((durations.official * 100) / totals.official).toFixed(1)
+  //   );
+  //   averages[memberId].custom = Number(
+  //     ((durations.custom * 100) / totals.custom).toFixed(1)
+  //   );
 
-    averages[memberId].official =
-      averages[memberId].official > 1 ? averages[memberId].official : 0;
-    averages[memberId].custom =
-      averages[memberId].custom > 1 ? averages[memberId].custom : 0;
-  });
+  //   averages[memberId].official =
+  //     averages[memberId].official > 1 ? averages[memberId].official : 0;
+  //   averages[memberId].custom =
+  //     averages[memberId].custom > 1 ? averages[memberId].custom : 0;
+  // });
 
-  unit.averages = averages;
+  // unit.averages = averages;
 
-  // Flag unit as complete
-  unit.complete = true;
+  // // Flag unit as complete
+  // unit.complete = true;
 
-  // The following if statements are used when the unit tab is updated in the UI
-  if (type) {
-    yield put({ type: types.SET_SELECTED_UNIT, payload: unit });
-  }
-  if (selectedArtist) {
-    selectedArtist.units[unitIndex] = unit;
-    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
-  }
+  // // The following if statements are used when the unit tab is updated in the UI
+  // if (type) {
+  //   yield put({ type: types.SET_SELECTED_UNIT, payload: unit });
+  // }
+  // if (selectedArtist) {
+  //   selectedArtist.units[unitIndex] = unit;
+  //   yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
+  // }
 
-  yield put({ type: 'CLEAR_PENDING', actionType });
-  return unit;
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 function* requestUnitMembers({ type, unitId, panels }) {

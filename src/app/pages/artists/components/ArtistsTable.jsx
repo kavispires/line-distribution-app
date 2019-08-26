@@ -45,7 +45,7 @@ const ArtistsTable = ({
     if (pending) {
       return (
         <tr>
-          <td colSpan="5">
+          <td colSpan="6">
             <LoadingIcon />
           </td>
         </tr>
@@ -53,7 +53,7 @@ const ArtistsTable = ({
     }
     return (
       <tr>
-        <td colSpan="5">{emptyTableMessage}</td>
+        <td colSpan="6">{emptyTableMessage}</td>
       </tr>
     );
   };
@@ -85,39 +85,45 @@ const ArtistsTable = ({
         </thead>
         <tbody onClick={rowAction}>
           {filteredArtists.length > 0
-            ? filteredArtists.map((entry, index) => (
-                <tr
-                  key={`all-artists-${entry.id}`}
-                  id={`${index}:a:${entry.id}`}
-                >
-                  <td
-                    className="artists-cell-favorite"
-                    onClick={() => favoriteAction(entry.id)}
-                  >
-                    <FavoriteIcon
-                      action={() => {}}
-                      id={entry.id}
-                      size="12"
-                      state={
-                        user.favoriteArtists && user.favoriteArtists[entry.id]
-                      }
-                    />
-                  </td>
-                  <td>
-                    {entry.name}{' '}
-                    {entry.private ? (
-                      <Icon type="private" color="red" title="Private" inline />
-                    ) : null}
-                  </td>
-                  <td>{entry.agency}</td>
-                  <td>{enums.GENRES[entry.genre]}</td>
-                  <td>{entry.unitIds.length}</td>
-                  <td>
-                    {entry.members.map(member => member.name).join(', ')} (
-                    {entry.members.length})
-                  </td>
-                </tr>
-              ))
+            ? filteredArtists.map(entry => {
+                const key = `all-artists-${entry.id}`;
+                const id = `${entry.id}:::${entry.unitIds[0]}`;
+                return (
+                  <tr key={key} id={id}>
+                    <td
+                      className="artists-cell-favorite"
+                      onClick={() => favoriteAction(entry.id)}
+                    >
+                      <FavoriteIcon
+                        action={() => {}}
+                        id={entry.id}
+                        size="12"
+                        state={
+                          user.favoriteArtists && user.favoriteArtists[entry.id]
+                        }
+                      />
+                    </td>
+                    <td>
+                      {entry.name}{' '}
+                      {entry.private ? (
+                        <Icon
+                          type="private"
+                          color="red"
+                          title="Private"
+                          inline
+                        />
+                      ) : null}
+                    </td>
+                    <td>{entry.agency}</td>
+                    <td>{enums.GENRES[entry.genre]}</td>
+                    <td>{entry.unitIds.length}</td>
+                    <td>
+                      {entry.members.map(member => member.name).join(', ')} (
+                      {entry.members.length})
+                    </td>
+                  </tr>
+                );
+              })
             : rowFallback()}
         </tbody>
       </table>
