@@ -24,12 +24,7 @@ class Units extends Component {
   componentDidUpdate(prevProps) {
     const prevUnitId = prevProps.match.params.unitId;
     const { unitId } = this.props.match.params;
-
-    if (
-      prevUnitId !== unitId &&
-      !prevProps.auth.isAuthenticated &&
-      this.props.auth.isAuthenticated
-    ) {
+    if (prevUnitId !== unitId && this.props.auth.isAuthenticated) {
       this.props.loadUnit(unitId);
     }
   }
