@@ -353,6 +353,18 @@ class API {
               this._db,
               this._reload
             );
+            // API/users/<id>/favorite-members
+          } else if (route.subPath === 'favorite-members') {
+            result = await putFunctions.updateUserFavoriteMembers(
+              route.referenceId,
+              body,
+              this._db,
+              this._reload
+            );
+          } else {
+            return reject(
+              Error(`Unable to perform PUT action, path ${path} does not exist`)
+            );
           }
           break;
         default:
@@ -558,6 +570,20 @@ const putFunctions = {
       reload.users = true;
       if (error) {
         const message = `Failed to update User's Favorite Artists ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    return body;
+  },
+  // Update user favorite members
+  updateUserFavoriteMembers: async (id, body, db, reload) => {
+    const key = id;
+    await dbRef.ref(`/users/${key}/favoriteMembers`).update(body, error => {
+      reload.users = true;
+      if (error) {
+        const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(
           body
         )}`;
         throw new Error(`${message}: ${error}`);
