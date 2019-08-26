@@ -108,9 +108,15 @@ const serializers = {
     };
   },
 
-  typeahead: data => {
+  typeahead: (data, type) => {
+    let text = data.attributes.name;
+
+    if (type === 'member') {
+      text = `${data.attributes.name} (${data.attributes.referenceArtists[0]})`;
+    }
+
     return {
-      text: data.attributes.name,
+      text,
       value: data.id,
     };
   },
@@ -251,7 +257,7 @@ export const serializeCollection = (
 
   if (includeTypeahead) {
     const serializedTypeahead = serializedCollectionResult.map(value =>
-      serializers.typeahead(value)
+      serializers.typeahead(value, type)
     );
 
     result.meta = {
