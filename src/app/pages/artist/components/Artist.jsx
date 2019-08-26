@@ -8,6 +8,7 @@ import {
   FavoriteIcon,
   LoadingWrapper,
   RequirementWrapper,
+  Icon,
 } from '../../../common';
 
 class Artist extends Component {
@@ -61,7 +62,12 @@ class Artist extends Component {
                     />
                   </h2>
                   <p className="artist-page-info__genre">
-                    {selectedArtist.agency} • {selectedArtist.genre}
+                    {selectedArtist.agency} • {selectedArtist.genre}{' '}
+                    {selectedArtist.disbanded ? (
+                      <span>
+                        • <Icon type="grave" inline color="purple" /> Disbanded
+                      </span>
+                    ) : null}
                   </p>
                   <ul className="artist-page-info__members-list">
                     {selectedArtist.members &&
