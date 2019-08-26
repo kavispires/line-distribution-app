@@ -2,7 +2,6 @@
 /* eslint class-methods-use-this: 0 */
 
 import firebase from 'firebase';
-import HttpStatus from 'http-status-codes';
 import { fb, googleProvider, userSession } from './firebase';
 import utils from './utils';
 import { serializeCollection, serialize } from './serializers';
@@ -233,8 +232,8 @@ class API {
   /**
    * Gets data from the database based on a path
    * @category Method
-   * @param {String} path the error message string
-   * @returns undefined
+   * @param {String} path the get request path
+   * @returns {Promise} response
    */
   async get(path) {
     this.print('Fetching data:', path);
@@ -244,6 +243,10 @@ class API {
        * List of possible get calls:
        * /artists
        * /artists/<id>
+       * /colors
+       * /members
+       * /units/<id>
+       * /user/<id>
        */
       let result = {};
 
@@ -303,6 +306,58 @@ class API {
         default:
           return reject(
             Error(`Unable to perform GET action, path ${path} does not exist`)
+          );
+      }
+
+      // TO-DO: Catch errors in result and reject
+
+      return resolve(result);
+    });
+  }
+
+  /**
+   * Updates data in the database based on a path
+   * @category Method
+   * @param {String} path the put request path
+   * @returns {Promise} response
+   */
+  async put(path, body) {
+    this.print('Updating data:', path);
+
+    return new Promise(async (resolve, reject) => {
+      /*
+       * List of possible get calls:
+       * /users/<id>/favorite-artists
+       */
+      let result = {};
+
+      if (!this._loaded || !this._authenticated) {
+        await utils.wait(WAIT_DB_TIME);
+
+        if (!this._loaded || !this._authenticated) {
+          const errorMessage = this.buildErrorMessage('GET');
+          return reject(Error(errorMessage));
+        }
+      }
+
+      const route = utils.breadcrumble(path);
+
+      switch (route.root) {
+        // API/users
+        case 'users':
+          // API/users/<id>/favorite-artists
+          if (route.subPath === 'favorite-artists') {
+            result = await putFunctions.updateUserFavoriteArtists(
+              route.referenceId,
+              body,
+              this._db,
+              this._reload
+            );
+          }
+          break;
+        default:
+          return reject(
+            Error(`Unable to perform PUT action, path ${path} does not exist`)
           );
       }
 
@@ -484,7 +539,7 @@ const getFunctions = {
   },
   // Fetches a single user
   fetchUser: async (id, db, reload) => {
-    if (db.users[id] === undefined || reload.artists === true) {
+    if (db.users[id] === undefined || reload.users === true) {
       let response = {};
       await dbRef.ref(`/users/${id}`).once('value', snapshot => {
         response = snapshot.val();
@@ -492,6 +547,23 @@ const getFunctions = {
       db.users[id] = response;
     }
     return serialize(db.users[id], id, 'user');
+  },
+};
+
+const putFunctions = {
+  // Update user favorite artists
+  updateUserFavoriteArtists: async (id, body, db, reload) => {
+    const key = id;
+    await dbRef.ref(`/users/${key}/favoriteArtists`).update(body, error => {
+      reload.users = true;
+      if (error) {
+        const message = `Failed to update User's Favorite Artists ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    return body;
   },
 };
 

@@ -7,6 +7,8 @@ import { FavoriteIcon, LoadingIcon, Icon } from '../../../common';
 // Import utils
 import enums from '../../../../utils/readable-enums';
 
+const NUMBER_OF_COLUMNS = '7';
+
 const ArtistsTable = ({
   artists,
   favoriteAction,
@@ -45,7 +47,7 @@ const ArtistsTable = ({
     if (pending) {
       return (
         <tr>
-          <td colSpan="6">
+          <td colSpan={NUMBER_OF_COLUMNS}>
             <LoadingIcon />
           </td>
         </tr>
@@ -53,7 +55,7 @@ const ArtistsTable = ({
     }
     return (
       <tr>
-        <td colSpan="6">{emptyTableMessage}</td>
+        <td colSpan={NUMBER_OF_COLUMNS}>{emptyTableMessage}</td>
       </tr>
     );
   };
@@ -81,6 +83,7 @@ const ArtistsTable = ({
             <th>Genre</th>
             <th>Units</th>
             <th>Members</th>
+            <th>Disbanded</th>
           </tr>
         </thead>
         <tbody onClick={rowAction}>
@@ -120,6 +123,16 @@ const ArtistsTable = ({
                     <td>
                       {entry.members.map(member => member.name).join(', ')} (
                       {entry.members.length})
+                    </td>
+                    <td>
+                      {entry.disbanded ? (
+                        <Icon
+                          type="grave"
+                          color="purple"
+                          title="Disbanded"
+                          inline
+                        />
+                      ) : null}
                     </td>
                   </tr>
                 );
