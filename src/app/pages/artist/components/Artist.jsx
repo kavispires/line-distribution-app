@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // Import components
 import UnitsContainer from '../containers/UnitsContainer';
+import Bias from './Bias';
 // Import common components
 import {
   FavoriteIcon,
@@ -27,6 +28,7 @@ class Artist extends Component {
       app,
       artists: { selectedArtist },
       auth,
+      updateBias,
     } = this.props;
 
     const isArtistPending = app.pending.REQUEST_ARTIST;
@@ -81,9 +83,13 @@ class Artist extends Component {
                       ))}
                   </ul>
                 </div>
-                <div className="artist-page-bias">
-                  {/* { TO-DO: Add user bias for artist} */}
-                </div>
+                <Bias
+                  artistId={selectedArtist.id}
+                  isPending={app.pending.UPDATE_USER_BIASES}
+                  members={selectedArtist.members}
+                  updateBias={updateBias}
+                  userBiases={auth.user.biases}
+                />
               </div>
               {/* Artist has no units */
               hasNoUnits ? (
@@ -110,6 +116,7 @@ Artist.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
+  updateBias: PropTypes.func.isRequired,
 };
 
 Artist.defaultProps = {};

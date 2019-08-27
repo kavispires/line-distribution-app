@@ -1,4 +1,4 @@
-/* eslint no-underscore-dangle: ["error", { "allow": ["_authenticated", "_admin", "_loaded", _uid, "_user", "_db", "_reload"] }] */
+/* eslint no-underscore-dangle: ["error", { "allow": ["_authenticated", "_admin", "_loaded", _uid, "_user", "_db", "_reload", "_userAdditionalInfo"] }] */
 /* eslint class-methods-use-this: 0 */
 
 import firebase from 'firebase';
@@ -27,6 +27,10 @@ class API {
       songs: {},
       units: {},
       users: {},
+      userAdditionalInfo: {
+        displayName: null,
+        photoURL: null,
+      },
     };
     this._reload = {
       artists: true,
@@ -100,6 +104,10 @@ class API {
       if (user.emailVerified) {
         this._authenticated = true;
         this._uid = user.uid;
+        this._db.userAdditionalInfo = {
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        };
 
         let userResponse = {};
 
@@ -108,9 +116,6 @@ class API {
         } catch (_) {
           userResponse = await this.post(`/users/${user.uid}`);
         }
-
-        userResponse.data.attributes.displayName = user.displayName;
-        userResponse.data.attributes.photoURL = user.photoURL;
 
         this._admin = userResponse.data.attributes.isAdmin;
         this._user = userResponse;
@@ -142,6 +147,10 @@ class API {
         if (user.emailVerified) {
           this._authenticated = true;
           this._uid = user.uid;
+          this._db.userAdditionalInfo = {
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          };
 
           let userResponse;
           try {
@@ -149,9 +158,6 @@ class API {
           } catch (_) {
             userResponse = await this.post(`/users/${user.uid}`);
           }
-
-          userResponse.data.attributes.displayName = user.displayName;
-          userResponse.data.attributes.photoURL = user.photoURL;
 
           this._admin = userResponse.data.attributes.isAdmin;
           result = userResponse;
@@ -361,6 +367,13 @@ class API {
               this._db,
               this._reload
             );
+          } else if (route.subPath === 'biases') {
+            result = await putFunctions.updateUserBiases(
+              route.referenceId,
+              body,
+              this._db,
+              this._reload
+            );
           } else {
             return reject(
               Error(`Unable to perform PUT action, path ${path} does not exist`)
@@ -557,12 +570,27 @@ const getFunctions = {
         response = snapshot.val();
       });
       db.users[id] = response;
+      reload.users = false;
     }
-    return serialize(db.users[id], id, 'user');
+    return serialize(db.users[id], id, 'user', db.userAdditionalInfo);
   },
 };
 
 const putFunctions = {
+  // Update user biases
+  updateUserBiases: async (id, body, db, reload) => {
+    const key = id;
+    await dbRef.ref(`/users/${key}/biases`).set(body, error => {
+      reload.users = true;
+      if (error) {
+        const message = `Failed to update User's Biases ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    return getFunctions.fetchUser(id, db, reload);
+  },
   // Update user favorite artists
   updateUserFavoriteArtists: async (id, body, db, reload) => {
     const key = id;
@@ -575,7 +603,7 @@ const putFunctions = {
         throw new Error(`${message}: ${error}`);
       }
     });
-    return body;
+    return getFunctions.fetchUser(id, db, reload);
   },
   // Update user favorite members
   updateUserFavoriteMembers: async (id, body, db, reload) => {
@@ -589,7 +617,7 @@ const putFunctions = {
         throw new Error(`${message}: ${error}`);
       }
     });
-    return body;
+    return getFunctions.fetchUser(id, db, reload);
   },
 };
 

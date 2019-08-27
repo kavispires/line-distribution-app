@@ -606,9 +606,12 @@ function* updateUserBiases(action) {
   yield delay(DELAY_DURATION);
 
   try {
-    yield API.put(`/users/${action.userId}/biases`, action.biases);
-    yield put({ type: types.SET_BIASES, payload: action.biases });
-    yield put({ type: types.SET_BIAS, payload: action.bias });
+    const response = yield API.put(
+      `/users/${action.userId}/biases`,
+      action.biases
+    );
+    const user = utils.parseResponse(response);
+    yield put({ type: types.SET_USER, payload: user });
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',
@@ -616,6 +619,7 @@ function* updateUserBiases(action) {
       actionType: action.type,
     });
   }
+
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
@@ -624,10 +628,13 @@ function* updateUserFavoriteArtists(action) {
   yield delay(DELAY_DURATION);
 
   try {
-    yield API.put(
+    const response = yield API.put(
       `/users/${action.userId}/favorite-artists`,
       action.userFavoriteArtists
     );
+
+    const user = utils.parseResponse(response);
+    yield put({ type: types.SET_USER, payload: user });
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',
@@ -643,10 +650,13 @@ function* updateUserFavoriteMembers(action) {
   yield delay(DELAY_DURATION);
 
   try {
-    yield API.put(
+    const response = yield API.put(
       `/users/${action.userId}/favorite-members`,
       action.userFavoriteMembers
     );
+
+    const user = utils.parseResponse(response);
+    yield put({ type: types.SET_USER, payload: user });
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',

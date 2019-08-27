@@ -190,7 +190,7 @@ const serializers = {
     return result;
   },
 
-  user: (data, id) => {
+  user: (data, id, additionalData) => {
     data = _.cloneDeep(data);
     return {
       id: data.id || id,
@@ -203,8 +203,8 @@ const serializers = {
         isAdmin: Boolean(data.isAdmin),
         latestUnits: data.latesUnits || [],
         session: data.session || {},
-        displayName: null, // merged from auth
-        photoURL: null, // merged from auth
+        displayName: additionalData.displayName || null, // merged from auth
+        photoURL: additionalData.photoURL || null, // merged from auth
       },
     };
   },
