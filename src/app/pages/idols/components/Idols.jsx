@@ -97,8 +97,7 @@ class Idols extends Component {
         }
       }
 
-      if (this.state.color)
-        evaluation.push(member.colorId === this.state.color);
+      if (this.state.color) evaluation.push(member.color === this.state.color);
       if (this.state.gender)
         evaluation.push(member.gender === this.state.gender);
       if (this.state.nationality)
@@ -285,7 +284,7 @@ class Idols extends Component {
                     initialValue={this.state.sort}
                   >
                     <Option value="age">Age</Option>
-                    <Option value="colorId">Color</Option>
+                    <Option value="color">Color</Option>
                     <Option value="gender">Gender</Option>
                     <Option value="referenceArtists">Group</Option>
                     <Option value="name">Name</Option>
