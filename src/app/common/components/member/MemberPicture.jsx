@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
+// Import contants
 import constants from '../../../../utils/constants';
 
 class MemberPicture extends Component {
@@ -35,12 +38,20 @@ class MemberPicture extends Component {
       );
     }
     return (
-      <img
+      <LazyLoadImage
         className={className}
         src={pictureUrl}
         onError={this.fallback}
-        alt="Member"
+        alt={`Member: ${name}`}
       />
+
+      // </LazyLoadImage>
+      // <img
+      //   className={className}
+      //   src={pictureUrl}
+      //   onError={this.fallback}
+      //   alt="Member"
+      // />
     );
   }
 }
