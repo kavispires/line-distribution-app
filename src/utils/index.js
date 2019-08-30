@@ -361,6 +361,9 @@ const getMostImportantPosition = positions => {
   return 'VOCALIST';
 };
 
+const removeSpecialCharacters = str =>
+  str.replace(/(\*|★|&| |-|\(|\)|%|\.|')+/g, '');
+
 export default {
   bem,
   camelCase,
@@ -377,6 +380,7 @@ export default {
   parseArrayToObject,
   parseResponse,
   parseResponseToObject,
+  removeSpecialCharacters,
   spiralBirthdate,
   spiralCase,
   spinalCaseWord,

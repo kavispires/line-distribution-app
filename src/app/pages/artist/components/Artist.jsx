@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Import components
-import UnitsContainer from '../containers/UnitsContainer';
+import ArtistPicture from './ArtistPicture';
 import Bias from './Bias';
+import UnitsContainer from '../containers/UnitsContainer';
 // Import common components
 import {
   FavoriteIcon,
@@ -49,9 +50,7 @@ class Artist extends Component {
           <LoadingWrapper pending={isArtistPending}>
             <section className="artist-section">
               <div className="artist-section-wrapper">
-                <div className="artist-page-profile">
-                  {/* { TO-DO Add artist photo compoenent } */}
-                </div>
+                <ArtistPicture artistName={selectedArtist.name} />
                 <div className="artist-page-info">
                   <h2 className="artist-page-info__name">
                     {selectedArtist.name}
