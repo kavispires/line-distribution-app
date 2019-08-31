@@ -49,7 +49,9 @@ class Idols extends Component {
 
   localStorage() {
     this.setState({
-      showIds: localStorage.get('idolsShowIds') || this.props.auth.isAdmin,
+      showIds: this.props.auth.isAdmin
+        ? localStorage.get('idolsShowIds')
+        : false,
       sort: localStorage.get('idolsSort') || 'name',
       order: localStorage.get('idolsOrder') || 'asc',
     });
@@ -71,7 +73,9 @@ class Idols extends Component {
     });
 
     localStorage.set({
-      idolsShowIds: formState.values.showIds || this.state.showIds,
+      idolsShowIds: this.props.auth.isAdmin
+        ? formState.values.showIds || this.state.showIds
+        : null,
       idolsSort: formState.values.sort || null,
       idolsOrder: formState.values.order || null,
     });

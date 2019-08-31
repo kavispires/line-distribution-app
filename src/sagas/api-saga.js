@@ -252,8 +252,7 @@ function* requestSongs(action) {
   try {
     const response = yield API.get('/songs');
     const songsList = utils.parseResponse(response);
-    const sortedSongsList = _.orderBy(songsList, [s => s.title.toLowerCase()]);
-    yield put({ type: types.SET_SONGS, payload: sortedSongsList });
+    yield put({ type: types.SET_SONGS, payload: songsList });
   } catch (error) {
     yield put({
       type: 'ERROR',

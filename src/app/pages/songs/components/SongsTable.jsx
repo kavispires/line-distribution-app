@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { LoadingIcon, Icon, SortingButton } from '../../../common';
 
 const MEANT_FOR_TEXT = {
-  FEMALE: 'Girl Groups',
-  MALE: 'Boy Groups',
-  MIXED: 'Any Group',
+  FEMALE: 'Girl Group',
+  MALE: 'Boy Group',
+  MIXED: 'Mixed Group',
   UNKNOWN: 'Unknown',
 };
 
@@ -71,8 +71,8 @@ const SongsTable = ({
           <th>
             Artist{' '}
             <SortingButton
-              active={sortedBy === 'originalArtist'}
-              action={() => sortBy('originalArtist')}
+              active={sortedBy === 'originalArtistName'}
+              action={() => sortBy('originalArtistName')}
             />
           </th>
           <th>
@@ -127,7 +127,7 @@ const SongsTable = ({
                     ) : null}
                   </td>
                   <td>
-                    {entry.originalArtist}{' '}
+                    {entry.originalArtistName}{' '}
                     {entry.originalArtistId && (
                       <Icon
                         type="check"

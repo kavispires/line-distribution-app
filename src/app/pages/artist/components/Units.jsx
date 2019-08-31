@@ -37,6 +37,18 @@ class Units extends Component {
     }
   }
 
+  goToPage(page) {
+    // Activate Unit
+    if (
+      this.props.artists.selectedUnit.id !== this.props.distribute.activeUnit.id
+    ) {
+      this.props.activateUnit();
+    }
+
+    // Then Redirect
+    this.props.history.push(`/${page}`);
+  }
+
   render() {
     const {
       app: { pending },
@@ -88,13 +100,13 @@ class Units extends Component {
                       <div className="unit-section__actions">
                         <button
                           className="btn"
-                          onClick={() => this.artistRedirect('songs')}
+                          onClick={() => this.goToPage('songs')}
                         >
                           Distribute
                         </button>
                         <button
                           className="btn"
-                          onClick={() => this.artistRedirect('lyrics')}
+                          onClick={() => this.goToPage('lyrics')}
                         >
                           Play with Lyrics{' '}
                           <span className="restriction">*</span>
@@ -168,9 +180,11 @@ class Units extends Component {
 }
 
 Units.propTypes = {
+  activateUnit: PropTypes.func.isRequired,
   app: PropTypes.object.isRequired,
   artists: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadUnit: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,

@@ -121,6 +121,32 @@ const serializers = {
     };
   },
 
+  song: (data, id) => {
+    data = _.cloneDeep(data);
+
+    return {
+      id: data.id || id,
+      type: 'song',
+      attributes: {
+        album: data.album || UNKNOWN,
+        createdBy: data.createdBy || null,
+        modifiedBy: data.modifiedBy || null,
+        private: Boolean(data.private),
+        distribution: data.distribution,
+        gender: data.gender || UNKNOWN,
+        groupSize: data.groupSize || 0,
+        originalArtistId: data.originalArtist.artistId || null,
+        originalArtistName: data.originalArtist.name,
+        single: Boolean(data.single),
+        title: data.title,
+        videoId: data.videoId,
+        hasMusicVideo: Boolean(!data.hasNoMusicVideo),
+        hasRap: Boolean(data.hasRap),
+        hasDanceBreak: Boolean(data.hasDance),
+      },
+    };
+  },
+
   unit: (data, id, additionalData) => {
     data = _.cloneDeep(data);
 
@@ -130,12 +156,12 @@ const serializers = {
       attributes: {
         artistId: data.artistId || null,
         createdBy: data.createdBy || null,
+        modifiedBy: data.modifiedBy || null,
         debutYear: data.debutYear,
         name: data.name,
         official: Boolean(!data.unofficial),
         subUnit: Boolean(data.subUnit),
         private: Boolean(data.private),
-        modifiedBy: data.modifiedBy || null,
       },
     };
 
@@ -161,6 +187,7 @@ const serializers = {
       result.attributes.gender = utils.determineUnitGenre(serializedMembers);
     } else {
       result.attributes.members = [];
+      result.attributes.gender = UNKNOWN;
     }
 
     // Add distributions

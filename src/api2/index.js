@@ -291,6 +291,10 @@ class API {
         case 'members':
           result = await getFunctions.fetchMembers(this._db, this._reload);
           break;
+        // API/membersongss
+        case 'songs':
+          result = await getFunctions.fetchSongs(this._db, this._reload);
+          break;
         // API/units
         case 'units':
           // API/units/<id>
@@ -489,6 +493,18 @@ const getFunctions = {
     });
 
     return Promise.all(responses);
+  },
+  // Fetches list of songs
+  fetchSongs: async (db, reload) => {
+    if (reload.songs === true) {
+      let response = {};
+      await dbRef.ref(`/songs`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.songs = response;
+      reload.songs = false;
+    }
+    return serializeCollection(db.songs, 'song', true, 'title');
   },
   // Fetches set of units (used by /artist)
   fetchUnitsSet: async (ids, db, reload) => {
