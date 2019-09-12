@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { fb, googleProvider, userSession } from './firebase';
 import utils from './utils';
 import { serializeCollection, serialize } from './serializers';
+import { deserialize } from './deserializers';
 
 const WAIT_AUTH_TIME = 2000;
 const WAIT_DB_TIME = 3500;
@@ -338,6 +339,8 @@ class API {
       /*
        * List of possible get calls:
        * /users/<id>/favorite-artists
+       * /users/<id>/favorite-members
+       * /users/<id>/biases
        */
       let result = {};
 
@@ -371,6 +374,7 @@ class API {
               this._db,
               this._reload
             );
+            // API/users/<id>/biases
           } else if (route.subPath === 'biases') {
             result = await putFunctions.updateUserBiases(
               route.referenceId,
@@ -380,7 +384,9 @@ class API {
             );
           } else {
             return reject(
-              Error(`Unable to perform PUT action, path ${path} does not exist`)
+              Error(
+                `Unable to perform PUT action for user, path ${path} does not exist`
+              )
             );
           }
           break;
@@ -596,7 +602,8 @@ const putFunctions = {
   // Update user biases
   updateUserBiases: async (id, body, db, reload) => {
     const key = id;
-    await dbRef.ref(`/users/${key}/biases`).set(body, error => {
+    const deserializedBody = deserialize(body, 'user', 'put', 'biases');
+    await dbRef.ref(`/users/${key}`).set(deserializedBody, error => {
       reload.users = true;
       if (error) {
         const message = `Failed to update User's Biases ${key}: ${JSON.stringify(
@@ -610,7 +617,13 @@ const putFunctions = {
   // Update user favorite artists
   updateUserFavoriteArtists: async (id, body, db, reload) => {
     const key = id;
-    await dbRef.ref(`/users/${key}/favoriteArtists`).update(body, error => {
+    const deserializedBody = deserialize(
+      body,
+      'user',
+      'put',
+      'favoriteArtists'
+    );
+    await dbRef.ref(`/users/${key}`).update(deserializedBody, error => {
       reload.users = true;
       if (error) {
         const message = `Failed to update User's Favorite Artists ${key}: ${JSON.stringify(
@@ -624,7 +637,13 @@ const putFunctions = {
   // Update user favorite members
   updateUserFavoriteMembers: async (id, body, db, reload) => {
     const key = id;
-    await dbRef.ref(`/users/${key}/favoriteMembers`).update(body, error => {
+    const deserializedBody = deserialize(
+      body,
+      'user',
+      'put',
+      'favoriteMembers'
+    );
+    await dbRef.ref(`/users/${key}`).update(deserializedBody, error => {
       reload.users = true;
       if (error) {
         const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(

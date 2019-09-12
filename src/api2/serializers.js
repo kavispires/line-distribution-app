@@ -238,12 +238,12 @@ const serializers = {
 };
 
 /**
- * Serializer a collection of entries
+ * Serializes a single entry
  * @category Function
  * @param {object} entity the data entity from the database
  * @param {string} id the id of the entity
  * @param {string} type the serializer type
- * @returns {object} a serialized collection of data
+ * @returns {object} a serialized ]data object
  */
 export const serialize = (entity, id, type, additionalData) => {
   return {
@@ -252,7 +252,7 @@ export const serialize = (entity, id, type, additionalData) => {
 };
 
 /**
- * Serializer a collection of entries
+ * Serializes a collection of entries
  * @category Function
  * @param {object} collection the data collection
  * @param {string} type the serializer type
