@@ -154,6 +154,7 @@ function* requestColors(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+// TODO: REFACTOR
 function* requestDistribution(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -166,6 +167,20 @@ function* requestDistribution(action) {
   try {
     const response = yield API.get(`/distributions/${distributionId}`);
     selectedDistribution = utils.parseResponse(response);
+
+    yield put({
+      type: types.SET_ACTIVE_SONG,
+      payload: utils.parseResponse(selectedDistribution.song),
+    });
+    const selectedDistributionWithoutSong = Object.assign(
+      {},
+      selectedDistribution
+    );
+    delete selectedDistributionWithoutSong.song;
+    yield put({
+      type: types.SET_ACTIVE_DISTRIBUTION,
+      payload: selectedDistributionWithoutSong,
+    });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -176,11 +191,6 @@ function* requestDistribution(action) {
       actionType: action.type,
     });
   }
-
-  yield put({
-    type: types.SET_ACTIVE_DISTRIBUTION,
-    payload: selectedDistribution,
-  });
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 
@@ -209,6 +219,7 @@ function* requestMembers(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+// TODO: REFACTOR
 function* requestSong(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);

@@ -114,8 +114,8 @@ class Songs extends Component {
 
       if (this.state.query) {
         const query = this.state.query.toLowerCase();
-        const stringSearch = `${song.title.toLowerCase()} ${song.originalArtistName.toLowerCase()}`;
-        if (stringSearch.includes(query)) {
+
+        if (song.query.includes(query)) {
           evaluation.push(song);
         } else {
           evaluation.push(!song);
@@ -182,9 +182,9 @@ class Songs extends Component {
           <p>To start a distribution, select a song by clicking on its row.</p>
           <SongsTable
             filteredSongs={filteredSongs}
-            hasActiveFilters={
+            hasActiveFilters={Boolean(
               this.state.query || this.state.undone || this.state.matchGender
-            }
+            )}
             pending={pending.REQUEST_SONGS}
             rowAction={this.handleTableClick}
             previouslyDistributedSongsDict={activeUnit.songsDict}

@@ -12,6 +12,7 @@ class Units extends Component {
     super(props);
 
     this.redirectToUnit = this.redirectToUnit.bind(this);
+    this.goToDistribution = this.goToDistribution.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +25,12 @@ class Units extends Component {
   componentDidUpdate(prevProps) {
     const prevUnitId = prevProps.match.params.unitId;
     const { unitId } = this.props.match.params;
-    if (prevUnitId !== unitId && this.props.auth.isAuthenticated) {
+    if (
+      this.props.auth.isAuthenticated &&
+      (this.props.artists.selectedUnit.id !==
+        prevProps.artists.selectedUnit.id ||
+        prevUnitId !== unitId)
+    ) {
       this.props.loadUnit(unitId);
     }
   }
@@ -45,8 +51,15 @@ class Units extends Component {
       this.props.activateUnit();
     }
 
-    // Then Redirect
+    // Then Redirect: songs, lyrics, distribute
     this.props.history.push(`/${page}`);
+  }
+
+  goToDistribution(id) {
+    this.props.loadDistribution(id);
+
+    // Then Active Unit and go to page
+    this.goToPage('distribute');
   }
 
   render() {
@@ -187,6 +200,7 @@ Units.propTypes = {
   distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   loadUnit: PropTypes.func.isRequired,
+  loadDistribution: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
 };

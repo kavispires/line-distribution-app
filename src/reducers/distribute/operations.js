@@ -2,6 +2,9 @@ import _ from 'lodash';
 
 import actions from './actions';
 
+const loadDistribution = distributionId => dispatch =>
+  dispatch({ type: 'REQUEST_DISTRIBUTION', distributionId });
+
 const activateSong = id => (dispatch, getState) => {
   // Reset everything but Unit
   dispatch(actions.resetDistributeSong({}));
@@ -60,7 +63,6 @@ const activateUnit = () => (dispatch, getState) => {
 };
 
 const prepareSong = activeSongParam => (dispatch, getState) => {
-  // const { activeSong } = getState().distribute;
   const activeSong = activeSongParam || getState().distribute.activeSong;
 
   if (activeSong.id) {
@@ -352,6 +354,7 @@ export default {
   handleDistributionCategory,
   handleSaveDistribution,
   linkMemberToPart,
+  loadDistribution,
   mergeActiveDistribution,
   prepareSong,
 };

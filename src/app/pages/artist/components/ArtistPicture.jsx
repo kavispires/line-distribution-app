@@ -21,10 +21,8 @@ class ArtistPicture extends Component {
 
     const parsedName = utils.removeSpecialCharacters(artistName.toLowerCase());
 
-    const pictureUrl = `${process.env.PUBLIC_URL}${constants.GROUPS_PICTURE_URL}${parsedName}.jpg`;
-
     // If picture is not found
-    if (this.state.fetchPictureFailed) {
+    if (!artistName || this.state.fetchPictureFailed) {
       console.log(`Missing Artist Picture: ${parsedName}`); // eslint-disable-line
       return (
         <img
@@ -34,6 +32,8 @@ class ArtistPicture extends Component {
         />
       );
     }
+
+    const pictureUrl = `${process.env.PUBLIC_URL}${constants.GROUPS_PICTURE_URL}${parsedName}.jpg`;
 
     return (
       <img
@@ -47,9 +47,11 @@ class ArtistPicture extends Component {
 }
 
 ArtistPicture.propTypes = {
-  artistName: PropTypes.string.isRequired,
+  artistName: PropTypes.string,
 };
 
-ArtistPicture.defaultProps = {};
+ArtistPicture.defaultProps = {
+  artistName: '',
+};
 
 export default ArtistPicture;

@@ -65,6 +65,30 @@ const serializers = {
     };
   },
 
+  distribution: (data, id, songData) => {
+    data = _.cloneDeep(data);
+
+    return {
+      id: data.id || id,
+      type: 'distribution',
+      attributes: {
+        createdBy: data.createdBy || null,
+        modifiedBy: data.modifiedBy || null,
+        private: Boolean(data.private),
+        category: getEnum(data.category, 'CATEGORY'),
+        rates: data.rates,
+        features: data.features || {},
+        songId: data.songId,
+        unitId: data.unitId,
+        relationships: utils.mergeDistributionRelationships(
+          data.relationships,
+          data.legend
+        ),
+        song: songData,
+      },
+    };
+  },
+
   distributionSummary: (data, id) => {
     data = _.cloneDeep(data);
 
@@ -72,7 +96,7 @@ const serializers = {
       id: data.id || id,
       createdBy: data.createdBy || null,
       modifiedBy: data.modifiedBy || null,
-      category: data.category,
+      category: getEnum(data.category, 'CATEGORY'),
       rates: data.rates,
       features: data.features || {},
       private: Boolean(data.private),
@@ -132,11 +156,13 @@ const serializers = {
         createdBy: data.createdBy || null,
         modifiedBy: data.modifiedBy || null,
         private: Boolean(data.private),
-        distribution: data.distribution,
+        distribution: utils.parseSongDistribution(data.distribution),
         gender: data.gender || UNKNOWN,
         groupSize: data.groupSize || 0,
         originalArtistId: data.originalArtist.artistId || null,
         originalArtistName: data.originalArtist.name,
+        query: `${data.title} ${data.originalArtist.name} ${data.album ||
+          ''}`.toLowerCase(),
         single: Boolean(data.single),
         title: data.title,
         videoId: data.videoId,

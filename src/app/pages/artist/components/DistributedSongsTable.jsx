@@ -48,7 +48,7 @@ const DistributedSongsTable = ({
           <th>Distribution Preview</th>
         </tr>
       </thead>
-      <tbody onClick={rowAction}>
+      <tbody>
         {distributions.length > 0
           ? distributions.map(entry => {
               const key = `artist-distribution-${entry.id}`;
@@ -57,7 +57,7 @@ const DistributedSongsTable = ({
                   key={key}
                   id={`a-${entry.id}`}
                   className="artist-distributed-songs-row"
-                  onClick={() => rowAction(entry)}
+                  onClick={() => rowAction(entry.id)}
                 >
                   <td className="artist-distributed-songs-row__title">
                     {entry.songTitle}

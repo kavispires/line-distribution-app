@@ -255,7 +255,7 @@ class API {
        * /units/<id>
        * /user/<id>
        */
-      let result = {};
+      let result = null;
 
       if (!this._loaded || !this._authenticated) {
         await utils.wait(WAIT_DB_TIME);
@@ -288,6 +288,16 @@ class API {
         case 'colors':
           result = await getFunctions.fetchColors(this._db, this._reload);
           break;
+        // API/distributions
+        case 'distributions':
+          if (route.referenceId) {
+            result = await getFunctions.fetchDistribution(
+              route.referenceId,
+              this._db,
+              this._reload
+            );
+          }
+          break;
         // API/members
         case 'members':
           result = await getFunctions.fetchMembers(this._db, this._reload);
@@ -299,28 +309,36 @@ class API {
         // API/units
         case 'units':
           // API/units/<id>
-          result = await getFunctions.fetchUnit(
-            route.referenceId,
-            this._db,
-            this._reload
-          );
+          if (route.referenceId) {
+            result = await getFunctions.fetchUnit(
+              route.referenceId,
+              this._db,
+              this._reload
+            );
+          }
           break;
         // API/users
         case 'users':
           // API/users/<id>
-          result = await getFunctions.fetchUser(
-            route.referenceId,
-            this._db,
-            this._reload
-          );
+          if (route.referenceId) {
+            result = await getFunctions.fetchUser(
+              route.referenceId,
+              this._db,
+              this._reload
+            );
+          }
           break;
         default:
           return reject(
-            Error(`Unable to perform GET action, path ${path} does not exist`)
+            Error(`Unable to perform GET action: path ${path} does not exist`)
           );
       }
 
-      // TO-DO: Catch errors in result and reject
+      if (!result) {
+        return reject(
+          Error(`Unable to perform GET action: an unkown error has occured`)
+        );
+      }
 
       return resolve(result);
     });
@@ -446,6 +464,21 @@ const getFunctions = {
     }
     return serializeCollection(db.colors, 'color', true);
   },
+  // Fetches a single distribution
+  fetchDistribution: async (id, db, reload) => {
+    let response = {};
+    if (db.distributions[id] === undefined || reload.distributions === true) {
+      await dbRef.ref(`/distributions/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.distributions[id] = response;
+    }
+
+    // Get song
+    const song = await getFunctions.fetchSong(response.songId, db, reload);
+
+    return serialize(db.distributions[id], id, 'distribution', song);
+  },
   // Fetches set of distributions (used by /unit)
   fetchDistributionsSet: async (ids, db, reload) => {
     const responses = await ids.map(id => {
@@ -499,6 +532,18 @@ const getFunctions = {
     });
 
     return Promise.all(responses);
+  },
+  // Fetches a single song
+  fetchSong: async (id, db, reload) => {
+    if (db.songs[id] === undefined || reload.songs === true) {
+      let response = {};
+      await dbRef.ref(`/songs/${id}`).once('value', snapshot => {
+        response = snapshot.val();
+      });
+      db.songs[id] = response;
+    }
+
+    return serialize(db.songs[id], id, 'song');
   },
   // Fetches list of songs
   fetchSongs: async (db, reload) => {

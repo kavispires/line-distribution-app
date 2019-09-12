@@ -1512,6 +1512,24 @@ input:checked + .slider:before {
   padding: 6px;
 }
 
+.distribute-view__controls {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  border-color: #b5b5ba;
+  display: flex;
+}
+.distribute-view__controls__button {
+  flex: 1;
+  border: 0;
+  padding: 12px 24px;
+  cursor: pointer;
+  background: #ffffff;
+}
+.distribute-view__controls__button:hover {
+  background: #ebebf2;
+}
+
 .distribute-progress-bar {
   width: 100%;
   padding: 6px;

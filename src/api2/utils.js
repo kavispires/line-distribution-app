@@ -233,6 +233,24 @@ const getMembersIdsFromUnit = membersObj =>
   }, []);
 
 /**
+ * Transforms stringified relationships into an object with replaced legendId for memberIds
+ * @param {string} relationshipsStr
+ * @param {obect} legend
+ * @returns {object} a collection of distributionKey: memberIds pairs
+ */
+const mergeDistributionRelationships = (relationshipsStr, legend) => {
+  const relationships = JSON.parse(relationshipsStr);
+
+  Object.entries(relationships).forEach(([key, legendIds]) => {
+    relationships[key] = legendIds.map(legendId =>
+      legend[legendId] ? legend[legendId] : legendId
+    );
+  });
+
+  return relationships;
+};
+
+/**
  * Merges serialized members from unit and parsed unit members positions
  * @param {array} members
  * @param {obect} positionsObj
@@ -277,6 +295,59 @@ const parseColorRGB = rgb => {
 };
 
 /**
+ * Parses distribution string into an array of distribution data
+ * @param {string} distributionString the distribution of a song
+ * @returns {array} a list of distribution lines with part objects
+ */
+const parseSongDistribution = distributionString => {
+  const buildPartData = data => {
+    const [id, startTime, duration] = data.split(':');
+    return {
+      id,
+      startTime: +startTime,
+      duration: +duration,
+      endTime: +startTime + +duration,
+    };
+  };
+
+  // Iterate through lines
+  return distributionString.split('\n').map(line => {
+    if (line.length < 2) {
+      return [];
+    }
+    const parsedLine = [];
+    let insideBracket = false;
+    let id = '';
+    let content = '';
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '[' && i > 0) {
+        content = content[0] === ' ' ? content.substring(1) : content;
+        parsedLine.push({ ...buildPartData(id), content, memberId: [] });
+      }
+
+      if (char === '[') {
+        insideBracket = true;
+        id = '';
+        content = content.trim();
+      } else if (char === ']') {
+        insideBracket = false;
+        content = '';
+      } else if (insideBracket) {
+        id += char;
+      } else {
+        content += char;
+      }
+    }
+    content = content[0] === ' ' ? content.substring(1) : content;
+    parsedLine.push({ ...buildPartData(id), content, memberId: [] });
+
+    return parsedLine;
+  });
+};
+
+/**
  * Parses unit members urns
  * @param {obect} members
  * @returns {object} a collection of memberIds and their list of positions
@@ -307,9 +378,11 @@ export default {
   categorizeDistributions,
   determineUnitGenre,
   getMembersIdsFromUnit,
+  mergeDistributionRelationships,
   mergeUnitMembers,
   parseArtistMemberUrn,
   parseColorRGB,
+  parseSongDistribution,
   parseUnitMembersPositions,
   wait,
 };

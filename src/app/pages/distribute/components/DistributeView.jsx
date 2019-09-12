@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
 
 // Import shared components
-import { ActiveSong, ActiveUnit } from '../../../common';
+import { ActiveSong, ActiveUnit, Icon } from '../../../common';
 
 // Import utility functions
 import utils from '../../../../utils';
@@ -210,6 +210,7 @@ class DistributeView extends Component {
           <ActiveUnit activeUnit={activeUnit} showMembers />
           <ActiveSong activeSong={activeSong} />
         </section>
+
         <section className="distribute-view__video" id="video-container-view">
           <YouTube
             videoId={activeSong.videoId}
@@ -242,20 +243,35 @@ class DistributeView extends Component {
             </div>
           </div>
         </section>
-        <section className="distribute-view-controls">
-          <button className="btn" onClick={() => this.togglePlayPause()}>
-            Play/Pause
+        <section className="distribute-view__controls">
+          <button
+            className="distribute-view__controls__button"
+            onClick={() => this.togglePlayPause()}
+          >
+            {this.state.isPlaying ? (
+              <Icon type="pause" />
+            ) : (
+              <Icon type="play" />
+            )}
           </button>
-          <button className="btn" onClick={() => this.restartVideo()}>
-            Restart
+          <button
+            className="distribute-view__controls__button"
+            onClick={() => this.restartVideo()}
+          >
+            <Icon type="restart" />
           </button>
-          <button className="btn" onClick={() => this.rewindFastforward('-')}>
-            - 10s
+          <button
+            className="distribute-view__controls__button"
+            onClick={() => this.rewindFastforward('-')}
+          >
+            <Icon type="rewind" />
           </button>
-          <button className="btn" onClick={() => this.rewindFastforward('+')}>
-            + 10s
+          <button
+            className="distribute-view__controls__button"
+            onClick={() => this.rewindFastforward('+')}
+          >
+            <Icon type="fast-forward" />
           </button>
-          <button className="btn">Results</button>
         </section>
         <h1>View!</h1>
       </Fragment>

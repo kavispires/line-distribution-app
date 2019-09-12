@@ -1,3 +1,9 @@
+export const CATEGORY = {
+  OFFICIAL: 'OFFICIAL',
+  SHOULD: 'SHOULD',
+  WOULD: 'WOULD',
+};
+
 export const GENDERS = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
@@ -8,6 +14,9 @@ export const GENRES = {
   CPOP: 'C-POP',
   JPOP: 'J-POP',
   KPOP: 'K-POP',
+  'C-POP': 'C-POP',
+  'J-POP': 'J-POP',
+  'K-POP': 'K-POP',
   OTHER: 'OTHER',
   POP: 'POP',
 };
@@ -54,6 +63,9 @@ const getEnum = (value = '', library = '') => {
   if (value === UNKNOWN) return UNKNOWN;
 
   switch (library) {
+    case 'CATEGORY':
+      result = CATEGORY[value];
+      break;
     case 'GENDER':
       result = GENDERS[value];
       break;
