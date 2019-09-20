@@ -13,24 +13,69 @@ import localStorage from '../../../../utils/local-storage';
 import utils from '../../../../utils';
 
 class Idols extends Component {
+  static filterIdols(members = [], user, filters) {
+    const filteredMembers = _.filter(members, member => {
+      const evaluation = [!member.hide];
+
+      if (filters.favorite) {
+        if (filters.favorite === 'favorite') {
+          evaluation.push(user.favoriteMembers[member.id]);
+        } else {
+          evaluation.push(!user.favoriteMembers[member.id]);
+        }
+      }
+
+      if (filters.privacy) {
+        if (filters.privacy === 'private') {
+          evaluation.push(member.private);
+        } else {
+          evaluation.push(!member.private);
+        }
+      }
+
+      if (filters.color) evaluation.push(member.color === filters.color);
+      if (filters.gender) evaluation.push(member.gender === filters.gender);
+      if (filters.nationality)
+        evaluation.push(member.nationality === filters.nationality);
+      if (filters.position)
+        evaluation.push(member.positions.includes(filters.position));
+      if (filters.name)
+        evaluation.push(
+          member.name.toLowerCase().startsWith(filters.name.toLowerCase())
+        );
+      if (filters.age) {
+        if (filters.age === '<18') {
+          evaluation.push(member.age < 18);
+        } else if (filters.age === '18-28') {
+          evaluation.push(member.age > 17 && member.age < 28);
+        } else {
+          evaluation.push(member.age > 28);
+        }
+      }
+      return evaluation.every(e => e);
+    });
+
+    return _.orderBy(filteredMembers, [filters.sort], [filters.order]);
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      age: '',
-      color: '',
-      favorite: '',
-      gender: '',
-      name: '',
-      nationality: '',
-      position: '',
-      privacy: '',
-      sort: 'name',
-      order: 'asc',
-      showIds: false,
+      filters: {
+        age: '',
+        color: '',
+        favorite: '',
+        gender: '',
+        name: '',
+        nationality: '',
+        position: '',
+        privacy: '',
+        sort: 'name',
+        order: 'asc',
+        showIds: false,
+      },
+      members: [],
     };
-
-    this.filterIdols = this.filterIdols.bind(this);
-    this.sortIdols = this.sortIdols.bind(this);
   }
 
   componentDidMount() {
@@ -45,6 +90,10 @@ class Idols extends Component {
     if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
       this.props.loadMembers();
     }
+    // Run members filters as soon as the api return the list of members
+    if (prevProps.db.members.length !== this.props.db.members.length) {
+      this.updateFilters({ values: {} }, true);
+    }
   }
 
   localStorage() {
@@ -57,8 +106,8 @@ class Idols extends Component {
     });
   }
 
-  updateFilters(formState) {
-    this.setState({
+  updateFilters(formState, forceUpdateFilters = false) {
+    const filters = {
       age: formState.values.age,
       color: formState.values.color,
       favorite: formState.values.favorite,
@@ -70,80 +119,46 @@ class Idols extends Component {
       sort: formState.values.sort || 'name',
       order: formState.values.order || 'asc',
       showIds: formState.values.showIds || false,
+    };
+
+    // Prevent filters to be run if filters were not modified
+    const hasNoNewFiltres = _.isEqual({ ...filters, members: [] }, this.state);
+    if (hasNoNewFiltres && !forceUpdateFilters) {
+      return;
+    }
+
+    const filteredMembers = this.constructor.filterIdols(
+      this.props.db.members,
+      this.props.auth.user,
+      filters
+    );
+
+    this.setState({
+      members: filteredMembers,
+      ...filters,
     });
 
     localStorage.set({
       idolsShowIds: this.props.auth.isAdmin
-        ? formState.values.showIds || this.state.showIds
+        ? filters.showIds || this.state.filters.showIds
         : null,
-      idolsSort: formState.values.sort || null,
-      idolsOrder: formState.values.order || null,
+      idolsSort: filters.sort || null,
+      idolsOrder: filters.order || null,
     });
-  }
-
-  filterIdols(members, user) {
-    return _.filter(members, member => {
-      const evaluation = [!member.hide];
-
-      if (this.state.favorite) {
-        if (this.state.favorite === 'favorite') {
-          evaluation.push(user.favoriteMembers[member.id]);
-        } else {
-          evaluation.push(!user.favoriteMembers[member.id]);
-        }
-      }
-
-      if (this.state.privacy) {
-        if (this.state.privacy === 'private') {
-          evaluation.push(member.private);
-        } else {
-          evaluation.push(!member.private);
-        }
-      }
-
-      if (this.state.color) evaluation.push(member.color === this.state.color);
-      if (this.state.gender)
-        evaluation.push(member.gender === this.state.gender);
-      if (this.state.nationality)
-        evaluation.push(member.nationality === this.state.nationality);
-      if (this.state.position)
-        evaluation.push(member.positions.includes(this.state.position));
-      if (this.state.name)
-        evaluation.push(
-          member.name.toLowerCase().startsWith(this.state.name.toLowerCase())
-        );
-      if (this.state.age) {
-        if (this.state.age === '<18') {
-          evaluation.push(member.age < 18);
-        } else if (this.state.age === '18-28') {
-          evaluation.push(member.age > 17 && member.age < 28);
-        } else {
-          evaluation.push(member.age > 28);
-        }
-      }
-      return evaluation.every(e => e);
-    });
-  }
-
-  sortIdols(filteredMembers) {
-    return _.orderBy(filteredMembers, [this.state.sort], [this.state.order]);
   }
 
   render() {
     const {
       app: { pending },
       auth: { isAdmin, user },
-      db: { members },
       updateFavoriteMembers,
     } = this.props;
+
+    const { members, filters } = this.state;
 
     if (pending.REQUEST_MEMBERS) {
       return <Loading message="Fecthing Idols..." />;
     }
-
-    const filteredMembers = this.filterIdols(members, user);
-
-    const sortedMembers = this.sortIdols(filteredMembers);
 
     return (
       <RequirementWrapper>
@@ -163,7 +178,7 @@ class Idols extends Component {
                   <Text
                     className="idols__filter-input-text"
                     field="name"
-                    initialValue={this.state.name}
+                    initialValue={filters.name}
                     maxLength="3"
                   />
                 </div>
@@ -173,7 +188,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="gender"
-                    initialValue={this.state.gender}
+                    initialValue={filters.gender}
                   >
                     <Option value="">Any</Option>
                     {Object.entries(enums.GENDERS).map(gender => (
@@ -188,7 +203,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="nationality"
-                    initialValue={this.state.nationality}
+                    initialValue={filters.nationality}
                   >
                     <Option value="">Any</Option>
                     {Object.entries(enums.NATIONALITIES).map(
@@ -205,7 +220,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="age"
-                    initialValue={this.state.age}
+                    initialValue={filters.age}
                   >
                     <Option value="">Any</Option>
                     <Option value="<18">&lt;18</Option>
@@ -218,7 +233,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="position"
-                    initialValue={this.state.position}
+                    initialValue={filters.position}
                   >
                     <Option value="">Any</Option>
                     {Object.entries(enums.POSITIONS).map(([value, text]) => (
@@ -233,7 +248,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="color"
-                    initialValue={this.state.color}
+                    initialValue={filters.color}
                   >
                     <Option value="">Any</Option>
                     {Object.entries(constants.COLORS).map(color => (
@@ -248,7 +263,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="favorite"
-                    initialValue={this.state.favorite}
+                    initialValue={filters.favorite}
                   >
                     <Option value="">Any</Option>
                     <Option value="favorite">Favorite</Option>
@@ -260,7 +275,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="privacy"
-                    initialValue={this.state.privacy}
+                    initialValue={filters.privacy}
                   >
                     <Option value="">Any</Option>
                     <Option value="private">Private</Option>
@@ -270,10 +285,7 @@ class Idols extends Component {
                 {isAdmin && (
                   <div className="idols__filter-select-group">
                     <label className="idols__filter-label">Show Ids</label>
-                    <Checkbox
-                      field="showIds"
-                      initialValue={this.state.showIds}
-                    />
+                    <Checkbox field="showIds" initialValue={filters.showIds} />
                   </div>
                 )}
               </div>
@@ -285,7 +297,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="sort"
-                    initialValue={this.state.sort}
+                    initialValue={filters.sort}
                   >
                     <Option value="age">Age</Option>
                     <Option value="color">Color</Option>
@@ -300,7 +312,7 @@ class Idols extends Component {
                   <Select
                     className="idols__filter-select"
                     field="order"
-                    initialValue={this.state.order}
+                    initialValue={filters.order}
                   >
                     <Option value="asc">Ascending</Option>
                     <Option value="desc">Descending</Option>
@@ -309,15 +321,13 @@ class Idols extends Component {
               </div>
             </div>
           </Form>
-          <h3 className="member-count">
-            Displaying {sortedMembers.length} members
-          </h3>
+          <h3 className="member-count">Displaying {members.length} members</h3>
           <div className="idols__list">
-            {sortedMembers.map(member => (
+            {members.map(member => (
               <MemberCard
                 key={member.id}
                 member={member}
-                showId={this.state.showIds}
+                showId={filters.showIds}
                 showReferenceArtist
                 favoriteState={
                   user.favoriteMembers && user.favoriteMembers[member.id]
