@@ -75,4 +75,10 @@
     padding-right: $unit-p2;
     transform: translateY(6px);
   }
+
+  .member-id {
+    background: $color-gray-1;
+    margin: 0;
+    padding: $unit-p2 $unit;
+  }
 }

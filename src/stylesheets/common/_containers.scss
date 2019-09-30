@@ -28,4 +28,16 @@
     display: flex;
     flex-direction: column;
   }
+
+  &--with-filters {
+    padding: 0;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  &__main-content {
+    padding: $unit-x2;
+    overflow-y: scroll;
+    width: 100%;
+  }
 }

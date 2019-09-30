@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { Checkbox, Form, Option, Select, Text } from 'informed';
-
+// Import components
+import IdolsFilters from './IdolsFilters';
 // Import common components
-import { Loading, MemberCard, RequirementWrapper } from '../../../common';
+import { Icon, Loading, MemberCard, RequirementWrapper } from '../../../common';
 // Import utils
-import constants from '../../../../utils/constants';
-import enums from '../../../../utils/readable-enums';
 import localStorage from '../../../../utils/local-storage';
-import utils from '../../../../utils';
 
 class Idols extends Component {
   static filterIdols(members = [], user, filters) {
@@ -75,7 +72,11 @@ class Idols extends Component {
         showIds: false,
       },
       members: [],
+      sidePanel: null,
     };
+
+    this.updateFilters = this.updateFilters.bind(this);
+    this.openPanel = this.openPanel.bind(this);
   }
 
   componentDidMount() {
@@ -135,7 +136,7 @@ class Idols extends Component {
 
     this.setState({
       members: filteredMembers,
-      ...filters,
+      filters,
     });
 
     localStorage.set({
@@ -147,6 +148,16 @@ class Idols extends Component {
     });
   }
 
+  openPanel(panelName) {
+    let sidePanel = null;
+    if (panelName && panelName !== this.state.sidePanel) {
+      sidePanel = panelName;
+    }
+    this.setState({
+      sidePanel,
+    });
+  }
+
   render() {
     const {
       app: { pending },
@@ -154,7 +165,7 @@ class Idols extends Component {
       updateFavoriteMembers,
     } = this.props;
 
-    const { members, filters } = this.state;
+    const { members, filters, sidePanel } = this.state;
 
     if (pending.REQUEST_MEMBERS) {
       return <Loading message="Fecthing Idols..." />;
@@ -162,181 +173,49 @@ class Idols extends Component {
 
     return (
       <RequirementWrapper>
-        <main className="container container--idols">
-          <h1>Idols</h1>
-          <Form
-            onChange={formState => this.updateFilters(formState)}
-            autoComplete="off"
-            className="idols__filters-form"
-          >
-            <div className="idols__filters-group">
-              <div className="idols__filters-items">
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">
-                    Name starts with
-                  </label>
-                  <Text
-                    className="idols__filter-input-text"
-                    field="name"
-                    initialValue={filters.name}
-                    maxLength="3"
-                  />
-                </div>
-
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Gender</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="gender"
-                    initialValue={filters.gender}
-                  >
-                    <Option value="">Any</Option>
-                    {Object.entries(enums.GENDERS).map(gender => (
-                      <Option key={gender[0]} value={gender[0]}>
-                        {gender[1]}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Nationality</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="nationality"
-                    initialValue={filters.nationality}
-                  >
-                    <Option value="">Any</Option>
-                    {Object.entries(enums.NATIONALITIES).map(
-                      ([value, text]) => (
-                        <Option key={value} value={value}>
-                          {text}
-                        </Option>
-                      )
-                    )}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Age Range</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="age"
-                    initialValue={filters.age}
-                  >
-                    <Option value="">Any</Option>
-                    <Option value="<18">&lt;18</Option>
-                    <Option value="18-28">18-28</Option>
-                    <Option value="28+">28+</Option>
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Position</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="position"
-                    initialValue={filters.position}
-                  >
-                    <Option value="">Any</Option>
-                    {Object.entries(enums.POSITIONS).map(([value, text]) => (
-                      <Option key={value} value={value}>
-                        {text}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Color</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="color"
-                    initialValue={filters.color}
-                  >
-                    <Option value="">Any</Option>
-                    {Object.entries(constants.COLORS).map(color => (
-                      <Option key={color[0]} value={color[0]}>
-                        {utils.humanize(color[1], 'Capital')}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Favorite</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="favorite"
-                    initialValue={filters.favorite}
-                  >
-                    <Option value="">Any</Option>
-                    <Option value="favorite">Favorite</Option>
-                    <Option value="nonfavorite">Non-favorite</Option>
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Privacy</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="privacy"
-                    initialValue={filters.privacy}
-                  >
-                    <Option value="">Any</Option>
-                    <Option value="private">Private</Option>
-                    <Option value="public">Public</Option>
-                  </Select>
-                </div>
-                {isAdmin && (
-                  <div className="idols__filter-select-group">
-                    <label className="idols__filter-label">Show Ids</label>
-                    <Checkbox field="showIds" initialValue={filters.showIds} />
-                  </div>
-                )}
-              </div>
+        <div className="container container--with-filters container--idols">
+          <IdolsFilters
+            isExpanded={sidePanel === 'filters'}
+            filters={filters}
+            isAdmin={isAdmin}
+            updateFilters={this.updateFilters}
+            openPanel={this.openPanel}
+          />
+          <aside className="side-panel-vertical-buttons">
+            <button
+              className="side-panel-vertical-buttons__button"
+              onClick={() => this.openPanel('filters')}
+            >
+              <Icon type="filter" />
+            </button>
+            <button
+              className="side-panel-vertical-buttons__button"
+              onClick={() => this.openPanel('edit')}
+            >
+              <Icon type="edit" />
+            </button>
+          </aside>
+          <main className="container__main-content">
+            <h1>Idols</h1>
+            <p className="filter-count-text italic">
+              Displaying {members.length} members...
+            </p>
+            <div className="idols__list">
+              {members.map(member => (
+                <MemberCard
+                  key={member.id}
+                  member={member}
+                  showId={filters.showIds}
+                  showReferenceArtist
+                  favoriteState={
+                    user.favoriteMembers && user.favoriteMembers[member.id]
+                  }
+                  updateFavoriteMembers={updateFavoriteMembers}
+                />
+              ))}
             </div>
-            <div className="idols__filters-group">
-              <div className="idols__filters-items">
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Sort by</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="sort"
-                    initialValue={filters.sort}
-                  >
-                    <Option value="age">Age</Option>
-                    <Option value="color">Color</Option>
-                    <Option value="gender">Gender</Option>
-                    <Option value="referenceArtists">Group</Option>
-                    <Option value="name">Name</Option>
-                    <Option value="nationality">Nationality</Option>
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Order by</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="order"
-                    initialValue={filters.order}
-                  >
-                    <Option value="asc">Ascending</Option>
-                    <Option value="desc">Descending</Option>
-                  </Select>
-                </div>
-              </div>
-            </div>
-          </Form>
-          <h3 className="member-count">Displaying {members.length} members</h3>
-          <div className="idols__list">
-            {members.map(member => (
-              <MemberCard
-                key={member.id}
-                member={member}
-                showId={filters.showIds}
-                showReferenceArtist
-                favoriteState={
-                  user.favoriteMembers && user.favoriteMembers[member.id]
-                }
-                updateFavoriteMembers={updateFavoriteMembers}
-              />
-            ))}
-          </div>
-        </main>
+          </main>
+        </div>
       </RequirementWrapper>
     );
   }
