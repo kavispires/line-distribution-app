@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   background: #fff;
-  font-size: $unit;
+  font-size: get-unit(3);
 }
 
 * {
@@ -22,22 +22,22 @@ body {
 
 h1 {
   font-size: 1.5em;
-  margin: $unit 0;
+  margin: get-unit(3) 0;
 }
 
 h2 {
   font-size: 1.25em;
-  margin: $unit 0;
+  margin: get-unit(3) 0;
 }
 
 h3 {
   font-size: 1.15em;
-  margin: $unit-p2 0;
+  margin: get-unit(2) 0;
 }
 
 p {
   font-size: 1em;
-  margin: $unit-p2 0;
+  margin: get-unit(2) 0;
 }
 
 .hidden {

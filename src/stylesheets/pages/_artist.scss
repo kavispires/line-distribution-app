@@ -1,20 +1,20 @@
 $TOP_HEIGHT: 140px;
 
 .artist-section {
-  margin: $unit 0;
+  margin: get-unit(3) 0;
 }
 
 .artist-section-wrapper {
   display: flex;
   width: 100%;
-  margin-bottom: $unit;
+  margin-bottom: get-unit(3);
 }
 
 .artist-page-profile {
   height: $TOP_HEIGHT;
   background: $color-gray-3;
   width: 250px;
-  margin-right: $unit;
+  margin-right: get-unit(3);
 }
 
 .artist-page-bias {
@@ -74,8 +74,8 @@ $TOP_HEIGHT: 140px;
     top: 10%;
     right: 90%;
     width: 250px;
-    border-radius: $unit-p4;
-    padding: $unit;
+    border-radius: get-unit(1);
+    padding: get-unit(3);
     min-height: 30px;
     background: $color-negative;
     box-shadow: 0 2px 5px $color-gray-3;
@@ -89,9 +89,9 @@ $TOP_HEIGHT: 140px;
 
   .bias-hover-button {
     cursor: pointer;
-    padding: $unit-p4 $unit-p2;
-    margin: $unit-p4 $unit-p4 0 0;
-    border-radius: $unit-p4;
+    padding: get-unit(1) get-unit(2);
+    margin: get-unit(1) get-unit(1) 0 0;
+    border-radius: get-unit(1);
     min-width: 70px;
     border: 0;
     flex-grow: 1;
@@ -132,10 +132,10 @@ $TOP_HEIGHT: 140px;
 
   &__member-pill {
     background: $color-gray-2;
-    padding: $unit-p4 $unit-p2;
-    border-radius: $unit-p4;
-    margin-right: $unit-p2;
-    margin-bottom: $unit-p4;
+    padding: get-unit(1) get-unit(2);
+    border-radius: get-unit(1);
+    margin-right: get-unit(2);
+    margin-bottom: get-unit(1);
   }
 }
 
@@ -171,7 +171,7 @@ $TOP_HEIGHT: 140px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: $unit-p2;
+    border-radius: get-unit(2);
     min-width: 110px;
   }
 
@@ -179,7 +179,7 @@ $TOP_HEIGHT: 140px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    border-radius: $unit-p2;
+    border-radius: get-unit(2);
     min-width: 110px;
   }
 
@@ -188,8 +188,8 @@ $TOP_HEIGHT: 140px;
     width: 105px;
     height: 105px;
     background: $color-gray-1;
-    margin-bottom: $unit;
-    border-radius: $unit-p2;
+    margin-bottom: get-unit(3);
+    border-radius: get-unit(2);
   }
 
   &__bias-picture {
@@ -197,16 +197,16 @@ $TOP_HEIGHT: 140px;
     width: 105px;
     height: 105px;
     background: $color-gray-1;
-    margin-bottom: $unit;
-    border-radius: $unit-p2;
+    margin-bottom: get-unit(3);
+    border-radius: get-unit(2);
   }
 
   &__bias-no-picture {
     width: 105px;
     height: 105px;
     background: $color-yellow;
-    margin-bottom: $unit;
-    border-radius: $unit-p2;
+    margin-bottom: get-unit(3);
+    border-radius: get-unit(2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -226,10 +226,10 @@ $TOP_HEIGHT: 140px;
 
     .btn {
       display: inline-block;
-      margin-right: $unit-p2;
+      margin-right: get-unit(2);
       min-width: 120px;
       min-width: 120px;
-      margin-bottom: $unit-p2;
+      margin-bottom: get-unit(2);
     }
   }
 

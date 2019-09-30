@@ -3,7 +3,7 @@
   height: 96px;
   display: flex;
   justify-content: center;
-  padding: $unit;
+  padding: get-unit(3);
 
   &--tiny {
     height: 32px;

@@ -21,14 +21,14 @@
   &__members-list {
     width: 100%;
     background: $color-gray-1;
-    padding: $unit-p2;
-    margin-bottom: $unit;
+    padding: get-unit(2);
+    margin-bottom: get-unit(3);
   }
 
   &__members-list--empty {
     background: $color-gray-1;
-    padding: $unit-p2;
-    margin-bottom: $unit;
+    padding: get-unit(2);
+    margin-bottom: get-unit(3);
   }
 
   &__input {
@@ -40,7 +40,7 @@
 
   &__output {
     @include lyrics-parser;
-    padding-left: $unit-p2;
+    padding-left: get-unit(2);
     overflow-y: auto;
     // line-height: 24px;
   }

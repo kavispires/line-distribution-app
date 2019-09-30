@@ -8,11 +8,11 @@
     width: 50%;
 
     &--left {
-      margin-right: $unit-p4;
+      margin-right: get-unit(1);
     }
 
     &--right {
-      margin-left: $unit-p4;
+      margin-left: get-unit(1);
     }
   }
 
@@ -31,7 +31,7 @@
       margin: 0 auto;
 
       select {
-        margin-bottom: $unit;
+        margin-bottom: get-unit(3);
       }
     }
 
@@ -42,8 +42,8 @@
       }
 
       &__group {
-        width: calc(50% - #{$unit});
-        margin-right: $unit;
+        width: calc(50% - #{get-unit(3)});
+        margin-right: get-unit(3);
       }
     }
   }
@@ -51,19 +51,19 @@
   &__form {
     &__label {
       display: block;
-      margin-bottom: $unit-p2;
+      margin-bottom: get-unit(2);
     }
 
     &__input-text {
       display: block;
-      margin-bottom: $unit-p2;
+      margin-bottom: get-unit(2);
       width: 100%;
       max-width: none;
     }
 
     &__typeahead {
       display: block;
-      margin-bottom: $unit-p2;
+      margin-bottom: get-unit(2);
       width: 100%;
       max-width: none;
 
@@ -73,7 +73,7 @@
     }
 
     &__input-number {
-      margin-left: $unit-p2;
+      margin-left: get-unit(2);
       min-width: 30px;
     }
   }
@@ -82,12 +82,12 @@
     &__controls {
       display: flex;
       & .btn:first-child {
-        margin-right: $unit-p4;
+        margin-right: get-unit(1);
       }
     }
 
     &__textarea {
-      margin-top: $unit-p2;
+      margin-top: get-unit(2);
       width: 100%;
       height: 400px;
       resize: none;
@@ -98,15 +98,15 @@
     width: 100%;
     background: $color-gray-1;
     display: flex;
-    border-radius: $unit-p4;
-    margin-bottom: $unit;
+    border-radius: get-unit(1);
+    margin-bottom: get-unit(3);
 
     .box {
       width: 25%;
-      padding: $unit $unit-p2;
-      border-radius: $unit-p4;
+      padding: get-unit(3) get-unit(2);
+      border-radius: get-unit(1);
       border: none;
-      margin: $unit-p4;
+      margin: get-unit(1);
       font-weight: bold;
       display: flex;
       flex-direction: column;
@@ -121,10 +121,10 @@
       .key {
         font-size: 120%;
         border: 1px solid $color-negative;
-        padding: 0 $unit-p2;
-        border-radius: $unit-p4;
+        padding: 0 get-unit(2);
+        border-radius: get-unit(1);
         background: rgba(255, 255, 255, 0.25);
-        margin-bottom: $unit-p2;
+        margin-bottom: get-unit(2);
       }
 
       .member-name {
@@ -142,15 +142,15 @@
     flex-wrap: wrap;
     width: 100%;
     background: $color-gray-1;
-    border-radius: $unit-p4;
-    margin-bottom: $unit;
+    border-radius: get-unit(1);
+    margin-bottom: get-unit(3);
     max-height: 400px;
     overflow: auto;
 
     &__pill {
-      padding: $unit-p4 $unit-p2;
-      border-radius: $unit-p2;
-      margin: $unit-p4;
+      padding: get-unit(1) get-unit(2);
+      border-radius: get-unit(2);
+      margin: get-unit(1);
       border: 2px solid $color-gray-1;
 
       &--active {
@@ -161,7 +161,7 @@
 
     &__stats span {
       display: inline-block;
-      padding-right: $unit;
+      padding-right: get-unit(3);
     }
   }
 
@@ -172,17 +172,17 @@
   &__distribution {
     &__lyrics {
       border: 1px solid $color-gray-1;
-      padding: $unit-p4;
-      margin: $unit-p4;
+      padding: get-unit(1);
+      margin: get-unit(1);
       max-height: 500px;
       overflow: auto;
     }
 
     &__line {
-      margin: $unit-p4 0;
+      margin: get-unit(1) 0;
 
       &--icon {
-        margin-right: $unit-p4;
+        margin-right: get-unit(1);
         cursor: pointer;
       }
 

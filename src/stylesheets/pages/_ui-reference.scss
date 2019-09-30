@@ -32,11 +32,11 @@
     align-items: center;
     justify-content: center;
     border: 1px solid $color-gray-1;
-    border-radius: $unit-p4;
+    border-radius: get-unit(1);
   }
 
   &__name {
-    margin-bottom: $unit;
+    margin-bottom: get-unit(3);
   }
 }
 
@@ -54,29 +54,29 @@
     display: flex;
     flex-direction: column;
     border: 1px solid $color-gray-1;
-    border-radius: $unit-p4;
+    border-radius: get-unit(1);
   }
 
   &__name {
-    margin-bottom: $unit;
+    margin-bottom: get-unit(3);
   }
 
   &__example {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-bottom: $unit;
+    margin-bottom: get-unit(3);
 
     & > * {
-      margin-right: $unit;
+      margin-right: get-unit(3);
     }
   }
 
   &__description {
     width: 100%;
-    padding: $unit-p2;
-    margin-bottom: $unit;
+    padding: get-unit(2);
+    margin-bottom: get-unit(3);
     background: $color-gray-1;
-    border-radius: $unit-p4;
+    border-radius: get-unit(1);
   }
 }

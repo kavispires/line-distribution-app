@@ -31,11 +31,11 @@
   }
 
   p {
-    margin: $unit-p2;
+    margin: get-unit(2);
   }
 
   ul {
     list-style: none;
-    margin-bottom: $unit;
+    margin-bottom: get-unit(3);
   }
 }

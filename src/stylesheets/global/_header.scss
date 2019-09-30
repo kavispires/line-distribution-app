@@ -19,7 +19,7 @@ $header_height_logo: 36px;
   a {
     background-color: $color-negative;
     color: $color-primary;
-    padding: $unit-p2;
+    padding: get-unit(2);
     text-decoration: none;
     display: block;
     border-left-width: 3px;
@@ -36,7 +36,7 @@ $header_height_logo: 36px;
 .header {
   width: 100%;
   display: flex;
-  padding: $padding $unit-x2;
+  padding: $padding get-unit(4);
   background-color: $color-primary;
   background: linear-gradient(to right, #000000, #000d71);
   height: $header_height;
@@ -50,7 +50,7 @@ $header_height_logo: 36px;
 
   &__logo {
     height: $header_height_logo;
-    margin-right: $unit;
+    margin-right: get-unit(3);
     cursor: pointer;
   }
 
@@ -59,11 +59,11 @@ $header_height_logo: 36px;
 
     & > a,
     button {
-      font-size: $unit;
+      font-size: get-unit(3);
       background: transparent;
       color: $color-negative;
       text-decoration: none;
-      padding: $unit-p2 $unit;
+      padding: get-unit(2) get-unit(3);
       border-width: 2px;
       border-style: solid;
       border-color: transparent;
@@ -117,7 +117,7 @@ $header_height_logo: 36px;
   position: relative;
 
   &__nav {
-    font-size: $unit;
+    font-size: get-unit(3);
     background: transparent;
     color: $color-negative;
     border-width: 2px;
@@ -135,7 +135,7 @@ $header_height_logo: 36px;
 
   &__photo {
     height: 28px;
-    margin-right: $unit;
+    margin-right: get-unit(3);
     border-radius: 50%;
   }
 

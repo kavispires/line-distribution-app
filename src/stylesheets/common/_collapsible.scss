@@ -27,7 +27,7 @@
     border: 1px solid $color-gray-2;
 
     &.expanded {
-      padding: $unit-p2;
+      padding: get-unit(2);
       flex: 1;
     }
 

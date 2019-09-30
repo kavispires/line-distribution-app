@@ -1,0 +1,21 @@
+/* get-unit
+ * Determines unit with 3px reference, every value is double its precessor
+ * Formula: 2^(x-1) x 3
+ * Examples:
+ * 1: 3px
+ * 2: 6px
+ * 3: 12px
+ * 4: 24px
+ * 5: 48px
+*/
+@function get-unit($multiplier) {
+  $raised: 1;
+
+  @if $multiplier > 1 {
+    @for $i from 1 through $multiplier - 1 {
+      $raised: $raised * 2;
+    }
+  }
+
+  @return $raised * 3px;
+}

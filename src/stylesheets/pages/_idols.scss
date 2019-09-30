@@ -3,11 +3,11 @@
     display: block;
     color: $color-gray-4;
     text-transform: uppercase;
-    margin-bottom: $unit;
+    margin-bottom: get-unit(3);
   }
 
   &__filter-name {
-    margin-right: $unit-p2;
+    margin-right: get-unit(2);
   }
 
   &__list {
@@ -17,6 +17,6 @@
   }
 
   &__filter-label {
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
   }
 }

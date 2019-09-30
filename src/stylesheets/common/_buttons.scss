@@ -1,5 +1,5 @@
 .btn {
-  padding: $unit-p2 $unit;
+  padding: get-unit(2) get-unit(3);
   border-width: 1px;
   border-style: solid;
   border-radius: 4px;
@@ -25,15 +25,15 @@
 .btn-block {
   width: 100%;
   display: block;
-  margin: $unit-p4 0;
+  margin: get-unit(1) 0;
 }
 
 .btn-hollow {
-  margin: $unit-p2;
+  margin: get-unit(2);
   color: $color-negative;
   background: none;
   cursor: pointer;
-  min-height: $unit-x2;
+  min-height: get-unit(4);
 
   &:hover {
     background: rgba(255, 255, 255, 0.5);
@@ -47,12 +47,12 @@
 }
 
 .btn-simple {
-  margin: $unit-p2;
+  margin: get-unit(2);
   color: $color-primary;
   border-color: $color-primary;
   background: none;
   cursor: pointer;
-  min-height: $unit-x2;
+  min-height: get-unit(4);
 
   &:hover {
     background: rgba(0, 0, 0, 0.1);

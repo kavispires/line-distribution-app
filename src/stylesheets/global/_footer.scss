@@ -1,7 +1,7 @@
 .footer {
   font-size: 75%;
   text-align: center;
-  padding: $unit-p4;
+  padding: get-unit(1);
   box-shadow: -10px 0 10px $color-gray-1;
   z-index: 10;
   height: 24px;

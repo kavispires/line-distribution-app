@@ -6,13 +6,13 @@
   }
 
   &__content-container {
-    margin-top: $unit;
+    margin-top: get-unit(3);
   }
 
   &__save-section {
-    margin-top: $unit;
+    margin-top: get-unit(3);
     border: 1px solid $color-gray-1;
-    padding: $unit-p2;
+    padding: get-unit(2);
   }
 
   &__section {
@@ -23,15 +23,15 @@
 
   &__section-left {
     width: 50%;
-    margin-right: $unit-p4;
+    margin-right: get-unit(1);
     border: 1px solid $color-gray-1;
-    padding: $unit-p2;
+    padding: get-unit(2);
     flex: 1;
   }
 
   &__section-right {
     width: 50%;
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
     flex: 1;
     display: flex;
   }
@@ -42,14 +42,14 @@
       max-height: 500px;
       height: 100%;
       overflow: auto;
-      padding: $unit-p2;
+      padding: get-unit(2);
       border: 1px solid $color-gray-1;
     }
   }
 
   &__members {
     background: $color-gray-1;
-    padding: $unit-p4;
+    padding: get-unit(1);
     padding-bottom: 0;
     display: flex;
     flex-wrap: wrap;
@@ -88,7 +88,7 @@
 
   &__rates {
     background: $color-gray-1;
-    padding: $unit-p4;
+    padding: get-unit(1);
     padding-bottom: 0;
     display: flex;
     list-style: none;
@@ -129,7 +129,7 @@
       top: 0;
       left: 0;
       z-index: 9;
-      border-radius: $unit-p4;
+      border-radius: get-unit(1);
     }
   }
 
@@ -140,7 +140,7 @@
 
 .distribute-view {
   &__video {
-    margin-top: $unit;
+    margin-top: get-unit(3);
     background: $color-primary;
     display: flex;
     justify-content: center;
@@ -168,12 +168,12 @@
       align-items: flex-end;
       flex-direction: column;
       justify-content: space-evenly;
-      padding: $unit-x2;
+      padding: get-unit(4);
 
       &__member {
         width: 100%;
         // background: grey;
-        padding: $unit-p2;
+        padding: get-unit(2);
       }
     }
   }
@@ -188,7 +188,7 @@
     &__button {
       flex: 1;
       border: 0;
-      padding: $unit $unit-x2;
+      padding: get-unit(3) get-unit(4);
       cursor: pointer;
       background: $color-negative;
 
@@ -202,7 +202,7 @@
 .distribute-progress-bar {
   width: 100%;
   // background: grey;
-  padding: $unit-p2;
+  padding: get-unit(2);
   display: flex;
   align-items: center;
 
@@ -212,14 +212,14 @@
     text-transform: uppercase;
     width: 80px;
     text-align: right;
-    margin-right: $unit-x2;
+    margin-right: get-unit(4);
   }
 
   &__progress {
     display: inline-block;
     width: 70%;
     background: $color-gray-4;
-    border-radius: $unit;
+    border-radius: get-unit(3);
     height: 10px;
     position: relative;
   }
@@ -229,7 +229,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: $unit;
+    border-radius: get-unit(3);
   }
 
   &__active-icon {
@@ -239,7 +239,7 @@
       height: 10px;
       background: $color-negative;
       border-radius: 50%;
-      margin: 0 $unit;
+      margin: 0 get-unit(3);
     }
 
     &--off {
@@ -248,7 +248,7 @@
       height: 10px;
       background: $color-gray-4;
       border-radius: 50%;
-      margin: 0 $unit;
+      margin: 0 get-unit(3);
     }
   }
 
@@ -260,10 +260,10 @@
 .distribution {
   &__lyrics {
     &__line {
-      margin: $unit-p4 0;
+      margin: get-unit(1) 0;
 
       &--icon {
-        margin-right: $unit-p4;
+        margin-right: get-unit(1);
         cursor: pointer;
       }
 

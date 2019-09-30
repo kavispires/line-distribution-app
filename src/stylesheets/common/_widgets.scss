@@ -1,7 +1,7 @@
 .switch {
   position: relative;
   display: inline-block;
-  top: $unit-p4;
+  top: get-unit(1);
   width: 46px;
   height: 20px;
 }
@@ -47,26 +47,26 @@ input:checked + .slider:before {
 }
 
 .slide-text-left {
-  margin-right: $unit-p2;
+  margin-right: get-unit(2);
 }
 
 .slide-text-right {
-  margin-left: $unit;
+  margin-left: get-unit(3);
 }
 
 .widget-h1-title {
-  font-size: $unit;
+  font-size: get-unit(3);
   font-weight: normal;
   color: $color-gray-4;
-  margin-left: $unit;
+  margin-left: get-unit(3);
 }
 
 .active-widget {
   background: $color-gray-1;
-  padding: $unit-p2 $unit;
-  margin: $unit-p4 $unit $unit-p4 0;
-  border-bottom-left-radius: $unit-p2;
-  border-top-right-radius: $unit-p2;
+  padding: get-unit(2) get-unit(3);
+  margin: get-unit(1) get-unit(3) get-unit(1) 0;
+  border-bottom-left-radius: get-unit(2);
+  border-top-right-radius: get-unit(2);
   box-shadow: 1px 1px 1px $color-gray-2;
   display: inline-block;
   width: 50%;
@@ -86,11 +86,11 @@ input:checked + .slider:before {
 
   &__go-to-button {
     position: absolute;
-    top: $unit;
-    right: $unit;
+    top: get-unit(3);
+    right: get-unit(3);
     padding: 2px 4px;
     background: none;
-    border-radius: $unit-p4;
+    border-radius: get-unit(1);
     cursor: pointer;
 
     &:hover {
@@ -135,11 +135,11 @@ input:checked + .slider:before {
     font-size: 0.6em;
     font-weight: normal;
     font-style: italic;
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
     color: $color-gray-4;
   }
   &__members {
-    margin: $unit-p2 0 0 0;
+    margin: get-unit(2) 0 0 0;
     padding: 0;
 
     .pill {
@@ -153,7 +153,7 @@ input:checked + .slider:before {
     text-transform: uppercase;
     border: 2px solid $color-gray-2;
     border-right-width: 0;
-    padding: $unit-p2 $unit;
+    padding: get-unit(2) get-unit(3);
     background: $color-gray-1;
 
     &:hover {
@@ -174,14 +174,14 @@ input:checked + .slider:before {
     }
 
     &:first-child {
-      border-top-left-radius: $unit-p2;
-      border-bottom-left-radius: $unit-p2;
+      border-top-left-radius: get-unit(2);
+      border-bottom-left-radius: get-unit(2);
     }
 
     &:last-child {
       border-right-width: 2px;
-      border-top-right-radius: $unit-p2;
-      border-bottom-right-radius: $unit-p2;
+      border-top-right-radius: get-unit(2);
+      border-bottom-right-radius: get-unit(2);
     }
   }
 }

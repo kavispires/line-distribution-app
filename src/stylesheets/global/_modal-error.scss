@@ -12,8 +12,8 @@
     position: relative;
     background: $color-negative;
     text-align: center;
-    padding: $unit-x4;
-    border-radius: $unit-p4;
+    padding: get-unit(5);
+    border-radius: get-unit(1);
   }
 
   .close {

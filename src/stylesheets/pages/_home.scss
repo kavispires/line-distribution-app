@@ -42,14 +42,14 @@
 
     .btn-home {
       width: 120px;
-      padding: 1px $unit-p2;
+      padding: 1px get-unit(2);
       border: 1px solid;
       border-radius: 4px;
-      margin: $unit-p2;
+      margin: get-unit(2);
       color: $color-negative;
       background: none;
       cursor: pointer;
-      min-height: $unit-x2;
+      min-height: get-unit(4);
 
       &:hover {
         background: rgba(255, 255, 255, 0.5);

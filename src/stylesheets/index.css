@@ -1,4 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700');
+/* get-unit
+ * Determines unit with 3px reference, every value is double its precessor
+ * Formula: 2^(x-1) x 3
+ * Examples:
+ * 1: 3px
+ * 2: 6px
+ * 3: 12px
+ * 4: 24px
+ * 5: 48px
+*/
 body {
   margin: 0;
   padding: 0;

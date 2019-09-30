@@ -3,14 +3,14 @@
 }
 
 .tabs-content {
-  padding: $unit;
+  padding: get-unit(3);
   border-left: $color-gray-1 1px solid;
   border-bottom: $color-gray-1 1px solid;
   border-right: $color-gray-1 1px solid;
   margin-bottom: -12px;
 
   &--empty {
-    padding: $unit;
+    padding: get-unit(3);
     border: $color-gray-1 1px solid;
     margin-bottom: -12px;
   }
@@ -26,16 +26,16 @@
 
   &__tab {
     background: $color-gray-1;
-    padding: $unit-p2 $unit-x2;
+    padding: get-unit(2) get-unit(4);
     cursor: pointer;
     border-right: 1px solid $color-negative;
 
     &:first-child {
-      border-top-left-radius: $unit-p4;
+      border-top-left-radius: get-unit(1);
     }
 
     &:last-child {
-      border-top-right-radius: $unit-p4;
+      border-top-right-radius: get-unit(1);
     }
 
     &:hover {
@@ -61,6 +61,6 @@
   &__content {
     border-left: $color-gray-1 1px solid;
     border-right: $color-gray-1 1px solid;
-    padding: $unit $unit-p2;
+    padding: get-unit(3) get-unit(2);
   }
 }

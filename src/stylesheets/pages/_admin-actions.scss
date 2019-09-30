@@ -1,17 +1,17 @@
 .actions-group {
   display: flex;
   flex-wrap: wrap;
-  margin-top: $unit-x2;
+  margin-top: get-unit(4);
 }
 
 .actions-item {
   width: 30%;
   min-width: 300px;
-  margin: 0 $unit $unit 0;
-  padding: $unit;
+  margin: 0 get-unit(3) get-unit(3) 0;
+  padding: get-unit(3);
   flex: 1;
   border: 1px solid $color-gray-1;
-  border-radius: $unit-p4;
+  border-radius: get-unit(1);
 
   text-align: center;
 
@@ -21,9 +21,9 @@
 }
 
 .actions-code {
-  padding: $unit-p2 $unit;
+  padding: get-unit(2) get-unit(3);
   border: 1px solid $color-gray-2;
-  border-radius: $unit-p4;
+  border-radius: get-unit(1);
   font-weight: bold;
   font-size: 120%;
   display: inline-block;
@@ -31,6 +31,6 @@
 
 .actions-code-input {
   display: block;
-  margin: $unit auto;
-  padding: $unit-p2 $unit;
+  margin: get-unit(3) auto;
+  padding: get-unit(2) get-unit(3);
 }

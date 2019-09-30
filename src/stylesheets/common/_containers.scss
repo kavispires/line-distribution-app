@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   height: 100%;
-  padding: $unit-x2;
+  padding: get-unit(4);
   // overflow-y: auto;
 
   &:first-child {
@@ -36,7 +36,7 @@
   }
 
   &__main-content {
-    padding: $unit-x2;
+    padding: get-unit(4);
     overflow-y: scroll;
     width: 100%;
   }
