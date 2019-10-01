@@ -1,5 +1,5 @@
 .loading-bar {
-  background-color: $color-negative;
+  background-color: get-color(negative);
   width: 100%;
   height: 4px;
   position: absolute;
@@ -19,48 +19,48 @@
   }
 
   .bar-0 {
-    background-color: $color-pink;
+    background-color: get-color(pink);
     animation: grow0 4s forwards;
     z-index: 28;
   }
 
   .bar-1 {
-    background-color: $color-purple;
+    background-color: get-color(purple);
     animation: grow1 4s ease-in infinite;
   }
 
   .bar-2 {
-    background-color: $color-blue;
+    background-color: get-color(blue);
     animation: grow2 4s ease-in infinite;
   }
 
   .bar-3 {
-    background-color: $color-teal;
+    background-color: get-color(teal);
     animation: grow3 4s ease-in infinite;
   }
 
   .bar-4 {
-    background-color: $color-green;
+    background-color: get-color(green);
     animation: grow4 4s ease-in infinite;
   }
 
   .bar-5 {
-    background-color: $color-yellow;
+    background-color: get-color(yellow);
     animation: grow5 4s ease-in infinite;
   }
 
   .bar-6 {
-    background-color: $color-orange;
+    background-color: get-color(orange);
     animation: grow6 4s ease-in infinite;
   }
 
   .bar-7 {
-    background-color: $color-red;
+    background-color: get-color(red);
     animation: grow7 4s ease-in infinite;
   }
 
   .bar-8 {
-    background-color: $color-pink;
+    background-color: get-color(pink);
     animation: grow8 4s ease-in infinite;
   }
 }

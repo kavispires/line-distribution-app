@@ -2,22 +2,22 @@
   padding: get-unit(2) get-unit(3);
   border-width: 1px;
   border-style: solid;
-  border-radius: 4px;
+  border-radius: get-unit(1);
   cursor: pointer;
 
   &:hover {
-    color: $color-gray-4;
-    background: linear-gradient($color-negative, $color-gray-1);
+    color: get-color(gray, 4);
+    background: linear-gradient(get-color(negative), get-color(gray, 1));
   }
 
   &:disabled {
-    border-color: $color-gray-1;
+    border-color: get-color(gray, 1);
     font-style: italic;
     cursor: default;
 
     &:hover {
-      color: $color-gray-2;
-      background: $color-negative;
+      color: get-color(gray, 2);
+      background: get-color(negative);
     }
   }
 }
@@ -30,7 +30,7 @@
 
 .btn-hollow {
   margin: get-unit(2);
-  color: $color-negative;
+  color: get-color(negative);
   background: none;
   cursor: pointer;
   min-height: get-unit(4);
@@ -48,8 +48,8 @@
 
 .btn-simple {
   margin: get-unit(2);
-  color: $color-primary;
-  border-color: $color-primary;
+  color: get-color(primary);
+  border-color: get-color(primary);
   background: none;
   cursor: pointer;
   min-height: get-unit(4);

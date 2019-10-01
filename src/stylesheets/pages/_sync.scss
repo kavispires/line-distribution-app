@@ -18,7 +18,7 @@
 
   &__video {
     width: 100%;
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     min-height: 200px;
     display: flex;
     justify-content: center;
@@ -96,7 +96,7 @@
 
   &__distribution__buttons {
     width: 100%;
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     display: flex;
     border-radius: get-unit(1);
     margin-bottom: get-unit(3);
@@ -115,12 +115,12 @@
       cursor: pointer;
 
       &:hover {
-        background: $color-negative;
+        background: get-color(negative);
       }
 
       .key {
         font-size: 120%;
-        border: 1px solid $color-negative;
+        border: 1px solid get-color(negative);
         padding: 0 get-unit(2);
         border-radius: get-unit(1);
         background: rgba(255, 255, 255, 0.25);
@@ -141,7 +141,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     border-radius: get-unit(1);
     margin-bottom: get-unit(3);
     max-height: 400px;
@@ -151,11 +151,11 @@
       padding: get-unit(1) get-unit(2);
       border-radius: get-unit(2);
       margin: get-unit(1);
-      border: 2px solid $color-gray-1;
+      border: 2px solid get-color(gray, 1);
 
       &--active {
-        border: 2px solid $color-primary;
-        color: $color-negative;
+        border: 2px solid get-color(primary);
+        color: get-color(negative);
       }
     }
 
@@ -166,12 +166,12 @@
   }
 
   &__sequence--true {
-    background: $color-orange;
+    background: get-color(orange);
   }
 
   &__distribution {
     &__lyrics {
-      border: 1px solid $color-gray-1;
+      border: 1px solid get-color(gray, 1);
       padding: get-unit(1);
       margin: get-unit(1);
       max-height: 500px;
@@ -187,7 +187,7 @@
       }
 
       &--part-active {
-        background: $color-orange;
+        background: get-color(orange);
       }
     }
   }

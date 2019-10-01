@@ -3,7 +3,7 @@ $unit-panel-width: 20%;
 $members-panel-width: 60%;
 
 @mixin section {
-  background: $color-gray-2;
+  background: get-color(gray, 2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,8 +12,8 @@ $members-panel-width: 60%;
 }
 
 @mixin section-edit {
-  background: $color-negative;
-  border: 2px solid $color-gray-2;
+  background: get-color(negative);
+  border: 2px solid get-color(gray, 2);
   display: flex;
   flex-direction: column;
   padding: get-unit(4);
@@ -40,27 +40,27 @@ $members-panel-width: 60%;
   &__artist {
     @include section;
     width: $artist-panel-width;
-    border-right: 1px solid $color-gray-1;
+    border-right: 1px solid get-color(gray, 1);
     border-radius: get-unit(2) 0 0 get-unit(2);
   }
 
   &__artist-edit {
     @include section-edit;
     width: $artist-panel-width;
-    border-right: 1px solid $color-gray-1;
+    border-right: 1px solid get-color(gray, 1);
     border-radius: get-unit(2) 0 0 get-unit(2);
   }
 
   &__unit {
     @include section;
     width: $unit-panel-width;
-    border-right: 1px solid $color-gray-1;
+    border-right: 1px solid get-color(gray, 1);
   }
 
   &__unit-edit {
     @include section-edit;
     width: $unit-panel-width;
-    border-right: 1px solid $color-gray-1;
+    border-right: 1px solid get-color(gray, 1);
     align-items: flex-start;
   }
 
@@ -115,17 +115,17 @@ $members-panel-width: 60%;
 
   &__button-typeahead {
     padding: get-unit(1) get-unit(3);
-    border: 1px solid $color-gray-3;
+    border: 1px solid get-color(gray, 3);
     border-radius: get-unit(1);
-    background: $color-gray-1;
+    background: get-color(gray, 1);
   }
 
   &__valid {
-    border: 2px solid $color-green;
-    background: $color-negative;
+    border: 2px solid get-color(green);
+    background: get-color(negative);
     padding: get-unit(2);
     border-radius: get-unit(2);
-    color: $color-green;
+    color: get-color(green);
   }
 
   &__inline {
@@ -159,10 +159,10 @@ $members-panel-width: 60%;
 
   &__input {
     width: 100%;
-    border: 1px solid $color-gray-1;
+    border: 1px solid get-color(gray, 1);
 
     &--invalid {
-      border: 1px solid $color-red;
+      border: 1px solid get-color(red);
     }
   }
 
@@ -212,14 +212,14 @@ $members-panel-width: 60%;
 .manage-member {
   padding: get-unit(2);
   border-radius: get-unit(1);
-  background: $color-gray-1;
+  background: get-color(gray, 1);
   max-width: 170px;
   // border: 3px solid gold;
   &__title {
     display: block;
     font-weight: bold;
     margin-bottom: get-unit(2);
-    background: $color-gray-3;
+    background: get-color(gray, 3);
     padding: 0 get-unit(1);
     border-radius: get-unit(1);
   }
@@ -228,7 +228,7 @@ $members-panel-width: 60%;
 .manage-member-new {
   padding: get-unit(2);
   border-radius: get-unit(1);
-  background: $color-gray-2;
+  background: get-color(gray, 2);
   max-width: 170px;
   text-align: center;
 
@@ -236,7 +236,7 @@ $members-panel-width: 60%;
     display: block;
     font-weight: bold;
     margin-bottom: get-unit(2);
-    background: $color-gray-3;
+    background: get-color(gray, 3);
     padding: 0 get-unit(1);
     border-radius: get-unit(1);
   }
@@ -255,7 +255,7 @@ $checkbox-size: 30px;
 
 .position-checkbox {
   appearance: none;
-  border: 2px solid $color-primary;
+  border: 2px solid get-color(primary);
   width: $checkbox-size;
   height: $checkbox-size;
   border-radius: 50%;
@@ -266,7 +266,7 @@ $checkbox-size: 30px;
   cursor: pointer;
 
   &:checked {
-    border: 2px solid $color-orange;
+    border: 2px solid get-color(orange);
   }
 }
 
@@ -335,8 +335,8 @@ $checkbox-size: 30px;
   box-sizing: border-box;
 
   &--in-use {
-    border: 2px solid $color-primary;
-    color: $color-negative;
+    border: 2px solid get-color(primary);
+    color: get-color(negative);
   }
 }
 

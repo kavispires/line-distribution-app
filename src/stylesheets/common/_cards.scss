@@ -5,9 +5,9 @@
   margin-right: get-unit(3);
   margin-bottom: get-unit(3);
   padding: get-unit(2);
-  background: $color-negative;
-  border-right: 1px solid $color-gray-1;
-  border-bottom: 1px solid $color-gray-1;
+  background: get-color(negative);
+  border-right: 1px solid get-color(gray, 1);
+  border-bottom: 1px solid get-color(gray, 1);
 
   &__profile-image {
     display: block;
@@ -54,7 +54,7 @@
     font-weight: 700;
     margin: 0;
     bottom: -1.5em;
-    color: #000;
+    color: get-color(black);
     font-size: 1.5em;
   }
 
@@ -77,7 +77,7 @@
   }
 
   .member-id {
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     margin: 0;
     padding: get-unit(2) get-unit(3);
   }

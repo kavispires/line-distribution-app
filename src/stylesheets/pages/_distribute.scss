@@ -11,7 +11,7 @@
 
   &__save-section {
     margin-top: get-unit(3);
-    border: 1px solid $color-gray-1;
+    border: 1px solid get-color(gray, 1);
     padding: get-unit(2);
   }
 
@@ -24,7 +24,7 @@
   &__section-left {
     width: 50%;
     margin-right: get-unit(1);
-    border: 1px solid $color-gray-1;
+    border: 1px solid get-color(gray, 1);
     padding: get-unit(2);
     flex: 1;
   }
@@ -43,12 +43,12 @@
       height: 100%;
       overflow: auto;
       padding: get-unit(2);
-      border: 1px solid $color-gray-1;
+      border: 1px solid get-color(gray, 1);
     }
   }
 
   &__members {
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     padding: get-unit(1);
     padding-bottom: 0;
     display: flex;
@@ -57,19 +57,19 @@
 
   &__member-pill {
     cursor: pointer;
-    border: 2px solid $color-gray-1;
+    border: 2px solid get-color(gray, 1);
     white-space: nowrap;
     width: 25%;
-    box-shadow: 1px 1px 5px $color-gray-2;
+    box-shadow: 1px 1px 5px get-color(gray, 2);
     overflow: hidden;
 
     &:hover {
-      border: 2px solid $color-primary;
+      border: 2px solid get-color(primary);
     }
 
     &.active {
-      color: $color-negative;
-      border: 2px dashed $color-negative !important;
+      color: get-color(negative);
+      border: 2px dashed get-color(negative) !important;
     }
   }
 
@@ -87,7 +87,7 @@
   }
 
   &__rates {
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     padding: get-unit(1);
     padding-bottom: 0;
     display: flex;
@@ -112,7 +112,7 @@
       position: relative;
       width: 75%;
       height: 30px;
-      background: $color-negative;
+      background: get-color(negative);
       margin-right: 0;
     }
 
@@ -141,7 +141,7 @@
 .distribute-view {
   &__video {
     margin-top: get-unit(3);
-    background: $color-primary;
+    background: get-color(primary);
     display: flex;
     justify-content: center;
     min-height: 500px;
@@ -181,8 +181,8 @@
   &__controls {
     border-width: 1px;
     border-style: solid;
-    border-radius: 4px;
-    border-color: $color-gray-2;
+    border-radius: get-unit(1);
+    border-color: get-color(gray, 2);
     display: flex;
 
     &__button {
@@ -190,10 +190,10 @@
       border: 0;
       padding: get-unit(3) get-unit(4);
       cursor: pointer;
-      background: $color-negative;
+      background: get-color(negative);
 
       &:hover {
-        background: $color-gray-1;
+        background: get-color(gray, 1);
       }
     }
   }
@@ -218,7 +218,7 @@
   &__progress {
     display: inline-block;
     width: 70%;
-    background: $color-gray-4;
+    background: get-color(gray, 4);
     border-radius: get-unit(3);
     height: 10px;
     position: relative;
@@ -237,7 +237,7 @@
       display: inline-block;
       width: 10px;
       height: 10px;
-      background: $color-negative;
+      background: get-color(negative);
       border-radius: 50%;
       margin: 0 get-unit(3);
     }
@@ -246,14 +246,14 @@
       display: inline-block;
       width: 10px;
       height: 10px;
-      background: $color-gray-4;
+      background: get-color(gray, 4);
       border-radius: 50%;
       margin: 0 get-unit(3);
     }
   }
 
   &__duration {
-    color: $color-negative;
+    color: get-color(negative);
   }
 }
 
@@ -268,7 +268,7 @@
       }
 
       &--part-active {
-        background: $color-orange;
+        background: get-color(orange);
       }
     }
   }

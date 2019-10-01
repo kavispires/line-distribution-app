@@ -2,14 +2,14 @@
   font-size: 75%;
   text-align: center;
   padding: get-unit(1);
-  box-shadow: -10px 0 10px $color-gray-1;
+  box-shadow: -10px 0 10px get-color(gray, 1);
   z-index: 10;
   height: 24px;
   max-height: 24px;
 
   a {
     text-decoration: none;
-    color: $color-blue;
+    color: get-color(blue);
     font-weight: bold;
   }
 }

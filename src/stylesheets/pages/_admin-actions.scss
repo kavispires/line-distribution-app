@@ -10,7 +10,7 @@
   margin: 0 get-unit(3) get-unit(3) 0;
   padding: get-unit(3);
   flex: 1;
-  border: 1px solid $color-gray-1;
+  border: 1px solid get-color(gray, 1);
   border-radius: get-unit(1);
 
   text-align: center;
@@ -22,7 +22,7 @@
 
 .actions-code {
   padding: get-unit(2) get-unit(3);
-  border: 1px solid $color-gray-2;
+  border: 1px solid get-color(gray, 2);
   border-radius: get-unit(1);
   font-weight: bold;
   font-size: 120%;

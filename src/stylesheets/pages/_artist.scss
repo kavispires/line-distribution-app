@@ -12,7 +12,7 @@ $TOP_HEIGHT: 140px;
 
 .artist-page-profile {
   height: $TOP_HEIGHT;
-  background: $color-gray-3;
+  background: get-color(gray, 3);
   width: 250px;
   margin-right: get-unit(3);
 }
@@ -30,7 +30,7 @@ $TOP_HEIGHT: 140px;
 
     &--hover {
       transform: scale(1.1);
-      box-shadow: 0px 2px 5px $color-gray-2;
+      box-shadow: 0px 2px 5px get-color(gray, 2);
     }
   }
 
@@ -42,14 +42,14 @@ $TOP_HEIGHT: 140px;
 
     &--hover {
       transform: scale(1.1);
-      box-shadow: 0px 2px 5px $color-gray-2;
+      box-shadow: 0px 2px 5px get-color(gray, 2);
     }
 
     &__image {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      border: 5px solid $color-yellow;
+      border: 5px solid get-color(yellow);
     }
 
     &__no-image {
@@ -59,7 +59,7 @@ $TOP_HEIGHT: 140px;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: $color-negative;
+      color: get-color(negative);
       text-transform: uppercase;
       font-size: 120%;
     }
@@ -77,8 +77,8 @@ $TOP_HEIGHT: 140px;
     border-radius: get-unit(1);
     padding: get-unit(3);
     min-height: 30px;
-    background: $color-negative;
-    box-shadow: 0 2px 5px $color-gray-3;
+    background: get-color(negative);
+    box-shadow: 0 2px 5px get-color(gray, 3);
     z-index: 15;
   }
 
@@ -97,9 +97,9 @@ $TOP_HEIGHT: 140px;
     flex-grow: 1;
 
     &:hover {
-      color: $color-negative;
+      color: get-color(negative);
       transform: scale(1.2);
-      box-shadow: 0px 1px 2px $color-primary;
+      box-shadow: 0px 1px 2px get-color(primary);
     }
   }
 }
@@ -131,7 +131,7 @@ $TOP_HEIGHT: 140px;
   }
 
   &__member-pill {
-    background: $color-gray-2;
+    background: get-color(gray, 2);
     padding: get-unit(1) get-unit(2);
     border-radius: get-unit(1);
     margin-right: get-unit(2);
@@ -142,10 +142,10 @@ $TOP_HEIGHT: 140px;
 .no-units-container {
   display: flex;
   min-height: 200px;
-  border: 1px solid $color-gray-1;
+  border: 1px solid get-color(gray, 1);
   justify-content: center;
   align-items: center;
-  color: $color-gray-3;
+  color: get-color(gray, 3);
 }
 
 .unit-section {
@@ -154,7 +154,7 @@ $TOP_HEIGHT: 140px;
   }
 
   &__ruler {
-    border: 0.5px solid $color-gray-1;
+    border: 0.5px solid get-color(gray, 1);
   }
 
   &__info {
@@ -187,7 +187,7 @@ $TOP_HEIGHT: 140px;
     display: block;
     width: 105px;
     height: 105px;
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     margin-bottom: get-unit(3);
     border-radius: get-unit(2);
   }
@@ -196,7 +196,7 @@ $TOP_HEIGHT: 140px;
     display: block;
     width: 105px;
     height: 105px;
-    background: $color-gray-1;
+    background: get-color(gray, 1);
     margin-bottom: get-unit(3);
     border-radius: get-unit(2);
   }
@@ -204,7 +204,7 @@ $TOP_HEIGHT: 140px;
   &__bias-no-picture {
     width: 105px;
     height: 105px;
-    background: $color-yellow;
+    background: get-color(yellow);
     margin-bottom: get-unit(3);
     border-radius: get-unit(2);
     display: flex;
@@ -216,7 +216,7 @@ $TOP_HEIGHT: 140px;
       font-weight: 700;
       margin: 0;
       bottom: -1.5em;
-      color: #000;
+      color: get-color(black);
       font-size: 1.5em;
     }
   }

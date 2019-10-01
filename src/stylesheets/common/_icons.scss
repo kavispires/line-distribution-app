@@ -1,6 +1,6 @@
 .icon-heart-hollow {
   &:hover {
-    fill: $color-red !important;
+    fill: get-color(red) !important;
   }
 }
 

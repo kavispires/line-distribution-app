@@ -19,7 +19,7 @@
   left: 0;
   right: 0;
   bottom: -4px;
-  background-color: $color-gray-2;
+  background-color: get-color(gray, 2);
   transition: 0.4s;
 }
 
@@ -30,16 +30,16 @@
   width: 20px;
   left: 4px;
   bottom: 4px;
-  background-color: $color-negative;
+  background-color: get-color(negative);
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: $color-blue;
+  background-color: get-color(blue);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px $color-blue;
+  box-shadow: 0 0 1px get-color(blue);
 }
 
 input:checked + .slider:before {
@@ -57,17 +57,17 @@ input:checked + .slider:before {
 .widget-h1-title {
   font-size: get-unit(3);
   font-weight: normal;
-  color: $color-gray-4;
+  color: get-color(gray, 4);
   margin-left: get-unit(3);
 }
 
 .active-widget {
-  background: $color-gray-1;
+  background: get-color(gray, 1);
   padding: get-unit(2) get-unit(3);
   margin: get-unit(1) get-unit(3) get-unit(1) 0;
   border-bottom-left-radius: get-unit(2);
   border-top-right-radius: get-unit(2);
-  box-shadow: 1px 1px 1px $color-gray-2;
+  box-shadow: 1px 1px 1px get-color(gray, 2);
   display: inline-block;
   width: 50%;
   position: relative;
@@ -94,7 +94,7 @@ input:checked + .slider:before {
     cursor: pointer;
 
     &:hover {
-      background: $color-negative;
+      background: get-color(negative);
     }
   }
 
@@ -102,12 +102,12 @@ input:checked + .slider:before {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $color-primary;
+    background: get-color(primary);
     padding: 0;
   }
 
   &__video--placeholder {
-    background: $color-red;
+    background: get-color(red);
   }
 
   &.inline {
@@ -118,7 +118,7 @@ input:checked + .slider:before {
 
   h3 {
     font-size: 1em;
-    color: $color-gray-4;
+    color: get-color(gray, 4);
     margin: 0;
   }
 
@@ -136,14 +136,14 @@ input:checked + .slider:before {
     font-weight: normal;
     font-style: italic;
     margin-left: get-unit(1);
-    color: $color-gray-4;
+    color: get-color(gray, 4);
   }
   &__members {
     margin: get-unit(2) 0 0 0;
     padding: 0;
 
     .pill {
-      background: $color-negative;
+      background: get-color(negative);
     }
   }
 }
@@ -151,10 +151,10 @@ input:checked + .slider:before {
 .mode-widget {
   &__label {
     text-transform: uppercase;
-    border: 2px solid $color-gray-2;
+    border: 2px solid get-color(gray, 2);
     border-right-width: 0;
     padding: get-unit(2) get-unit(3);
-    background: $color-gray-1;
+    background: get-color(gray, 1);
 
     &:hover {
       font-weight: bold;
@@ -165,12 +165,12 @@ input:checked + .slider:before {
     }
 
     &--active {
-      background: $color-negative;
+      background: get-color(negative);
       font-weight: bold;
     }
 
     &--disabled {
-      color: $color-gray-2;
+      color: get-color(gray, 2);
     }
 
     &:first-child {

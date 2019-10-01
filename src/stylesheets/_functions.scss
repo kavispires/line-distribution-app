@@ -19,3 +19,58 @@
 
   @return $raised * 3px;
 }
+
+/* get-color
+ * Determines color and available shades
+ * Each color has 9 levels and 5 is the default mid color one
+*/
+@function get-color($color-name, $shade: 5) {
+  $colors: (
+    primary: #222222,
+    negative: #ffffff,
+    blue: #598ffd,
+    gray: #6f7273,
+    green: #49d156,
+    orange: #fea245,
+    pink: #fb9cf0,
+    purple: #9e8ef0,
+    red: #d14949,
+    teal: #34ac9e,
+    yellow: #ffd700,
+    white: #ffffff,
+    black: #222222,
+    test: #6b7273,
+  );
+
+  $shade-levels: (
+    1: 50%,
+    2: 40%,
+    3: 30%,
+    4: 15%,
+    5: 0,
+    6: -15%,
+    7: -30%,
+    8: -40%,
+    9: -50%,
+  );
+
+  $color: null;
+
+  // Determine color
+  @if map-has-key($colors, $color-name) {
+    $color: map-get($colors, $color-name);
+  } @else {
+    @error "Invalid color name: `#{$color-name}`.";
+  }
+
+  $shade-level: null;
+
+  // Determine shade
+  @if map-has-key($shade-levels, $shade) {
+    $shade-level: map-get($shade-levels, $shade);
+  } @else {
+    @error "Invalid shade value: `#{$shade}`.";
+  }
+
+  @return adjust-color($color, $lightness: $shade-level);
+}

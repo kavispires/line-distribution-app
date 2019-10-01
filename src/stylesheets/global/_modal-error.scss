@@ -10,7 +10,7 @@
 
   &__content {
     position: relative;
-    background: $color-negative;
+    background: get-color(negative);
     text-align: center;
     padding: get-unit(5);
     border-radius: get-unit(1);
@@ -26,12 +26,12 @@
     cursor: pointer;
 
     &:hover {
-      color: $color-red;
+      color: get-color(red);
       transform: scale(1.5);
     }
   }
 
   &__error-message {
-    color: $color-red;
+    color: get-color(red);
   }
 }

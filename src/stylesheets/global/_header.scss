@@ -11,14 +11,14 @@ $header_height_logo: 36px;
   border-top: 6px solid transparent;
 
   hr {
-    border: 1px solid $color-gray-1;
-    background-color: $color-negative;
+    border: 1px solid get-color(gray, 1);
+    background-color: get-color(negative);
     margin: 0;
   }
 
   a {
-    background-color: $color-negative;
-    color: $color-primary;
+    background-color: get-color(negative);
+    color: get-color(primary);
     padding: get-unit(2);
     text-decoration: none;
     display: block;
@@ -27,8 +27,8 @@ $header_height_logo: 36px;
     border-style: solid;
 
     &:hover {
-      background-color: $color-gray-1;
-      border-left-color: $color-blue;
+      background-color: get-color(gray, 1);
+      border-left-color: get-color(blue);
     }
   }
 }
@@ -36,9 +36,13 @@ $header_height_logo: 36px;
 .header {
   width: 100%;
   display: flex;
-  padding: $padding get-unit(4);
-  background-color: $color-primary;
-  background: linear-gradient(to right, #000000, #000d71);
+  padding: get-unit(2) get-unit(4);
+  background-color: get-color(primary);
+  background: linear-gradient(
+    to right,
+    get-color(black, 9),
+    get-color(blue, 8)
+  );
   height: $header_height;
   min-height: $header_height_logo;
 }
@@ -55,32 +59,32 @@ $header_height_logo: 36px;
   }
 
   &__links {
-    color: $color-negative;
+    color: get-color(negative);
 
     & > a,
     button {
       font-size: get-unit(3);
       background: transparent;
-      color: $color-negative;
+      color: get-color(negative);
       text-decoration: none;
       padding: get-unit(2) get-unit(3);
       border-width: 2px;
       border-style: solid;
       border-color: transparent;
-      border-left-color: $color-gray-3;
+      border-left-color: get-color(gray, 3);
       border-left-width: 1px;
       cursor: pointer;
 
       &:visited {
-        color: $color-negative;
+        color: get-color(negative);
       }
 
       &:hover {
-        border-bottom-color: $color-gray-3;
+        border-bottom-color: get-color(gray, 3);
       }
 
       &.active {
-        border-bottom-color: $color-negative;
+        border-bottom-color: get-color(negative);
       }
 
       &:first-child {
@@ -96,7 +100,7 @@ $header_height_logo: 36px;
   height: 100%;
 
   &__nav {
-    border-left-color: $color-gray-3 !important;
+    border-left-color: get-color(gray, 3) !important;
   }
 
   &__dropdown {
@@ -119,13 +123,13 @@ $header_height_logo: 36px;
   &__nav {
     font-size: get-unit(3);
     background: transparent;
-    color: $color-negative;
+    color: get-color(negative);
     border-width: 2px;
     border-style: solid;
     border-color: transparent;
     display: flex;
     align-items: center;
-    border-radius: $border-radius;
+    border-radius: get-unit(1);
     cursor: pointer;
 
     &:hover {
@@ -148,7 +152,7 @@ $header_height_logo: 36px;
   }
 
   &__btn {
-    border-color: $color-negative;
+    border-color: get-color(negative);
 
     &:hover {
       background: rgba(255, 255, 255, 0.5);

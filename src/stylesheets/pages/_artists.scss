@@ -8,7 +8,7 @@
   &__search-bar {
     padding: get-unit(2);
     margin-bottom: get-unit(3);
-    border: 1px solid $color-gray-1;
+    border: 1px solid get-color(gray, 1);
     width: 30%;
     min-width: 300px;
   }

@@ -1,7 +1,7 @@
 .idols {
   &__filter-title {
     display: block;
-    color: $color-gray-4;
+    color: get-color(gray, 4);
     text-transform: uppercase;
     margin-bottom: get-unit(3);
   }
