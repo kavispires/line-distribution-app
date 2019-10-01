@@ -19,6 +19,7 @@ import Lyrics from './app/pages/lyrics';
 import Manage from './app/pages/manage';
 import Songs from './app/pages/songs';
 import Sync from './app/pages/sync';
+import Temp from './app/pages/temp';
 import UIReference from './app/pages/ui-reference';
 import User from './app/pages/user';
 
@@ -44,6 +45,7 @@ const routes = (
       <Route path="/admin/manage" component={Manage} />
       <Route path="/admin/sync" component={Sync} />
       <Route path="/admin/ui-reference" component={UIReference} />
+      <Route path="/admin/temp" component={Temp} />
 
       <Route path="/user" component={User} />
 

@@ -167,7 +167,7 @@ class Idols extends Component {
 
     const { members, filters, sidePanel } = this.state;
 
-    if (pending.REQUEST_MEMBERS) {
+    if (pending.REQUEST_ARTISTS || pending.INITIALIZER || pending.RUN_AUTH) {
       return <Loading message="Fecthing Idols..." />;
     }
 

@@ -2351,6 +2351,48 @@ input:checked + .slider:before {
   background: #fea245;
 }
 
+.temp-box {
+  width: 100px;
+  height: 100px;
+  background: grey;
+}
+
+.temp-1 {
+  background-color: #eeefef;
+}
+
+.temp-2 {
+  background-color: #d3d6d7;
+}
+
+.temp-3 {
+  background-color: #b9bdbe;
+}
+
+.temp-4 {
+  background-color: #919899;
+}
+
+.temp-5 {
+  background-color: #6b7273;
+}
+
+.temp-6 {
+  background-color: #464b4b;
+}
+
+.temp-7 {
+  background-color: #212324;
+}
+
+.temp-8 {
+  background-color: #090909;
+}
+
+.temp-9 {
+  background-color: black;
+}
+
 .color-palette {
   width: 100%;
   display: flex;
