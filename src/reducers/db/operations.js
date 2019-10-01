@@ -54,9 +54,19 @@ const loadSongs = () => (dispatch, getState) => {
   }
 };
 
+/**
+ * Trigger saga to update members from the database
+ * @category Reducer Operator
+ * @dispatches member
+ */
+const updateMember = member => dispatch => {
+  dispatch({ type: 'UPDATE_MEMBER', member });
+};
+
 export default {
   loadArtists,
   loadColors,
   loadMembers,
   loadSongs,
+  updateMember,
 };

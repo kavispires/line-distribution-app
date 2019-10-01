@@ -80,7 +80,8 @@
 
 .side-panel-color-bar {
   width: 100%;
-  height: get-unit(3);
+  padding: get-unit(1);
+  color: get-color(white);
   &:after {
     content: ' ';
   }

@@ -97,7 +97,10 @@ class Idols extends Component {
       this.props.loadMembers();
     }
     // Run members filters as soon as the api return the list of members
-    if (prevProps.db.members.length !== this.props.db.members.length) {
+    if (
+      prevProps.db.members.length !== this.props.db.members.length ||
+      (prevProps.app.loading === true && this.props.app.loading === false)
+    ) {
       this.updateFilters({ values: {} }, true);
     }
   }
@@ -180,8 +183,15 @@ class Idols extends Component {
     );
   }
 
-  updateMember(member) {
-    console.log('%cUPDATING', 'background:orange', member);
+  updateMember(formValues) {
+    const member = { ...this.state.editingMember, ...formValues };
+
+    this.props.updateMember(member);
+
+    this.setState({
+      editingMember: {},
+      sidePanel: null,
+    });
   }
 
   render() {
@@ -196,6 +206,8 @@ class Idols extends Component {
     if (pending.REQUEST_MEMBERS || pending.INITIALIZER || pending.RUN_AUTH) {
       return <Loading message="Fecthing Idols..." />;
     }
+
+    console.log(editingMember);
 
     return (
       <RequirementWrapper>
@@ -262,6 +274,7 @@ Idols.propTypes = {
   db: PropTypes.object.isRequired,
   loadMembers: PropTypes.func.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
+  updateMember: PropTypes.func.isRequired,
 };
 
 export default Idols;

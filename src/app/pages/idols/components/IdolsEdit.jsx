@@ -15,9 +15,19 @@ const IdolsEdit = ({ isExpanded, editingMember, openPanel, updateMember }) => (
       <Form autoComplete="off" onSubmit={updateMember}>
         {({ formState, formApi }) => (
           <Fragment>
+            {/* <label className="input-label">Values:</label>
+            <code>{JSON.stringify(formState.values)}</code>
+            <label className="input-label">Touched:</label>
+            <code>{JSON.stringify(formState.touched)}</code>
+            <label className="input-label">Dirty:</label>
+            <code>{JSON.stringify(formState.dirty)}</code>
+            <label className="input-label">Full Thing:</label>
+            <code>{JSON.stringify(formState)}</code> */}
             <div
               className={`side-panel-color-bar background-color-${editingMember.color}`}
-            />
+            >
+              {editingMember.id}
+            </div>
             <label className="input-label required">Name</label>
             <Text
               className="input-text"

@@ -374,6 +374,24 @@ class API {
       const route = utils.breadcrumble(path);
 
       switch (route.root) {
+        // API/members
+        case 'members':
+          // API/members/<id>
+          if (route.referenceId) {
+            result = await putFunctions.updateMember(
+              route.referenceId,
+              body,
+              this._db,
+              this._uid
+            );
+          } else {
+            return reject(
+              Error(
+                `Unable to perform PUT action for member, path ${path} does not exist`
+              )
+            );
+          }
+          break;
         // API/users
         case 'users':
           // API/users/<id>/favorite-artists
@@ -644,6 +662,22 @@ const getFunctions = {
 };
 
 const putFunctions = {
+  // Update Member
+  updateMember: async (id, body, db, uid) => {
+    const key = id;
+    const deserializedBody = deserialize(body, 'member', 'put', uid);
+    await dbRef.ref(`/members/${key}`).set(deserializedBody, error => {
+      if (error) {
+        const message = `Failed to update Member ${key}: ${JSON.stringify(
+          body
+        )}`;
+        throw new Error(`${message}: ${error}`);
+      }
+    });
+    // // Replace member in the DB
+    db.members[id] = deserializedBody;
+    return getFunctions.fetchMembers(db, false);
+  },
   // Update user biases
   updateUserBiases: async (id, body, db, reload) => {
     const key = id;

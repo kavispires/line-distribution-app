@@ -363,6 +363,19 @@ const parseUnitMembersPositions = members =>
   }, {});
 
 /**
+ * Remove all falsy values from an object mutating the data object
+ * @param {obect} data
+ * @returns {undefined} the original object is mutated
+ */
+const removeFalsyValues = data => {
+  Object.entries(data).forEach(([key, value]) => {
+    if (!value) {
+      delete data[key];
+    }
+  });
+};
+
+/**
  * Asyncronous function that delays code when using with async/await
  * @param {number} ms time in miliseconds the fuction should wait
  * @returns {Promise}
@@ -384,5 +397,6 @@ export default {
   parseColorRGB,
   parseSongDistribution,
   parseUnitMembersPositions,
+  removeFalsyValues,
   wait,
 };

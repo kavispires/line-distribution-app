@@ -409,7 +409,8 @@ p {
 
 .side-panel-color-bar {
   width: 100%;
-  height: 12px;
+  padding: 3px;
+  color: white;
 }
 .side-panel-color-bar:after {
   content: ' ';

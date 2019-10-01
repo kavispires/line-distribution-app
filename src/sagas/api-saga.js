@@ -577,7 +577,7 @@ function* updateMember(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { member, referenceArtist, artistGenre } = action;
+  const { member } = action;
 
   let response;
   try {
@@ -586,10 +586,20 @@ function* updateMember(action) {
       response = yield API.put(`/members/${member.id}`, member);
     } else {
       // Create member if it does not have an id
-      response = yield API.post('/members', {
-        ...member,
-        referenceArtist,
-        primaryGenre: artistGenre,
+      response = yield API.post('/members', member);
+    }
+
+    if (response) {
+      const membersList = utils.parseResponse(response);
+      yield put({ type: types.SET_MEMBERS, payload: membersList });
+
+      const { typeahead } = response.meta;
+      yield put({ type: types.SET_MEMBERS_TYPEAHEAD, payload: typeahead });
+
+      yield put({
+        type: 'SUCCESS_TOAST',
+        message: 'Member updaded Successfully',
+        actionType: action.type,
       });
     }
   } catch (error) {
@@ -601,11 +611,6 @@ function* updateMember(action) {
       actionType: action.type,
     });
   }
-
-  response.data.positions = {};
-  member.positions.forEach(pos => {
-    response.data.positions[`${response.data.id}:${member.name}:${pos}`] = true;
-  });
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
   return response.data;
@@ -701,6 +706,7 @@ function* apiSaga() {
   yield takeLatest('SEND_LOG', sendLog);
   yield takeLatest('SEND_SONG', sendSong);
   yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);
+  yield takeLatest('UPDATE_MEMBER', updateMember);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
   yield takeLatest('UPDATE_USER_FAVORITE_MEMBERS', updateUserFavoriteMembers);
