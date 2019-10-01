@@ -44,14 +44,6 @@ class MemberPicture extends Component {
         onError={this.fallback}
         alt={`Member: ${name}`}
       />
-
-      // </LazyLoadImage>
-      // <img
-      //   className={className}
-      //   src={pictureUrl}
-      //   onError={this.fallback}
-      //   alt="Member"
-      // />
     );
   }
 }

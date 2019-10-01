@@ -16,6 +16,7 @@ const MemberCard = ({
   averages,
   showId,
   showReferenceArtist,
+  editMember,
 }) => (
   <div className="card">
     {showId && (
@@ -24,15 +25,26 @@ const MemberCard = ({
         {member.id}
       </p>
     )}
-    <MemberPicture
-      className={
-        showReferenceArtist ? 'card__profile-full-image' : 'card__profile-image'
-      }
-      color={member.color}
-      gender={member.gender}
-      memberId={member.id}
-      name={member.name}
-    />
+    <div className="position-relative">
+      <MemberPicture
+        className={`card__profile-image ${
+          !showReferenceArtist ? 'card__profile-image--crop' : ''
+        }`}
+        color={member.color}
+        gender={member.gender}
+        memberId={member.id}
+        name={member.name}
+      />
+      {Boolean(editMember) && (
+        <button
+          className="btn-invisible card__edit-member-button"
+          onClick={() => editMember(member)}
+        >
+          <Icon type="edit-box" />
+        </button>
+      )}
+    </div>
+
     <span className={`card__color-bar background-color-${member.color}`} />
     <h3 className="card__name">
       {member.name}
@@ -90,6 +102,7 @@ MemberCard.propTypes = {
   favoriteState: PropTypes.bool,
   member: PropTypes.object.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
+  editMember: PropTypes.func,
 };
 
 MemberCard.defaultProps = {
@@ -97,6 +110,7 @@ MemberCard.defaultProps = {
   showId: false,
   showReferenceArtist: false,
   favoriteState: false,
+  editMember: null,
 };
 
 export default MemberCard;

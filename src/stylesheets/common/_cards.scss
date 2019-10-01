@@ -12,40 +12,38 @@
   &__profile-image {
     display: block;
     width: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    height: 60px;
-    transition: height 0.3s ease-in-out;
-
-    &:hover {
-      object-fit: fill;
-      height: auto;
-    }
-  }
-  &__profile-full-image {
-    display: block;
-    width: 100%;
     -o-object-fit: fill;
     object-fit: fill;
     height: auto;
     transition: height 0.3s ease-in-out;
+
+    &--crop {
+      -o-object-fit: cover;
+      object-fit: cover;
+      height: 60px;
+
+      &:hover {
+        object-fit: fill;
+        height: auto;
+      }
+    }
   }
 
   &__color-bar {
     width: 100%;
     display: flex;
-    height: 6px;
+    height: get-unit(2);
 
     &--main {
       display: block;
-      width: calc(100% - 6px);
-      height: 6px;
+      width: calc(100% - get-unit(2));
+      height: get-unit(2);
     }
 
     &--alt {
       display: block;
-      height: 6px;
-      width: 6px;
+      height: get-unit(2);
+      width: get-unit(2);
     }
   }
 
@@ -80,5 +78,13 @@
     background: get-color(gray, 1);
     margin: 0;
     padding: get-unit(2) get-unit(3);
+  }
+
+  &__edit-member-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: get-color(white);
+    box-shadow: -1px 1px 1px get-color(grey, 3);
   }
 }
