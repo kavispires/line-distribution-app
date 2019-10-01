@@ -340,6 +340,7 @@ p {
   overflow-x: hidden;
   padding-top: 48px;
   transition: 0.5s;
+  padding-bottom: 48px;
   color: #494b4c;
 }
 .side-panel--active {

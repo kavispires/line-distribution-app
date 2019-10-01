@@ -6,6 +6,7 @@
   overflow-x: hidden;
   padding-top: get-unit(5);
   transition: 0.5s;
+  padding-bottom: get-unit(5);
 
   &--active {
     width: auto;
