@@ -137,10 +137,15 @@ const parseBirthDate = d => {
   if (date.length === 8) {
     const year = date.substring(0, 4);
     const month = date.substring(4, 6);
-    const day = date.substring(6);
+    const day = date.substring(6, 8);
     return `${month}/${day}/${year}`;
   }
   return '?';
+};
+
+const parseBirthdateToInput = (d = 20000101) => {
+  const bd = `${d}`;
+  return `${bd.substring(0, 4)}-${bd.substring(4, 6)}-${bd.substring(6, 8)}`;
 };
 
 const parseResponse = response => {
@@ -376,6 +381,7 @@ export default {
   insertAtCursor,
   makePositionsEditable,
   parseBirthDate,
+  parseBirthdateToInput,
   parseQueryParams,
   parseArrayToObject,
   parseResponse,

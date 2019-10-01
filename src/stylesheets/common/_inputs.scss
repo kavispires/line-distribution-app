@@ -75,3 +75,8 @@
   max-width: 150px;
   max-height: get-unit(4);
 }
+
+.required:after {
+  color: get-color(red);
+  content: '*';
+}

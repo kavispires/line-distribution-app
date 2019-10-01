@@ -10,6 +10,7 @@
   &--active {
     width: auto;
     min-width: 18vw;
+    max-width: 18vw;
     padding-left: get-unit(3);
     padding-right: get-unit(3);
   }
@@ -66,7 +67,20 @@
   border: 1px solid get-color(gray, 2);
   margin: get-unit(4) 0;
 }
-.side-panel-close-button {
+.side-panel-button {
   margin-top: get-unit(3);
+  margin-left: get-unit(3);
   float: right;
+}
+
+.side-panel-list {
+  padding-left: get-unit(5);
+}
+
+.side-panel-color-bar {
+  width: 100%;
+  height: get-unit(3);
+  &:after {
+    content: ' ';
+  }
 }

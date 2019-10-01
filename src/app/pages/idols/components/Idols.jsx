@@ -4,10 +4,12 @@ import _ from 'lodash';
 
 // Import components
 import IdolsFilters from './IdolsFilters';
+import IdolsEdit from './IdolsEdit';
 // Import common components
 import { Icon, Loading, MemberCard, RequirementWrapper } from '../../../common';
 // Import utils
 import localStorage from '../../../../utils/local-storage';
+import utils from '../../../../utils';
 
 class Idols extends Component {
   static filterIdols(members = [], user, filters) {
@@ -73,10 +75,13 @@ class Idols extends Component {
       },
       members: [],
       sidePanel: null,
+      editingMember: {},
     };
 
-    this.updateFilters = this.updateFilters.bind(this);
     this.openPanel = this.openPanel.bind(this);
+    this.toggleMemberEditing = this.toggleMemberEditing.bind(this);
+    this.updateFilters = this.updateFilters.bind(this);
+    this.updateMember = this.updateMember.bind(this);
   }
 
   componentDidMount() {
@@ -158,6 +163,27 @@ class Idols extends Component {
     });
   }
 
+  toggleMemberEditing(member) {
+    const editingMember = { ...member };
+    editingMember.birthdate = utils.parseBirthdateToInput(member.birthdate);
+
+    this.setState(
+      {
+        editingMember,
+        sidePanel: null,
+      },
+      () => {
+        if (this.state.sidePanel !== 'edit') {
+          this.setState({ sidePanel: 'edit' });
+        }
+      }
+    );
+  }
+
+  updateMember(member) {
+    console.log('%cUPDATING', 'background:orange', member);
+  }
+
   render() {
     const {
       app: { pending },
@@ -165,9 +191,9 @@ class Idols extends Component {
       updateFavoriteMembers,
     } = this.props;
 
-    const { members, filters, sidePanel } = this.state;
+    const { editingMember, filters, members, sidePanel } = this.state;
 
-    if (pending.REQUEST_ARTISTS || pending.INITIALIZER || pending.RUN_AUTH) {
+    if (pending.REQUEST_MEMBERS || pending.INITIALIZER || pending.RUN_AUTH) {
       return <Loading message="Fecthing Idols..." />;
     }
 
@@ -181,6 +207,12 @@ class Idols extends Component {
             updateFilters={this.updateFilters}
             openPanel={this.openPanel}
           />
+          <IdolsEdit
+            isExpanded={sidePanel === 'edit'}
+            editingMember={editingMember}
+            openPanel={this.openPanel}
+            updateMember={this.updateMember}
+          />
           <aside className="side-panel-vertical-buttons">
             <button
               className="side-panel-vertical-buttons__button"
@@ -188,12 +220,14 @@ class Idols extends Component {
             >
               <Icon type="filter" />
             </button>
-            <button
-              className="side-panel-vertical-buttons__button"
-              onClick={() => this.openPanel('edit')}
-            >
-              <Icon type="edit" />
-            </button>
+            {isAdmin && (
+              <button
+                className="side-panel-vertical-buttons__button"
+                onClick={() => this.openPanel('edit')}
+              >
+                <Icon type="edit" />
+              </button>
+            )}
           </aside>
           <main className="container__main-content">
             <h1>Idols</h1>
@@ -211,6 +245,7 @@ class Idols extends Component {
                     user.favoriteMembers && user.favoriteMembers[member.id]
                   }
                   updateFavoriteMembers={updateFavoriteMembers}
+                  editMember={this.toggleMemberEditing}
                 />
               ))}
             </div>

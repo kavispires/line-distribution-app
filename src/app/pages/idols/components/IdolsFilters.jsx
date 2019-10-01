@@ -18,12 +18,8 @@ const IdolsFilters = ({
 }) => (
   <aside className={`side-panel ${isExpanded ? 'side-panel--active' : ''}`}>
     <h3>Filters</h3>
-    <Form
-      onChange={formState => updateFilters(formState)}
-      autoComplete="off"
-      // className="idols__filters-form"
-    >
-      <label className="input-label">Name</label>
+    <Form onChange={formState => updateFilters(formState)} autoComplete="off">
+      <label className="input-label">Name (first 3 letters)</label>
       <Text
         className="input-text"
         field="name"
@@ -148,10 +144,7 @@ const IdolsFilters = ({
       </Select>
     </Form>
 
-    <button
-      className="btn side-panel-close-button"
-      onClick={() => openPanel(null)}
-    >
+    <button className="btn side-panel-button" onClick={() => openPanel(null)}>
       Close
     </button>
   </aside>
