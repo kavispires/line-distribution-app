@@ -207,8 +207,6 @@ class Idols extends Component {
       return <Loading message="Fecthing Idols..." />;
     }
 
-    console.log(editingMember);
-
     return (
       <RequirementWrapper>
         <div className="container container--with-filters container--idols">

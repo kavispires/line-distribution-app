@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // Form components
 import { Checkbox, Form, Option, Select, Text } from 'informed';
@@ -113,8 +114,10 @@ const IdolsEdit = ({ isExpanded, editingMember, openPanel, updateMember }) => (
             </p>
             <ul className="side-panel-list">
               {editingMember.referenceArtists &&
-                editingMember.referenceArtists.map(art => (
-                  <li key={art}>{art}</li>
+                editingMember.referenceArtists.map(ra => (
+                  <li key={ra.name}>
+                    <Link to={`/artists/${ra.id}`}>{ra.name}</Link>
+                  </li>
                 ))}
             </ul>
             <button

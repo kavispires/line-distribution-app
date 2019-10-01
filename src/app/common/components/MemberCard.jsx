@@ -60,7 +60,7 @@ const MemberCard = ({
         {member.private && (
           <Icon type="private" color="red" inline title="private" size="18" />
         )}
-        <b>From </b> {member.referenceArtists.join(', ')}
+        <b>From </b> {member.referenceArtists.map(ra => ra.name).join(', ')}
       </p>
     )}
 
