@@ -42,9 +42,20 @@ const POSITIONS = {
   VISUAL: 'Visual',
 };
 
+const TAGS = {
+  ALL_AROUND: 'All Around',
+  CHARISMATIC: 'Charismatic',
+  DANCE_MACHINE: 'Dancing Machine',
+  GOOD_LOOKING: 'Good Looking',
+  POWER_VOCALS: 'Power Vocals',
+  RAPSTAR: 'Rapstar',
+  UNKOWN: 'Unknown',
+};
+
 export default {
   GENDERS,
   GENRES,
   NATIONALITIES,
   POSITIONS,
+  TAGS,
 };

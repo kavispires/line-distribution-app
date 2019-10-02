@@ -16,14 +16,6 @@ const IdolsEdit = ({ isExpanded, editingMember, openPanel, updateMember }) => (
       <Form autoComplete="off" onSubmit={updateMember}>
         {({ formState, formApi }) => (
           <Fragment>
-            {/* <label className="input-label">Values:</label>
-            <code>{JSON.stringify(formState.values)}</code>
-            <label className="input-label">Touched:</label>
-            <code>{JSON.stringify(formState.touched)}</code>
-            <label className="input-label">Dirty:</label>
-            <code>{JSON.stringify(formState.dirty)}</code>
-            <label className="input-label">Full Thing:</label>
-            <code>{JSON.stringify(formState)}</code> */}
             <div
               className={`side-panel-color-bar background-color-${editingMember.color}`}
             >
@@ -78,20 +70,20 @@ const IdolsEdit = ({ isExpanded, editingMember, openPanel, updateMember }) => (
                 </Option>
               ))}
             </Select>
-            <label className="input-label required">Primary Genre</label>
+            <label className="input-label">Tags</label>
             <Select
               className="input-select"
-              field="primaryGenre"
-              initialValue={editingMember.primaryGenre}
+              field="tags"
+              initialValue={editingMember.tags}
+              multiple
             >
-              {Object.entries(enums.GENRES).map(([value, text]) => (
+              {Object.entries(enums.TAGS).map(([value, text]) => (
                 <Option key={value} value={value}>
                   {text}
                 </Option>
               ))}
             </Select>
             {/* Add Colors */}
-            {/* Add Tags */}
             <hr className="side-panel-hr" />
             <label className="input-label input-label--inline">Private</label>
             <Checkbox field="private" initialValue={editingMember.private} />
@@ -159,17 +151,18 @@ const IdolsEdit = ({ isExpanded, editingMember, openPanel, updateMember }) => (
 IdolsEdit.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   editingMember: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    color: PropTypes.number,
-    initials: PropTypes.string,
     birthdate: PropTypes.string,
+    color: PropTypes.number,
     gender: PropTypes.string,
+    hide: PropTypes.bool,
+    id: PropTypes.string,
+    initials: PropTypes.string,
+    name: PropTypes.string,
     nationality: PropTypes.string,
     primaryGenre: PropTypes.string,
     private: PropTypes.bool,
-    hide: PropTypes.bool,
     referenceArtists: PropTypes.array,
+    tags: PropTypes.array,
   }),
   updateMember: PropTypes.func.isRequired,
   openPanel: PropTypes.func.isRequired,
@@ -177,17 +170,18 @@ IdolsEdit.propTypes = {
 
 IdolsEdit.defaultProps = {
   editingMember: {
-    id: null,
-    name: '',
+    birthdate: null,
     color: 0,
-    initials: '',
-    birthdate: '2019-01-01',
     gender: 'UNKOWN',
-    nationality: 'UNKNOWN',
+    hide: false,
+    id: null,
+    initials: '',
+    name: '',
+    nationality: 'OTHER',
     primaryGenre: 'OTHER',
     private: false,
-    hide: false,
     referenceArtists: ['ArtistId'],
+    tags: [],
   },
 };
 
