@@ -682,7 +682,7 @@ const putFunctions = {
   updateUserBiases: async (id, body, db, reload) => {
     const key = id;
     const deserializedBody = deserialize(body, 'user', 'put', 'biases');
-    await dbRef.ref(`/users/${key}`).set(deserializedBody, error => {
+    await dbRef.ref(`/users/${key}/biases`).set(deserializedBody, error => {
       reload.users = true;
       if (error) {
         const message = `Failed to update User's Biases ${key}: ${JSON.stringify(
@@ -696,41 +696,47 @@ const putFunctions = {
   // Update user favorite artists
   updateUserFavoriteArtists: async (id, body, db, reload) => {
     const key = id;
+    const extendedBody = { ...db.users[id].favoriteArtists, ...body };
     const deserializedBody = deserialize(
-      body,
+      extendedBody,
       'user',
       'put',
       'favoriteArtists'
     );
-    await dbRef.ref(`/users/${key}`).update(deserializedBody, error => {
-      reload.users = true;
-      if (error) {
-        const message = `Failed to update User's Favorite Artists ${key}: ${JSON.stringify(
-          body
-        )}`;
-        throw new Error(`${message}: ${error}`);
-      }
-    });
+    await dbRef
+      .ref(`/users/${key}/favoriteArtists`)
+      .set(deserializedBody, error => {
+        reload.users = true;
+        if (error) {
+          const message = `Failed to update User's Favorite Artists ${key}: ${JSON.stringify(
+            body
+          )}`;
+          throw new Error(`${message}: ${error}`);
+        }
+      });
     return getFunctions.fetchUser(id, db, reload);
   },
   // Update user favorite members
   updateUserFavoriteMembers: async (id, body, db, reload) => {
     const key = id;
+    const extendedBody = { ...db.users[id].favoriteMembers, ...body };
     const deserializedBody = deserialize(
-      body,
+      extendedBody,
       'user',
       'put',
       'favoriteMembers'
     );
-    await dbRef.ref(`/users/${key}`).update(deserializedBody, error => {
-      reload.users = true;
-      if (error) {
-        const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(
-          body
-        )}`;
-        throw new Error(`${message}: ${error}`);
-      }
-    });
+    await dbRef
+      .ref(`/users/${key}/favoriteMembers`)
+      .set(deserializedBody, error => {
+        reload.users = true;
+        if (error) {
+          const message = `Failed to update User's Favorite Members ${key}: ${JSON.stringify(
+            body
+          )}`;
+          throw new Error(`${message}: ${error}`);
+        }
+      });
     return getFunctions.fetchUser(id, db, reload);
   },
 };
