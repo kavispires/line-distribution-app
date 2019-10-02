@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import MemberNationaltyFlag from './member/MemberNationalityFlag';
 import MemberPicture from './member/MemberPicture';
 import MemberPositions from './member/MemberPositions';
+import MemberTags from './member/MemberTags';
 // Import utility functions
 import utils from '../../../utils';
 import { FavoriteIcon, Icon } from '..';
@@ -92,6 +93,7 @@ const MemberCard = ({
       <b>Positions:</b>
     </p>
     <MemberPositions memberId={member.id} positions={member.positions} />
+    <MemberTags tags={member.tags} memberId={member.id} color={member.color} />
   </div>
 );
 

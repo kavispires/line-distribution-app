@@ -49,7 +49,7 @@ const TAGS = {
   GOOD_LOOKING: 'Good Looking',
   POWER_VOCALS: 'Power Vocals',
   RAPSTAR: 'Rapstar',
-  UNKOWN: 'Unknown',
+  UNKNOWN: 'Unknown',
 };
 
 export default {

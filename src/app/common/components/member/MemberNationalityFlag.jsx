@@ -5,14 +5,10 @@ import constants from '../../../../utils/constants';
 const MemberNationaltyFlag = ({ nationality }) => {
   const flag = constants.FLAGS_LIST[nationality];
 
-  let flagUrl = `${process.env.PUBLIC_URL}${
-    constants.NATIONALITY_FLAG_URL
-  }unknown.jpg`;
+  let flagUrl = `${process.env.PUBLIC_URL}${constants.NATIONALITY_FLAG_URL}unknown.jpg`;
 
   if (flag) {
-    flagUrl = `${process.env.PUBLIC_URL}${
-      constants.NATIONALITY_FLAG_URL
-    }${flag}.jpg`;
+    flagUrl = `${process.env.PUBLIC_URL}${constants.NATIONALITY_FLAG_URL}${flag}.jpg`;
   }
 
   return (

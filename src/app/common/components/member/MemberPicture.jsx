@@ -5,6 +5,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 // Import contants
 import constants from '../../../../utils/constants';
 
+const loggedMissingPictures = {};
+
 class MemberPicture extends Component {
   constructor() {
     super();
@@ -28,7 +30,11 @@ class MemberPicture extends Component {
     const pictureFallback = `${process.env.PUBLIC_URL}${constants.PROFILE_PICTURE_URL}profile-${genderSuffix}-${profilePlaceholderCode}.png`;
 
     if (this.state.failed) {
-      console.log(`Missing Member Picture: ${name.toLowerCase()}${memberId}`); // eslint-disable-line
+      if (loggedMissingPictures[memberId] === undefined) {
+        console.log(`Missing Member Picture: ${name.toLowerCase()}${memberId}`); // eslint-disable-line
+        loggedMissingPictures[memberId] = true;
+      }
+
       return (
         <img
           className={`${className} background-color-${color}`}

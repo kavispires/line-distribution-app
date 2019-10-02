@@ -518,6 +518,8 @@ p {
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
   width: 18%;
   min-width: 200px;
   max-width: 250px;
@@ -577,6 +579,7 @@ p {
   padding: 0;
   list-style: none;
   margin-top: -6px;
+  flex-grow: 1;
 }
 .card__position-icon {
   height: 24px;
@@ -594,6 +597,29 @@ p {
   right: 0;
   background: white;
   box-shadow: -1px 1px 1px #bcbebf;
+}
+.card__tags-group {
+  background: #f0f1f1;
+  padding: 3px 3px 0 3px;
+  display: flex;
+  font-size: 80%;
+}
+.card__tags-group span {
+  display: block;
+  margin-right: 6px;
+  color: #888888;
+}
+.card__tags-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+.card__tag {
+  border-radius: 3px;
+  padding: 0 6px;
+  margin-right: 6px;
+  margin-bottom: 3px;
 }
 
 .switch {

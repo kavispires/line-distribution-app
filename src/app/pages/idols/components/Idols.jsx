@@ -117,17 +117,18 @@ class Idols extends Component {
 
   updateFilters(formState, forceUpdateFilters = false) {
     const filters = {
-      age: formState.values.age,
-      color: formState.values.color,
-      favorite: formState.values.favorite,
-      gender: formState.values.gender,
-      name: formState.values.name,
-      nationality: formState.values.nationality,
-      position: formState.values.position,
-      privacy: formState.values.privacy,
-      sort: formState.values.sort || 'name',
-      order: formState.values.order || 'asc',
-      showIds: formState.values.showIds || false,
+      age: formState.values.age || this.state.filters.age,
+      color: formState.values.color || this.state.filters.color,
+      favorite: formState.values.favorite || this.state.filters.favorite,
+      gender: formState.values.gender || this.state.filters.gender,
+      name: formState.values.name || this.state.filters.name,
+      nationality:
+        formState.values.nationality || this.state.filters.nationality,
+      position: formState.values.position || this.state.filters.position,
+      privacy: formState.values.privacy || this.state.filters.privacy,
+      sort: formState.values.sort || this.state.filters.sort,
+      order: formState.values.order || this.state.filters.order,
+      showIds: formState.values.showIds || this.state.filters.showIds,
     };
 
     // Prevent filters to be run if filters were not modified
