@@ -26,6 +26,7 @@ const IdolsEdit = ({ isExpanded, editingMember, openPanel, updateMember }) => (
               className="input-text"
               field="name"
               initialValue={editingMember.name}
+              disabled
             />
             <label className="input-label">
               Initials{' '}
