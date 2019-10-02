@@ -80,17 +80,19 @@ class Bias extends Component {
       />
     );
 
+    const biasColor = this.state.bias ? this.state.bias.color : '31';
+
     const pictureComponent =
       // If picture is not found
       this.state.fetchPictureFailed ? (
         <div
-          className={`bias-icon-picture__no-image background-color-${this.state.bias.color}`}
+          className={`bias-icon-picture__no-image background-color-${biasColor}`}
         >
           <span>{this.state.bias.name}</span>
         </div>
       ) : (
         <img
-          className="bias-icon-picture__image"
+          className={`bias-icon-picture__image border-color-${biasColor}`}
           src={this.state.biasPictureUrl}
           onError={this.fallback}
           alt="Bias"
