@@ -4,4 +4,9 @@
   margin-bottom: get-unit(2);
   padding: get-unit(1) get-unit(2);
   border-radius: get-unit(1);
+
+  &--mini {
+    padding: 0 get-unit(1);
+    margin-bottom: get-unit(1);
+  }
 }

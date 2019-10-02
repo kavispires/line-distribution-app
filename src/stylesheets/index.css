@@ -339,8 +339,8 @@ p {
   background-color: #f0f1f1;
   overflow-x: hidden;
   padding-top: 48px;
-  transition: 0.5s;
   padding-bottom: 48px;
+  transition: 0.5s;
   color: #494b4c;
 }
 .side-panel--active {
@@ -422,6 +422,10 @@ p {
   margin-bottom: 6px;
   padding: 3px 6px;
   border-radius: 3px;
+}
+.pill--mini {
+  padding: 0 3px;
+  margin-bottom: 3px;
 }
 
 .table {
@@ -614,12 +618,6 @@ p {
   padding: 0;
   margin: 0;
   display: flex;
-}
-.card__tag {
-  border-radius: 3px;
-  padding: 0 6px;
-  margin-right: 6px;
-  margin-bottom: 3px;
 }
 
 .switch {

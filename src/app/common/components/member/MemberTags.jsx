@@ -10,13 +10,13 @@ const MemberTags = ({ tags, memberId, color }) => (
         tags.map(tag => (
           <li
             key={`tag${memberId}-${tag}`}
-            className={`card__tag background-color-${color}`}
+            className={`pill pill--mini background-color-${color}`}
           >
             {enums.TAGS[tag]}
           </li>
         ))
       ) : (
-        <li className="card__tag background-color-31">None</li>
+        <li className="pill pill--mini background-color-31">None</li>
       )}
     </ul>
   </div>

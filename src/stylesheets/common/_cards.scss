@@ -110,11 +110,4 @@
     margin: 0;
     display: flex;
   }
-
-  &__tag {
-    border-radius: get-unit(1);
-    padding: 0 get-unit(2);
-    margin-right: get-unit(2);
-    margin-bottom: get-unit(1);
-  }
 }
