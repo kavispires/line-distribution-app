@@ -109,6 +109,8 @@ const serializers = {
   member: (data, id) => {
     data = _.cloneDeep(data);
 
+    const referenceArtists = data.referenceArtists || [];
+
     return {
       id: data.id || id,
       type: 'member',
@@ -126,7 +128,11 @@ const serializers = {
         positions: data.positions || [],
         private: Boolean(data.private),
         primaryGenre: getEnum(data.primaryGenre, 'GENRE'),
-        referenceArtists: data.referenceArtists || [],
+        referenceArtists,
+        referenceArtistsQuery: referenceArtists
+          .reduce((raq, ra) => raq + ra.name, '')
+          .replace(/[{()}]/g, '')
+          .toLowerCase(),
         tags: data.tags || [],
       },
     };
@@ -136,7 +142,9 @@ const serializers = {
     let text = data.attributes.name;
 
     if (type === 'member') {
-      text = `${data.attributes.name} (${data.attributes.referenceArtists[0]})`;
+      const referenceArtistsName =
+        data.attributes.referenceArtists[0].name || UNKNOWN;
+      text = `${data.attributes.name} (${referenceArtistsName})`;
     }
 
     return {

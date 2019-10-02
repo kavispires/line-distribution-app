@@ -128,7 +128,7 @@ const IdolsFilters = ({
         <Option value="age">Age</Option>
         <Option value="color">Color</Option>
         <Option value="gender">Gender</Option>
-        <Option value="referenceArtists">Group</Option>
+        <Option value="referenceArtistsQuery">Group</Option>
         <Option value="name">Name</Option>
         <Option value="nationality">Nationality</Option>
       </Select>
