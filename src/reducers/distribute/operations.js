@@ -26,6 +26,154 @@ const activateSong = id => (dispatch, getState) => {
   }
 };
 
+const activateUnit = () => (dispatch, getState) => {
+  // Reset everything
+  dispatch(actions.resetDistribute({}));
+
+  const selectedArtist = { ...getState().artists.selectedArtist };
+  const activeUnit = { ...getState().artists.selectedUnit };
+
+  activeUnit.artistName = selectedArtist.name;
+  activeUnit.genre = selectedArtist.genre;
+
+  dispatch(actions.setActiveUnit(activeUnit));
+};
+
+const prepareDistributionViewer = () => (dispatch, getState) => {
+  // Get activeDistribution and activeSong
+  const {
+    activeDistribution: { rates, relationships },
+    activeSong: { distribution },
+  } = getState().distribute;
+
+  // Build members totals from rates
+  const totals = Object.keys(rates).reduce((acc, key) => {
+    if (!['max', 'total'].includes(key)) {
+      acc[key] = 0;
+    }
+    return acc;
+  }, {});
+
+  class Timestamp {
+    constructor(tts = {}, actv = {}, ctt = '', iactv = {}) {
+      this.totals = { ...tts };
+      this.active = { ...actv };
+      this.content = [ctt];
+      this.inactive = { ...iactv };
+      this.duration = 0;
+    }
+
+    addActive(newMembers = []) {
+      newMembers.forEach(member => {
+        if (this.active[member] === undefined) {
+          this.active[member] = 0;
+        }
+        this.active[member] += 1;
+      });
+    }
+
+    addInactive(newMembers = []) {
+      newMembers.forEach(member => {
+        if (this.inactive[member] === undefined) {
+          this.inactive[member] = 0;
+        }
+        this.inactive[member] += 1;
+      });
+    }
+
+    addContent(newContent = '') {
+      if (this.content.length < 2 && !this.content[0]) {
+        this.content = [newContent];
+      } else {
+        this.content.push(newContent);
+      }
+    }
+
+    addDuration(duration = 0) {
+      this.duration += duration;
+    }
+
+    addTotals(newMembers = [], duration = 0) {
+      newMembers.forEach(member => {
+        if (this.totals[member] === undefined) {
+          this.totals[member] = 0;
+        }
+        this.totals[member] += duration;
+      });
+    }
+
+    replaceTotals(newTotals = {}) {
+      this.totals = { ...newTotals };
+    }
+  }
+
+  const defaultTimestampEntry = {
+    0: new Timestamp(totals),
+  };
+
+  // Loop through song.distribution and through every part
+  // Adding the startTime as an entry on the timestamp
+  const timestamps = distribution.reduce(
+    (acc, line) => {
+      // Loop parts
+      line.forEach(part => {
+        const timestampOnKey = Math.floor(part.startTime * 10); // TO-DO: Convert to miliseconds
+        const timestampOffKey = Math.floor(part.endTime * 10); // TO-DO: Convert to miliseconds
+
+        const newMembers = relationships[part.id];
+
+        // Add timestamp object to acc based on startTime
+        if (acc[timestampOnKey] === undefined) {
+          acc[timestampOnKey] = new Timestamp();
+        }
+        // acc[timestampOnKey].replaceTotals(latestTotals);
+        acc[timestampOnKey].addActive(newMembers);
+        acc[timestampOnKey].addContent(part.content);
+        // TO-DO: add totals?
+
+        // Add timestamp object to acc based on endTime
+        if (acc[timestampOffKey] === undefined) {
+          acc[timestampOffKey] = new Timestamp();
+        }
+        // acc[timestampOffKey].replaceTotals(latestTotals);
+        acc[timestampOffKey].addInactive(newMembers);
+        acc[timestampOffKey].addDuration(part.duration);
+        // acc[timestampOffKey].addTotals(newMembers, part.duration);
+
+        // // Update latestTotals
+        // latestTotals = acc[timestampOnKey].totals;
+      });
+
+      return acc;
+    },
+    {
+      ...defaultTimestampEntry,
+    }
+  );
+
+  let latestTotals = { ...totals };
+
+  // Addup totals
+  Object.values(timestamps).forEach(timestamp => {
+    timestamp.totals = { ...latestTotals };
+
+    if (timestamp.duration) {
+      Object.keys(timestamp.inactive).forEach(memberId => {
+        timestamp.totals[memberId] += timestamp.duration;
+      });
+    }
+
+    delete timestamp.inactive;
+
+    // Update latest totals
+    latestTotals = { ...timestamp.totals };
+  });
+
+  dispatch(actions.setTimestampsDict(timestamps));
+};
+
+// TO-DO: VERIFY USE FROM HERE
+
 const activateSongDistribution = distribution => (dispatch, getState) => {
   // Reset everything but Unit
   dispatch(actions.resetDistributeSong({}));
@@ -47,19 +195,6 @@ const activateSongDistribution = distribution => (dispatch, getState) => {
       previouslyLoadedSongs: allSongs,
     });
   }
-};
-
-const activateUnit = () => (dispatch, getState) => {
-  // Reset everything
-  dispatch(actions.resetDistribute({}));
-
-  const selectedArtist = { ...getState().artists.selectedArtist };
-  const activeUnit = { ...getState().artists.selectedUnit };
-
-  activeUnit.artistName = selectedArtist.name;
-  activeUnit.genre = selectedArtist.genre;
-
-  dispatch(actions.setActiveUnit(activeUnit));
 };
 
 const prepareSong = activeSongParam => (dispatch, getState) => {
@@ -356,5 +491,6 @@ export default {
   linkMemberToPart,
   loadDistribution,
   mergeActiveDistribution,
+  prepareDistributionViewer,
   prepareSong,
 };

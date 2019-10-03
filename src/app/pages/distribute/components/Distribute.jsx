@@ -7,14 +7,19 @@ import DistributeView from './DistributeView';
 // Import common components
 import { ModeWidget, RequirementWrapper } from '../../../common';
 
+let flag = true;
+
 class Distribute extends Component {
   componentDidMount() {
     // this.props.prepareSong(); // not necessary, song comes prepared from api
   }
 
   componentDidUpdate(prevProps) {
-    const hasActiveSong = this.props.distribute.activeSong.id;
-    const hasActiveDistribution = this.props.distribute.activeDistribution.id;
+    // console.log('COMPONENT DID UPDATE');
+    const hasActiveSong = Boolean(this.props.distribute.activeSong.id);
+    const hasActiveDistribution = Boolean(
+      this.props.distribute.activeDistribution.id
+    );
 
     const isNewActiveSong =
       prevProps.distribute.activeSong !== this.props.distribute.activeSong;
@@ -22,10 +27,20 @@ class Distribute extends Component {
       prevProps.distribute.activeDistribution !==
       this.props.distribute.activeDistribution;
     const isNewActivation = isNewActiveSong || isNewActiveDistribution;
+    // const isNewActivation = flag;
+    flag = false;
+
+    // console.log({ hasActiveSong });
+    // console.log({ hasActiveDistribution });
+    // console.log({ isNewActiveSong });
+    // console.log({ isNewActiveDistribution });
+    // console.log({ isNewActivation });
 
     if (hasActiveSong && hasActiveDistribution && isNewActivation) {
       // this.props.prepareSong(this.props.distribute.activeSong);
-      this.props.mergeActiveDistribution();
+      // this.props.mergeActiveDistribution();
+      // console.log('PREPARE DISTRIBUTION VIEWER');
+      this.props.prepareDistributionViewer();
     }
   }
 
@@ -69,7 +84,7 @@ class Distribute extends Component {
     } = this.props;
 
     const members = this.getMembers();
-    console.log(members);
+    // console.log(members);
 
     return (
       <RequirementWrapper requirements={['activeUnit', 'activeSong']}>
