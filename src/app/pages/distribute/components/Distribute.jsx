@@ -28,7 +28,7 @@ class Distribute extends Component {
       this.props.distribute.activeDistribution;
     const isNewActivation = isNewActiveSong || isNewActiveDistribution;
     // const isNewActivation = flag;
-    flag = false;
+    // flag = false;
 
     // console.log({ hasActiveSong });
     // console.log({ hasActiveDistribution });

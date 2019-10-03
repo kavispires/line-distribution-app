@@ -55,10 +55,10 @@ const prepareDistributionViewer = () => (dispatch, getState) => {
   }, {});
 
   class Timestamp {
-    constructor(tts = {}, actv = {}, ctt = '', iactv = {}) {
+    constructor(tts = {}, actv = {}, iactv = {}) {
       this.totals = { ...tts };
       this.active = { ...actv };
-      this.content = [ctt];
+      this.content = [];
       this.inactive = { ...iactv };
       this.duration = 0;
     }
@@ -111,10 +111,22 @@ const prepareDistributionViewer = () => (dispatch, getState) => {
     0: new Timestamp(totals),
   };
 
+  const lyricsStart = {};
+  const lyricsEnd = {};
+
   // Loop through song.distribution and through every part
   // Adding the startTime as an entry on the timestamp
   const timestamps = distribution.reduce(
     (acc, line) => {
+      const lyricLineStart = {
+        startTime: 0,
+        content: [],
+      };
+      const lyricLineEnd = {
+        endTime: 0,
+        content: [],
+      };
+
       // Loop parts
       line.forEach(part => {
         const timestampOnKey = Math.floor(part.startTime * 10); // TO-DO: Convert to miliseconds
@@ -126,10 +138,9 @@ const prepareDistributionViewer = () => (dispatch, getState) => {
         if (acc[timestampOnKey] === undefined) {
           acc[timestampOnKey] = new Timestamp();
         }
-        // acc[timestampOnKey].replaceTotals(latestTotals);
+
         acc[timestampOnKey].addActive(newMembers);
-        acc[timestampOnKey].addContent(part.content);
-        // TO-DO: add totals?
+        // acc[timestampOnKey].addContent(part.content);
 
         // Add timestamp object to acc based on endTime
         if (acc[timestampOffKey] === undefined) {
@@ -138,11 +149,28 @@ const prepareDistributionViewer = () => (dispatch, getState) => {
         // acc[timestampOffKey].replaceTotals(latestTotals);
         acc[timestampOffKey].addInactive(newMembers);
         acc[timestampOffKey].addDuration(part.duration);
-        // acc[timestampOffKey].addTotals(newMembers, part.duration);
 
-        // // Update latestTotals
-        // latestTotals = acc[timestampOnKey].totals;
+        // Build lyric line
+        if (
+          !lyricLineStart.startTime ||
+          lyricLineStart.startTime > timestampOnKey
+        ) {
+          lyricLineStart.startTime = timestampOnKey;
+        }
+        if (!lyricLineEnd.endTime || lyricLineEnd.endTime < timestampOffKey) {
+          lyricLineEnd.endTime = timestampOffKey;
+        }
+        lyricLineStart.content.push(part.content);
+        lyricLineEnd.content.push(part.content);
       });
+
+      const trimmedContent = lyricLineStart.content
+        .join('')
+        .trim()
+        .replace(/  +/g, ' ');
+
+      lyricsStart[lyricLineStart.startTime] = trimmedContent;
+      lyricsEnd[lyricLineEnd.endTime] = trimmedContent;
 
       return acc;
     },
@@ -153,9 +181,13 @@ const prepareDistributionViewer = () => (dispatch, getState) => {
 
   let latestTotals = { ...totals };
 
-  // Addup totals
-  Object.values(timestamps).forEach(timestamp => {
+  const currentLyrics = [];
+
+  // Addup totals and attatch lyrics
+  Object.entries(timestamps).forEach(([id, timestamp]) => {
     timestamp.totals = { ...latestTotals };
+
+    // console.log(id);
 
     if (timestamp.duration) {
       Object.keys(timestamp.inactive).forEach(memberId => {
@@ -163,7 +195,21 @@ const prepareDistributionViewer = () => (dispatch, getState) => {
       });
     }
 
-    delete timestamp.inactive;
+    // Add lyrics to current
+    if (lyricsStart[id]) {
+      currentLyrics.push(lyricsStart[id]);
+    }
+
+    // Remove lyrics from current
+    if (lyricsEnd[id]) {
+      const index = currentLyrics.indexOf(lyricsEnd[id]);
+      if (index > -1) {
+        currentLyrics.splice(index, 1);
+      }
+    }
+
+    // Add current to content
+    timestamp.content = [...currentLyrics];
 
     // Update latest totals
     latestTotals = { ...timestamp.totals };

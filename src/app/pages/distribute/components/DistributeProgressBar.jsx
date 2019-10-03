@@ -10,6 +10,7 @@ const DistributeProgressBar = ({
 }) => {
   const widthStyle = {
     width: `${percentage}%`,
+    transition: '0.1s',
   };
 
   return (

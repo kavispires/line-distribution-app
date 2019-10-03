@@ -29,7 +29,7 @@ class DistributeView extends Component {
         width: 0,
       },
       isVideoAreaReady: false,
-      lyrics: '',
+      lyrics: [],
       currentTime: 0,
       isPlaying: false,
       isReady: false,
@@ -154,7 +154,7 @@ class DistributeView extends Component {
     );
 
     const arrayOfTotals = Object.entries(rates).reduce((acc, [key, val]) => {
-      if (!['ALL', 'max', 'total'].includes(key)) acc.push(val);
+      if (!['ALL', 'NONE', 'max', 'total'].includes(key)) acc.push(val);
       return acc;
     }, []);
     const max = Math.max(...arrayOfTotals);
@@ -163,6 +163,7 @@ class DistributeView extends Component {
       membersProgress,
       membersGroups,
       max,
+      lyrics: [],
     });
   }
 
@@ -176,29 +177,30 @@ class DistributeView extends Component {
 
     if (currentTimestamp) {
       // Determine lyrics
-      const lyrics = currentTimestamp.content.join('\n');
+      newState.lyrics = currentTimestamp.content;
 
       // Deactive inactive members
       Object.keys(currentTimestamp.inactive).forEach(memberId => {
         const { duration } = membersProgress[memberId];
         membersProgress[memberId].active = false;
         membersProgress[memberId].duration = duration;
-        membersProgress[memberId].percentage = (100 * duration) / max;
+        const percentage = (100 * duration) / max;
+        membersProgress[memberId].percentage =
+          percentage < 100 ? percentage : 100;
       });
 
       // Active active members
       Object.keys(currentTimestamp.active).forEach(memberId => {
         membersProgress[memberId].active = true;
       });
-
-      newState.lyrics = lyrics;
     }
 
     // Add second to every active member
     Object.values(membersProgress).forEach(member => {
       if (member.active) {
         member.duration += 0.1;
-        member.percentage = (100 * member.duration) / max;
+        const percentage = (100 * member.duration) / max;
+        member.percentage = percentage < 100 ? percentage : 100;
       }
     });
 
@@ -291,7 +293,11 @@ class DistributeView extends Component {
                       })}
                     </div>
                     <div className="distribute-viewer-overlay__lyrics">
-                      {this.state.lyrics}
+                      {this.state.lyrics.map(line => (
+                        <p key={line} className="line">
+                          {line}
+                        </p>
+                      ))}
                     </div>
                     <div className="distribute-viewer-overlay__bars">
                       {this.state.membersGroups.map((group, index) => {
@@ -320,22 +326,6 @@ class DistributeView extends Component {
                           </div>
                         );
                       })}
-
-                      {/* {Object.values(this.state.membersProgress).map(member => {
-                        if (member.name === 'ALL' || member.name === 'NONE') {
-                          return null;
-                        }
-                        return (
-                          <DistributeProgressBar
-                            key={`bar-${member.id}`}
-                            active={member.active}
-                            color={member.color}
-                            duration={member.duration}
-                            name={member.name}
-                            percentage={member.percentage}
-                          />
-                        );
-                      })} */}
                     </div>
                   </div>
                 </div>
