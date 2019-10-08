@@ -21,24 +21,6 @@
 
 .distribute-viewer-video {
   width: 100%;
-  max-width: 80vw;
-  height: 100%;
-
-  @media screen and (min-width: $break-small) {
-    min-height: 200px;
-  }
-
-  @media screen and (min-width: $break-medium) {
-    min-height: 420px;
-  }
-
-  @media screen and (min-width: $break-large) {
-    min-height: 540px;
-  }
-
-  @media screen and (min-width: $break-x-large) {
-    min-height: 720px;
-  }
 
   &__youtube {
     text-align: center;

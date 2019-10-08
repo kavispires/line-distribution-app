@@ -13,6 +13,7 @@ import optionVertical from './../../../../images/distribute-vertical.svg';
 import optionDiscs from './../../../../images/distribute-discs.svg';
 import optionReport from './../../../../images/distribute-report.svg';
 import optionRank from './../../../../images/distribute-rank.svg';
+import vplaceholder from './../../../../images/16x9.svg';
 
 let player = null;
 let animationInterval;
@@ -259,6 +260,9 @@ class DistributeView extends Component {
             </li>
           </ul>
           <div className="distribute-viewer-video" id="video-container-view">
+            {!this.state.isVideoAreaReady ? (
+              <img src={vplaceholder} alt="Video Placeholder" />
+            ) : null}
             {this.state.isVideoAreaReady ? (
               <Fragment>
                 <div className="distribute-viewer-video__youtube">

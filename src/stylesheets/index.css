@@ -1531,28 +1531,6 @@ input:checked + .slider:before {
 
 .distribute-viewer-video {
   width: 100%;
-  max-width: 80vw;
-  height: 100%;
-}
-@media screen and (min-width: 320px) {
-  .distribute-viewer-video {
-    min-height: 200px;
-  }
-}
-@media screen and (min-width: 720px) {
-  .distribute-viewer-video {
-    min-height: 420px;
-  }
-}
-@media screen and (min-width: 1200px) {
-  .distribute-viewer-video {
-    min-height: 540px;
-  }
-}
-@media screen and (min-width: 1400px) {
-  .distribute-viewer-video {
-    min-height: 720px;
-  }
 }
 .distribute-viewer-video__youtube {
   text-align: center;
