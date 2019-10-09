@@ -1,6 +1,8 @@
 # Line Distribution
 
-For a live version of this project, click [here](http://www.kavispires.com/line-distribution-app/#/)
+For a live version of this project, click [here](http://www.kavispires.com/line-distribution-app/#/)<sup>*</sup>
+
+<sup>*</sup> You will need to login with a google account to view the complete app.
 
 ## Bugs
 
@@ -9,18 +11,16 @@ For a live version of this project, click [here](http://www.kavispires.com/line-
 ## Sitemap
 
 - Home
-  - Signin
   - Learn More
-- Artists
+- Artists<sup>1</sup>
   - Artist
-- Idols (Members)
-- Distribute
-  - Sync (Video) Distribution
-  - Unsynced Distribbution
-  - Results
-- Songs
-- Extra
-- Admin Tools
+- Idols<sup>1</sup>
+- Distribute<sup>2</sup>
+- Lyrics<sup>2</sup>
+- Songs<sup>1</sup>
+- Lab<sup>1</sup>
+- Admin Tools<sup>3</sup>
+  - Actions
   - UI Reference
     - Color Sheet
     - Icon Sheet
@@ -28,13 +28,17 @@ For a live version of this project, click [here](http://www.kavispires.com/line-
   - Manage
   - Sync
   - Test
-- User
+- User <sup>1</sup>
+
+<sup>1</sup> Only available if user is logged in
+<sup>2</sup> Only available if user has activated an unit to work with
+<sup>3</sup> Only available if user is an administrator
 
 ## Features
 
 ### Artists
 
-- Table of Artists with name, genre, # of units, mebers
+- Table of Artists with name, genre, # of units, members
 - Filterable Input Field that accepts name or member
 - 5 Last used units (name, genra, unit): selecting a unit to use updates this automatically.
 - 5 Favorite units: on a unit page, a favorite can be toggled.
