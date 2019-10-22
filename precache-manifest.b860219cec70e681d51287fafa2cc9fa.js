@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3a718bb11fd56d0026962046376efb5e",
+    "revision": "b55865f86ade9a6b1aa72a9fdbcfa79a",
     "url": "/line-distribution-app/index.html"
   },
   {
-    "revision": "47f570b07fffc2d71a69",
+    "revision": "b8f606461c6d28305a3b",
     "url": "/line-distribution-app/static/css/main.93ec9a0b.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/line-distribution-app/static/js/2.f7aee261.chunk.js"
   },
   {
-    "revision": "47f570b07fffc2d71a69",
-    "url": "/line-distribution-app/static/js/main.9d73e63e.chunk.js"
+    "revision": "b8f606461c6d28305a3b",
+    "url": "/line-distribution-app/static/js/main.29c61fae.chunk.js"
   },
   {
     "revision": "197c1830d2b3a33cd262",
