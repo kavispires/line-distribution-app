@@ -366,14 +366,14 @@ class DistributeView extends Component {
                     onClick={() => this.rewindFastforward('-')}
                     disabled
                   >
-                    <Icon type="rewind" />
+                    <Icon type="rewind" color="gray" />
                   </button>
                   <button
                     className="distribute-viewer-controls__button"
                     onClick={() => this.rewindFastforward('+')}
                     disabled
                   >
-                    <Icon type="fast-forward" />
+                    <Icon type="fast-forward" color="gray" />
                   </button>
                 </div>
               </Fragment>
