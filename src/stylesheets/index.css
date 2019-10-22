@@ -1799,6 +1799,7 @@ input:checked + .slider:before {
   padding: 0 6px 6px 6px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .distribute-progress-bar__name {
   display: inline-block;

@@ -140,7 +140,6 @@ const prepareDistributionViewer = () => (dispatch, getState) => {
         }
 
         acc[timestampOnKey].addActive(newMembers);
-        // acc[timestampOnKey].addContent(part.content);
 
         // Add timestamp object to acc based on endTime
         if (acc[timestampOffKey] === undefined) {

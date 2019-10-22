@@ -324,6 +324,7 @@
   padding: 0 get-unit(2) get-unit(2) get-unit(2);
   display: flex;
   align-items: center;
+  justify-content: center;
 
   &__name {
     display: inline-block;

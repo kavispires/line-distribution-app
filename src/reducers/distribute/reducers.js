@@ -14,7 +14,7 @@ const initialState = {
   remainder: 100,
   timestampsDict: {},
   // TO-DO: Remove or comment out to deploy
-  ...mockData,
+  // ...mockData,
 };
 
 export default function reducer(prevState = initialState, action) {

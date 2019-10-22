@@ -17,7 +17,6 @@ import vplaceholder from './../../../../images/16x9.svg';
 
 let player = null;
 let animationInterval;
-// let membersProgress = {};
 
 const INTERVAL = 100;
 
@@ -59,6 +58,15 @@ class DistributeView extends Component {
     }
 
     this.setMembers();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      Object.keys(prevProps.rates).join('') !==
+      Object.keys(this.props.rates).join('')
+    ) {
+      this.setMembers();
+    }
   }
 
   onReady(e) {
@@ -154,6 +162,7 @@ class DistributeView extends Component {
       [[]]
     );
 
+    // Detemine max based on members only
     const arrayOfTotals = Object.entries(rates).reduce((acc, [key, val]) => {
       if (!['ALL', 'NONE', 'max', 'total'].includes(key)) acc.push(val);
       return acc;
@@ -182,10 +191,12 @@ class DistributeView extends Component {
 
       // Deactive inactive members
       Object.keys(currentTimestamp.inactive).forEach(memberId => {
-        const { duration } = membersProgress[memberId];
+        const duration = currentTimestamp.totals[memberId];
+        const percentage = (100 * duration) / max;
+
         membersProgress[memberId].active = false;
         membersProgress[memberId].duration = duration;
-        const percentage = (100 * duration) / max;
+
         membersProgress[memberId].percentage =
           percentage < 100 ? percentage : 100;
       });
@@ -353,12 +364,14 @@ class DistributeView extends Component {
                   <button
                     className="distribute-viewer-controls__button"
                     onClick={() => this.rewindFastforward('-')}
+                    disabled
                   >
                     <Icon type="rewind" />
                   </button>
                   <button
                     className="distribute-viewer-controls__button"
                     onClick={() => this.rewindFastforward('+')}
+                    disabled
                   >
                     <Icon type="fast-forward" />
                   </button>
@@ -384,13 +397,16 @@ class DistributeView extends Component {
 }
 
 DistributeView.propTypes = {
-  members: PropTypes.object.isRequired,
-  rates: PropTypes.object.isRequired,
+  members: PropTypes.object,
+  rates: PropTypes.object,
   timestampsDict: PropTypes.object.isRequired,
   activeSong: PropTypes.object.isRequired,
   activeUnit: PropTypes.object.isRequired,
 };
 
-DistributeView.defaultProps = {};
+DistributeView.defaultProps = {
+  members: {},
+  rates: {},
+};
 
 export default DistributeView;
