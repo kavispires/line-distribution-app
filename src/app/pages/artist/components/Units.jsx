@@ -150,6 +150,7 @@ class Units extends Component {
                         favoriteMembers && favoriteMembers[member.id]
                       }
                       updateFavoriteMembers={updateFavoriteMembers}
+                      averages={member.averages}
                     />
                   ))}
                 </div>

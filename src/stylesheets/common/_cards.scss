@@ -64,6 +64,10 @@
     transform: translateY(3px);
   }
 
+  &__average {
+    margin: get-unit(1) 0;
+  }
+
   &__positions {
     padding: 0;
     list-style: none;

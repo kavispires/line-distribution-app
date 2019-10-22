@@ -75,15 +75,15 @@ const MemberCard = ({
     </p>
     {averages && (
       <Fragment>
-        <p>
+        <p className="card__average">
           <b>Avg Official Songs: </b>
           {averages.official}%
         </p>
-        <p>
+        <p className="card__average">
           <b>Avg Custom Songs: </b>
           {averages.custom}%
         </p>
-        <p>
+        <p className="card__average">
           <b>Avg All Songs: </b>
           {averages.all}%
         </p>
