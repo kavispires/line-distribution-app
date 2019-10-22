@@ -141,6 +141,8 @@ input:checked + .slider:before {
   &__members {
     margin: get-unit(2) 0 0 0;
     padding: 0;
+    display: flex;
+    overflow-y: overlay;
 
     .pill {
       background: get-color(negative);

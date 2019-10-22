@@ -38,19 +38,19 @@ const ActiveUnitWidget = ({ activeUnit, showMembers, inline, ...props }) => {
         </h1>
         {showMembers ? (
           <ul className="active-widget__members">
-            {Object.values(activeUnit.members).map(member => (
+            {activeUnit.members.map(member => (
               <li
                 key={member.id}
-                className={`pill background-color-${utils.getColorNumber(
-                  member.colorId
-                )}`}
+                className={`pill background-color-${member.color}`}
               >
                 {member.name}
               </li>
             ))}
           </ul>
         ) : (
-          <p className="active-widget__members-count">3</p>
+          <p className="active-widget__members-count">
+            {activeUnit.members.length || 0}
+          </p>
         )}
       </div>
     </section>

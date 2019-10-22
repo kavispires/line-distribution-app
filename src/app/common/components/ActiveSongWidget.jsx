@@ -29,7 +29,7 @@ const ActiveSongWidget = ({ activeSong, inline, ...props }) => {
         <h1>
           {activeSong.title.toUpperCase()}{' '}
           <span className="active-widget__unit">
-            (by {activeSong.originalArtist})
+            (by {activeSong.originalArtistName})
           </span>
         </h1>
       </div>

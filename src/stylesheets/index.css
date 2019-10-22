@@ -752,6 +752,8 @@ input:checked + .slider:before {
 .active-widget__members {
   margin: 6px 0 0 0;
   padding: 0;
+  display: flex;
+  overflow-y: overlay;
 }
 .active-widget__members .pill {
   background: white;
