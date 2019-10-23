@@ -106,7 +106,7 @@ const ArtistsTable = ({
                         }
                       />
                     </td>
-                    <td>
+                    <td className="no-break">
                       {entry.name}{' '}
                       {entry.private ? (
                         <Icon
@@ -117,14 +117,14 @@ const ArtistsTable = ({
                         />
                       ) : null}
                     </td>
-                    <td>{entry.agency}</td>
+                    <td className="no-break">{entry.agency}</td>
                     <td>{enums.GENRES[entry.genre]}</td>
                     <td>{entry.unitIds.length}</td>
                     <td>
                       {entry.members.map(member => member.name).join(', ')} (
                       {entry.members.length})
                     </td>
-                    <td>
+                    <td className="center">
                       {entry.disbanded ? (
                         <Icon
                           type="grave"
