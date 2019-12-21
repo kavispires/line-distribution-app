@@ -70,10 +70,10 @@ const breadcrumble = path => {
 const buildArtistQuery = (data, membersData) => {
   const { name } = data;
   const otherNames = data.otherNames || '';
-  const agency = data.agency !== UNKNOWN ? data.agency : '';
+  const agency = data.agency ? data.agency : '';
   const membersNames = membersData.map(m => m.name).join(' ');
 
-  return `${name} ${otherNames} ${membersNames} ${agency}`.toLowerCase();
+  return `${name} ${otherNames} ${membersNames} ${agency}`.toLowerCase().trim();
 };
 
 /**

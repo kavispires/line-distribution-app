@@ -10,23 +10,27 @@ describe('API/Serializers', () => {
         members: ['2001:-m1:Adam:1', '2002:-m2:Bob:2'],
         unitIds: ['-u1'],
       };
-      expect(serialize.artist(data)).toEqual({
-        id: '-a1',
-        type: 'artist',
-        attributes: {
-          agency: 'UNKNOWN',
-          createdBy: null,
-          genre: 'UNKNOWN',
-          members: [
-            { id: '-m1', color: '1', name: 'Adam' },
-            { id: '-m2', color: '2', name: 'Bob' },
-          ],
-          modifiedBy: null,
-          name: 'Band',
-          otherNames: 'bandit',
-          private: false,
-          query: 'band bandit adam bob',
-          unitIds: ['-u1'],
+
+      expect(serialize(data, data.id, 'artist')).toEqual({
+        data: {
+          id: '-a1',
+          type: 'artist',
+          attributes: {
+            agency: 'UNKNOWN',
+            createdBy: null,
+            disbanded: false,
+            genre: 'UNKNOWN',
+            members: [
+              { id: '-m1', color: '1', name: 'Adam' },
+              { id: '-m2', color: '2', name: 'Bob' },
+            ],
+            modifiedBy: null,
+            name: 'Band',
+            otherNames: 'bandit',
+            private: false,
+            query: 'band bandit adam bob',
+            unitIds: ['-u1'],
+          },
         },
       });
     });
@@ -215,46 +219,50 @@ describe('API/Serializers', () => {
           unitIds: ['-u2', '-u3'],
         },
       };
-      expect(serializeCollection(data, 'artist')).toEqual([
-        {
-          id: '-a1',
-          type: 'artist',
-          attributes: {
-            agency: 'UNKNOWN',
-            createdBy: null,
-            genre: 'UNKNOWN',
-            members: [
-              { id: '-m1', name: 'Adam', color: '1' },
-              { id: '-m2', name: 'Bob', color: '2' },
-            ],
-            modifiedBy: null,
-            name: 'Band',
-            otherNames: 'bandit',
-            private: false,
-            query: 'band bandit adam bob',
-            unitIds: ['-u1'],
+      expect(serializeCollection(data, 'artist')).toEqual({
+        data: [
+          {
+            id: '-a1',
+            type: 'artist',
+            attributes: {
+              agency: 'UNKNOWN',
+              createdBy: null,
+              disbanded: false,
+              genre: 'UNKNOWN',
+              members: [
+                { id: '-m1', name: 'Adam', color: '1' },
+                { id: '-m2', name: 'Bob', color: '2' },
+              ],
+              modifiedBy: null,
+              name: 'Band',
+              otherNames: 'bandit',
+              private: false,
+              query: 'band bandit adam bob',
+              unitIds: ['-u1'],
+            },
           },
-        },
-        {
-          id: '-a2',
-          type: 'artist',
-          attributes: {
-            agency: 'UNKNOWN',
-            createdBy: null,
-            genre: 'UNKNOWN',
-            members: [
-              { id: '-m3', name: 'Carl', color: '3' },
-              { id: '-m4', name: 'Dan', color: '4' },
-            ],
-            modifiedBy: null,
-            name: 'Group',
-            otherNames: 'groupie',
-            private: false,
-            query: 'group groupie carl dan',
-            unitIds: ['-u2', '-u3'],
+          {
+            id: '-a2',
+            type: 'artist',
+            attributes: {
+              agency: 'UNKNOWN',
+              createdBy: null,
+              disbanded: false,
+              genre: 'UNKNOWN',
+              members: [
+                { id: '-m3', name: 'Carl', color: '3' },
+                { id: '-m4', name: 'Dan', color: '4' },
+              ],
+              modifiedBy: null,
+              name: 'Group',
+              otherNames: 'groupie',
+              private: false,
+              query: 'group groupie carl dan',
+              unitIds: ['-u2', '-u3'],
+            },
           },
-        },
-      ]);
+        ],
+      });
     });
   });
 });
