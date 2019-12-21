@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // Import utils
 import constants from '../../../../utils/constants';
+import { printWarning } from '../../../../utils/print-service';
 import utils from '../../../../utils';
 
 const picturePlaceholder = `${process.env.PUBLIC_URL}${constants.GROUPS_PICTURE_URL}placeholder.jpg`;
@@ -23,7 +24,7 @@ class ArtistPicture extends Component {
 
     // If picture is not found
     if (!artistName || this.state.fetchPictureFailed) {
-      console.log(`Missing Artist Picture: ${parsedName}`); // eslint-disable-line
+      printWarning(`Missing Artist Picture: ${parsedName}`);
       return (
         <img
           className="artist-page-profile"

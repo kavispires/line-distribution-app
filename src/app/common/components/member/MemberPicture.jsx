@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-// Import contants
+// Import utils
 import constants from '../../../../utils/constants';
+import { printWarning } from '../../../../utils/print-service';
 
 const loggedMissingPictures = {};
 
@@ -31,7 +32,9 @@ class MemberPicture extends Component {
 
     if (this.state.failed) {
       if (loggedMissingPictures[memberId] === undefined) {
-        console.log(`Missing Member Picture: ${name.toLowerCase()}${memberId}`); // eslint-disable-line
+        printWarning(
+          `Missing Member Picture: ${name.toLowerCase()}${memberId}`
+        );
         loggedMissingPictures[memberId] = true;
       }
 
