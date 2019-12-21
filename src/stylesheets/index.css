@@ -1541,11 +1541,20 @@ input:checked + .slider:before {
 .distribute-viewer-video {
   width: 100%;
 }
+.distribute-viewer-video > img {
+  min-height: 450px;
+  max-height: 600px;
+}
 .distribute-viewer-video__youtube {
   text-align: center;
   position: relative;
   background: #222222;
   border-radius: 6px;
+  min-height: 450px;
+  max-height: 600px;
+}
+.distribute-viewer-video__youtube:first-child {
+  min-height: 450px;
 }
 
 .distribute-viewer-overlay {

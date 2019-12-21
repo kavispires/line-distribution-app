@@ -69,6 +69,10 @@ class DistributeView extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(animationInterval);
+  }
+
   onReady(e) {
     player = e.target;
     this.setState({ isReady: true });
@@ -273,8 +277,7 @@ class DistributeView extends Component {
           <div className="distribute-viewer-video" id="video-container-view">
             {!this.state.isVideoAreaReady ? (
               <img src={vplaceholder} alt="Video Placeholder" />
-            ) : null}
-            {this.state.isVideoAreaReady ? (
+            ) : (
               <Fragment>
                 <div className="distribute-viewer-video__youtube">
                   <YouTube
@@ -377,8 +380,6 @@ class DistributeView extends Component {
                   </button>
                 </div>
               </Fragment>
-            ) : (
-              <LoadingIcon size="small" />
             )}
           </div>
           <ul className="distribute-viewer-grid__aside">

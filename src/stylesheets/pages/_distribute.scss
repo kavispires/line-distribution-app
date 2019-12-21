@@ -21,12 +21,22 @@
 
 .distribute-viewer-video {
   width: 100%;
+  & > img {
+    min-height: 450px;
+    max-height: 600px;
+  }
 
   &__youtube {
     text-align: center;
     position: relative;
     background: get-color(black);
     border-radius: get-unit(2);
+    min-height: 450px;
+    max-height: 600px;
+
+    &:first-child {
+      min-height: 450px;
+    }
   }
 }
 
