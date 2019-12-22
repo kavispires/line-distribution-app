@@ -1,6 +1,7 @@
 import ActiveSong from './containers/ActiveSongWidgetContainer';
 import ActiveUnit from './containers/ActiveUnitWidgetContainer';
 import ActiveVideoWidget from './components/ActiveVideoWidget';
+import Button from './components/Button';
 import Collapsible from './components/Collapsible';
 import FavoriteIcon from './components/FavoriteIcon';
 import Icon from './components/Icon';
@@ -21,6 +22,7 @@ export {
   ActiveSong,
   ActiveUnit,
   ActiveVideoWidget,
+  Button,
   Collapsible,
   FavoriteIcon,
   Icon,

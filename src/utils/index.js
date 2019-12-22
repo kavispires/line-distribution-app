@@ -8,7 +8,7 @@ import _ from 'lodash';
  * @param {String} block
  * @param {String} modifiers
  * @param {String} element
- * @param {extra} extras
+ * @param {Array} extras
  * @returns {string} bem-class
  */
 const bem = (...args) => {
@@ -36,7 +36,12 @@ const bem = (...args) => {
     if (typeof modifiers === 'string') {
       modifiers = [modifiers];
     }
-    modifiers = modifiers.map(m => `--${m}`);
+    modifiers = modifiers.reduce((acc, m) => {
+      if (m) {
+        acc.push(`--${m}`);
+      }
+      return acc;
+    }, []);
   }
   // Prepare element
   if (hasElement) {
@@ -61,11 +66,13 @@ const bem = (...args) => {
     modifiers.forEach(m => {
       classes += ` ${block}${m}`;
     });
+    classes = classes.trim();
   }
 
   // Only Element
   if (hasElement && !hasModifiers) {
     classes = ` ${block}${element}`;
+    classes = classes.trim();
   }
 
   // Modifiers and Element
@@ -74,9 +81,14 @@ const bem = (...args) => {
     modifiers.forEach(m => {
       classes += ` ${block}${element}${m}`;
     });
+    classes = classes.trim();
   }
 
-  return `${classes} ${extras.join(' ')}`.trim();
+  if (extras.length > 0) {
+    classes += ` ${extras.join(' ')}`;
+  }
+
+  return classes.trim();
 };
 
 /**
