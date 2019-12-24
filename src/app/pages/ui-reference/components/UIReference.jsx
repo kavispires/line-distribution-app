@@ -62,6 +62,7 @@ class UIReference extends Component {
     const tab = typeof e === 'string' ? e : e.target.id;
 
     if (tab) {
+      this.props.history.push(`/admin/ui-reference?tab=${tab}`);
       this.setState({
         tab,
       });
@@ -98,6 +99,7 @@ UIReference.propTypes = {
   app: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   loadColors: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
 };
