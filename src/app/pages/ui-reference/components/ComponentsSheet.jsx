@@ -9,6 +9,7 @@ import {
   FavoriteIcon,
   Icon,
   LoadingIcon,
+  PageTitle,
   Switch,
   Tabs,
   Typeahead,
@@ -104,10 +105,24 @@ const ComponentSheet = () => (
       <ComponentExample
         name="Loading Icon"
         description="Colored loading icon"
-        requiredArguments={['']}
         optionalArguments={['size: tiny, small, medium (Default), large']}
       >
         <LoadingIcon />
+      </ComponentExample>
+
+      <ComponentExample
+        name="Page Title"
+        description="Adds an H1 to the page"
+        requiredArguments={['title: the title of the page']}
+        optionalArguments={[
+          'isAdmin: adds flag indication that the page has admin features',
+          'isBeta: adds flag indication that the page has beta features',
+        ]}
+      >
+        <PageTitle title="Page" />
+        <PageTitle title="Page" isAdmin />
+        <PageTitle title="Page" isBeta />
+        <PageTitle title="Page" isBeta isAdmin />
       </ComponentExample>
 
       <ComponentExample

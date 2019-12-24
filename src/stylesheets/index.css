@@ -449,6 +449,22 @@ p {
   content: ' ';
 }
 
+.page-title__flag {
+  display: inline-block;
+  transform: translateY(-6px);
+  font-size: 50%;
+  border-radius: 3px;
+  padding: 0 3px;
+  color: white;
+  margin-left: 3px;
+}
+.page-title__flag--admin {
+  background-color: #d14949;
+}
+.page-title__flag--beta {
+  background-color: #fea245;
+}
+
 .pill {
   display: inline-block;
   margin-right: 6px;
