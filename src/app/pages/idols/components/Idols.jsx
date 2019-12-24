@@ -6,7 +6,13 @@ import _ from 'lodash';
 import IdolsFilters from './IdolsFilters';
 import IdolsEdit from './IdolsEdit';
 // Import common components
-import { Icon, Loading, MemberCard, RequirementWrapper } from '../../../common';
+import {
+  Icon,
+  Loading,
+  MemberCard,
+  PageTitle,
+  RequirementWrapper,
+} from '../../../common';
 // Import utils
 import localStorage from '../../../../utils/local-storage';
 import utils from '../../../../utils';
@@ -241,7 +247,7 @@ class Idols extends Component {
             )}
           </aside>
           <main className="container__main-content">
-            <h1>Idols</h1>
+            <PageTitle title="Idols" />
             <p className="filter-count-text italic">
               Displaying {members.length} members...
             </p>

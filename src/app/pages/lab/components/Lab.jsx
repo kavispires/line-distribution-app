@@ -1,9 +1,13 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
+// Import common components
+import { PageTitle } from '../../../common';
+
 const Lab = () => (
   <main className="container container--lab">
-    <h1>Lab</h1>
+    <PageTitle title="Lab" />
+    <p>Content.</p>
   </main>
 );
 

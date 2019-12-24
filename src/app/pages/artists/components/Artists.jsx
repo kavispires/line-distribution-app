@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 // Import common components
 import {
-  ActiveUnit,
-  Switch,
-  RequirementWrapper,
   ActiveSong,
+  ActiveUnit,
+  PageTitle,
+  RequirementWrapper,
+  Switch,
 } from '../../../common';
 // Import components
 import ArtistsTable from './ArtistsTable';
@@ -94,7 +95,7 @@ class Artists extends Component {
     return (
       <RequirementWrapper>
         <main className="container container--artists">
-          <h1>Artists</h1>
+          <PageTitle title="Artists" />
 
           <section className="active-widget__group">
             <ActiveUnit activeUnit={activeUnit} showMembers />
@@ -102,7 +103,6 @@ class Artists extends Component {
           </section>
 
           <section className="artists__section">
-            <h2>All Artists</h2>
             <input
               className="artists__search-bar"
               type="text"

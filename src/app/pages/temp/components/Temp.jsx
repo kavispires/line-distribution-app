@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // Import common components
-import { RequirementWrapper } from '../../../common';
+import { PageTitle, RequirementWrapper } from '../../../common';
 
 class Temp extends Component {
   componentDidMount() {}
@@ -12,7 +12,7 @@ class Temp extends Component {
     return (
       <RequirementWrapper>
         <main className="container container--temp">
-          <h1>Temp Page</h1>
+          <PageTitle title="Temp" isAdmin isBeta />
           <div className="temp-box temp-1" />
           <div className="temp-box temp-2" />
           <div className="temp-box temp-3" />

@@ -8,9 +8,10 @@ import UnitsContainer from '../containers/UnitsContainer';
 // Import common components
 import {
   FavoriteIcon,
-  LoadingWrapper,
-  RequirementWrapper,
   Icon,
+  LoadingWrapper,
+  PageTitle,
+  RequirementWrapper,
 } from '../../../common';
 
 class Artist extends Component {
@@ -46,7 +47,7 @@ class Artist extends Component {
     return (
       <RequirementWrapper requirements={['selectedArtist']}>
         <main className="container container--artist">
-          <h1>Artist Page</h1>
+          <PageTitle title="Artist Page" />
           <LoadingWrapper pending={isArtistPending}>
             <section className="artist-section">
               <div className="artist-section-wrapper">

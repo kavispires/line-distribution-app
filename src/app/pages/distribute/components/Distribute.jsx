@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DistributeEdit from './DistributeEdit';
 import DistributeView from './DistributeView';
 // Import common components
-import { ModeWidget, RequirementWrapper } from '../../../common';
+import { ModeWidget, PageTitle, RequirementWrapper } from '../../../common';
 
 let flag = true;
 
@@ -90,7 +90,7 @@ class Distribute extends Component {
       <RequirementWrapper requirements={['activeUnit', 'activeSong']}>
         <main className="container container--distribute">
           <div className="distribute__header">
-            <h1>Distribute</h1>
+            <PageTitle title="Distribute" />
             <ModeWidget
               labels={['view', 'edit']}
               active={distributeView}

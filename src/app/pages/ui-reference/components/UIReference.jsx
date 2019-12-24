@@ -7,7 +7,12 @@ import ColorSheet from './ColorSheet';
 import ComponentSheet from './ComponentsSheet';
 import IconSheet from './IconSheet';
 // Import common components
-import { RequirementWrapper, Tabs, LoadingWrapper } from '../../../common';
+import {
+  LoadingWrapper,
+  PageTitle,
+  RequirementWrapper,
+  Tabs,
+} from '../../../common';
 // Import utility functions
 import utils from '../../../../utils';
 
@@ -79,7 +84,7 @@ class UIReference extends Component {
     return (
       <RequirementWrapper requirements={['admin']}>
         <main className="container container--artists">
-          <h1>UI Reference</h1>
+          <PageTitle title="UI Reference" isAdmin />
           <Tabs
             tabs={['Colors', 'Components', 'Icons']}
             action={this.setActiveTab}

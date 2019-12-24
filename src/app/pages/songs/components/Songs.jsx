@@ -6,7 +6,12 @@ import { Checkbox, Form, Text } from 'informed';
 // Import components
 import SongsTable from './SongsTable';
 // Import common components
-import { ActiveSong, ActiveUnit, RequirementWrapper } from '../../../common';
+import {
+  ActiveSong,
+  ActiveUnit,
+  PageTitle,
+  RequirementWrapper,
+} from '../../../common';
 // Import utils
 import localStorage from '../../../../utils/local-storage';
 
@@ -143,7 +148,7 @@ class Songs extends Component {
     return (
       <RequirementWrapper requirements={['activeUnit']}>
         <main className="container container--songs">
-          <h1>Songs</h1>
+          <PageTitle title="Songs" />
           <section className="active-widget__group">
             <ActiveUnit activeUnit={activeUnit} showMembers />
             <ActiveSong activeSong={activeSong} />

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import components
 import AdminAction from './AdminAction';
 // Import common components
-import { RequirementWrapper } from '../../../common';
+import { PageTitle, RequirementWrapper } from '../../../common';
 
 const NOOP = () => {};
 
@@ -22,9 +22,11 @@ class AdminActions extends Component {
     return (
       <RequirementWrapper requirements={['admin']}>
         <main className="container container--admin-actions">
-          <h1>Administrator Actions</h1>
+          <PageTitle title="Administrator Actions" isAdmin />
+
           <p>
-            Here you can manipulate the database by performing preset actions.<br />
+            Here you can manipulate the database by performing preset actions.
+            <br />
             You must type the for letter code to enable the button.
           </p>
 

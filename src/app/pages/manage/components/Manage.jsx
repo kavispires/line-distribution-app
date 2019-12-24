@@ -8,7 +8,7 @@ import ManageArtist from './ManageArtist';
 import ManageUnit from './ManageUnit';
 import ManageMembers from './ManageMembers';
 // Import common components
-import { RequirementWrapper, Loading, Icon } from '../../../common';
+import { Icon, Loading, PageTitle, RequirementWrapper } from '../../../common';
 // Import utility functions
 import utils from '../../../../utils';
 
@@ -208,7 +208,7 @@ class Manage extends Component {
       <RequirementWrapper requirements={['admin']}>
         <main className="container container--manage">
           <div className="manage-header">
-            <h1>Manage</h1>
+            <PageTitle title="Manage" isAdmin />
             <button className="btn btn-resync-db" onClick={handleResyncDB}>
               Resync Database
             </button>
