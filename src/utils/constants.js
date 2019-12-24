@@ -83,8 +83,6 @@ const POSITIONS_LIST = [
   'VISUAL',
 ];
 
-const NATIONALITY_FLAG_URL = '/images/flags/';
-
 const PROFILE_PICTURE_URL = '/images/profiles/';
 
 const GROUPS_PICTURE_URL = '/images/groups/';
@@ -114,7 +112,6 @@ export default {
   GENRES_DB,
   GROUPS_PICTURE_URL,
   POSITIONS_LIST,
-  NATIONALITY_FLAG_URL,
   PROFILE_PICTURE_URL,
   SYNC_KEY_LIST,
   SYNC_KEY_COLOR_LIST,

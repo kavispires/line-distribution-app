@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import logo from '../../../../images/logo-alt.svg';
 
 // Import common components
-import { Icon, LoadingIcon } from '../../../common';
+import { Button, Icon, LoadingIcon } from '../../../common';
 
 const HomeWelcomeNavigation = ({
   isAuthenticated,
@@ -16,7 +16,12 @@ const HomeWelcomeNavigation = ({
     <img className="home__logo" src={logo} alt="Line Distribution" />
     <div className="home__buttons">
       {!isAuthenticated && (
-        <button className="btn-home" onClick={loginAction} disabled={isPending}>
+        <Button
+          label=""
+          onClick={loginAction}
+          className="btn-home"
+          disabled={isPending}
+        >
           {isPending ? (
             <LoadingIcon size="tiny" inline />
           ) : (
@@ -24,11 +29,13 @@ const HomeWelcomeNavigation = ({
               Sign-in <Icon type="logout" color="white" inline />
             </Fragment>
           )}
-        </button>
+        </Button>
       )}
-      <button className="btn-home" onClick={() => learnMoreAction()}>
-        Learm more
-      </button>
+      <Button
+        label="Learn more"
+        onClick={learnMoreAction}
+        className="btn-home"
+      />
     </div>
   </div>
 );
