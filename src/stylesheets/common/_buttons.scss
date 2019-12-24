@@ -1,5 +1,5 @@
 .btn {
-  padding: get-unit(2) get-unit(3);
+  padding: get-unit(2) get-unit(4);
   border-width: 1px;
   border-style: solid;
   border-radius: get-unit(1);
@@ -7,7 +7,7 @@
 
   &:hover {
     color: get-color(gray, 4);
-    background: linear-gradient(get-color(negative), get-color(gray, 1));
+    background: linear-gradient(get-color(white), get-color(gray, 1));
   }
 
   &:disabled {
@@ -16,8 +16,44 @@
     cursor: default;
 
     &:hover {
-      color: get-color(gray, 2);
+      color: get-color(gray, 1);
       background: get-color(negative);
+    }
+  }
+
+  &--block {
+    width: 100%;
+    display: block;
+    margin: get-unit(1) 0;
+  }
+
+  &--primary {
+    background: get-color(white);
+  }
+
+  &--secondary {
+    background: get-color(gray, 2);
+    border-color: get-color(gray, 4);
+
+    &:hover {
+      color: get-color(gray, 8);
+      background: linear-gradient(get-color(gray, 2), get-color(gray, 4));
+    }
+  }
+
+  &--terciary {
+    border: none;
+    color: get-color(blue, 5);
+  }
+
+  &--danger {
+    background: get-color(red, 3);
+    color: get-color(red, 6);
+    border-color: get-color(red, 5);
+
+    &:hover {
+      color: get-color(red, 8);
+      background: linear-gradient(get-color(red, 3), get-color(red, 5));
     }
   }
 }

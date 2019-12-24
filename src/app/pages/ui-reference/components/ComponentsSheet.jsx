@@ -4,6 +4,7 @@ import React from 'react';
 import ComponentExample from './ComponentExample';
 // Import common components
 import {
+  Button,
   Collapsible,
   FavoriteIcon,
   Icon,
@@ -18,6 +19,33 @@ const NOOP = () => {};
 const ComponentSheet = () => (
   <main className="container">
     <ul className="component-list">
+      <ComponentExample
+        name="Button"
+        description="Button tag wrapper"
+        requiredArguments={[
+          'label: the text displayed in the button',
+          'onClick: the action performed when the button is clicked',
+        ]}
+        optionalArguments={[
+          'className: additional classname',
+          'icon: icon type that is placed on the left of the label',
+          'isBlock: flag indication a button has full width',
+          'isDisabled: flag indicating if the button is disabled',
+          'isVisible: flag indication if the button is visible',
+          'size: accepts small, default, or large',
+          'type: accepts primary, secondary, terciary, danger',
+          'accepts blocked elemements',
+        ]}
+      >
+        <Button label="primary" onClick={NOOP} />
+        <Button label="secondary" onClick={NOOP} type="secondary" />
+        <Button label="terciary" onClick={NOOP} type="terciary" />
+        <Button label="danger" onClick={NOOP} type="danger" />
+        <Button label="icon" onClick={NOOP} icon="lock" />
+        <Button label="disabled" onClick={NOOP} isDisabled />
+        <Button label="block" onClick={NOOP} isBlock />
+      </ComponentExample>
+
       <ComponentExample
         name="Collapsible"
         description="Collapsible panel with children content"

@@ -10,6 +10,7 @@ import LoadingIcon from './components/LoadingIcon';
 import LoadingWrapper from './components/LoadingWrapper';
 import MemberCard from './components/MemberCard';
 import ModeWidget from './components/ModeWidget';
+import PageTitle from './components/PageTitle';
 import PositionIcon from './components/PositionIcon';
 import RequirementWrapper from './containers/RequirementWrapperContainer';
 import Select from './components/Select';
@@ -31,6 +32,7 @@ export {
   LoadingWrapper,
   MemberCard,
   ModeWidget,
+  PageTitle,
   PositionIcon,
   RequirementWrapper,
   Select,

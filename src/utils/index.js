@@ -4,14 +4,14 @@
 import _ from 'lodash';
 
 /**
- * Parsers bem classes accepting two or more arguments
+ * Parses bem classes accepting two or more arguments
  * @param {String} block
  * @param {String} modifiers
  * @param {String} element
  * @param {Array} extras
  * @returns {string} bem-class
  */
-const bem = (...args) => {
+export const bem = (...args) => {
   const block = args[0];
   let modifiers = args[1] || '';
   let element = args[2];

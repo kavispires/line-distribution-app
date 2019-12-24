@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import shared components
 import { Icon } from '../../common';
 // Import utility functions
-import utils from '../../../utils';
+import { bem } from '../../../utils';
 
 const Button = ({
   label,
@@ -20,7 +20,7 @@ const Button = ({
 }) => {
   const blockClass = isBlock ? 'block' : '';
   const visibilityClass = isVisible ? '' : ' hidden';
-  const bemClasses = utils.bem('btn', [blockClass, size, type]);
+  const bemClasses = bem('btn', [blockClass, size, type]);
 
   return (
     <button
@@ -32,7 +32,7 @@ const Button = ({
         <Fragment>{children}</Fragment>
       ) : (
         <Fragment>
-          {Boolean(icon) && <Icon type={icon} size="tiny" inline />}
+          {Boolean(icon) && <Icon type={icon} size="12" inline />}
           {label}
         </Fragment>
       )}
