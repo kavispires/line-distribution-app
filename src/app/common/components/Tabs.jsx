@@ -48,7 +48,7 @@ Tabs.propTypes = {
   action: PropTypes.func.isRequired,
   active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.any.isRequired,
-  icons: PropTypes.objectOf(PropTypes.element),
+  icons: PropTypes.arrayOf(PropTypes.element),
   tabs: PropTypes.array.isRequired,
 };
 
