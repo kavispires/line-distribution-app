@@ -6,14 +6,6 @@ import enums from '../../utils/readable-enums';
 
 import actions from './actions';
 
-const switchUIReferenceTab = event => async dispatch => {
-  const { id } = event.target;
-
-  if (!id) return null;
-
-  return dispatch(actions.setUIReferenceTab(id));
-};
-
 const handleResyncDB = () => dispatch => dispatch({ type: 'RESYNC_DATABASE' });
 
 const handleEditArtist = artistId => (dispatch, getState) => {
@@ -385,7 +377,6 @@ export default {
   removeMember,
   resetManage,
   saveManage,
-  switchUIReferenceTab,
   unlockUnit,
   unlockMembers,
   updateManageForm,

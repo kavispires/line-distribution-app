@@ -17,6 +17,13 @@
     }
   }
 
+  @if $multiplier < 0 {
+    $raised: -1;
+    @for $i from $multiplier through -1 {
+      $raised: $raised * 2;
+    }
+  }
+
   @return $raised * 3px;
 }
 

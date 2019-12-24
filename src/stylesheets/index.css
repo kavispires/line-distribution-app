@@ -2636,11 +2636,13 @@ input:checked + .slider:before {
 .component-list__example {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
   margin-bottom: 12px;
 }
 .component-list__example > * {
   margin-right: 12px;
+  margin-bottom: 12px;
 }
 .component-list__description {
   width: 100%;
@@ -3038,7 +3040,7 @@ input:checked + .slider:before {
 
 .animated {
   animation-duration: 1s;
-  animation-fill-mode: both;
+  animation-fill-mode: forwards;
 }
 .animated.bounceIn {
   animation-duration: 0.7s;
@@ -3404,12 +3406,20 @@ body.toastr-confirm-active {
   opacity: 0.5;
   cursor: pointer;
   font-family: 'Helvetica Neue', Helvetica, Arial sans-serif;
+  color: #000;
 }
 .redux-toastr .toastr .close-toastr:hover {
   opacity: 1;
 }
 .redux-toastr .toastr .close-toastr:focus {
   outline: none;
+}
+.redux-toastr .toastr .close-toastr span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .redux-toastr .toastr.rrt-info,
 .redux-toastr .toastr.rrt-success,
