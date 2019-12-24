@@ -365,6 +365,51 @@ p {
   padding: 0;
 }
 
+.member-nationality-flag {
+  width: 20px;
+  height: 13px;
+  display: block;
+  background-image: url('../images/flags.jpg');
+  background-size: 240px;
+  background-position: 0px 0px;
+}
+.member-nationality-flag--unknown {
+  background-position: 0px 0px;
+}
+.member-nationality-flag--usa {
+  background-position: -140px 0px;
+}
+.member-nationality-flag--brazil {
+  background-position: -200px 0px;
+}
+.member-nationality-flag--uk {
+  background-position: -160px 0px;
+}
+.member-nationality-flag--canada {
+  background-position: -180px 0px;
+}
+.member-nationality-flag--china {
+  background-position: -60px 0px;
+}
+.member-nationality-flag--japan {
+  background-position: -40px 0px;
+}
+.member-nationality-flag--korea {
+  background-position: -20px 0px;
+}
+.member-nationality-flag--taiwan {
+  background-position: -100px 0px;
+}
+.member-nationality-flag--thailand {
+  background-position: -120px 0px;
+}
+.member-nationality-flag--vietnam {
+  background-position: -80px 0px;
+}
+.member-nationality-flag--planted {
+  background-position: -220px 0px;
+}
+
 .side-panel {
   height: 100%;
   width: 0;
@@ -624,8 +669,7 @@ p {
   font-size: 1.5em;
 }
 .card__flag {
-  height: 13px;
-  width: auto;
+  display: inline-block;
   transform: translateY(3px);
 }
 .card__average {

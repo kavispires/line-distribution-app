@@ -36,6 +36,7 @@ export const NATIONALITIES = {
   TAIWANESE: 'TAIWANESE',
   THAI: 'THAI',
   VIETNAMISE: 'VIETNAMISE',
+  PLANTIAN: 'PLANTIAN',
 };
 
 export const POSITIONS = {

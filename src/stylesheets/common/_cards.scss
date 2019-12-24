@@ -59,9 +59,8 @@
   }
 
   &__flag {
-    height: 13px;
-    width: auto;
-    transform: translateY(3px);
+    display: inline-block;
+    transform: translateY(get-unit(1));
   }
 
   &__average {

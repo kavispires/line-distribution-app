@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`common/MemberNationalityFlag renders 1`] = `
+<DocumentFragment>
+  <span
+    class="member-nationality-flag member-nationality-flag--korea "
+    title="KOREAN"
+  />
+</DocumentFragment>
+`;

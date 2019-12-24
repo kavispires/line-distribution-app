@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Import Member components
-import MemberNationaltyFlag from './member/MemberNationalityFlag';
+import MemberNationalityFlag from './MemberNationalityFlag';
 import MemberPicture from './member/MemberPicture';
 import MemberPositions from './member/MemberPositions';
 import MemberTags from './member/MemberTags';
@@ -71,7 +71,10 @@ const MemberCard = ({
     </p>
     <p>
       <b>Nationality: </b>
-      <MemberNationaltyFlag nationality={member.nationality} />
+      <MemberNationalityFlag
+        nationality={member.nationality}
+        className="card__flag"
+      />
     </p>
     {averages && (
       <Fragment>

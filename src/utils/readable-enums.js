@@ -25,6 +25,7 @@ const NATIONALITIES = {
   TAIWANESE: 'Taiwanese',
   THAI: 'Thai',
   VIETNAMISE: 'Vietnamise',
+  PLANTIAN: 'Plantian',
 };
 
 const POSITIONS = {

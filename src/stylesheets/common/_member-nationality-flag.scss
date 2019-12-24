@@ -1,0 +1,63 @@
+$flag-width: 20px;
+$flag-count: 12;
+
+@function get-flag-pos($index) {
+  @return $index * $flag-width * -1;
+}
+
+.member-nationality-flag {
+  width: $flag-width;
+  height: 13px;
+  display: block;
+  background-image: url('../images/flags.jpg');
+  background-size: $flag-width * $flag-count;
+  background-position: 0px 0px;
+
+  &--unknown {
+    background-position: get-flag-pos(0) 0px;
+  }
+
+  &--usa {
+    background-position: get-flag-pos(7) 0px;
+  }
+
+  &--brazil {
+    background-position: get-flag-pos(10) 0px;
+  }
+
+  &--uk {
+    background-position: get-flag-pos(8) 0px;
+  }
+
+  &--canada {
+    background-position: get-flag-pos(9) 0px;
+  }
+
+  &--china {
+    background-position: get-flag-pos(3) 0px;
+  }
+
+  &--japan {
+    background-position: get-flag-pos(2) 0px;
+  }
+
+  &--korea {
+    background-position: get-flag-pos(1) 0px;
+  }
+
+  &--taiwan {
+    background-position: get-flag-pos(5) 0px;
+  }
+
+  &--thailand {
+    background-position: get-flag-pos(6) 0px;
+  }
+
+  &--vietnam {
+    background-position: get-flag-pos(4) 0px;
+  }
+
+  &--planted {
+    background-position: get-flag-pos(11) 0px;
+  }
+}

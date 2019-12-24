@@ -9,6 +9,7 @@ import Loading from './components/Loading';
 import LoadingIcon from './components/LoadingIcon';
 import LoadingWrapper from './components/LoadingWrapper';
 import MemberCard from './components/MemberCard';
+import MemberNationalityFlag from './components/MemberNationalityFlag';
 import ModeWidget from './components/ModeWidget';
 import PageTitle from './components/PageTitle';
 import PositionIcon from './components/PositionIcon';
@@ -32,6 +33,7 @@ export {
   LoadingWrapper,
   MemberCard,
   ModeWidget,
+  MemberNationalityFlag,
   PageTitle,
   PositionIcon,
   RequirementWrapper,

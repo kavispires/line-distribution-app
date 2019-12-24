@@ -54,9 +54,10 @@ const FLAGS_LIST = {
   CHINESE: 'china',
   JAPANESE: 'japan',
   KOREAN: 'korea',
+  PLANTIAN: 'planted',
   TAIWANESE: 'taiwan',
   THAI: 'thailand',
-  VIETNAMISE: 'vietnamise',
+  VIETNAMISE: 'vietnam',
 };
 
 const GENRES_DB = {

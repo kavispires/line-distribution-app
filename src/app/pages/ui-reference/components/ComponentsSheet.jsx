@@ -9,6 +9,7 @@ import {
   FavoriteIcon,
   Icon,
   LoadingIcon,
+  MemberNationalityFlag,
   PageTitle,
   Switch,
   Tabs,
@@ -21,7 +22,30 @@ const ComponentSheet = () => (
   <main className="container">
     <ul className="component-list">
       <ComponentExample
-        name="Button"
+        name="<NationalityFlag>"
+        description="Adds nationality flag image"
+        optionalArguments={[
+          'nationality: one of the acceptable nationalities or it is defaulted to unknown',
+          'className: any custom classname to be added to component',
+        ]}
+      >
+        <MemberNationalityFlag />
+        <MemberNationalityFlag nationality="AMERICAN" />
+        <MemberNationalityFlag nationality="BRAZILIAN" />
+        <MemberNationalityFlag nationality="BRITISH" />
+        <MemberNationalityFlag nationality="CANADIAN" />
+        <MemberNationalityFlag nationality="CHINESE" />
+        <MemberNationalityFlag nationality="JAPANESE" />
+        <MemberNationalityFlag nationality="KOREAN" />
+        <MemberNationalityFlag nationality="TAIWANESE" />
+        <MemberNationalityFlag nationality="THAI" />
+        <MemberNationalityFlag nationality="VIETNAMISE" />
+        <MemberNationalityFlag nationality="PLANTIAN" />
+        <MemberNationalityFlag nationality="UNKNOWN" />
+      </ComponentExample>
+
+      <ComponentExample
+        name="<Button>"
         description="Button tag wrapper"
         requiredArguments={[
           'label: the text displayed in the button',
@@ -48,7 +72,7 @@ const ComponentSheet = () => (
       </ComponentExample>
 
       <ComponentExample
-        name="Collapsible"
+        name="<Collapsible>"
         description="Collapsible panel with children content"
         requiredArguments={[
           'title: the header of the panel',
@@ -73,7 +97,7 @@ const ComponentSheet = () => (
       </ComponentExample>
 
       <ComponentExample
-        name="Favorite Icon"
+        name="<FavoriteIcon>"
         description="Heart shaped favorite icon"
         requiredArguments={[
           'action: onClick function',
@@ -103,7 +127,7 @@ const ComponentSheet = () => (
       </ComponentExample>
 
       <ComponentExample
-        name="Loading Icon"
+        name="<LoadingIcon>"
         description="Colored loading icon"
         optionalArguments={['size: tiny, small, medium (Default), large']}
       >
@@ -111,7 +135,7 @@ const ComponentSheet = () => (
       </ComponentExample>
 
       <ComponentExample
-        name="Page Title"
+        name="<PageTitle>"
         description="Adds an H1 to the page"
         requiredArguments={['title: the title of the page']}
         optionalArguments={[
@@ -126,7 +150,7 @@ const ComponentSheet = () => (
       </ComponentExample>
 
       <ComponentExample
-        name="Switch"
+        name="<Switch>"
         description="Switch button to indicate if a feature is on"
         requiredArguments={[
           'action: function to be exectued when switch is triggers',
@@ -140,7 +164,7 @@ const ComponentSheet = () => (
       </ComponentExample>
 
       <ComponentExample
-        name="Tabs"
+        name="<Tabs>"
         description="Wrapper component with selectable tabs"
         requiredArguments={[
           'tabs: array of tabs strings',
@@ -158,7 +182,7 @@ const ComponentSheet = () => (
       </ComponentExample>
 
       <ComponentExample
-        name="Typeahead"
+        name="<Typeahead>"
         description="Input field with autocomplete datalist option"
         requiredArguments={[
           'action: function trigged when input is selected',
