@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const PageTitle = ({ title, isBeta, isAdmin }) => (
-  <h1 className="page-title">
-    {title}
-    {isAdmin && (
-      <span className="page-title__flag page-title__flag--admin">Admin</span>
-    )}
-    {isBeta && (
-      <span className="page-title__flag page-title__flag--beta">Beta</span>
-    )}
-  </h1>
-);
+const PageTitle = ({ title, isBeta, isAdmin }) => {
+  useEffect(() => {
+    document.title = `Line Distributon | ${title}`;
+  });
+
+  return (
+    <h1 className="page-title">
+      {title}
+      {isAdmin && (
+        <span className="page-title__flag page-title__flag--admin">Admin</span>
+      )}
+      {isBeta && (
+        <span className="page-title__flag page-title__flag--beta">Beta</span>
+      )}
+    </h1>
+  );
+};
 
 PageTitle.defaultProps = {
   isAdmin: false,

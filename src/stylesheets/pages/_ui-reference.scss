@@ -40,6 +40,13 @@
   }
 }
 
+.component-indices {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
 .component-list {
   width: 100%;
   display: flex;
@@ -49,7 +56,7 @@
 
   &__item {
     width: 100%;
-    margin: 10px;
+    margin: 10px 0;
     padding: 10px;
     display: flex;
     flex-direction: column;

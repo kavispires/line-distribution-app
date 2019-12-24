@@ -42,8 +42,15 @@
   }
 
   &--terciary {
-    border: none;
+    border: 1px solid transparent;
     color: get-color(blue, 5);
+    transition: border 0.5s;
+
+    &:hover {
+      color: get-color(blue, 5);
+      border: 1px solid get-color(blue, 5);
+      background: none;
+    }
   }
 
   &--danger {

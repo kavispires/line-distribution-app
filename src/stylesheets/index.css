@@ -152,8 +152,14 @@ p {
   background: linear-gradient(#d6d7d8, #959899);
 }
 .btn--terciary {
-  border: none;
+  border: 1px solid transparent;
   color: #598ffd;
+  transition: border 0.5s;
+}
+.btn--terciary:hover {
+  color: #598ffd;
+  border: 1px solid #598ffd;
+  background: none;
 }
 .btn--danger {
   background: #f0c3c3;
@@ -2703,6 +2709,13 @@ input:checked + .slider:before {
   margin-bottom: 12px;
 }
 
+.component-indices {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
 .component-list {
   width: 100%;
   display: flex;
@@ -2712,7 +2725,7 @@ input:checked + .slider:before {
 }
 .component-list__item {
   width: 100%;
-  margin: 10px;
+  margin: 10px 0;
   padding: 10px;
   display: flex;
   flex-direction: column;

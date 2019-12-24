@@ -8,7 +8,7 @@ const ComponentExample = ({
   optionalArguments,
   children,
 }) => (
-  <li className="component-list__item">
+  <li className="component-list__item" id={name}>
     <h3 className="component-list__name">{name}</h3>
     <div className="component-list__example">
       <Fragment>{children}</Fragment>
