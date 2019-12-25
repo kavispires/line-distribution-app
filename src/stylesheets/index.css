@@ -170,6 +170,17 @@ p {
   color: #3e1010;
   background: linear-gradient(#f0c3c3, #d14949);
 }
+.btn--transparent {
+  background: transparent;
+  border: 1px solid transparent;
+}
+.btn--transparent:hover {
+  background: transparent;
+  transform: scale(1.2);
+}
+.btn--transparent:focus {
+  outline: none;
+}
 
 .btn-block {
   width: 100%;
@@ -211,15 +222,6 @@ p {
 
 .btn-50 {
   width: 50%;
-}
-
-.btn-transparent {
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-}
-.btn-transparent:focus {
-  outline: none;
 }
 
 .position-icon {

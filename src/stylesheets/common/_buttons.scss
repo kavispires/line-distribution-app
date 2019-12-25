@@ -63,6 +63,20 @@
       background: linear-gradient(get-color(red, 3), get-color(red, 5));
     }
   }
+
+  &--transparent {
+    background: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+      background: transparent;
+      transform: scale(1.2);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
 .btn-block {
@@ -108,14 +122,4 @@
 
 .btn-50 {
   width: 50%;
-}
-
-.btn-transparent {
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-
-  &:focus {
-    outline: none;
-  }
 }
