@@ -8,18 +8,17 @@
  * 4: 24px
  * 5: 48px
 */
-@function get-unit($multiplier) {
+@function get-unit($value) {
   $raised: 1;
+
+  @if $value < 0 {
+    $raised: -1;
+  }
+
+  $multiplier: abs($value);
 
   @if $multiplier > 1 {
     @for $i from 1 through $multiplier - 1 {
-      $raised: $raised * 2;
-    }
-  }
-
-  @if $multiplier < 0 {
-    $raised: -1;
-    @for $i from $multiplier through -1 {
       $raised: $raised * 2;
     }
   }

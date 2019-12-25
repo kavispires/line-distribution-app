@@ -37,7 +37,7 @@ describe('common/MemberNationalityFlag', () => {
   });
 
   for (let i = 0; i < FLAGS.length; i++) {
-    const { nationality, flag } = FLAGS[0];
+    const { nationality, flag } = FLAGS[i];
     it(`renders the correct flag: ${nationality}`, () => {
       const { getByTitle } = render(
         <MemberNationalityFlag nationality={nationality} />

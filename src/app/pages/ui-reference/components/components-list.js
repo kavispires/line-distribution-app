@@ -9,6 +9,7 @@ import {
   LoadingIcon,
   MemberNationalityFlag,
   PageTitle,
+  PositionIcon,
   Switch,
   Tabs,
   Typeahead,
@@ -159,6 +160,39 @@ const COMPONENTS_LIST = [
         <PageTitle title="Page" isAdmin />
         <PageTitle title="Page" isBeta />
         <PageTitle title="Page" isBeta isAdmin />
+      </>
+    ),
+  },
+  {
+    name: '<PositionIcon>',
+    description: 'Position icon with optional inline name',
+    requiredArguments: [
+      'position: the standarized all caps position name (see constants)',
+    ],
+    optionalArguments: [
+      'displayName: a boolean indicating that the position name should be displayed or a string to be displayed as the position name',
+      'className: any custom class names',
+    ],
+    example: (
+      <>
+        <PositionIcon position="LEADER" displayName />
+        <PositionIcon position="MAIN_VOCALIST" displayName />
+        <PositionIcon position="MAIN_RAPPER" displayName />
+        <PositionIcon position="MAIN_DANCER" displayName />
+        <PositionIcon position="LEAD_VOCALIST" displayName />
+        <PositionIcon position="LEAD_RAPPER" displayName />
+        <PositionIcon position="LEAD_DANCER" displayName />
+        <PositionIcon position="VOCALIST" displayName />
+        <PositionIcon position="RAPPER" displayName />
+        <PositionIcon position="DANCER" displayName />
+        <PositionIcon position="CENTER" displayName />
+        <PositionIcon position="FACE_OF_THE_GROUP" displayName />
+        <PositionIcon position="VISUAL" displayName />
+        <PositionIcon position="MAKNAE" displayName />
+        <PositionIcon position="ALL" displayName />
+        <PositionIcon position="NONE" displayName />
+        <PositionIcon position="UNKNOWN" displayName />
+        <PositionIcon position="" displayName="Custom Display Name" />
       </>
     ),
   },

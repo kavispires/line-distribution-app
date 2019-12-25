@@ -46,7 +46,7 @@ const DEFAULT_COLORS = {
   yellow: '#ffd700',
 };
 
-const FLAGS_LIST = {
+const FLAGS_LIST_ICON = {
   AMERICAN: 'usa',
   BRAZILIAN: 'brazil',
   BRITISH: 'uk',
@@ -58,6 +58,46 @@ const FLAGS_LIST = {
   TAIWANESE: 'taiwan',
   THAI: 'thailand',
   VIETNAMISE: 'vietnam',
+};
+
+const POSITIONS_LIST_ICON = {
+  MAIN_VOCALIST: 'main-vocalist',
+  MAIN_RAPPER: 'main-rapper',
+  MAIN_DANCER: 'main-dancer',
+  LEAD_VOCALIST: 'lead-vocalist',
+  LEAD_RAPPER: 'lead-rapper',
+  LEAD_DANCER: 'lead-dancer',
+  VOCALIST: 'vocalist',
+  RAPPER: 'rapper',
+  DANCER: 'dancer',
+  LEADER: 'leader',
+  CENTER: 'center',
+  FACE_OF_THE_GROUP: 'face',
+  VISUAL: 'visual',
+  MAKNAE: 'maknae',
+  ALL: 'all',
+  NONE: 'none',
+  UNKNOWN: 'unknown',
+};
+
+const POSITIONS_DISPLAY_NAME = {
+  MAIN_VOCALIST: 'Main Vocalist',
+  MAIN_RAPPER: 'Main Rapper',
+  MAIN_DANCER: 'Main Dancer',
+  LEAD_VOCALIST: 'Lead Vocalist',
+  LEAD_RAPPER: 'Lead Rapper',
+  LEAD_DANCER: 'Lead Dancer',
+  VOCALIST: 'Vocalist',
+  RAPPER: 'Rapper',
+  DANCER: 'Dancer',
+  LEADER: 'Leader',
+  CENTER: 'Center',
+  FACE_OF_THE_GROUP: 'Face of the Group',
+  VISUAL: 'Visual',
+  MAKNAE: 'Maknae',
+  ALL: 'All',
+  NONE: 'None',
+  UNKNOWN: 'Unknown Position',
 };
 
 const GENRES_DB = {
@@ -108,10 +148,12 @@ const YOUTUBE_URLS = ['cudssvDuOpc'];
 export default {
   COLORS,
   DEFAULT_COLORS,
-  FLAGS_LIST,
+  FLAGS_LIST_ICON,
   GENRES_DB,
   GROUPS_PICTURE_URL,
+  POSITIONS_DISPLAY_NAME,
   POSITIONS_LIST,
+  POSITIONS_LIST_ICON,
   PROFILE_PICTURE_URL,
   SYNC_KEY_LIST,
   SYNC_KEY_COLOR_LIST,

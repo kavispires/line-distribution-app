@@ -1,61 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Import position icons
-import iconLeader from '../../../images/icon-leader.svg';
-import iconMainVocalist from '../../../images/icon-main-vocalist.svg';
-import iconMainRapper from '../../../images/icon-main-rapper.svg';
-import iconMainDancer from '../../../images/icon-main-dancer.svg';
-import iconLeadVocalist from '../../../images/icon-lead-vocalist.svg';
-import iconLeadRapper from '../../../images/icon-lead-rapper.svg';
-import iconLeadDancer from '../../../images/icon-lead-dancer.svg';
-import iconVocalist from '../../../images/icon-vocalist.svg';
-import iconDancer from '../../../images/icon-dancer.svg';
-import iconRapper from '../../../images/icon-rapper.svg';
-import iconCenter from '../../../images/icon-center.svg';
-import iconVisual from '../../../images/icon-visual.svg';
-import iconMaknae from '../../../images/icon-maknae.svg';
-import iconAll from '../../../images/icon-all.svg';
-import iconNone from '../../../images/icon-none.svg';
+// Import utilities
+import constants from '../../../utils/constants';
+import { bem } from '../../../utils';
 
-const PositionIcon = ({ className, position }) => {
-  const iconBank = {
-    LEADER: iconLeader,
-    MAIN_VOCALIST: iconMainVocalist,
-    MAIN_RAPPER: iconMainRapper,
-    MAIN_DANCER: iconMainDancer,
-    LEAD_VOCALIST: iconLeadVocalist,
-    LEAD_RAPPER: iconLeadRapper,
-    LEAD_DANCER: iconLeadDancer,
-    VOCALIST: iconVocalist,
-    RAPPER: iconDancer,
-    DANCER: iconRapper,
-    CENTER: iconCenter,
-    VISUAL: iconVisual,
-    MAKNAE: iconMaknae,
-    ALL: iconAll,
-    NONE: iconNone,
-  };
+const PositionIcon = ({ position, displayName, className }) => {
+  const pos = constants.POSITIONS_LIST_ICON[position] || 'unknown';
+  const baseClasses = bem('position-icon', [pos]);
+  const name =
+    typeof displayName === 'boolean'
+      ? constants.POSITIONS_DISPLAY_NAME[position] || position
+      : displayName;
 
-  return (
-    <span className={className}>
-      <img
-        className="position-icon"
-        src={iconBank[position]}
-        alt={`Position: ${position}`}
-        title={position}
-      />
-    </span>
+  const iconComponent = (
+    <span
+      className={`${baseClasses} ${displayName ? className : ''}`}
+      title={`Position: ${name}`}
+      data-testid="position-icon"
+    />
   );
+
+  if (displayName) {
+    return (
+      <div
+        className={`position-icon-container ${className}`}
+        data-testid="position-icon-container"
+      >
+        {iconComponent}
+        <span className="position-icon-name">{name}</span>
+      </div>
+    );
+  }
+
+  return iconComponent;
 };
 
 PositionIcon.propTypes = {
   className: PropTypes.string,
+  displayName: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   position: PropTypes.string.isRequired,
 };
 
 PositionIcon.defaultProps = {
-  className: 'position-icon-container--inline',
+  className: '',
+  displayName: false,
 };
 
 export default PositionIcon;

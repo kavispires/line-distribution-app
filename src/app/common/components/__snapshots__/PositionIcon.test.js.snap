@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`common/PositionIcon renders 1`] = `
+<DocumentFragment>
+  <span
+    class="position-icon position-icon--leader "
+    data-testid="position-icon"
+    title="Position: Leader"
+  />
+</DocumentFragment>
+`;

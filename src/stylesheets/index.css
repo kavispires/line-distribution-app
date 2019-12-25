@@ -222,15 +222,81 @@ p {
   outline: none;
 }
 
-.icon-heart-hollow:hover {
-  fill: #d14949 !important;
+.position-icon {
+  width: 24px;
+  height: 24px;
+  background-size: 24px;
+  display: block;
+  background-image: url('../images/positions.svg');
+  background-position: 0px 0px;
+}
+.position-icon--leader {
+  background-position-y: -1px;
+}
+.position-icon--main-vocalist {
+  background-position-y: -25px;
+}
+.position-icon--lead-vocalist {
+  background-position-y: -49px;
+}
+.position-icon--vocalist {
+  background-position-y: -73px;
+}
+.position-icon--main-rapper {
+  background-position-y: -97px;
+}
+.position-icon--lead-rapper {
+  background-position-y: -121px;
+}
+.position-icon--rapper {
+  background-position-y: -145px;
+}
+.position-icon--main-dancer {
+  background-position-y: -169px;
+}
+.position-icon--lead-dancer {
+  background-position-y: -193px;
+}
+.position-icon--dancer {
+  background-position-y: -217px;
+}
+.position-icon--visual {
+  background-position-y: -241px;
+}
+.position-icon--center {
+  background-position-y: -265px;
+}
+.position-icon--maknae {
+  background-position-y: -289px;
+}
+.position-icon--face {
+  background-position-y: -313px;
+}
+.position-icon--all {
+  background-position-y: -337px;
+}
+.position-icon--none {
+  background-position-y: -361px;
+}
+.position-icon--unknown {
+  background-position-y: -385px;
 }
 
-.position-icon-container--inline {
-  width: 16px;
+.position-icon-container {
+  display: block;
+}
+.position-icon-container > .position-icon {
   display: inline-block;
-  transform: translateY(2px);
-  line-height: 1px;
+  margin-right: 3px;
+}
+
+.position-icon-name {
+  display: inline-block;
+  transform: translateY(-6px);
+}
+
+.icon-heart-hollow:hover {
+  fill: #d14949 !important;
 }
 
 .ld-select {
@@ -380,40 +446,40 @@ p {
   background-position: 0px 0px;
 }
 .member-nationality-flag--unknown {
-  background-position: 0px 0px;
+  background-position-x: 0px;
 }
 .member-nationality-flag--usa {
-  background-position: -140px 0px;
+  background-position-x: -140px;
 }
 .member-nationality-flag--brazil {
-  background-position: -200px 0px;
+  background-position-x: -200px;
 }
 .member-nationality-flag--uk {
-  background-position: -160px 0px;
+  background-position-x: -160px;
 }
 .member-nationality-flag--canada {
-  background-position: -180px 0px;
+  background-position-x: -180px;
 }
 .member-nationality-flag--china {
-  background-position: -60px 0px;
+  background-position-x: -60px;
 }
 .member-nationality-flag--japan {
-  background-position: -40px 0px;
+  background-position-x: -40px;
 }
 .member-nationality-flag--korea {
-  background-position: -20px 0px;
+  background-position-x: -20px;
 }
 .member-nationality-flag--taiwan {
-  background-position: -100px 0px;
+  background-position-x: -100px;
 }
 .member-nationality-flag--thailand {
-  background-position: -120px 0px;
+  background-position-x: -120px;
 }
 .member-nationality-flag--vietnam {
-  background-position: -80px 0px;
+  background-position-x: -80px;
 }
 .member-nationality-flag--planted {
-  background-position: -220px 0px;
+  background-position-x: -220px;
 }
 
 .side-panel {

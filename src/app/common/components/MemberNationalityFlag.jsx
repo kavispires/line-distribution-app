@@ -6,7 +6,7 @@ import constants from '../../../utils/constants';
 import { bem } from '../../../utils';
 
 const MemberNationalityFlag = ({ nationality, className }) => {
-  const flag = constants.FLAGS_LIST[nationality] || 'unknown';
+  const flag = constants.FLAGS_LIST_ICON[nationality] || 'unknown';
   const baseClasses = bem('member-nationality-flag', [flag]);
 
   return <span className={`${baseClasses} ${className}`} title={nationality} />;

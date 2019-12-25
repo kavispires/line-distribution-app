@@ -1,7 +1,7 @@
 .page-title {
   &__flag {
     display: inline-block;
-    transform: translateY(get-unit(-1));
+    transform: translateY(get-unit(-2));
     font-size: 50%;
     border-radius: get-unit(1);
     padding: 0 get-unit(1);

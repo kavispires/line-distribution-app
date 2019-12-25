@@ -14,50 +14,50 @@ $flag-count: 12;
   background-position: 0px 0px;
 
   &--unknown {
-    background-position: get-flag-pos(0) 0px;
+    background-position-x: get-flag-pos(0);
   }
 
   &--usa {
-    background-position: get-flag-pos(7) 0px;
+    background-position-x: get-flag-pos(7);
   }
 
   &--brazil {
-    background-position: get-flag-pos(10) 0px;
+    background-position-x: get-flag-pos(10);
   }
 
   &--uk {
-    background-position: get-flag-pos(8) 0px;
+    background-position-x: get-flag-pos(8);
   }
 
   &--canada {
-    background-position: get-flag-pos(9) 0px;
+    background-position-x: get-flag-pos(9);
   }
 
   &--china {
-    background-position: get-flag-pos(3) 0px;
+    background-position-x: get-flag-pos(3);
   }
 
   &--japan {
-    background-position: get-flag-pos(2) 0px;
+    background-position-x: get-flag-pos(2);
   }
 
   &--korea {
-    background-position: get-flag-pos(1) 0px;
+    background-position-x: get-flag-pos(1);
   }
 
   &--taiwan {
-    background-position: get-flag-pos(5) 0px;
+    background-position-x: get-flag-pos(5);
   }
 
   &--thailand {
-    background-position: get-flag-pos(6) 0px;
+    background-position-x: get-flag-pos(6);
   }
 
   &--vietnam {
-    background-position: get-flag-pos(4) 0px;
+    background-position-x: get-flag-pos(4);
   }
 
   &--planted {
-    background-position: get-flag-pos(11) 0px;
+    background-position-x: get-flag-pos(11);
   }
 }
