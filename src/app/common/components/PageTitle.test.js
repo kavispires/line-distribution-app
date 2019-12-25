@@ -4,8 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 import PageTitle from './PageTitle';
 
 describe('common/PageTitle', () => {
-  const TRUE = true;
-
   afterEach(cleanup);
 
   it('renders', () => {
@@ -14,16 +12,12 @@ describe('common/PageTitle', () => {
   });
 
   it('renders the admin banner', () => {
-    const { getByText } = render(
-      <PageTitle title="Page Title" isAdmin={TRUE} />
-    );
+    const { getByText } = render(<PageTitle title="Page Title" isAdmin />);
     expect(getByText('Admin')).toBeInTheDocument();
   });
 
   it('renders the beta banner', () => {
-    const { getByText } = render(
-      <PageTitle title="Page Title" isBeta={TRUE} />
-    );
+    const { getByText } = render(<PageTitle title="Page Title" isBeta />);
     expect(getByText('Beta')).toBeInTheDocument();
   });
 });
