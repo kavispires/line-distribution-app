@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Common/Button renders 1`] = `
+exports[`common/Button renders 1`] = `
 <DocumentFragment>
   <button
     class="btn btn--default btn--primary  "
@@ -10,7 +10,7 @@ exports[`Common/Button renders 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Common/Button renders children as a block 1`] = `
+exports[`common/Button renders children as a block 1`] = `
 <DocumentFragment>
   <button
     class="btn btn--default btn--primary  "

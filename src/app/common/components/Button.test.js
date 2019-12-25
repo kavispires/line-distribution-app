@@ -3,15 +3,18 @@ import { render, fireEvent, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Button from './Button';
 
-describe('Common/Button', () => {
-  let NOOP;
+const SIZES = ['default', 'small', 'large'];
+const TYPES = ['primary', 'secondary', 'terciary', 'danger'];
+
+describe('common/Button', () => {
   const FALSE = false;
-  const TRUE = true;
+  const NOOP = () => {};
+  let SPY;
 
   beforeAll(() => {});
 
   beforeEach(() => {
-    NOOP = jest.fn();
+    SPY = jest.fn();
   });
 
   afterEach(cleanup);
@@ -44,13 +47,13 @@ describe('Common/Button', () => {
   });
 
   it('fires onClick prop function when clicked', () => {
-    const { getByText } = render(<Button label="Label" onClick={NOOP} />);
+    const { getByText } = render(<Button label="Label" onClick={SPY} />);
 
-    expect(NOOP).not.toHaveBeenCalled();
+    expect(SPY).not.toHaveBeenCalled();
 
     fireEvent.click(getByText('Label'));
 
-    expect(NOOP).toHaveBeenCalled();
+    expect(SPY).toHaveBeenCalled();
   });
 
   it('accepts a icon name as prop', () => {
@@ -71,7 +74,7 @@ describe('Common/Button', () => {
 
   it('adds an block class when isBlock flag is true', () => {
     const { container } = render(
-      <Button label="Label" onClick={NOOP} isBlock={TRUE} />
+      <Button label="Label" onClick={NOOP} isBlock />
     );
 
     expect(container.firstChild.classList.contains('btn--block')).toBe(true);
@@ -85,63 +88,31 @@ describe('Common/Button', () => {
     expect(container.firstChild.classList.contains('hidden')).toBe(true);
   });
 
-  it('adds btn--default when size argument is "default" or omitted', () => {
-    const { container } = render(
-      <Button label="Label" onClick={NOOP} size="default" />
-    );
+  for (let i = 0; i < SIZES.length; i++) {
+    const size = SIZES[i];
+    it(`adds btn--${size} when size argument is "${size}"`, () => {
+      const { container } = render(
+        <Button label="Label" onClick={NOOP} size={size} />
+      );
 
-    expect(container.firstChild.classList.contains('btn--default')).toBe(true);
-  });
+      expect(container.firstChild.classList.contains(`btn--${size}`)).toBe(
+        true
+      );
+    });
+  }
 
-  it('adds btn--small class when size argument is "small"', () => {
-    const { container } = render(
-      <Button label="Label" onClick={NOOP} size="small" />
-    );
+  for (let i = 0; i < TYPES.length; i++) {
+    const type = TYPES[i];
+    it(`adds btn--${type} when type argument is "${type}"`, () => {
+      const { container } = render(
+        <Button label="Label" onClick={NOOP} type={type} />
+      );
 
-    expect(container.firstChild.classList.contains('btn--small')).toBe(true);
-  });
-
-  it('adds btn--large class when size argument is "large"', () => {
-    const { container } = render(
-      <Button label="Label" onClick={NOOP} size="large" />
-    );
-
-    expect(container.firstChild.classList.contains('btn--large')).toBe(true);
-  });
-
-  it('adds btn--primary class when type argument is "primary" or omitted', () => {
-    const { container } = render(
-      <Button label="Label" onClick={NOOP} type="primary" />
-    );
-
-    expect(container.firstChild.classList.contains('btn--primary')).toBe(true);
-  });
-
-  it('adds btn--secondary class when type argument is "secondary"', () => {
-    const { container } = render(
-      <Button label="Label" onClick={NOOP} type="secondary" />
-    );
-
-    expect(container.firstChild.classList.contains('btn--secondary')).toBe(
-      true
-    );
-  });
-
-  it('adds btn--terciary class when type argument is "terciary"', () => {
-    const { container } = render(
-      <Button label="Label" onClick={NOOP} type="terciary" />
-    );
-
-    expect(container.firstChild.classList.contains('btn--terciary')).toBe(true);
-  });
-
-  it('adds btn--danger class when type argument is "danger"', () => {
-    const { container } = render(
-      <Button label="Label" onClick={NOOP} type="danger" />
-    );
-
-    expect(container.firstChild.classList.contains('btn--danger')).toBe(true);
-  });
+      expect(container.firstChild.classList.contains(`btn--${type}`)).toBe(
+        true
+      );
+    });
+  }
 
   it('accepts custom classes with the className argument"', () => {
     const { container } = render(
