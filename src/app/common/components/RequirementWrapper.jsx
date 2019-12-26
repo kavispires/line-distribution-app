@@ -33,18 +33,25 @@ class RequirementWrapper extends Component {
   }
 
   render() {
-    if (!this.state.ready) {
+    if (!this.state.ready || this.props.app.pending.INITIALIZER) {
       return <Loading message="Loading..." />;
     }
 
     // Verify Database
-    if (this.state.database && !this.props.app.databaseReady) {
+    if (this.state.database && !this.props.app.isDatabaseReady) {
       return <Loading message="Fecthing database..." />;
+    }
+
+    // Verify Auth
+    if (this.state.authentication && this.props.app.pending.RUN_LOGIN) {
+      return (
+        <Loading message="Authenticating... Please continue in the Google Popup window" />
+      );
     }
 
     // Verify Authentication
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.authentication &&
       !this.props.auth.isAuthenticated
     ) {
@@ -63,7 +70,7 @@ class RequirementWrapper extends Component {
 
     // Verify Admin
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.admin &&
       !this.props.auth.isAdmin
     ) {
@@ -81,12 +88,12 @@ class RequirementWrapper extends Component {
 
     // Verify Selected Artist
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.selectedArtist &&
       (!this.props.artists.selectedArtist ||
         !this.props.artists.selectedArtist.id)
     ) {
-      if (this.props.app.loading) {
+      if (this.props.app.isLoading) {
         return <Loading message="Fecthing artist..." />;
       }
       return (
@@ -102,7 +109,7 @@ class RequirementWrapper extends Component {
 
     // Verify Active Artist
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.activeArtist &&
       this.props.artists.activeArtist &&
       !this.props.artists.activeArtist.id
@@ -121,7 +128,7 @@ class RequirementWrapper extends Component {
 
     // Verify Active Active
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.activeUnit &&
       this.props.distribute.activeUnit &&
       !this.props.distribute.activeUnit.id
@@ -139,7 +146,7 @@ class RequirementWrapper extends Component {
     }
 
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.activeSong &&
       this.props.distribute.activeSong &&
       !this.props.distribute.activeSong.id

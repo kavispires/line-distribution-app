@@ -105,7 +105,7 @@ class Idols extends Component {
     // Run members filters as soon as the api return the list of members
     if (
       prevProps.db.members.length !== this.props.db.members.length ||
-      (prevProps.app.loading === true && this.props.app.loading === false)
+      (prevProps.app.isLoading === true && this.props.app.isLoading === false)
     ) {
       this.updateFilters({ values: {} }, true);
     }

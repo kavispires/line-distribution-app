@@ -20,7 +20,6 @@ function* clearPending(actionType) {
 
   if (Object.keys(localPendingCache).length === 0) {
     yield put({ type: types.SET_PENDING, payload: localPendingCache });
-    yield put({ type: types.SET_LOADING, payload: false });
   }
 }
 
@@ -35,10 +34,8 @@ function* pending({ actionType }) {
 
   if (Object.keys(localPendingCache).length > 0) {
     yield put({ type: types.SET_PENDING, payload: localPendingCache });
-    yield put({ type: types.SET_LOADING, payload: true });
   } else {
     yield put({ type: types.SET_PENDING, payload: localPendingCache });
-    yield put({ type: types.SET_LOADING, payload: false });
   }
 }
 

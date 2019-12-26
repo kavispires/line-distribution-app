@@ -22,7 +22,7 @@ class App extends Component {
           logout={this.props.logout}
           pending={this.props.app.pending}
         />
-        {this.props.app.loading && <LoadingBar />}
+        {this.props.app.isLoading && <LoadingBar />}
       </Fragment>
     );
   }
