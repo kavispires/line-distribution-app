@@ -29,7 +29,12 @@ const Icon = ({ type, size, color, inline, title }) => {
       height={`${size}px`}
       viewBox="0 0 100 100"
     >
-      <path style={styles.path} d={ICONS[type]} className={`icon-${type}`}>
+      <path
+        style={styles.path}
+        d={ICONS[type]}
+        className={`icon-${type}`}
+        data-testid="icon-path"
+      >
         <title>{title}</title>
       </path>
     </svg>
@@ -37,9 +42,9 @@ const Icon = ({ type, size, color, inline, title }) => {
 };
 
 Icon.propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.oneOf(Object.keys(ICONS)),
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  color: PropTypes.string,
+  color: PropTypes.oneOf(Object.keys(constants.DEFAULT_COLORS)),
   inline: PropTypes.bool,
   title: PropTypes.string,
 };

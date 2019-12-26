@@ -8,8 +8,6 @@ describe('common/FavoriteIcon', () => {
   const NOOP = () => {};
   let SPY;
 
-  beforeAll(() => {});
-
   beforeEach(() => {
     SPY = jest.fn();
   });
