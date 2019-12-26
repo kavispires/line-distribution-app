@@ -47,14 +47,17 @@ const Tabs = ({ tabs, active, action, icons, ...props }) => {
 Tabs.propTypes = {
   action: PropTypes.func.isRequired,
   active: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  children: PropTypes.any.isRequired,
-  icons: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  icons: PropTypes.objectOf([PropTypes.elementType, PropTypes.object]),
   tabs: PropTypes.array.isRequired,
 };
 
 Tabs.defaultProps = {
   active: null,
-  icons: [],
+  icons: {},
 };
 
 export default Tabs;
