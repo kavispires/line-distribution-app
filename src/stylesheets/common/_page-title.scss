@@ -16,4 +16,12 @@
       background-color: get-color(orange);
     }
   }
+
+  &--warning {
+    &::before {
+      content: ' ';
+      border: get-unit(1) solid get-color(orange);
+      margin-right: get-unit(3);
+    }
+  }
 }

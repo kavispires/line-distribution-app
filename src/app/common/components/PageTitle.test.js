@@ -20,4 +20,11 @@ describe('common/PageTitle', () => {
     const { getByText } = render(<PageTitle title="Page Title" isBeta />);
     expect(getByText('Beta')).toBeInTheDocument();
   });
+
+  it('renders the warning bar', () => {
+    const { container } = render(<PageTitle title="Page Title" isWarning />);
+    expect(container.firstChild.classList.contains('page-title--warning')).toBe(
+      true
+    );
+  });
 });

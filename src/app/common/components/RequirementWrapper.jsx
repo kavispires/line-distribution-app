@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import common components
-import { Icon, Loading } from '..';
+import { Icon, Loading, PageTitle } from '..';
 // Import images
 import logo from '../../../images/logo-neg.svg';
 
@@ -98,7 +98,7 @@ class RequirementWrapper extends Component {
       }
       return (
         <main className="container container--artist">
-          <h1>Artist Page</h1>
+          <PageTitle title="Artist Page" isWarning />
           <p>
             No artist has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group.
@@ -116,7 +116,7 @@ class RequirementWrapper extends Component {
     ) {
       return (
         <main className="container container--artist">
-          <h1>Artist Required</h1>
+          <PageTitle title="Artist Required" isWarning />
           <p>
             No artist has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group and then
@@ -135,7 +135,7 @@ class RequirementWrapper extends Component {
     ) {
       return (
         <main className="container container--artist">
-          <h1>Active Unit Required</h1>
+          <PageTitle title="Active Unit Required" isWarning />
           <p>
             No unit has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group and then
@@ -153,7 +153,7 @@ class RequirementWrapper extends Component {
     ) {
       return (
         <main className="container container--artist">
-          <h1>Active Song Required</h1>
+          <PageTitle title="Active Song Required" isWarning />
           <p>
             No song has been selected. Go to the{' '}
             <Link to="/songs">Songs Page</Link> and select a song.
@@ -162,7 +162,7 @@ class RequirementWrapper extends Component {
       );
     }
 
-    return <div className="wrapper">{this.props.children}</div>;
+    return <Fragment>{this.props.children}</Fragment>;
   }
 }
 

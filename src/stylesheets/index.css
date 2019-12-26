@@ -83,6 +83,7 @@ p {
   width: 100%;
   height: 100%;
   padding: 24px;
+  overflow-y: auto;
 }
 .container:first-child {
   padding-top: 0;
@@ -584,6 +585,12 @@ p {
   background-color: #fea245;
 }
 
+.page-title--warning::before {
+  content: ' ';
+  border: 3px solid #fea245;
+  margin-right: 12px;
+}
+
 .pill {
   display: inline-block;
   margin-right: 6px;
@@ -994,12 +1001,6 @@ input:checked + .slider:before {
 
 .container--requirement-wrapper {
   background: linear-gradient(white, #f0f1f1);
-}
-
-.wrapper {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
 }
 
 .requirement-wrapper__container {
