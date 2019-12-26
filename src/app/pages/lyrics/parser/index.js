@@ -353,7 +353,7 @@ const parseLyrics = (input, members, unitId) => {
   // Build member color bank if it's a new unitId
   if (unitId !== latestUnitId) {
     Object.values(members).forEach(member => {
-      COLOR_BANK[member.name.toUpperCase()] = member.colorId || 'col000000';
+      COLOR_BANK[member.name.toUpperCase()] = member.color || 'col000000';
     });
     latestUnitId = unitId;
   }

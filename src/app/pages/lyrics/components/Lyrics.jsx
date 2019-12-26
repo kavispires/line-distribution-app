@@ -51,8 +51,7 @@ class Lyrics extends Component {
             <ul className="lyrics__members-list">
               {Object.values(activeUnit.members).map(member => (
                 <li
-                  className={`pill background-color-${member.color.number ||
-                    0}`}
+                  className={`pill background-color-${member.color || 0}`}
                   key={member.id}
                 >
                   {member.name.toUpperCase()}{' '}
