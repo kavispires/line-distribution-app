@@ -257,12 +257,11 @@ const serializers = {
       id: data.id || id,
       type: 'user',
       attributes: {
-        email: data.email,
         favoriteArtists: data.favoriteArtists || {}, // Oject(Reference(Artist):Boolean)
         favoriteMembers: data.favoriteMembers || {}, // Oject(Reference(Member):Boolean)
         biases: data.biases || {}, // Object(Reference(Artist):Reference(Member))
         isAdmin: Boolean(data.isAdmin),
-        latestUnits: data.latesUnits || [],
+        latestUnits: data.latesUnits || {},
         session: data.session || {},
         displayName: additionalData.displayName || null, // merged from auth
         photoURL: additionalData.photoURL || null, // merged from auth
