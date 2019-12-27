@@ -30,17 +30,22 @@ const NATIONALITIES = {
 
 const POSITIONS = {
   MAIN_VOCALIST: 'Main Vocalist',
-  LEAD_VOCALIST: 'Lead Vocalist',
-  VOCALIST: 'Vocalist',
   MAIN_RAPPER: 'Main Rapper',
-  LEAD_RAPPER: 'Lead Rapper',
-  RAPPER: 'Rapper',
   MAIN_DANCER: 'Main Dancer',
+  LEAD_VOCALIST: 'Lead Vocalist',
+  LEAD_RAPPER: 'Lead Rapper',
   LEAD_DANCER: 'Lead Dancer',
+  VOCALIST: 'Vocalist',
+  RAPPER: 'Rapper',
   DANCER: 'Dancer',
   LEADER: 'Leader',
   CENTER: 'Center',
+  FACE_OF_THE_GROUP: 'Face of the Group',
   VISUAL: 'Visual',
+  MAKNAE: 'Maknae',
+  ALL: 'All',
+  NONE: 'None',
+  UNKNOWN: 'Unknown Position',
 };
 
 const TAGS = {

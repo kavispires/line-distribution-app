@@ -80,26 +80,6 @@ const POSITIONS_LIST_ICON = {
   UNKNOWN: 'unknown',
 };
 
-const POSITIONS_DISPLAY_NAME = {
-  MAIN_VOCALIST: 'Main Vocalist',
-  MAIN_RAPPER: 'Main Rapper',
-  MAIN_DANCER: 'Main Dancer',
-  LEAD_VOCALIST: 'Lead Vocalist',
-  LEAD_RAPPER: 'Lead Rapper',
-  LEAD_DANCER: 'Lead Dancer',
-  VOCALIST: 'Vocalist',
-  RAPPER: 'Rapper',
-  DANCER: 'Dancer',
-  LEADER: 'Leader',
-  CENTER: 'Center',
-  FACE_OF_THE_GROUP: 'Face of the Group',
-  VISUAL: 'Visual',
-  MAKNAE: 'Maknae',
-  ALL: 'All',
-  NONE: 'None',
-  UNKNOWN: 'Unknown Position',
-};
-
 const GENRES_DB = {
   'C-Pop': 'CPOP',
   'J-Pop': 'JPOP',
@@ -151,7 +131,6 @@ export default {
   FLAGS_LIST_ICON,
   GENRES_DB,
   GROUPS_PICTURE_URL,
-  POSITIONS_DISPLAY_NAME,
   POSITIONS_LIST,
   POSITIONS_LIST_ICON,
   PROFILE_PICTURE_URL,

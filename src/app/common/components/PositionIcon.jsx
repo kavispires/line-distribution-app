@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // Import utilities
 import constants from '../../../utils/constants';
+import enums from '../../../utils/readable-enums';
 import { bem } from '../../../utils';
 
 const PositionIcon = ({ position, displayName, className }) => {
@@ -10,7 +11,7 @@ const PositionIcon = ({ position, displayName, className }) => {
   const baseClasses = bem('position-icon', [pos]);
   const name =
     typeof displayName === 'boolean'
-      ? constants.POSITIONS_DISPLAY_NAME[position] || position
+      ? enums.POSITIONS[position] || position
       : displayName;
 
   const iconComponent = (

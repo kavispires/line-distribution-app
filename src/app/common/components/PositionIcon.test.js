@@ -4,6 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import PositionIcon from './PositionIcon';
 
 import constants from '../../../utils/constants';
+import enums from '../../../utils/readable-enums';
 
 describe('common/PositionIcon', () => {
   afterEach(cleanup);
@@ -46,7 +47,7 @@ describe('common/PositionIcon', () => {
       expect(classListEl.includes('position-icon')).toBe(true);
       expect(classListEl.includes(`position-icon--${classString}`)).toBe(true);
 
-      const text = getByText(constants.POSITIONS_DISPLAY_NAME[position]);
+      const text = getByText(enums.POSITIONS[position]);
       expect(text).toBeInTheDocument();
     });
   }
