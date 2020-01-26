@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/Artists/ArtistsTable renders 1`] = `
+<DocumentFragment>
+  <p
+    class="italic"
+  >
+    Displaying 0 artists...
+  </p>
+  <table
+    class="table"
+  >
+    <thead>
+      <tr>
+        <th
+          class="artists-table__favorite-col"
+        >
+          Favorite
+        </th>
+        <th>
+          Name
+        </th>
+        <th>
+          Agency
+        </th>
+        <th>
+          Genre
+        </th>
+        <th>
+          Units
+        </th>
+        <th>
+          Members
+        </th>
+        <th>
+          Disbanded
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          colspan="7"
+        >
+          No artists available
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;
