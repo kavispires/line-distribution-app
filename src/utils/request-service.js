@@ -13,8 +13,6 @@ const dataCache = {
   typeahead: {},
 };
 
-// const wait = (ms = 1000) => new Promise((r, j) => setTimeout(r, ms));
-
 /**
  * Class to determine state.
  */
@@ -65,6 +63,14 @@ class StatefulService {
   }
 
   /**
+   * Determines if request service is loading or reloading.
+   * @returns {bool}
+   */
+  get isPending() {
+    return this.isLoading || this.isReloading;
+  }
+
+  /**
    * Error message when request service has failed.
    * @returns {string}
    */
@@ -77,7 +83,7 @@ class StatefulService {
 
   /**
    * Sets error state, message, and toaster.
-   * @param {string }err the error message thrown by the api
+   * @param {string} err the error message thrown by the api
    * @returns {undefined}
    */
   set error(err) {
@@ -87,6 +93,24 @@ class StatefulService {
     }
     this._errorMessage = err.message || err;
     toastr.error(this.errorMessage);
+  }
+
+  /**
+   * Sets status.
+   * @param {string} state
+   * @param {object} componentContext
+   * @returns {undefined}
+   */
+  setState(state, componentContext) {
+    if (typeof state !== 'symbol') {
+      this.error(`State given is not allowed: ${state}`);
+    }
+
+    this._status = state;
+
+    if (componentContext) {
+      componentContext.forceUpdate();
+    }
   }
 
   /**
@@ -108,7 +132,7 @@ class StatefulService {
  * @returns {undefined}
  */
 const normalize = (response, responseType) => {
-  const { data, meta } = response;
+  const { data = response, meta } = response;
   // Normalize meta
   if (meta) {
     if (meta.typeahead) {
@@ -130,7 +154,7 @@ const normalize = (response, responseType) => {
     };
   } else if (Array.isArray(data)) {
     data.forEach(entry => {
-      normalize(entry);
+      normalize(entry, responseType);
     });
   } else {
     throw new Error('Data is not JSON;API compliant.');
@@ -144,7 +168,7 @@ const normalize = (response, responseType) => {
  * @param api the API class that makes requests
  * @param ignoreJSONAPI flag indication if JSON;API compliance should be ignored
  */
-export default class RequestService extends StatefulService {
+export class RequestService extends StatefulService {
   constructor(type, path, api, ignoreJSONAPI = false) {
     super();
     this._type = type;
@@ -154,6 +178,7 @@ export default class RequestService extends StatefulService {
     this._lastFetched = 0;
     this._refresh = true;
     this._ignoreJSONAPI = ignoreJSONAPI;
+    this.bola = 0;
 
     if (!type) {
       throw new Error(
@@ -198,9 +223,12 @@ export default class RequestService extends StatefulService {
    */
   async read(id, componentContext) {
     // If it is already loading, don't run it again
-    if (this.isLoading) return;
+    if (this.isPending) return;
 
-    this._status = this._data ? states.RELOADING : states.LOADING;
+    this.setState(
+      this._data ? states.RELOADING : states.LOADING,
+      componentContext
+    );
 
     try {
       let response;
@@ -245,9 +273,12 @@ export default class RequestService extends StatefulService {
    */
   async create(body, componentContext) {
     // If it is already loading, don't run it again
-    if (this.isLoading) return;
+    if (this.isPending) return;
 
-    this._status = this._data ? states.RELOADING : states.LOADING;
+    this.setState(
+      this._data ? states.RELOADING : states.LOADING,
+      componentContext
+    );
 
     // Check if body is present
     if (!body) {
@@ -302,9 +333,12 @@ export default class RequestService extends StatefulService {
    */
   async update(id, body, componentContext) {
     // If it is already loading, don't run it again
-    if (this.isLoading) return;
+    if (this.isPending) return;
 
-    this._status = this._data ? states.RELOADING : states.LOADING;
+    this.setState(
+      this._data ? states.RELOADING : states.LOADING,
+      componentContext
+    );
 
     // Check if body is present
     if (!id) {
@@ -361,9 +395,12 @@ export default class RequestService extends StatefulService {
    */
   async destroy(id, componentContext) {
     // If it is already loading, don't run it again
-    if (this.isLoading) return;
+    if (this.isPending) return;
 
-    this._status = this._data ? states.RELOADING : states.LOADING;
+    this.setState(
+      this._data ? states.RELOADING : states.LOADING,
+      componentContext
+    );
 
     // Check if body is present
     if (!id) {
@@ -406,3 +443,124 @@ export default class RequestService extends StatefulService {
     return dataCache.typeahead[this._type] || [];
   }
 }
+
+/**
+ * Class to perform network requests for the user.
+ * @param type the data type defined in the API
+ * @param path the API path root to make requests
+ * @param api the API class that makes requests
+ * @param ignoreJSONAPI flag indication if JSON;API compliance should be ignored
+ */
+export class UserRequestService extends RequestService {
+  constructor(type, path, api, ignoreJSONAPI = false) {
+    super(type, path, api, ignoreJSONAPI);
+  }
+
+  async init(componentContext) {
+    // If it is already loading, don't run it again
+    if (this.isPending) return;
+
+    this.setState(
+      this._data ? states.RELOADING : states.LOADING,
+      componentContext
+    );
+
+    try {
+      this.clearError();
+
+      const response = await this._api.init();
+      if (response.user) {
+        normalize(response.user);
+        this._refresh = false;
+        this._lastFetched = Date.now();
+        this._status = states.SUCCESS;
+
+        this._data = dataCache[this._type][response.user.data.id];
+
+        toastr.success(
+          'Welcome Back!',
+          `You are logged in as ${this.data.displayName}`
+        );
+      } else {
+        this._status = states.NO_STATE;
+      }
+    } catch (err) {
+      this.error = err;
+      this._data = null;
+    } finally {
+      if (componentContext) {
+        componentContext.forceUpdate();
+      }
+    }
+  }
+
+  async login(componentContext) {
+    // If it is already loading, don't run it again
+    if (this.isPending) return;
+
+    this.setState(
+      this._data ? states.RELOADING : states.LOADING,
+      componentContext
+    );
+
+    try {
+      this.clearError();
+
+      const response = await this._api.login();
+      normalize(response);
+
+      console.log(response.data);
+
+      this._refresh = false;
+      this._lastFetched = Date.now();
+      this._status = states.SUCCESS;
+
+      toastr.success(
+        'Hello!',
+        `You are logged in as ${response.data.displayName}`
+      );
+
+      this._data = dataCache[this._type][response.data.id];
+    } catch (err) {
+      this.error = err;
+      this._data = null;
+    } finally {
+      if (componentContext) {
+        componentContext.forceUpdate();
+      }
+    }
+  }
+
+  async logout(componentContext) {
+    // If it is already loading, don't run it again
+    if (this.isPending) return;
+
+    this.setState(
+      this._data ? states.RELOADING : states.LOADING,
+      componentContext
+    );
+
+    try {
+      this.clearError();
+
+      const response = await this._api.logout();
+
+      this._refresh = false;
+      this._lastFetched = Date.now();
+      this._status = states.SUCCESS;
+
+      toastr.success('You were logged out successfully');
+
+      this._data = dataCache[this._type][response.data.id];
+    } catch (err) {
+      this.error = err;
+      this._data = null;
+    } finally {
+      if (componentContext) {
+        componentContext.forceUpdate();
+      }
+    }
+  }
+}
+
+export default RequestService;
