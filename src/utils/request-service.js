@@ -4,6 +4,7 @@ import { toastr } from 'react-redux-toastr';
 const states = {
   NO_STATE: Symbol('NO_STATE'),
   LOADING: Symbol('LOADING'),
+  RELOADING: Symbol('RELOADING'),
   SUCCESS: Symbol('SUCCESS'),
   FAIL: Symbol('FAIL'),
 };
@@ -15,37 +16,12 @@ const dataCache = {
 // const wait = (ms = 1000) => new Promise((r, j) => setTimeout(r, ms));
 
 /**
- * Class to perform network requests.
- * @param type the data type defined in the API
- * @param path the API path root to make requests
- * @param api the API class that makes requests
- * @returns {bool}
+ * Class to determine state.
  */
-export default class RequestService {
-  constructor(type, path, api, ignoreJSONAPI = false) {
-    this._type = type;
-    this._path = path;
-    this._api = api;
+class StatefulService {
+  constructor() {
     this._status = states.NO_STATE;
-    this._data = null;
     this._errorMessage = null;
-    this._lastFetched = 0;
-    this._refresh = true;
-    this._ignoreJSONAPI = ignoreJSONAPI;
-
-    if (!type) {
-      throw new Error(
-        'The data type defined in the API is required in the constructor'
-      );
-    }
-
-    if (!path) {
-      throw new Error('The API path root is required in the constructor');
-    }
-
-    if (!api) {
-      throw new Error('The API service is required in the constructor');
-    }
   }
 
   /**
@@ -81,15 +57,11 @@ export default class RequestService {
   }
 
   /**
-   * Determines if request service data should to be refetched.
+   * Determines if request service is reloading.
    * @returns {bool}
    */
-  get isStale() {
-    return Boolean(
-      this.isNoState ||
-        this._refresh ||
-        Date.now() - this._lastFetched > 1800000
-    );
+  get isReloading() {
+    return this._status === states.RELOADING;
   }
 
   /**
@@ -101,14 +73,6 @@ export default class RequestService {
       return this._errorMessage || 'An unkown error has occured';
     }
     return '';
-  }
-
-  /**
-   * Data to be used in the app.
-   * @returns {string}
-   */
-  get data() {
-    return this._data;
   }
 
   /**
@@ -132,6 +96,99 @@ export default class RequestService {
   clearError() {
     this._errorMessage = null;
   }
+}
+
+/**
+ * Parses API data and stores it in dataCache.
+ * @param data the data response
+ * @param relationshipsa the list of relationships from the response
+ * @param included the included relationship data from response
+ * @param meta the meta object
+ * @param type the type of the RequestService
+ * @returns {undefined}
+ */
+const normalize = (response, responseType) => {
+  const { data, meta } = response;
+  // Normalize meta
+  if (meta) {
+    if (meta.typeahead) {
+      dataCache.typeahead[responseType] = meta.typeahead;
+    }
+  }
+
+  const { id, type, attributes } = data;
+
+  // Normalize data: single entry or array
+  if (id && type && attributes) {
+    if (dataCache[type] === undefined) {
+      dataCache[type] = {};
+    }
+
+    dataCache[type][id] = {
+      id,
+      ...attributes,
+    };
+  } else if (Array.isArray(data)) {
+    data.forEach(entry => {
+      normalize(entry);
+    });
+  } else {
+    throw new Error('Data is not JSON;API compliant.');
+  }
+};
+
+/**
+ * Class to perform network requests.
+ * @param type the data type defined in the API
+ * @param path the API path root to make requests
+ * @param api the API class that makes requests
+ * @param ignoreJSONAPI flag indication if JSON;API compliance should be ignored
+ */
+export default class RequestService extends StatefulService {
+  constructor(type, path, api, ignoreJSONAPI = false) {
+    super();
+    this._type = type;
+    this._path = path;
+    this._api = api;
+    this._data = null;
+    this._lastFetched = 0;
+    this._refresh = true;
+    this._ignoreJSONAPI = ignoreJSONAPI;
+
+    if (!type) {
+      throw new Error(
+        'The data type defined in the API is required in the constructor'
+      );
+    }
+
+    if (!path) {
+      throw new Error('The API path root is required in the constructor');
+    }
+
+    if (!api) {
+      throw new Error('The API service is required in the constructor');
+    }
+  }
+
+  /**
+   * Determines if request service data should to be refetched.
+   * @returns {bool}
+   */
+  get isStale() {
+    return Boolean(
+      this.isNoState ||
+        this._refresh ||
+        Date.now() - this._lastFetched > 1800000
+    );
+  }
+
+  /**
+   * Data to be used in the app.
+   * @returns {string}
+   */
+  get data() {
+    return this._data;
+  }
 
   /**
    * Fetches data from the api if data is stale or from cached data.
@@ -143,7 +200,7 @@ export default class RequestService {
     // If it is already loading, don't run it again
     if (this.isLoading) return;
 
-    this._status = states.LOADING;
+    this._status = this._data ? states.RELOADING : states.LOADING;
 
     try {
       let response;
@@ -190,7 +247,7 @@ export default class RequestService {
     // If it is already loading, don't run it again
     if (this.isLoading) return;
 
-    this._status = states.LOADING;
+    this._status = this._data ? states.RELOADING : states.LOADING;
 
     // Check if body is present
     if (!body) {
@@ -247,7 +304,7 @@ export default class RequestService {
     // If it is already loading, don't run it again
     if (this.isLoading) return;
 
-    this._status = states.LOADING;
+    this._status = this._data ? states.RELOADING : states.LOADING;
 
     // Check if body is present
     if (!id) {
@@ -306,7 +363,7 @@ export default class RequestService {
     // If it is already loading, don't run it again
     if (this.isLoading) return;
 
-    this._status = states.LOADING;
+    this._status = this._data ? states.RELOADING : states.LOADING;
 
     // Check if body is present
     if (!id) {
@@ -349,42 +406,3 @@ export default class RequestService {
     return dataCache.typeahead[this._type] || [];
   }
 }
-
-/**
- * Parses API data and stores it in dataCache.
- * @param data the data response
- * @param relationshipsa the list of relationships from the response
- * @param included the included relationship data from response
- * @param meta the meta object
- * @param type the type of the RequestService
- * @returns {undefined}
- */
-const normalize = (response, responseType) => {
-  const { data, meta } = response;
-  // Normalize meta
-  if (meta) {
-    if (meta.typeahead) {
-      dataCache.typeahead[responseType] = meta.typeahead;
-    }
-  }
-
-  const { id, type, attributes } = data;
-
-  // Normalize data: single entry or array
-  if (id && type && attributes) {
-    if (dataCache[type] === undefined) {
-      dataCache[type] = {};
-    }
-
-    dataCache[type][id] = {
-      id,
-      ...attributes,
-    };
-  } else if (Array.isArray(data)) {
-    data.forEach(entry => {
-      normalize(entry);
-    });
-  } else {
-    throw new Error('Data is not JSON;API compliant.');
-  }
-};
