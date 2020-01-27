@@ -7,40 +7,43 @@ import LoadingBar from './LoadingBar';
 
 class App extends Component {
   componentDidMount() {
-    this.props.init();
+    this.props.db.user.init(this);
   }
 
   render() {
+    const { db, distribute, history, location } = this.props;
+
+    const isPending = Object.values(db).some(item => item?.isPending);
+
     return (
       <Fragment>
         <Menu
-          activeUnit={this.props.distribute.activeUnit}
-          auth={this.props.auth}
-          history={this.props.history}
-          location={this.props.location}
-          login={this.props.login}
-          logout={this.props.logout}
-          pending={this.props.app.pending}
+          activeUnit={distribute.activeUnit}
+          history={history}
+          location={location}
+          user={db.user}
+          login={db.user.login}
+          logout={db.user.logout}
         />
-        {this.props.app.isLoading && <LoadingBar />}
+        {isPending && <LoadingBar />}
       </Fragment>
     );
   }
 }
 
 App.propTypes = {
-  app: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
+  db: PropTypes.object.isRequired,
   distribute: PropTypes.object,
   history: PropTypes.object.isRequired,
-  init: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
+  login: PropTypes.func,
+  logout: PropTypes.func,
 };
 
 App.defaultProps = {
   distribute: { activeUnit: {} },
+  login: () => {},
+  logout: () => {},
 };
 
 export default App;

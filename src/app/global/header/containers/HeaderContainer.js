@@ -3,24 +3,11 @@ import { withRouter } from 'react-router-dom';
 
 import Header from '../components/Header';
 
-import { appOperations } from '../../../../reducers/app';
-import { authOperations } from '../../../../reducers/auth';
-
 const mapStateToProps = state => ({
-  app: state.app,
-  artists: state.artists,
-  auth: state.auth,
+  db: state.db,
   distribute: state.distribute,
 });
 
-const mapDispatchToProps = {
-  ...appOperations,
-  ...authOperations,
-};
+const mapDispatchToProps = {};
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Header)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

@@ -10,33 +10,17 @@ import { Icon, LoadingIcon } from '../../../common';
 import logo from '../../../../images/logo.svg';
 import userPlaceholder from '../../../../images/user-placeholder.svg';
 
-const Menu = ({
-  activeUnit,
-  auth,
-  history,
-  location,
-  login,
-  logout,
-  pending,
-}) => {
-  const handleLogoClick = () => {
-    history.push('/');
-  };
-
+const Menu = ({ activeUnit, history, location, login, logout, user }) => {
   const { pathname } = location;
 
   // Hide parts of the menu if user is not authenticaded
-  const authHideClass = auth.isAuthenticated ? '' : 'hidden';
+  const authHideClass = user.isSuccessful ? '' : 'hidden';
 
   // Hide parts of the menu if user is not an administrator
-  const adminHideClass = auth.isAdmin ? '' : 'hidden';
+  const adminHideClass = user.data?.isAdmin ? '' : 'hidden';
 
   // Hide parts of the menu if user hasn't selected an active unit
   const activeUnitHideClass = activeUnit.id ? '' : 'hidden';
-
-  // Sign-in pending
-  const isPending =
-    pending.INITIALIZER || pending.RUN_LOGIN || pending.RUN_AUTH;
 
   return (
     <header className="header">
@@ -45,7 +29,7 @@ const Menu = ({
           className="header-nav__logo"
           src={logo}
           alt="Logo"
-          onClick={() => handleLogoClick()}
+          onClick={() => history.push('/')}
         />
         <nav className={`header-nav__links ${authHideClass}`}>
           <Link
@@ -104,15 +88,15 @@ const Menu = ({
           </div>
         </nav>
       </div>
-      {auth.isAuthenticated ? (
+      {user.isSuccessful ? (
         <div className="header-user">
           <button className="header-user__nav">
             <img
               className="header-user__photo"
-              src={auth.user.photoURL || userPlaceholder}
+              src={user.data?.photoURL || userPlaceholder}
               alt="user"
             />
-            {auth.user.displayName}
+            {user.data.displayName}
           </button>
           <div className="header-user__dropdown">
             <Link to="/user?tab=1">My Artists</Link>
@@ -127,10 +111,10 @@ const Menu = ({
         <div className="header-user">
           <button
             className="btn btn-hollow header-user__btn"
-            onClick={login}
-            disabled={isPending}
+            onClick={() => login.login()}
+            disabled={user.isPending}
           >
-            {isPending ? (
+            {user.isPending ? (
               <LoadingIcon size="tiny" inline />
             ) : (
               <Fragment>
@@ -146,21 +130,17 @@ const Menu = ({
 
 Menu.propTypes = {
   activeUnit: PropTypes.object,
-  auth: PropTypes.object,
   history: PropTypes.object,
   location: PropTypes.object,
-  login: PropTypes.func,
-  logout: PropTypes.func,
-  pending: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 Menu.defaultProps = {
   activeUnit: {},
-  auth: {},
   history: {},
   location: {},
-  login: () => {},
-  logout: () => {},
 };
 
 export default Menu;

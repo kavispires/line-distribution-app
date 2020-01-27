@@ -1,22 +1,20 @@
 import types from './types';
 
+import {
+  RequestService,
+  UserRequestService,
+} from '../../utils/request-service';
+import API from '../../api2';
+
 const initialState = {
-  artists: [],
-  colors: {},
-  members: [],
-  songs: [],
-  // Indicates when bulk get requests should be performed
-  reload: {
-    artists: true,
-    colors: true,
-    members: true,
-    songs: true,
-  },
-  typeahead: {
-    artists: [],
-    members: [],
-    units: [],
-  },
+  artists: new RequestService('artist', '/artists', API),
+  colors: new RequestService('color', '/colors', API),
+  distributions: new RequestService('distribution', '/distributions', API),
+  members: new RequestService('member', '/members', API),
+  songs: new RequestService('song', '/songs', API),
+  units: new RequestService('unit', '/units', API),
+  user: new UserRequestService('user', '/users', API),
+  test: new RequestService('artist', '/artists', API),
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -66,4 +64,8 @@ export default function reducer(prevState = initialState, action) {
       return prevState;
   }
   return newState;
+}
+
+function determineIsLoading(state) {
+  return Object.values(state).some(item => item.isPending);
 }
