@@ -55,10 +55,10 @@ class API {
    */
   get state() {
     return {
-      admin: this._authenticated ? this._admin : false,
-      authenticated: this._authenticated,
-      loaded: this._loaded,
-      user: this._authenticated ? this._user : {},
+      isAdmin: this._authenticated ? this._admin : false,
+      isAuthenticated: this._authenticated,
+      isLoaded: this._loaded,
+      user: this._authenticated ? this._user : null,
     };
   }
 
@@ -96,9 +96,7 @@ class API {
     this.print('Running auth...');
 
     return new Promise(async resolve => {
-      if (!this._loaded) {
-        await utils.wait(WAIT_AUTH_TIME);
-      }
+      await utils.wait(WAIT_AUTH_TIME);
 
       const { user } = userSession;
 
@@ -110,7 +108,7 @@ class API {
           photoURL: user.photoURL,
         };
 
-        let userResponse = {};
+        let userResponse = null;
 
         try {
           userResponse = await this.get(`/users/${user.uid}`);
@@ -132,6 +130,14 @@ class API {
     this.print('Running login...');
 
     return new Promise(async (resolve, reject) => {
+      if (!this._loaded) {
+        try {
+          await this.init();
+        } catch (err) {
+          return reject(Error(err));
+        }
+      }
+
       let result;
 
       try {
@@ -176,6 +182,14 @@ class API {
     this.print('Running logout...');
 
     return new Promise(async (resolve, reject) => {
+      if (!this._loaded) {
+        try {
+          await this.init();
+        } catch (err) {
+          return reject(Error(err));
+        }
+      }
+
       try {
         await fb.auth().signOut();
         this._authenticated = false;
@@ -256,6 +270,22 @@ class API {
        * /user/<id>
        */
       let result = null;
+
+      if (!this._loaded) {
+        try {
+          await this.init();
+        } catch (err) {
+          return reject(Error(err));
+        }
+      }
+
+      if (!this._authenticated) {
+        try {
+          await this.login();
+        } catch (err) {
+          return reject(Error(err));
+        }
+      }
 
       if (!this._loaded || !this._authenticated) {
         await utils.wait(WAIT_DB_TIME);
