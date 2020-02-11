@@ -5,7 +5,7 @@ import { ScrollSync, ScrollSyncPane } from 'react-scroll-sync';
 // Import lyrics components
 import LyricsOutput from './LyricsOutput';
 // Import common components
-import { Loading, RequirementWrapper } from '../../../common';
+import { Loading, PageTitle, RequirementWrapper } from '../../../common';
 // Import lyric parser
 import parseLyrics from '../parser';
 
@@ -46,13 +46,12 @@ class Lyrics extends Component {
     return (
       <RequirementWrapper requirements={['activeUnit']}>
         <main className="container container--lyrics">
-          <h1>Lyrics</h1>
+          <PageTitle title="Lyrics" />
           {activeUnit.members ? (
             <ul className="lyrics__members-list">
               {Object.values(activeUnit.members).map(member => (
                 <li
-                  className={`pill background-color-${member.color.number ||
-                    0}`}
+                  className={`pill background-color-${member.color || 0}`}
                   key={member.id}
                 >
                   {member.name.toUpperCase()}{' '}

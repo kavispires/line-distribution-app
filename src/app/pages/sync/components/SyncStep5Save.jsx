@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Import common components
 import { Icon, LoadingWrapper } from '../../../common';
 // Import constants
-import constants from '../../../../utils/constants';
+import enums from '../../../../utils/readable-enums';
 
 const SyncStep5Save = ({ info, pending, saveSync, unlockSpecificStep }) => (
   <div className="sync__step sync__step--5">
@@ -23,7 +23,7 @@ const SyncStep5Save = ({ info, pending, saveSync, unlockSpecificStep }) => (
       </li>
       <li className="sync__verify__info-item">Group Size: {info.groupSize}</li>
       <li className="sync__verify__info-item">
-        Group Gender: {constants.ARTISTS_GENDERS[info.gender]}
+        Group Gender: {enums.GENDERS[info.gender]}
       </li>
       <li className="sync__verify__info-item">Video Id: {info.videoId}</li>
       <li className="sync__verify__info-item">

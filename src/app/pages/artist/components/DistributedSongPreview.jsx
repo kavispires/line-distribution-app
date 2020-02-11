@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 
 const DistributedSongPreview = ({ rates, members }) => (
   <div className="distribution-rates-preview__container">
-    {Object.keys(members).map(memberId => {
+    {members.map(member => {
+      const allRate = rates.ALL || 0;
+      const noneRate = rates.NONE || 0;
       const percentage =
-        (100 * rates[memberId]) / (rates.total - rates.ALL - rates.NONE);
+        (100 * rates[member.id]) / (rates.total - allRate - noneRate);
 
       const spanWidth = {
         width: `${percentage}%`,
@@ -13,10 +15,8 @@ const DistributedSongPreview = ({ rates, members }) => (
 
       return (
         <span
-          key={`bar-${memberId}-${percentage}`}
-          className={`distribution-rates-preview__bar background-color-${
-            members[memberId].color.number
-          }`}
+          key={`bar-${member.id}-${percentage}`}
+          className={`distribution-rates-preview__bar background-color-${member.color}`}
           style={spanWidth}
         >
           {percentage.toFixed(1)}%
@@ -28,7 +28,7 @@ const DistributedSongPreview = ({ rates, members }) => (
 
 DistributedSongPreview.propTypes = {
   rates: PropTypes.object.isRequired,
-  members: PropTypes.object.isRequired,
+  members: PropTypes.array.isRequired,
 };
 
 DistributedSongPreview.defaultProps = {};

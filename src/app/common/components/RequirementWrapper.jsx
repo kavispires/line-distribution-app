@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Import common components
-import { Icon, Loading } from '..';
+import { Icon, Loading, PageTitle } from '..';
 // Import images
 import logo from '../../../images/logo-neg.svg';
 
@@ -33,18 +33,25 @@ class RequirementWrapper extends Component {
   }
 
   render() {
-    if (!this.state.ready) {
+    if (!this.state.ready || this.props.app.pending.INITIALIZER) {
       return <Loading message="Loading..." />;
     }
 
     // Verify Database
-    if (this.state.database && !this.props.app.databaseReady) {
+    if (this.state.database && !this.props.app.isDatabaseReady) {
       return <Loading message="Fecthing database..." />;
+    }
+
+    // Verify Auth
+    if (this.state.authentication && this.props.app.pending.RUN_LOGIN) {
+      return (
+        <Loading message="Authenticating... Please continue in the Google Popup window" />
+      );
     }
 
     // Verify Authentication
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.authentication &&
       !this.props.auth.isAuthenticated
     ) {
@@ -63,7 +70,7 @@ class RequirementWrapper extends Component {
 
     // Verify Admin
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.admin &&
       !this.props.auth.isAdmin
     ) {
@@ -81,17 +88,17 @@ class RequirementWrapper extends Component {
 
     // Verify Selected Artist
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.selectedArtist &&
       (!this.props.artists.selectedArtist ||
         !this.props.artists.selectedArtist.id)
     ) {
-      if (this.props.app.loading) {
+      if (this.props.app.isLoading) {
         return <Loading message="Fecthing artist..." />;
       }
       return (
         <main className="container container--artist">
-          <h1>Artist Page</h1>
+          <PageTitle title="Artist Page" isWarning />
           <p>
             No artist has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group.
@@ -102,14 +109,14 @@ class RequirementWrapper extends Component {
 
     // Verify Active Artist
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.activeArtist &&
       this.props.artists.activeArtist &&
       !this.props.artists.activeArtist.id
     ) {
       return (
         <main className="container container--artist">
-          <h1>Artist Required</h1>
+          <PageTitle title="Artist Required" isWarning />
           <p>
             No artist has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group and then
@@ -121,14 +128,14 @@ class RequirementWrapper extends Component {
 
     // Verify Active Active
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.activeUnit &&
       this.props.distribute.activeUnit &&
       !this.props.distribute.activeUnit.id
     ) {
       return (
         <main className="container container--artist">
-          <h1>Active Unit Required</h1>
+          <PageTitle title="Active Unit Required" isWarning />
           <p>
             No unit has been selected. Go to the{' '}
             <Link to="/artists">Artists Page</Link> and select a group and then
@@ -139,14 +146,14 @@ class RequirementWrapper extends Component {
     }
 
     if (
-      !this.props.app.loading &&
+      !this.props.app.isLoading &&
       this.state.activeSong &&
       this.props.distribute.activeSong &&
       !this.props.distribute.activeSong.id
     ) {
       return (
         <main className="container container--artist">
-          <h1>Active Song Required</h1>
+          <PageTitle title="Active Song Required" isWarning />
           <p>
             No song has been selected. Go to the{' '}
             <Link to="/songs">Songs Page</Link> and select a song.
@@ -155,7 +162,7 @@ class RequirementWrapper extends Component {
       );
     }
 
-    return <div className="wrapper">{this.props.children}</div>;
+    return <Fragment>{this.props.children}</Fragment>;
   }
 }
 

@@ -189,8 +189,8 @@ const getBitStyle = (part, type) => {
 
   if (type === 0 && part.colors && part.colors.length) {
     if (part.colors.length > 1) {
-      const colorHexes = part.colors.map(
-        c => (colorDict[c] ? colorDict[c].hex : BASE_COLOR)
+      const colorHexes = part.colors.map(c =>
+        colorDict[c] ? colorDict[c].hex : BASE_COLOR
       );
       styles.background = `linear-gradient(${colorHexes.join(', ')})`;
     } else {
@@ -200,8 +200,8 @@ const getBitStyle = (part, type) => {
 
   if (type === 1 && part.subColors && part.subColors.length) {
     if (part.subColors.length > 1) {
-      const colorHexes = part.subColors.map(
-        c => (colorDict[c] ? colorDict[c].hex : BASE_COLOR)
+      const colorHexes = part.subColors.map(c =>
+        colorDict[c] ? colorDict[c].hex : BASE_COLOR
       );
       styles.background = `linear-gradient(${colorHexes.join(', ')})`;
     } else {
@@ -211,8 +211,8 @@ const getBitStyle = (part, type) => {
 
   if (type === 4 && part.choirColors && part.choirColors.length) {
     if (part.choirColors.length > 1) {
-      const colorHexes = part.choirColors.map(
-        c => (colorDict[c] ? colorDict[c].hex : BASE_COLOR)
+      const colorHexes = part.choirColors.map(c =>
+        colorDict[c] ? colorDict[c].hex : BASE_COLOR
       );
       styles.background = `linear-gradient(${colorHexes.join(', ')})`;
     } else {

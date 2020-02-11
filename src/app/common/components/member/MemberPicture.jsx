@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
+// Import utils
 import constants from '../../../../utils/constants';
-import utils from '../../../../utils';
+import { printWarning } from '../../../../utils/print-service';
+
+const loggedMissingPictures = {};
 
 class MemberPicture extends Component {
   constructor() {
@@ -13,37 +18,40 @@ class MemberPicture extends Component {
   }
 
   render() {
-    const { className, colorId, gender, memberId, name } = this.props;
+    const { className, color, gender, memberId, name } = this.props;
 
     const pictureUrl = `${process.env.PUBLIC_URL}${
       constants.PROFILE_PICTURE_URL
     }${name.toLowerCase()}${memberId}.jpg`;
 
-    const GENDER_ENUM = gender === 'FEMALE' ? 'f' : 'm';
+    const genderSuffix = gender === 'FEMALE' ? 'f' : 'm';
 
-    const colorNumber = utils.getColorNumber(colorId);
-    const profilePlaceholderCode = (colorNumber % 5) + 1;
+    const profilePlaceholderCode = (color % 5) + 1;
 
-    const pictureFallback = `${process.env.PUBLIC_URL}${
-      constants.PROFILE_PICTURE_URL
-    }profile-${GENDER_ENUM}-${profilePlaceholderCode}.png`;
+    const pictureFallback = `${process.env.PUBLIC_URL}${constants.PROFILE_PICTURE_URL}profile-${genderSuffix}-${profilePlaceholderCode}.png`;
 
     if (this.state.failed) {
-      console.log(`Missing Member Picture: ${name.toLowerCase()}${memberId}`); // eslint-disable-line
+      if (loggedMissingPictures[memberId] === undefined) {
+        printWarning(
+          `Missing Member Picture: ${name.toLowerCase()}${memberId}`
+        );
+        loggedMissingPictures[memberId] = true;
+      }
+
       return (
         <img
-          className={`${className} background-color-${colorNumber}`}
+          className={`${className} background-color-${color}`}
           src={pictureFallback}
           alt="Member"
         />
       );
     }
     return (
-      <img
+      <LazyLoadImage
         className={className}
         src={pictureUrl}
         onError={this.fallback}
-        alt="Member"
+        alt={`Member: ${name}`}
       />
     );
   }
@@ -51,7 +59,7 @@ class MemberPicture extends Component {
 
 MemberPicture.propTypes = {
   className: PropTypes.string,
-  colorId: PropTypes.string.isRequired,
+  color: PropTypes.number.isRequired,
   gender: PropTypes.string.isRequired,
   memberId: PropTypes.string.isRequired,
   name: PropTypes.string,

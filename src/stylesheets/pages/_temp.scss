@@ -1,0 +1,11 @@
+.temp-box {
+  width: 100px;
+  height: 100px;
+  background: grey;
+}
+
+@for $i from 1 through 9 {
+  .temp-#{$i} {
+    background-color: get-color(test, $i);
+  }
+}

@@ -1,15 +1,15 @@
 @mixin select-override {
   appearance: none;
-  border: 1px solid $color-gray-2;
+  border: 1px solid get-color(gray, 2);
   border-radius: 4px;
-  background: $color-negative;
+  background: get-color(negative);
   min-width: 100px;
   overflow: hidden;
   // float: left;
 
   &:hover {
-    color: $color-gray-4;
-    background: linear-gradient($color-negative, $color-gray-1);
+    color: get-color(gray, 4);
+    background: linear-gradient(get-color(negative), get-color(gray, 1));
   }
 
   select {
@@ -23,13 +23,13 @@
     &:after {
       content: '<>';
       font: 17px monospace;
-      color: #333;
+      color: get-color(gray);
       transform: rotate(90deg);
       right: 11px;
 
       top: 18px;
       padding: 0 0 2px;
-      border-bottom: 1px solid #999;
+      border-bottom: 1px solid get-color(gray, 2);
 
       position: absolute;
       pointer-events: none;
@@ -45,7 +45,7 @@
   @include select-override;
 
   select {
-    padding: $unit-p2 $unit;
+    padding: get-unit(2) get-unit(3);
   }
 }
 
@@ -53,12 +53,12 @@
   @include select-override;
 
   select {
-    padding: $unit-p4 $unit-p2;
+    padding: get-unit(1) get-unit(2);
   }
 }
 
 .ld-select__label {
-  color: $color-gray-4;
+  color: get-color(gray, 4);
 }
 
 .typeahead {
@@ -68,10 +68,15 @@
 }
 
 .typeahead-input {
-  border: 1px solid $color-gray-3;
-  padding: $unit-p4 $unit;
-  border-radius: $unit-p4;
+  border: 1px solid get-color(gray, 3);
+  padding: get-unit(1) get-unit(3);
+  border-radius: get-unit(1);
   width: 100%;
   max-width: 150px;
-  max-height: $unit-x2;
+  max-height: get-unit(4);
+}
+
+.required:after {
+  color: get-color(red);
+  content: '*';
 }

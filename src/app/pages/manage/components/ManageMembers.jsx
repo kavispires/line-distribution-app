@@ -11,6 +11,7 @@ import managePlus from '../../../../images/manage-plus.svg';
 import utils from '../../../../utils';
 // Import constants
 import constants from '../../../../utils/constants';
+import enums from '../../../../utils/readable-enums';
 
 const ManageMembers = ({
   formState,
@@ -97,7 +98,8 @@ const ManageMembers = ({
                       className="manage-form__label"
                       title="Member names must be less than 12 characters without spaces, commas, colors, semicolons, questions marks or periods"
                     >
-                      Name*<Text
+                      Name*{' '}
+                      <Text
                         className={`manage-form__input ${isValidName}`}
                         field="name"
                         validateOnBlur
@@ -107,7 +109,8 @@ const ManageMembers = ({
                       />
                     </label>
                     <label className="manage-form__label manage-form__label--30">
-                      Initials<Text
+                      Initials{' '}
+                      <Text
                         className="manage-form__input"
                         field="initials"
                         initialValue={member.initials}
@@ -117,7 +120,8 @@ const ManageMembers = ({
                   </div>
                   <div className="manage-form__inline">
                     <label className="manage-form__label manage-form__label--70">
-                      Birthdate*<Text
+                      Birthdate*{' '}
+                      <Text
                         className="manage-form__input"
                         field="birthdate"
                         validate={isRequired}
@@ -166,9 +170,9 @@ const ManageMembers = ({
                         <Option value="" disabled>
                           Select One...
                         </Option>
-                        {Object.entries(constants.GENDERS).map(gender => (
-                          <Option key={`${key}-${gender[0]}`} value={gender[0]}>
-                            {gender[1]}
+                        {Object.entries(enums.GENDERS).map(([value, text]) => (
+                          <Option key={`${key}-${value}`} value={value}>
+                            {text}
                           </Option>
                         ))}
                       </Select>
@@ -185,13 +189,10 @@ const ManageMembers = ({
                         <Option value="" disabled>
                           Select One...
                         </Option>
-                        {Object.entries(constants.NATIONALITIES).map(
-                          nationality => (
-                            <Option
-                              key={`${key}-${nationality[0]}`}
-                              value={nationality[0]}
-                            >
-                              {nationality[1]}
+                        {Object.entries(enums.NATIONALITIES).map(
+                          ([value, text]) => (
+                            <Option key={`${key}-${value}`} value={value}>
+                              {text}
                             </Option>
                           )
                         )}

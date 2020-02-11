@@ -1,11 +1,5 @@
 .container--requirement-wrapper {
-  background: linear-gradient(#ffffff, #ebebf2);
-}
-
-.wrapper {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
+  background: linear-gradient(get-color(white), get-color(gray, 1));
 }
 
 .requirement-wrapper {
@@ -15,7 +9,7 @@
 
     p {
       text-align: center;
-      margin: $unit-x2 0;
+      margin: get-unit(4) 0;
     }
 
     button {

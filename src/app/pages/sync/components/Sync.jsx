@@ -12,9 +12,10 @@ import SyncStep5Save from './SyncStep5Save';
 // Import common components
 import {
   Collapsible,
-  Loading,
-  RequirementWrapper,
   Icon,
+  Loading,
+  PageTitle,
+  RequirementWrapper,
 } from '../../../common';
 
 let loadYT;
@@ -154,7 +155,7 @@ class Sync extends Component {
     return (
       <RequirementWrapper requirements={['admin']}>
         <main className="container container--sync">
-          <h1>Sync</h1>
+          <PageTitle title="Sync" isAdmin />
           <section className="sync__container">
             <div className="sync__group sync__group--left">
               <section

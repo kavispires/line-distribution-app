@@ -1,9 +1,3 @@
-const ARTISTS_GENDERS = {
-  FEMALE: 'Female',
-  MALE: 'Male',
-  MIXED: 'Mixed',
-};
-
 const COLORS = {
   col000001: 'red',
   col000002: 'blood',
@@ -52,7 +46,7 @@ const DEFAULT_COLORS = {
   yellow: '#ffd700',
 };
 
-const FLAGS_LIST = {
+const FLAGS_LIST_ICON = {
   AMERICAN: 'usa',
   BRAZILIAN: 'brazil',
   BRITISH: 'uk',
@@ -60,23 +54,30 @@ const FLAGS_LIST = {
   CHINESE: 'china',
   JAPANESE: 'japan',
   KOREAN: 'korea',
+  PLANTIAN: 'planted',
   TAIWANESE: 'taiwan',
   THAI: 'thailand',
-  VIETNAMISE: 'vietnamise',
+  VIETNAMISE: 'vietnam',
 };
 
-const GENDERS = {
-  FEMALE: 'Female',
-  MALE: 'Male',
-  UNKOWN: 'Unknown',
-};
-
-const GENRES = {
-  CPOP: 'C-Pop',
-  JPOP: 'J-Pop',
-  KPOP: 'K-Pop',
-  OTHER: 'Other',
-  POP: 'Pop',
+const POSITIONS_LIST_ICON = {
+  MAIN_VOCALIST: 'main-vocalist',
+  MAIN_RAPPER: 'main-rapper',
+  MAIN_DANCER: 'main-dancer',
+  LEAD_VOCALIST: 'lead-vocalist',
+  LEAD_RAPPER: 'lead-rapper',
+  LEAD_DANCER: 'lead-dancer',
+  VOCALIST: 'vocalist',
+  RAPPER: 'rapper',
+  DANCER: 'dancer',
+  LEADER: 'leader',
+  CENTER: 'center',
+  FACE_OF_THE_GROUP: 'face',
+  VISUAL: 'visual',
+  MAKNAE: 'maknae',
+  ALL: 'all',
+  NONE: 'none',
+  UNKNOWN: 'unknown',
 };
 
 const GENRES_DB = {
@@ -102,38 +103,9 @@ const POSITIONS_LIST = [
   'VISUAL',
 ];
 
-const POSITIONS_LIST_OBJ = {
-  MAIN_VOCALIST: 'Main Vocalist',
-  LEAD_VOCALIST: 'Lead Vocalist',
-  VOCALIST: 'Vocalist',
-  MAIN_RAPPER: 'Main Rapper',
-  LEAD_RAPPER: 'Lead Rapper',
-  RAPPER: 'Rapper',
-  MAIN_DANCER: 'Main Dancer',
-  LEAD_DANCER: 'Lead Dancer',
-  DANCER: 'Dancer',
-  LEADER: 'Leader',
-  CENTER: 'Center',
-  VISUAL: 'Visual',
-};
-
-const NATIONALITIES = {
-  AMERICAN: 'American',
-  BRAZILIAN: 'Brazilian',
-  BRITISH: 'British',
-  CANADIAN: 'Canadian',
-  CHINESE: 'Chinese',
-  JAPANESE: 'Japanese',
-  KOREAN: 'Korean',
-  OTHER: 'Other',
-  TAIWANESE: 'Taiwanese',
-  THAI: 'Thai',
-  VIETNAMISE: 'Vietnamise',
-};
-
-const NATIONALITY_FLAG_URL = '/images/flags/';
-
 const PROFILE_PICTURE_URL = '/images/profiles/';
+
+const GROUPS_PICTURE_URL = '/images/groups/';
 
 const SYNC_KEY_LIST = {
   1: true,
@@ -154,17 +126,13 @@ const SYNC_KEY_COLOR_LIST = {
 const YOUTUBE_URLS = ['cudssvDuOpc'];
 
 export default {
-  ARTISTS_GENDERS,
   COLORS,
   DEFAULT_COLORS,
-  FLAGS_LIST,
-  GENDERS,
-  GENRES,
+  FLAGS_LIST_ICON,
   GENRES_DB,
+  GROUPS_PICTURE_URL,
   POSITIONS_LIST,
-  POSITIONS_LIST_OBJ,
-  NATIONALITIES,
-  NATIONALITY_FLAG_URL,
+  POSITIONS_LIST_ICON,
   PROFILE_PICTURE_URL,
   SYNC_KEY_LIST,
   SYNC_KEY_COLOR_LIST,

@@ -3,83 +3,88 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // Import components
-import BiasPicture from './BiasPicture';
 import DistributedSongsTable from './DistributedSongsTable';
 // Import common components
-import {
-  Tabs,
-  Icon,
-  LoadingWrapper,
-  MemberCard,
-  Select,
-} from '../../../common';
+import { Tabs, Icon, LoadingWrapper, MemberCard } from '../../../common';
 
 class Units extends Component {
-  componentDidMount() {
-    this.props.props.getBias();
+  constructor(props) {
+    super(props);
+
+    this.redirectToUnit = this.redirectToUnit.bind(this);
     this.goToDistribution = this.goToDistribution.bind(this);
   }
 
+  componentDidMount() {
+    const { unitId } = this.props.match.params;
+    if (unitId && this.props.auth.isAuthenticated) {
+      this.props.loadUnit(unitId);
+    }
+  }
+
   componentDidUpdate(prevProps) {
+    const prevUnitId = prevProps.match.params.unitId;
+    const { unitId } = this.props.match.params;
     if (
-      prevProps.props.artists.selectedUnit.id !==
-      this.props.props.artists.selectedUnit.id
+      this.props.auth.isAuthenticated &&
+      (this.props.artists.selectedUnit.id !==
+        prevProps.artists.selectedUnit.id ||
+        prevUnitId !== unitId)
     ) {
-      this.props.props.getBias();
+      this.props.loadUnit(unitId);
     }
   }
 
-  artistRedirect(page) {
-    this.props.props.activateUnit();
-
-    this.props.props.history.push(`/${page}`);
+  redirectToUnit(e) {
+    const unitId = e.target.id;
+    const artistId = this.props.artists.selectedArtist.id;
+    if (artistId && unitId && this.props.match.params.unitId !== unitId) {
+      this.props.history.push(`/artists/${artistId}/${unitId}`);
+    }
   }
 
-  goToDistribution(distribution) {
-    if (distribution && distribution.id && distribution.songId) {
-      this.artistRedirect('distribute');
-      this.props.props.activateSongDistribution(distribution);
+  goToPage(page) {
+    // Activate Unit
+    if (
+      this.props.artists.selectedUnit.id !== this.props.distribute.activeUnit.id
+    ) {
+      this.props.activateUnit();
     }
+
+    // Then Redirect: songs, lyrics, distribute
+    this.props.history.push(`/${page}`);
+  }
+
+  goToDistribution(id) {
+    this.props.loadDistribution(id);
+
+    // Then Active Unit and go to page
+    this.goToPage('distribute');
   }
 
   render() {
     const {
-      props: {
-        app,
-        artists: { artistPageTab, bias, selectedArtist, selectedUnit },
-        auth,
-        switchArtistPageTab,
-        updateBias,
-        updateFavoriteMembers,
+      app: { pending },
+      artists: { selectedArtist, selectedUnit },
+      auth: {
+        user: { favoriteMembers },
       },
+      match,
+      updateFavoriteMembers,
     } = this.props;
 
-    // If Artist has no unit
-    if (!app.loading && !Object.keys(selectedUnit).length) {
-      return (
-        <section className="artist__section">
-          <div className="tabs-container">
-            <p className="tabs-content--empty">
-              This artist has no units available.
-            </p>
-          </div>
-        </section>
-      );
-    }
-
-    const isUnitPending = app.pending.REQUEST_UNIT;
+    const isUnitPending = pending.REQUEST_UNIT;
 
     return (
       <section className="artist__section">
         <Tabs
           tabs={selectedArtist.units || []}
-          action={switchArtistPageTab}
-          active={artistPageTab}
-          icons={[
-            <Icon type="check" color="blue" inline key="official" />,
-            <Icon type="sub-unit" color="orange" key="subUnit" />,
-          ]}
-          iconConditions={['official', 'subUnit']}
+          action={this.redirectToUnit}
+          active={match.params.unitId}
+          icons={{
+            official: <Icon type="check" color="blue" inline key="official" />,
+            subUnit: <Icon type="sub-unit" color="orange" key="subUnit" />,
+          }}
         >
           {selectedUnit.id ? (
             <div className="unit-section">
@@ -95,22 +100,26 @@ class Units extends Component {
                       </p>
                       <p>
                         <b>Official Distributions:</b>{' '}
-                        {selectedUnit.distributions.length || 0}
+                        {selectedUnit.distributions.official.length || 0}
                       </p>
                       <p>
                         <b>Custom Distributions:</b>{' '}
-                        {selectedUnit.distributions.length || 0}
+                        {selectedUnit.distributions.custom.length || 0}
+                      </p>
+                      <p>
+                        <b>Rework Distributions:</b>{' '}
+                        {selectedUnit.distributions.rework.length || 0}
                       </p>
                       <div className="unit-section__actions">
                         <button
                           className="btn"
-                          onClick={() => this.artistRedirect('songs')}
+                          onClick={() => this.goToPage('songs')}
                         >
                           Distribute
                         </button>
                         <button
                           className="btn"
-                          onClick={() => this.artistRedirect('lyrics')}
+                          onClick={() => this.goToPage('lyrics')}
                         >
                           Play with Lyrics{' '}
                           <span className="restriction">*</span>
@@ -125,21 +134,6 @@ class Units extends Component {
                     </Fragment>
                   </LoadingWrapper>
                 </div>
-                <div className="unit-section__bias">
-                  <LoadingWrapper pending={isUnitPending}>
-                    <div className="unit-section__bias-wrapper">
-                      <BiasPicture bias={bias} />
-                      <Select
-                        action={updateBias}
-                        options={selectedUnit.members}
-                        optionValue="id"
-                        optionName="name"
-                        optionPrefix="Bias: "
-                        placeholder="Select your bias..."
-                      />
-                    </div>
-                  </LoadingWrapper>
-                </div>
               </div>
               <hr className="unit-section__ruler" />
               <h2>Members:</h2>
@@ -150,14 +144,13 @@ class Units extends Component {
                     'birthdate'
                   ).map(member => (
                     <MemberCard
-                      averages={selectedUnit.averages[member.id]}
                       key={member.id}
                       member={member}
                       favoriteState={
-                        auth.user.favoriteMembers &&
-                        auth.user.favoriteMembers[member.id]
+                        favoriteMembers && favoriteMembers[member.id]
                       }
                       updateFavoriteMembers={updateFavoriteMembers}
+                      averages={member.averages}
                     />
                   ))}
                 </div>
@@ -179,9 +172,20 @@ class Units extends Component {
                   rowAction={this.goToDistribution}
                 />
               </LoadingWrapper>
+              <h2>Re-Distributions</h2>
+              <LoadingWrapper pending={isUnitPending}>
+                <DistributedSongsTable
+                  distributions={selectedUnit.distributions.rework}
+                  members={selectedUnit.members}
+                  rowAction={this.goToDistribution}
+                />
+              </LoadingWrapper>
             </div>
           ) : (
-            <p>The selected Artist has no units.</p>
+            <p>
+              <Icon type="go-up" color="gray" inline /> Select one of the tabs
+              to see the unit information and options.
+            </p>
           )}
         </Tabs>
       </section>
@@ -190,7 +194,16 @@ class Units extends Component {
 }
 
 Units.propTypes = {
-  props: PropTypes.object.isRequired,
+  activateUnit: PropTypes.func.isRequired,
+  app: PropTypes.object.isRequired,
+  artists: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  distribute: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  loadUnit: PropTypes.func.isRequired,
+  loadDistribution: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  updateFavoriteMembers: PropTypes.func.isRequired,
 };
 
 export default Units;

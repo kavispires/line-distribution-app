@@ -2,92 +2,56 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { Checkbox, Form, Option, Select, Text } from 'informed';
-
+// Import components
+import IdolsFilters from './IdolsFilters';
+import IdolsEdit from './IdolsEdit';
 // Import common components
-import { Loading, MemberCard, RequirementWrapper } from '../../../common';
-// Import constants
-import constants from '../../../../utils/constants';
-// Import utility functions
+import {
+  Icon,
+  Loading,
+  MemberCard,
+  PageTitle,
+  RequirementWrapper,
+} from '../../../common';
+// Import utils
+import localStorage from '../../../../utils/local-storage';
 import utils from '../../../../utils';
 
 class Idols extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      age: '',
-      color: '',
-      favorite: '',
-      gender: '',
-      name: '',
-      nationality: '',
-      position: '',
-      privacy: '',
-      sort: 'name',
-      order: 'asc',
-      showIds: false,
-    };
+  static filterIdols(members = [], user, filters) {
+    const filteredMembers = _.filter(members, member => {
+      const evaluation = [!member.hide];
 
-    this.filterIdols = this.filterIdols.bind(this);
-    this.sortIdols = this.sortIdols.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.loadMembers();
-  }
-
-  updateFilters(formState) {
-    this.setState({
-      age: formState.values.age,
-      color: formState.values.color,
-      favorite: formState.values.favorite,
-      gender: formState.values.gender,
-      name: formState.values.name,
-      nationality: formState.values.nationality,
-      position: formState.values.position,
-      privacy: formState.values.privacy,
-      sort: formState.values.sort || 'name',
-      order: formState.values.order || 'asc',
-      showIds: formState.values.showIds || false,
-    });
-  }
-
-  filterIdols(members, user) {
-    return _.filter(members, member => {
-      const evaluation = [];
-
-      if (this.state.favorite) {
-        if (this.state.favorite === 'favorite') {
+      if (filters.favorite) {
+        if (filters.favorite === 'favorite') {
           evaluation.push(user.favoriteMembers[member.id]);
         } else {
           evaluation.push(!user.favoriteMembers[member.id]);
         }
       }
 
-      if (this.state.privacy) {
-        if (this.state.privacy === 'private') {
+      if (filters.privacy) {
+        if (filters.privacy === 'private') {
           evaluation.push(member.private);
         } else {
           evaluation.push(!member.private);
         }
       }
 
-      if (this.state.color)
-        evaluation.push(member.colorId === this.state.color);
-      if (this.state.gender)
-        evaluation.push(member.gender === this.state.gender);
-      if (this.state.nationality)
-        evaluation.push(member.nationality === this.state.nationality);
-      if (this.state.position)
-        evaluation.push(member.positions.includes(this.state.position));
-      if (this.state.name)
+      if (filters.color) evaluation.push(member.color === filters.color);
+      if (filters.gender) evaluation.push(member.gender === filters.gender);
+      if (filters.nationality)
+        evaluation.push(member.nationality === filters.nationality);
+      if (filters.position)
+        evaluation.push(member.positions.includes(filters.position));
+      if (filters.name)
         evaluation.push(
-          member.name.toLowerCase().startsWith(this.state.name.toLowerCase())
+          member.name.toLowerCase().startsWith(filters.name.toLowerCase())
         );
-      if (this.state.age) {
-        if (this.state.age === '<18') {
+      if (filters.age) {
+        if (filters.age === '<18') {
           evaluation.push(member.age < 18);
-        } else if (this.state.age === '18-28') {
+        } else if (filters.age === '18-28') {
           evaluation.push(member.age > 17 && member.age < 28);
         } else {
           evaluation.push(member.age > 28);
@@ -95,207 +59,215 @@ class Idols extends Component {
       }
       return evaluation.every(e => e);
     });
+
+    return _.orderBy(filteredMembers, [filters.sort], [filters.order]);
   }
 
-  sortIdols(filteredMembers) {
-    return _.orderBy(filteredMembers, [this.state.sort], [this.state.order]);
+  constructor(props) {
+    super(props);
+    this.state = {
+      filters: {
+        age: '',
+        color: '',
+        favorite: '',
+        gender: '',
+        name: '',
+        nationality: '',
+        position: '',
+        privacy: '',
+        sort: 'name',
+        order: 'asc',
+        showIds: false,
+      },
+      members: [],
+      sidePanel: null,
+      editingMember: {},
+    };
+
+    this.openPanel = this.openPanel.bind(this);
+    this.toggleMemberEditing = this.toggleMemberEditing.bind(this);
+    this.updateFilters = this.updateFilters.bind(this);
+    this.updateMember = this.updateMember.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.loadMembers();
+    }
+
+    this.localStorage();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
+      this.props.loadMembers();
+    }
+    // Run members filters as soon as the api return the list of members
+    if (
+      prevProps.db.members.length !== this.props.db.members.length ||
+      (prevProps.app.isLoading === true && this.props.app.isLoading === false)
+    ) {
+      this.updateFilters({ values: {} }, true);
+    }
+  }
+
+  localStorage() {
+    this.setState({
+      showIds: this.props.auth.isAdmin
+        ? localStorage.get('idolsShowIds')
+        : false,
+      sort: localStorage.get('idolsSort') || 'name',
+      order: localStorage.get('idolsOrder') || 'asc',
+    });
+  }
+
+  updateFilters(formState, forceUpdateFilters = false) {
+    const filters = {
+      age: formState.values.age || this.state.filters.age,
+      color: formState.values.color || this.state.filters.color,
+      favorite: formState.values.favorite || this.state.filters.favorite,
+      gender: formState.values.gender || this.state.filters.gender,
+      name: formState.values.name || this.state.filters.name,
+      nationality:
+        formState.values.nationality || this.state.filters.nationality,
+      position: formState.values.position || this.state.filters.position,
+      privacy: formState.values.privacy || this.state.filters.privacy,
+      sort: formState.values.sort || this.state.filters.sort,
+      order: formState.values.order || this.state.filters.order,
+      showIds: formState.values.showIds || this.state.filters.showIds,
+    };
+
+    // Prevent filters to be run if filters were not modified
+    const hasNoNewFiltres = _.isEqual({ ...filters, members: [] }, this.state);
+    if (hasNoNewFiltres && !forceUpdateFilters) {
+      return;
+    }
+
+    const filteredMembers = this.constructor.filterIdols(
+      this.props.db.members,
+      this.props.auth.user,
+      filters
+    );
+
+    this.setState({
+      members: filteredMembers,
+      filters,
+    });
+
+    localStorage.set({
+      idolsShowIds: this.props.auth.isAdmin
+        ? filters.showIds || this.state.filters.showIds
+        : null,
+      idolsSort: filters.sort || null,
+      idolsOrder: filters.order || null,
+    });
+  }
+
+  openPanel(panelName) {
+    let sidePanel = null;
+    if (panelName && panelName !== this.state.sidePanel) {
+      sidePanel = panelName;
+    }
+    this.setState({
+      sidePanel,
+    });
+  }
+
+  toggleMemberEditing(member) {
+    const editingMember = { ...member };
+    editingMember.birthdate = utils.parseBirthdateToInput(member.birthdate);
+
+    this.setState(
+      {
+        editingMember,
+        sidePanel: null,
+      },
+      () => {
+        if (this.state.sidePanel !== 'edit') {
+          this.setState({ sidePanel: 'edit' });
+        }
+      }
+    );
+  }
+
+  updateMember(formValues) {
+    const member = { ...this.state.editingMember, ...formValues };
+
+    this.props.updateMember(member);
+
+    this.setState({
+      editingMember: {},
+      sidePanel: null,
+    });
   }
 
   render() {
     const {
       app: { pending },
       auth: { isAdmin, user },
-      db: { members },
       updateFavoriteMembers,
     } = this.props;
 
-    if (pending.REQUEST_MEMBERS) {
+    const { editingMember, filters, members, sidePanel } = this.state;
+
+    if (pending.REQUEST_MEMBERS || pending.INITIALIZER || pending.RUN_AUTH) {
       return <Loading message="Fecthing Idols..." />;
     }
 
-    const filteredMembers = this.filterIdols(members, user);
-
-    const sortedMembers = this.sortIdols(filteredMembers);
-
     return (
       <RequirementWrapper>
-        <main className="container container--idols">
-          <h1>Idols</h1>
-          <Form
-            onChange={formState => this.updateFilters(formState)}
-            autoComplete="off"
-            className="idols__filters-form"
-          >
-            <div className="idols__filters-group">
-              <div className="idols__filters-items">
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">
-                    Name starts with
-                  </label>
-                  <Text
-                    className="idols__filter-input-text"
-                    field="name"
-                    initialValue={this.state.name}
-                    maxLength="3"
-                  />
-                </div>
-
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Gender</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="gender"
-                    initialValue={this.state.gender}
-                  >
-                    <Option value="">Any</Option>
-                    {Object.entries(constants.GENDERS).map(gender => (
-                      <Option key={gender[0]} value={gender[0]}>
-                        {gender[1]}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Nationality</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="nationality"
-                    initialValue={this.state.nationality}
-                  >
-                    <Option value="">Any</Option>
-                    {Object.entries(constants.NATIONALITIES).map(
-                      nationalitie => (
-                        <Option key={nationalitie[0]} value={nationalitie[0]}>
-                          {nationalitie[1]}
-                        </Option>
-                      )
-                    )}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Age Range</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="age"
-                    initialValue={this.state.age}
-                  >
-                    <Option value="">Any</Option>
-                    <Option value="<18">&lt;18</Option>
-                    <Option value="18-28">18-28</Option>
-                    <Option value="28+">28+</Option>
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Position</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="position"
-                    initialValue={this.state.position}
-                  >
-                    <Option value="">Any</Option>
-                    {constants.POSITIONS_LIST.map(position => (
-                      <Option key={position} value={position}>
-                        {constants.POSITIONS_LIST_OBJ[position]}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Color</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="color"
-                    initialValue={this.state.color}
-                  >
-                    <Option value="">Any</Option>
-                    {Object.entries(constants.COLORS).map(color => (
-                      <Option key={color[0]} value={color[0]}>
-                        {utils.humanize(color[1], 'Capital')}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Favorite</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="favorite"
-                    initialValue={this.state.favorite}
-                  >
-                    <Option value="">Any</Option>
-                    <Option value="favorite">Favorite</Option>
-                    <Option value="nonfavorite">Non-favorite</Option>
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Privacy</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="privacy"
-                    initialValue={this.state.privacy}
-                  >
-                    <Option value="">Any</Option>
-                    <Option value="private">Private</Option>
-                    <Option value="public">Public</Option>
-                  </Select>
-                </div>
-                {isAdmin && (
-                  <div className="idols__filter-select-group">
-                    <label className="idols__filter-label">Show Ids</label>
-                    <Checkbox field="showIds" initialValue={isAdmin} />
-                  </div>
-                )}
-              </div>
+        <div className="container container--with-filters container--idols">
+          <IdolsFilters
+            isExpanded={sidePanel === 'filters'}
+            filters={filters}
+            isAdmin={isAdmin}
+            updateFilters={this.updateFilters}
+            openPanel={this.openPanel}
+          />
+          <IdolsEdit
+            isExpanded={sidePanel === 'edit'}
+            editingMember={editingMember}
+            openPanel={this.openPanel}
+            updateMember={this.updateMember}
+          />
+          <aside className="side-panel-vertical-buttons">
+            <button
+              className="side-panel-vertical-buttons__button"
+              onClick={() => this.openPanel('filters')}
+            >
+              <Icon type="filter" />
+            </button>
+            {isAdmin && (
+              <button
+                className="side-panel-vertical-buttons__button"
+                onClick={() => this.openPanel('edit')}
+              >
+                <Icon type="edit" />
+              </button>
+            )}
+          </aside>
+          <main className="container__main-content">
+            <PageTitle title="Idols" />
+            <p className="filter-count-text italic">
+              Displaying {members.length} members...
+            </p>
+            <div className="idols__list">
+              {members.map(member => (
+                <MemberCard
+                  key={member.id}
+                  member={member}
+                  showId={filters.showIds}
+                  showReferenceArtist
+                  favoriteState={
+                    user.favoriteMembers && user.favoriteMembers[member.id]
+                  }
+                  updateFavoriteMembers={updateFavoriteMembers}
+                  editMember={this.toggleMemberEditing}
+                />
+              ))}
             </div>
-            <div className="idols__filters-group">
-              <div className="idols__filters-items">
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Sort by</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="sort"
-                    initialValue={this.state.sort}
-                  >
-                    <Option value="age">Age</Option>
-                    <Option value="colorId">Color</Option>
-                    <Option value="gender">Gender</Option>
-                    <Option value="referenceArtist">Group</Option>
-                    <Option value="name">Name</Option>
-                    <Option value="nationality">Nationality</Option>
-                  </Select>
-                </div>
-                <div className="idols__filter-select-group">
-                  <label className="idols__filter-label">Order by</label>
-                  <Select
-                    className="idols__filter-select"
-                    field="order"
-                    initialValue={this.state.order}
-                  >
-                    <Option value="asc">Ascending</Option>
-                    <Option value="desc">Descending</Option>
-                  </Select>
-                </div>
-              </div>
-            </div>
-          </Form>
-          <h3 className="member-count">
-            Displaying {sortedMembers.length} members
-          </h3>
-          <div className="idols__list">
-            {sortedMembers.map(member => (
-              <MemberCard
-                key={member.id}
-                member={member}
-                showId={this.state.showIds}
-                showReferenceArtist
-                favoriteState={
-                  user.favoriteMembers && user.favoriteMembers[member.id]
-                }
-                updateFavoriteMembers={updateFavoriteMembers}
-              />
-            ))}
-          </div>
-        </main>
+          </main>
+        </div>
       </RequirementWrapper>
     );
   }
@@ -307,6 +279,7 @@ Idols.propTypes = {
   db: PropTypes.object.isRequired,
   loadMembers: PropTypes.func.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
+  updateMember: PropTypes.func.isRequired,
 };
 
 export default Idols;

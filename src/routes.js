@@ -19,6 +19,7 @@ import Lyrics from './app/pages/lyrics';
 import Manage from './app/pages/manage';
 import Songs from './app/pages/songs';
 import Sync from './app/pages/sync';
+import Temp from './app/pages/temp';
 import UIReference from './app/pages/ui-reference';
 import User from './app/pages/user';
 
@@ -30,7 +31,8 @@ const routes = (
     <div className="app">
       <Header />
       <ErrorModal />
-      <Route path="/artists/:artistId" component={Artist} />
+      <Route path="/artists/:artistId/:unitId" component={Artist} />
+      <Route exact path="/artists/:artistId" component={Artist} />
       <Route exact path="/artists" component={Artists} />
       <Route path="/distribute" component={Distribute} />
       <Route path="/idols" component={Idols} />
@@ -43,6 +45,7 @@ const routes = (
       <Route path="/admin/manage" component={Manage} />
       <Route path="/admin/sync" component={Sync} />
       <Route path="/admin/ui-reference" component={UIReference} />
+      <Route path="/admin/temp" component={Temp} />
 
       <Route path="/user" component={User} />
 

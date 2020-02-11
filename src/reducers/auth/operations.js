@@ -1,5 +1,3 @@
-import actions from './actions';
-
 const login = () => dispatch => dispatch({ type: 'RUN_LOGIN' });
 
 const logout = () => dispatch => dispatch({ type: 'RUN_LOGOUT' });
@@ -19,9 +17,6 @@ const updateFavoriteArtists = id => async (dispatch, getState) => {
       userFavoriteArtists,
       userId: user.id,
     });
-
-    user.favoriteArtists = userFavoriteArtists;
-    dispatch(actions.setUser(user));
   }
 };
 
@@ -40,44 +35,26 @@ const updateFavoriteMembers = id => async (dispatch, getState) => {
       userFavoriteMembers,
       userId: user.id,
     });
-
-    user.favoriteMembers = userFavoriteMembers;
-    dispatch(actions.setUser(user));
   }
 };
 
-const updateBias = event => async (dispatch, getState) => {
-  const { value } = event.target;
-  const { id, members } = getState().artists.selectedUnit;
+const updateBias = (biasId, artistId) => async (dispatch, getState) => {
+  const user = { ...getState().auth.user };
+  const userBiases = { ...user.biases } || {};
 
-  if (value && id && members && members[value]) {
-    const user = { ...getState().auth.user };
-    const biases = { ...user.biases } || {};
+  if (!biasId || !artistId || !user.id) return;
 
-    const biasId = `${id}:${value}`;
-
-    // Stop if member is already the bias
-    if (biases[biasId]) return;
-
-    // Remove any biases within this unit
-    Object.keys(members).forEach(key => {
-      const currentBias = `${id}:${key}`;
-      if (biases[currentBias]) {
-        delete biases[`${id}:${key}`];
-      }
-    });
-
-    biases[biasId] = true;
-
-    const bias = { ...members[value] };
-
-    await dispatch({
-      type: 'UPDATE_USER_BIASES',
-      bias,
-      biases,
-      userId: user.id,
-    });
+  if (userBiases[artistId] === biasId) {
+    delete userBiases[artistId];
+  } else {
+    userBiases[artistId] = biasId;
   }
+
+  await dispatch({
+    type: 'UPDATE_USER_BIASES',
+    biases: userBiases,
+    userId: user.id,
+  });
 };
 
 export default {

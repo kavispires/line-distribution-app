@@ -1,0 +1,27 @@
+.page-title {
+  &__flag {
+    display: inline-block;
+    transform: translateY(get-unit(-2));
+    font-size: 50%;
+    border-radius: get-unit(1);
+    padding: 0 get-unit(1);
+    color: get-color(white);
+    margin-left: get-unit(1);
+
+    &--admin {
+      background-color: get-color(red);
+    }
+
+    &--beta {
+      background-color: get-color(orange);
+    }
+  }
+
+  &--warning {
+    &::before {
+      content: ' ';
+      border: get-unit(1) solid get-color(orange);
+      margin-right: get-unit(3);
+    }
+  }
+}

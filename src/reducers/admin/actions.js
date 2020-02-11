@@ -12,8 +12,6 @@ const setManageResult = payload => dispatch =>
   dispatch({ type: types.SET_MANAGE_RESULT, payload });
 const setPanels = payload => dispatch =>
   dispatch({ type: types.SET_PANELS, payload });
-const setUIReferenceTab = payload => dispatch =>
-  dispatch({ type: types.SET_UI_REFERENCE_TAB, payload });
 const setUnitsTypeahead = payload => dispatch =>
   dispatch({ type: types.SET_UNITS_TYPEAHEAD, payload });
 const setUnitsTypeaheadDict = payload => dispatch =>
@@ -26,7 +24,6 @@ export default {
   setEditingUnit,
   setManageResult,
   setPanels,
-  setUIReferenceTab,
   setUnitsTypeahead,
   setUnitsTypeaheadDict,
 };

@@ -3,20 +3,20 @@ $unit-panel-width: 20%;
 $members-panel-width: 60%;
 
 @mixin section {
-  background: $color-gray-2;
+  background: get-color(gray, 2);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: $unit-x2;
+  padding: get-unit(4);
 }
 
 @mixin section-edit {
-  background: $color-negative;
-  border: 2px solid $color-gray-2;
+  background: get-color(negative);
+  border: 2px solid get-color(gray, 2);
   display: flex;
   flex-direction: column;
-  padding: $unit-x2;
+  padding: get-unit(4);
   justify-content: space-between;
 }
 
@@ -40,40 +40,40 @@ $members-panel-width: 60%;
   &__artist {
     @include section;
     width: $artist-panel-width;
-    border-right: 1px solid $color-gray-1;
-    border-radius: $unit-p2 0 0 $unit-p2;
+    border-right: 1px solid get-color(gray, 1);
+    border-radius: get-unit(2) 0 0 get-unit(2);
   }
 
   &__artist-edit {
     @include section-edit;
     width: $artist-panel-width;
-    border-right: 1px solid $color-gray-1;
-    border-radius: $unit-p2 0 0 $unit-p2;
+    border-right: 1px solid get-color(gray, 1);
+    border-radius: get-unit(2) 0 0 get-unit(2);
   }
 
   &__unit {
     @include section;
     width: $unit-panel-width;
-    border-right: 1px solid $color-gray-1;
+    border-right: 1px solid get-color(gray, 1);
   }
 
   &__unit-edit {
     @include section-edit;
     width: $unit-panel-width;
-    border-right: 1px solid $color-gray-1;
+    border-right: 1px solid get-color(gray, 1);
     align-items: flex-start;
   }
 
   &__members {
     @include section;
     width: $members-panel-width;
-    border-radius: 0 $unit-p2 $unit-p2 0;
+    border-radius: 0 get-unit(2) get-unit(2) 0;
   }
 
   &__members-edit {
     @include section-edit;
     width: $members-panel-width;
-    border-radius: 0 $unit-p2 $unit-p2 0;
+    border-radius: 0 get-unit(2) get-unit(2) 0;
     align-items: flex-start;
     flex-direction: row;
     overflow-y: auto;
@@ -92,7 +92,7 @@ $members-panel-width: 60%;
   }
 
   &__button-lock-image {
-    border-radius: $unit;
+    border-radius: get-unit(3);
   }
 
   &__button-add {
@@ -114,18 +114,18 @@ $members-panel-width: 60%;
   }
 
   &__button-typeahead {
-    padding: $unit-p4 $unit;
-    border: 1px solid $color-gray-3;
-    border-radius: $unit-p4;
-    background: $color-gray-1;
+    padding: get-unit(1) get-unit(3);
+    border: 1px solid get-color(gray, 3);
+    border-radius: get-unit(1);
+    background: get-color(gray, 1);
   }
 
   &__valid {
-    border: 2px solid $color-green;
-    background: $color-negative;
-    padding: $unit-p2;
-    border-radius: $unit-p2;
-    color: $color-green;
+    border: 2px solid get-color(green);
+    background: get-color(negative);
+    padding: get-unit(2);
+    border-radius: get-unit(2);
+    color: get-color(green);
   }
 
   &__inline {
@@ -135,7 +135,7 @@ $members-panel-width: 60%;
 
   &__label {
     display: block;
-    margin-bottom: $unit;
+    margin-bottom: get-unit(3);
   }
 
   &__label--70 {
@@ -144,25 +144,25 @@ $members-panel-width: 60%;
 
   &__label--50 {
     width: 50%;
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
   }
 
   &__label--40 {
     width: 40%;
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
   }
 
   &__label--30 {
     width: 30%;
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
   }
 
   &__input {
     width: 100%;
-    border: 1px solid $color-gray-1;
+    border: 1px solid get-color(gray, 1);
 
     &--invalid {
-      border: 1px solid $color-red;
+      border: 1px solid get-color(red);
     }
   }
 
@@ -172,7 +172,7 @@ $members-panel-width: 60%;
     justify-content: flex-end;
 
     & > * {
-      margin-right: $unit;
+      margin-right: get-unit(3);
 
       &:last-child {
         margin-right: 0;
@@ -189,7 +189,7 @@ $members-panel-width: 60%;
 
   &__form-member {
     width: 32%;
-    margin-bottom: $unit;
+    margin-bottom: get-unit(3);
   }
 
   .option-swatch {
@@ -202,43 +202,43 @@ $members-panel-width: 60%;
 
 .manage-form-nav {
   text-align: right;
-  margin: $unit 0;
+  margin: get-unit(3) 0;
 
   .btn {
-    margin-left: $unit-p2;
+    margin-left: get-unit(2);
   }
 }
 
 .manage-member {
-  padding: $unit-p2;
-  border-radius: $unit-p4;
-  background: $color-gray-1;
+  padding: get-unit(2);
+  border-radius: get-unit(1);
+  background: get-color(gray, 1);
   max-width: 170px;
   // border: 3px solid gold;
   &__title {
     display: block;
     font-weight: bold;
-    margin-bottom: $unit-p2;
-    background: $color-gray-3;
-    padding: 0 $unit-p4;
-    border-radius: $unit-p4;
+    margin-bottom: get-unit(2);
+    background: get-color(gray, 3);
+    padding: 0 get-unit(1);
+    border-radius: get-unit(1);
   }
 }
 
 .manage-member-new {
-  padding: $unit-p2;
-  border-radius: $unit-p4;
-  background: $color-gray-2;
+  padding: get-unit(2);
+  border-radius: get-unit(1);
+  background: get-color(gray, 2);
   max-width: 170px;
   text-align: center;
 
   &__title {
     display: block;
     font-weight: bold;
-    margin-bottom: $unit-p2;
-    background: $color-gray-3;
-    padding: 0 $unit-p4;
-    border-radius: $unit-p4;
+    margin-bottom: get-unit(2);
+    background: get-color(gray, 3);
+    padding: 0 get-unit(1);
+    border-radius: get-unit(1);
   }
 }
 
@@ -255,18 +255,18 @@ $checkbox-size: 30px;
 
 .position-checkbox {
   appearance: none;
-  border: 2px solid $color-primary;
+  border: 2px solid get-color(primary);
   width: $checkbox-size;
   height: $checkbox-size;
   border-radius: 50%;
   display: inline-block;
   position: relative;
   margin: 0;
-  margin-right: $unit-p4;
+  margin-right: get-unit(1);
   cursor: pointer;
 
   &:checked {
-    border: 2px solid $color-orange;
+    border: 2px solid get-color(orange);
   }
 }
 
@@ -323,7 +323,7 @@ $checkbox-size: 30px;
   padding: 0;
   list-style: none;
   display: flex;
-  border-radius: $unit-p2;
+  border-radius: get-unit(2);
   overflow: hidden;
   min-height: 40px;
 }
@@ -331,12 +331,12 @@ $checkbox-size: 30px;
 .color-reference-item {
   width: 3.33334%;
   text-align: center;
-  padding: $unit-p4;
+  padding: get-unit(1);
   box-sizing: border-box;
 
   &--in-use {
-    border: 2px solid $color-primary;
-    color: $color-negative;
+    border: 2px solid get-color(primary);
+    color: get-color(negative);
   }
 }
 
@@ -357,6 +357,6 @@ $checkbox-size: 30px;
 
 .btn-resync-db {
   position: absolute;
-  right: $unit-x2;
-  top: $unit-x2;
+  right: get-unit(4);
+  top: get-unit(4);
 }

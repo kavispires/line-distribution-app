@@ -2,9 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Import Member components
-import MemberNationaltyFlag from './member/MemberNationalityFlag';
+import MemberNationalityFlag from './MemberNationalityFlag';
 import MemberPicture from './member/MemberPicture';
 import MemberPositions from './member/MemberPositions';
+import MemberTags from './member/MemberTags';
 // Import utility functions
 import utils from '../../../utils';
 import { FavoriteIcon, Icon } from '..';
@@ -16,6 +17,7 @@ const MemberCard = ({
   averages,
   showId,
   showReferenceArtist,
+  editMember,
 }) => (
   <div className="card">
     {showId && (
@@ -24,20 +26,27 @@ const MemberCard = ({
         {member.id}
       </p>
     )}
-    <MemberPicture
-      className={
-        showReferenceArtist ? 'card__profile-full-image' : 'card__profile-image'
-      }
-      colorId={member.colorId}
-      gender={member.gender}
-      memberId={member.id}
-      name={member.name}
-    />
-    <span
-      className={`card__color-bar background-color-${utils.getColorNumber(
-        member.colorId
-      )}`}
-    />
+    <div className="position-relative">
+      <MemberPicture
+        className={`card__profile-image ${
+          !showReferenceArtist ? 'card__profile-image--crop' : ''
+        }`}
+        color={member.color}
+        gender={member.gender}
+        memberId={member.id}
+        name={member.name}
+      />
+      {Boolean(editMember) && (
+        <button
+          className="btn-invisible card__edit-member-button"
+          onClick={() => editMember(member)}
+        >
+          <Icon type="edit-box" />
+        </button>
+      )}
+    </div>
+
+    <span className={`card__color-bar background-color-${member.color}`} />
     <h3 className="card__name">
       {member.name}
       <FavoriteIcon
@@ -52,7 +61,7 @@ const MemberCard = ({
         {member.private && (
           <Icon type="private" color="red" inline title="private" size="18" />
         )}
-        <b>From </b> {member.referenceArtist}
+        <b>From </b> {member.referenceArtists.map(ra => ra.name).join(', ')}
       </p>
     )}
 
@@ -62,19 +71,22 @@ const MemberCard = ({
     </p>
     <p>
       <b>Nationality: </b>
-      <MemberNationaltyFlag nationality={member.nationality} />
+      <MemberNationalityFlag
+        nationality={member.nationality}
+        className="card__flag"
+      />
     </p>
     {averages && (
       <Fragment>
-        <p>
+        <p className="card__average">
           <b>Avg Official Songs: </b>
           {averages.official}%
         </p>
-        <p>
+        <p className="card__average">
           <b>Avg Custom Songs: </b>
           {averages.custom}%
         </p>
-        <p>
+        <p className="card__average">
           <b>Avg All Songs: </b>
           {averages.all}%
         </p>
@@ -84,6 +96,7 @@ const MemberCard = ({
       <b>Positions:</b>
     </p>
     <MemberPositions memberId={member.id} positions={member.positions} />
+    <MemberTags tags={member.tags} memberId={member.id} color={member.color} />
   </div>
 );
 
@@ -94,6 +107,7 @@ MemberCard.propTypes = {
   favoriteState: PropTypes.bool,
   member: PropTypes.object.isRequired,
   updateFavoriteMembers: PropTypes.func.isRequired,
+  editMember: PropTypes.func,
 };
 
 MemberCard.defaultProps = {
@@ -101,6 +115,7 @@ MemberCard.defaultProps = {
   showId: false,
   showReferenceArtist: false,
   favoriteState: false,
+  editMember: null,
 };
 
 export default MemberCard;

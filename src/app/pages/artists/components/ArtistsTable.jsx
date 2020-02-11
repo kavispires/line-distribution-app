@@ -4,6 +4,10 @@ import _ from 'lodash';
 
 // Import shared components
 import { FavoriteIcon, LoadingIcon, Icon } from '../../../common';
+// Import utils
+import enums from '../../../../utils/readable-enums';
+
+const NUMBER_OF_COLUMNS = '7';
 
 const ArtistsTable = ({
   artists,
@@ -12,16 +16,16 @@ const ArtistsTable = ({
   rowAction,
   searchQuery,
   showFavoriteArtistsOnly,
-  user,
+  userFavoriteArtists,
 }) => {
   // Filter artists
-  let filteredArtists = artists;
+  let filteredArtists = artists || [];
   if ((searchQuery && filteredArtists[0]) || showFavoriteArtistsOnly) {
     filteredArtists = _.filter(artists, o => {
       let include = false;
       // If displaying only favorite artists
       if (showFavoriteArtistsOnly) {
-        include = user.favoriteArtists[o.id] !== undefined;
+        include = userFavoriteArtists[o.id] !== undefined;
       }
       // If displaying only matching queries
       if (searchQuery && filteredArtists[0]) {
@@ -43,7 +47,7 @@ const ArtistsTable = ({
     if (pending) {
       return (
         <tr>
-          <td colSpan="5">
+          <td colSpan={NUMBER_OF_COLUMNS}>
             <LoadingIcon />
           </td>
         </tr>
@@ -51,12 +55,15 @@ const ArtistsTable = ({
     }
     return (
       <tr>
-        <td colSpan="5">{emptyTableMessage}</td>
+        <td colSpan={NUMBER_OF_COLUMNS}>{emptyTableMessage}</td>
       </tr>
     );
   };
 
   const hasActiveFilters = searchQuery.length > 0 || showFavoriteArtistsOnly;
+
+  console.log(artists);
+  console.log(userFavoriteArtists);
 
   return (
     <Fragment>
@@ -64,9 +71,8 @@ const ArtistsTable = ({
         <p className="italic">Loading...</p>
       ) : (
         <p className="italic">
-          Displaying {filteredArtists.length} artists{hasActiveFilters
-            ? ' within search'
-            : ''}
+          Displaying {filteredArtists.length} artists
+          {hasActiveFilters ? ' within search' : ''}
           ...
         </p>
       )}
@@ -76,41 +82,64 @@ const ArtistsTable = ({
           <tr>
             <th className="artists-table__favorite-col">Favorite</th>
             <th>Name</th>
+            <th>Agency</th>
             <th>Genre</th>
             <th>Units</th>
             <th>Members</th>
+            <th>Disbanded</th>
           </tr>
         </thead>
         <tbody onClick={rowAction}>
           {filteredArtists.length > 0
-            ? filteredArtists.map(entry => (
-                <tr key={`all-artists-${entry.id}`} id={`a-${entry.id}`}>
-                  <td
-                    className="artists-cell-favorite"
-                    onClick={() => favoriteAction(entry.id)}
-                  >
-                    <FavoriteIcon
-                      action={() => {}}
-                      id={entry.id}
-                      size="12"
-                      state={
-                        user.favoriteArtists && user.favoriteArtists[entry.id]
-                      }
-                    />
-                  </td>
-                  <td>
-                    {entry.name}{' '}
-                    {entry.private ? (
-                      <Icon type="private" color="red" title="Private" inline />
-                    ) : null}
-                  </td>
-                  <td>{entry.genre}</td>
-                  <td>{entry.units ? entry.units.length : 0}</td>
-                  <td>
-                    {entry.memberList.join(', ')} ({entry.memberList.length})
-                  </td>
-                </tr>
-              ))
+            ? filteredArtists.map(entry => {
+                const key = `all-artists-${entry.id}`;
+                const id = `${entry.id}:::${entry.unitIds[0]}`;
+                return (
+                  <tr key={key} id={id}>
+                    <td
+                      className="artists-cell-favorite"
+                      onClick={() => favoriteAction(entry.id)}
+                    >
+                      <FavoriteIcon
+                        action={() => {}}
+                        id={entry.id}
+                        size="12"
+                        state={
+                          userFavoriteArtists && userFavoriteArtists[entry.id]
+                        }
+                      />
+                    </td>
+                    <td className="no-break">
+                      {entry.name}{' '}
+                      {entry.private ? (
+                        <Icon
+                          type="private"
+                          color="red"
+                          title="Private"
+                          inline
+                        />
+                      ) : null}
+                    </td>
+                    <td className="no-break">{entry.agency}</td>
+                    <td>{enums.GENRES[entry.genre]}</td>
+                    <td>{entry.unitIds.length}</td>
+                    <td>
+                      {entry.members.map(member => member.name).join(', ')} (
+                      {entry.members.length})
+                    </td>
+                    <td className="center">
+                      {entry.disbanded ? (
+                        <Icon
+                          type="grave"
+                          color="purple"
+                          title="Disbanded"
+                          inline
+                        />
+                      ) : null}
+                    </td>
+                  </tr>
+                );
+              })
             : rowFallback()}
         </tbody>
       </table>
@@ -125,7 +154,7 @@ ArtistsTable.propTypes = {
   rowAction: PropTypes.func.isRequired,
   searchQuery: PropTypes.string,
   showFavoriteArtistsOnly: PropTypes.bool,
-  user: PropTypes.object.isRequired,
+  userFavoriteArtists: PropTypes.object.isRequired,
 };
 
 ArtistsTable.defaultProps = {

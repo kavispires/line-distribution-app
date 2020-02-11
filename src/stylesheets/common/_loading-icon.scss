@@ -1,9 +1,9 @@
 .loading-icon {
   max-width: 100%;
-  height: 96px;
+  height: get-unit(6);
   display: flex;
   justify-content: center;
-  padding: $unit;
+  padding: get-unit(3);
 
   &--tiny {
     height: 32px;

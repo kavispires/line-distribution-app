@@ -1,14 +1,103 @@
-.icon-heart-hollow {
-  &:hover {
-    fill: $color-red !important;
+$position-size: 24px;
+$position-count: 18;
+
+@function get-position-pos($index) {
+  @return $index * $position-size * -1 - 1;
+}
+
+.position-icon {
+  width: $position-size;
+  height: $position-size;
+  background-size: $position-size;
+  display: block;
+  background-image: url('../images/positions.svg');
+  background-position: 0px 0px;
+
+  &--leader {
+    background-position-y: get-position-pos(0);
+  }
+
+  &--main-vocalist {
+    background-position-y: get-position-pos(1);
+  }
+
+  &--lead-vocalist {
+    background-position-y: get-position-pos(2);
+  }
+
+  &--vocalist {
+    background-position-y: get-position-pos(3);
+  }
+
+  &--main-rapper {
+    background-position-y: get-position-pos(4);
+  }
+
+  &--lead-rapper {
+    background-position-y: get-position-pos(5);
+  }
+
+  &--rapper {
+    background-position-y: get-position-pos(6);
+  }
+
+  &--main-dancer {
+    background-position-y: get-position-pos(7);
+  }
+
+  &--lead-dancer {
+    background-position-y: get-position-pos(8);
+  }
+
+  &--dancer {
+    background-position-y: get-position-pos(9);
+  }
+
+  &--visual {
+    background-position-y: get-position-pos(10);
+  }
+
+  &--center {
+    background-position-y: get-position-pos(11);
+  }
+
+  &--maknae {
+    background-position-y: get-position-pos(12);
+  }
+
+  &--face {
+    background-position-y: get-position-pos(13);
+  }
+
+  &--all {
+    background-position-y: get-position-pos(14);
+  }
+
+  &--none {
+    background-position-y: get-position-pos(15);
+  }
+
+  &--unknown {
+    background-position-y: get-position-pos(16);
   }
 }
 
 .position-icon-container {
-  &--inline {
-    width: 16px;
+  display: block;
+
+  & > .position-icon {
     display: inline-block;
-    transform: translateY(2px);
-    line-height: 1px;
+    margin-right: get-unit(1);
+  }
+}
+
+.position-icon-name {
+  display: inline-block;
+  transform: translateY(get-unit(-2));
+}
+
+.icon-heart-hollow {
+  &:hover {
+    fill: get-color(red) !important;
   }
 }

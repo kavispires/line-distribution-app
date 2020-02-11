@@ -17,5 +17,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'prettier/prettier': 'error',
     'no-return-assign': 'off',
+    'import/no-named-as-default-member': 'off',
+    'import/no-named-as-default': 'off',
   },
 };

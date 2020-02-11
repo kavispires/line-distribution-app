@@ -3,14 +3,14 @@
 }
 
 .songs-filters-group {
-  background: $color-gray-1;
+  background: get-color(gray, 1);
   display: flex;
-  border: 1px solid $color-gray-1;
-  padding: $unit-p2;
+  border: 1px solid get-color(gray, 1);
+  padding: get-unit(2);
 }
 
 .songs-filter-group {
   display: flex;
   flex-direction: column;
-  margin-right: $unit-x4;
+  margin-right: get-unit(5);
 }

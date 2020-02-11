@@ -1,8 +1,112 @@
-.artist__section {
-  margin: $unit 0;
+$TOP_HEIGHT: 140px;
+
+.artist-section {
+  margin: get-unit(3) 0;
 }
 
-.artist-page {
+.artist-section-wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: get-unit(3);
+}
+
+.artist-page-profile {
+  height: $TOP_HEIGHT;
+  background: get-color(gray, 3);
+  width: 250px;
+  margin-right: get-unit(3);
+}
+
+.artist-page-bias {
+  height: $TOP_HEIGHT;
+  width: $TOP_HEIGHT;
+  position: relative;
+
+  .bias-icon-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform 0.5s, box-shadow 1s;
+
+    &--hover {
+      transform: scale(1.1);
+      box-shadow: 0px 2px 5px get-color(gray, 2);
+    }
+  }
+
+  .bias-icon-picture {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform 0.5s, box-shadow 1s;
+
+    &--hover {
+      transform: scale(1.1);
+      box-shadow: 0px 2px 5px get-color(gray, 2);
+    }
+
+    &__image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 5px solid get-color(yellow, 3);
+    }
+
+    &__no-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: get-color(negative);
+      text-transform: uppercase;
+      font-size: 120%;
+    }
+
+    &__loading-icon {
+      transform: scale(0.5);
+    }
+  }
+
+  .bias-hover {
+    position: absolute;
+    top: 10%;
+    right: 90%;
+    width: 250px;
+    border-radius: get-unit(1);
+    padding: get-unit(3);
+    min-height: 30px;
+    background: get-color(negative);
+    box-shadow: 0 2px 5px get-color(gray, 3);
+    z-index: 15;
+  }
+
+  .bias-hover-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .bias-hover-button {
+    cursor: pointer;
+    padding: get-unit(1) get-unit(2);
+    margin: get-unit(1) get-unit(1) 0 0;
+    border-radius: get-unit(1);
+    min-width: 70px;
+    border: 0;
+    flex-grow: 1;
+
+    &:hover {
+      color: get-color(negative);
+      transform: scale(1.2);
+      box-shadow: 0px 1px 2px get-color(primary);
+    }
+  }
+}
+
+.artist-page-info {
+  flex-grow: 2;
+
   &__name {
     font-size: 48px;
     text-transform: uppercase;
@@ -27,12 +131,21 @@
   }
 
   &__member-pill {
-    background: $color-gray-2;
-    padding: $unit-p4 $unit-p2;
-    border-radius: $unit-p4;
-    margin-right: $unit-p2;
-    margin-bottom: $unit-p4;
+    background: get-color(gray, 2);
+    padding: get-unit(1) get-unit(2);
+    border-radius: get-unit(1);
+    margin-right: get-unit(2);
+    margin-bottom: get-unit(1);
   }
+}
+
+.no-units-container {
+  display: flex;
+  min-height: 200px;
+  border: 1px solid get-color(gray, 1);
+  justify-content: center;
+  align-items: center;
+  color: get-color(gray, 3);
 }
 
 .unit-section {
@@ -41,7 +154,7 @@
   }
 
   &__ruler {
-    border: 0.5px solid $color-gray-1;
+    border: 0.5px solid get-color(gray, 1);
   }
 
   &__info {
@@ -51,14 +164,14 @@
   }
 
   &__summary {
-    // width: 50%;
+    width: 100%;
   }
 
   &__bias {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: $unit-p2;
+    border-radius: get-unit(2);
     min-width: 110px;
   }
 
@@ -66,7 +179,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    border-radius: $unit-p2;
+    border-radius: get-unit(2);
     min-width: 110px;
   }
 
@@ -74,26 +187,26 @@
     display: block;
     width: 105px;
     height: 105px;
-    background: $color-gray-1;
-    margin-bottom: $unit;
-    border-radius: $unit-p2;
+    background: get-color(gray, 1);
+    margin-bottom: get-unit(3);
+    border-radius: get-unit(2);
   }
 
   &__bias-picture {
     display: block;
     width: 105px;
     height: 105px;
-    background: $color-gray-1;
-    margin-bottom: $unit;
-    border-radius: $unit-p2;
+    background: get-color(gray, 1);
+    margin-bottom: get-unit(3);
+    border-radius: get-unit(2);
   }
 
   &__bias-no-picture {
     width: 105px;
     height: 105px;
-    background: $color-yellow;
-    margin-bottom: $unit;
-    border-radius: $unit-p2;
+    background: get-color(yellow);
+    margin-bottom: get-unit(3);
+    border-radius: get-unit(2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,7 +216,7 @@
       font-weight: 700;
       margin: 0;
       bottom: -1.5em;
-      color: #000;
+      color: get-color(black);
       font-size: 1.5em;
     }
   }
@@ -113,10 +226,10 @@
 
     .btn {
       display: inline-block;
-      margin-right: $unit-p2;
+      margin-right: get-unit(2);
       min-width: 120px;
       min-width: 120px;
-      margin-bottom: $unit-p2;
+      margin-bottom: get-unit(2);
     }
   }
 

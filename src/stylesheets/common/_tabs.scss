@@ -3,15 +3,15 @@
 }
 
 .tabs-content {
-  padding: $unit;
-  border-left: $color-gray-1 1px solid;
-  border-bottom: $color-gray-1 1px solid;
-  border-right: $color-gray-1 1px solid;
+  padding: get-unit(3);
+  border-left: get-color(gray, 1) 1px solid;
+  border-bottom: get-color(gray, 1) 1px solid;
+  border-right: get-color(gray, 1) 1px solid;
   margin-bottom: -12px;
 
   &--empty {
-    padding: $unit;
-    border: $color-gray-1 1px solid;
+    padding: get-unit(3);
+    border: get-color(gray, 1) 1px solid;
     margin-bottom: -12px;
   }
 }
@@ -20,33 +20,34 @@
   width: 100%;
   list-style: none;
   display: flex;
-  border-bottom: $color-gray-1 1px solid;
+  border-bottom: get-color(gray, 1) 1px solid;
   padding: 0;
   margin: 0;
 
   &__tab {
-    background: $color-gray-1;
-    padding: $unit-p2 $unit-x2;
+    background: get-color(gray, 1);
+    padding: get-unit(2) get-unit(4);
     cursor: pointer;
+    border-right: 1px solid get-color(negative);
 
     &:first-child {
-      border-top-left-radius: $unit-p4;
+      border-top-left-radius: get-unit(1);
     }
 
     &:last-child {
-      border-top-right-radius: $unit-p4;
+      border-top-right-radius: get-unit(1);
     }
 
     &:hover {
-      background: $color-gray-2;
+      background: get-color(gray, 2);
     }
 
     &--selected {
       font-weight: bold;
-      color: $color-blue;
-      border: 1px solid $color-gray-1;
-      border-bottom: 2px solid $color-negative;
-      background: $color-negative;
+      color: get-color(blue);
+      border: 1px solid get-color(gray, 1);
+      border-bottom: 2px solid get-color(negative);
+      background: get-color(negative);
       transform: translateY(2px);
       z-index: 10;
 
@@ -58,8 +59,8 @@
   }
 
   &__content {
-    border-left: $color-gray-1 1px solid;
-    border-right: $color-gray-1 1px solid;
-    padding: $unit $unit-p2;
+    border-left: get-color(gray, 1) 1px solid;
+    border-right: get-color(gray, 1) 1px solid;
+    padding: get-unit(3) get-unit(2);
   }
 }

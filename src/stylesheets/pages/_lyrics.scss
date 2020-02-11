@@ -5,7 +5,7 @@
 
 @mixin lyrics-parser {
   width: 50%;
-  border: 1px solid $color-gray-1;
+  border: 1px solid get-color(gray, 1);
   font-size: 11px;
   height: 100%;
 }
@@ -20,15 +20,15 @@
 
   &__members-list {
     width: 100%;
-    background: $color-gray-1;
-    padding: $unit-p2;
-    margin-bottom: $unit;
+    background: get-color(gray, 1);
+    padding: get-unit(2);
+    margin-bottom: get-unit(3);
   }
 
   &__members-list--empty {
-    background: $color-gray-1;
-    padding: $unit-p2;
-    margin-bottom: $unit;
+    background: get-color(gray, 1);
+    padding: get-unit(2);
+    margin-bottom: get-unit(3);
   }
 
   &__input {
@@ -40,7 +40,7 @@
 
   &__output {
     @include lyrics-parser;
-    padding-left: $unit-p2;
+    padding-left: get-unit(2);
     overflow-y: auto;
     // line-height: 24px;
   }

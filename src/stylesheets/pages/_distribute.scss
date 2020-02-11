@@ -1,3 +1,164 @@
+.distribute-viewer-grid {
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  margin-top: get-unit(3);
+
+  &__aside {
+    list-style: none;
+    padding: get-unit(2);
+  }
+}
+
+.distribute-viewer-modes-title {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.distribute-viewer-mode {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.distribute-viewer-video {
+  width: 100%;
+  & > img {
+    min-height: 450px;
+    max-height: 600px;
+  }
+
+  &__youtube {
+    text-align: center;
+    position: relative;
+    background: get-color(black);
+    border-radius: get-unit(2);
+    min-height: 450px;
+    max-height: 600px;
+
+    &:first-child {
+      min-height: 450px;
+    }
+  }
+}
+
+.distribute-viewer-overlay {
+  color: get-color(white);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // background: yellowgreen;
+
+  &__active-members {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__active-member {
+    width: 100px; // TO-DO: media-query-it
+    height: 100px; // TO-DO: media-query-it
+    background: palevioletred;
+    border-radius: 50%;
+    display: inline-block;
+    margin: get-unit(3);
+    border: get-unit(1) solid white;
+  }
+
+  &__lyrics {
+    width: 100%;
+    height: 10%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &__bars {
+    width: 100%;
+    height: 55%;
+    display: flex;
+    background: rgba(0, 0, 0, 0.8);
+    padding: get-unit(2);
+  }
+
+  &__bars-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &--1 {
+      width: 100%;
+    }
+
+    &--2 {
+      width: 50%;
+    }
+
+    &--3 {
+      width: 33%;
+    }
+  }
+}
+
+.distribute-viewer-video-float {
+  color: white;
+  position: absolute;
+
+  &__inner {
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: get-unit(4);
+
+    &__member {
+      width: 100%;
+      // background: grey;
+      padding: get-unit(2);
+    }
+  }
+}
+
+.distribute-viewer-controls {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: get-unit(1);
+  border-color: get-color(gray, 2);
+  display: flex;
+
+  &__button {
+    flex: 1;
+    border: 0;
+    padding: get-unit(3) get-unit(4);
+    cursor: pointer;
+    background: get-color(negative);
+
+    &:hover {
+      background: get-color(gray, 1);
+    }
+  }
+}
+
 .distribute {
   &__header {
     display: flex;
@@ -6,13 +167,13 @@
   }
 
   &__content-container {
-    margin-top: $unit;
+    margin-top: get-unit(3);
   }
 
   &__save-section {
-    margin-top: $unit;
-    border: 1px solid $color-gray-1;
-    padding: $unit-p2;
+    margin-top: get-unit(3);
+    border: 1px solid get-color(gray, 1);
+    padding: get-unit(2);
   }
 
   &__section {
@@ -23,15 +184,15 @@
 
   &__section-left {
     width: 50%;
-    margin-right: $unit-p4;
-    border: 1px solid $color-gray-1;
-    padding: $unit-p2;
+    margin-right: get-unit(1);
+    border: 1px solid get-color(gray, 1);
+    padding: get-unit(2);
     flex: 1;
   }
 
   &__section-right {
     width: 50%;
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
     flex: 1;
     display: flex;
   }
@@ -42,14 +203,14 @@
       max-height: 500px;
       height: 100%;
       overflow: auto;
-      padding: $unit-p2;
-      border: 1px solid $color-gray-1;
+      padding: get-unit(2);
+      border: 1px solid get-color(gray, 1);
     }
   }
 
   &__members {
-    background: $color-gray-1;
-    padding: $unit-p4;
+    background: get-color(gray, 1);
+    padding: get-unit(1);
     padding-bottom: 0;
     display: flex;
     flex-wrap: wrap;
@@ -57,19 +218,19 @@
 
   &__member-pill {
     cursor: pointer;
-    border: 2px solid $color-gray-1;
+    border: 2px solid get-color(gray, 1);
     white-space: nowrap;
     width: 25%;
-    box-shadow: 1px 1px 5px $color-gray-2;
+    box-shadow: 1px 1px 5px get-color(gray, 2);
     overflow: hidden;
 
     &:hover {
-      border: 2px solid $color-primary;
+      border: 2px solid get-color(primary);
     }
 
     &.active {
-      color: $color-negative;
-      border: 2px dashed $color-negative !important;
+      color: get-color(negative);
+      border: 2px dashed get-color(negative) !important;
     }
   }
 
@@ -87,8 +248,8 @@
   }
 
   &__rates {
-    background: $color-gray-1;
-    padding: $unit-p4;
+    background: get-color(gray, 1);
+    padding: get-unit(1);
     padding-bottom: 0;
     display: flex;
     list-style: none;
@@ -112,7 +273,7 @@
       position: relative;
       width: 75%;
       height: 30px;
-      background: $color-negative;
+      background: get-color(negative);
       margin-right: 0;
     }
 
@@ -129,7 +290,7 @@
       top: 0;
       left: 0;
       z-index: 9;
-      border-radius: $unit-p4;
+      border-radius: get-unit(1);
     }
   }
 
@@ -138,53 +299,42 @@
   }
 }
 
-.distribute-view {
-  &__video {
-    margin-top: $unit;
-    background: $color-primary;
-    display: flex;
-    justify-content: center;
-    min-height: 500px;
-    position: relative;
+.distribute-viewer {
+  background: red;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+
+  &__modes {
+    width: 10vw;
+    list-style: none;
+    padding: get-unit(2);
+
+    & li {
+      background: green;
+    }
   }
 
-  &__video-float {
-    color: white;
-    position: absolute;
-    bottom: 0;
+  &__mode-text {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  &__video {
     width: 100%;
-    background: rgb(0, 0, 0);
-    background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.8) 90%,
-      rgba(0, 0, 0, 0) 100%
-    );
-
-    &__inner {
-      margin: 0 auto;
-      height: 100%;
-      display: flex;
-      align-items: flex-end;
-      flex-direction: column;
-      justify-content: space-evenly;
-      padding: $unit-x2;
-
-      &__member {
-        width: 100%;
-        // background: grey;
-        padding: $unit-p2;
-      }
-    }
+    max-width: 80vw;
+    flex-grow: 1;
+    background: yellow;
   }
 }
 
 .distribute-progress-bar {
   width: 100%;
-  // background: grey;
-  padding: $unit-p2;
+  padding: 0 get-unit(2) get-unit(2) get-unit(2);
   display: flex;
   align-items: center;
+  justify-content: center;
 
   &__name {
     display: inline-block;
@@ -192,14 +342,14 @@
     text-transform: uppercase;
     width: 80px;
     text-align: right;
-    margin-right: $unit-x2;
+    margin-right: get-unit(4);
   }
 
   &__progress {
     display: inline-block;
     width: 70%;
-    background: $color-gray-4;
-    border-radius: $unit;
+    background: get-color(gray, 4);
+    border-radius: get-unit(3);
     height: 10px;
     position: relative;
   }
@@ -209,46 +359,40 @@
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: $unit;
+    border-radius: get-unit(3);
+    transition: 0.5;
   }
 
   &__active-icon {
-    &--on {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background: $color-negative;
-      border-radius: 50%;
-      margin: 0 $unit;
-    }
-
-    &--off {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background: $color-gray-4;
-      border-radius: 50%;
-      margin: 0 $unit;
-    }
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: get-color(negative);
+    border-radius: 50%;
+    margin: 0 get-unit(3);
   }
 
   &__duration {
-    color: $color-negative;
+    color: get-color(negative);
+    width: 10px;
+    margin: 0 get-unit(3);
+    max-height: 10px;
+    transform: translateY(get-unit(1) * -1);
   }
 }
 
 .distribution {
   &__lyrics {
     &__line {
-      margin: $unit-p4 0;
+      margin: get-unit(1) 0;
 
       &--icon {
-        margin-right: $unit-p4;
+        margin-right: get-unit(1);
         cursor: pointer;
       }
 
       &--part-active {
-        background: $color-orange;
+        background: get-color(orange);
       }
     }
   }

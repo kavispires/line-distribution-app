@@ -2,16 +2,9 @@ import _ from 'lodash';
 import { toastr } from 'react-redux-toastr';
 
 import constants from '../../utils/constants';
+import enums from '../../utils/readable-enums';
 
 import actions from './actions';
-
-const switchUIReferenceTab = event => async dispatch => {
-  const { id } = event.target;
-
-  if (!id) return null;
-
-  return dispatch(actions.setUIReferenceTab(id));
-};
 
 const handleResyncDB = () => dispatch => dispatch({ type: 'RESYNC_DATABASE' });
 
@@ -291,9 +284,7 @@ const saveManage = formState => async (dispatch, getState) => {
     ) {
       missingField = true;
     }
-    const hasPositions = Object.keys(member).some(
-      m => constants.POSITIONS_LIST_OBJ[m]
-    );
+    const hasPositions = Object.keys(member).some(m => enums.POSITIONS[m]);
     if (!hasPositions) missingField = true;
   });
   if (missingField) {
@@ -386,7 +377,6 @@ export default {
   removeMember,
   resetManage,
   saveManage,
-  switchUIReferenceTab,
   unlockUnit,
   unlockMembers,
   updateManageForm,

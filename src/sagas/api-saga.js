@@ -2,11 +2,11 @@ import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import _ from 'lodash';
 import { toastr } from 'react-redux-toastr';
 
-import API from '../api';
+// import API from '../api';
+import API from '../api2';
 
 import { types } from '../reducers';
 import utils from '../utils';
-import constants from '../utils/constants';
 
 // Delay helper to make API look more realistic
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -15,24 +15,23 @@ const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 500 : 0;
 // API Workers
 
 /**
- * Initializes database, check for existing auth session, and load colors
+ * Initializes database, check for existing auth session
  * @param {object} action
  */
 function* initializer(action) {
+  console.log('%c SAGA!!!', 'background:green;color:white');
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
   try {
-    const dbStart = yield API.init();
-    const status = dbStart.dbState();
-    yield put({ type: types.SET_DATABASE_READY, payload: status.data.loaded });
+    const response = yield API.init();
 
-    yield delay(DELAY_DURATION + 1000);
+    if (response.loaded) {
+      yield put({ type: types.SET_DATABASE_READY, payload: response.loaded });
+    }
 
-    let loggedUser = yield API.auth();
-    loggedUser = loggedUser.data.attributes ? loggedUser.data : null;
-    if (loggedUser) {
-      const user = utils.parseResponse(loggedUser);
+    if (response.user.data && response.user.data.id) {
+      const user = utils.parseResponse(response.user);
 
       yield put({ type: types.SET_USER, payload: user });
       yield put({ type: types.SET_AUTHENTICATED, payload: true });
@@ -40,7 +39,41 @@ function* initializer(action) {
       if (user.isAdmin) {
         yield put({ type: types.SET_ADMIN, payload: true });
       }
+      yield put({
+        type: 'SUCCESS_TOAST',
+        message: ['Welcome back!', `You are logged in as ${user.displayName}`],
+        actionType: action.type,
+      });
+    } else {
+      yield delay(2000 + DELAY_DURATION);
+      yield call(runAuth, { action: 'RUN_AUTH' });
+    }
+  } catch (error) {
+    yield put({
+      type: 'ERROR',
+      message: error,
+      actionType: action.type,
+    });
+  }
 
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
+}
+
+function* runAuth(action) {
+  console.log('%c SAGA!!!', 'background:orange;color:white');
+  yield put({ type: 'PENDING', actionType: action.type });
+  try {
+    const response = yield API.auth();
+
+    if (response.data && response.data.id) {
+      const user = utils.parseResponse(response);
+
+      yield put({ type: types.SET_USER, payload: user });
+      yield put({ type: types.SET_AUTHENTICATED, payload: true });
+
+      if (user.isAdmin) {
+        yield put({ type: types.SET_ADMIN, payload: true });
+      }
       yield put({
         type: 'SUCCESS_TOAST',
         message: ['Welcome back!', `You are logged in as ${user.displayName}`],
@@ -64,22 +97,12 @@ function* requestArtists(action) {
 
   try {
     const response = yield API.get('/artists');
-    const artistList = utils.parseResponse(response);
-    const sortedArtistList = _.sortBy(artistList, [a => a.name.toLowerCase()]);
-    yield put({ type: types.SET_ARTISTS, payload: sortedArtistList });
 
-    const artistsTypeahead = [];
-    const artistsTypeaheadDict = {};
+    const parsedArtists = utils.parseResponse(response);
+    yield put({ type: types.SET_ARTISTS, payload: parsedArtists });
 
-    sortedArtistList.forEach(artist => {
-      artistsTypeahead.push(artist.name);
-      artistsTypeaheadDict[artist.name] = artist.id;
-    });
-    yield put({ type: types.SET_ARTISTS_TYPEAHEAD, payload: artistsTypeahead });
-    yield put({
-      type: types.SET_ARTISTS_TYPEAHEAD_DICT,
-      payload: artistsTypeaheadDict,
-    });
+    const { typeahead } = response.meta;
+    yield put({ type: types.SET_ARTISTS_TYPEAHEAD, payload: typeahead });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -95,15 +118,11 @@ function* requestArtist(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { artistId, panels, state } = action;
-  let { queryParams } = action;
-
-  let selectedArtist = {};
-
-  // Fetch Artist
+  const { artistId } = action;
   try {
     const response = yield API.get(`/artists/${artistId}`);
-    selectedArtist = utils.parseResponse(response);
+    const selectedArtist = utils.parseResponse(response);
+    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -113,70 +132,6 @@ function* requestArtist(action) {
       ],
       actionType: action.type,
     });
-  }
-
-  // Select default unit id
-  queryParams = utils.parseQueryParams(queryParams);
-  let selectedUnitId = selectedArtist.units[0];
-  let unitIndex = 0;
-  if (
-    queryParams &&
-    queryParams.unit &&
-    selectedArtist.units.includes(queryParams.unit)
-  ) {
-    selectedUnitId = queryParams.unit;
-    unitIndex = selectedArtist.units.indexOf(selectedUnitId);
-  }
-
-  // Fetch Artist's Units
-  try {
-    const response = yield API.get(`/artists/${artistId}/units`);
-    selectedArtist.units = utils.parseResponse(response);
-  } catch (error) {
-    yield put({
-      type: 'ERROR',
-      message: [
-        `Unable to load artist ${artistId}'s units from database`,
-        error.toString(),
-      ],
-      actionType: action.type,
-    });
-  }
-
-  // Just send artist if dealing with Manage Artist
-  if (state === 'edit') {
-    selectedArtist.state = 'edit';
-    panels.artist = state;
-
-    const unitsTypeahead = [];
-    const unitsTypeaheadDict = {};
-
-    selectedArtist.units.forEach(unit => {
-      unitsTypeahead.push(unit.name);
-      unitsTypeaheadDict[unit.name] = unit.id;
-    });
-
-    yield put({ type: types.SET_UNITS_TYPEAHEAD, payload: unitsTypeahead });
-    yield put({
-      type: types.SET_UNITS_TYPEAHEAD_DICT,
-      payload: unitsTypeaheadDict,
-    });
-
-    selectedArtist.genre = constants.GENRES_DB[selectedArtist.genre];
-
-    yield put({ type: types.SET_EDITING_ARTIST, payload: selectedArtist });
-    yield put({ type: types.SET_PANELS, payload: panels });
-  } else {
-    // Fetch complete unit for default unit
-    const selectedUnit = yield call(requestUnit, {
-      unitId: selectedUnitId,
-    });
-
-    selectedArtist.units[unitIndex] = selectedUnit;
-
-    yield put({ type: types.SET_ARTIST_PAGE_TAB, payload: selectedUnitId });
-    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
-    yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
   }
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
@@ -201,6 +156,7 @@ function* requestColors(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+// TODO: REFACTOR
 function* requestDistribution(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -213,6 +169,20 @@ function* requestDistribution(action) {
   try {
     const response = yield API.get(`/distributions/${distributionId}`);
     selectedDistribution = utils.parseResponse(response);
+
+    yield put({
+      type: types.SET_ACTIVE_SONG,
+      payload: utils.parseResponse(selectedDistribution.song),
+    });
+    const selectedDistributionWithoutSong = Object.assign(
+      {},
+      selectedDistribution
+    );
+    delete selectedDistributionWithoutSong.song;
+    yield put({
+      type: types.SET_ACTIVE_DISTRIBUTION,
+      payload: selectedDistributionWithoutSong,
+    });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -223,11 +193,6 @@ function* requestDistribution(action) {
       actionType: action.type,
     });
   }
-
-  yield put({
-    type: types.SET_ACTIVE_DISTRIBUTION,
-    payload: selectedDistribution,
-  });
 
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 
@@ -241,24 +206,10 @@ function* requestMembers(action) {
   try {
     const response = yield API.get('/members');
     const membersList = utils.parseResponse(response);
-    const sortedMembersList = _.sortBy(membersList, [
-      m => m.name.toLowerCase(),
-    ]);
-    yield put({ type: types.SET_MEMBERS, payload: sortedMembersList });
+    yield put({ type: types.SET_MEMBERS, payload: membersList });
 
-    const membersTypeahead = [];
-    const membersTypeaheadDict = {};
-
-    sortedMembersList.forEach(member => {
-      const key = `${member.name} (${member.referenceArtist})`;
-      membersTypeahead.push(key);
-      membersTypeaheadDict[key] = member.id;
-    });
-    yield put({ type: types.SET_MEMBERS_TYPEAHEAD, payload: membersTypeahead });
-    yield put({
-      type: types.SET_MEMBERS_TYPEAHEAD_DICT,
-      payload: membersTypeaheadDict,
-    });
+    const { typeahead } = response.meta;
+    yield put({ type: types.SET_MEMBERS_TYPEAHEAD, payload: typeahead });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -270,6 +221,7 @@ function* requestMembers(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
+// TODO: REFACTOR
 function* requestSong(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
@@ -313,8 +265,7 @@ function* requestSongs(action) {
   try {
     const response = yield API.get('/songs');
     const songsList = utils.parseResponse(response);
-    const sortedSongsList = _.orderBy(songsList, [s => s.title.toLowerCase()]);
-    yield put({ type: types.SET_SONGS, payload: sortedSongsList });
+    yield put({ type: types.SET_SONGS, payload: songsList });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -326,15 +277,15 @@ function* requestSongs(action) {
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
-function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
-  const actionType = 'REQUEST_UNIT';
-  yield put({ type: 'PENDING', actionType });
+function* requestUnit(action) {
+  yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  let unit = {};
+  const { unitId } = action;
   try {
     const response = yield API.get(`/units/${unitId}`);
-    unit = utils.parseResponse(response);
+    const selectedUnit = utils.parseResponse(response);
+    yield put({ type: types.SET_SELECTED_UNIT, payload: selectedUnit });
   } catch (error) {
     yield put({
       type: 'ERROR',
@@ -342,163 +293,11 @@ function* requestUnit({ type, unitId, selectedArtist, unitIndex }) {
         `Unable to load unit ${unitId} from database`,
         error.toString(),
       ],
-      actionType,
+      actionType: action.type,
     });
   }
 
-  // Fetch members
-  let members = {};
-  try {
-    const response = yield API.get(`/units/${unitId}/members`);
-    members = utils.parseArrayToObject(response);
-  } catch (error) {
-    yield put({
-      type: 'ERROR',
-      message: [
-        `Unable to load members from unit ${unitId} from database`,
-        error.toString(),
-      ],
-      actionType,
-    });
-  }
-  unit.members = members;
-
-  const membersArray = Object.values(members);
-
-  unit.gender = membersArray.reduce((res, member) => {
-    if (member.gender !== res) return 'MIXED';
-    return res;
-  }, membersArray[0].gender);
-
-  // Fetch distributions and merge
-  let distributions = [];
-  try {
-    const response = yield API.get(`/units/${unitId}/distributions`);
-    distributions = utils.parseResponse(response);
-  } catch (error) {
-    yield put({
-      type: 'ERROR',
-      message: [
-        `Unable to load distributions from unit ${unitId} from database`,
-        error.toString(),
-      ],
-      actionType,
-    });
-  }
-
-  const songsDict = {};
-
-  // Separate distribution into official and custom ones
-  unit.distributions = distributions.reduce(
-    (obj, distribution) => {
-      if (
-        distribution.category === 'OFFICIAL' ||
-        distribution.category === ''
-      ) {
-        // TO-DO: Remove this when DB is fixed
-        distribution.category = 'OFFICIAL';
-        obj.official.push(distribution);
-      } else {
-        obj.custom.push(distribution);
-      }
-
-      // Set songs dictionary entry
-      songsDict[distribution.songId] = distribution.id;
-
-      return obj;
-    },
-    {
-      official: [],
-      custom: [],
-    }
-  );
-
-  // Sort songs
-  unit.distributions.official = _.sortBy(unit.distributions.official, [
-    'title',
-    'originalArtist',
-  ]);
-  unit.distributions.custom = _.sortBy(unit.distributions.custom, [
-    'title',
-    'originalArtist',
-  ]);
-
-  // Add songs dictionary to unit
-  unit.songsDict = songsDict;
-
-  // Calculate averages
-  const averages = {};
-  const totals = {
-    official: 0,
-    custom: 0,
-  };
-
-  unit.distributions.official.forEach(distribution => {
-    Object.entries(distribution.rates).forEach(([memberId, duration]) => {
-      if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
-        if (averages[memberId] === undefined) {
-          averages[memberId] = {
-            official: 0,
-            custom: 0,
-          };
-        }
-        averages[memberId].official += duration;
-        totals.official += duration;
-      }
-    });
-  });
-
-  unit.distributions.custom.forEach(distribution => {
-    Object.entries(distribution.rates).forEach(([memberId, duration]) => {
-      if (!['ALL', 'NONE', 'max', 'remaining', 'total'].includes(memberId)) {
-        if (averages[memberId] === undefined) {
-          averages[memberId] = {
-            official: 0,
-            custom: 0,
-          };
-        }
-        averages[memberId].custom += duration;
-        totals.custom += duration;
-      }
-    });
-  });
-
-  Object.entries(averages).forEach(([memberId, durations]) => {
-    averages[memberId].all = Number(
-      (
-        ((durations.official + durations.custom) * 100) /
-        (totals.official + totals.custom)
-      ).toFixed(1)
-    );
-    averages[memberId].official = Number(
-      ((durations.official * 100) / totals.official).toFixed(1)
-    );
-    averages[memberId].custom = Number(
-      ((durations.custom * 100) / totals.custom).toFixed(1)
-    );
-
-    averages[memberId].official =
-      averages[memberId].official > 1 ? averages[memberId].official : 0;
-    averages[memberId].custom =
-      averages[memberId].custom > 1 ? averages[memberId].custom : 0;
-  });
-
-  unit.averages = averages;
-
-  // Flag unit as complete
-  unit.complete = true;
-
-  // The following if statements are used when the unit tab is updated in the UI
-  if (type) {
-    yield put({ type: types.SET_SELECTED_UNIT, payload: unit });
-  }
-  if (selectedArtist) {
-    selectedArtist.units[unitIndex] = unit;
-    yield put({ type: types.SET_SELECTED_ARTIST, payload: selectedArtist });
-  }
-
-  yield put({ type: 'CLEAR_PENDING', actionType });
-  return unit;
+  yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
 function* requestUnitMembers({ type, unitId, panels }) {
@@ -780,7 +579,7 @@ function* updateMember(action) {
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
-  const { member, referenceArtist, artistGenre } = action;
+  const { member } = action;
 
   let response;
   try {
@@ -789,10 +588,20 @@ function* updateMember(action) {
       response = yield API.put(`/members/${member.id}`, member);
     } else {
       // Create member if it does not have an id
-      response = yield API.post('/members', {
-        ...member,
-        referenceArtist,
-        primaryGenre: artistGenre,
+      response = yield API.post('/members', member);
+    }
+
+    if (response) {
+      const membersList = utils.parseResponse(response);
+      yield put({ type: types.SET_MEMBERS, payload: membersList });
+
+      const { typeahead } = response.meta;
+      yield put({ type: types.SET_MEMBERS_TYPEAHEAD, payload: typeahead });
+
+      yield put({
+        type: 'SUCCESS_TOAST',
+        message: 'Member updaded Successfully',
+        actionType: action.type,
       });
     }
   } catch (error) {
@@ -805,11 +614,6 @@ function* updateMember(action) {
     });
   }
 
-  response.data.positions = {};
-  member.positions.forEach(pos => {
-    response.data.positions[`${response.data.id}:${member.name}:${pos}`] = true;
-  });
-
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
   return response.data;
 }
@@ -819,9 +623,12 @@ function* updateUserBiases(action) {
   yield delay(DELAY_DURATION);
 
   try {
-    yield API.put(`/users/${action.userId}/biases`, action.biases);
-    yield put({ type: types.SET_BIASES, payload: action.biases });
-    yield put({ type: types.SET_BIAS, payload: action.bias });
+    const response = yield API.put(
+      `/users/${action.userId}/biases`,
+      action.biases
+    );
+    const user = utils.parseResponse(response);
+    yield put({ type: types.SET_USER, payload: user });
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',
@@ -829,6 +636,7 @@ function* updateUserBiases(action) {
       actionType: action.type,
     });
   }
+
   yield put({ type: 'CLEAR_PENDING', actionType: action.type });
 }
 
@@ -837,10 +645,13 @@ function* updateUserFavoriteArtists(action) {
   yield delay(DELAY_DURATION);
 
   try {
-    yield API.put(
+    const response = yield API.put(
       `/users/${action.userId}/favorite-artists`,
       action.userFavoriteArtists
     );
+
+    const user = utils.parseResponse(response);
+    yield put({ type: types.SET_USER, payload: user });
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',
@@ -856,10 +667,13 @@ function* updateUserFavoriteMembers(action) {
   yield delay(DELAY_DURATION);
 
   try {
-    yield API.put(
+    const response = yield API.put(
       `/users/${action.userId}/favorite-members`,
       action.userFavoriteMembers
     );
+
+    const user = utils.parseResponse(response);
+    yield put({ type: types.SET_USER, payload: user });
   } catch (error) {
     yield put({
       type: 'ERROR_TOAST',
@@ -877,6 +691,7 @@ function* test(action) {
 }
 
 function* apiSaga() {
+  console.log('%c SAGA!!!', 'background:red;color:white');
   yield takeLatest('INITIALIZER', initializer);
   yield takeLatest('REQUEST_ARTISTS', requestArtists);
   yield takeLatest('REQUEST_ARTIST', requestArtist);
@@ -894,6 +709,7 @@ function* apiSaga() {
   yield takeLatest('SEND_LOG', sendLog);
   yield takeLatest('SEND_SONG', sendSong);
   yield takeLatest('UPDATE_COMPLETE_ARTIST', updateCompleteArtist);
+  yield takeLatest('UPDATE_MEMBER', updateMember);
   yield takeLatest('UPDATE_USER_BIASES', updateUserBiases);
   yield takeLatest('UPDATE_USER_FAVORITE_ARTISTS', updateUserFavoriteArtists);
   yield takeLatest('UPDATE_USER_FAVORITE_MEMBERS', updateUserFavoriteMembers);

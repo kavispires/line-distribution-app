@@ -3,27 +3,64 @@ import PropTypes from 'prop-types';
 
 // Import page components
 import DistributeEdit from './DistributeEdit';
-
-// Import common components
-import { ModeWidget, RequirementWrapper } from '../../../common';
 import DistributeView from './DistributeView';
+// Import common components
+import { ModeWidget, PageTitle, RequirementWrapper } from '../../../common';
+
+let flag = true;
 
 class Distribute extends Component {
   componentDidMount() {
-    this.props.prepareSong();
+    // this.props.prepareSong(); // not necessary, song comes prepared from api
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      (prevProps.distribute.activeDistribution !==
-        this.props.distribute.activeDistribution ||
-        prevProps.distribute.activeSong !== this.props.distribute.activeSong) &&
-      this.props.distribute.activeSong.id &&
+    // console.log('COMPONENT DID UPDATE');
+    const hasActiveSong = Boolean(this.props.distribute.activeSong.id);
+    const hasActiveDistribution = Boolean(
       this.props.distribute.activeDistribution.id
-    ) {
-      this.props.prepareSong(this.props.distribute.activeSong);
-      this.props.mergeActiveDistribution();
+    );
+
+    const isNewActiveSong =
+      prevProps.distribute.activeSong !== this.props.distribute.activeSong;
+    const isNewActiveDistribution =
+      prevProps.distribute.activeDistribution !==
+      this.props.distribute.activeDistribution;
+    const isNewActivation = isNewActiveSong || isNewActiveDistribution;
+    // const isNewActivation = flag;
+    // flag = false;
+
+    // console.log({ hasActiveSong });
+    // console.log({ hasActiveDistribution });
+    // console.log({ isNewActiveSong });
+    // console.log({ isNewActiveDistribution });
+    // console.log({ isNewActivation });
+
+    if (hasActiveSong && hasActiveDistribution && isNewActivation) {
+      // this.props.prepareSong(this.props.distribute.activeSong);
+      // this.props.mergeActiveDistribution();
+      // console.log('PREPARE DISTRIBUTION VIEWER');
+      this.props.prepareDistributionViewer();
     }
+  }
+
+  getMembers() {
+    const members = { ...this.props.distribute.activeUnit.members };
+    members.ALL = {
+      id: 'ALL',
+      name: 'ALL',
+      colorId: 'col000000',
+      color: { number: 0, hex: '#b5b5ba' },
+      positions: ['ALL'],
+    };
+    members.NONE = {
+      id: 'NONE',
+      name: 'NONE',
+      colorId: 'col000031',
+      color: { number: 0, hex: '#ebebf2' },
+      positions: ['NONE'],
+    };
+    return members;
   }
 
   render() {
@@ -46,32 +83,14 @@ class Distribute extends Component {
       linkMemberToPart,
     } = this.props;
 
-    const getMembers = () => {
-      const members = { ...activeUnit.members };
-      members.ALL = {
-        id: 'ALL',
-        name: 'ALL',
-        colorId: 'col000000',
-        color: { number: 0, hex: '#b5b5ba' },
-        positions: ['ALL'],
-      };
-      members.NONE = {
-        id: 'NONE',
-        name: 'NONE',
-        colorId: 'col000031',
-        color: { number: 0, hex: '#ebebf2' },
-        positions: ['NONE'],
-      };
-      return members;
-    };
-
-    const members = getMembers();
+    const members = this.getMembers();
+    // console.log(members);
 
     return (
       <RequirementWrapper requirements={['activeUnit', 'activeSong']}>
         <main className="container container--distribute">
           <div className="distribute__header">
-            <h1>Distribute</h1>
+            <PageTitle title="Distribute" />
             <ModeWidget
               labels={['view', 'edit']}
               active={distributeView}
@@ -79,15 +98,15 @@ class Distribute extends Component {
             />
           </div>
 
-          {distributeView === 'view' ? (
-            <DistributeView
-              activeSong={activeSong}
-              activeUnit={activeUnit}
-              members={members}
-              distributionLines={distributionLines}
-              timestampsDict={timestampsDict}
-              rates={activeDistribution.rates}
-            />
+          <DistributeView
+            activeSong={activeSong}
+            activeUnit={activeUnit}
+            members={members}
+            distributionLines={distributionLines}
+            timestampsDict={timestampsDict}
+            rates={activeDistribution.rates}
+          />
+          {/* {distributeView === 'view' ? (
           ) : (
             <DistributeEdit
               activeDistribution={activeDistribution}
@@ -103,7 +122,7 @@ class Distribute extends Component {
               rates={rates}
               remainder={remainder}
             />
-          )}
+          )} */}
         </main>
       </RequirementWrapper>
     );

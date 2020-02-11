@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`common/Button renders 1`] = `
+<DocumentFragment>
+  <button
+    class="btn btn--default btn--primary  "
+  >
+    Label
+  </button>
+</DocumentFragment>
+`;
+
+exports[`common/Button renders children as a block 1`] = `
+<DocumentFragment>
+  <button
+    class="btn btn--default btn--primary  "
+  >
+    <p>
+      Button Name Here
+    </p>
+  </button>
+</DocumentFragment>
+`;

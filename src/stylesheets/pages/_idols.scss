@@ -1,56 +1,13 @@
 .idols {
-  &__filters-form {
-    background: $color-gray-1;
-    width: 100%;
-    padding: $unit-p4;
-    display: flex;
-    // justify-content: space-between;
-  }
-
-  &__filters-group {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    min-width: 15%;
-
-    &:not(:first-child) {
-      border-left: 2px solid $color-negative;
-      padding-left: $unit;
-    }
-  }
-
   &__filter-title {
     display: block;
-    color: $color-gray-4;
+    color: get-color(gray, 4);
     text-transform: uppercase;
-    margin-bottom: $unit;
-  }
-
-  &__filter-select-group {
-    display: inline-block;
-    margin-right: $unit;
-    margin-bottom: $unit-p4;
-  }
-
-  &__filter-label {
-    display: block;
-    margin-bottom: $unit-p4;
-  }
-
-  &__filter-select {
-    border: 1px solid $color-gray-2;
-    border-radius: 4px;
-    background: $color-negative;
-    min-width: 80px;
-
-    &:hover {
-      color: $color-gray-4;
-      background: linear-gradient($color-negative, $color-gray-1);
-    }
+    margin-bottom: get-unit(3);
   }
 
   &__filter-name {
-    margin-right: $unit-p2;
+    margin-right: get-unit(2);
   }
 
   &__list {
@@ -60,6 +17,6 @@
   }
 
   &__filter-label {
-    margin-left: $unit-p4;
+    margin-left: get-unit(1);
   }
 }

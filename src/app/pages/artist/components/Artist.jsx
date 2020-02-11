@@ -2,24 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Import components
-import Units from './Units';
+import ArtistPicture from './ArtistPicture';
+import Bias from './Bias';
+import UnitsContainer from '../containers/UnitsContainer';
 // Import common components
 import {
   FavoriteIcon,
+  Icon,
   LoadingWrapper,
+  PageTitle,
   RequirementWrapper,
 } from '../../../common';
-// Import utility functions
-import utils from '../../../../utils';
 
 class Artist extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      memberColors: {},
-    };
-  }
-
   componentDidMount() {
     const { artistId } = this.props.match.params;
     if (
@@ -30,67 +25,81 @@ class Artist extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.artists.selectedUnit.id !== this.props.artists.selectedUnit.id
-    ) {
-      this.getMemberColors();
-    }
-  }
-
-  getMemberColors() {
-    const memberColors = { ...this.state.memberColors };
-    Object.values(this.props.artists.selectedUnit.members).forEach(member => {
-      memberColors[member.id] = utils.getColorNumber(member.colorId);
-    });
-    this.setState({ memberColors });
-  }
-
   render() {
     const {
       app,
       artists: { selectedArtist },
       auth,
+      updateBias,
     } = this.props;
 
     const isArtistPending = app.pending.REQUEST_ARTIST;
 
+    const hasNoUnits =
+      !selectedArtist.units || selectedArtist.units.length === 0;
+
+    const isArtistFavoritedByUser =
+      selectedArtist &&
+      selectedArtist.id &&
+      auth.user &&
+      auth.user.favoriteArtists[selectedArtist.id];
+
     return (
       <RequirementWrapper requirements={['selectedArtist']}>
         <main className="container container--artist">
-          <h1>Artist Page</h1>
+          <PageTitle title="Artist Page" />
           <LoadingWrapper pending={isArtistPending}>
-            <section className="artist__section">
-              <h2 className="artist-page__name">
-                {selectedArtist.name}
-                <FavoriteIcon
-                  action={this.props.updateFavoriteArtists}
-                  id={selectedArtist.id || ''}
-                  className="artist-page__name--fav-icon"
-                  size="20"
-                  state={
-                    selectedArtist &&
-                    selectedArtist.id &&
-                    auth.user &&
-                    auth.user.favoriteArtists[selectedArtist.id]
-                  }
+            <section className="artist-section">
+              <div className="artist-section-wrapper">
+                <ArtistPicture artistName={selectedArtist.name} />
+                <div className="artist-page-info">
+                  <h2 className="artist-page-info__name">
+                    {selectedArtist.name}
+                    <FavoriteIcon
+                      action={this.props.updateFavoriteArtists}
+                      id={selectedArtist.id || ''}
+                      className="artist-page-info__name--fav-icon"
+                      size="20"
+                      state={isArtistFavoritedByUser}
+                    />
+                  </h2>
+                  <p className="artist-page-info__genre">
+                    {selectedArtist.agency} • {selectedArtist.genre}{' '}
+                    {selectedArtist.disbanded ? (
+                      <span>
+                        • <Icon type="grave" inline color="purple" /> Disbanded
+                      </span>
+                    ) : null}
+                  </p>
+                  <ul className="artist-page-info__members-list">
+                    {selectedArtist.members &&
+                      selectedArtist.members.map(member => (
+                        <li
+                          className={`artist-page-info__member-pill background-color-${member.color}`}
+                          key={`mp-${member.id}`}
+                        >
+                          {member.name}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+                <Bias
+                  artistId={selectedArtist.id}
+                  isPending={app.pending.UPDATE_USER_BIASES}
+                  members={selectedArtist.members}
+                  updateBias={updateBias}
+                  userBiases={auth.user.biases}
                 />
-              </h2>
-              <p className="artist-page__genre">{selectedArtist.genre}</p>
-              <ul className="artist-page__members-list">
-                {selectedArtist.memberList &&
-                  selectedArtist.memberList.map((memberName, index) => (
-                    <li
-                      className={`artist-page__member-pill background-color-${
-                        this.state.memberColors[selectedArtist.memberIds[index]]
-                      }`}
-                      key={`mp-${memberName}`}
-                    >
-                      {memberName}
-                    </li>
-                  ))}
-              </ul>
-              <Units props={this.props} />
+              </div>
+              {/* Artist has no units */
+              hasNoUnits ? (
+                <div className="no-units-container">
+                  The selected artist has no units available.
+                </div>
+              ) : (
+                /* Artist has units */
+                <UnitsContainer />
+              )}
             </section>
           </LoadingWrapper>
         </main>
@@ -107,6 +116,7 @@ Artist.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
+  updateBias: PropTypes.func.isRequired,
 };
 
 Artist.defaultProps = {};

@@ -48,29 +48,32 @@ const DistributedSongsTable = ({
           <th>Distribution Preview</th>
         </tr>
       </thead>
-      <tbody onClick={rowAction}>
+      <tbody>
         {distributions.length > 0
-          ? distributions.map(entry => (
-              <tr
-                key={`artist-distributions-${entry.id}`}
-                id={`a-${entry.id}`}
-                className="artist-distributed-songs-row"
-                onClick={() => rowAction(entry)}
-              >
-                <td className="artist-distributed-songs-row__title">
-                  {entry.title}
-                </td>
-                <td className="artist-distributed-songs-row__original-artist">
-                  {humanizeCategory(entry.category, entry.originalArtist)}
-                </td>
-                <td className="artist-distributed-songs-row__distribution-preview">
-                  <DistributedSongPreview
-                    rates={entry.rates}
-                    members={members}
-                  />
-                </td>
-              </tr>
-            ))
+          ? distributions.map(entry => {
+              const key = `artist-distribution-${entry.id}`;
+              return (
+                <tr
+                  key={key}
+                  id={`a-${entry.id}`}
+                  className="artist-distributed-songs-row"
+                  onClick={() => rowAction(entry.id)}
+                >
+                  <td className="artist-distributed-songs-row__title">
+                    {entry.songTitle}
+                  </td>
+                  <td className="artist-distributed-songs-row__original-artist">
+                    {humanizeCategory(entry.category, entry.songArtist)}
+                  </td>
+                  <td className="artist-distributed-songs-row__distribution-preview">
+                    <DistributedSongPreview
+                      rates={entry.rates}
+                      members={members}
+                    />
+                  </td>
+                </tr>
+              );
+            })
           : rowFallback()}
       </tbody>
     </table>
@@ -81,7 +84,7 @@ DistributedSongsTable.propTypes = {
   pending: PropTypes.bool,
   rowAction: PropTypes.func,
   distributions: PropTypes.array.isRequired,
-  members: PropTypes.object.isRequired,
+  members: PropTypes.array.isRequired,
 };
 
 DistributedSongsTable.defaultProps = {

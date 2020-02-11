@@ -8,8 +8,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid $color-gray-2;
-    background: $color-gray-1;
+    border: 1px solid get-color(gray, 2);
+    background: get-color(gray, 1);
     cursor: pointer;
 
     &:focus {
@@ -23,11 +23,11 @@
 
   &__content {
     width: 100%;
-    background: $color-negative;
-    border: 1px solid $color-gray-2;
+    background: get-color(negative);
+    border: 1px solid get-color(gray, 2);
 
     &.expanded {
-      padding: $unit-p2;
+      padding: get-unit(2);
       flex: 1;
     }
 

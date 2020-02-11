@@ -1,0 +1,88 @@
+.side-panel {
+  height: 100%;
+  width: 0;
+  min-width: 0;
+  background-color: get-color(gray, 1);
+  overflow-x: hidden;
+  padding-top: get-unit(5);
+  padding-bottom: get-unit(5);
+  transition: 0.5s;
+
+  &--active {
+    width: auto;
+    min-width: 18vw;
+    max-width: 18vw;
+    padding-left: get-unit(3);
+    padding-right: get-unit(3);
+  }
+
+  color: get-color(gray, 6);
+
+  h3 {
+    text-transform: uppercase;
+    margin-bottom: get-unit(4);
+  }
+}
+
+.side-panel-vertical-buttons {
+  background: get-color(gray, 2);
+  display: flex;
+  flex-direction: column;
+
+  &__button {
+    border-bottom: 0;
+    border-top: 2px solid get-color(gray, 1);
+    border-left: 1px solid get-color(gray, 2);
+    border-right: 1px solid get-color(gray, 2);
+    padding: get-unit(5) get-unit(3) get-unit(5);
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      background: get-color(gray, 1);
+    }
+  }
+}
+
+.input-label {
+  color: get-color(gray, 6);
+  margin: get-unit(3) 0 get-unit(1);
+  display: block;
+
+  &--inline {
+    display: inline-block;
+    margin-right: get-unit(3);
+  }
+}
+
+.input-text,
+.input-select {
+  background: get-color(white);
+  border: 0;
+  width: 100%;
+  display: block;
+  border-radius: 0;
+}
+
+.side-panel-hr {
+  border: 1px solid get-color(gray, 2);
+  margin: get-unit(4) 0;
+}
+.side-panel-button {
+  margin-top: get-unit(3);
+  margin-left: get-unit(3);
+  float: right;
+}
+
+.side-panel-list {
+  padding-left: get-unit(5);
+}
+
+.side-panel-color-bar {
+  width: 100%;
+  padding: get-unit(1);
+  color: get-color(white);
+  &:after {
+    content: ' ';
+  }
+}

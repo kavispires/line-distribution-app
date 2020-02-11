@@ -1,12 +1,12 @@
 import types from './types';
 
 const initialState = {
-  databaseReady: false,
+  isDatabaseReady: false,
   error: false,
   errorInline: false,
   errorMessage: '',
   pending: {},
-  loading: false,
+  isLoading: false,
 };
 
 export default function reducer(prevState = initialState, action) {
@@ -20,7 +20,7 @@ export default function reducer(prevState = initialState, action) {
       break;
 
     case types.SET_DATABASE_READY:
-      newState.databaseReady = action.payload;
+      newState.isDatabaseReady = action.payload;
       break;
 
     case types.SET_ERROR:
@@ -37,14 +37,11 @@ export default function reducer(prevState = initialState, action) {
 
     case types.SET_PENDING:
       newState.pending = action.payload;
+      newState.isLoading = Object.keys(action.payload).length > 0;
       break;
 
     case types.SET_SUCCESS:
       newState.success = action.payload;
-      break;
-
-    case types.SET_LOADING:
-      newState.loading = action.payload;
       break;
 
     default:

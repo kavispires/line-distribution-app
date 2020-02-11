@@ -2,27 +2,27 @@ import parser from './index';
 
 const MEMBERS = {
   '-LVRFeNAc2nf-uZlIurE': {
-    colorId: 'col000020',
+    colorId: 'col000000',
     name: 'Kyle',
     id: '-LVRFeNAc2nf-uZlIurE',
   },
   '-LVRFeOG1HJSZSdHbotB': {
-    colorId: 'col000002',
+    colorId: 'col000000',
     name: 'Anthony',
     id: '-LVRFeOG1HJSZSdHbotB',
   },
   '-LVRFePJxP4fCWgN_Lqf': {
-    colorId: 'col000008',
+    colorId: 'col000000',
     name: 'Viktor',
     id: '-LVRFePJxP4fCWgN_Lqf',
   },
   '-LVRFeQMJ5rcbg-U-KRY': {
-    colorId: 'col000023',
+    colorId: 'col000000',
     name: 'Ira',
     id: '-LVRFeQMJ5rcbg-U-KRY',
   },
   '-LVRFeRPTdA6WiOv1CO7': {
-    colorId: 'col000012',
+    colorId: 'col000000',
     name: 'Seth',
     id: '-LVRFeRPTdA6WiOv1CO7',
   },
@@ -41,7 +41,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing'],
                   adlib: [0],
                 },
@@ -62,13 +62,13 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing'],
                   adlib: [0],
                 },
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I dance'],
                   adlib: [0],
                 },
@@ -89,19 +89,19 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing'],
                   adlib: [0],
                 },
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I dance'],
                   adlib: [0],
                 },
                 {
                   singers: ['VIKTOR'],
-                  colors: ['col000008'],
+                  colors: ['col000000'],
                   line: ['I rap'],
                   adlib: [0],
                 },
@@ -123,25 +123,25 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing'],
                   adlib: [0],
                 },
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I dance'],
                   adlib: [0],
                 },
                 {
                   singers: ['VIKTOR'],
-                  colors: ['col000008'],
+                  colors: ['col000000'],
                   line: ['I rap'],
                   adlib: [0],
                 },
                 {
                   singers: ['IRA'],
-                  colors: ['col000023'],
+                  colors: ['col000000'],
                   line: ['I pose'],
                   adlib: [0],
                 },
@@ -163,31 +163,31 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing'],
                   adlib: [0],
                 },
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I dance'],
                   adlib: [0],
                 },
                 {
                   singers: ['VIKTOR'],
-                  colors: ['col000008'],
+                  colors: ['col000000'],
                   line: ['I rap'],
                   adlib: [0],
                 },
                 {
                   singers: ['IRA'],
-                  colors: ['col000023'],
+                  colors: ['col000000'],
                   line: ['I pose'],
                   adlib: [0],
                 },
                 {
                   singers: ['SETH'],
-                  colors: ['col000012'],
+                  colors: ['col000000'],
                   line: ['I talk'],
                   adlib: [0],
                 },
@@ -210,7 +210,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE', 'ANTHONY'],
-                  colors: ['col000020', 'col000002'],
+                  colors: ['col000000', 'col000000'],
                   line: ['We sing'],
                   adlib: [0],
                 },
@@ -231,7 +231,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE', 'ANTHONY', 'VIKTOR'],
-                  colors: ['col000020', 'col000002', 'col000008'],
+                  colors: ['col000000', 'col000000', 'col000000'],
                   line: ['We dance'],
                   adlib: [0],
                 },
@@ -252,7 +252,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE', 'ANTHONY', 'VIKTOR', 'IRA'],
-                  colors: ['col000020', 'col000002', 'col000008', 'col000023'],
+                  colors: ['col000000', 'col000000', 'col000000', 'col000000'],
                   line: ['We rap'],
                   adlib: [0],
                 },
@@ -274,11 +274,11 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE', 'ANTHONY', 'VIKTOR', 'IRA', 'SETH'],
                   colors: [
-                    'col000020',
-                    'col000002',
-                    'col000008',
-                    'col000023',
-                    'col000012',
+                    'col000000',
+                    'col000000',
+                    'col000000',
+                    'col000000',
+                    'col000000',
                   ],
                   line: ['We pose'],
                   adlib: [0],
@@ -303,8 +303,8 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   subSingers: ['ANTHONY'],
-                  colors: ['col000020'],
-                  subColors: ['col000002'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
@@ -326,8 +326,8 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   subSingers: ['ANTHONY'],
-                  colors: ['col000020'],
-                  subColors: ['col000002'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance', 'I rap', 'I talk'],
                   adlib: [0, 1, 0, 1],
                 },
@@ -349,14 +349,14 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   subSingers: ['ANTHONY'],
-                  colors: ['col000020'],
-                  subColors: ['col000002'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
                 {
                   singers: ['VIKTOR'],
-                  colors: ['col000008'],
+                  colors: ['col000000'],
                   line: ['I rap'],
                   adlib: [0],
                 },
@@ -379,16 +379,16 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   subSingers: ['ANTHONY'],
-                  colors: ['col000020'],
-                  subColors: ['col000002'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
                 {
                   singers: ['VIKTOR'],
                   subSingers: ['ANTHONY'],
-                  colors: ['col000008'],
-                  subColors: ['col000002'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I rap', 'I dance'],
                   adlib: [0, 1],
                   omitSub: true,
@@ -412,16 +412,16 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   subSingers: ['ANTHONY'],
-                  colors: ['col000020'],
-                  subColors: ['col000002'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
                 {
                   singers: ['VIKTOR'],
                   subSingers: ['IRA'],
-                  colors: ['col000008'],
-                  subColors: ['col000023'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I rap', 'I pose'],
                   adlib: [0, 1],
                 },
@@ -444,16 +444,16 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   subSingers: ['ANTHONY'],
-                  colors: ['col000020'],
-                  subColors: ['col000002'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
                 {
                   singers: ['VIKTOR'],
                   subSingers: ['IRA'],
-                  colors: ['col000008'],
-                  subColors: ['col000023'],
+                  colors: ['col000000'],
+                  subColors: ['col000000'],
                   line: ['I rap', 'I pose', 'I walk', 'I talk'],
                   adlib: [0, 1, 0, 1],
                 },
@@ -477,8 +477,8 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE', 'ANTHONY'],
                   subSingers: ['VIKTOR'],
-                  colors: ['col000020', 'col000002'],
-                  subColors: ['col000008'],
+                  colors: ['col000000', 'col000000'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
@@ -500,8 +500,8 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE'],
                   subSingers: ['ANTHONY', 'VIKTOR'],
-                  colors: ['col000020'],
-                  subColors: ['col000002', 'col000008'],
+                  colors: ['col000000'],
+                  subColors: ['col000000', 'col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
@@ -523,8 +523,8 @@ describe('Lyrics/Parser', () => {
                 {
                   singers: ['KYLE', 'ANTHONY'],
                   subSingers: ['VIKTOR', 'IRA'],
-                  colors: ['col000020', 'col000002'],
-                  subColors: ['col000008', 'col000023'],
+                  colors: ['col000000', 'col000000'],
+                  subColors: ['col000000', 'col000000'],
                   line: ['I sing', 'I dance'],
                   adlib: [0, 1],
                 },
@@ -547,7 +547,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I dance'],
                   adlib: [1],
                 },
@@ -570,7 +570,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 2],
                 },
@@ -614,7 +614,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['ALL', 'KYLE'],
-                  colors: ['col000000', 'col000020'],
+                  colors: ['col000000', 'col000000'],
                   line: ['We sing'],
                   adlib: [0],
                 },
@@ -637,7 +637,7 @@ describe('Lyrics/Parser', () => {
                   singers: ['ALL'],
                   colors: ['col000000'],
                   subSingers: ['KYLE'],
-                  subColors: ['col000020'],
+                  subColors: ['col000000'],
                   line: ['We sing', 'yeah'],
                   adlib: [0, 1],
                 },
@@ -662,7 +662,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing'],
                   adlib: [0],
                 },
@@ -670,7 +670,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I dance'],
                   adlib: [0],
                   omit: true,
@@ -692,9 +692,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I rap'],
                   adlib: [0, 1],
                 },
@@ -702,9 +702,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I dance', 'I pose'],
                   adlib: [0, 1],
                   omit: true,
@@ -727,9 +727,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I dance', 'I sing'],
                   adlib: [1, 0],
                 },
@@ -737,9 +737,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I rap', 'I walk'],
                   adlib: [1, 0],
                   omit: true,
@@ -764,7 +764,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing'],
                   adlib: [0],
                 },
@@ -793,7 +793,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   subSingers: ['KYLE'],
-                  subColors: ['col000020'],
+                  subColors: ['col000000'],
                   line: ['Oh yeah'],
                   adlib: [1],
                 },
@@ -823,7 +823,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   subSingers: ['KYLE'],
-                  subColors: ['col000020'],
+                  subColors: ['col000000'],
                   line: ['Oh yeah'],
                   adlib: [1],
                 },
@@ -855,11 +855,11 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I dance'],
                   adlib: [1],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                 },
               ],
             ],
@@ -867,7 +867,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 2],
                 },
@@ -888,7 +888,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 2],
                 },
@@ -896,7 +896,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['ANTHONY'],
-                  colors: ['col000002'],
+                  colors: ['col000000'],
                   line: ['I dance', 'yeah'],
                   adlib: [0, 2],
                   omit: true,
@@ -922,7 +922,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 2],
                 },
@@ -943,7 +943,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing', 'yeah', 'I dance', 'yeah'],
                   adlib: [0, 2, 0, 2],
                 },
@@ -964,7 +964,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['yeah', 'I sing'],
                   adlib: [2, 0],
                 },
@@ -985,9 +985,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance', 'yeah'],
                   adlib: [0, 1, 2],
                 },
@@ -1009,9 +1009,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: [
                     'I sing',
                     'yeah',
@@ -1039,11 +1039,11 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   choirSingers: ['VIKTOR'],
-                  choirColors: ['col000008'],
+                  choirColors: ['col000000'],
                   line: ['I sing', 'I dance', 'yeah'],
                   adlib: [0, 1, 4],
                 },
@@ -1064,7 +1064,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 2],
                 },
@@ -1072,7 +1072,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   line: ['I dance', 'yeah'],
                   adlib: [0, 2],
                   omit: true,
@@ -1095,9 +1095,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'I dance', 'yeah'],
                   adlib: [0, 1, 2],
                 },
@@ -1105,9 +1105,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I rap', 'I walk', 'yeah'],
                   adlib: [0, 1, 2],
                   omit: true,
@@ -1129,9 +1129,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 2],
                 },
@@ -1139,7 +1139,7 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I dance', 'yeah'],
                   adlib: [1, 2],
                   omitSub: true,
@@ -1161,9 +1161,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   choirSingers: ['VIKTOR'],
-                  choirColors: ['col000008'],
+                  choirColors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 4],
                 },
@@ -1171,9 +1171,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   choirSingers: ['VIKTOR'],
-                  choirColors: ['col000008'],
+                  choirColors: ['col000000'],
                   line: ['I dance', 'yeah'],
                   adlib: [0, 4],
                   omit: true,
@@ -1196,11 +1196,11 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   choirSingers: ['IRA'],
-                  choirColors: ['col000023'],
+                  choirColors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 4],
                 },
@@ -1208,9 +1208,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   choirSingers: ['IRA'],
-                  choirColors: ['col000023'],
+                  choirColors: ['col000000'],
                   line: ['I dance', 'yeah'],
                   adlib: [1, 4],
                   omitSub: true,
@@ -1234,11 +1234,11 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   choirSingers: ['IRA'],
-                  choirColors: ['col000023'],
+                  choirColors: ['col000000'],
                   line: ['I sing', 'yeah'],
                   adlib: [0, 4],
                 },
@@ -1246,9 +1246,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   choirSingers: ['IRA'],
-                  choirColors: ['col000023'],
+                  choirColors: ['col000000'],
                   line: ['I dance', 'yeah'],
                   adlib: [1, 4],
                   omitSub: true,
@@ -1258,9 +1258,9 @@ describe('Lyrics/Parser', () => {
               [
                 {
                   singers: ['KYLE'],
-                  colors: ['col000020'],
+                  colors: ['col000000'],
                   subSingers: ['ANTHONY'],
-                  subColors: ['col000002'],
+                  subColors: ['col000000'],
                   line: ['I rap', 'yeah'],
                   adlib: [0, 1],
                   omit: true,
@@ -1305,7 +1305,7 @@ describe('Lyrics/Parser', () => {
             [
               {
                 adlib: [0],
-                colors: ['col000023'],
+                colors: ['col000000'],
                 line: [''],
                 singers: ['IRA'],
               },
@@ -1324,7 +1324,7 @@ describe('Lyrics/Parser', () => {
         errors: [
           'You should not place a opening parenthesis inside another parenthesis',
         ],
-        result: [[[{ colors: ['col000023'], singers: ['IRA'] }]]],
+        result: [[[{ colors: ['col000000'], singers: ['IRA'] }]]],
         uses: { IRA: 1 },
       });
     });
@@ -1337,7 +1337,7 @@ describe('Lyrics/Parser', () => {
         errors: [
           'You should not place a closing parenthesis inside another parenthesis',
         ],
-        result: [[[{ subColors: ['col000023'], subSingers: ['IRA'] }]]],
+        result: [[[{ subColors: ['col000000'], subSingers: ['IRA'] }]]],
         uses: { IRA: 1 },
       });
     });
@@ -1350,7 +1350,7 @@ describe('Lyrics/Parser', () => {
         errors: [
           'You should not place a opening curly braces inside another curly braces',
         ],
-        result: [[[{ colors: ['col000023'], singers: ['IRA'] }]]],
+        result: [[[{ colors: ['col000000'], singers: ['IRA'] }]]],
         uses: { IRA: 1 },
       });
     });
@@ -1367,9 +1367,9 @@ describe('Lyrics/Parser', () => {
           [
             [
               {
-                choirColors: ['col000023'],
+                choirColors: ['col000000'],
                 choirSingers: ['IRA'],
-                colors: ['col000023'],
+                colors: ['col000000'],
                 singers: ['IRA'],
               },
             ],

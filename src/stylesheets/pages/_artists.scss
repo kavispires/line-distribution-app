@@ -2,13 +2,13 @@
   &__section {
     width: 100%;
     overflow: auto;
-    margin: $unit-p2 0 $unit-x2 0;
+    margin: get-unit(2) 0 get-unit(4) 0;
   }
 
   &__search-bar {
-    padding: $unit-p2;
-    margin-bottom: $unit;
-    border: 1px solid $color-gray-1;
+    padding: get-unit(2);
+    margin-bottom: get-unit(3);
+    border: 1px solid get-color(gray, 1);
     width: 30%;
     min-width: 300px;
   }

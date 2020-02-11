@@ -4,14 +4,14 @@
 import _ from 'lodash';
 
 /**
- * Parsers bem classes accepting two or more arguments
+ * Parses bem classes accepting two or more arguments
  * @param {String} block
  * @param {String} modifiers
  * @param {String} element
- * @param {extra} extras
+ * @param {Array} extras
  * @returns {string} bem-class
  */
-const bem = (...args) => {
+export const bem = (...args) => {
   const block = args[0];
   let modifiers = args[1] || '';
   let element = args[2];
@@ -36,7 +36,12 @@ const bem = (...args) => {
     if (typeof modifiers === 'string') {
       modifiers = [modifiers];
     }
-    modifiers = modifiers.map(m => `--${m}`);
+    modifiers = modifiers.reduce((acc, m) => {
+      if (m) {
+        acc.push(`--${m}`);
+      }
+      return acc;
+    }, []);
   }
   // Prepare element
   if (hasElement) {
@@ -61,11 +66,13 @@ const bem = (...args) => {
     modifiers.forEach(m => {
       classes += ` ${block}${m}`;
     });
+    classes = classes.trim();
   }
 
   // Only Element
   if (hasElement && !hasModifiers) {
     classes = ` ${block}${element}`;
+    classes = classes.trim();
   }
 
   // Modifiers and Element
@@ -74,9 +81,14 @@ const bem = (...args) => {
     modifiers.forEach(m => {
       classes += ` ${block}${element}${m}`;
     });
+    classes = classes.trim();
   }
 
-  return `${classes} ${extras.join(' ')}`.trim();
+  if (extras.length > 0) {
+    classes += ` ${extras.join(' ')}`;
+  }
+
+  return classes.trim();
 };
 
 /**
@@ -137,10 +149,15 @@ const parseBirthDate = d => {
   if (date.length === 8) {
     const year = date.substring(0, 4);
     const month = date.substring(4, 6);
-    const day = date.substring(6);
+    const day = date.substring(6, 8);
     return `${month}/${day}/${year}`;
   }
   return '?';
+};
+
+const parseBirthdateToInput = (d = 20000101) => {
+  const bd = `${d}`;
+  return `${bd.substring(0, 4)}-${bd.substring(4, 6)}-${bd.substring(6, 8)}`;
 };
 
 const parseResponse = response => {
@@ -361,6 +378,9 @@ const getMostImportantPosition = positions => {
   return 'VOCALIST';
 };
 
+const removeSpecialCharacters = str =>
+  str.replace(/(\*|★|&| |-|\(|\)|%|\.|')+/g, '');
+
 export default {
   bem,
   camelCase,
@@ -373,10 +393,12 @@ export default {
   insertAtCursor,
   makePositionsEditable,
   parseBirthDate,
+  parseBirthdateToInput,
   parseQueryParams,
   parseArrayToObject,
   parseResponse,
   parseResponseToObject,
+  removeSpecialCharacters,
   spiralBirthdate,
   spiralCase,
   spinalCaseWord,

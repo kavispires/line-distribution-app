@@ -3,29 +3,38 @@ import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
 
 // Import shared components
-import { ActiveSong, ActiveUnit } from '../../../common';
-
+import { ActiveSong, ActiveUnit, Icon, LoadingIcon } from '../../../common';
 // Import utility functions
-import utils from '../../../../utils';
+import constants from '../../../../utils/constants';
 import DistributeProgressBar from './DistributeProgressBar';
+// Import images
+import optionBasic from './../../../../images/distribute-basic.svg';
+import optionVertical from './../../../../images/distribute-vertical.svg';
+import optionDiscs from './../../../../images/distribute-discs.svg';
+import optionReport from './../../../../images/distribute-report.svg';
+import optionRank from './../../../../images/distribute-rank.svg';
+import vplaceholder from './../../../../images/16x9.svg';
 
 let player = null;
 let animationInterval;
-// let membersProgress = {};
 
-const INTERVAL = 1000;
+const INTERVAL = 100;
 
 class DistributeView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dimensions: {
+        height: 0,
+        width: 0,
+      },
+      isVideoAreaReady: false,
+      lyrics: [],
       currentTime: 0,
-      height: 0,
       isPlaying: false,
       isReady: false,
-      members: {},
-      activeCache: {},
       membersProgress: {},
+      membersGroups: [],
     };
 
     this.setDimentions = this.setDimentions.bind(this);
@@ -34,15 +43,34 @@ class DistributeView extends Component {
     this.onPlay = this.onPlay.bind(this);
     this.onPause = this.onPause.bind(this);
     this.onEnd = this.onEnd.bind(this);
+    this.restartVideo = this.restartVideo.bind(this);
+    this.calculateBars = this.calculateBars.bind(this);
   }
 
   componentDidMount() {
+    player = null;
     // Determine player height
-    if (!this.state.height && document.getElementById('video-container-view')) {
+    if (
+      !this.state.dimensions.height &&
+      document.getElementById('video-container-view')
+    ) {
       this.setDimentions();
     }
 
     this.setMembers();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      Object.keys(prevProps.rates).join('') !==
+      Object.keys(this.props.rates).join('')
+    ) {
+      this.setMembers();
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(animationInterval);
   }
 
   onReady(e) {
@@ -50,31 +78,26 @@ class DistributeView extends Component {
     this.setState({ isReady: true });
   }
 
-  onPlay(e) {
-    console.log('PLAY', e);
+  onPlay() {
     this.setState({ isPlaying: true });
   }
 
-  onPause(e) {
-    console.log('PAUSE', e);
+  onPause() {
     this.setState({ isPlaying: false });
   }
 
-  onEnd(e) {
-    console.log('END', e);
+  onEnd() {
     this.setState({ isPlaying: false });
   }
 
   onStateChange(e) {
-    console.log('STATE', e);
-
     // If video is playing
     if (e.data === 1) {
       // Lyric Review Animation Interval
       animationInterval = setInterval(() => {
-        const currentTime = Math.round(e.target.getCurrentTime());
-        this.setState({ currentTime });
-        // this.calculateBars(currentTime);
+        const currentTime = Math.floor(e.target.getCurrentTime() * 10);
+        // this.setState({ currentTime });
+        this.calculateBars(currentTime);
       }, INTERVAL);
     } else {
       // Kill interval
@@ -83,79 +106,125 @@ class DistributeView extends Component {
   }
 
   setDimentions() {
-    let width = document.getElementById('video-container-view').clientWidth;
-    let height = document.getElementById('video-container-view').clientHeight;
+    let width =
+      document.getElementById('video-container-view').clientWidth || 16;
+    let height =
+      document.getElementById('video-container-view').clientHeight || 9;
     if (width > height) {
       width = (16 * height) / 9;
     } else {
       height = (9 * width) / 16;
     }
 
-    this.setState(() => ({ width, height }));
+    this.setState(
+      () => ({
+        dimensions: {
+          height,
+          width,
+        },
+      }),
+      () => {
+        this.setState(() => ({ isVideoAreaReady: true }));
+      }
+    );
   }
 
   setMembers() {
-    const { members } = this.props;
+    const { members, rates } = this.props;
 
-    const membersState = {};
-    Object.values(members).forEach(member => {
-      membersState[member.id] = {
+    const membersProgress = Object.values(members).reduce((acc, member) => {
+      acc[member.id] = {
         id: member.id,
         name: member.name,
-        colorNumber: member.color.number || 0,
+        color: member.color || 0,
         percentage: 0,
         duration: 0,
         active: false,
+        picUrl: `${process.env.PUBLIC_URL}${
+          constants.PROFILE_PICTURE_URL
+        }${member.name.toLowerCase()}${member.id}.jpg`,
       };
-    });
 
-    this.setState({ membersProgress: membersState });
+      return acc;
+    }, {});
+
+    const membersLength = Object.values(members).length - 2;
+    const numberOfColumns = Math.ceil(membersLength / 10);
+    const membersPerColumn = Math.ceil(membersLength / numberOfColumns);
+    const membersGroups = Object.values(members).reduce(
+      (acc, member) => {
+        if (member.id === 'ALL' || member.id === 'NONE') return acc;
+
+        const lastGroup = acc[acc.length - 1];
+        if (lastGroup.length < membersPerColumn) {
+          lastGroup.push(member.id);
+        } else {
+          acc.push([member.id]);
+        }
+        return acc;
+      },
+      [[]]
+    );
+
+    // Detemine max based on members only
+    const arrayOfTotals = Object.entries(rates).reduce((acc, [key, val]) => {
+      if (!['ALL', 'NONE', 'max', 'total'].includes(key)) acc.push(val);
+      return acc;
+    }, []);
+    const max = Math.max(...arrayOfTotals);
+
+    this.setState({
+      membersProgress,
+      membersGroups,
+      max,
+      lyrics: [],
+    });
   }
 
   calculateBars(timestamp) {
-    const { timestampsDict, rates } = this.props;
-    let activeCache = { ...this.state.activeCache };
+    const currentTimestamp = this.props.timestampsDict[timestamp];
+    const { max } = this.state;
+
+    const newState = {};
+
     const membersProgress = { ...this.state.membersProgress };
 
-    const distributionTotals = {};
+    if (currentTimestamp) {
+      // Determine lyrics
+      newState.lyrics = currentTimestamp.content;
 
-    const currentDPS = timestampsDict[timestamp];
+      // Deactive inactive members
+      Object.keys(currentTimestamp.inactive).forEach(memberId => {
+        const duration = currentTimestamp.totals[memberId];
+        const percentage = (100 * duration) / max;
 
-    if (currentDPS) {
-      // Encache
-      if (currentDPS.start) {
-        activeCache = { ...activeCache, ...currentDPS.start };
-      }
+        membersProgress[memberId].active = false;
+        membersProgress[memberId].duration = duration;
 
-      // Decache
-      if (currentDPS.stop) {
-        Object.entries(currentDPS.stop).forEach(([id, total]) => {
-          distributionTotals[id] = total;
-          delete activeCache[id];
-        });
-      }
-
-      Object.keys(membersProgress).forEach(memberId => {
-        const currentMember = membersProgress[memberId];
-        if (activeCache[memberId]) {
-          currentMember.active = true;
-          currentMember.duration += INTERVAL / 1000;
-          currentMember.percentage =
-            (100 * membersProgress[memberId].duration) / rates.max;
-        } else {
-          currentMember.active = false;
-          currentMember.duration +=
-            distributionTotals[memberId] || currentMember.duration;
-          currentMember.percentage = (100 * currentMember.duration) / rates.max;
-        }
+        membersProgress[memberId].percentage =
+          percentage < 100 ? percentage : 100;
       });
 
-      this.setState(() => ({
-        activeCache,
-        distributionTotals,
-        membersProgress,
-      }));
+      // Active active members
+      Object.keys(currentTimestamp.active).forEach(memberId => {
+        membersProgress[memberId].active = true;
+      });
     }
+
+    // Add second to every active member
+    Object.values(membersProgress).forEach(member => {
+      if (member.active) {
+        member.duration += 0.1;
+        const percentage = (100 * member.duration) / max;
+        member.percentage = percentage < 100 ? percentage : 100;
+      }
+    });
+
+    newState.membersProgress = membersProgress;
+
+    this.setState({
+      ...newState,
+    });
   }
 
   togglePlayPause() {
@@ -167,11 +236,15 @@ class DistributeView extends Component {
   }
 
   restartVideo() {
+    this.setMembers();
+
     player.seekTo(0);
     player.playVideo();
   }
 
   rewindFastforward(direction) {
+    // TO-DO: Update UI bars accordingly
+
     if (direction === '+') {
       player.seekTo(player.getCurrentTime() + 10);
     } else {
@@ -182,89 +255,159 @@ class DistributeView extends Component {
   render() {
     const { activeSong, activeUnit } = this.props;
 
-    // Youtube Player options
-    const opts = {
-      height: this.state.height,
-      width: this.state.width,
-    };
-
-    // const getVideoFloatSize = members => {
-    //   const size = Object.keys(members).length;
-    //   if (size <= 6) return 'small';
-    //   if (size > 12) return 'large';
-    //   return 'medium';
-    // };
-
-    // const videoFloatSize = getVideoFloatSize(members);
-
-    const barsHeight = {
-      height: `${this.state.height / 2}px`,
-    };
-    const barsWidth = {
-      width: `${this.state.width}px`,
-    };
-
     return (
       <Fragment>
         <section className="active-widget__group">
           <ActiveUnit activeUnit={activeUnit} showMembers />
           <ActiveSong activeSong={activeSong} />
         </section>
-        <section className="distribute-view__video" id="video-container-view">
-          <YouTube
-            videoId={activeSong.videoId}
-            opts={opts}
-            onReady={this.onReady}
-            onPlay={this.onPlay}
-            onPause={this.onPause}
-            onEnd={this.onEnd}
-            onStateChange={this.onStateChange}
-          />
-          <div className="distribute-view__video-float" style={barsHeight}>
-            <div
-              className="distribute-view__video-float__inner"
-              style={barsWidth}
-            >
-              {Object.values(this.state.membersProgress).map(member => {
-                if (member.name === 'ALL' || member.name === 'NONE') {
-                  return null;
-                }
-                return (
-                  <DistributeProgressBar
-                    active={member.active}
-                    colorNumber={member.colorNumber}
-                    duration={member.duration}
-                    name={member.name}
-                    percentage={member.percentage}
+        <section className="distribute-viewer-grid">
+          <ul className="distribute-viewer-grid__aside">
+            <li className="distribute-viewer-modes-title">Style</li>
+            <li className="distribute-viewer-mode">
+              <img src={optionBasic} alt="Basic" />
+            </li>
+            <li className="distribute-viewer-mode">
+              <img src={optionVertical} alt="Vertical" />
+            </li>
+            <li className="distribute-viewer-mode">
+              <img src={optionDiscs} alt="Discs" />
+            </li>
+          </ul>
+          <div className="distribute-viewer-video" id="video-container-view">
+            {!this.state.isVideoAreaReady ? (
+              <img src={vplaceholder} alt="Video Placeholder" />
+            ) : (
+              <Fragment>
+                <div className="distribute-viewer-video__youtube">
+                  <YouTube
+                    videoId={activeSong.videoId}
+                    opts={this.state.dimensions}
+                    onReady={this.onReady}
+                    onPlay={this.onPlay}
+                    onPause={this.onPause}
+                    onEnd={this.onEnd}
+                    onStateChange={this.onStateChange}
                   />
-                );
-              })}
-            </div>
+                  <div className="distribute-viewer-overlay">
+                    <div className="distribute-viewer-overlay__active-members">
+                      {Object.values(this.state.membersProgress).map(member => {
+                        if (
+                          member.active === false ||
+                          member.name === 'ALL' ||
+                          member.name === 'NONE'
+                        ) {
+                          return null;
+                        }
+
+                        return (
+                          <img
+                            key={`pic-${member.id}`}
+                            className={`distribute-viewer-overlay__active-member border-color-${member.color}`}
+                            src={member.picUrl}
+                            alt={member.name}
+                          />
+                        );
+                      })}
+                    </div>
+                    <div className="distribute-viewer-overlay__lyrics">
+                      {this.state.lyrics.map(line => (
+                        <p key={line} className="line">
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                    <div className="distribute-viewer-overlay__bars">
+                      {this.state.membersGroups.map((group, index) => {
+                        const key = `group-${index}`;
+                        return (
+                          <div
+                            key={key}
+                            className={`distribute-viewer-overlay__bars-group distribute-viewer-overlay__bars-group--${this.state.membersGroups.length}`}
+                          >
+                            {group.map(memberId => {
+                              const member = this.state.membersProgress[
+                                memberId
+                              ];
+
+                              return (
+                                <DistributeProgressBar
+                                  key={`bar-${member.id}`}
+                                  active={member.active}
+                                  color={member.color}
+                                  duration={member.duration}
+                                  name={member.name}
+                                  percentage={member.percentage}
+                                />
+                              );
+                            })}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="distribute-viewer-controls">
+                  <button
+                    className="distribute-viewer-controls__button"
+                    onClick={() => this.togglePlayPause()}
+                  >
+                    {this.state.isPlaying ? (
+                      <Icon type="pause" />
+                    ) : (
+                      <Icon type="play" />
+                    )}
+                  </button>
+                  <button
+                    className="distribute-viewer-controls__button"
+                    onClick={() => this.restartVideo()}
+                  >
+                    <Icon type="restart" />
+                  </button>
+                  <button
+                    className="distribute-viewer-controls__button"
+                    onClick={() => this.rewindFastforward('-')}
+                    disabled
+                  >
+                    <Icon type="rewind" color="gray" />
+                  </button>
+                  <button
+                    className="distribute-viewer-controls__button"
+                    onClick={() => this.rewindFastforward('+')}
+                    disabled
+                  >
+                    <Icon type="fast-forward" color="gray" />
+                  </button>
+                </div>
+              </Fragment>
+            )}
           </div>
+          <ul className="distribute-viewer-grid__aside">
+            <li className="distribute-viewer-modes-title">Options</li>
+            <li className="distribute-viewer-mode">
+              <img src={optionRank} alt="Rank/Results" />
+            </li>
+            <li className="distribute-viewer-mode">
+              <img src={optionReport} alt="Report Broken Distribution" />
+            </li>
+          </ul>
         </section>
-        <section className="distribute-view-controls">
-          <button className="btn" onClick={() => this.togglePlayPause()}>
-            Play/Pause
-          </button>
-          <button className="btn" onClick={() => this.restartVideo()}>
-            Restart
-          </button>
-          <button className="btn" onClick={() => this.rewindFastforward('-')}>
-            - 10s
-          </button>
-          <button className="btn" onClick={() => this.rewindFastforward('+')}>
-            + 10s
-          </button>
-          <button className="btn">Results</button>
-        </section>
-        <h1>View!</h1>
       </Fragment>
     );
   }
 }
 
-DistributeView.propTypes = {};
+DistributeView.propTypes = {
+  members: PropTypes.object,
+  rates: PropTypes.object,
+  timestampsDict: PropTypes.object.isRequired,
+  activeSong: PropTypes.object.isRequired,
+  activeUnit: PropTypes.object.isRequired,
+};
 
-DistributeView.defaultProps = {};
+DistributeView.defaultProps = {
+  members: {},
+  rates: {},
+};
 
 export default DistributeView;

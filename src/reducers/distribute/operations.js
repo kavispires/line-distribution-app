@@ -2,6 +2,9 @@ import _ from 'lodash';
 
 import actions from './actions';
 
+const loadDistribution = distributionId => dispatch =>
+  dispatch({ type: 'REQUEST_DISTRIBUTION', distributionId });
+
 const activateSong = id => (dispatch, getState) => {
   // Reset everything but Unit
   dispatch(actions.resetDistributeSong({}));
@@ -22,6 +25,199 @@ const activateSong = id => (dispatch, getState) => {
     });
   }
 };
+
+const activateUnit = () => (dispatch, getState) => {
+  // Reset everything
+  dispatch(actions.resetDistribute({}));
+
+  const selectedArtist = { ...getState().artists.selectedArtist };
+  const activeUnit = { ...getState().artists.selectedUnit };
+
+  activeUnit.artistName = selectedArtist.name;
+  activeUnit.genre = selectedArtist.genre;
+
+  dispatch(actions.setActiveUnit(activeUnit));
+};
+
+const prepareDistributionViewer = () => (dispatch, getState) => {
+  // Get activeDistribution and activeSong
+  const {
+    activeDistribution: { rates, relationships },
+    activeSong: { distribution },
+  } = getState().distribute;
+
+  // Build members totals from rates
+  const totals = Object.keys(rates).reduce((acc, key) => {
+    if (!['max', 'total'].includes(key)) {
+      acc[key] = 0;
+    }
+    return acc;
+  }, {});
+
+  class Timestamp {
+    constructor(tts = {}, actv = {}, iactv = {}) {
+      this.totals = { ...tts };
+      this.active = { ...actv };
+      this.content = [];
+      this.inactive = { ...iactv };
+      this.duration = 0;
+    }
+
+    addActive(newMembers = []) {
+      newMembers.forEach(member => {
+        if (this.active[member] === undefined) {
+          this.active[member] = 0;
+        }
+        this.active[member] += 1;
+      });
+    }
+
+    addInactive(newMembers = []) {
+      newMembers.forEach(member => {
+        if (this.inactive[member] === undefined) {
+          this.inactive[member] = 0;
+        }
+        this.inactive[member] += 1;
+      });
+    }
+
+    addContent(newContent = '') {
+      if (this.content.length < 2 && !this.content[0]) {
+        this.content = [newContent];
+      } else {
+        this.content.push(newContent);
+      }
+    }
+
+    addDuration(duration = 0) {
+      this.duration += duration;
+    }
+
+    addTotals(newMembers = [], duration = 0) {
+      newMembers.forEach(member => {
+        if (this.totals[member] === undefined) {
+          this.totals[member] = 0;
+        }
+        this.totals[member] += duration;
+      });
+    }
+
+    replaceTotals(newTotals = {}) {
+      this.totals = { ...newTotals };
+    }
+  }
+
+  const defaultTimestampEntry = {
+    0: new Timestamp(totals),
+  };
+
+  const lyricsStart = {};
+  const lyricsEnd = {};
+
+  // Loop through song.distribution and through every part
+  // Adding the startTime as an entry on the timestamp
+  const timestamps = distribution.reduce(
+    (acc, line) => {
+      const lyricLineStart = {
+        startTime: 0,
+        content: [],
+      };
+      const lyricLineEnd = {
+        endTime: 0,
+        content: [],
+      };
+
+      // Loop parts
+      line.forEach(part => {
+        const timestampOnKey = Math.floor(part.startTime * 10); // TO-DO: Convert to miliseconds
+        const timestampOffKey = Math.floor(part.endTime * 10); // TO-DO: Convert to miliseconds
+
+        const newMembers = relationships[part.id];
+
+        // Add timestamp object to acc based on startTime
+        if (acc[timestampOnKey] === undefined) {
+          acc[timestampOnKey] = new Timestamp();
+        }
+
+        acc[timestampOnKey].addActive(newMembers);
+
+        // Add timestamp object to acc based on endTime
+        if (acc[timestampOffKey] === undefined) {
+          acc[timestampOffKey] = new Timestamp();
+        }
+        // acc[timestampOffKey].replaceTotals(latestTotals);
+        acc[timestampOffKey].addInactive(newMembers);
+        acc[timestampOffKey].addDuration(part.duration);
+
+        // Build lyric line
+        if (
+          !lyricLineStart.startTime ||
+          lyricLineStart.startTime > timestampOnKey
+        ) {
+          lyricLineStart.startTime = timestampOnKey;
+        }
+        if (!lyricLineEnd.endTime || lyricLineEnd.endTime < timestampOffKey) {
+          lyricLineEnd.endTime = timestampOffKey;
+        }
+        lyricLineStart.content.push(part.content);
+        lyricLineEnd.content.push(part.content);
+      });
+
+      const trimmedContent = lyricLineStart.content
+        .join('')
+        .trim()
+        .replace(/  +/g, ' ');
+
+      lyricsStart[lyricLineStart.startTime] = trimmedContent;
+      lyricsEnd[lyricLineEnd.endTime] = trimmedContent;
+
+      return acc;
+    },
+    {
+      ...defaultTimestampEntry,
+    }
+  );
+
+  let latestTotals = { ...totals };
+
+  const currentLyrics = [];
+
+  // Addup totals and attatch lyrics
+  Object.entries(timestamps).forEach(([id, timestamp]) => {
+    timestamp.totals = { ...latestTotals };
+
+    // console.log(id);
+
+    if (timestamp.duration) {
+      Object.keys(timestamp.inactive).forEach(memberId => {
+        timestamp.totals[memberId] += timestamp.duration;
+      });
+    }
+
+    // Add lyrics to current
+    if (lyricsStart[id]) {
+      currentLyrics.push(lyricsStart[id]);
+    }
+
+    // Remove lyrics from current
+    if (lyricsEnd[id]) {
+      const index = currentLyrics.indexOf(lyricsEnd[id]);
+      if (index > -1) {
+        currentLyrics.splice(index, 1);
+      }
+    }
+
+    // Add current to content
+    timestamp.content = [...currentLyrics];
+
+    // Update latest totals
+    latestTotals = { ...timestamp.totals };
+  });
+
+  dispatch(actions.setTimestampsDict(timestamps));
+};
+
+// TO-DO: VERIFY USE FROM HERE
 
 const activateSongDistribution = distribution => (dispatch, getState) => {
   // Reset everything but Unit
@@ -46,21 +242,7 @@ const activateSongDistribution = distribution => (dispatch, getState) => {
   }
 };
 
-const activateUnit = () => (dispatch, getState) => {
-  // Reset everything
-  dispatch(actions.resetDistribute({}));
-
-  const selectedArtist = { ...getState().artists.selectedArtist };
-  const activeUnit = { ...getState().artists.selectedUnit };
-
-  activeUnit.artistName = selectedArtist.name;
-  activeUnit.genre = selectedArtist.genre;
-
-  dispatch(actions.setActiveUnit(activeUnit));
-};
-
 const prepareSong = activeSongParam => (dispatch, getState) => {
-  // const { activeSong } = getState().distribute;
   const activeSong = activeSongParam || getState().distribute.activeSong;
 
   if (activeSong.id) {
@@ -352,6 +534,8 @@ export default {
   handleDistributionCategory,
   handleSaveDistribution,
   linkMemberToPart,
+  loadDistribution,
   mergeActiveDistribution,
+  prepareDistributionViewer,
   prepareSong,
 };

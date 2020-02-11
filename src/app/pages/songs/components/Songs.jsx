@@ -6,7 +6,14 @@ import { Checkbox, Form, Text } from 'informed';
 // Import components
 import SongsTable from './SongsTable';
 // Import common components
-import { ActiveSong, ActiveUnit, RequirementWrapper } from '../../../common';
+import {
+  ActiveSong,
+  ActiveUnit,
+  PageTitle,
+  RequirementWrapper,
+} from '../../../common';
+// Import utils
+import localStorage from '../../../../utils/local-storage';
 
 class Songs extends Component {
   constructor(props) {
@@ -26,7 +33,17 @@ class Songs extends Component {
   }
 
   componentDidMount() {
-    this.props.loadSongs();
+    if (this.props.auth.isAuthenticated) {
+      this.props.loadSongs();
+    }
+
+    this.localStorage();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
+      this.props.loadSongs();
+    }
   }
 
   setSort(type) {
@@ -39,6 +56,20 @@ class Songs extends Component {
       order,
       sortedBy: type,
     });
+
+    localStorage.set({
+      songsSort: type,
+      songsOrder: order === 'desc' ? 'desc' : null,
+    });
+  }
+
+  localStorage() {
+    this.setState({
+      undone: localStorage.get('songsUndone') || true,
+      matchGender: localStorage.get('songsMatchGender') || true,
+      sortedBy: localStorage.get('songsSort') || 'title',
+      order: localStorage.get('songsOrder') || 'asc',
+    });
   }
 
   updateFilters(formState) {
@@ -46,6 +77,11 @@ class Songs extends Component {
       query: formState.values.query,
       undone: formState.values.undone,
       matchGender: formState.values.matchGender,
+    });
+
+    localStorage.set({
+      songsUndone: formState.values.undone || null,
+      songsMatchGender: formState.values.matchGender || null,
     });
   }
 
@@ -83,8 +119,8 @@ class Songs extends Component {
 
       if (this.state.query) {
         const query = this.state.query.toLowerCase();
-        const stringSearch = `${song.title.toLowerCase()} ${song.originalArtist.toLowerCase()}`;
-        if (stringSearch.includes(query)) {
+
+        if (song.query.includes(query)) {
           evaluation.push(song);
         } else {
           evaluation.push(!song);
@@ -112,7 +148,7 @@ class Songs extends Component {
     return (
       <RequirementWrapper requirements={['activeUnit']}>
         <main className="container container--songs">
-          <h1>Songs</h1>
+          <PageTitle title="Songs" />
           <section className="active-widget__group">
             <ActiveUnit activeUnit={activeUnit} showMembers />
             <ActiveSong activeSong={activeSong} />
@@ -151,9 +187,9 @@ class Songs extends Component {
           <p>To start a distribution, select a song by clicking on its row.</p>
           <SongsTable
             filteredSongs={filteredSongs}
-            hasActiveFilters={
+            hasActiveFilters={Boolean(
               this.state.query || this.state.undone || this.state.matchGender
-            }
+            )}
             pending={pending.REQUEST_SONGS}
             rowAction={this.handleTableClick}
             previouslyDistributedSongsDict={activeUnit.songsDict}
@@ -169,6 +205,7 @@ class Songs extends Component {
 Songs.propTypes = {
   activateSong: PropTypes.func.isRequired,
   app: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
   distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,

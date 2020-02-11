@@ -3,44 +3,38 @@ import PropTypes from 'prop-types';
 
 const DistributeProgressBar = ({
   active,
-  colorNumber,
+  color,
   duration,
   name,
   percentage,
 }) => {
   const widthStyle = {
     width: `${percentage}%`,
+    transition: '0.1s',
   };
 
-  // if (active) {
-  //   console.log({
-  //     colorNumber,
-  //     duration,
-  //     name,
-  //     percentage,
-  //   });
-  // }
   return (
     <div className="distribute-progress-bar">
       <div
-        className={`distribute-progress-bar__name foreground-color-${colorNumber}`}
+        className={`distribute-progress-bar__name foreground-color-${color}`}
       >
         {name}
       </div>
       <div className="distribute-progress-bar__progress">
         <span
-          className={`distribute-progress-bar__bar background-color-${colorNumber}`}
+          className={`distribute-progress-bar__bar background-color-${color}`}
           style={widthStyle}
         />
       </div>
-      <div
-        className={`distribute-progress-bar__active-icon--${
-          active ? 'on' : 'off'
-        }`}
-      />
-      <div className="distribute-progress-bar__duration">
-        {duration.toFixed(1)}s
-      </div>
+      {active ? (
+        <div
+          className={`distribute-progress-bar__active-icon background-color-${color}`}
+        />
+      ) : (
+        <div className="distribute-progress-bar__duration">
+          {duration.toFixed(1)}s
+        </div>
+      )}
     </div>
   );
 };
@@ -48,7 +42,7 @@ const DistributeProgressBar = ({
 DistributeProgressBar.propTypes = {
   active: PropTypes.bool,
   name: PropTypes.string,
-  colorNumber: PropTypes.number,
+  color: PropTypes.number,
   duration: PropTypes.number,
   percentage: PropTypes.number,
 };
@@ -56,7 +50,7 @@ DistributeProgressBar.propTypes = {
 DistributeProgressBar.defaultProps = {
   active: false,
   name: 'Bob',
-  colorNumber: 1,
+  color: 1,
   duration: 15.4,
   percentage: 40,
 };

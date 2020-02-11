@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`common/PageTitle renders 1`] = `
+<DocumentFragment>
+  <h1
+    class="page-title"
+  >
+    Page Title
+  </h1>
+</DocumentFragment>
+`;
