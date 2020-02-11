@@ -9,6 +9,8 @@ const HomeBackgroundVideo = () => {
       Math.floor(Math.random() * constants.YOUTUBE_URLS.length)
     ];
 
+  const styles = {};
+
   return (
     <div className="home__video">
       <iframe

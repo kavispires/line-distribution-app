@@ -16,16 +16,16 @@ const ArtistsTable = ({
   rowAction,
   searchQuery,
   showFavoriteArtistsOnly,
-  user,
+  userFavoriteArtists,
 }) => {
   // Filter artists
-  let filteredArtists = artists;
+  let filteredArtists = artists || [];
   if ((searchQuery && filteredArtists[0]) || showFavoriteArtistsOnly) {
     filteredArtists = _.filter(artists, o => {
       let include = false;
       // If displaying only favorite artists
       if (showFavoriteArtistsOnly) {
-        include = user.favoriteArtists[o.id] !== undefined;
+        include = userFavoriteArtists[o.id] !== undefined;
       }
       // If displaying only matching queries
       if (searchQuery && filteredArtists[0]) {
@@ -61,6 +61,9 @@ const ArtistsTable = ({
   };
 
   const hasActiveFilters = searchQuery.length > 0 || showFavoriteArtistsOnly;
+
+  console.log(artists);
+  console.log(userFavoriteArtists);
 
   return (
     <Fragment>
@@ -102,7 +105,7 @@ const ArtistsTable = ({
                         id={entry.id}
                         size="12"
                         state={
-                          user.favoriteArtists && user.favoriteArtists[entry.id]
+                          userFavoriteArtists && userFavoriteArtists[entry.id]
                         }
                       />
                     </td>
@@ -151,7 +154,7 @@ ArtistsTable.propTypes = {
   rowAction: PropTypes.func.isRequired,
   searchQuery: PropTypes.string,
   showFavoriteArtistsOnly: PropTypes.bool,
-  user: PropTypes.object.isRequired,
+  userFavoriteArtists: PropTypes.object.isRequired,
 };
 
 ArtistsTable.defaultProps = {

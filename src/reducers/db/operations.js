@@ -1,3 +1,5 @@
+// TO-DO: DELETE from here
+
 /**
  * Trigger saga to fetch artists from the database if reloaded is necessary
  * @category Reducer Operator

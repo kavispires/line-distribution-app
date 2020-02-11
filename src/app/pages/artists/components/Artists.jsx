@@ -30,16 +30,18 @@ class Artists extends Component {
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.loadArtists();
-    }
+    this.props.db.artists.read(this);
+    // console.log(this.props.db.artists.data);
+    // if (this.props.auth.isAuthenticated) {
+    //   // this.props.loadArtists();
+    // }
 
     this.localStorage();
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
-      this.props.loadArtists();
+      // this.props.loadArtists();
     }
   }
 
@@ -83,24 +85,33 @@ class Artists extends Component {
 
   render() {
     const {
-      app: { pending },
       auth: { user },
-      db,
+      db: { artists },
       distribute: { activeSong, activeUnit },
+      updateFavoriteArtists,
     } = this.props;
 
-    const isArtistPending =
-      pending.REQUEST_ARTISTS || pending.INITIALIZER || pending.RUN_AUTH;
+    const { artistSearchQuery, artistsFavoritesOnly } = this.state;
+
+    // console.log(artists.data);
+
+    // const isArtistPending =
+    //   pending.REQUEST_ARTISTS ||
+    //   pending.INITIALIZER ||
+    //   pending.RUN_AUTH ||
+    //   artists.isLoading;
 
     return (
       <RequirementWrapper>
         <main className="container container--artists">
-          <PageTitle title="Artists" />
-
           <section className="active-widget__group">
             <ActiveUnit activeUnit={activeUnit} showMembers />
             <ActiveSong activeSong={activeSong} />
           </section>
+
+          <PageTitle title="Artists" />
+
+          {/* TO-DO: Recent artists */}
 
           <section className="artists__section">
             <input
@@ -112,16 +123,16 @@ class Artists extends Component {
             Show Favorite Artists Only:{' '}
             <Switch
               action={this.toggleShowFavoriteArtistsOnly}
-              checked={this.state.artistsFavoritesOnly}
+              checked={artistsFavoritesOnly}
             />
             <ArtistsTable
-              artists={db.artists}
-              searchQuery={this.state.artistSearchQuery}
-              pending={isArtistPending}
+              artists={artists.data}
+              searchQuery={artistSearchQuery}
+              pending={artists.isLoading}
               rowAction={this.handleTableClick}
-              favoriteAction={this.props.updateFavoriteArtists}
-              showFavoriteArtistsOnly={this.state.artistsFavoritesOnly}
-              user={user}
+              favoriteAction={updateFavoriteArtists}
+              showFavoriteArtistsOnly={artistsFavoritesOnly}
+              userFavoriteArtists={user.favoriteArtists}
             />
           </section>
         </main>
@@ -131,13 +142,11 @@ class Artists extends Component {
 }
 
 Artists.propTypes = {
-  app: PropTypes.object.isRequired,
-  artists: PropTypes.object.isRequired,
+  artists: PropTypes.array.isRequired,
   auth: PropTypes.object.isRequired,
   db: PropTypes.object.isRequired,
   distribute: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  loadArtists: PropTypes.func.isRequired,
   updateFavoriteArtists: PropTypes.func.isRequired,
 };
 

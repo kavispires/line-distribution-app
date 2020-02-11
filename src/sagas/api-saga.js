@@ -19,6 +19,7 @@ const DELAY_DURATION = process.env.NODE_ENV === 'development' ? 500 : 0;
  * @param {object} action
  */
 function* initializer(action) {
+  console.log('%c SAGA!!!', 'background:green;color:white');
   yield put({ type: 'PENDING', actionType: action.type });
   yield delay(DELAY_DURATION);
 
@@ -59,6 +60,7 @@ function* initializer(action) {
 }
 
 function* runAuth(action) {
+  console.log('%c SAGA!!!', 'background:orange;color:white');
   yield put({ type: 'PENDING', actionType: action.type });
   try {
     const response = yield API.auth();
@@ -689,6 +691,7 @@ function* test(action) {
 }
 
 function* apiSaga() {
+  console.log('%c SAGA!!!', 'background:red;color:white');
   yield takeLatest('INITIALIZER', initializer);
   yield takeLatest('REQUEST_ARTISTS', requestArtists);
   yield takeLatest('REQUEST_ARTIST', requestArtist);
